@@ -31,7 +31,17 @@ static func quality_for_adapter(adapter: String) -> String:
 	var name: String = adapter.to_lower()
 	if name.contains("swiftshader") or name.contains("llvmpipe") or name.contains("softpipe") or name.contains("software") or name.contains("lavapipe"):
 		return "low"
-	return "high"
+	return default_graphics()
+
+## Medium on the web, where WebGL pays the most for shadows and full-size frames.
+static func default_graphics() -> String:
+	return "medium" if OS.has_feature("web") else "high"
+
+static func quality_ids() -> PackedStringArray:
+	return PackedStringArray(["low", "medium", "high"])
+
+static func _quality(q: String) -> String:
+	return q if quality_ids().has(q) else default_graphics()
 
 static func ensure() -> void:
 	if loaded:
@@ -47,6 +57,7 @@ static func ensure() -> void:
 	SMLang.apply(language)
 	var adapter: String = _adapter()
 	if adapter.strip_edges() == "" and OS.has_feature("web"):
+		graphics = default_graphics()
 		return
 	loaded = true
 	graphics = quality_for_adapter(adapter)
@@ -75,12 +86,15 @@ static func effective() -> String:
 static func low() -> bool:
 	return effective() == "low"
 
+static func high() -> bool:
+	return effective() == "high"
+
 static func idb_script() -> String:
 	return IDB_JS
 
 static func set_graphics(q: String) -> void:
 	ensure()
-	graphics = "low" if q == "low" else "high"
+	graphics = _quality(q)
 	_write()
 
 static func set_master(v: float) -> void:
@@ -110,7 +124,7 @@ static func set_edge(on: bool) -> void:
 
 static func restore() -> void:
 	ensure()
-	graphics = "high"
+	graphics = default_graphics()
 	master = 1.0
 	sfx = 1.0
 	music = 0.55
@@ -246,12 +260,13 @@ static func apply_scene(host: Node) -> void:
 	apply_audio()
 	if host == null:
 		return
-	var allow_shadow: bool = not low()
 	var lights: Array[Node] = host.find_children("", "DirectionalLight3D", true, false)
 	for node: Node in lights:
-		var light: DirectionalLight3D = node as DirectionalLight3D
-		if light != null:
-			light.shadow_enabled = allow_shadow
+		budget_shadow(node as DirectionalLight3D)
+	var view: Viewport = host.get_viewport()
+	if view != null:
+		view.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
+		view.scaling_3d_scale = render_scale()
 	var cam: RTSCamera = host.find_child("Camera", true, false) as RTSCamera
 	if cam == null:
 		return
@@ -261,12 +276,40 @@ static func apply_scene(host: Node) -> void:
 	cam.pan_speed = pan
 	cam.edge_pan_px = authored if edge else 0.0
 
+## Share of the window the 3D view renders at. The HUD always draws at full size.
+static func render_scale() -> float:
+	var q: String = effective()
+	if q == "low":
+		return 0.7
+	if q == "medium" and OS.has_feature("web"):
+		return 0.85
+	return 1.0
+
+## One sun casts shadows. High uses two splits, Medium one orthogonal map. Low and web Medium cast none.
+## Only units and buildings cast; scenery multimeshes already opt out.
+static func budget_shadow(light: DirectionalLight3D) -> void:
+	if light == null:
+		return
+	var q: String = effective()
+	var web: bool = OS.has_feature("web")
+	light.shadow_enabled = q == "high" or (q == "medium" and not web)
+	if not light.shadow_enabled:
+		return
+	light.shadow_blur = 1.0
+	if q == "high" and not web:
+		light.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
+		light.directional_shadow_max_distance = 90.0
+		light.directional_shadow_blend_splits = false
+	else:
+		light.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL
+		light.directional_shadow_max_distance = 70.0
+	RenderingServer.directional_shadow_atlas_set_size(2048 if q == "high" and not web else 1024, true)
+
 static func _read() -> void:
 	var cfg: ConfigFile = ConfigFile.new()
 	if cfg.load(PATH) != OK:
 		return
-	var stored: String = str(cfg.get_value("game", "graphics", "high"))
-	graphics = "low" if stored == "low" else "high"
+	graphics = _quality(str(cfg.get_value("game", "graphics", default_graphics())))
 	master = clampf(float(cfg.get_value("game", "master", 1.0)), 0.0, 1.0)
 	sfx = clampf(float(cfg.get_value("game", "sfx", 1.0)), 0.0, 1.0)
 	music = clampf(float(cfg.get_value("game", "music", 0.55)), 0.0, 1.0)

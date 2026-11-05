@@ -7,6 +7,7 @@ const Backdrop = preload("res://game/menu_backdrop.gd")
 const Glass = preload("res://game/glass.gd")
 
 var low_button: Button
+var medium_button: Button
 var high_button: Button
 var master_slider: HSlider
 var music_slider: HSlider
@@ -97,12 +98,16 @@ func _ready() -> void:
 	var quality: Label = _caption("QualityLabel", "Quality")
 	add_child(quality)
 	low_button = _choice("GraphicsLow", "Low")
+	medium_button = _choice("GraphicsMedium", "Medium")
 	high_button = _choice("GraphicsHigh", "High")
 	low_button.pressed.connect(_pick_graphics.bind("low"))
+	medium_button.pressed.connect(_pick_graphics.bind("medium"))
 	high_button.pressed.connect(_pick_graphics.bind("high"))
-	low_button.set_meta("blurb", "Low drops trees, rain, fog, and shadows.")
-	high_button.set_meta("blurb", "High keeps trees, rain, fog, and shadows.")
+	low_button.set_meta("blurb", "Low drops trees, rain, fog, and shadows, and renders the 3D view smaller.")
+	medium_button.set_meta("blurb", "Medium keeps trees, rain, and fog. One light shadow map on desktop, none in the browser.")
+	high_button.set_meta("blurb", "High keeps trees, rain, fog, and two-split shadows.")
 	add_child(low_button)
+	add_child(medium_button)
 	add_child(high_button)
 	master_readout = _caption("MasterLabel", "Master")
 	music_readout = _caption("MusicLabel", "Music")
@@ -192,6 +197,7 @@ func _ready() -> void:
 	blurb.add_theme_color_override("font_color", Color(1, 1, 1))
 	add_child(blurb)
 	_watch(low_button)
+	_watch(medium_button)
 	_watch(high_button)
 	_watch(master_slider)
 	_watch(music_slider)
@@ -247,7 +253,7 @@ func _show_page(page: String) -> void:
 
 func _tag_pages() -> void:
 	var groups: Dictionary = {
-		"video": ["SectionGraphics", "QualityLabel", "GraphicsLow", "GraphicsHigh"],
+		"video": ["SectionGraphics", "QualityLabel", "GraphicsLow", "GraphicsMedium", "GraphicsHigh"],
 		"audio": ["SectionAudio", "MasterLabel", "MasterVolume", "MasterValue", "MusicLabel", "MusicVolume", "MusicValue", "SfxLabel", "SfxVolume", "SfxValue", "VoiceLabel", "VoiceValue"],
 		"controls": ["SectionControls", "EdgePan", "PanLabel", "PanSpeed", "PanValue"],
 		"gameplay": ["SectionGameplay", "DifficultyLabel", "SettingsDiffEasy", "SettingsDiffNormal", "SettingsDiffHard"],
@@ -310,8 +316,10 @@ func _layout(view: Vector2) -> void:
 	var slider_w: float = maxf(72.0, value_x - slider_x - 8.0)
 	y = _place_section("SectionGraphics", content_x, y, content_w)
 	y = _place_row(get_node_or_null("QualityLabel"), content_x, y, label_w)
-	_place_value(low_button, slider_x, y - 44.0, 72.0)
-	_place_value(high_button, slider_x + 80.0, y - 44.0, 72.0)
+	var pick_w: float = clampf((value_x + value_w - slider_x - 16.0) / 3.0, 56.0, 76.0)
+	_place_value(low_button, slider_x, y - 44.0, pick_w)
+	_place_value(medium_button, slider_x + pick_w + 8.0, y - 44.0, pick_w)
+	_place_value(high_button, slider_x + (pick_w + 8.0) * 2.0, y - 44.0, pick_w)
 	y = _place_section("SectionAudio", content_x, y, content_w)
 	y = _place_slider(master_readout, master_slider, master_value, content_x, y, label_w, slider_x, slider_w, value_x)
 	y = _place_slider(music_readout, music_slider, music_value, content_x, y, label_w, slider_x, slider_w, value_x)
@@ -461,8 +469,9 @@ func _nudge(step: int) -> void:
 	if slider != null:
 		slider.value = clampf(slider.value + slider.step * float(step), slider.min_value, slider.max_value)
 		return
-	if owner == low_button or owner == high_button:
-		_pick_graphics("high" if step > 0 else "low")
+	if owner == low_button or owner == medium_button or owner == high_button:
+		var levels: PackedStringArray = Settings.quality_ids()
+		_pick_graphics(levels[clampi(levels.find(Settings.graphics) + step, 0, levels.size() - 1)])
 		return
 	if owner != null and str(owner.name).begins_with("SettingsDiff"):
 		var order: PackedStringArray = PackedStringArray(["easy", "normal", "hard"])
@@ -477,10 +486,10 @@ func _nudge(step: int) -> void:
 func pull() -> void:
 	_syncing = true
 	Settings.ensure()
-	low_button.disabled = Settings.graphics == "low"
-	high_button.disabled = Settings.graphics == "high"
-	low_button.add_theme_color_override("font_color", Color(1, 1, 1, 1 if Settings.graphics == "low" else 0.45))
-	high_button.add_theme_color_override("font_color", Color(1, 1, 1, 1 if Settings.graphics == "high" else 0.45))
+	for pick: Button in [low_button, medium_button, high_button]:
+		var level: String = String(pick.name).trim_prefix("Graphics").to_lower()
+		pick.disabled = Settings.graphics == level
+		pick.add_theme_color_override("font_color", Color(1, 1, 1, 1 if Settings.graphics == level else 0.45))
 	master_slider.value = Settings.master
 	music_slider.value = Settings.music
 	sfx_slider.value = Settings.sfx
