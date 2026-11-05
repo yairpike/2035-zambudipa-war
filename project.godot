@@ -10,6 +10,7 @@ config/features=PackedStringArray("4.7")
 
 SMTouch="*res://addons/rts_advanced/sm_touch.gd"
 SMWeb="*res://addons/rts_advanced/sm_web.gd"
+RenderBudget="*res://game/render_budget.gd"
 PerfProbe="*res://game/perf_probe.gd"
 
 [debug]
