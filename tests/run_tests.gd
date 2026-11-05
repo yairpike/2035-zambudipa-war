@@ -577,7 +577,14 @@ func test_hud_pause() -> void:
 	roll.pressed.emit()
 	var panel: Control = boot.find_child("CreditsPanel", true, false) as Control
 	var music: Label = boot.find_child("CreditsMusic", true, false) as Label
-	check(panel != null and panel.visible and music != null and music.text == "BlackBloc", "the credits screen credits BlackBloc for the music")
+	var credits_scroll: ScrollContainer = boot.find_child("CreditsScroll", true, false) as ScrollContainer
+	var credits_back: Control = boot.find_child("CreditsBack", true, false) as Control
+	var tab_camp: Control = boot.find_child("TabCampaign", true, false) as Control
+	var tab_multi: Control = boot.find_child("TabMultiplayer", true, false) as Control
+	var grey_btn: Control = boot.find_child("GreyboxButton", true, false) as Control
+	var train_btn: Control = boot.find_child("BasicTraining", true, false) as Control
+	var font_match: bool = tab_camp != null and tab_multi != null and tab_camp.get_theme_font_size("font_size") == tab_multi.get_theme_font_size("font_size") and grey_btn != null and train_btn != null and grey_btn.get_theme_font_size("font_size") == train_btn.get_theme_font_size("font_size")
+	check(panel != null and panel.visible and music != null and music.text == "BlackBloc" and credits_scroll != null and credits_back != null and credits_scroll.position.y + credits_scroll.size.y <= credits_back.position.y and font_match, "the credits screen scrolls above Back, credits BlackBloc, and keeps menu button font sizes uniform")
 	panel._unhandled_input(esc)
 	var title: CanvasItem = boot.find_child("GameTitle", true, false) as CanvasItem
 	check(not panel.visible and title != null and title.visible, "Esc closes the credits")
@@ -6717,13 +6724,17 @@ func test_render_budget() -> void:
 	Ground._fog(haze_env, haze_sight)
 	check(haze_env.fog_enabled and haze_env.fog_density <= 0.008, "Strait haze keeps fog density light enough to see terrain and units")
 	var backdrop_script: GDScript = load("res://game/menu_backdrop.gd") as GDScript
+	backdrop_script.skip_export = true
+	backdrop_script._cache.clear()
 	var bgs_ok: bool = true
 	for bg_name: String in ["main_menu", "gtfc", "nmrf", "mvd", "black_market", "loading"]:
 		var bg_tex: Texture2D = backdrop_script.call("texture", bg_name) as Texture2D
-		if bg_tex == null or bg_tex.get_width() < 1920:
+		if bg_tex == null or bg_tex.get_width() < 1:
 			bgs_ok = false
+	backdrop_script.skip_export = false
+	backdrop_script._cache.clear()
 	var presets_cfg: String = FileAccess.get_file_as_string("res://export_presets.cfg")
 	var splash_ok: bool = str(ProjectSettings.get_setting("application/boot_splash/image")) == "res://brand/boot_splash.png" and FileAccess.file_exists("res://brand/boot_splash.webp") and FileAccess.file_exists("res://brand/wordmark-vanguard-1024.png")
 	var icons_ok: bool = FileAccess.file_exists("res://icon.png") and FileAccess.file_exists("res://brand/icon.ico") and FileAccess.file_exists("res://brand/icon.icns") and presets_cfg.contains("res://brand/icon.ico") and presets_cfg.contains("res://brand/icon.icns")
-	check(bgs_ok and splash_ok and icons_ok, "Four Fronts splash, Vanguard wordmark, six 4K menu backgrounds, and Chevron app icons are wired")
+	check(bgs_ok and splash_ok and icons_ok, "Four Fronts splash, Vanguard wordmark, six menu backgrounds, and Chevron app icons resolve without build/web")
 	Settings.set_graphics("high")

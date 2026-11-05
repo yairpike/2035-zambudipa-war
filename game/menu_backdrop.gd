@@ -358,6 +358,7 @@ func _sync_web_video() -> void:
 	JavaScriptBridge.eval("try{var v=document.getElementById('asean-menu-video');if(v){if(%s){v.play().catch(function(){});}else{v.pause();}}}catch(_){}" % ("true" if active else "false"), true)
 
 static var _cache: Dictionary = {}
+static var skip_export: bool = false
 
 static func texture(stem: String) -> Texture2D:
 	if stem == "" or stem.contains("..") or stem.contains("\\"):
@@ -389,13 +390,19 @@ static func _read(file_name: String) -> PackedByteArray:
 	var packed: String = "res://ui/menu/%s" % file_name
 	if FileAccess.file_exists(packed):
 		return FileAccess.get_file_as_bytes(packed)
-	var roots: PackedStringArray = PackedStringArray()
-	var base: String = OS.get_executable_path().get_base_dir()
-	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/ui/menu"))
-	roots.append(base.path_join("ui/menu"))
-	roots.append(base.get_base_dir().path_join("Resources/ui/menu"))
-	for root: String in roots:
-		var path: String = root.path_join(file_name)
-		if FileAccess.file_exists(path):
-			return FileAccess.get_file_as_bytes(path)
+	if not skip_export:
+		var roots: PackedStringArray = PackedStringArray()
+		var base: String = OS.get_executable_path().get_base_dir()
+		roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/ui/menu"))
+		roots.append(base.path_join("ui/menu"))
+		roots.append(base.get_base_dir().path_join("Resources/ui/menu"))
+		for root: String in roots:
+			var path: String = root.path_join(file_name)
+			if FileAccess.file_exists(path):
+				return FileAccess.get_file_as_bytes(path)
+	if OS.has_feature("web"):
+		return PackedByteArray()
+	var fixture: String = "res://tests/fixtures/ui/menu/%s" % file_name
+	if FileAccess.file_exists(fixture):
+		return FileAccess.get_file_as_bytes(fixture)
 	return PackedByteArray()

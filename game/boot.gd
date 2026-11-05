@@ -152,7 +152,7 @@ func _ready() -> void:
 	multi.text = "MULTIPLAYER"
 	multi.theme_type_variation = "HeaderButton"
 	multi.set_meta("nav", true)
-	multi.add_theme_font_size_override("font_size", 22)
+	multi.add_theme_font_size_override("font_size", 32)
 	multi.pressed.connect(_show_tab.bind("multi"))
 	add_child(multi)
 	tab_buttons.append(multi)
@@ -678,6 +678,7 @@ func _skirmish() -> void:
 	grey.name = "GreyboxButton"
 	grey.text = "Sandbox"
 	grey.custom_minimum_size = Vector2(180, 44)
+	grey.add_theme_font_size_override("font_size", 22)
 	grey.tooltip_text = "Practice map."
 	grey.pressed.connect(_open.bind("res://game/greybox.tscn"))
 	skirmish_panel.add_child(grey)
@@ -689,8 +690,8 @@ func _skirmish() -> void:
 	var train: Button = Plate.new() as Button
 	train.name = "BasicTraining"
 	train.text = "Basic training"
-	train.custom_minimum_size = Vector2(200, 44)
-	train.add_theme_font_size_override("font_size", 16)
+	train.custom_minimum_size = Vector2(220, 44)
+	train.add_theme_font_size_override("font_size", 22)
 	train.pressed.connect(_basic_training)
 	skirmish_panel.add_child(train)
 	play_button = Plate.new() as Button
@@ -1572,7 +1573,7 @@ func _layout_menu(size: Vector2) -> void:
 	if chip != null:
 		chip.position = Vector2(size.x - 360.0, chip_y)
 		chip.size = Vector2(340.0, 34.0 if portrait else 40.0)
-	var plate_w: float = rail_w - (48.0 if narrow else 120.0)
+	var plate_w: float = rail_w - (48.0 if narrow else 104.0)
 	var y: float = 120.0 if narrow else 180.0
 	var row_h: float = 48.0
 	y = _seat(find_child("TabCampaign", true, false) as Control, left, y, plate_w, row_h)
@@ -2122,13 +2123,15 @@ func _place_skirmish(panel_w: float, panel_h: float) -> void:
 	var grey: Control = find_child("GreyboxButton", true, false) as Control
 	if grey != null:
 		grey.position = Vector2(foot_x, after + 184.0 if narrow else foot + 6.0)
-		grey.size = Vector2(150.0, 40.0)
+		grey.size = Vector2(168.0, 44.0)
+		grey.custom_minimum_size = Vector2(168.0, 44.0)
 	var train: Control = find_child("BasicTraining", true, false) as Control
 	if train != null:
-		var train_x: float = foot_x + 162.0
+		var train_x: float = foot_x + 180.0
 		var train_y: float = after + 184.0 if narrow else foot + 6.0
 		train.position = Vector2(train_x, train_y)
-		train.size = Vector2(180.0, 40.0)
+		train.size = Vector2(228.0, 44.0)
+		train.custom_minimum_size = Vector2(228.0, 44.0)
 	_hide_old_difficulty()
 
 ## Landscape phones: maps in a two-wide grid on the left, choices and Play on the right.
