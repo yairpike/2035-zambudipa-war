@@ -604,7 +604,8 @@ static func _paint(root: Node3D, primary: Color, accent: Color, id: String) -> v
 	_paint_node(root, primary, accent, _tripo_id(id))
 
 static func _paint_node(node: Node, primary: Color, accent: Color, textured_wash: bool) -> void:
-	if str(node.name) == "Wake" or str(node.name) == "ContactShadow":
+	var n: String = str(node.name)
+	if n == "Wake" or n == "BowSpray" or n == "ContactShadow" or n == "Wheels":
 		return
 	var mesh_node: MeshInstance3D = node as MeshInstance3D
 	if mesh_node != null and mesh_node.mesh != null:
@@ -697,6 +698,7 @@ static func _mount(body: MeshInstance3D, scene: Node3D, footprint: AABB, fill: b
 	body.mesh = null
 	body.material_override = null
 	body.set_meta("model", scene.name)
+	body.set_meta("hull_parts_ready", false)
 	body.visible = true
 	body.set_meta("standin_held", false)
 
@@ -789,7 +791,9 @@ static func _to_root(root: Node3D, mesh_node: Node3D) -> Transform3D:
 static func _under_wake(mesh_node: Node, root: Node) -> bool:
 	var node: Node = mesh_node
 	while node != null and node != root:
-		if str(node.name) == "Wake":
+		var n: String = str(node.name)
+		if n == "Wake" or n == "BowSpray" or n == "ContactShadow" or n == "Wheels":
 			return true
 		node = node.get_parent()
-	return str(root.name) == "Wake"
+	var rn: String = str(root.name)
+	return rn == "Wake" or rn == "BowSpray" or rn == "ContactShadow" or rn == "Wheels"

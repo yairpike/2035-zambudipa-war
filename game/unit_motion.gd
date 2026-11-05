@@ -447,55 +447,121 @@ static func _carries_shield(body: Node3D, side: String) -> bool:
 
 static func _hull(u: RTSUnit, body: MeshInstance3D, delta: float) -> void:
 	var form: String = str(body.get_meta("form", ""))
+	var kind_id: String = str(body.get_meta("unit_kind", u.unit_type))
+	var role_id: String = str(body.get_meta("unit_role", u.get_meta("role", "")))
+	var loco_id: String = str(u.get_meta("locomotion", body.get_meta("unit_loco", "ground")))
+	var forms_script: GDScript = load("res://game/unit_meshes.gd") as GDScript
+	if not bool(body.get_meta("hull_parts_ready", false)):
+		forms_script.call("ensure_hull_parts", body, kind_id, form, role_id, loco_id, body.get_meta("trim_ink", Color.WHITE))
 	var t: float = float(body.get_meta("anim_t", 0.0))
 	var moving: bool = u.is_moving()
+	var was_moving: bool = bool(body.get_meta("anim_was_moving", false))
+	body.set_meta("anim_was_moving", moving)
+	var accel: float = float(body.get_meta("anim_accel", 0.0))
+	if moving and not was_moving:
+		accel = 1.0
+	elif moving:
+		accel = move_toward(accel, 0.35, delta * 1.6)
+	else:
+		accel = move_toward(accel, 0.0, delta * 3.0)
+	body.set_meta("anim_accel", accel)
 	var heading: float = float(body.get_meta("anim_heading", u.rotation.y))
-	var turret: Node3D = body.get_node_or_null("Turret") as Node3D
-	if turret != null:
-		var want: float = 0.0
-		var foe: RTSUnit = u.attack_target
-		if foe != null and is_instance_valid(foe) and foe.is_alive():
-			want = wrapf(yaw_to(u.global_position, foe.global_position) - heading, -PI, PI)
-		turret.rotation.y = rotate_toward(turret.rotation.y, want, TURRET_RATE * delta)
+	var wheels: Node3D = body.get_node_or_null("Wheels") as Node3D
+	if wheels != null:
+		var spin: float = float(body.get_meta("anim_wheel_spin", 0.0))
+		if moving:
+			spin += (u.speed * u.speed_scale * delta) / 0.28
+			body.set_meta("anim_wheel_spin", spin)
+		for idx: int in wheels.get_child_count():
+			var w: Node3D = wheels.get_child(idx) as Node3D
+			if w == null:
+				continue
+			var r: float = float(w.get_meta("wheel_r", 0.28))
+			var rest_y: float = float(w.get_meta("rest_y", r))
+			w.rotation.x = -spin * (0.28 / maxf(r, 0.1))
+			var bounce: float = sin(spin * 1.8 + float(idx) * 1.1) * 0.016 if moving else 0.0
+			w.position.y = lerpf(w.position.y, rest_y + bounce, minf(1.0, delta * 14.0))
 	var kick: float = float(body.get_meta("anim_kick", 0.0))
 	kick = move_toward(kick, 0.0, delta * 5.0)
 	body.set_meta("anim_kick", kick)
-	var barrel: Node3D = turret.get_node_or_null("Barrel") as Node3D if turret != null else null
 	var braced: bool = form == "tube" and float(body.get_meta("anim_still", 0.0)) >= BRACE_AFTER
+	var turret: Node3D = body.get_node_or_null("Turret") as Node3D
+	var target_elev: float = 0.0
+	if turret != null:
+		if not turret.has_meta("anim_rest_pitch"):
+			turret.set_meta("anim_rest_pitch", turret.rotation.x)
+		var want: float = 0.0
+		var foe: RTSUnit = u.attack_target
+		if foe != null and is_instance_valid(foe) and foe.is_alive():
+			var u_pos: Vector3 = u.global_position if u.is_inside_tree() else u.position
+			var f_pos: Vector3 = foe.global_position if foe.is_inside_tree() else foe.position
+			want = wrapf(yaw_to(u_pos, f_pos) - heading, -PI, PI)
+			var dx: float = f_pos.x - u_pos.x
+			var dz: float = f_pos.z - u_pos.z
+			var flat_d: float = maxf(sqrt(dx * dx + dz * dz), 0.5)
+			var foe_air: bool = str(foe.get_meta("locomotion", "")) == "air" or str(foe.get_meta("role", "")) == "air" or str(foe.get_meta("role", "")) == "drone"
+			var dy: float = (f_pos.y + (1.8 if foe_air else 0.0)) - u_pos.y
+			target_elev = clampf(atan2(dy, flat_d), -0.35, 0.55)
+			if form == "tube":
+				target_elev += 0.22 + (0.10 if braced else 0.0)
+			elif absf(target_elev) < 0.04:
+				target_elev = 0.06
+		turret.rotation.y = rotate_toward(turret.rotation.y, want, TURRET_RATE * delta)
+		var turret_rest_pitch: float = float(turret.get_meta("anim_rest_pitch", 0.0))
+		var want_turret_pitch: float = turret_rest_pitch + target_elev * 0.6 + _ease_kick(kick) * 0.08
+		turret.rotation.x = lerpf(turret.rotation.x, want_turret_pitch, minf(1.0, delta * 8.0))
+	var barrel: Node3D = turret.get_node_or_null("Barrel") as Node3D if turret != null else null
 	if barrel != null:
 		if not barrel.has_meta("anim_rest"):
 			barrel.set_meta("anim_rest", barrel.position)
 			barrel.set_meta("anim_rest_pitch", barrel.rotation.x)
 		var rest: Vector3 = barrel.get_meta("anim_rest")
 		barrel.position = rest + barrel.basis.z.normalized() * _ease_kick(kick) * 0.45
-		var elevate: float = 0.32 if braced and engaged(u) else 0.0
-		barrel.rotation.x = lerpf(barrel.rotation.x, float(barrel.get_meta("anim_rest_pitch", 0.0)) + elevate, minf(1.0, delta * 3.0))
+		var elevate: float = target_elev + (0.12 if braced and engaged(u) else 0.0) + _ease_kick(kick) * 0.1
+		barrel.rotation.x = lerpf(barrel.rotation.x, float(barrel.get_meta("anim_rest_pitch", 0.0)) + elevate, minf(1.0, delta * 6.0))
 	var yaw_was: float = float(body.get_meta("anim_yaw", heading))
 	var turn_rate: float = wrapf(heading - yaw_was, -PI, PI) / maxf(delta, 0.0001)
+	var turn_err: float = wrapf(u.rotation.y - heading, -PI, PI)
 	body.set_meta("anim_yaw", heading)
+	var rotor: Node3D = body.get_node_or_null("Rotor") as Node3D
+	if rotor != null:
+		rotor.rotate_y(delta * (30.0 if moving else 22.0))
+	var wake: MeshInstance3D = body.get_node_or_null("Wake") as MeshInstance3D
+	if wake != null:
+		wake.visible = moving
+		if moving:
+			wake.scale = Vector3.ONE * (0.92 + 0.12 * sin(t * 9.0))
+	var spray: MeshInstance3D = body.get_node_or_null("BowSpray") as MeshInstance3D
+	if spray != null:
+		spray.visible = moving
+		if moving:
+			spray.scale = Vector3.ONE * (0.88 + 0.14 * cos(t * 11.0))
 	var lift: float = 0.0
 	var pitch: float = 0.0
 	var roll: float = 0.0
-	var airborne: bool = form == "heli" or form == "jet" or form == "airship" or str(u.get_meta("locomotion", "")) == "air"
+	var recoil_z: float = 0.0
+	var airborne: bool = bool(forms_script.call("is_air_unit", kind_id, role_id, loco_id, form))
+	var boat_hull: bool = not airborne and bool(forms_script.call("is_boat_unit", kind_id, role_id, loco_id, form))
 	if airborne:
 		var base: float = 0.0 if form == "heli" or form == "jet" or form == "airship" else 1.8
-		lift = base + sin(t * 1.9) * 0.12
-		pitch = -0.14 if moving else 0.0
-		roll = clampf(-turn_rate * 0.25, -0.5, 0.5)
-		var rotor: Node3D = body.get_node_or_null("Rotor") as Node3D
-		if rotor != null:
-			rotor.rotate_y(delta * 22.0)
-	elif (form == "boat" or form == "sub") and str(u.get_meta("locomotion", "")) != "ground":
-		lift = sin(t * 1.6) * 0.05
-		pitch = (-0.05 if moving else 0.0) + sin(t * 1.1) * 0.02
-		roll = sin(t * 1.3) * 0.04 + clampf(-turn_rate * 0.08, -0.15, 0.15)
+		lift = base + sin(t * 2.2) * 0.14 + cos(t * 3.7) * 0.03
+		pitch = (-0.16 - accel * 0.08 if moving else sin(t * 1.5) * 0.025) + _ease_kick(kick) * 0.16
+		roll = clampf(-turn_rate * 0.28 - turn_err * 0.45, -0.58, 0.58) + (sin(t * 2.4) * 0.04 if moving else sin(t * 1.4) * 0.02)
+		recoil_z = _ease_kick(kick) * 0.14
+	elif boat_hull and loco_id != "ground" and not bool(u.get_meta("legs", false)):
+		lift = sin(t * 1.8) * 0.06 + (0.04 if moving else 0.0)
+		pitch = (0.07 + accel * 0.05 if moving else 0.0) + sin(t * 1.4) * 0.035 + _ease_kick(kick) * 0.08
+		roll = sin(t * 1.3 + 0.5) * 0.05 + clampf(-turn_rate * 0.14 - turn_err * 0.25, -0.22, 0.22)
+		recoil_z = _ease_kick(kick) * 0.14
 		if form == "sub" and not moving and not engaged(u):
 			lift -= 0.35
-	elif form == "tank" or form == "tube" or form == "truck" or form == "hero" or form == "boat":
+	else:
 		if moving:
-			lift = absf(sin(t * 15.0)) * 0.025
-			pitch = sin(t * 7.0) * 0.008 - 0.012
-		pitch += _ease_kick(kick) * 0.05
+			lift = absf(sin(t * 15.0)) * 0.028
+			pitch = sin(t * 7.0) * 0.01 - 0.012 + accel * 0.04
+			roll = clampf(-turn_rate * 0.06 - turn_err * 0.1, -0.08, 0.08)
+		pitch += _ease_kick(kick) * 0.09
+		recoil_z = _ease_kick(kick) * 0.18
 		if braced:
 			lift -= 0.06
 		if form == "boat":
@@ -518,11 +584,11 @@ static func _hull(u: RTSUnit, body: MeshInstance3D, delta: float) -> void:
 		else:
 			lift += arc * 0.15
 	else:
-		body.position.z = lerpf(body.position.z, 0.0, minf(1.0, delta * 6.0))
+		body.position.z = lerpf(body.position.z, recoil_z, minf(1.0, delta * (14.0 if kick > 0.1 else 6.0)))
 		_dome(body, 0.0)
 	body.position.y = lerpf(body.position.y, lift, minf(1.0, delta * 10.0))
-	body.rotation.x = lerpf(body.rotation.x, pitch, minf(1.0, delta * 6.0))
-	body.rotation.z = lerpf(body.rotation.z, roll, minf(1.0, delta * 4.0))
+	body.rotation.x = lerpf(body.rotation.x, pitch, minf(1.0, delta * 8.0))
+	body.rotation.z = lerpf(body.rotation.z, roll, minf(1.0, delta * 5.0))
 
 ## A translucent shield bubble for riot shields, hydro-shields and domes.
 static func _dome(body: MeshInstance3D, amount: float) -> void:

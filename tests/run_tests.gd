@@ -17,6 +17,7 @@ const WorldView = preload("res://game/world_view.gd")
 const Ground = preload("res://game/ground_view.gd")
 const Catalog = preload("res://game/model_catalog.gd")
 const Debris = preload("res://game/building_debris.gd")
+const Scale = preload("res://game/model_scale.gd")
 var H: Harness
 var duel_note: String = ""
 
@@ -375,9 +376,7 @@ func _lots_squared(plan: SMMapPlan, grid: SMDomainGrid) -> bool:
 	return true
 
 func test_model_scale() -> void:
-	const Forms = preload("res://game/unit_meshes.gd")
 	const Models = preload("res://game/model_registry.gd")
-	const Scale = preload("res://game/model_scale.gd")
 	const Env = preload("res://game/env_dress.gd")
 	var chart: Dictionary = SMBasePlan.chart()
 	check(not chart.is_empty() and float(chart.get("cell_m", 0.0)) == 4.0, "the scale chart loads with 4 m cells")
@@ -5952,6 +5951,7 @@ func test_unit_motion() -> void:
 	var calm: PackedFloat32Array = _motion_duel(false)
 	var shown: PackedFloat32Array = _motion_duel(true)
 	check(calm == shown, "the same duel ends identically with and without unit motion")
+	_check_non_infantry_motion(stage, foe)
 	var mi: MeshInstance3D = WorldView.slab(stage, "Built_barracks", Vector3(20, 2.3, 0), Vector3(2.2, 4.6, 2.2), Color.RED)
 	var fx: Node = mi.get_node_or_null("BuildingFx")
 	check(fx != null and mi.position.y < 2.3 - 0.5, "a new structure starts below ground for its rise")
@@ -5980,6 +5980,90 @@ func test_unit_motion() -> void:
 	var ruin: Node3D = stage.get_node_or_null("Ruin_Built_barracks") as Node3D
 	check(ruin != null and ruin.visible and not mi.visible, "hiding a structure leaves a collapsing ruin in its place")
 	stage.queue_free()
+
+func _check_non_infantry_motion(stage: Node3D, foe: RTSUnit) -> void:
+	var veh_count: int = 0
+	var air_count: int = 0
+	var boat_count: int = 0
+	var veh_bad: PackedStringArray = PackedStringArray()
+	var air_bad: PackedStringArray = PackedStringArray()
+	var boat_bad: PackedStringArray = PackedStringArray()
+	for fac: String in ["gtfc", "nmrf", "mvd", "black_market"]:
+		var data: Dictionary = SMCatalog.faction(fac)
+		for unit: Dictionary in SMCatalog.units_of(data):
+			var uid: String = str(unit.get("id", ""))
+			var role: String = str(unit.get("role", ""))
+			var loco: String = str(unit.get("locomotion", "ground"))
+			var cls: String = Scale.unit_class(uid)
+			if cls == "infantry" or cls == "hero" or cls == "dog" or cls == "walker" or cls == "mobile_yard":
+				continue
+			var u: RTSUnit = RTSUnit.new()
+			u.unit_type = StringName(uid)
+			u.team = 0
+			u.speed = 6.0
+			u.attack_range = 30.0
+			stage.add_child(u)
+			u.position = Vector3.ZERO
+			u.set_meta("role", role)
+			u.set_meta("locomotion", loco)
+			var body: MeshInstance3D = Forms.dress_unit(uid, role, loco, Color.RED, Color.RED, Color.YELLOW, fac)
+			u.add_child(body)
+			Motion.attach(u, body)
+			var form: String = str(body.get_meta("form", ""))
+			u.set_path(PackedVector3Array([Vector3(12.0, 0.0, -12.0)]))
+			for step: int in 10:
+				u.advance(1.0 / 30.0)
+				Forms.animate(u, 1.0 / 30.0)
+			if Forms.is_vehicle_unit(uid, role, form):
+				veh_count += 1
+				var wheels: Node3D = body.get_node_or_null("Wheels") as Node3D
+				var turret: Node3D = body.get_node_or_null("Turret") as Node3D
+				var barrel: Node3D = turret.get_node_or_null("Barrel") as Node3D if turret != null else null
+				var w0: Node3D = wheels.get_child(0) as Node3D if wheels != null and wheels.get_child_count() > 0 else null
+				var spun: bool = w0 != null and absf(w0.rotation.x) > 0.1
+				u.attack_target = foe
+				for step2: int in 15:
+					Forms.animate(u, 1.0 / 30.0)
+				var aimed: bool = turret != null and absf(turret.rotation.y) > 0.05 and absf(turret.rotation.x) > 0.01
+				Motion.on_fired(u, foe)
+				Forms.animate(u, 1.0 / 30.0)
+				var recoiled: bool = barrel != null and absf(body.rotation.x) > 0.001 and float(body.get_meta("anim_kick", 0.0)) > 0.5
+				if not (spun and aimed and recoiled):
+					veh_bad.append(uid)
+			elif Forms.is_air_unit(uid, role, loco, form):
+				air_count += 1
+				var rotor: Node3D = body.get_node_or_null("Rotor") as Node3D
+				var spun_r: bool = rotor != null and absf(rotor.rotation.y) > 0.2
+				var pitched: bool = absf(body.rotation.x) > 0.01 and absf(body.position.y) > 0.001
+				u.set_path(PackedVector3Array([Vector3(-20.0, 0.0, 5.0)]))
+				u.advance(1.0 / 30.0)
+				Forms.animate(u, 1.0 / 30.0)
+				var banked: bool = absf(body.rotation.z) > 0.01
+				Motion.on_fired(u, foe)
+				Forms.animate(u, 1.0 / 30.0)
+				var fire_pitch: bool = float(body.get_meta("anim_kick", 0.0)) > 0.5
+				if not (spun_r and pitched and banked and fire_pitch):
+					air_bad.append(uid)
+			elif Forms.is_boat_unit(uid, role, loco, form):
+				boat_count += 1
+				var wake: MeshInstance3D = body.get_node_or_null("Wake") as MeshInstance3D
+				var spray: MeshInstance3D = body.get_node_or_null("BowSpray") as MeshInstance3D
+				var turret: Node3D = body.get_node_or_null("Turret") as Node3D
+				var moving_foam: bool = wake != null and wake.visible and spray != null and spray.visible
+				var water_pose: bool = absf(body.rotation.x) > 0.005 or absf(body.rotation.z) > 0.005
+				u.attack_target = foe
+				for step3: int in 15:
+					Forms.animate(u, 1.0 / 30.0)
+				var aimed_b: bool = turret != null and absf(turret.rotation.y) > 0.05
+				u.stop()
+				Forms.animate(u, 1.0 / 30.0)
+				var stopped_foam: bool = wake != null and not wake.visible and spray != null and not spray.visible
+				if not (moving_foam and water_pose and aimed_b and stopped_foam):
+					boat_bad.append(uid)
+			u.free()
+	check(veh_count >= 14 and veh_bad.is_empty(), "every vehicle rolls its wheels, aims its turret in yaw and pitch, and recoils on fire (%d) %s" % [veh_count, veh_bad])
+	check(air_count >= 19 and air_bad.is_empty(), "every aircraft and drone spins its rotor, bobs, banks into turns, and pitches on acceleration and fire (%d) %s" % [air_count, air_bad])
+	check(boat_count >= 9 and boat_bad.is_empty(), "every boat pitches and rolls on water, shows wake and bow spray while moving, and aims its turret (%d) %s" % [boat_count, boat_bad])
 
 const FACING_STATIC: PackedStringArray = ["amber_tank", "cyan_ifv", "channel_skiff", "cyan_gunship", "hub_drone", "sampan"]
 const COMPASS: PackedStringArray = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]

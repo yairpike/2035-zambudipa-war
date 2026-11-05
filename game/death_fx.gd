@@ -42,6 +42,10 @@ func begin(p_body: Node3D, p_player: AnimationPlayer) -> void:
 	FX.fire(self, Vector3(0, size * 0.3, 0), clampf(size * 0.3, 0.5, 1.6))
 	FX.smoke(self, Vector3(0, size * 0.45, 0), clampf(size * 0.35, 0.6, 2.0))
 	FX.coat(body, FX.char_coat(0.62))
+	for foam_name: String in ["Wake", "BowSpray"]:
+		var foam_node: Node3D = body.get_node_or_null(foam_name) as Node3D
+		if foam_node != null:
+			foam_node.visible = false
 	turret = body.get_node_or_null("Turret") as Node3D
 	if turret != null:
 		turret_vel = Vector3(r.randf_range(-1.0, 1.0), r.randf_range(4.5, 6.5), r.randf_range(-1.0, 1.0))

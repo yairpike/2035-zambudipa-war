@@ -185,7 +185,7 @@ static func char_coat(strength: float) -> StandardMaterial3D:
 	return mat
 
 static func coat(node: Node, mat: Material) -> void:
-	if node.name == "ContactShadow" or node.name == "Wake" or node is CPUParticles3D:
+	if node.name == "ContactShadow" or node.name == "Wake" or node.name == "BowSpray" or node is CPUParticles3D:
 		return
 	var mesh_node: GeometryInstance3D = node as GeometryInstance3D
 	if mesh_node != null:
