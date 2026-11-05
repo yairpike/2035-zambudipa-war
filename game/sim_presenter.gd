@@ -297,9 +297,9 @@ static func _on_chrome(outcome: SMOutcome, panel: Control, faction: String) -> v
 	back.anchor_right = 0.0
 	back.anchor_bottom = 0.5
 	back.offset_left = 64.0
-	back.offset_top = 48.0
+	back.offset_top = 56.0
 	back.offset_right = 360.0
-	back.offset_bottom = 100.0
+	back.offset_bottom = 108.0
 	back.custom_minimum_size = Vector2(320, 52)
 	back.pressed.connect(_boot.bind(outcome))
 	panel.add_child(back)
@@ -311,6 +311,7 @@ static func _on_chrome(outcome: SMOutcome, panel: Control, faction: String) -> v
 			boot_chip.visible = false
 
 static func _boot(outcome: SMOutcome) -> void:
+	preload("res://game/boot.gd").mark_training_seen()
 	preload("res://game/lan_link.gd").close()
 	if outcome == null or outcome.host == null:
 		return

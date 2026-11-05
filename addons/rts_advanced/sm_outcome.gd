@@ -10,6 +10,7 @@ var victory: bool = false
 var host: Node
 var panel: Control
 var banner: Label
+var reason: Label
 var back: Button
 var _cool: Dictionary[int, float] = {}
 
@@ -46,6 +47,22 @@ func mount(p_host: Node, layer: CanvasLayer) -> void:
 	banner.add_theme_font_size_override("font_size", 48)
 	banner.add_theme_color_override("font_color", Color(1, 1, 1))
 	panel.add_child(banner)
+	reason = Label.new()
+	reason.name = "MatchReason"
+	reason.visible = false
+	reason.anchor_left = 0.0
+	reason.anchor_top = 0.5
+	reason.anchor_right = 1.0
+	reason.anchor_bottom = 0.5
+	reason.offset_left = 64.0
+	reason.offset_right = -64.0
+	reason.offset_top = 12.0
+	reason.offset_bottom = 44.0
+	reason.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	reason.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	reason.add_theme_font_size_override("font_size", 22)
+	reason.add_theme_color_override("font_color", Color(0.96, 0.94, 0.88))
+	panel.add_child(reason)
 	chrome_wanted.emit(self, panel, faction)
 
 func consider(player_units: int, player_buildings: int, enemy_units: int, enemy_buildings: int) -> void:
@@ -162,10 +179,10 @@ func _hide(id: StringName) -> void:
 		built.set_meta("destroyed", true)
 		(built as Node3D).visible = false
 
-func finish(win: bool) -> void:
-	_finish(win)
+func finish(win: bool, note: String = "") -> void:
+	_finish(win, note)
 
-func _finish(win: bool) -> void:
+func _finish(win: bool, note: String = "") -> void:
 	if over:
 		return
 	over = true
@@ -181,6 +198,9 @@ func _finish(win: bool) -> void:
 	if banner != null:
 		banner.text = "Victory" if win else "Defeat"
 		banner.add_theme_color_override("font_color", Color(1, 1, 1))
+	if reason != null:
+		reason.text = note
+		reason.visible = note != ""
 	var status: Label = null
 	if host != null:
 		status = host.find_child("Status", true, false) as Label

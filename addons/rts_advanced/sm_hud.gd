@@ -837,6 +837,7 @@ func _guide(layer: CanvasLayer) -> void:
 	var help: Button = Button.new()
 	help.name = "HelpButton"
 	help.text = "How to play (H)"
+	help.visible = not use_tiles
 	help.clip_text = true
 	help.custom_minimum_size = Vector2(168, 44)
 	help.z_index = 9
@@ -1711,6 +1712,10 @@ func _leave_phone() -> void:
 	mission_panel = null
 	rotate_banner = null
 	phone = false
+	if use_tiles:
+		var help_btn: CanvasItem = _phone_node("HelpButton")
+		if help_btn != null:
+			help_btn.visible = false
 	if use_tiles and icon_grid != null:
 		icon_grid.columns = 3
 	var supers: CanvasItem = _phone_node("SuperDock")

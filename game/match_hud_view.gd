@@ -25,6 +25,7 @@ static func install(layer: CanvasLayer, hud: SMHud, grid: SMDomainGrid, camera: 
 	root._bind(hud, grid, camera)
 
 func _bind(hud: SMHud, grid: SMDomainGrid, camera: RTSCamera) -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	hud.use_tiles = true
 	_skin = Look.id_for(self, _mark_id(hud))
 	_selection_row()
@@ -135,6 +136,8 @@ func _match_host() -> Node:
 	return layer.get_parent() if layer != null else null
 
 func paint(hud: SMHud) -> void:
+	_seat_chrome()
+	_glass_overlays()
 	_paint_power(hud)
 	_paint_monitor(hud)
 	_paint_modes(hud)
@@ -1359,7 +1362,7 @@ func _seat_objective() -> void:
 			mark.add_theme_font_override("font", face)
 		layer.add_child(mark)
 	var height: float = 120.0 if _goals_open else 28.0
-	_anchor(shade, 0.0, 0.0, 0.0, 0.0, 72.0, 36.0, 432.0, 36.0 + height)
+	_anchor(shade, 0.0, 0.0, 0.0, 0.0, 72.0, 36.0, 384.0, 36.0 + height)
 	_anchor(mark, 0.0, 0.0, 0.0, 0.0, 78.0, 38.0, 98.0, 62.0)
 	status.z_index = 7
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART if _goals_open else TextServer.AUTOWRAP_OFF
@@ -1369,7 +1372,7 @@ func _seat_objective() -> void:
 	status.custom_minimum_size = Vector2(0, 22)
 	status.add_theme_font_size_override("font_size", 15)
 	status.add_theme_color_override("font_color", Color(1, 1, 1, 0.92))
-	_anchor(status, 0.0, 0.0, 0.0, 0.0, 100.0, 38.0, 424.0, 36.0 + height)
+	_anchor(status, 0.0, 0.0, 0.0, 0.0, 100.0, 38.0, 376.0, 36.0 + height)
 
 func _seat_flyout() -> void:
 	var layer: Node = get_parent()

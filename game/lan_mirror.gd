@@ -39,6 +39,7 @@ var _fog: PackedByteArray = PackedByteArray()
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	preload("res://game/boot.gd").mark_training_seen()
 	preload("res://game/sim_presenter.gd").follow(self)
 	var seat: Seat = Lan.seat()
 	var guest_fac: String = seat.guest_faction if seat.guest_faction != "" else SMFront.current()
@@ -309,12 +310,12 @@ func _process(delta: float) -> void:
 	hud.refresh()
 	if seat.winner == "guest":
 		if not outcome.over:
-			outcome.finish(true)
+			outcome.finish(true, "The other player left the match.")
 		_status.text = "The other player left the match. Opponent left. Victory."
 		hud.show_line("The other player left the match.")
 	elif seat.winner == "host":
 		if not outcome.over:
-			outcome.finish(false)
+			outcome.finish(false, "The other player left the match.")
 		_status.text = "The other player left the match. Opponent left. Defeat."
 		hud.show_line("The other player left the match.")
 	elif seat.paused:

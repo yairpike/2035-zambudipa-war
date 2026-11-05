@@ -383,6 +383,7 @@ func _restart() -> void:
 
 func _to_boot() -> void:
 	_resume()
+	preload("res://game/boot.gd").mark_training_seen()
 	Lan.close()
 	var tree: SceneTree = get_tree()
 	if tree == null:

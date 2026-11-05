@@ -43,6 +43,7 @@ func _ready() -> void:
 	name = "SettingsPanel"
 	visible = false
 	z_index = 30
+	visibility_changed.connect(_on_visibility)
 	set_process_unhandled_input(true)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -492,6 +493,18 @@ func _nudge(step: int) -> void:
 		_cycle_voice(step)
 	elif owner == language_value:
 		_cycle_language(step)
+
+func _on_visibility() -> void:
+	if not visible:
+		return
+	var host: Node = get_parent()
+	if host == null:
+		return
+	var offer: CanvasItem = host.get_node_or_null("TrainingOffer") as CanvasItem
+	if offer != null:
+		offer.visible = false
+	if not embedded and host.has_method("_hide_menu_chrome"):
+		host.call("_hide_menu_chrome")
 
 func pull() -> void:
 	_syncing = true

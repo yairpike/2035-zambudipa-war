@@ -3611,10 +3611,15 @@ func test_lan_match() -> void:
 	if mirror_hud != null:
 		mirror_hud.refresh()
 	var mirror_cameo: TextureRect = mirror.find_child("CardCameo", true, false) as TextureRect
+	var mirror_help: Control = mirror.find_child("HelpButton", true, false) as Control
+	var mirror_shade: Control = mirror.find_child("ObjectiveShade", true, false) as Control
+	var mirror_strip: Control = mirror.find_child("MatchStrip", true, false) as Control
+	var strip_hit: Rect2 = mirror_shade.get_global_rect().intersection(mirror_strip.get_global_rect()) if mirror_shade != null and mirror_strip != null else Rect2()
 	Lan.seat().ingest(JSON.stringify({"k": "bye"}))
 	mirror.call("_process", 0.05)
 	var mirror_status: Label = mirror.find_child("Status", true, false) as Label
-	check(mirror_cameo != null and mirror_cameo.visible and mirror_cameo.texture != null and mirror_status != null and mirror_status.text.contains("The other player left the match"), "the guest selection card shows a unit cameo and host departure notifies the guest")
+	var mirror_reason: Label = mirror.find_child("MatchReason", true, false) as Label
+	check(mirror_cameo != null and mirror_cameo.visible and mirror_cameo.texture != null and (mirror_help == null or not mirror_help.visible) and (strip_hit.size.x < 1.0 or strip_hit.size.y < 1.0) and mirror_status != null and mirror_status.text.contains("The other player left the match") and mirror_reason != null and mirror_reason.is_visible_in_tree() and mirror_reason.text == "The other player left the match.", "the guest HUD keeps the status line clear of the help tip, shows a unit cameo, and displays the departure reason on the Victory screen")
 	mirror.free()
 	await process_frame
 	Lan.seat().paused = true
@@ -6601,13 +6606,29 @@ func test_game_language() -> void:
 	check(Settings.language == "burmese" and row != null and row.text == "မြန်မာ" and burmese_lines * 2 > burmese_texts.size(), "the Language row switches the open menu to Burmese (%d of %d lines)" % [burmese_lines, burmese_texts.size()])
 	boot.call("_show_tab", "skirmish")
 	await process_frame
+	var top_card: Control = boot.find_child("CardPhillips", true, false) as Control
+	var title_node: Control = boot.find_child("GameTitle", true, false) as Control
 	var bot_row: Control = boot.find_child("SkirmishBotCycle", true, false) as Control
 	var menu_back: Control = boot.find_child("MenuBack", true, false) as Control
 	var back_hit: Rect2 = bot_row.get_global_rect().intersection(menu_back.get_global_rect()) if bot_row != null and menu_back != null else Rect2()
-	check(bot_row != null and menu_back != null and (back_hit.size.x < 1.0 or back_hit.size.y < 1.0), "the Skirmish Back button stays clear of the Commander and Difficulty rows")
+	check(top_card != null and title_node != null and top_card.position.y >= title_node.position.y + 88.0 and bot_row != null and menu_back != null and (back_hit.size.x < 1.0 or back_hit.size.y < 1.0), "the Skirmish map list sits below the ASEAN 2031 logo and Back stays clear of the Commander and Difficulty rows")
+	boot.call("_show_tab", "campaign")
+	boot.call("layout_for", Vector2(1231, 663))
+	await process_frame
+	var camp_scroll: Control = boot.find_child("ActIMissions", true, false) as Control
+	var last_mission: Control = boot.find_child("Mission_andaman", true, false) as Control
+	var camp_easy: Control = boot.find_child("CampaignDiffEasy", true, false) as Control
+	check(camp_scroll != null and last_mission != null and camp_easy != null and last_mission.get_global_rect().end.y <= camp_scroll.get_global_rect().end.y + 1.0 and camp_scroll.get_global_rect().end.y <= camp_easy.get_global_rect().position.y - 4.0, "Burmese campaign missions fit inside the mission list without clipping above the difficulty row")
 	var zh_cat: Dictionary = _catalog("zh")
 	check(str(zh_cat.get("Medium", "")) == "中" and str(zh_cat.get("Low", "")) == "低" and str(zh_cat.get("High", "")) == "高", "Mandarin translates Low, Medium, and High")
 	boot.free()
+	await process_frame
+	var boot_after: Node = (load("res://game/boot.tscn") as PackedScene).instantiate()
+	root.add_child(boot_after)
+	await process_frame
+	var offer_after: Control = boot_after.find_child("TrainingOffer", true, false) as Control
+	check(offer_after == null or not offer_after.visible, "the first-visit training prompt stays dismissed after a match")
+	boot_after.free()
 	await process_frame
 	Settings.set_language(held_language)
 	Settings.set_voice(held_voice)

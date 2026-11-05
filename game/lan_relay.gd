@@ -44,12 +44,12 @@ func _banner(host: Node) -> void:
 	if seat.winner == "host":
 		var outcome: SMOutcome = host.get("outcome") as SMOutcome
 		if outcome != null and not outcome.over:
-			outcome.finish(true)
+			outcome.finish(true, "The other player left the match.")
 		status.text = "Opponent left. Victory."
 	elif seat.winner == "guest":
 		var lost: SMOutcome = host.get("outcome") as SMOutcome
 		if lost != null and not lost.over:
-			lost.finish(false)
+			lost.finish(false, "The other player left the match.")
 		status.text = "Opponent left. Defeat."
 	elif seat.paused:
 		status.text = "Paused. Waiting for the other player."
