@@ -8,6 +8,7 @@ const LINES: Array[Array] = [
 	["", "Yangonite, Ready To Rage Against The Abnormalities, Supayarlat, Past Cracks, Machinesfuture, Humanfuture, Night, Love Drunk, Changes, Not Needed Anymore, Poison, Time"],
 	["SOUND EFFECTS", "Kenney (kenney.nl) and other CC0 sources, listed in game/sfx/CREDITS.md"],
 	["ENGINE", "Godot Engine, MIT licence"],
+	["FONTS", "Noto Sans Myanmar, Noto Sans Thai, and Noto Sans SC, SIL Open Font License 1.1"],
 	["RTS CORE", "Godot RTS Advanced, MIT licence"],
 ]
 

@@ -113,6 +113,7 @@ func _run() -> void:
 	await H.section("test_map_symmetry", test_map_symmetry)
 	await H.section("test_model_scale", test_model_scale)
 	await H.section("test_street_towns", test_street_towns)
+	await H.section("test_game_language", test_game_language)
 	quit(H.finish())
 
 func test_scripts() -> void:
@@ -3177,18 +3178,22 @@ func test_set_piece() -> void:
 	var other_tongue: bool = not clips.call("dialogue", plain, "tachileik", "open")
 	Settings.set_voice("english")
 	var removed: bool = not clips.call("dialogue", plain, "tachileik", "escort")
-	var heard: bool = clips.call("dialogue", plain, "tachileik", "open")
+	var heard: bool = not clips.call("dialogue", plain, "tachileik", "open")
+	Settings.set_voice("burmese")
+	var mine: bool = clips.call("dialogue", plain, "tachileik", "open")
 	var player: Node = plain.get_node_or_null("Dialogue")
-	var played_my: bool = player != null and str(player.get_meta("clip", "")) == "dialogue/my/tachileik/open.ogg"
+	var played_my: bool = mine and player != null and str(player.get_meta("clip", "")) == "dialogue/my/tachileik/open.ogg"
+	Settings.set_voice("thai")
 	var andaman: bool = clips.call("dialogue", plain, "andaman", "open")
 	var played_th: bool = player != null and str(player.get_meta("clip", "")) == "dialogue/th/andaman/open.ogg"
-	var silent: bool = not clips.call("dialogue", plain, "kokang", "open")
+	Settings.set_voice("english")
+	var silent: bool = not clips.call("dialogue", plain, "kokang", "open") and not clips.call("dialogue", plain, "andaman", "open")
 	if wrote:
 		_remove_tree(dialogue_dir)
 	if held and DirAccess.dir_exists_absolute(stash) and not DirAccess.dir_exists_absolute(dialogue_dir):
 		DirAccess.rename_absolute(stash, dialogue_dir)
 	Settings.set_voice("english")
-	check(quiet and wrote and other_tongue and removed and heard and played_my and andaman and played_th and silent and player != null, "dialogue skips a failed take, falls back by region, and stays a subtitle otherwise")
+	check(quiet and wrote and other_tongue and removed and heard and played_my and andaman and played_th and silent and player != null, "dialogue plays only the chosen language, skips a failed take, and stays a subtitle otherwise")
 	plain.free()
 	await process_frame
 	SMCampaign.selected = "tachileik"
@@ -4473,10 +4478,15 @@ func test_sm_bark() -> void:
 	])
 	var events: PackedStringArray = PackedStringArray(["select", "move", "attack"])
 	var barks_ok: bool = true
+	var heard_units: int = 0
 	for unit_id: String in voiced:
+		var heard_unit: bool = false
 		for event_name: String in events:
 			var found: PackedStringArray = clips.call("_variants", unit_id, event_name) as PackedStringArray
-			if found.is_empty() or clips.call("_stream", found[0]) == null:
+			if found.is_empty():
+				continue
+			heard_unit = true
+			if clips.call("_stream", found[0]) == null:
 				barks_ok = false
 			var english: bool = false
 			for rel: String in found:
@@ -4484,11 +4494,14 @@ func test_sm_bark() -> void:
 					english = true
 				if clips.call("_stream", rel) == null or rel.contains("_retired") or rel.split("/").size() < 3:
 					barks_ok = false
-			if english:
-				for rel: String in found:
-					if not rel.begins_with("barks/en/"):
-						barks_ok = false
-	check(barks_ok, "the nine shipped units decode a take, and English stays English")
+			if not english:
+				barks_ok = false
+			for rel: String in found:
+				if not rel.begins_with("barks/en/"):
+					barks_ok = false
+		if heard_unit:
+			heard_units += 1
+	check(barks_ok and heard_units >= 5, "the shipped units decode their English takes, and a unit whose English takes all failed stays silent instead of borrowing another language")
 	check(clips.call("clip_for", "militia", "select") != null, "a shipped bark is chosen for playback")
 	check(Settings.voice_folder("english") == "en" and Settings.voice_folder("burmese") == "my" and Settings.voice_folder("mandarin") == "zh" and Settings.voice_folder("thai") == "th" and Settings.voice_folder("malay") == "ms", "voice settings map onto en my zh th ms")
 	var wanted: PackedStringArray = clips.call("_wanted_langs") as PackedStringArray
@@ -4496,32 +4509,35 @@ func test_sm_bark() -> void:
 	var mvd_order: PackedStringArray = clips.call("_order_for", "en", "mvd") as PackedStringArray
 	var market_order: PackedStringArray = clips.call("_order_for", "en", "black_market") as PackedStringArray
 	var thai_order: PackedStringArray = clips.call("_order_for", "th", "gtfc") as PackedStringArray
-	check(wanted == PackedStringArray(["en", "my", "th"]), "english on GTFC fetches Burmese and Thai")
+	check(wanted == PackedStringArray(["en"]), "english on GTFC fetches only English")
 	SMFront.faction_id = "black_market"
 	var market_fetch: PackedStringArray = clips.call("_wanted_langs") as PackedStringArray
 	SMFront.faction_id = "gtfc"
-	check(market_fetch == PackedStringArray(["en", "ms"]), "english on the black market fetches Malay")
-	check(nmrf_order == PackedStringArray(["en", "ms"]), "english on NMRF falls back to Malay")
-	check(mvd_order == PackedStringArray(["en", "zh"]), "english on MVD falls back to Mandarin")
-	check(market_order == PackedStringArray(["en", "ms"]), "english on the black market falls back to Malay")
-	check(thai_order == PackedStringArray(["th", "en"]), "thai still falls back to a passing english take")
+	check(market_fetch == PackedStringArray(["en"]), "english on the black market fetches only English")
+	check(nmrf_order == PackedStringArray(["en"]), "english on NMRF never borrows Malay")
+	check(mvd_order == PackedStringArray(["en"]), "english on MVD never borrows Mandarin")
+	check(market_order == PackedStringArray(["en"]), "english on the black market never borrows Malay")
+	check(thai_order == PackedStringArray(["th"]), "thai never borrows an english take")
 	Settings.set_voice("thai")
 	check(clips.call("_best", "barks", "militia_select_1.ogg") == "barks/th/militia_select_1.ogg", "thai plays the th take")
 	check(clips.call("_best", "barks", "crimson_sapper_select_1.ogg") == "barks/th/crimson_sapper_select_1.ogg", "thai plays the sapper's own take")
 	Settings.set_voice("english")
 	check(clips.call("_best", "barks", "militia_select_1.ogg") == "barks/en/militia_select_1.ogg", "english plays the en take")
-	check(clips.call("_best", "barks", "militia_move_1.ogg") == "barks/my/militia_move_1.ogg", "a failed english take falls back to Burmese")
-	check(clips.call("_best", "barks", "slag_hauler_attack_1.ogg") == "barks/th/slag_hauler_attack_1.ogg", "a failed Burmese take falls on to Thai")
-	check(clips.call("_best", "barks", "emerald_gunboat_select_1.ogg") == "barks/ms/emerald_gunboat_select_1.ogg", "a failed NMRF english take falls back to Malay")
-	check(clips.call("_best", "barks", "clearance_trooper_move_1.ogg") == "barks/zh/clearance_trooper_move_1.ogg", "a failed MVD english take falls back to Mandarin")
-	check(clips.call("_best", "barks", "ch4_select_1.ogg") == "barks/ms/ch4_select_1.ogg", "a failed black market take falls back to Malay")
+	check(clips.call("_best", "barks", "militia_move_1.ogg") == "", "a failed english take stays a tone instead of Burmese")
+	check(clips.call("_best", "barks", "slag_hauler_attack_1.ogg") == "", "a failed english take never falls on to Thai")
+	check(clips.call("_best", "barks", "emerald_gunboat_select_1.ogg") == "", "a failed NMRF english take never plays Malay")
+	check(clips.call("_best", "barks", "clearance_trooper_move_1.ogg") == "", "a failed MVD english take never plays Mandarin")
+	check(clips.call("_best", "barks", "ch4_select_1.ogg") == "", "a failed black market english take never plays Malay")
 	check(clips.call("_best", "barks", "orlan10_select_1.ogg") == "barks/en/orlan10_select_1.ogg", "a passing black market take stays in English")
-	check(clips.call("_best", "announcer", "gtfc/unit_lost.ogg") == "announcer/my/gtfc/unit_lost.ogg", "a failed english announcer line falls back to Burmese")
+	check(clips.call("_best", "announcer", "gtfc/unit_lost.ogg") == "", "a failed english announcer line stays silent instead of Burmese")
 	check(clips.call("_best", "announcer", "gtfc/low_power.ogg") == "announcer/en/gtfc/low_power.ogg", "a passing english announcer line stays in English")
 	check(clips.call("clip_for", "not_a_unit", "select") == null, "a missing bark stays empty for the tone")
 	check(clips.call("_stream", "barks/crimson_sapper_select_2.ogg") == null, "the old flat sapper line is not played")
+	var english_sapper: PackedStringArray = clips.call("_variants", "crimson_sapper", "select") as PackedStringArray
+	Settings.set_voice("burmese")
 	var sapper_lines: PackedStringArray = clips.call("_variants", "crimson_sapper", "select") as PackedStringArray
-	check(sapper_lines == PackedStringArray(["barks/my/crimson_sapper_select_1.ogg", "barks/my/crimson_sapper_select_2.ogg"]), "the sapper select line plays in Burmese")
+	Settings.set_voice("english")
+	check(english_sapper.is_empty() and sapper_lines == PackedStringArray(["barks/my/crimson_sapper_select_1.ogg", "barks/my/crimson_sapper_select_2.ogg"]), "the sapper select line plays in Burmese only when Burmese is chosen")
 	SMFront.faction_id = held_faction
 	clips.call("color_voice", null)
 	var music_bus: int = AudioServer.get_bus_index("Music")
@@ -6271,3 +6287,150 @@ func _flat_olive(tex: Texture2D) -> bool:
 		y += 4
 	return seen.size() < 3
 
+
+const LANG_LOCALES: PackedStringArray = ["my", "zh", "th", "ms"]
+## Non-Latin words an English screen may show: each language's own name on the Language row.
+const ENGLISH_APPROVED: PackedStringArray = ["မြန်မာ", "中文", "ไทย"]
+
+static func _catalog(locale: String) -> Dictionary:
+	var out: Dictionary = {}
+	var tr: Translation = load("res://localization/game/%s.po" % locale) as Translation
+	if tr == null:
+		return out
+	for key: StringName in tr.get_message_list():
+		out[String(key)] = String(tr.get_message(key))
+	return out
+
+## Letters outside Latin, with symbols, punctuation, and arrows allowed.
+static func _foreign_letters(line: String, approved: PackedStringArray) -> String:
+	var rest: String = line
+	for word: String in approved:
+		rest = rest.replace(word, "")
+	for i: int in rest.length():
+		var c: int = rest.unicode_at(i)
+		if c <= 0x024F or (c >= 0x1E00 and c <= 0x1EFF) or (c >= 0x2000 and c <= 0x2BFF) or c == 0xFE0F:
+			continue
+		return rest.substr(i, 1)
+	return ""
+
+static func _marks(line: String) -> PackedStringArray:
+	var out: PackedStringArray = PackedStringArray()
+	var rx: RegEx = RegEx.create_from_string(SMLang.PLACEHOLDER)
+	for m: RegExMatch in rx.search_all(line):
+		out.append(m.get_string())
+	return out
+
+func _shown_texts(node: Node, out: PackedStringArray) -> void:
+	var item: CanvasItem = node as CanvasItem
+	if item != null and not item.is_visible_in_tree():
+		return
+	var label: Label = node as Label
+	var button: Button = node as Button
+	var raw: String = ""
+	if label != null:
+		raw = label.text
+	elif button != null:
+		raw = button.text
+	if raw.strip_edges() != "":
+		var control: Control = node as Control
+		out.append(control.atr(raw) if control.can_auto_translate() else raw)
+	for child: Node in node.get_children():
+		_shown_texts(child, out)
+
+func test_game_language() -> void:
+	var en: Dictionary = _catalog("en")
+	check(en.size() > 500, "the English catalog holds the player-facing lines (%d)" % en.size())
+	for locale: String in LANG_LOCALES:
+		var other: Dictionary = _catalog(locale)
+		var missing: PackedStringArray = PackedStringArray()
+		var broken: PackedStringArray = PackedStringArray()
+		for key: String in en:
+			var said: String = str(other.get(key, ""))
+			if said.strip_edges() == "":
+				missing.append(key)
+			elif _marks(key) != _marks(said) or key.count("\n") != said.count("\n"):
+				broken.append(key)
+		check(missing.is_empty(), "every English line has a %s line %s" % [locale, missing.slice(0, 4)])
+		check(broken.is_empty(), "%s keeps every placeholder and line break %s" % [locale, broken.slice(0, 4)])
+	var foreign: PackedStringArray = PackedStringArray()
+	for key: String in en:
+		var shown: String = str(en[key])
+		if _foreign_letters(key, PackedStringArray()) != "" or _foreign_letters(shown, PackedStringArray()) != "":
+			foreign.append(shown)
+	check(foreign.is_empty(), "no English line carries non-Latin script %s" % [foreign.slice(0, 4)])
+	check(str(en.get("Kris Plasma Rush", "")) == "Kris Dagger Plasma Rush" and str(en.get("Shar Htoo Waw Kloud Drone Truck", "")).contains("Cloud"), "English glosses the flavour words in names")
+	var scripts: Dictionary = {"my": [0x1000, 0x109F], "th": [0x0E00, 0x0E7F], "zh": [0x2E80, 0x9FFF]}
+	var faces: Array[Font] = preload("res://game/font_faces.gd").script_faces()
+	check(faces.size() == 3, "the Burmese, Thai, and Chinese faces ship with the build")
+	for locale: String in scripts.keys():
+		var span: Array = scripts[locale]
+		var gaps: Dictionary = {}
+		var lines: Dictionary = _catalog(locale)
+		for key: String in lines:
+			var said: String = str(lines[key])
+			for i: int in said.length():
+				var c: int = said.unicode_at(i)
+				if c < int(span[0]) or c > int(span[1]):
+					continue
+				var drawn: bool = false
+				for face: Font in faces:
+					if face.has_char(c):
+						drawn = true
+						break
+				if not drawn:
+					gaps[String.chr(c)] = true
+		check(gaps.is_empty(), "the %s face draws every %s character %s" % [locale, locale, gaps.keys().slice(0, 6)])
+	SMLang.apply("burmese")
+	var built: String = String(TranslationServer.translate(&"Barracks built"))
+	var credits: String = String(TranslationServer.translate(&"Credits 640"))
+	var direct: String = String(TranslationServer.translate(&"Nothing selected"))
+	check(direct != "Nothing selected" and _foreign_letters(direct, PackedStringArray()) != "", "Burmese translates a plain line")
+	check(credits.contains("640") and not credits.contains("Credits"), "a formatted line keeps its number in Burmese")
+	check(not built.contains("Barracks") and built.contains(String(TranslationServer.translate(&"Barracks"))), "a formatted line translates its argument too")
+	SMLang.apply("english")
+	check(String(TranslationServer.translate(&"Nothing selected")) == "Nothing selected" and String(TranslationServer.translate(&"Kris Plasma Rush")) == "Kris Dagger Plasma Rush", "English shows English and the glosses")
+	var held_language: String = Settings.language
+	var held_voice: String = Settings.voice
+	Settings.set_language("thai")
+	Settings.reread()
+	check(Settings.language == "thai" and Settings.voice == "thai" and TranslationServer.get_locale() == "th", "the game language round-trips and the voice follows it")
+	Settings.set_voice("english")
+	Settings.reread()
+	check(Settings.language == "thai" and Settings.voice == "english", "the voice language can differ from the game language")
+	Settings.set_language("klingon")
+	check(Settings.language == "english" and TranslationServer.get_locale() == "en", "an unknown game language stays English")
+	var clips: GDScript = load("res://game/match_audio.gd") as GDScript
+	check(clips.call("_order_for", "en", "gtfc") == PackedStringArray(["en"]) and clips.call("_dialogue_order", "kokang") == PackedStringArray(["en"]), "English voices never borrow another language")
+	var boot: Node = (load("res://game/boot.tscn") as PackedScene).instantiate()
+	root.add_child(boot)
+	await process_frame
+	var gear: Button = boot.find_child("SettingsButton", true, false) as Button
+	if gear != null:
+		gear.pressed.emit()
+	var panel: Control = boot.find_child("SettingsPanel", true, false) as Control
+	var row: Button = boot.find_child("LanguageValue", true, false) as Button
+	if panel != null:
+		panel.call("_show_page", "language")
+	await process_frame
+	var english_texts: PackedStringArray = PackedStringArray()
+	_shown_texts(boot, english_texts)
+	var english_foreign: PackedStringArray = PackedStringArray()
+	for line: String in english_texts:
+		if _foreign_letters(line, ENGLISH_APPROVED) != "":
+			english_foreign.append(line)
+	check(row != null and row.text == "English" and english_foreign.is_empty(), "the English menu and Language page show only English %s" % [english_foreign.slice(0, 4)])
+	if row != null:
+		row.pressed.emit()
+	await process_frame
+	var burmese_texts: PackedStringArray = PackedStringArray()
+	_shown_texts(boot, burmese_texts)
+	var burmese_lines: int = 0
+	for line: String in burmese_texts:
+		if _foreign_letters(line, PackedStringArray()) != "":
+			burmese_lines += 1
+	check(Settings.language == "burmese" and row != null and row.text == "မြန်မာ" and burmese_lines * 2 > burmese_texts.size(), "the Language row switches the open menu to Burmese (%d of %d lines)" % [burmese_lines, burmese_texts.size()])
+	boot.free()
+	await process_frame
+	Settings.set_language(held_language)
+	Settings.set_voice(held_voice)
+	SMLang.apply("english")

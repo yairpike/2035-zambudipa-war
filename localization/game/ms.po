@@ -1,0 +1,2732 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ASEAN 2031\n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid ""
+"\n"
+"Cost %d"
+msgstr ""
+"\n"
+"Kos %d"
+
+msgid ""
+"\n"
+"Hotkey %d"
+msgstr ""
+"\n"
+"Kekunci pintas %d"
+
+msgid "  %ds"
+msgstr "  %ds"
+
+msgid " The spray defoliated your line."
+msgstr " Semburan itu menggugurkan daun di barisan anda."
+
+msgid "%d cr"
+msgstr "%d kr"
+
+msgid "%s    HP %d/%d    F %s"
+msgstr "%s    HP %d/%d    F %s"
+
+msgid "%s  %s is ready to copy."
+msgstr "%s  %s sedia untuk disalin."
+
+msgid "%s built"
+msgstr "%s siap dibina"
+
+msgid "%s x%d"
+msgstr "%s x%d"
+
+msgid "%s. %d credits. HP %d. Damage %d. Moves on %s. F: %s."
+msgstr "%s. %d kredit. HP %d. Kerosakan %d. Bergerak di %s. F: %s."
+
+msgid "%s. %s. %d credits. HP %d."
+msgstr "%s. %s. %d kredit. HP %d."
+
+msgid "%s. Area hit, then it cools down."
+msgstr "%s. Serangan kawasan, kemudian ia menyejuk."
+
+msgid "+beam"
+msgstr "+alur"
+
+msgid "+smart"
+msgstr "+pintar"
+
+msgid "2 players"
+msgstr "2 pemain"
+
+msgid "23-Drone Swarm"
+msgstr "Kawanan 23 Dron"
+
+msgid "3D-Print Overdrive"
+msgstr "Pacuan Cetakan 3D"
+
+msgid "A balloon barrage. One cast."
+msgstr "Hujan bom belon. Sekali guna."
+
+msgid "A carpet run. One cast."
+msgstr "Pengeboman permaidani. Sekali guna."
+
+msgid "A city bank, a jungle bank, and a river between them. The landmark does not burn."
+msgstr "Tebing bandar, tebing hutan, dan sungai di antaranya. Mercu tanda itu tidak terbakar."
+
+msgid "A faster, tougher enemy."
+msgstr "Musuh yang lebih pantas dan lebih tangguh."
+
+msgid "A larger field. Fords cross the river. The enemy builds, expands, and attacks."
+msgstr "Medan lebih luas. Arungan merentasi sungai. Musuh membina, berkembang dan menyerang."
+
+msgid "A napalm run. It does not finish the mission."
+msgstr "Serangan napalm. Ia tidak menamatkan misi."
+
+msgid "A pirate haul. One cast."
+msgstr "Rampasan lanun. Sekali guna."
+
+msgid "A second wave is in the black haze."
+msgstr "Gelombang kedua berada dalam jerebu hitam."
+
+msgid "A slower enemy, for learning the company."
+msgstr "Musuh yang lebih perlahan, untuk mengenali kompeni."
+
+msgid "A spray run is coming down the road. Cut it off."
+msgstr "Serangan semburan sedang mara di jalan. Pintas ia."
+
+msgid "A thermal scan. One cast."
+msgstr "Imbasan terma. Sekali guna."
+
+msgid "A-Move"
+msgstr "Gerak-S"
+
+msgid "Ability"
+msgstr "Kebolehan"
+
+msgid "Ability (F)"
+msgstr "Kebolehan (F)"
+
+msgid "Ability (F). A toggle flips every selected toggle unit. Smart-cast fires only the closest ready unit. A finished beam freezes the nearest enemy."
+msgstr "Kebolehan (F). Togol menukar setiap unit togol yang dipilih. Guna pintar hanya melepaskan unit sedia yang terdekat. Alur yang lengkap membekukan musuh terdekat."
+
+msgid "ability fired"
+msgstr "kebolehan dilepaskan"
+
+msgid "ability not ready"
+msgstr "kebolehan belum sedia"
+
+msgid "Aceh Tsunami Tank"
+msgstr "Kereta Kebal Tsunami Aceh"
+
+msgid "Act I"
+msgstr "Babak I"
+
+msgid "Act II"
+msgstr "Babak II"
+
+msgid "Act III"
+msgstr "Babak III"
+
+msgid "Adrenaline Cloud"
+msgstr "Awan Adrenalin"
+
+msgid "Advanced Rocket Pods"
+msgstr "Pod Roket Lanjutan"
+
+msgid "Aegis Dome"
+msgstr "Kubah Aegis"
+
+msgid "Afterburner Return"
+msgstr "Pulang Pembakar Lanjut"
+
+msgid "Agent-Zero Cryo-Copter"
+msgstr "Kopter Krio Ejen-Sifar"
+
+msgid "Aircraft"
+msgstr "Pesawat"
+
+msgid "Airfield"
+msgstr "Lapangan Terbang"
+
+msgid "All %s"
+msgstr "Semua %s"
+
+msgid "Ally"
+msgstr "Sekutu"
+
+msgid "already unpacked"
+msgstr "sudah dibongkar"
+
+msgid "Ambush clear. %s. Mine rubies: %d/30."
+msgstr "Serang hendap dibersihkan. %s. Lombong delima: %d/30."
+
+msgid "An ally breaks. The span is down."
+msgstr "Sekutu berpecah. Jambatan telah runtuh."
+
+msgid "Andaman breakout"
+msgstr "Pecah kepungan Andaman"
+
+msgid "Andaman breakout. Text briefing. Sink the channel boats and the second wave, then land an amphibious unit on the far shore. A mine line in the channel damages ships. The far shore opens, and a squall crosses. The side cache is optional."
+msgstr "Pecah kepungan Andaman. Taklimat teks. Tenggelamkan bot terusan dan gelombang kedua, kemudian daratkan unit amfibia di pantai seberang. Barisan periuk api di terusan merosakkan kapal. Pantai seberang terbuka, dan ribut melintas. Simpanan sampingan adalah pilihan."
+
+msgid "Andaman Siege Barge"
+msgstr "Tongkang Kepung Andaman"
+
+msgid "Answer"
+msgstr "Jawapan"
+
+msgid "Answer applied. Waiting for the guest."
+msgstr "Jawapan digunakan. Menunggu tetamu."
+
+msgid "Archipelago Rising"
+msgstr "Kebangkitan Kepulauan"
+
+msgid "Archipelago Rising. Text briefing. Sink the boats and the second picket, sail the packer into shallow water, unpack the wharf, and upgrade it. The packer reaches the shallows, the wharf rises, and a squall hits."
+msgstr "Kebangkitan Kepulauan. Taklimat teks. Tenggelamkan bot dan peronda kedua, layarkan pembungkus ke air cetek, bongkar dermaga, dan naik tarafnya. Pembungkus sampai ke air cetek, dermaga berdiri, dan ribut melanda."
+
+msgid "Arms a bomb. One cast."
+msgstr "Memasang bom. Sekali guna."
+
+msgid "Arms bazaar (mission)"
+msgstr "Bazar senjata (misi)"
+
+msgid "Arms bazaar. Text briefing. Capture the bazaar so infantry and drones draw a discount."
+msgstr "Bazar senjata. Taklimat teks. Tawan bazar supaya infantri dan dron mendapat diskaun."
+
+msgid "Artillery Telemetry Link"
+msgstr "Pautan Telemetri Artileri"
+
+msgid "ASEAN 2031"
+msgstr "ASEAN 2031"
+
+msgid "Athena Orbital Designator"
+msgstr "Penanda Orbit Athena"
+
+msgid "Atolls"
+msgstr "Pulau Karang"
+
+msgid "attack move"
+msgstr "gerak serang"
+
+msgid "Attack-move"
+msgstr "Gerak serang"
+
+msgid "Attack-move ahead of the lead unit."
+msgstr "Gerak serang mendahului unit utama."
+
+msgid "AUDIO"
+msgstr "AUDIO"
+
+msgid "BACK"
+msgstr "KEMBALI"
+
+msgid "Back"
+msgstr "Kembali"
+
+msgid "Ballistic Riot Shield"
+msgstr "Perisai Rusuhan Balistik"
+
+msgid "Balloon Bomb Barrage"
+msgstr "Hujan Bom Belon"
+
+msgid "balloons 9"
+msgstr "belon 9"
+
+msgid "Bamboo Hide"
+msgstr "Penyamaran Buluh"
+
+msgid "Banyan Hologram"
+msgstr "Hologram Beringin"
+
+msgid "Barracks"
+msgstr "Berek"
+
+msgid "Basic training"
+msgstr "Latihan asas"
+
+msgid "bazaar required"
+msgstr "bazar diperlukan"
+
+msgid "Beach master"
+msgstr "Ketua pantai"
+
+msgid "Beach Rockets"
+msgstr "Roket Pantai"
+
+msgid "beam fired"
+msgstr "alur dilepaskan"
+
+msgid "Beam freeze (mission)"
+msgstr "Alur beku (misi)"
+
+msgid "Beam freeze. Text briefing. Hold the beam until the target freezes."
+msgstr "Alur beku. Taklimat teks. Kekalkan alur sehingga sasaran membeku."
+
+msgid "Beam officer"
+msgstr "Pegawai alur"
+
+msgid "Bench Seat"
+msgstr "Kerusi Bangku"
+
+msgid "Black Haze"
+msgstr "Jerebu Hitam"
+
+msgid "Black Haze. Text briefing. Capture the hydro radar and hold it through the longer haze while a second raider wave attacks. The haze closes, a second wave comes through it, and you hold the radar."
+msgstr "Jerebu Hitam. Taklimat teks. Tawan radar hidro dan pertahankannya sepanjang jerebu yang lebih lama sementara gelombang perompak kedua menyerang. Jerebu menutup, gelombang kedua datang menembusinya, dan anda mempertahankan radar."
+
+msgid "Black Market"
+msgstr "Pasaran Gelap"
+
+msgid "Black-Hole Armor"
+msgstr "Perisai Lohong Hitam"
+
+msgid "BlackBloc"
+msgstr "BlackBloc"
+
+msgid "Blackout EMP"
+msgstr "EMP Pemadaman"
+
+msgid "Bo Mya"
+msgstr "Bo Mya"
+
+msgid "bomb armed"
+msgstr "bom dipasang"
+
+msgid "Bomblet Carpet"
+msgstr "Permaidani Bom Kecil"
+
+msgid "Bonus complete: side cache"
+msgstr "Bonus selesai: simpanan sampingan"
+
+msgid "Bonus failed: the spray landed"
+msgstr "Bonus gagal: semburan mendarat"
+
+msgid "Bonus: reach the side cache"
+msgstr "Bonus: capai simpanan sampingan"
+
+msgid "Boot menu"
+msgstr "Menu but"
+
+msgid "Both batteries are still up, and the screen is with them."
+msgstr "Kedua-dua bateri masih berdiri, dan pelindung bersamanya."
+
+msgid "Both server blocks are live. Start the hack."
+msgstr "Kedua-dua blok pelayan aktif. Mulakan godaman."
+
+msgid "Both superweapons are live. Break the screen and drop them."
+msgstr "Kedua-dua senjata super aktif. Pecahkan pelindung dan musnahkan."
+
+msgid "Both weapons are armed. The count is running."
+msgstr "Kedua-dua senjata bersedia. Kiraan sedang berjalan."
+
+msgid "Box"
+msgstr "Kotak"
+
+msgid "Bridge down"
+msgstr "Jambatan runtuh"
+
+msgid "Briefing"
+msgstr "Taklimat"
+
+msgid "bring one rare-earth stock"
+msgstr "bawa satu stok nadir bumi"
+
+msgid "Build"
+msgstr "Bina"
+
+msgid "Build a barracks and train 3 infantry."
+msgstr "Bina berek dan latih 3 infantri."
+
+msgid "Build a power plant."
+msgstr "Bina loji janakuasa."
+
+msgid "build blocked"
+msgstr "binaan disekat"
+
+msgid "Build pipeline"
+msgstr "Saluran binaan"
+
+msgid "Building"
+msgstr "Bangunan"
+
+msgid "Buildings"
+msgstr "Bangunan"
+
+msgid "Bunker Lock"
+msgstr "Kunci Kubu"
+
+msgid "Burma"
+msgstr "Burma"
+
+msgid "Burma Road"
+msgstr "Jalan Burma"
+
+msgid "Burma Road Bulldozer Tank"
+msgstr "Kereta Kebal Jentolak Jalan Burma"
+
+msgid "Burmese"
+msgstr "Bahasa Burma"
+
+msgid "Buy clearance"
+msgstr "Beli kelulusan"
+
+msgid "CAMPAIGN"
+msgstr "KEMPEN"
+
+msgid "Campaign"
+msgstr "Kempen"
+
+msgid "Canals cut the paddies. Right-click a bridge to drop it. The enemy builds, expands, and attacks."
+msgstr "Terusan memotong sawah. Klik kanan jambatan untuk meruntuhkannya. Musuh membina, berkembang dan menyerang."
+
+msgid "Cancel"
+msgstr "Batal"
+
+msgid "Cancel the building in progress and refund what it has spent."
+msgstr "Batalkan binaan yang sedang berjalan dan pulangkan kos yang telah dibelanjakan."
+
+msgid "cannot cross"
+msgstr "tidak boleh menyeberang"
+
+msgid "cannot import"
+msgstr "tidak boleh diimport"
+
+msgid "cannot sell"
+msgstr "tidak boleh dijual"
+
+msgid "cannot train"
+msgstr "tidak boleh dilatih"
+
+msgid "Capture the radar, then hold it through the haze."
+msgstr "Tawan radar, kemudian pertahankannya sepanjang jerebu."
+
+msgid "capture: yard, ruby night shift, and one rare-earth stock, after the recon drones fall"
+msgstr "tawan: limbungan, syif malam delima, dan satu stok nadir bumi, selepas dron peninjau jatuh"
+
+msgid "Caravan ambush"
+msgstr "Serang hendap kafilah"
+
+msgid "caravan in"
+msgstr "kafilah tiba"
+
+msgid "Caravan master"
+msgstr "Ketua kafilah"
+
+msgid "Cargo Winch Airlift"
+msgstr "Angkut Udara Win Kargo"
+
+msgid "Cash Bounty"
+msgstr "Ganjaran Tunai"
+
+msgid "Cash Bribe"
+msgstr "Rasuah Tunai"
+
+msgid "Century Carpet Bomber"
+msgstr "Pengebom Permaidani Abad"
+
+msgid "CH-4"
+msgstr "CH-4"
+
+msgid "CH-4 hangar"
+msgstr "Hangar CH-4"
+
+msgid "Changes"
+msgstr "Changes"
+
+msgid "Channel boat"
+msgstr "Bot terusan"
+
+msgid "channel clear"
+msgstr "terusan bersih"
+
+msgid "Channel crossing (mission)"
+msgstr "Penyeberangan terusan (misi)"
+
+msgid "Channel crossing. Text briefing. Send an amphibious unit across the deep water to the far shore."
+msgstr "Penyeberangan terusan. Taklimat teks. Hantar unit amfibia merentasi air dalam ke pantai seberang."
+
+msgid "Charcoal / cyan"
+msgstr "Arang / sian"
+
+msgid "Chat"
+msgstr "Sembang"
+
+msgid "Chemical Afterburner"
+msgstr "Pembakar Lanjut Kimia"
+
+msgid "Chiang Rai"
+msgstr "Chiang Rai"
+
+msgid "Chips the towers. It does not finish the mission."
+msgstr "Mengikis menara. Ia tidak menamatkan misi."
+
+msgid "Choose a map"
+msgstr "Pilih peta"
+
+msgid "Chopper Mode"
+msgstr "Mod Helikopter"
+
+msgid "Chrono-Phase Recall"
+msgstr "Panggil Balik Fasa Krono"
+
+msgid "Citadel garrison"
+msgstr "Garison kubu"
+
+msgid "Citadel officer"
+msgstr "Pegawai kubu"
+
+msgid "Clear"
+msgstr "Kosongkan"
+
+msgid "Clear the ambush (%d). Then walk the caravan to the night shift."
+msgstr "Bersihkan serang hendap (%d). Kemudian iring kafilah ke syif malam."
+
+msgid "Clear the field    Hold the line    Bring it home"
+msgstr "Bersihkan medan    Pertahankan barisan    Bawa pulang"
+
+msgid "Clear the garrison (%d) and hold the hydro radar."
+msgstr "Bersihkan garison (%d) dan pertahankan radar hidro."
+
+msgid "Clear the garrison (%d), then %s."
+msgstr "Bersihkan garison (%d), kemudian %s."
+
+msgid "Clear the garrison (%d), then siphon the compound."
+msgstr "Bersihkan garison (%d), kemudian sedut kompaun."
+
+msgid "clear the Orlan drones"
+msgstr "bersihkan dron Orlan"
+
+msgid "Clear the shore (%d). A boat is on the far shore."
+msgstr "Bersihkan pantai (%d). Sebuah bot di pantai seberang."
+
+msgid "Clear the shore (%d). Land a boat on the far shore. The mine line hurts ships."
+msgstr "Bersihkan pantai (%d). Daratkan bot di pantai seberang. Barisan periuk api merosakkan kapal."
+
+msgid "clearance %d"
+msgstr "kelulusan %d"
+
+msgid "Clearance commander"
+msgstr "Komander kelulusan"
+
+msgid "clearance refused"
+msgstr "kelulusan ditolak"
+
+msgid "Clearance two (mission)"
+msgstr "Kelulusan dua (misi)"
+
+msgid "Clearance two. Text briefing. Buy clearance, then queue and place the drone bay inside the pad."
+msgstr "Kelulusan dua. Taklimat teks. Beli kelulusan, kemudian beratur dan letakkan ruang dron di dalam pad."
+
+msgid "Colonel Nguyen Phantom"
+msgstr "Kolonel Nguyen Phantom"
+
+msgid "Column screen"
+msgstr "Pelindung kolum"
+
+msgid "Command deck"
+msgstr "Dek arahan"
+
+msgid "Commander:  %s"
+msgstr "Komander:  %s"
+
+msgid "Company"
+msgstr "Kompeni"
+
+msgid "Complete objective"
+msgstr "Selesaikan objektif"
+
+msgid "Compound garrison"
+msgstr "Garison kompaun"
+
+msgid "Compound runner"
+msgstr "Pelari kompaun"
+
+msgid "Connecting to %s."
+msgstr "Menyambung ke %s."
+
+msgid "Construction Yard"
+msgstr "Limbungan Pembinaan"
+
+msgid "Contact behind the wagon."
+msgstr "Musuh di belakang gerabak."
+
+msgid "CONTROLS"
+msgstr "KAWALAN"
+
+msgid "Copter shifting."
+msgstr "Kopter beralih."
+
+msgid "Copter under fire."
+msgstr "Kopter diserang."
+
+msgid "Copy again"
+msgstr "Salin semula"
+
+msgid "Copy offer"
+msgstr "Salin tawaran"
+
+msgid "Copy the answer once it appears and send it back to the host."
+msgstr "Salin jawapan sebaik ia muncul dan hantar semula kepada hos."
+
+msgid "Copy the offer into the other browser, then paste its answer back. No account."
+msgstr "Salin tawaran ke pelayar lain, kemudian tampal jawapannya kembali. Tiada akaun."
+
+msgid "Copy the offer once it appears, then paste the guest's answer."
+msgstr "Salin tawaran sebaik ia muncul, kemudian tampal jawapan tetamu."
+
+msgid "Copy this answer and send it to the host."
+msgstr "Salin jawapan ini dan hantar kepada hos."
+
+msgid "Copy this offer and send it to the guest."
+msgstr "Salin tawaran ini dan hantar kepada tetamu."
+
+msgid "Could not join."
+msgstr "Tidak dapat menyertai."
+
+msgid "Count: %ds"
+msgstr "Kiraan: %ds"
+
+msgid "Count: 16s"
+msgstr "Kiraan: 16s"
+
+msgid "CREDITS"
+msgstr "KREDIT"
+
+msgid "Credits %d"
+msgstr "Kredit %d"
+
+msgid "Credits %d    Power %d/%d%s"
+msgstr "Kredit %d    Kuasa %d/%d%s"
+
+msgid "credits +250"
+msgstr "kredit +250"
+
+msgid "Credits 0    Power 0/0"
+msgstr "Kredit 0    Kuasa 0/0"
+
+msgid "Crimson / amber"
+msgstr "Merah tua / ambar"
+
+msgid "Cross channel"
+msgstr "Seberangi terusan"
+
+msgid "Cryo on the target."
+msgstr "Krio pada sasaran."
+
+msgid "cryo wave"
+msgstr "gelombang krio"
+
+msgid "Cryo-copter airborne."
+msgstr "Kopter krio di udara."
+
+msgid "Cryogeddon"
+msgstr "Krio-kiamat"
+
+msgid "Cryoshot"
+msgstr "Tembakan Krio"
+
+msgid "Cu Chi Tunnel Hound"
+msgstr "Anjing Terowong Cu Chi"
+
+msgid "Cyber compound (mission)"
+msgstr "Kompaun siber (misi)"
+
+msgid "Cyber compound. Text briefing. Capture the compound and siphon the enemy purse."
+msgstr "Kompaun siber. Taklimat teks. Tawan kompaun dan sedut dana musuh."
+
+msgid "damage 1.5"
+msgstr "kerosakan 1.5"
+
+msgid "Defeat"
+msgstr "Kekalahan"
+
+msgid "defender air"
+msgstr "pertahanan udara"
+
+msgid "defender ground"
+msgstr "pertahanan darat"
+
+msgid "Defender-VX"
+msgstr "Defender-VX"
+
+msgid "Defenses"
+msgstr "Pertahanan"
+
+msgid "Defoliation lead"
+msgstr "Ketua penggugur daun"
+
+msgid "Delta Amphibious IFV"
+msgstr "IFV Amfibia Delta"
+
+msgid "Destroy both superweapons (%d left) before the count (%ds)."
+msgstr "Musnahkan kedua-dua senjata super (%d lagi) sebelum kiraan (%ds)."
+
+msgid "destroy: both enemy superweapons fall before the count hits zero"
+msgstr "musnahkan: kedua-dua senjata super musuh tumbang sebelum kiraan mencapai sifar"
+
+msgid "destroy: every ghost inside the jammer dies, GPS cut and fiber full"
+msgstr "musnahkan: setiap hantu di dalam pengacau mati, GPS terputus dan gentian penuh"
+
+msgid "destroy: the ambush dies, the jade wagon reaches the bazaar, then the ruby night shift fills the purse"
+msgstr "musnahkan: serang hendap mati, gerabak jed sampai ke bazar, kemudian syif malam delima mengisi dana"
+
+msgid "destroy: the beam freezes the phantom, then the phantom and the battery die"
+msgstr "musnahkan: alur membekukan phantom, kemudian phantom dan bateri mati"
+
+msgid "destroy: the boats die, then the wharf is unpacked and upgraded"
+msgstr "musnahkan: bot-bot mati, kemudian dermaga dibongkar dan dinaik taraf"
+
+msgid "destroy: the channel boats die and an amphibious unit reaches the far shore"
+msgstr "musnahkan: bot terusan mati dan unit amfibia sampai ke pantai seberang"
+
+msgid "destroy: the EW towers fall, then the Su-30 and CH-4 hangars"
+msgstr "musnahkan: menara EW tumbang, kemudian hangar Su-30 dan CH-4"
+
+msgid "destroy: the garrison dies, the hack is held on the server blocks, then both blocks are siphoned"
+msgstr "musnahkan: garison mati, godaman dipertahankan pada blok pelayan, kemudian kedua-dua blok disedut"
+
+msgid "destroy: the GTFC tank column is frozen, then destroyed"
+msgstr "musnahkan: kolum kereta kebal GTFC dibekukan, kemudian dimusnahkan"
+
+msgid "destroy: the joint enemy fleet is sunk"
+msgstr "musnahkan: armada gabungan musuh ditenggelamkan"
+
+msgid "destroy: the radar garrison dies and the hydro radar is held"
+msgstr "musnahkan: garison radar mati dan radar hidro dipertahankan"
+
+msgid "Details"
+msgstr "Butiran"
+
+msgid "Difficulty"
+msgstr "Kesukaran"
+
+msgid "Difficulty:  %s"
+msgstr "Kesukaran:  %s"
+
+msgid "Discharges a held unit. One cast."
+msgstr "Melepaskan unit yang ditahan. Sekali guna."
+
+msgid "Done"
+msgstr "Selesai"
+
+msgid "Dozer advancing."
+msgstr "Jentolak mara."
+
+msgid "Dozer ready."
+msgstr "Jentolak sedia."
+
+msgid "Dozer under fire."
+msgstr "Jentolak diserang."
+
+msgid "Drag a box    Select"
+msgstr "Seret kotak    Pilih"
+
+msgid "Drag a box around your units."
+msgstr "Seret kotak mengelilingi unit anda."
+
+msgid "Drone truck standing by."
+msgstr "Trak dron bersiap sedia."
+
+msgid "Drones on the jade wagon. Keep it under the trees."
+msgstr "Dron pada gerabak jed. Kekalkan ia di bawah pokok."
+
+msgid "Drones on the target."
+msgstr "Dron pada sasaran."
+
+msgid "Drop the EW towers (%d), then the hangars (%d)."
+msgstr "Jatuhkan menara EW (%d), kemudian hangar (%d)."
+
+msgid "Easy"
+msgstr "Mudah"
+
+msgid "Edge pan"
+msgstr "Tatal tepi"
+
+msgid "Eject and Repair"
+msgstr "Lenting dan Baiki"
+
+msgid "Electro-Latch Detonate"
+msgstr "Letupan Selak Elektro"
+
+msgid "Electro-Stasis Tether"
+msgstr "Tambatan Stasis Elektro"
+
+msgid "Elite"
+msgstr "Elit"
+
+msgid "Emergency Evasive Return"
+msgstr "Pulang Elakan Kecemasan"
+
+msgid "Enemy"
+msgstr "Musuh"
+
+msgid "Enemy spotted."
+msgstr "Musuh dikesan."
+
+msgid "Engage"
+msgstr "Serang"
+
+msgid "ENGINE"
+msgstr "ENJIN"
+
+msgid "English"
+msgstr "Bahasa Inggeris"
+
+msgid "English, Burmese, Mandarin, Thai, or Malay. A missing line plays the English take."
+msgstr "Bahasa Inggeris, Burma, Mandarin, Thai atau Melayu. Baris yang tiada akan dimainkan dalam rakaman Inggeris."
+
+msgid "Esc    Pause"
+msgstr "Esc    Jeda"
+
+msgid "Esc  Back    ·    Enter  Select"
+msgstr "Esc  Kembali    ·    Enter  Pilih"
+
+msgid "Evacuate and Lay Mines"
+msgstr "Kosongkan dan Pasang Periuk Api"
+
+msgid "EW tower"
+msgstr "Menara EW"
+
+msgid "F    Ability"
+msgstr "F    Kebolehan"
+
+msgid "F ability found no enemy"
+msgstr "Kebolehan F tidak menemui musuh"
+
+msgid "F ability struck an enemy"
+msgstr "Kebolehan F mengenai musuh"
+
+msgid "Faction:  %s"
+msgstr "Puak:  %s"
+
+msgid "Federal Wings Ag-Bomber Hexacopter"
+msgstr "Heksakopter Pengebom Pertanian Sayap Persekutuan"
+
+msgid "Ferry warden"
+msgstr "Warden feri"
+
+msgid "Fiber-Optic Tether"
+msgstr "Tambatan Gentian Optik"
+
+msgid "Fibre Dive"
+msgstr "Junaman Gentian"
+
+msgid "Field clinic (mission)"
+msgstr "Klinik medan (misi)"
+
+msgid "Field clinic. Text briefing. Capture the clinic and let it heal the company."
+msgstr "Klinik medan. Taklimat teks. Tawan klinik dan biarkan ia merawat kompeni."
+
+msgid "Field Medical Tent"
+msgstr "Khemah Perubatan Medan"
+
+msgid "Fight the briefing."
+msgstr "Lawan mengikut taklimat."
+
+msgid "fire the beam"
+msgstr "lepaskan alur"
+
+msgid "First mission. Select the company, right-click to move, and right-click the raiders to fight. Raise the yard, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails."
+msgstr "Misi pertama. Pilih kompeni, klik kanan untuk bergerak, dan klik kanan perompak untuk bertempur. Dirikan limbungan, jalankan syif malam delima, dan bawa pulang satu stok nadir bumi. Jika kompeni musnah, serbuan gagal."
+
+msgid "Flak-Slag Mast"
+msgstr "Tiang Flak Sanga"
+
+msgid "Fleet captain"
+msgstr "Kapten armada"
+
+msgid "Fleet picket"
+msgstr "Peronda armada"
+
+msgid "FLH7 Squad"
+msgstr "Skuad FLH7"
+
+msgid "Fog Over Pakbeng"
+msgstr "Kabus Menyelubungi Pakbeng"
+
+msgid "Fog Over Pakbeng. Text briefing. Hold a hydro radar through the longer haze while a second raider wave attacks. An ally breaks first. The haze stays shut, and the radar has to be held. The side cache is optional."
+msgstr "Kabus Menyelubungi Pakbeng. Taklimat teks. Pertahankan radar hidro sepanjang jerebu yang lebih lama sementara gelombang perompak kedua menyerang. Sekutu berpecah dahulu. Jerebu kekal tertutup, dan radar mesti dipertahankan. Simpanan sampingan adalah pilihan."
+
+msgid "FONTS"
+msgstr "FON"
+
+msgid "Form"
+msgstr "Formasi"
+
+msgid "Formation. Switch between a line and a box."
+msgstr "Formasi. Tukar antara barisan dan kotak."
+
+msgid "Found %s."
+msgstr "Menemui %s."
+
+msgid "FPV Strike Drone"
+msgstr "Dron Serangan FPV"
+
+msgid "Free Trade"
+msgstr "Perdagangan Bebas"
+
+msgid "Freeze the column (%d/%d), then destroy it (%d left).%s"
+msgstr "Bekukan kolum (%d/%d), kemudian musnahkannya (%d lagi).%s"
+
+msgid "freeze the phantom"
+msgstr "bekukan phantom"
+
+msgid "Freezes one target. One cast."
+msgstr "Membekukan satu sasaran. Sekali guna."
+
+msgid "Freezes the tank column. It does not finish the mission."
+msgstr "Membekukan kolum kereta kebal. Ia tidak menamatkan misi."
+
+msgid "Freezes the trimarans for a while. It does not finish the mission."
+msgstr "Membekukan trimaran seketika. Ia tidak menamatkan misi."
+
+msgid "Frequency Hop"
+msgstr "Lompatan Frekuensi"
+
+msgid "Game language"
+msgstr "Bahasa permainan"
+
+msgid "GAMEPLAY"
+msgstr "PERMAINAN"
+
+msgid "garrison %d"
+msgstr "garison %d"
+
+msgid "Garrison clear. %s. Siphon both server blocks (%d)."
+msgstr "Garison dibersihkan. %s. Sedut kedua-dua blok pelayan (%d)."
+
+msgid "Garrison clear. Hold the hydro radar."
+msgstr "Garison dibersihkan. Pertahankan radar hidro."
+
+msgid "Garrison clear. Hydro radar is held."
+msgstr "Garison dibersihkan. Radar hidro dipertahankan."
+
+msgid "Garrison clear. Siphon the compound (%d)."
+msgstr "Garison dibersihkan. Sedut kompaun (%d)."
+
+msgid "Garrison in the trees."
+msgstr "Garison di dalam hutan."
+
+msgid "Garuda Mecha-Overlord"
+msgstr "Mecha-Penguasa Garuda"
+
+msgid "General Bo Mya"
+msgstr "Jeneral Bo Mya"
+
+msgid "Ghosts in the jammer. Every one of them has to fall."
+msgstr "Hantu di dalam pengacau. Setiap seorang mesti tumbang."
+
+msgid "Ghosts of Patani"
+msgstr "Hantu Patani"
+
+msgid "Ghosts of Patani. Text briefing. Destroy every ghost in the jammer, including the shipment guards. GPS guidance drops there. A fiber link does not. Losing the company fails the mission. GPS drops, ghosts close in, and then the guide turns. The side cache is optional."
+msgstr "Hantu Patani. Taklimat teks. Musnahkan setiap hantu di dalam pengacau, termasuk pengawal penghantaran. Panduan GPS hilang di sana. Pautan gentian tidak. Kehilangan kompeni menggagalkan misi. GPS hilang, hantu mendekat, kemudian pemandu berpaling tadah. Simpanan sampingan adalah pilihan."
+
+msgid "Godot Engine, MIT licence"
+msgstr "Godot Engine, lesen MIT"
+
+msgid "Godot RTS Advanced, MIT licence"
+msgstr "Godot RTS Advanced, lesen MIT"
+
+msgid "gold bullion"
+msgstr "jongkong emas"
+
+msgid "Golden Confluence"
+msgstr "Pertemuan Emas"
+
+msgid "Golden Dragon Dirigible"
+msgstr "Kapal Udara Naga Emas"
+
+msgid "Golden Slag / Aurum-9"
+msgstr "Sanga Emas / Aurum-9"
+
+msgid "Golden Slag / Aurum-9 stays in the yard ledger. Ruby and rare earth are the raid."
+msgstr "Sanga Emas / Aurum-9 kekal dalam lejar limbungan. Delima dan nadir bumi ialah sasaran serbuan."
+
+msgid "Got it"
+msgstr "Faham"
+
+msgid "GPS drops in the mist. Fiber shots still land."
+msgstr "GPS hilang dalam kabus. Tembakan gentian masih mengena."
+
+msgid "GPS Spoofing"
+msgstr "Pemalsuan GPS"
+
+msgid "GRAPHICS"
+msgstr "GRAFIK"
+
+msgid "Greybox"
+msgstr "Kotak kelabu"
+
+msgid "Grinder Treads"
+msgstr "Rantai Pengisar"
+
+msgid "Ground"
+msgstr "Darat"
+
+msgid "Group %d"
+msgstr "Kumpulan %d"
+
+msgid "Group %d empty"
+msgstr "Kumpulan %d kosong"
+
+msgid "Group %d stored"
+msgstr "Kumpulan %d disimpan"
+
+msgid "group toggle"
+msgstr "togol kumpulan"
+
+msgid "GTFC"
+msgstr "GTFC"
+
+msgid "GTFC  crimson / amber"
+msgstr "GTFC  merah tua / ambar"
+
+msgid "GTFC gunboat"
+msgstr "Bot meriam GTFC"
+
+msgid "GTFC tank"
+msgstr "Kereta kebal GTFC"
+
+msgid "Guard"
+msgstr "Kawal"
+
+msgid "Guard. Fire at enemies in range."
+msgstr "Kawal. Tembak musuh dalam jarak."
+
+msgid "Guide"
+msgstr "Panduan"
+
+msgid "Gun Wharf"
+msgstr "Dermaga Senjata"
+
+msgid "H    Controls"
+msgstr "H    Kawalan"
+
+msgid "H guide    P protocols"
+msgstr "H panduan    P protokol"
+
+msgid "Ha Long Hydrofoil"
+msgstr "Hidrofoil Ha Long"
+
+msgid "hack held"
+msgstr "godaman dipertahankan"
+
+msgid "Hack: %ds"
+msgstr "Godaman: %ds"
+
+msgid "Hack: 20s"
+msgstr "Godaman: 20s"
+
+msgid "Halt"
+msgstr "Henti"
+
+msgid "Hard"
+msgstr "Sukar"
+
+msgid "haul 120"
+msgstr "angkut 120"
+
+msgid "Hawk Missiles"
+msgstr "Peluru Berpandu Helang"
+
+msgid "Haze coxswain"
+msgstr "Jurumudi jerebu"
+
+msgid "Haze raider"
+msgstr "Perompak jerebu"
+
+msgid "Hide mission"
+msgstr "Sembunyikan misi"
+
+msgid "High"
+msgstr "Tinggi"
+
+msgid "High graphics, full volume, voices in the game language, normal difficulty, edge pan on."
+msgstr "Grafik tinggi, kelantangan penuh, suara dalam bahasa permainan, kesukaran biasa, anjak tepi dihidupkan."
+
+msgid "High keeps trees, rain, fog, and shadows."
+msgstr "Tinggi mengekalkan pokok, hujan, kabus dan bayang-bayang."
+
+msgid "High Technology"
+msgstr "Teknologi Tinggi"
+
+msgid "Highland cliffs block the climb. The road is open ground. The enemy builds, expands, and attacks."
+msgstr "Cenuram tanah tinggi menghalang pendakian. Jalan ialah kawasan lapang. Musuh membina, berkembang dan menyerang."
+
+msgid "Highland Saboteur"
+msgstr "Pensabotaj Tanah Tinggi"
+
+msgid "Highlight a row to read what it changes."
+msgstr "Serlahkan baris untuk membaca apa yang diubahnya."
+
+msgid "Hold"
+msgstr "Tahan"
+
+msgid "hold the blocks %ds"
+msgstr "pertahankan blok %ds"
+
+msgid "Hold the radar through the haze. %d seconds left."
+msgstr "Pertahankan radar sepanjang jerebu. %d saat lagi."
+
+msgid "Hold the radar. The haze is the clock."
+msgstr "Pertahankan radar. Jerebu ialah jamnya."
+
+msgid "Hold. Do not acquire targets."
+msgstr "Tahan. Jangan cari sasaran."
+
+msgid "Holder"
+msgstr "Pemegang"
+
+msgid "Honorable Discharge"
+msgstr "Persaraan Terhormat"
+
+msgid "Host %s %s    Guest %s %s"
+msgstr "Hos %s %s    Tetamu %s %s"
+
+msgid "Host a 1v1 on this LAN, or join one. Each player brings a faction and a base."
+msgstr "Hos 1v1 di LAN ini, atau sertai satu. Setiap pemain membawa puak dan pangkalan."
+
+msgid "Host LAN"
+msgstr "Hos LAN"
+
+msgid "Houses"
+msgstr "Rumah"
+
+msgid "Hover-technical set."
+msgstr "Teknikal hover sedia."
+
+msgid "How fast the camera slides."
+msgstr "Kelajuan kamera meluncur."
+
+msgid "How to play"
+msgstr "Cara bermain"
+
+msgid "How to play (H)"
+msgstr "Cara bermain (H)"
+
+msgid "hub not queued"
+msgstr "hab belum dibaris"
+
+msgid "hub not ready"
+msgstr "hab belum sedia"
+
+msgid "hub placed"
+msgstr "hab diletakkan"
+
+msgid "hub ready to place"
+msgstr "hab sedia diletakkan"
+
+msgid "Hub Refinery"
+msgstr "Kilang Penapis Hab"
+
+msgid "HUD"
+msgstr "HUD"
+
+msgid "Humanfuture"
+msgstr "Humanfuture"
+
+msgid "Hydro radar (mission)"
+msgstr "Radar hidro (misi)"
+
+msgid "Hydro radar. Text briefing. Capture the radar so water nodes show on the map."
+msgstr "Radar hidro. Taklimat teks. Tawan radar supaya nod air dipaparkan pada peta."
+
+msgid "Indochina Drone Carrier"
+msgstr "Kapal Induk Dron Indochina"
+
+msgid "Infantry"
+msgstr "Infantri"
+
+msgid "Infantry screen the tanks. They are not the column."
+msgstr "Infantri melindungi kereta kebal. Mereka bukan kolum itu."
+
+msgid "Infiltrator Operative"
+msgstr "Operatif Penyusup"
+
+msgid "Inflatable Raft and C4"
+msgstr "Rakit Kembung dan C4"
+
+msgid "Interceptor up."
+msgstr "Pemintas di udara."
+
+msgid "Internal queue"
+msgstr "Baris gilir dalaman"
+
+msgid "Ion-Cryo Collider"
+msgstr "Pelanggar Ion-Krio"
+
+msgid "Irrawaddy Gyro-Gunship"
+msgstr "Kapal Meriam Giro Irrawaddy"
+
+msgid "Iskandar"
+msgstr "Iskandar"
+
+msgid "Islands in deep water. Shoals are the crossings. The enemy builds, expands, and attacks."
+msgstr "Pulau di air dalam. Beting ialah laluan penyeberangan. Musuh membina, berkembang dan menyerang."
+
+msgid "Jade caravan"
+msgstr "Kafilah jed"
+
+msgid "Jammer"
+msgstr "Pengacau"
+
+msgid "Jammer drill (mission)"
+msgstr "Latihan pengacau (misi)"
+
+msgid "Jammer drill. Text briefing. GPS guidance drops inside the jammer. A fiber link does not."
+msgstr "Latihan pengacau. Taklimat teks. Panduan GPS hilang di dalam pengacau. Pautan gentian tidak."
+
+msgid "Jammer ghost"
+msgstr "Hantu pengacau"
+
+msgid "Jar battery"
+msgstr "Bateri tempayan"
+
+msgid "Jar screen"
+msgstr "Pelindung tempayan"
+
+msgid "Jet Interceptor"
+msgstr "Jet Pemintas"
+
+msgid "Jets on the target."
+msgstr "Jet pada sasaran."
+
+msgid "Johor Loiter-Swarm"
+msgstr "Kawanan Legar Johor"
+
+msgid "Join LAN"
+msgstr "Sertai LAN"
+
+msgid "Join offer"
+msgstr "Tawaran sertai"
+
+msgid "Joint picket"
+msgstr "Peronda gabungan"
+
+msgid "Junta escort"
+msgstr "Pengiring junta"
+
+msgid "Kachin Sapper Dog"
+msgstr "Anjing Jurutera Kachin"
+
+msgid "kamikaze 6"
+msgstr "kamikaze 6"
+
+msgid "Kamikaze Drone Squadron"
+msgstr "Skuadron Dron Kamikaze"
+
+msgid "Keep the beam on the phantom. It is not frozen yet."
+msgstr "Kekalkan alur pada phantom. Ia belum membeku."
+
+msgid "Keep the ferry alive (%s). %d seconds left."
+msgstr "Pastikan feri selamat (%s). %d saat lagi."
+
+msgid "Keep the ferry alive. %d seconds left."
+msgstr "Pastikan feri selamat. %d saat lagi."
+
+msgid "Keng Tung Defoliation"
+msgstr "Penggugur Daun Keng Tung"
+
+msgid "Keng Tung. Text briefing. Freeze the GTFC tank column, then destroy it. Infantry screens the tanks. Toxic Defoliation can freeze them. Casting it does not end the mission. A spray run comes down the road and has to be cut off. If it lands, it defoliates your line and the side cache is lost."
+msgstr "Keng Tung. Taklimat teks. Bekukan kolum kereta kebal GTFC, kemudian musnahkannya. Infantri melindungi kereta kebal. Penggugur Daun Toksik boleh membekukan mereka. Menggunakannya tidak menamatkan misi. Serangan semburan mara di jalan dan mesti dipintas. Jika ia mendarat, ia menggugurkan daun di barisan anda dan simpanan sampingan hilang."
+
+msgid "Kenney (kenney.nl) and other CC0 sources, listed in game/sfx/CREDITS.md"
+msgstr "Kenney (kenney.nl) dan sumber CC0 lain, disenaraikan dalam game/sfx/CREDITS.md"
+
+msgid "Key guide"
+msgstr "Panduan kekunci"
+
+msgid "Kite Loiterer"
+msgstr "Dron Legar Layang-layang"
+
+msgid "Kokang and Mogok night raid"
+msgstr "Serbuan malam Kokang dan Mogok"
+
+msgid "Kokang and Mogok night raid. Raise the scaffold yard, run the ruby pits on night shift, and bring one rare-earth stock home before dawn. If the company dies, the raid fails. An ambush, a blown bridge, a turned guide, and rain can arrive while you work. The side cache is optional."
+msgstr "Serbuan malam Kokang dan Mogok. Dirikan limbungan perancah, jalankan lombong delima pada syif malam, dan bawa pulang satu stok nadir bumi sebelum subuh. Jika kompeni musnah, serbuan gagal. Serang hendap, jambatan diletupkan, pemandu berpaling tadah dan hujan boleh tiba semasa anda bekerja. Simpanan sampingan adalah pilihan."
+
+msgid "Kokang and Mogok. Text briefing. Raise the yard, clear the Orlan recon over the pits, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails. Rain hits, Orlans pass the pits, and the night shift starts. The side cache is optional."
+msgstr "Kokang dan Mogok. Taklimat teks. Dirikan limbungan, bersihkan peninjau Orlan di atas lombong, jalankan syif malam delima, dan bawa pulang satu stok nadir bumi. Jika kompeni musnah, serbuan gagal. Hujan melanda, Orlan melintasi lombong, dan syif malam bermula. Simpanan sampingan adalah pilihan."
+
+msgid "Kokang: %s. %s. %s. %s."
+msgstr "Kokang: %s. %s. %s. %s."
+
+msgid "Krakatoa Dreadnought"
+msgstr "Kapal Perang Krakatoa"
+
+msgid "Kris Plasma Rush"
+msgstr "Rempuhan Plasma Keris"
+
+msgid "LAN guest. Your company, your base."
+msgstr "Tetamu LAN. Kompeni anda, pangkalan anda."
+
+msgid "Land"
+msgstr "Darat"
+
+msgid "Land Legs"
+msgstr "Kaki Darat"
+
+msgid "LANGUAGE"
+msgstr "BAHASA / LANGUAGE"
+
+msgid "Laser Target Lock"
+msgstr "Kunci Sasaran Laser"
+
+msgid "Last-Stand Ram"
+msgstr "Rempuhan Terakhir"
+
+msgid "Leech beam on."
+msgstr "Alur lintah aktif."
+
+msgid "Left click selects. Right click moves. F ability."
+msgstr "Klik kiri untuk memilih. Klik kanan untuk bergerak. F untuk kebolehan."
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
+"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+"Klik kiri pada unit, atau seret kotak mengelilingi kompeni anda. Gelang jingga menunjukkan jarak senjata unit yang dipilih, dan gelang yang sama muncul apabila penuding berada di atas unit.\n"
+"Klik kanan tanah lapang untuk bergerak. Klik kanan musuh untuk menyerang. Satu gelang menandakan tempat itu, kemudian pudar.\n"
+"Tekan Q untuk serang-gerak ke arah kursor. Tekan X untuk berhenti. Ctrl dan 1 hingga 9 menyimpan kumpulan. Tekan nombor itu untuk memanggilnya semula, dan tekan sekali lagi untuk memusatkan kamera.\n"
+"Shift-klik menambah unit. Ctrl-klik menogol unit. Dwiklik, atau E, memilih setiap unit jenis itu. Z membariskan kompeni untuk gerakan seterusnya. Shift-klik kanan di tanah lapang menambah satu langkah lagi. R memacak bendera himpunan, dan unit baharu muncul di sebelahnya. Bar atas menunjukkan kredit yang diperoleh sesaat.\n"
+"Satu berlian berada pada langkah seterusnya unit pendahulu. Denyut nipis menandakan objektif semasa, dan peta mini membingkai tempat itu. Serangan yang kena memaparkan nombor terapung.\n"
+"Klik peta mini untuk melompatkan kamera ke situ.\n"
+"Tekan F, atau Kebolehan, untuk menggunakan kuasa unit yang dipilih. Lontaran pintar hanya menembak unit sedia yang paling hampir.\n"
+"Lajur di sebelah kanan melatih unit dan mendirikan bangunan. Berjalan ke atas pad berwarna untuk menuntutnya.\n"
+"Bot menyeberangi air dalam. Kereta kebal dan infantri kekal di darat, dan menggunakan arung cetek apabila ada yang terbuka.\n"
+"Lumpur monsun memperlahankan kereta kebal dan infantri. Jerebu Selat memendekkan penglihatan kecuali anda memiliki radar hidro. Di Mekong, klik kanan jambatan untuk meruntuhkannya dan membuka terusan. Bazar senjata yang ditawan menjual CH-4, Su-30, Orlan-10, dan Skuad FLH7, serta mencuri wang musuh.\n"
+"Kuasa rendah menghentikan pengeluaran baharu sehingga loji menampung penggunaan, dan melumpuhkan pertahanan. Batal membuang bangunan yang sedang dibina. Radar hidro menerangi koridor sungai. Klik kanan Kubu Kecil Sanga atau Multipenembak dengan infantri untuk mengisinya, kemudian klik bangunan siap itu untuk mengeluarkan mereka. Klik kedua pada Defender-VX yang siap menukar senapang darat dan udaranya.\n"
+"P membuka protokol. H membuka panduan ini.\n"
+"Baris status menunjukkan Objektif selesai apabila anda menang, dan Objektif gagal jika kompeni anda musnah."
+
+msgid "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr "Klik kiri untuk pilih. Shift-klik menambah. Dwiklik atau E memilih jenis itu. Klik kanan tanah untuk bergerak, musuh untuk menyerang. Shift-klik kanan menambah titik laluan. Z membariskan kompeni. Q serang-gerak. X berhenti. R memindahkan bendera himpunan. Ctrl+1-9 menyimpan kumpulan, nombornya memanggil semula. Gelang menandakan arahan. Klik peta mini untuk melompat. F kebolehan. H panduan. P membuka protokol."
+
+msgid "Line"
+msgstr "Barisan"
+
+msgid "Linked. %d units."
+msgstr "Disambung. %d unit."
+
+msgid "LOADING"
+msgstr "MEMUATKAN"
+
+msgid "Loading"
+msgstr "Memuatkan"
+
+msgid "Locks a satellite on the target. One cast."
+msgstr "Mengunci satelit pada sasaran. Sekali guna."
+
+msgid "Longtail Raider"
+msgstr "Penyerbu Ekor Panjang"
+
+msgid "Love Drunk"
+msgstr "Love Drunk"
+
+msgid "Low"
+msgstr "Rendah"
+
+msgid "Low drops trees, rain, fog, and shadows."
+msgstr "Rendah membuang pokok, hujan, kabus, dan bayang."
+
+msgid "low power"
+msgstr "kuasa rendah"
+
+msgid "Low power. Build a plant."
+msgstr "Kuasa rendah. Bina loji."
+
+msgid "Machinesfuture"
+msgstr "Machinesfuture"
+
+msgid "Mae Sai scaffold (mission)"
+msgstr "Perancah Mae Sai (misi)"
+
+msgid "Mae Sai. Text briefing. Raise the scaffold yard and keep the drain running until the frame is finished."
+msgstr "Mae Sai. Taklimat teks. Dirikan laman perancah dan pastikan saliran terus berjalan sehingga rangka siap."
+
+msgid "Magnetic Harpoon Grinder"
+msgstr "Pengisar Tempuling Magnet"
+
+msgid "Magnetic Hull Breach"
+msgstr "Tembusan Badan Magnet"
+
+msgid "Magnetic Satellite"
+msgstr "Satelit Magnet"
+
+msgid "Malacca Pocket-Sub"
+msgstr "Kapal Selam Poket Melaka"
+
+msgid "Malacca Recon Drone"
+msgstr "Dron Peninjau Melaka"
+
+msgid "Malay"
+msgstr "Bahasa Melayu"
+
+msgid "Mandarin"
+msgstr "Bahasa Mandarin"
+
+msgid "Market"
+msgstr "Pasar"
+
+msgid "Master"
+msgstr "Induk"
+
+msgid "Mekong"
+msgstr "Mekong"
+
+msgid "Mekong Assault Destroyer"
+msgstr "Pemusnah Serangan Mekong"
+
+msgid "Mekong Combat Sapper"
+msgstr "Jurutera Tempur Mekong"
+
+msgid "Mekong Delta"
+msgstr "Delta Mekong"
+
+msgid "Mekong Hawk UAV"
+msgstr "UAV Helang Mekong"
+
+msgid "Mekong Spider Drone"
+msgstr "Dron Labah-labah Mekong"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Menu and match songs. The default sits a little under full."
+msgstr "Lagu menu dan perlawanan. Lalainya sedikit di bawah penuh."
+
+msgid "Menu ticks, weapons, and the radio."
+msgstr "Bunyi menu, senjata, dan radio."
+
+msgid "Menus, HUD, briefings, and subtitles. Voices follow; the Audio page can change them."
+msgstr "Menu, HUD, taklimat dan sari kata. Suara turut berubah; halaman Audio boleh mengubahnya."
+
+msgid "Militia holding."
+msgstr "Militia bertahan."
+
+msgid "Militia moving."
+msgstr "Militia bergerak."
+
+msgid "Militia under fire."
+msgstr "Militia diserang."
+
+msgid "Mindanao Striker Walker"
+msgstr "Pejalan Penyerang Mindanao"
+
+msgid "Mine rubies"
+msgstr "Lombong delima"
+
+msgid "mine rubies"
+msgstr "lombong delima"
+
+msgid "Mine rubies: %d/30"
+msgstr "Lombong delima: %d/30"
+
+msgid "Mines in the cut. Take the boats wide of the line."
+msgstr "Periuk api di terusan. Bawa bot jauh dari barisan."
+
+msgid "Mines rubies. One cast."
+msgstr "Melombong delima. Sekali guna."
+
+msgid "Minimap"
+msgstr "Peta mini"
+
+msgid "Mirage Camo-Tank"
+msgstr "Kereta Kebal Penyamar Fatamorgana"
+
+msgid "Mission"
+msgstr "Misi"
+
+msgid "Mobile core"
+msgstr "Teras bergerak"
+
+msgid "Mogok Night-Shift Overdrive"
+msgstr "Pecutan Syif Malam Mogok"
+
+msgid "Monsoon"
+msgstr "Monsun"
+
+msgid "Monsoon Bull-Charge"
+msgstr "Rempuhan Seladang Monsun"
+
+msgid "Move packer"
+msgstr "Gerakkan pengemas"
+
+msgid "Multigunner"
+msgstr "Multipenembak"
+
+msgid "multigunner full"
+msgstr "multipenembak penuh"
+
+msgid "MULTIPLAYER"
+msgstr "BERBILANG PEMAIN"
+
+msgid "MUSIC"
+msgstr "MUZIK"
+
+msgid "Music"
+msgstr "Muzik"
+
+msgid "MVD"
+msgstr "MVD"
+
+msgid "MVD  charcoal / cyan"
+msgstr "MVD  arang / sian"
+
+msgid "MVD  charcoal / cyan    internal queue"
+msgstr "MVD  arang / sian    baris gilir dalaman"
+
+msgid "MVD cutter"
+msgstr "Pemotong MVD"
+
+msgid "MVD yard"
+msgstr "Laman MVD"
+
+msgid "Nano-Deflector Barrier"
+msgstr "Penghadang Nano-Pemesong"
+
+msgid "napalm 36"
+msgstr "napalm 36"
+
+msgid "Napalm is armed. Calling it does not sink the fleet."
+msgstr "Napalm sedia. Memanggilnya tidak menenggelamkan armada."
+
+msgid "Naval"
+msgstr "Tentera Laut"
+
+msgid "Naval Yard"
+msgstr "Limbungan Tentera Laut"
+
+msgid "need a naval yard"
+msgstr "perlu limbungan tentera laut"
+
+msgid "need a tech center"
+msgstr "perlu pusat teknologi"
+
+msgid "need an airfield"
+msgstr "perlu lapangan terbang"
+
+msgid "New to ASEAN 2031?"
+msgstr "Baru dengan ASEAN 2031?"
+
+msgid "Next skirmish: %s"
+msgstr "Pertempuran seterusnya: %s"
+
+msgid "Night"
+msgstr "Night"
+
+msgid "Night commander"
+msgstr "Komander malam"
+
+msgid "Night shift paying"
+msgstr "Syif malam membayar"
+
+msgid "NMRF"
+msgstr "NMRF"
+
+msgid "NMRF  olive / emerald"
+msgstr "NMRF  zaitun / zamrud"
+
+msgid "NMRF  olive / emerald    mobile core"
+msgstr "NMRF  zaitun / zamrud    teras bergerak"
+
+msgid "NMRF trimaran"
+msgstr "Trimaran NMRF"
+
+msgid "NMRF yard"
+msgstr "Laman NMRF"
+
+msgid "No stock yet"
+msgstr "Belum ada stok"
+
+msgid "no target"
+msgstr "tiada sasaran"
+
+msgid "Normal"
+msgstr "Biasa"
+
+msgid "not enough credits"
+msgstr "kredit tidak cukup"
+
+msgid "Not Needed Anymore"
+msgstr "Not Needed Anymore"
+
+msgid "not ready"
+msgstr "belum sedia"
+
+msgid "Nothing selected"
+msgstr "Tiada yang dipilih"
+
+msgid "nothing to cancel"
+msgstr "tiada untuk dibatalkan"
+
+msgid "nothing to repair"
+msgstr "tiada untuk dibaiki"
+
+msgid "Noto Sans Myanmar, Noto Sans Thai, and Noto Sans SC, SIL Open Font License 1.1"
+msgstr "Noto Sans Myanmar, Noto Sans Thai dan Noto Sans SC, Lesen Fon Terbuka SIL 1.1"
+
+msgid "NOW PLAYING"
+msgstr "SEDANG DIMAINKAN"
+
+msgid "Nusantara Boarder"
+msgstr "Penyerbu Kapal Nusantara"
+
+msgid "Objective complete"
+msgstr "Objektif selesai"
+
+msgid "Objective failed"
+msgstr "Objektif gagal"
+
+msgid "Objective stalled"
+msgstr "Objektif tergendala"
+
+msgid "Offer"
+msgstr "Tawaran"
+
+msgid "Offshore Tidal Turbine"
+msgstr "Turbin Pasang Surut Luar Pesisir"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Olive / emerald"
+msgstr "Zaitun / zamrud"
+
+msgid "On"
+msgstr "Hidup"
+
+msgid "One cast, then it is spent."
+msgstr "Sekali guna, kemudian habis."
+
+msgid "one hero"
+msgstr "satu wira"
+
+msgid "Open yard"
+msgstr "Buka laman"
+
+msgid "Opens robotic assembly. One cast."
+msgstr "Membuka pemasangan robotik. Sekali guna."
+
+msgid "Opens trade income. One cast."
+msgstr "Membuka pendapatan dagangan. Sekali guna."
+
+msgid "Operation 1027 drone wave"
+msgstr "Gelombang dron Operasi 1027"
+
+msgid "Operation 1027. Text briefing. Knock out the junta EW jamming towers while the escorts press in, then destroy the parked Su-30 and CH-4 hangars. The drone swarm can help. Casting it does not end the mission. The hangars scramble, the swarm crosses, and two rifles arrive."
+msgstr "Operasi 1027. Taklimat teks. Lumpuhkan menara gangguan EW junta sementara pengiring mara, kemudian musnahkan hangar Su-30 dan CH-4 yang diparkir. Kawanan dron boleh membantu. Menggunakannya tidak menamatkan misi. Hangar berlepas kecemasan, kawanan menyeberang, dan dua senapang tiba."
+
+msgid "Operation Shattered Monsoon"
+msgstr "Operasi Monsun Berkecai"
+
+msgid "Operation Shattered Monsoon. Text briefing. Destroy both enemy superweapons. A garrison screens the citadel. Protocols can help. Casting them does not end the mission. The garrison comes out, then a countdown runs. Destroy both weapons before it hits zero or the mission fails."
+msgstr "Operasi Monsun Berkecai. Taklimat teks. Musnahkan kedua-dua senjata super musuh. Sebuah garison melindungi kubu kota. Protokol boleh membantu. Menggunakannya tidak menamatkan misi. Garison keluar, kemudian kiraan detik berjalan. Musnahkan kedua-dua senjata sebelum ia mencecah sifar atau misi gagal."
+
+msgid "Opponent left. Defeat."
+msgstr "Lawan keluar. Kekalahan."
+
+msgid "Opponent left. Victory."
+msgstr "Lawan keluar. Kemenangan."
+
+msgid "Orlan recon"
+msgstr "Peninjau Orlan"
+
+msgid "Orlan Thermal Scan"
+msgstr "Imbasan Terma Orlan"
+
+msgid "Orlan-10"
+msgstr "Orlan-10"
+
+msgid "Orlans over the ruby pits. They have not marked the yard."
+msgstr "Orlan di atas lubang delima. Mereka belum menandakan laman."
+
+msgid "Overall loudness."
+msgstr "Kelantangan keseluruhan."
+
+msgid "Overload Barrage"
+msgstr "Bedilan Beban Lampau"
+
+msgid "P    Protocols"
+msgstr "P    Protokol"
+
+msgid "packer already unpacked"
+msgstr "pengemas sudah dibuka"
+
+msgid "Packer captain"
+msgstr "Kapten pengemas"
+
+msgid "Packer sail (mission)"
+msgstr "Pelayaran pengemas (misi)"
+
+msgid "Packer sail. Text briefing. Sail the packer into shallow water, unpack the wharf, and upgrade it."
+msgstr "Pelayaran pengemas. Taklimat teks. Layarkan pengemas ke air cetek, buka dermaga, dan naik tarafnya."
+
+msgid "packer sailed"
+msgstr "pengemas berlayar"
+
+msgid "packer stayed packed"
+msgstr "pengemas kekal berkemas"
+
+msgid "Paddy"
+msgstr "Sawah"
+
+msgid "Palms"
+msgstr "Palma"
+
+msgid "Pan speed"
+msgstr "Kelajuan sorot"
+
+msgid "Past Cracks"
+msgstr "Past Cracks"
+
+msgid "Paste the other browser's offer or answer"
+msgstr "Tampal tawaran atau jawapan pelayar yang satu lagi"
+
+msgid "Patani Corsair Guard"
+msgstr "Pengawal Lanun Patani"
+
+msgid "Patani: %d ghosts in the jammer. GPS shots must miss. Fiber stays true."
+msgstr "Patani: %d hantu dalam pengganggu. Tembakan GPS mesti tersasar. Gentian kekal tepat."
+
+msgid "Pause and settings"
+msgstr "Jeda dan tetapan"
+
+msgid "PAUSED"
+msgstr "DIJEDA"
+
+msgid "Paused. Waiting for the other player."
+msgstr "Dijeda. Menunggu pemain lain."
+
+msgid "Pays 250 credits once."
+msgstr "Membayar 250 kredit sekali."
+
+msgid "phantom frozen"
+msgstr "hantu dibekukan"
+
+msgid "Phantom of the Plain of Jars"
+msgstr "Hantu Dataran Tempayan"
+
+msgid "Pheromone Bark"
+msgstr "Salakan Feromon"
+
+msgid "Phillips"
+msgstr "Phillips"
+
+msgid "Phillips Channel"
+msgstr "Selat Phillips"
+
+msgid "Phillips Wave-Cannon"
+msgstr "Meriam Gelombang Phillips"
+
+msgid "Pick a faction and a map, then ready up."
+msgstr "Pilih puak dan peta, kemudian bersedia."
+
+msgid "Pick a map, then Play. The enemy builds, expands, and attacks."
+msgstr "Pilih peta, kemudian Main. Musuh membina, meluaskan, dan menyerang."
+
+msgid "Pick host or join."
+msgstr "Pilih hos atau sertai."
+
+msgid "Pickets across the bow. They are not the fleet."
+msgstr "Kapal peronda di haluan. Mereka bukan armada."
+
+msgid "pillbox full"
+msgstr "kubu kecil penuh"
+
+msgid "pipeline blocked"
+msgstr "saluran paip tersekat"
+
+msgid "pipeline ready"
+msgstr "saluran paip sedia"
+
+msgid "Pit guard"
+msgstr "Pengawal lubang"
+
+msgid "Place"
+msgstr "Letak"
+
+msgid "Place hub"
+msgstr "Letak hab"
+
+msgid "Plain"
+msgstr "Dataran"
+
+msgid "Plain of Jars. Text briefing. Hold the beam until the phantom freezes, then destroy the phantom, both batteries, and the screen. The beam holds, the phantom stutters, and the batteries stay up."
+msgstr "Dataran Tempayan. Taklimat teks. Tahan pancaran sehingga hantu membeku, kemudian musnahkan hantu, kedua-dua bateri, dan tabir. Pancaran bertahan, hantu tersekat-sekat, dan bateri kekal berdiri."
+
+msgid "Plain of Jars: %s, %s. Phantom %d, battery %d."
+msgstr "Dataran Tempayan: %s, %s. Hantu %d, bateri %d."
+
+msgid "Plain phantom"
+msgstr "Hantu dataran"
+
+msgid "Plantation Bomber"
+msgstr "Pengebom Ladang"
+
+msgid "Play"
+msgstr "Main"
+
+msgid "Play the training raid"
+msgstr "Main serbuan latihan"
+
+msgid "Players: 2"
+msgstr "Pemain: 2"
+
+msgid "Point-Defense Drones"
+msgstr "Dron Pertahanan Titik"
+
+msgid "Poison"
+msgstr "Poison"
+
+msgid "Power %d/%d"
+msgstr "Kuasa %d/%d"
+
+msgid "Power generated / power drawn"
+msgstr "Kuasa dijana / kuasa digunakan"
+
+msgid "Practice map."
+msgstr "Peta latihan."
+
+msgid "Premature Discharge"
+msgstr "Lepasan Pramatang"
+
+msgid "Press F to use an ability."
+msgstr "Tekan F untuk menggunakan kebolehan."
+
+msgid "Print overdrive."
+msgstr "Pecutan cetakan."
+
+msgid "printed 8"
+msgstr "dicetak 8"
+
+msgid "Prints a batch of units. One cast."
+msgstr "Mencetak sekumpulan unit. Sekali guna."
+
+msgid "Printsmith Rifleman"
+msgstr "Penembak Tukang Cetak"
+
+msgid "Protocol"
+msgstr "Protokol"
+
+msgid "Protocol bar (mission)"
+msgstr "Bar protokol (misi)"
+
+msgid "Protocol bar. Text briefing. Cast logistics, arsenal, and oracle once each. A second cast does nothing."
+msgstr "Bar protokol. Taklimat teks. Gunakan logistik, senjata, dan oracle sekali setiap satu. Penggunaan kedua tidak berbuat apa-apa."
+
+msgid "protocol spent"
+msgstr "protokol habis"
+
+msgid "Protocols"
+msgstr "Protokol"
+
+msgid "Protocols (P)"
+msgstr "Protokol (P)"
+
+msgid "Psionic Monsoon"
+msgstr "Monsun Psionik"
+
+msgid "Psionic Monsoon Decimator"
+msgstr "Pembinasa Monsun Psionik"
+
+msgid "Q    Attack-move"
+msgstr "Q    Serang-gerak"
+
+msgid "Quality"
+msgstr "Kualiti"
+
+msgid "queue full"
+msgstr "baris gilir penuh"
+
+msgid "Queue hub"
+msgstr "Baris gilir hab"
+
+msgid "Queue the hub inside the pad, buy clearance, then place it. The enemy builds, expands, and attacks."
+msgstr "Masukkan hab ke baris gilir di dalam pad, beli kebenaran, kemudian letakkannya. Musuh membina, meluaskan, dan menyerang."
+
+msgid "QUIT"
+msgstr "KELUAR"
+
+msgid "Quit to menu"
+msgstr "Keluar ke menu"
+
+msgid "Radar garrison"
+msgstr "Garison radar"
+
+msgid "Radar relief"
+msgstr "Bantuan radar"
+
+msgid "Raid complete"
+msgstr "Serbuan selesai"
+
+msgid "Raid complete. Scaffold, night ruby, rare-earth stock."
+msgstr "Serbuan selesai. Perancah, delima malam, stok nadir bumi."
+
+msgid "Raid stalled"
+msgstr "Serbuan tergendala"
+
+msgid "Raider"
+msgstr "Penyerbu"
+
+msgid "Rail Strike"
+msgstr "Serangan Rel"
+
+msgid "Rain on the pits. Keep the company moving."
+msgstr "Hujan di lubang. Terus gerakkan kompeni."
+
+msgid "Raise a yard, claim Golden Slag / Aurum-9, cross, then press F."
+msgstr "Dirikan laman, tuntut Sanga Emas / Aurum-9, menyeberang, kemudian tekan F."
+
+msgid "Raise scaffold"
+msgstr "Dirikan perancah"
+
+msgid "raise the yard"
+msgstr "dirikan laman"
+
+msgid "Raise the yard before the Orlans find the pits."
+msgstr "Dirikan laman sebelum Orlan menemui lubang."
+
+msgid "Raises a shield. It can be cast again after it cools."
+msgstr "Menaikkan perisai. Boleh digunakan lagi selepas ia sejuk."
+
+msgid "Raises the tech rank. One cast."
+msgstr "Menaikkan pangkat teknologi. Sekali guna."
+
+msgid "Raises weapon damage. One cast."
+msgstr "Meningkatkan kerosakan senjata. Sekali guna."
+
+msgid "Rally set"
+msgstr "Himpunan ditetapkan"
+
+msgid "Ramming Hydro-Shield"
+msgstr "Perisai Hidro Perempuh"
+
+msgid "rare earth"
+msgstr "nadir bumi"
+
+msgid "rare earth home"
+msgstr "nadir bumi pulang"
+
+msgid "Rare-earth stock (mission)"
+msgstr "Stok nadir bumi (misi)"
+
+msgid "Rare-earth stock secured"
+msgstr "Stok nadir bumi diamankan"
+
+msgid "Rare-earth stock. Text briefing. Claim the rare-earth node and bring one stock home."
+msgstr "Stok nadir bumi. Taklimat teks. Tuntut nod nadir bumi dan bawa pulang satu stok."
+
+msgid "RDY"
+msgstr "SDA"
+
+msgid "Read the briefing, then meet it on the field."
+msgstr "Baca taklimat, kemudian hadapinya di medan."
+
+msgid "READY"
+msgstr "SEDIA"
+
+msgid "Ready"
+msgstr "Sedia"
+
+msgid "Ready To Rage Against The Abnormalities"
+msgstr "Ready To Rage Against The Abnormalities"
+
+msgid "recon down"
+msgstr "peninjau tumbang"
+
+msgid "Recruit"
+msgstr "Rekrut"
+
+msgid "Repair"
+msgstr "Baiki"
+
+msgid "repair off"
+msgstr "baiki mati"
+
+msgid "Resource pad in sight."
+msgstr "Pad sumber kelihatan."
+
+msgid "Restart"
+msgstr "Mula semula"
+
+msgid "Restore Defaults"
+msgstr "Pulihkan Lalai"
+
+msgid "Resume"
+msgstr "Sambung"
+
+msgid "Return to the previous screen."
+msgstr "Kembali ke skrin sebelumnya."
+
+msgid "Reveals the field. One cast."
+msgstr "Mendedahkan medan. Sekali guna."
+
+msgid "Riau Syndicate Fixer"
+msgstr "Pengatur Sindiket Riau"
+
+msgid "Right-click    Move"
+msgstr "Klik kanan    Gerak"
+
+msgid "Right-click an enemy to attack."
+msgstr "Klik kanan musuh untuk menyerang."
+
+msgid "Right-click enemy    Attack"
+msgstr "Klik kanan musuh    Serang"
+
+msgid "Right-click the ground to move."
+msgstr "Klik kanan tanah untuk bergerak."
+
+msgid "River"
+msgstr "Sungai"
+
+msgid "River commander"
+msgstr "Komander sungai"
+
+msgid "River gunboat"
+msgstr "Bot meriam sungai"
+
+msgid "Road"
+msgstr "Jalan"
+
+msgid "Road ambush"
+msgstr "Serang hendap jalan"
+
+msgid "Robotic Assembly"
+msgstr "Pemasangan Robotik"
+
+msgid "Rotate to landscape for the best experience"
+msgstr "Putar ke landskap untuk pengalaman terbaik"
+
+msgid "RTS CORE"
+msgstr "TERAS RTS"
+
+msgid "Ruby night market (mission)"
+msgstr "Pasar malam delima (misi)"
+
+msgid "Ruby night market. Text briefing. Snap the ruby pit and run the night shift until the purse fills."
+msgstr "Pasar malam delima. Taklimat teks. Rampas lubang delima dan jalankan syif malam sehingga dompet penuh."
+
+msgid "Ruby not paying"
+msgstr "Delima tidak membayar"
+
+msgid "ruby paid"
+msgstr "delima dibayar"
+
+msgid "Rusher"
+msgstr "Perempuh"
+
+msgid "S.H.R.I.N.K. Ray"
+msgstr "Sinar P.E.N.G.E.C.I.L"
+
+msgid "Saigon Prism-Lock Tank"
+msgstr "Kereta Kebal Kunci Prisma Saigon"
+
+msgid "Salvage Leech Beam"
+msgstr "Pancaran Lintah Sisa"
+
+msgid "Salvage leech."
+msgstr "Lintah sisa."
+
+msgid "Salween Hydro-Generator"
+msgstr "Penjana Hidro Salween"
+
+msgid "Salween RPG Trooper"
+msgstr "Askar RPG Salween"
+
+msgid "Salween Smuggler Boat"
+msgstr "Bot Penyeludup Salween"
+
+msgid "Sandbox"
+msgstr "Kotak Pasir"
+
+msgid "Sandbox: yards, queues, five nodes, jammer"
+msgstr "Kotak Pasir: laman, baris gilir, lima nod, pengganggu"
+
+msgid "Satellite Laser Designation"
+msgstr "Penandaan Laser Satelit"
+
+msgid "satellite lock"
+msgstr "kunci satelit"
+
+msgid "Satellite Recon"
+msgstr "Tinjauan Satelit"
+
+msgid "Scaffold"
+msgstr "Perancah"
+
+msgid "Scaffold stalled"
+msgstr "Perancah tergendala"
+
+msgid "scaffold stalled"
+msgstr "perancah tergendala"
+
+msgid "Scaffold up"
+msgstr "Perancah berdiri"
+
+msgid "Scaffold yard"
+msgstr "Laman perancah"
+
+msgid "Scrambler"
+msgstr "Pengacau"
+
+msgid "Sea"
+msgstr "Laut"
+
+msgid "Seal answer"
+msgstr "Meterai jawapan"
+
+msgid "Secure rare earth"
+msgstr "Amankan nadir bumi"
+
+msgid "Seismic Slag Vacuum"
+msgstr "Penyedut Sanga Seismik"
+
+msgid "Seismic Slag Vacuum Imploder"
+msgstr "Peletup Ke Dalam Penyedut Sanga Seismik"
+
+msgid "Sell"
+msgstr "Jual"
+
+msgid "sell off"
+msgstr "jual mati"
+
+msgid "Send"
+msgstr "Hantar"
+
+msgid "Sends a drone squadron. One cast."
+msgstr "Menghantar skuadron dron. Sekali guna."
+
+msgid "Sets an ambush. One cast."
+msgstr "Memasang serang hendap. Sekali guna."
+
+msgid "SETTINGS"
+msgstr "TETAPAN"
+
+msgid "SFX"
+msgstr "SFX"
+
+msgid "Shan Behemoth Tank"
+msgstr "Kereta Kebal Raksasa Shan"
+
+msgid "Shan Insurgent Militia"
+msgstr "Militia Pemberontak Shan"
+
+msgid "Shaped Charge"
+msgstr "Cas Berbentuk"
+
+msgid "Shar Htoo Waw Kloud Drone Truck"
+msgstr "Trak Dron Awan Shar Htoo Waw"
+
+msgid "shield %d"
+msgstr "perisai %d"
+
+msgid "Shipment guard"
+msgstr "Pengawal kiriman"
+
+msgid "Shore boat"
+msgstr "Bot pantai"
+
+msgid "Shore gun"
+msgstr "Meriam pantai"
+
+msgid "Shrink ray."
+msgstr "Sinar pengecil."
+
+msgid "Shwe Kokko capture"
+msgstr "Penawanan Shwe Kokko"
+
+msgid "Shwe Kokko. Text briefing. Destroy the garrison and the river gunboats, capture both server blocks, and siphon the enemy purse. Hold a server block for twenty seconds. If you are pushed off, the hack resets. The side cache is optional."
+msgstr "Shwe Kokko. Taklimat teks. Musnahkan garison dan bot meriam sungai, tawan kedua-dua blok pelayan, dan sedut wang musuh. Tahan satu blok pelayan selama dua puluh saat. Jika anda ditolak keluar, penggodaman bermula semula. Simpanan sampingan adalah pilihan."
+
+msgid "Side"
+msgstr "Pihak"
+
+msgid "Siege of Chiang Rai"
+msgstr "Kepungan Chiang Rai"
+
+msgid "Singapore Trimaran"
+msgstr "Trimaran Singapura"
+
+msgid "Sink the boats (%d). Raise the wharf to level 2 (now %d)."
+msgstr "Tenggelamkan bot (%d). Naikkan dermaga ke tahap 2 (kini %d)."
+
+msgid "Sink the joint fleet (%d)."
+msgstr "Tenggelamkan armada gabungan (%d)."
+
+msgid "Siphon is up. Stay on the blocks until it pays."
+msgstr "Sedutan berjalan. Kekal di blok sehingga ia membayar."
+
+msgid "Siti The Kraken"
+msgstr "Siti Sang Kraken"
+
+msgid "Skimming out."
+msgstr "Mencuri keluar."
+
+msgid "Skip"
+msgstr "Langkau"
+
+msgid "Skip >>  N"
+msgstr "Langkau >>  N"
+
+msgid "Skip to the next song (N)"
+msgstr "Langkau ke lagu seterusnya (N)"
+
+msgid "SKIRMISH"
+msgstr "PERTEMPURAN"
+
+msgid "Skirmish"
+msgstr "Pertempuran"
+
+msgid "Slag Jump Mortar"
+msgstr "Mortar Lompat Sanga"
+
+msgid "Slag Jump Thruster"
+msgstr "Pendorong Lompat Sanga"
+
+msgid "Slag Molotov"
+msgstr "Molotov Sanga"
+
+msgid "Slag Molotov."
+msgstr "Molotov Sanga."
+
+msgid "Slag Pillbox"
+msgstr "Kubu Kecil Sanga"
+
+msgid "Slag Refinery"
+msgstr "Kilang Penapis Sanga"
+
+msgid "Sleeper Ambush"
+msgstr "Serang Hendap Tidur"
+
+msgid "smart-cast"
+msgstr "lontaran pintar"
+
+msgid "Smart-cast drill (mission)"
+msgstr "Latihan lontaran pintar (misi)"
+
+msgid "Smart-cast drill. Text briefing. Toggle the group. Only the closest ready unit fires."
+msgstr "Latihan lontaran pintar. Taklimat teks. Togol kumpulan. Hanya unit sedia yang paling hampir menembak."
+
+msgid "Solar-Biomass Plant"
+msgstr "Loji Solar-Biojisim"
+
+msgid "sold %d"
+msgstr "dijual %d"
+
+msgid "Sonic Howl"
+msgstr "Lolongan Sonik"
+
+msgid "Sop Ruak"
+msgstr "Sop Ruak"
+
+msgid "SOUND EFFECTS"
+msgstr "KESAN BUNYI"
+
+msgid "Space    Last alert"
+msgstr "Space    Amaran terakhir"
+
+msgid "Spectrum Prism"
+msgstr "Prisma Spektrum"
+
+msgid "speed 1.4"
+msgstr "kelajuan 1.4"
+
+msgid "Speeds the company up. One cast."
+msgstr "Mempercepat kompeni. Sekali guna."
+
+msgid "Spider-Hole Ambush"
+msgstr "Serang Hendap Lubang Labah-labah"
+
+msgid "Spoofs GPS guidance. One cast."
+msgstr "Memalsukan panduan GPS. Sekali guna."
+
+msgid "Spool FPV"
+msgstr "Gulung FPV"
+
+msgid "Sprint Skates"
+msgstr "Kasut Roda Pecut"
+
+msgid "Stand-Off Glide Barrage"
+msgstr "Bedilan Luncur Jarak Jauh"
+
+msgid "Start an offer before pasting an answer."
+msgstr "Mulakan tawaran sebelum menampal jawapan."
+
+msgid "Start with Kokang and Mogok. The match opens with a short lesson."
+msgstr "Mulakan dengan Kokang dan Mogok. Perlawanan dibuka dengan pelajaran ringkas."
+
+msgid "Starting in %d."
+msgstr "Bermula dalam %d."
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Stay on the radar until the murk thins."
+msgstr "Kekal di radar sehingga kabus menipis."
+
+msgid "Stay with the wagon. The bazaar is the drop."
+msgstr "Kekal bersama gerabak. Bazar ialah tempat penghantaran."
+
+msgid "still fighting"
+msgstr "masih bertempur"
+
+msgid "Stilts"
+msgstr "Tiang"
+
+msgid "Stop"
+msgstr "Berhenti"
+
+msgid "Stop the sprayer before it reaches the tanks."
+msgstr "Hentikan penyembur sebelum ia sampai ke kereta kebal."
+
+msgid "Strait Haze"
+msgstr "Jerebu Selat"
+
+msgid "Straits Pirate Raid"
+msgstr "Serbuan Lanun Selat"
+
+msgid "Street Press"
+msgstr "Mesin Cetak Jalanan"
+
+msgid "Strip lead"
+msgstr "Ketua landasan"
+
+msgid "Structures"
+msgstr "Struktur"
+
+msgid "Su-30"
+msgstr "Su-30"
+
+msgid "Su-30 hangar"
+msgstr "Hangar Su-30"
+
+msgid "Su-30 napalm run"
+msgstr "Serangan napalm Su-30"
+
+msgid "Submersible or Sky-Jet"
+msgstr "Kapal Selam atau Jet Langit"
+
+msgid "Sulu Tank-Buster"
+msgstr "Pemusnah Kereta Kebal Sulu"
+
+msgid "Sumatra Hover-Technical"
+msgstr "Teknikal Hover Sumatera"
+
+msgid "Supayarlat"
+msgstr "Supayarlat"
+
+msgid "superweapon cooling"
+msgstr "senjata super menyejuk"
+
+msgid "Superweapon ready."
+msgstr "Senjata super sedia."
+
+msgid "survive: hold the radar through the haze while the enemy attacks"
+msgstr "bertahan: pertahankan radar melalui jerebu semasa musuh menyerang"
+
+msgid "survive: the ferry crosses and holds until the timer runs out"
+msgstr "bertahan: feri menyeberang dan bertahan sehingga pemasa tamat"
+
+msgid "SW"
+msgstr "SS"
+
+msgid "swarm 23"
+msgstr "kawanan 23"
+
+msgid "Swarm Cloud"
+msgstr "Awan Kawanan"
+
+msgid "Swarm Hive Truck"
+msgstr "Trak Sarang Kawanan"
+
+msgid "Syndicate Alchemist"
+msgstr "Ahli Alkimia Sindiket"
+
+msgid "Tab    Next tab"
+msgstr "Tab    Tab seterusnya"
+
+msgid "Tachileik caravan"
+msgstr "Kafilah Tachileik"
+
+msgid "Tachileik caravan. Text briefing. Break the ambush and the road relief, walk the jade caravan onto the bazaar, then snap the ruby pit and run the night shift until the purse fills. Stay with the wagon while drones harass it. If the wagon dies, the mission fails. The road ambush hits after that. The side cache is optional."
+msgstr "Kafilah Tachileik. Taklimat teks. Patahkan serang hendap dan bantuan jalan, bawa kafilah jed ke bazar, kemudian rampas lubang delima dan jalankan syif malam sehingga dompet penuh. Kekal bersama gerabak semasa dron mengganggunya. Jika gerabak musnah, misi gagal. Serang hendap jalan menyerang selepas itu. Simpanan sampingan adalah pilihan."
+
+msgid "Tachileik Half-Track"
+msgstr "Separuh Rantai Tachileik"
+
+msgid "Target Painter"
+msgstr "Penanda Sasaran"
+
+msgid "Teak Technical"
+msgstr "Teknikal Jati"
+
+msgid "tech 1"
+msgstr "teknologi 1"
+
+msgid "Tech Center"
+msgstr "Pusat Teknologi"
+
+msgid "Technical under fire."
+msgstr "Teknikal diserang."
+
+msgid "Telekinetic Maelstrom"
+msgstr "Pusaran Telekinetik"
+
+msgid "Ten Degree Atolls"
+msgstr "Atol Sepuluh Darjah"
+
+msgid "Thai"
+msgstr "Bahasa Thai"
+
+msgid "Thai Border Mass Print"
+msgstr "Cetakan Besar Sempadan Thai"
+
+msgid "That paste is not an answer."
+msgstr "Tampalan itu bukan jawapan."
+
+msgid "That paste is not an offer."
+msgstr "Tampalan itu bukan tawaran."
+
+msgid "The 74-Kilometer Watch"
+msgstr "Kawalan 74 Kilometer"
+
+msgid "The 74-Kilometer Watch. Text briefing. Destroy the radar garrison and its relief squad, then hold the hydro radar so water shows. The radar pings, two rifles arrive, and the guide sells the watch."
+msgstr "Kawalan 74 Kilometer. Taklimat teks. Musnahkan garison radar dan skuad bantuannya, kemudian pertahankan radar hidro supaya air kelihatan. Radar berdenyut, dua senapang tiba, dan pemandu menjual pos kawalan."
+
+msgid "The answer did not start."
+msgstr "Jawapan tidak bermula."
+
+msgid "The answer was rejected."
+msgstr "Jawapan ditolak."
+
+msgid "The atoll is held by boats. Sail the packer in."
+msgstr "Atol dikuasai bot. Layarkan pengemas masuk."
+
+msgid "The browser did not produce a session description."
+msgstr "Pelayar tidak menghasilkan perihalan sesi."
+
+msgid "The camera slides when the pointer nears the screen edge."
+msgstr "Kamera menggelongsor apabila penuding menghampiri tepi skrin."
+
+msgid "the caravan is lost"
+msgstr "kafilah hilang"
+
+msgid "The channel is mined. Break out and land the far shore."
+msgstr "Terusan dipasang periuk api. Pecah keluar dan mendarat di pantai seberang."
+
+msgid "The citadel garrison is out. They screen the weapons."
+msgstr "Garison kubu kota sudah keluar. Mereka melindungi senjata."
+
+msgid "the company is wiped"
+msgstr "kompeni musnah"
+
+msgid "the count hit zero"
+msgstr "kiraan mencecah sifar"
+
+msgid "The data channel did not open."
+msgstr "Saluran data tidak dibuka."
+
+msgid "the defended target is lost"
+msgstr "sasaran yang dipertahankan hilang"
+
+msgid "The enemy builds, expands, and attacks. Cross a ford to reach them."
+msgstr "Musuh membina, meluaskan, dan menyerang. Seberangi arung untuk mencapai mereka."
+
+msgid "The far shore is open. Put a boat on it."
+msgstr "Pantai seberang terbuka. Letakkan bot di situ."
+
+msgid "The ferry has to live. Hold it through the channel."
+msgstr "Feri mesti selamat. Pertahankannya melalui terusan."
+
+msgid "The ferry is in the channel. Keep guns on the water."
+msgstr "Feri berada di terusan. Halakan senapang ke air."
+
+msgid "The guide turns on us. The span is down."
+msgstr "Pemandu mengkhianati kita. Jambatan sudah runtuh."
+
+msgid "The hack is running. Twenty seconds on the blocks."
+msgstr "Penggodaman berjalan. Dua puluh saat di blok."
+
+msgid "The haze closes over the radar. Do not walk off it."
+msgstr "Jerebu menutupi radar. Jangan tinggalkannya."
+
+msgid "The haze has closed in. Do not leave the radar."
+msgstr "Jerebu sudah menebal. Jangan tinggalkan radar."
+
+msgid "The haze is the weapon. Hold the radar."
+msgstr "Jerebu itulah senjatanya. Pertahankan radar."
+
+msgid "The haze is thick. Take the radar and stay on it."
+msgstr "Jerebu tebal. Ambil radar dan kekal di situ."
+
+msgid "The hydro radar is dark. Light the water."
+msgstr "Radar hidro gelap. Terangi air."
+
+msgid "The intended skirmish and campaign pace."
+msgstr "Rentak pertempuran dan kempen yang dimaksudkan."
+
+msgid "The jade wagon is on the road. Walk it through."
+msgstr "Gerabak jed di jalan. Bawanya melepasi."
+
+msgid "The jammer is live. Fiber holds. GPS does not."
+msgstr "Pengganggu aktif. Gentian bertahan. GPS tidak."
+
+msgid "The jammers are up. The hangars are still parked."
+msgstr "Pengganggu sudah berdiri. Hangar masih diparkir."
+
+msgid "The joint fleet is in the channel. Sink it."
+msgstr "Armada gabungan di terusan. Tenggelamkannya."
+
+msgid "The local description was rejected."
+msgstr "Perihalan tempatan ditolak."
+
+msgid "The match keeps the command deck, minimap, and unit card."
+msgstr "Perlawanan mengekalkan dek arahan, peta mini, dan kad unit."
+
+msgid "The monsoon breaks over the citadel. Drop both weapons."
+msgstr "Monsun pecah di atas kubu kota. Jatuhkan kedua-dua senjata."
+
+msgid "The night shift is on the road. Bring one stock home."
+msgstr "Syif malam di jalan. Bawa pulang satu stok."
+
+msgid "The offer did not start."
+msgstr "Tawaran tidak bermula."
+
+msgid "The offer was rejected."
+msgstr "Tawaran ditolak."
+
+msgid "The packer is in the shallows. Unpack it."
+msgstr "Pengemas berada di air cetek. Bukanya."
+
+msgid "The packer sails, unpacks a wharf, then upgrades it. The enemy builds, expands, and attacks."
+msgstr "Pengemas belayar, membuka dermaga, kemudian menaik tarafnya. Musuh membina, meluaskan, dan menyerang."
+
+msgid "The phantom is on the plain. Hold the beam until it freezes."
+msgstr "Hantu berada di dataran. Tahan pancaran sehingga ia membeku."
+
+msgid "The phantom stutters in the beam. Do not let go."
+msgstr "Hantu tersekat-sekat dalam pancaran. Jangan lepaskan."
+
+msgid "The port is busy."
+msgstr "Port sedang sibuk."
+
+msgid "The radar pings. Water shows along the road."
+msgstr "Radar berdenyut. Air kelihatan di sepanjang jalan."
+
+msgid "The selected side is who you play on the next skirmish."
+msgstr "Pihak yang dipilih ialah pihak yang anda mainkan dalam pertempuran seterusnya."
+
+msgid "The session did not open."
+msgstr "Sesi tidak dibuka."
+
+msgid "The span is cut. The guide has sold the watch."
+msgstr "Jambatan terputus. Pemandu telah menjual pos kawalan."
+
+msgid "The squall is on the shallows. Finish the wharf."
+msgstr "Ribut di air cetek. Siapkan dermaga."
+
+msgid "The squall is on. Cross while it lasts."
+msgstr "Ribut melanda. Menyeberang selagi ia berlangsung."
+
+msgid "The squall is on. Keep the ferry afloat."
+msgstr "Ribut melanda. Pastikan feri terapung."
+
+msgid "The strip scrambles. The Su-30 and the CH-4 are still on the ground."
+msgstr "Landasan berlepas kecemasan. Su-30 dan CH-4 masih di darat."
+
+msgid "The swarm is in the air. It does not finish the towers."
+msgstr "Kawanan di udara. Ia tidak memusnahkan menara."
+
+msgid "The tank column is on the road. Freeze it, then break it."
+msgstr "Barisan kereta kebal di jalan. Bekukannya, kemudian patahkannya."
+
+msgid "The wharf is up. Take it to the second level."
+msgstr "Dermaga berdiri. Naikkan ke tahap kedua."
+
+msgid "Throwing into them."
+msgstr "Melontar ke arah mereka."
+
+msgid "Thunder on the Tonle Sap"
+msgstr "Guruh di Tonle Sap"
+
+msgid "Tide Refinery"
+msgstr "Kilang Penapis Pasang Surut"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Time Bomb"
+msgstr "Bom Jangka"
+
+msgid "Tonkin Supersonic Fighter"
+msgstr "Pejuang Supersonik Tonkin"
+
+msgid "Tonle ferry"
+msgstr "Feri Tonle Sap"
+
+msgid "Tonle Sap. Text briefing. Defend the ferry until the longer timer runs out. NMRF trimarans keep arriving. Cryogeddon can help. Casting it does not end the mission. The ferry has to survive the crossing. A squall hits the channel."
+msgstr "Tonle Sap. Taklimat teks. Pertahankan feri sehingga pemasa yang lebih panjang tamat. Trimaran NMRF terus tiba. Cryogeddon boleh membantu. Menggunakannya tidak menamatkan misi. Feri mesti selamat menyeberang. Ribut melanda terusan."
+
+msgid "Torpedo Fan Spread"
+msgstr "Sebaran Kipas Torpedo"
+
+msgid "Toxic Defoliation"
+msgstr "Penggondolan Toksik"
+
+msgid "trade open"
+msgstr "dagangan dibuka"
+
+msgid "Train"
+msgstr "Latih"
+
+msgid "Train unit"
+msgstr "Latih unit"
+
+msgid "Tran"
+msgstr "Tran"
+
+msgid "Trimarans on the ferry. Hold the crossing."
+msgstr "Trimaran menyerang feri. Pertahankan penyeberangan."
+
+msgid "Truck rolling."
+msgstr "Trak bergerak."
+
+msgid "Truck taking hits."
+msgstr "Trak diserang."
+
+msgid "Two gunboats from the river are in."
+msgstr "Dua bot meriam dari sungai telah tiba."
+
+msgid "Two players. You and one enemy."
+msgstr "Dua pemain. Anda dan seorang musuh."
+
+msgid "Two rifles for the strip."
+msgstr "Dua senapang untuk landasan."
+
+msgid "Two rifles from the watch are in."
+msgstr "Dua senapang dari pos kawalan telah tiba."
+
+msgid "Under fire."
+msgstr "Diserang."
+
+msgid "Unit"
+msgstr "Unit"
+
+msgid "Units"
+msgstr "Unit"
+
+msgid "unknown unit"
+msgstr "unit tidak diketahui"
+
+msgid "unloaded %d"
+msgstr "dipunggah %d"
+
+msgid "Unpack"
+msgstr "Buka"
+
+msgid "Upgrade wharf"
+msgstr "Naik taraf dermaga"
+
+msgid "Vanguard Shock-Trooper"
+msgstr "Askar Kejutan Barisan Hadapan"
+
+msgid "Vehicles"
+msgstr "Kenderaan"
+
+msgid "Veteran"
+msgstr "Veteran"
+
+msgid "Victory"
+msgstr "Kemenangan"
+
+msgid "VIDEO"
+msgstr "VIDEO"
+
+msgid "Viet-Tech Laser Operator"
+msgstr "Operator Laser Teknologi Viet"
+
+msgid "Vindicator Bomber"
+msgstr "Pengebom Pembela"
+
+msgid "Voice language"
+msgstr "Bahasa suara"
+
+msgid "Waiting for the host."
+msgstr "Menunggu hos."
+
+msgid "Waiting on port %d."
+msgstr "Menunggu di port %d."
+
+msgid "walk the caravan"
+msgstr "bawa kafilah"
+
+msgid "War Factory"
+msgstr "Kilang Perang"
+
+msgid "Warlord's Bribe"
+msgstr "Rasuah Panglima Perang"
+
+msgid "Watch captain"
+msgstr "Kapten kawalan"
+
+msgid "Water"
+msgstr "Air"
+
+msgid "Wave-Force Turret"
+msgstr "Menara Meriam Daya Gelombang"
+
+msgid "Waypoint"
+msgstr "Titik laluan"
+
+msgid "Web play uses a copied offer and answer in the browser. This desktop build has no WebRTC addon."
+msgstr "Permainan web menggunakan tawaran dan jawapan yang disalin dalam pelayar. Binaan desktop ini tiada tambahan WebRTC."
+
+msgid "WebRTC did not start."
+msgstr "WebRTC tidak bermula."
+
+msgid "Wharf"
+msgstr "Dermaga"
+
+msgid "wharf level %d"
+msgstr "dermaga tahap %d"
+
+msgid "wharf not ready"
+msgstr "dermaga belum sedia"
+
+msgid "wharf unpacked"
+msgstr "dermaga dibuka"
+
+msgid "Wrath of the Garuda"
+msgstr "Kemurkaan Garuda"
+
+msgid "Wrath of the Garuda. Text briefing. Destroy the joint enemy fleet and its pickets. A napalm run can help. Calling it does not end the mission. Napalm is armed, pickets cross the bow, and two gunboats arrive."
+msgstr "Kemurkaan Garuda. Taklimat teks. Musnahkan armada gabungan musuh dan kapal perondanya. Serangan napalm boleh membantu. Memanggilnya tidak menamatkan misi. Napalm sedia, kapal peronda melintasi haluan, dan dua bot meriam tiba."
+
+msgid "X    Stop"
+msgstr "X    Berhenti"
+
+msgid "Yangonite"
+msgstr "Yangonite"
+
+msgid "Yangonite, Ready To Rage Against The Abnormalities, Supayarlat, Past Cracks, Machinesfuture, Humanfuture, Night, Love Drunk, Changes, Not Needed Anymore, Poison, Time"
+msgstr "Yangonite, Ready To Rage Against The Abnormalities, Supayarlat, Past Cracks, Machinesfuture, Humanfuture, Night, Love Drunk, Changes, Not Needed Anymore, Poison, Time"
+
+msgid "yard up"
+msgstr "laman berdiri"
+
+msgid "Z    Formation"
+msgstr "Z    Formasi"

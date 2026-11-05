@@ -1,0 +1,3629 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ASEAN 2031\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: addons/rts_advanced/sm_hud.gd:1188
+msgid ""
+"\n"
+"Cost %d"
+msgstr ""
+"\n"
+"Cost %d"
+
+#: addons/rts_advanced/sm_hud.gd:1191
+msgid ""
+"\n"
+"Hotkey %d"
+msgstr ""
+"\n"
+"Hotkey %d"
+
+#: addons/rts_advanced/sm_hud.gd:1104
+msgid "  %ds"
+msgstr "  %ds"
+
+#: addons/rts_advanced/sm_story.gd:285
+msgid " The spray defoliated your line."
+msgstr " The spray defoliated your line."
+
+#: addons/rts_advanced/sm_hud.gd:1102
+msgid "%d cr"
+msgstr "%d cr"
+
+#: addons/rts_advanced/sm_hud.gd:738
+msgid "%s    HP %d/%d    F %s"
+msgstr "%s    HP %d/%d    F %s"
+
+#: game/boot.gd:470
+msgid "%s  %s is ready to copy."
+msgstr "%s  %s is ready to copy."
+
+#: addons/rts_advanced/sm_hud.gd:586
+msgid "%s built"
+msgstr "%s built"
+
+#: localization/game/extra.txt
+msgid "%s x%d"
+msgstr "%s x%d"
+
+#: addons/rts_advanced/sm_guide.gd:23
+msgid "%s. %d credits. HP %d. Damage %d. Moves on %s. F: %s."
+msgstr "%s. %d credits. HP %d. Damage %d. Moves on %s. F: %s."
+
+#: addons/rts_advanced/sm_guide.gd:30
+msgid "%s. %s. %d credits. HP %d."
+msgstr "%s. %s. %d credits. HP %d."
+
+#: addons/rts_advanced/sm_hud.gd:395
+msgid "%s. Area hit, then it cools down."
+msgstr "%s. Area hit, then it cools down."
+
+#: addons/rts_advanced/sm_pointer.gd:711
+msgid "+beam"
+msgstr "+beam"
+
+#: addons/rts_advanced/sm_pointer.gd:705
+msgid "+smart"
+msgstr "+smart"
+
+#: game/boot.gd:1929
+msgid "2 players"
+msgstr "2 players"
+
+#: addons/rts_advanced/sm_protocols.gd:74
+msgid "23-Drone Swarm"
+msgstr "23-Drone Swarm"
+
+#: data/factions/gtfc/faction.json
+msgid "3D-Print Overdrive"
+msgstr "3D-Print Overdrive"
+
+#: addons/rts_advanced/sm_protocols.gd:139
+msgid "A balloon barrage. One cast."
+msgstr "A balloon barrage. One cast."
+
+#: addons/rts_advanced/sm_protocols.gd:141
+msgid "A carpet run. One cast."
+msgstr "A carpet run. One cast."
+
+#: game/skirmish_map.gd:272
+msgid "A city bank, a jungle bank, and a river between them. The landmark does not burn."
+msgstr "A city bank, a jungle bank, and a river between them. The landmark does not burn."
+
+#: game/settings_panel.gd:160
+msgid "A faster, tougher enemy."
+msgstr "A faster, tougher enemy."
+
+#: game/skirmish_map.gd:278
+msgid "A larger field. Fords cross the river. The enemy builds, expands, and attacks."
+msgstr "A larger field. Fords cross the river. The enemy builds, expands, and attacks."
+
+#: addons/rts_advanced/sm_protocols.gd:125
+msgid "A napalm run. It does not finish the mission."
+msgstr "A napalm run. It does not finish the mission."
+
+#: addons/rts_advanced/sm_protocols.gd:137
+msgid "A pirate haul. One cast."
+msgstr "A pirate haul. One cast."
+
+#: game/set_piece.gd:316
+msgid "A second wave is in the black haze."
+msgstr "A second wave is in the black haze."
+
+#: game/settings_panel.gd:158
+msgid "A slower enemy, for learning the company."
+msgstr "A slower enemy, for learning the company."
+
+#: game/set_piece.gd:348
+msgid "A spray run is coming down the road. Cut it off."
+msgstr "A spray run is coming down the road. Cut it off."
+
+#: addons/rts_advanced/sm_protocols.gd:151
+msgid "A thermal scan. One cast."
+msgstr "A thermal scan. One cast."
+
+#: addons/rts_advanced/sm_hud.gd:440
+msgid "A-Move"
+msgstr "A-Move"
+
+#: addons/rts_advanced/sm_hud.gd:412
+msgid "Ability"
+msgstr "Ability"
+
+#: addons/rts_advanced/sm_hud.gd:445
+msgid "Ability (F)"
+msgstr "Ability (F)"
+
+#: addons/rts_advanced/sm_guide.gd:33
+msgid "Ability (F). A toggle flips every selected toggle unit. Smart-cast fires only the closest ready unit. A finished beam freezes the nearest enemy."
+msgstr "Ability (F). A toggle flips every selected toggle unit. Smart-cast fires only the closest ready unit. A finished beam freezes the nearest enemy."
+
+#: game/faction_yard.gd:60
+msgid "ability fired"
+msgstr "ability fired"
+
+#: game/faction_yard.gd:60
+msgid "ability not ready"
+msgstr "ability not ready"
+
+#: data/factions/nmrf/faction.json
+msgid "Aceh Tsunami Tank"
+msgstr "Aceh Tsunami Tank"
+
+#: addons/rts_advanced/sm_campaign.gd:51
+msgid "Act I"
+msgstr "Act I"
+
+#: addons/rts_advanced/sm_campaign.gd:53
+msgid "Act II"
+msgstr "Act II"
+
+#: addons/rts_advanced/sm_campaign.gd:55
+msgid "Act III"
+msgstr "Act III"
+
+#: data/factions/gtfc/faction.json
+msgid "Adrenaline Cloud"
+msgstr "Adrenaline Cloud"
+
+#: addons/rts_advanced/sm_protocols.gd:62
+msgid "Advanced Rocket Pods"
+msgstr "Advanced Rocket Pods"
+
+#: data/factions/mvd/faction.json
+msgid "Aegis Dome"
+msgstr "Aegis Dome"
+
+#: data/factions/mvd/faction.json
+msgid "Afterburner Return"
+msgstr "Afterburner Return"
+
+#: data/factions/mvd/faction.json
+msgid "Agent-Zero Cryo-Copter"
+msgstr "Agent-Zero Cryo-Copter"
+
+#: game/match_hud_view.gd:694
+msgid "Aircraft"
+msgstr "Aircraft"
+
+#: data/factions/gtfc/faction.json
+msgid "Airfield"
+msgstr "Airfield"
+
+#: addons/rts_advanced/sm_pointer.gd:352
+msgid "All %s"
+msgstr "All %s"
+
+#: game/skirmish_map.gd:136
+msgid "Ally"
+msgstr "Ally"
+
+#: addons/rts_advanced/sm_side.gd:87
+msgid "already unpacked"
+msgstr "already unpacked"
+
+#: addons/rts_advanced/sm_story.gd:333
+msgid "Ambush clear. %s. Mine rubies: %d/30."
+msgstr "Ambush clear. %s. Mine rubies: %d/30."
+
+#: game/set_piece.gd:338
+msgid "An ally breaks. The span is down."
+msgstr "An ally breaks. The span is down."
+
+#: addons/rts_advanced/sm_campaign.gd:138
+msgid "Andaman breakout"
+msgstr "Andaman breakout"
+
+#: addons/rts_advanced/sm_campaign.gd:199
+msgid "Andaman breakout. Text briefing. Sink the channel boats and the second wave, then land an amphibious unit on the far shore. A mine line in the channel damages ships. The far shore opens, and a squall crosses. The side cache is optional."
+msgstr "Andaman breakout. Text briefing. Sink the channel boats and the second wave, then land an amphibious unit on the far shore. A mine line in the channel damages ships. The far shore opens, and a squall crosses. The side cache is optional."
+
+#: data/factions/gtfc/faction.json
+msgid "Andaman Siege Barge"
+msgstr "Andaman Siege Barge"
+
+#: game/boot.gd:469
+msgid "Answer"
+msgstr "Answer"
+
+#: game/web_paste.gd:131
+msgid "Answer applied. Waiting for the guest."
+msgstr "Answer applied. Waiting for the guest."
+
+#: addons/rts_advanced/sm_campaign.gd:146
+msgid "Archipelago Rising"
+msgstr "Archipelago Rising"
+
+#: addons/rts_advanced/sm_campaign.gd:207
+msgid "Archipelago Rising. Text briefing. Sink the boats and the second picket, sail the packer into shallow water, unpack the wharf, and upgrade it. The packer reaches the shallows, the wharf rises, and a squall hits."
+msgstr "Archipelago Rising. Text briefing. Sink the boats and the second picket, sail the packer into shallow water, unpack the wharf, and upgrade it. The packer reaches the shallows, the wharf rises, and a squall hits."
+
+#: addons/rts_advanced/sm_protocols.gd:153
+msgid "Arms a bomb. One cast."
+msgstr "Arms a bomb. One cast."
+
+#: addons/rts_advanced/sm_campaign.gd:172
+msgid "Arms bazaar (mission)"
+msgstr "Arms bazaar (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:233
+msgid "Arms bazaar. Text briefing. Capture the bazaar so infantry and drones draw a discount."
+msgstr "Arms bazaar. Text briefing. Capture the bazaar so infantry and drones draw a discount."
+
+#: data/factions/black_market/faction.json
+msgid "Artillery Telemetry Link"
+msgstr "Artillery Telemetry Link"
+
+#: addons/rts_advanced/sm_hud.gd:375
+msgid "ASEAN 2031"
+msgstr "ASEAN 2031"
+
+#: data/factions/mvd/faction.json
+msgid "Athena Orbital Designator"
+msgstr "Athena Orbital Designator"
+
+#: game/boot.gd:253
+msgid "Atolls"
+msgstr "Atolls"
+
+#: addons/rts_advanced/sm_hud.gd:486
+msgid "attack move"
+msgstr "attack move"
+
+#: addons/rts_advanced/sm_pointer.gd:576
+msgid "Attack-move"
+msgstr "Attack-move"
+
+#: addons/rts_advanced/sm_hud.gd:440
+msgid "Attack-move ahead of the lead unit."
+msgstr "Attack-move ahead of the lead unit."
+
+#: game/settings_panel.gd:93
+msgid "AUDIO"
+msgstr "AUDIO"
+
+#: game/boot.gd:168
+msgid "BACK"
+msgstr "BACK"
+
+#: game/credits_panel.gd:59
+msgid "Back"
+msgstr "Back"
+
+#: data/factions/mvd/faction.json
+msgid "Ballistic Riot Shield"
+msgstr "Ballistic Riot Shield"
+
+#: addons/rts_advanced/sm_protocols.gd:80
+msgid "Balloon Bomb Barrage"
+msgstr "Balloon Bomb Barrage"
+
+#: addons/rts_advanced/sm_protocols.gd:330
+msgid "balloons 9"
+msgstr "balloons 9"
+
+#: data/factions/gtfc/faction.json
+msgid "Bamboo Hide"
+msgstr "Bamboo Hide"
+
+#: data/factions/mvd/faction.json
+msgid "Banyan Hologram"
+msgstr "Banyan Hologram"
+
+#: data/factions/gtfc/faction.json
+msgid "Barracks"
+msgstr "Barracks"
+
+#: game/boot.gd:679
+msgid "Basic training"
+msgstr "Basic training"
+
+#: addons/rts_advanced/sm_hud.gd:621
+msgid "bazaar required"
+msgstr "bazaar required"
+
+#: game/set_piece.gd:125
+msgid "Beach master"
+msgstr "Beach master"
+
+#: data/factions/nmrf/faction.json
+msgid "Beach Rockets"
+msgstr "Beach Rockets"
+
+#: addons/rts_advanced/sm_story.gd:290
+msgid "beam fired"
+msgstr "beam fired"
+
+#: addons/rts_advanced/sm_campaign.gd:184
+msgid "Beam freeze (mission)"
+msgstr "Beam freeze (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:245
+msgid "Beam freeze. Text briefing. Hold the beam until the target freezes."
+msgstr "Beam freeze. Text briefing. Hold the beam until the target freezes."
+
+#: game/set_piece.gd:165
+msgid "Beam officer"
+msgstr "Beam officer"
+
+#: data/factions/gtfc/faction.json
+msgid "Bench Seat"
+msgstr "Bench Seat"
+
+#: addons/rts_advanced/sm_campaign.gd:144
+msgid "Black Haze"
+msgstr "Black Haze"
+
+#: addons/rts_advanced/sm_campaign.gd:205
+msgid "Black Haze. Text briefing. Capture the hydro radar and hold it through the longer haze while a second raider wave attacks. The haze closes, a second wave comes through it, and you hold the radar."
+msgstr "Black Haze. Text briefing. Capture the hydro radar and hold it through the longer haze while a second raider wave attacks. The haze closes, a second wave comes through it, and you hold the radar."
+
+#: addons/rts_advanced/sm_hud.gd:595
+msgid "Black Market"
+msgstr "Black Market"
+
+#: data/factions/mvd/faction.json
+msgid "Black-Hole Armor"
+msgstr "Black-Hole Armor"
+
+#: localization/game/extra.txt
+msgid "BlackBloc"
+msgstr "BlackBloc"
+
+#: data/factions/mvd/faction.json
+msgid "Blackout EMP"
+msgstr "Blackout EMP"
+
+#: addons/rts_advanced/sm_raider.gd:24
+msgid "Bo Mya"
+msgstr "Bo Mya"
+
+#: addons/rts_advanced/sm_protocols.gd:355
+msgid "bomb armed"
+msgstr "bomb armed"
+
+#: data/factions/nmrf/faction.json
+msgid "Bomblet Carpet"
+msgstr "Bomblet Carpet"
+
+#: game/set_piece.gd:711
+msgid "Bonus complete: side cache"
+msgstr "Bonus complete: side cache"
+
+#: game/set_piece.gd:697
+msgid "Bonus failed: the spray landed"
+msgstr "Bonus failed: the spray landed"
+
+#: game/set_piece.gd:564
+msgid "Bonus: reach the side cache"
+msgstr "Bonus: reach the side cache"
+
+#: game/campaign_mission.gd:115
+msgid "Boot menu"
+msgstr "Boot menu"
+
+#: game/set_piece.gd:358
+msgid "Both batteries are still up, and the screen is with them."
+msgstr "Both batteries are still up, and the screen is with them."
+
+#: game/set_piece.gd:272
+msgid "Both server blocks are live. Start the hack."
+msgstr "Both server blocks are live. Start the hack."
+
+#: game/set_piece.gd:368
+msgid "Both superweapons are live. Break the screen and drop them."
+msgstr "Both superweapons are live. Break the screen and drop them."
+
+#: game/set_piece.gd:372
+msgid "Both weapons are armed. The count is running."
+msgstr "Both weapons are armed. The count is running."
+
+#: addons/rts_advanced/sm_pointer.gd:373
+msgid "Box"
+msgstr "Box"
+
+#: game/skirmish_map.gd:301
+msgid "Bridge down"
+msgstr "Bridge down"
+
+#: addons/rts_advanced/sm_hud.gd:1597
+msgid "Briefing"
+msgstr "Briefing"
+
+#: addons/rts_advanced/sm_story.gd:718
+msgid "bring one rare-earth stock"
+msgstr "bring one rare-earth stock"
+
+#: game/lan_mirror.gd:85
+msgid "Build"
+msgstr "Build"
+
+#: game/match_coach.gd:99
+msgid "Build a barracks and train 3 infantry."
+msgstr "Build a barracks and train 3 infantry."
+
+#: game/match_coach.gd:97
+msgid "Build a power plant."
+msgstr "Build a power plant."
+
+#: addons/rts_advanced/sm_side.gd:140
+msgid "build blocked"
+msgstr "build blocked"
+
+#: game/phillips_channel.gd:148
+msgid "Build pipeline"
+msgstr "Build pipeline"
+
+#: addons/rts_advanced/sm_guide.gd:26
+msgid "Building"
+msgstr "Building"
+
+#: addons/rts_advanced/sm_hud.gd:376
+msgid "Buildings"
+msgstr "Buildings"
+
+#: data/factions/gtfc/faction.json
+msgid "Bunker Lock"
+msgstr "Bunker Lock"
+
+#: game/boot.gd:252
+msgid "Burma"
+msgstr "Burma"
+
+#: game/boot.gd:645
+msgid "Burma Road"
+msgstr "Burma Road"
+
+#: data/factions/gtfc/faction.json
+msgid "Burma Road Bulldozer Tank"
+msgstr "Burma Road Bulldozer Tank"
+
+#: game/match_settings.gd:136
+msgid "Burmese"
+msgstr "Burmese"
+
+#: game/faction_yard.gd:200
+msgid "Buy clearance"
+msgstr "Buy clearance"
+
+#: game/boot.gd:107
+msgid "CAMPAIGN"
+msgstr "CAMPAIGN"
+
+#: game/boot.gd:700
+msgid "Campaign"
+msgstr "Campaign"
+
+#: game/skirmish_map.gd:276
+msgid "Canals cut the paddies. Right-click a bridge to drop it. The enemy builds, expands, and attacks."
+msgstr "Canals cut the paddies. Right-click a bridge to drop it. The enemy builds, expands, and attacks."
+
+#: addons/rts_advanced/sm_hud.gd:399
+msgid "Cancel"
+msgstr "Cancel"
+
+#: addons/rts_advanced/sm_hud.gd:399
+msgid "Cancel the building in progress and refund what it has spent."
+msgstr "Cancel the building in progress and refund what it has spent."
+
+#: game/phillips_channel.gd:208
+msgid "cannot cross"
+msgstr "cannot cross"
+
+#: addons/rts_advanced/sm_hud.gd:631
+msgid "cannot import"
+msgstr "cannot import"
+
+#: addons/rts_advanced/sm_hud.gd:581
+msgid "cannot sell"
+msgstr "cannot sell"
+
+#: addons/rts_advanced/sm_hud.gd:670
+msgid "cannot train"
+msgstr "cannot train"
+
+#: addons/rts_advanced/sm_story.gd:306
+msgid "Capture the radar, then hold it through the haze."
+msgstr "Capture the radar, then hold it through the haze."
+
+#: addons/rts_advanced/sm_story.gd:76
+msgid "capture: yard, ruby night shift, and one rare-earth stock, after the recon drones fall"
+msgstr "capture: yard, ruby night shift, and one rare-earth stock, after the recon drones fall"
+
+#: addons/rts_advanced/sm_story.gd:138
+msgid "Caravan ambush"
+msgstr "Caravan ambush"
+
+#: addons/rts_advanced/sm_story.gd:332
+msgid "caravan in"
+msgstr "caravan in"
+
+#: game/set_piece.gd:113
+msgid "Caravan master"
+msgstr "Caravan master"
+
+#: data/factions/gtfc/faction.json
+msgid "Cargo Winch Airlift"
+msgstr "Cargo Winch Airlift"
+
+#: addons/rts_advanced/sm_protocols.gd:48
+msgid "Cash Bounty"
+msgstr "Cash Bounty"
+
+#: data/factions/mvd/faction.json
+msgid "Cash Bribe"
+msgstr "Cash Bribe"
+
+#: addons/rts_advanced/sm_protocols.gd:82
+msgid "Century Carpet Bomber"
+msgstr "Century Carpet Bomber"
+
+#: data/factions/black_market/faction.json
+msgid "CH-4"
+msgstr "CH-4"
+
+#: addons/rts_advanced/sm_story.gd:221
+msgid "CH-4 hangar"
+msgstr "CH-4 hangar"
+
+#: game/match_audio.gd:1129
+msgid "Changes"
+msgstr "Changes"
+
+#: addons/rts_advanced/sm_story.gd:183
+msgid "Channel boat"
+msgstr "Channel boat"
+
+#: game/phillips_channel.gd:234
+msgid "channel clear"
+msgstr "channel clear"
+
+#: addons/rts_advanced/sm_campaign.gd:166
+msgid "Channel crossing (mission)"
+msgstr "Channel crossing (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:227
+msgid "Channel crossing. Text briefing. Send an amphibious unit across the deep water to the far shore."
+msgstr "Channel crossing. Text briefing. Send an amphibious unit across the deep water to the far shore."
+
+#: addons/rts_advanced/sm_front.gd:44
+msgid "Charcoal / cyan"
+msgstr "Charcoal / cyan"
+
+#: game/boot.gd:278
+msgid "Chat"
+msgstr "Chat"
+
+#: data/factions/gtfc/faction.json
+msgid "Chemical Afterburner"
+msgstr "Chemical Afterburner"
+
+#: game/boot.gd:255
+msgid "Chiang Rai"
+msgstr "Chiang Rai"
+
+#: addons/rts_advanced/sm_protocols.gd:133
+msgid "Chips the towers. It does not finish the mission."
+msgstr "Chips the towers. It does not finish the mission."
+
+#: game/boot.gd:1917
+msgid "Choose a map"
+msgstr "Choose a map"
+
+#: data/factions/nmrf/faction.json
+msgid "Chopper Mode"
+msgstr "Chopper Mode"
+
+#: data/factions/mvd/faction.json
+msgid "Chrono-Phase Recall"
+msgstr "Chrono-Phase Recall"
+
+#: addons/rts_advanced/sm_story.gd:1060
+msgid "Citadel garrison"
+msgstr "Citadel garrison"
+
+#: game/set_piece.gd:175
+msgid "Citadel officer"
+msgstr "Citadel officer"
+
+#: addons/rts_advanced/sm_hud.gd:212
+msgid "Clear"
+msgstr "Clear"
+
+#: addons/rts_advanced/sm_story.gd:331
+msgid "Clear the ambush (%d). Then walk the caravan to the night shift."
+msgstr "Clear the ambush (%d). Then walk the caravan to the night shift."
+
+#: game/boot.gd:1941
+msgid "Clear the field    Hold the line    Bring it home"
+msgstr "Clear the field    Hold the line    Bring it home"
+
+#: addons/rts_advanced/sm_story.gd:310
+msgid "Clear the garrison (%d) and hold the hydro radar."
+msgstr "Clear the garrison (%d) and hold the hydro radar."
+
+#: addons/rts_advanced/sm_story.gd:318
+msgid "Clear the garrison (%d), then %s."
+msgstr "Clear the garrison (%d), then %s."
+
+#: addons/rts_advanced/sm_story.gd:319
+msgid "Clear the garrison (%d), then siphon the compound."
+msgstr "Clear the garrison (%d), then siphon the compound."
+
+#: addons/rts_advanced/sm_story.gd:719
+msgid "clear the Orlan drones"
+msgstr "clear the Orlan drones"
+
+#: addons/rts_advanced/sm_story.gd:297
+msgid "Clear the shore (%d). A boat is on the far shore."
+msgstr "Clear the shore (%d). A boat is on the far shore."
+
+#: addons/rts_advanced/sm_story.gd:298
+msgid "Clear the shore (%d). Land a boat on the far shore. The mine line hurts ships."
+msgstr "Clear the shore (%d). Land a boat on the far shore. The mine line hurts ships."
+
+#: addons/rts_advanced/sm_side.gd:120
+msgid "clearance %d"
+msgstr "clearance %d"
+
+#: game/set_piece.gd:155
+msgid "Clearance commander"
+msgstr "Clearance commander"
+
+#: addons/rts_advanced/sm_side.gd:120
+msgid "clearance refused"
+msgstr "clearance refused"
+
+#: addons/rts_advanced/sm_campaign.gd:178
+msgid "Clearance two (mission)"
+msgstr "Clearance two (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:239
+msgid "Clearance two. Text briefing. Buy clearance, then queue and place the drone bay inside the pad."
+msgstr "Clearance two. Text briefing. Buy clearance, then queue and place the drone bay inside the pad."
+
+#: data/factions/mvd/faction.json
+msgid "Colonel Nguyen Phantom"
+msgstr "Colonel Nguyen Phantom"
+
+#: addons/rts_advanced/sm_story.gd:1048
+msgid "Column screen"
+msgstr "Column screen"
+
+#: game/settings_panel.gd:174
+msgid "Command deck"
+msgstr "Command deck"
+
+#: game/boot.gd:1878
+msgid "Commander:  %s"
+msgstr "Commander:  %s"
+
+#: addons/rts_advanced/sm_pointer.gd:367
+msgid "Company"
+msgstr "Company"
+
+#: game/campaign_mission.gd:108
+msgid "Complete objective"
+msgstr "Complete objective"
+
+#: addons/rts_advanced/sm_story.gd:147
+msgid "Compound garrison"
+msgstr "Compound garrison"
+
+#: game/set_piece.gd:117
+msgid "Compound runner"
+msgstr "Compound runner"
+
+#: game/boot.gd:512
+msgid "Connecting to %s."
+msgstr "Connecting to %s."
+
+#: data/factions/gtfc/faction.json
+msgid "Construction Yard"
+msgstr "Construction Yard"
+
+#: game/set_piece.gd:270
+msgid "Contact behind the wagon."
+msgstr "Contact behind the wagon."
+
+#: game/settings_panel.gd:94
+msgid "CONTROLS"
+msgstr "CONTROLS"
+
+#: addons/rts_advanced/sm_bark.gd:65
+msgid "Copter shifting."
+msgstr "Copter shifting."
+
+#: addons/rts_advanced/sm_bark.gd:71
+msgid "Copter under fire."
+msgstr "Copter under fire."
+
+#: game/boot.gd:306
+msgid "Copy again"
+msgstr "Copy again"
+
+#: game/boot.gd:298
+msgid "Copy offer"
+msgstr "Copy offer"
+
+#: game/web_paste.gd:115
+msgid "Copy the answer once it appears and send it back to the host."
+msgstr "Copy the answer once it appears and send it back to the host."
+
+#: game/lan_seat.gd:90
+msgid "Copy the offer into the other browser, then paste its answer back. No account."
+msgstr "Copy the offer into the other browser, then paste its answer back. No account."
+
+#: game/web_paste.gd:88
+msgid "Copy the offer once it appears, then paste the guest's answer."
+msgstr "Copy the offer once it appears, then paste the guest's answer."
+
+#: game/web_paste.gd:153
+msgid "Copy this answer and send it to the host."
+msgstr "Copy this answer and send it to the host."
+
+#: game/web_paste.gd:151
+msgid "Copy this offer and send it to the guest."
+msgstr "Copy this offer and send it to the guest."
+
+#: game/boot.gd:514
+msgid "Could not join."
+msgstr "Could not join."
+
+#: game/set_piece.gd:817
+msgid "Count: %ds"
+msgstr "Count: %ds"
+
+#: game/set_piece.gd:488
+msgid "Count: 16s"
+msgstr "Count: 16s"
+
+#: game/boot.gd:150
+msgid "CREDITS"
+msgstr "CREDITS"
+
+#: addons/rts_advanced/sm_hud.gd:203
+msgid "Credits %d"
+msgstr "Credits %d"
+
+#: game/lan_mirror.gd:159
+msgid "Credits %d    Power %d/%d%s"
+msgstr "Credits %d    Power %d/%d%s"
+
+#: addons/rts_advanced/sm_protocols.gd:282
+msgid "credits +250"
+msgstr "credits +250"
+
+#: game/lan_mirror.gd:63
+msgid "Credits 0    Power 0/0"
+msgstr "Credits 0    Power 0/0"
+
+#: addons/rts_advanced/sm_front.gd:45
+msgid "Crimson / amber"
+msgstr "Crimson / amber"
+
+#: game/phillips_channel.gd:149
+msgid "Cross channel"
+msgstr "Cross channel"
+
+#: addons/rts_advanced/sm_bark.gd:67
+msgid "Cryo on the target."
+msgstr "Cryo on the target."
+
+#: addons/rts_advanced/sm_protocols.gd:343
+msgid "cryo wave"
+msgstr "cryo wave"
+
+#: addons/rts_advanced/sm_bark.gd:72
+msgid "Cryo-copter airborne."
+msgstr "Cryo-copter airborne."
+
+#: addons/rts_advanced/sm_protocols.gd:86
+msgid "Cryogeddon"
+msgstr "Cryogeddon"
+
+#: addons/rts_advanced/sm_protocols.gd:84
+msgid "Cryoshot"
+msgstr "Cryoshot"
+
+#: data/factions/mvd/faction.json
+msgid "Cu Chi Tunnel Hound"
+msgstr "Cu Chi Tunnel Hound"
+
+#: addons/rts_advanced/sm_campaign.gd:170
+msgid "Cyber compound (mission)"
+msgstr "Cyber compound (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:231
+msgid "Cyber compound. Text briefing. Capture the compound and siphon the enemy purse."
+msgstr "Cyber compound. Text briefing. Capture the compound and siphon the enemy purse."
+
+#: addons/rts_advanced/sm_protocols.gd:303
+msgid "damage 1.5"
+msgstr "damage 1.5"
+
+#: addons/rts_advanced/sm_outcome.gd:177
+msgid "Defeat"
+msgstr "Defeat"
+
+#: addons/rts_advanced/sm_side.gd:60
+msgid "defender air"
+msgstr "defender air"
+
+#: addons/rts_advanced/sm_side.gd:60
+msgid "defender ground"
+msgstr "defender ground"
+
+#: data/factions/mvd/faction.json
+msgid "Defender-VX"
+msgstr "Defender-VX"
+
+#: game/match_hud_view.gd:691
+msgid "Defenses"
+msgstr "Defenses"
+
+#: game/set_piece.gd:160
+msgid "Defoliation lead"
+msgstr "Defoliation lead"
+
+#: data/factions/mvd/faction.json
+msgid "Delta Amphibious IFV"
+msgstr "Delta Amphibious IFV"
+
+#: addons/rts_advanced/sm_story.gd:288
+msgid "Destroy both superweapons (%d left) before the count (%ds)."
+msgstr "Destroy both superweapons (%d left) before the count (%ds)."
+
+#: addons/rts_advanced/sm_story.gd:104
+msgid "destroy: both enemy superweapons fall before the count hits zero"
+msgstr "destroy: both enemy superweapons fall before the count hits zero"
+
+#: addons/rts_advanced/sm_story.gd:86
+msgid "destroy: every ghost inside the jammer dies, GPS cut and fiber full"
+msgstr "destroy: every ghost inside the jammer dies, GPS cut and fiber full"
+
+#: addons/rts_advanced/sm_story.gd:78
+msgid "destroy: the ambush dies, the jade wagon reaches the bazaar, then the ruby night shift fills the purse"
+msgstr "destroy: the ambush dies, the jade wagon reaches the bazaar, then the ruby night shift fills the purse"
+
+#: addons/rts_advanced/sm_story.gd:100
+msgid "destroy: the beam freezes the phantom, then the phantom and the battery die"
+msgstr "destroy: the beam freezes the phantom, then the phantom and the battery die"
+
+#: addons/rts_advanced/sm_story.gd:92
+msgid "destroy: the boats die, then the wharf is unpacked and upgraded"
+msgstr "destroy: the boats die, then the wharf is unpacked and upgraded"
+
+#: addons/rts_advanced/sm_story.gd:84
+msgid "destroy: the channel boats die and an amphibious unit reaches the far shore"
+msgstr "destroy: the channel boats die and an amphibious unit reaches the far shore"
+
+#: addons/rts_advanced/sm_story.gd:82
+msgid "destroy: the EW towers fall, then the Su-30 and CH-4 hangars"
+msgstr "destroy: the EW towers fall, then the Su-30 and CH-4 hangars"
+
+#: addons/rts_advanced/sm_story.gd:80
+msgid "destroy: the garrison dies, the hack is held on the server blocks, then both blocks are siphoned"
+msgstr "destroy: the garrison dies, the hack is held on the server blocks, then both blocks are siphoned"
+
+#: addons/rts_advanced/sm_story.gd:98
+msgid "destroy: the GTFC tank column is frozen, then destroyed"
+msgstr "destroy: the GTFC tank column is frozen, then destroyed"
+
+#: addons/rts_advanced/sm_story.gd:94
+msgid "destroy: the joint enemy fleet is sunk"
+msgstr "destroy: the joint enemy fleet is sunk"
+
+#: addons/rts_advanced/sm_story.gd:88
+msgid "destroy: the radar garrison dies and the hydro radar is held"
+msgstr "destroy: the radar garrison dies and the hydro radar is held"
+
+#: game/boot.gd:822
+msgid "Details"
+msgstr "Details"
+
+#: game/boot.gd:1092
+msgid "Difficulty"
+msgstr "Difficulty"
+
+#: game/boot.gd:1874
+msgid "Difficulty:  %s"
+msgstr "Difficulty:  %s"
+
+#: addons/rts_advanced/sm_protocols.gd:127
+msgid "Discharges a held unit. One cast."
+msgstr "Discharges a held unit. One cast."
+
+#: game/boot.gd:863
+msgid "Done"
+msgstr "Done"
+
+#: addons/rts_advanced/sm_bark.gd:45
+msgid "Dozer advancing."
+msgstr "Dozer advancing."
+
+#: addons/rts_advanced/sm_bark.gd:52
+msgid "Dozer ready."
+msgstr "Dozer ready."
+
+#: addons/rts_advanced/sm_bark.gd:51
+msgid "Dozer under fire."
+msgstr "Dozer under fire."
+
+#: addons/rts_advanced/sm_hud.gd:1162
+msgid "Drag a box    Select"
+msgstr "Drag a box    Select"
+
+#: game/match_coach.gd:91
+msgid "Drag a box around your units."
+msgstr "Drag a box around your units."
+
+#: addons/rts_advanced/sm_bark.gd:42
+msgid "Drone truck standing by."
+msgstr "Drone truck standing by."
+
+#: game/set_piece.gd:268
+msgid "Drones on the jade wagon. Keep it under the trees."
+msgstr "Drones on the jade wagon. Keep it under the trees."
+
+#: addons/rts_advanced/sm_bark.gd:37
+msgid "Drones on the target."
+msgstr "Drones on the target."
+
+#: addons/rts_advanced/sm_story.gd:281
+msgid "Drop the EW towers (%d), then the hangars (%d)."
+msgstr "Drop the EW towers (%d), then the hangars (%d)."
+
+#: game/boot.gd:1097
+msgid "Easy"
+msgstr "Easy"
+
+#: game/settings_panel.gd:147
+msgid "Edge pan"
+msgstr "Edge pan"
+
+#: data/factions/mvd/faction.json
+msgid "Eject and Repair"
+msgstr "Eject and Repair"
+
+#: data/factions/nmrf/faction.json
+msgid "Electro-Latch Detonate"
+msgstr "Electro-Latch Detonate"
+
+#: data/factions/gtfc/faction.json
+msgid "Electro-Stasis Tether"
+msgstr "Electro-Stasis Tether"
+
+#: addons/rts_advanced/sm_hud.gd:1414
+msgid "Elite"
+msgstr "Elite"
+
+#: data/factions/mvd/faction.json
+msgid "Emergency Evasive Return"
+msgstr "Emergency Evasive Return"
+
+#: addons/rts_advanced/sm_pointer.gd:217
+msgid "Enemy"
+msgstr "Enemy"
+
+#: game/match_coach.gd:257
+msgid "Enemy spotted."
+msgstr "Enemy spotted."
+
+#: game/phillips_channel.gd:150
+msgid "Engage"
+msgstr "Engage"
+
+#: game/credits_panel.gd:10
+msgid "ENGINE"
+msgstr "ENGINE"
+
+#: game/match_settings.gd:143
+msgid "English"
+msgstr "English"
+
+#: game/settings_panel.gd:142
+msgid "English, Burmese, Mandarin, Thai, or Malay. A missing line plays the English take."
+msgstr "English, Burmese, Mandarin, Thai, or Malay. A missing line plays the English take."
+
+#: addons/rts_advanced/sm_hud.gd:1173
+msgid "Esc    Pause"
+msgstr "Esc    Pause"
+
+#: game/boot.gd:739
+msgid "Esc  Back    ·    Enter  Select"
+msgstr "Esc  Back    ·    Enter  Select"
+
+#: data/factions/gtfc/faction.json
+msgid "Evacuate and Lay Mines"
+msgstr "Evacuate and Lay Mines"
+
+#: addons/rts_advanced/sm_story.gd:218
+msgid "EW tower"
+msgstr "EW tower"
+
+#: addons/rts_advanced/sm_hud.gd:1168
+msgid "F    Ability"
+msgstr "F    Ability"
+
+#: game/mission_kokang.gd:138
+msgid "F ability found no enemy"
+msgstr "F ability found no enemy"
+
+#: game/mission_kokang.gd:138
+msgid "F ability struck an enemy"
+msgstr "F ability struck an enemy"
+
+#: game/boot.gd:1867
+msgid "Faction:  %s"
+msgstr "Faction:  %s"
+
+#: data/factions/gtfc/faction.json
+msgid "Federal Wings Ag-Bomber Hexacopter"
+msgstr "Federal Wings Ag-Bomber Hexacopter"
+
+#: game/set_piece.gd:170
+msgid "Ferry warden"
+msgstr "Ferry warden"
+
+#: data/factions/gtfc/faction.json
+msgid "Fiber-Optic Tether"
+msgstr "Fiber-Optic Tether"
+
+#: data/factions/mvd/faction.json
+msgid "Fibre Dive"
+msgstr "Fibre Dive"
+
+#: addons/rts_advanced/sm_campaign.gd:174
+msgid "Field clinic (mission)"
+msgstr "Field clinic (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:235
+msgid "Field clinic. Text briefing. Capture the clinic and let it heal the company."
+msgstr "Field clinic. Text briefing. Capture the clinic and let it heal the company."
+
+#: data/factions/mvd/faction.json
+msgid "Field Medical Tent"
+msgstr "Field Medical Tent"
+
+#: addons/rts_advanced/sm_story.gd:341
+msgid "Fight the briefing."
+msgstr "Fight the briefing."
+
+#: addons/rts_advanced/sm_story.gd:290
+msgid "fire the beam"
+msgstr "fire the beam"
+
+#: addons/rts_advanced/sm_guide.gd:13
+msgid "First mission. Select the company, right-click to move, and right-click the raiders to fight. Raise the yard, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails."
+msgstr "First mission. Select the company, right-click to move, and right-click the raiders to fight. Raise the yard, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails."
+
+#: data/factions/gtfc/faction.json
+msgid "Flak-Slag Mast"
+msgstr "Flak-Slag Mast"
+
+#: game/set_piece.gd:150
+msgid "Fleet captain"
+msgstr "Fleet captain"
+
+#: addons/rts_advanced/sm_story.gd:1044
+msgid "Fleet picket"
+msgstr "Fleet picket"
+
+#: data/factions/black_market/faction.json
+msgid "FLH7 Squad"
+msgstr "FLH7 Squad"
+
+#: addons/rts_advanced/sm_campaign.gd:150
+msgid "Fog Over Pakbeng"
+msgstr "Fog Over Pakbeng"
+
+#: addons/rts_advanced/sm_campaign.gd:211
+msgid "Fog Over Pakbeng. Text briefing. Hold a hydro radar through the longer haze while a second raider wave attacks. An ally breaks first. The haze stays shut, and the radar has to be held. The side cache is optional."
+msgstr "Fog Over Pakbeng. Text briefing. Hold a hydro radar through the longer haze while a second raider wave attacks. An ally breaks first. The haze stays shut, and the radar has to be held. The side cache is optional."
+
+#: game/credits_panel.gd:11
+msgid "FONTS"
+msgstr "FONTS"
+
+#: addons/rts_advanced/sm_hud.gd:444
+msgid "Form"
+msgstr "Form"
+
+#: addons/rts_advanced/sm_hud.gd:444
+msgid "Formation. Switch between a line and a box."
+msgstr "Formation. Switch between a line and a box."
+
+#: game/boot.gd:530
+msgid "Found %s."
+msgstr "Found %s."
+
+#: data/factions/gtfc/faction.json
+msgid "FPV Strike Drone"
+msgstr "FPV Strike Drone"
+
+#: addons/rts_advanced/sm_protocols.gd:58
+msgid "Free Trade"
+msgstr "Free Trade"
+
+#: addons/rts_advanced/sm_story.gd:286
+msgid "Freeze the column (%d/%d), then destroy it (%d left).%s"
+msgstr "Freeze the column (%d/%d), then destroy it (%d left).%s"
+
+#: addons/rts_advanced/sm_story.gd:291
+msgid "freeze the phantom"
+msgstr "freeze the phantom"
+
+#: addons/rts_advanced/sm_protocols.gd:143
+msgid "Freezes one target. One cast."
+msgstr "Freezes one target. One cast."
+
+#: addons/rts_advanced/sm_protocols.gd:135
+msgid "Freezes the tank column. It does not finish the mission."
+msgstr "Freezes the tank column. It does not finish the mission."
+
+#: addons/rts_advanced/sm_protocols.gd:145
+msgid "Freezes the trimarans for a while. It does not finish the mission."
+msgstr "Freezes the trimarans for a while. It does not finish the mission."
+
+#: data/factions/black_market/faction.json
+msgid "Frequency Hop"
+msgstr "Frequency Hop"
+
+#: game/settings_panel.gd:168
+msgid "Game language"
+msgstr "Game language"
+
+#: game/settings_panel.gd:95
+msgid "GAMEPLAY"
+msgstr "GAMEPLAY"
+
+#: addons/rts_advanced/sm_guns.gd:56
+msgid "garrison %d"
+msgstr "garrison %d"
+
+#: addons/rts_advanced/sm_story.gd:324
+msgid "Garrison clear. %s. Siphon both server blocks (%d)."
+msgstr "Garrison clear. %s. Siphon both server blocks (%d)."
+
+#: addons/rts_advanced/sm_story.gd:313
+msgid "Garrison clear. Hold the hydro radar."
+msgstr "Garrison clear. Hold the hydro radar."
+
+#: addons/rts_advanced/sm_story.gd:312
+msgid "Garrison clear. Hydro radar is held."
+msgstr "Garrison clear. Hydro radar is held."
+
+#: addons/rts_advanced/sm_story.gd:325
+msgid "Garrison clear. Siphon the compound (%d)."
+msgstr "Garrison clear. Siphon the compound (%d)."
+
+#: game/set_piece.gd:276
+msgid "Garrison in the trees."
+msgstr "Garrison in the trees."
+
+#: data/factions/nmrf/faction.json
+msgid "Garuda Mecha-Overlord"
+msgstr "Garuda Mecha-Overlord"
+
+#: data/factions/gtfc/faction.json
+msgid "General Bo Mya"
+msgstr "General Bo Mya"
+
+#: game/set_piece.gd:300
+msgid "Ghosts in the jammer. Every one of them has to fall."
+msgstr "Ghosts in the jammer. Every one of them has to fall."
+
+#: addons/rts_advanced/sm_campaign.gd:140
+msgid "Ghosts of Patani"
+msgstr "Ghosts of Patani"
+
+#: addons/rts_advanced/sm_campaign.gd:201
+msgid "Ghosts of Patani. Text briefing. Destroy every ghost in the jammer, including the shipment guards. GPS guidance drops there. A fiber link does not. Losing the company fails the mission. GPS drops, ghosts close in, and then the guide turns. The side cache is optional."
+msgstr "Ghosts of Patani. Text briefing. Destroy every ghost in the jammer, including the shipment guards. GPS guidance drops there. A fiber link does not. Losing the company fails the mission. GPS drops, ghosts close in, and then the guide turns. The side cache is optional."
+
+#: game/credits_panel.gd:10
+msgid "Godot Engine, MIT licence"
+msgstr "Godot Engine, MIT licence"
+
+#: game/credits_panel.gd:12
+msgid "Godot RTS Advanced, MIT licence"
+msgstr "Godot RTS Advanced, MIT licence"
+
+#: addons/rts_advanced/sm_nodes.gd:30
+msgid "gold bullion"
+msgstr "gold bullion"
+
+#: game/boot.gd:649
+msgid "Golden Confluence"
+msgstr "Golden Confluence"
+
+#: data/factions/gtfc/faction.json
+msgid "Golden Dragon Dirigible"
+msgstr "Golden Dragon Dirigible"
+
+#: addons/rts_advanced/sm_nodes.gd:22
+msgid "Golden Slag / Aurum-9"
+msgstr "Golden Slag / Aurum-9"
+
+#: game/mission_kokang.gd:107
+msgid "Golden Slag / Aurum-9 stays in the yard ledger. Ruby and rare earth are the raid."
+msgstr "Golden Slag / Aurum-9 stays in the yard ledger. Ruby and rare earth are the raid."
+
+#: addons/rts_advanced/sm_hud.gd:907
+msgid "Got it"
+msgstr "Got it"
+
+#: game/set_piece.gd:298
+msgid "GPS drops in the mist. Fiber shots still land."
+msgstr "GPS drops in the mist. Fiber shots still land."
+
+#: addons/rts_advanced/sm_protocols.gd:90
+msgid "GPS Spoofing"
+msgstr "GPS Spoofing"
+
+#: game/settings_panel.gd:92
+msgid "GRAPHICS"
+msgstr "GRAPHICS"
+
+#: game/boot.gd:1379
+msgid "Greybox"
+msgstr "Greybox"
+
+#: addons/rts_advanced/sm_protocols.gd:50
+msgid "Grinder Treads"
+msgstr "Grinder Treads"
+
+#: game/greybox.gd:15
+msgid "Ground"
+msgstr "Ground"
+
+#: addons/rts_advanced/sm_pointer.gd:530
+msgid "Group %d"
+msgstr "Group %d"
+
+#: addons/rts_advanced/sm_pointer.gd:530
+msgid "Group %d empty"
+msgstr "Group %d empty"
+
+#: addons/rts_advanced/sm_pointer.gd:524
+msgid "Group %d stored"
+msgstr "Group %d stored"
+
+#: addons/rts_advanced/sm_hud.gd:761
+msgid "group toggle"
+msgstr "group toggle"
+
+#: addons/rts_advanced/sm_front.gd:17
+msgid "GTFC"
+msgstr "GTFC"
+
+#: addons/rts_advanced/sm_front.gd:38
+msgid "GTFC  crimson / amber"
+msgstr "GTFC  crimson / amber"
+
+#: addons/rts_advanced/sm_story.gd:235
+msgid "GTFC gunboat"
+msgstr "GTFC gunboat"
+
+#: addons/rts_advanced/sm_story.gd:240
+msgid "GTFC tank"
+msgstr "GTFC tank"
+
+#: addons/rts_advanced/sm_hud.gd:442
+msgid "Guard"
+msgstr "Guard"
+
+#: addons/rts_advanced/sm_hud.gd:442
+msgid "Guard. Fire at enemies in range."
+msgstr "Guard. Fire at enemies in range."
+
+#: addons/rts_advanced/sm_hud.gd:1753
+msgid "Guide"
+msgstr "Guide"
+
+#: data/factions/nmrf/faction.json
+msgid "Gun Wharf"
+msgstr "Gun Wharf"
+
+#: addons/rts_advanced/sm_hud.gd:1169
+msgid "H    Controls"
+msgstr "H    Controls"
+
+#: addons/rts_advanced/sm_hud.gd:847
+msgid "H guide    P protocols"
+msgstr "H guide    P protocols"
+
+#: data/factions/mvd/faction.json
+msgid "Ha Long Hydrofoil"
+msgstr "Ha Long Hydrofoil"
+
+#: addons/rts_advanced/sm_story.gd:315
+msgid "hack held"
+msgstr "hack held"
+
+#: game/set_piece.gd:812
+msgid "Hack: %ds"
+msgstr "Hack: %ds"
+
+#: game/set_piece.gd:409
+msgid "Hack: 20s"
+msgstr "Hack: 20s"
+
+#: addons/rts_advanced/sm_pointer.gd:555
+msgid "Halt"
+msgstr "Halt"
+
+#: game/boot.gd:1097
+msgid "Hard"
+msgstr "Hard"
+
+#: addons/rts_advanced/sm_protocols.gd:327
+msgid "haul 120"
+msgstr "haul 120"
+
+#: data/factions/mvd/faction.json
+msgid "Hawk Missiles"
+msgstr "Hawk Missiles"
+
+#: game/set_piece.gd:140
+msgid "Haze coxswain"
+msgstr "Haze coxswain"
+
+#: addons/rts_advanced/sm_story.gd:170
+msgid "Haze raider"
+msgstr "Haze raider"
+
+#: addons/rts_advanced/sm_hud.gd:1947
+msgid "Hide mission"
+msgstr "Hide mission"
+
+#: game/settings_panel.gd:100
+msgid "High"
+msgstr "High"
+
+#: game/settings_panel.gd:184
+msgid "High graphics, full volume, voices in the game language, normal difficulty, edge pan on."
+msgstr "High graphics, full volume, voices in the game language, normal difficulty, edge pan on."
+
+#: game/settings_panel.gd:104
+msgid "High keeps trees, rain, fog, and shadows."
+msgstr "High keeps trees, rain, fog, and shadows."
+
+#: addons/rts_advanced/sm_protocols.gd:60
+msgid "High Technology"
+msgstr "High Technology"
+
+#: game/skirmish_map.gd:279
+msgid "Highland cliffs block the climb. The road is open ground. The enemy builds, expands, and attacks."
+msgstr "Highland cliffs block the climb. The road is open ground. The enemy builds, expands, and attacks."
+
+#: data/factions/gtfc/faction.json
+msgid "Highland Saboteur"
+msgstr "Highland Saboteur"
+
+#: game/settings_panel.gd:189
+msgid "Highlight a row to read what it changes."
+msgstr "Highlight a row to read what it changes."
+
+#: addons/rts_advanced/sm_hud.gd:443
+msgid "Hold"
+msgstr "Hold"
+
+#: addons/rts_advanced/sm_story.gd:315
+msgid "hold the blocks %ds"
+msgstr "hold the blocks %ds"
+
+#: addons/rts_advanced/sm_story.gd:307
+msgid "Hold the radar through the haze. %d seconds left."
+msgstr "Hold the radar through the haze. %d seconds left."
+
+#: game/set_piece.gd:318
+msgid "Hold the radar. The haze is the clock."
+msgstr "Hold the radar. The haze is the clock."
+
+#: addons/rts_advanced/sm_hud.gd:443
+msgid "Hold. Do not acquire targets."
+msgstr "Hold. Do not acquire targets."
+
+#: game/boot.gd:1877
+msgid "Holder"
+msgstr "Holder"
+
+#: addons/rts_advanced/sm_protocols.gd:68
+msgid "Honorable Discharge"
+msgstr "Honorable Discharge"
+
+#: game/lan_seat.gd:368
+msgid "Host %s %s    Guest %s %s"
+msgstr "Host %s %s    Guest %s %s"
+
+#: game/lan_seat.gd:91
+msgid "Host a 1v1 on this LAN, or join one. Each player brings a faction and a base."
+msgstr "Host a 1v1 on this LAN, or join one. Each player brings a faction and a base."
+
+#: game/boot.gd:207
+msgid "Host LAN"
+msgstr "Host LAN"
+
+#: game/ground_view.gd:131
+msgid "Houses"
+msgstr "Houses"
+
+#: addons/rts_advanced/sm_bark.gd:62
+msgid "Hover-technical set."
+msgstr "Hover-technical set."
+
+#: game/settings_panel.gd:130
+msgid "How fast the camera slides."
+msgstr "How fast the camera slides."
+
+#: addons/rts_advanced/sm_hud.gd:864
+msgid "How to play"
+msgstr "How to play"
+
+#: addons/rts_advanced/sm_hud.gd:795
+msgid "How to play (H)"
+msgstr "How to play (H)"
+
+#: addons/rts_advanced/sm_side.gd:103
+msgid "hub not queued"
+msgstr "hub not queued"
+
+#: addons/rts_advanced/sm_side.gd:131
+msgid "hub not ready"
+msgstr "hub not ready"
+
+#: addons/rts_advanced/sm_side.gd:131
+msgid "hub placed"
+msgstr "hub placed"
+
+#: addons/rts_advanced/sm_side.gd:103
+msgid "hub ready to place"
+msgstr "hub ready to place"
+
+#: data/factions/mvd/faction.json
+msgid "Hub Refinery"
+msgstr "Hub Refinery"
+
+#: game/settings_panel.gd:96
+msgid "HUD"
+msgstr "HUD"
+
+#: game/match_audio.gd:1143
+msgid "Humanfuture"
+msgstr "Humanfuture"
+
+#: addons/rts_advanced/sm_campaign.gd:176
+msgid "Hydro radar (mission)"
+msgstr "Hydro radar (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:237
+msgid "Hydro radar. Text briefing. Capture the radar so water nodes show on the map."
+msgstr "Hydro radar. Text briefing. Capture the radar so water nodes show on the map."
+
+#: data/factions/mvd/faction.json
+msgid "Indochina Drone Carrier"
+msgstr "Indochina Drone Carrier"
+
+#: game/match_hud_view.gd:692
+msgid "Infantry"
+msgstr "Infantry"
+
+#: game/set_piece.gd:346
+msgid "Infantry screen the tanks. They are not the column."
+msgstr "Infantry screen the tanks. They are not the column."
+
+#: data/factions/mvd/faction.json
+msgid "Infiltrator Operative"
+msgstr "Infiltrator Operative"
+
+#: data/factions/gtfc/faction.json
+msgid "Inflatable Raft and C4"
+msgstr "Inflatable Raft and C4"
+
+#: addons/rts_advanced/sm_bark.gd:59
+msgid "Interceptor up."
+msgstr "Interceptor up."
+
+#: addons/rts_advanced/sm_front.gd:51
+msgid "Internal queue"
+msgstr "Internal queue"
+
+#: data/factions/mvd/faction.json
+msgid "Ion-Cryo Collider"
+msgstr "Ion-Cryo Collider"
+
+#: data/factions/gtfc/faction.json
+msgid "Irrawaddy Gyro-Gunship"
+msgstr "Irrawaddy Gyro-Gunship"
+
+#: game/skirmish_map.gd:133
+msgid "Iskandar"
+msgstr "Iskandar"
+
+#: game/skirmish_map.gd:274
+msgid "Islands in deep water. Shoals are the crossings. The enemy builds, expands, and attacks."
+msgstr "Islands in deep water. Shoals are the crossings. The enemy builds, expands, and attacks."
+
+#: addons/rts_advanced/sm_story.gd:1005
+msgid "Jade caravan"
+msgstr "Jade caravan"
+
+#: game/greybox.gd:25
+msgid "Jammer"
+msgstr "Jammer"
+
+#: addons/rts_advanced/sm_campaign.gd:168
+msgid "Jammer drill (mission)"
+msgstr "Jammer drill (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:229
+msgid "Jammer drill. Text briefing. GPS guidance drops inside the jammer. A fiber link does not."
+msgstr "Jammer drill. Text briefing. GPS guidance drops inside the jammer. A fiber link does not."
+
+#: addons/rts_advanced/sm_story.gd:207
+msgid "Jammer ghost"
+msgstr "Jammer ghost"
+
+#: addons/rts_advanced/sm_story.gd:213
+msgid "Jar battery"
+msgstr "Jar battery"
+
+#: addons/rts_advanced/sm_story.gd:1053
+msgid "Jar screen"
+msgstr "Jar screen"
+
+#: data/factions/nmrf/faction.json
+msgid "Jet Interceptor"
+msgstr "Jet Interceptor"
+
+#: addons/rts_advanced/sm_bark.gd:57
+msgid "Jets on the target."
+msgstr "Jets on the target."
+
+#: data/factions/nmrf/faction.json
+msgid "Johor Loiter-Swarm"
+msgstr "Johor Loiter-Swarm"
+
+#: game/boot.gd:214
+msgid "Join LAN"
+msgstr "Join LAN"
+
+#: game/boot.gd:321
+msgid "Join offer"
+msgstr "Join offer"
+
+#: addons/rts_advanced/sm_story.gd:231
+msgid "Joint picket"
+msgstr "Joint picket"
+
+#: addons/rts_advanced/sm_story.gd:222
+msgid "Junta escort"
+msgstr "Junta escort"
+
+#: data/factions/gtfc/faction.json
+msgid "Kachin Sapper Dog"
+msgstr "Kachin Sapper Dog"
+
+#: addons/rts_advanced/sm_protocols.gd:315
+msgid "kamikaze 6"
+msgstr "kamikaze 6"
+
+#: addons/rts_advanced/sm_protocols.gd:70
+msgid "Kamikaze Drone Squadron"
+msgstr "Kamikaze Drone Squadron"
+
+#: game/set_piece.gd:354
+msgid "Keep the beam on the phantom. It is not frozen yet."
+msgstr "Keep the beam on the phantom. It is not frozen yet."
+
+#: addons/rts_advanced/sm_story.gd:337
+msgid "Keep the ferry alive (%s). %d seconds left."
+msgstr "Keep the ferry alive (%s). %d seconds left."
+
+#: addons/rts_advanced/sm_story.gd:338
+msgid "Keep the ferry alive. %d seconds left."
+msgstr "Keep the ferry alive. %d seconds left."
+
+#: addons/rts_advanced/sm_campaign.gd:152
+msgid "Keng Tung Defoliation"
+msgstr "Keng Tung Defoliation"
+
+#: addons/rts_advanced/sm_campaign.gd:213
+msgid "Keng Tung. Text briefing. Freeze the GTFC tank column, then destroy it. Infantry screens the tanks. Toxic Defoliation can freeze them. Casting it does not end the mission. A spray run comes down the road and has to be cut off. If it lands, it defoliates your line and the side cache is lost."
+msgstr "Keng Tung. Text briefing. Freeze the GTFC tank column, then destroy it. Infantry screens the tanks. Toxic Defoliation can freeze them. Casting it does not end the mission. A spray run comes down the road and has to be cut off. If it lands, it defoliates your line and the side cache is lost."
+
+#: game/credits_panel.gd:9
+msgid "Kenney (kenney.nl) and other CC0 sources, listed in game/sfx/CREDITS.md"
+msgstr "Kenney (kenney.nl) and other CC0 sources, listed in game/sfx/CREDITS.md"
+
+#: game/match_exit.gd:68
+msgid "Key guide"
+msgstr "Key guide"
+
+#: data/factions/black_market/faction.json
+msgid "Kite Loiterer"
+msgstr "Kite Loiterer"
+
+#: addons/rts_advanced/sm_campaign.gd:130
+msgid "Kokang and Mogok night raid"
+msgstr "Kokang and Mogok night raid"
+
+#: addons/rts_advanced/sm_mission.gd:5
+msgid "Kokang and Mogok night raid. Raise the scaffold yard, run the ruby pits on night shift, and bring one rare-earth stock home before dawn. If the company dies, the raid fails. An ambush, a blown bridge, a turned guide, and rain can arrive while you work. The side cache is optional."
+msgstr "Kokang and Mogok night raid. Raise the scaffold yard, run the ruby pits on night shift, and bring one rare-earth stock home before dawn. If the company dies, the raid fails. An ambush, a blown bridge, a turned guide, and rain can arrive while you work. The side cache is optional."
+
+#: addons/rts_advanced/sm_campaign.gd:191
+msgid "Kokang and Mogok. Text briefing. Raise the yard, clear the Orlan recon over the pits, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails. Rain hits, Orlans pass the pits, and the night shift starts. The side cache is optional."
+msgstr "Kokang and Mogok. Text briefing. Raise the yard, clear the Orlan recon over the pits, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails. Rain hits, Orlans pass the pits, and the night shift starts. The side cache is optional."
+
+#: addons/rts_advanced/sm_story.gd:720
+msgid "Kokang: %s. %s. %s. %s."
+msgstr "Kokang: %s. %s. %s. %s."
+
+#: data/factions/nmrf/faction.json
+msgid "Krakatoa Dreadnought"
+msgstr "Krakatoa Dreadnought"
+
+#: data/factions/nmrf/faction.json
+msgid "Kris Plasma Rush"
+msgstr "Kris Dagger Plasma Rush"
+
+#: game/lan_mirror.gd:49
+msgid "LAN guest. Your company, your base."
+msgstr "LAN guest. Your company, your base."
+
+#: game/boot.gd:645
+msgid "Land"
+msgstr "Land"
+
+#: data/factions/gtfc/faction.json
+msgid "Land Legs"
+msgstr "Land Legs"
+
+#: game/settings_panel.gd:167
+msgid "LANGUAGE"
+msgstr "LANGUAGE"
+
+#: data/factions/mvd/faction.json
+msgid "Laser Target Lock"
+msgstr "Laser Target Lock"
+
+#: data/factions/nmrf/faction.json
+msgid "Last-Stand Ram"
+msgstr "Last-Stand Ram"
+
+#: addons/rts_advanced/sm_bark.gd:47
+msgid "Leech beam on."
+msgstr "Leech beam on."
+
+#: game/faction_yard.gd:218
+msgid "Left click selects. Right click moves. F ability."
+msgstr "Left click selects. Right click moves. F ability."
+
+#: addons/rts_advanced/sm_guide.gd:9
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
+"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
+"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+
+#: addons/rts_advanced/sm_guide.gd:6
+msgid "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+
+#: addons/rts_advanced/sm_pointer.gd:373
+msgid "Line"
+msgstr "Line"
+
+#: game/lan_mirror.gd:161
+msgid "Linked. %d units."
+msgstr "Linked. %d units."
+
+#: game/boot.gd:1399
+msgid "LOADING"
+msgstr "LOADING"
+
+#: game/boot.gd:1384
+msgid "Loading"
+msgstr "Loading"
+
+#: addons/rts_advanced/sm_protocols.gd:123
+msgid "Locks a satellite on the target. One cast."
+msgstr "Locks a satellite on the target. One cast."
+
+#: data/factions/nmrf/faction.json
+msgid "Longtail Raider"
+msgstr "Longtail Raider"
+
+#: game/match_audio.gd:1147
+msgid "Love Drunk"
+msgstr "Love Drunk"
+
+#: game/settings_panel.gd:99
+msgid "Low"
+msgstr "Low"
+
+#: game/settings_panel.gd:103
+msgid "Low drops trees, rain, fog, and shadows."
+msgstr "Low drops trees, rain, fog, and shadows."
+
+#: addons/rts_advanced/sm_hud.gd:660
+msgid "low power"
+msgstr "low power"
+
+#: game/match_coach.gd:246
+msgid "Low power. Build a plant."
+msgstr "Low power. Build a plant."
+
+#: game/match_audio.gd:1141
+msgid "Machinesfuture"
+msgstr "Machinesfuture"
+
+#: addons/rts_advanced/sm_campaign.gd:160
+msgid "Mae Sai scaffold (mission)"
+msgstr "Mae Sai scaffold (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:221
+msgid "Mae Sai. Text briefing. Raise the scaffold yard and keep the drain running until the frame is finished."
+msgstr "Mae Sai. Text briefing. Raise the scaffold yard and keep the drain running until the frame is finished."
+
+#: data/factions/gtfc/faction.json
+msgid "Magnetic Harpoon Grinder"
+msgstr "Magnetic Harpoon Grinder"
+
+#: data/factions/nmrf/faction.json
+msgid "Magnetic Hull Breach"
+msgstr "Magnetic Hull Breach"
+
+#: addons/rts_advanced/sm_protocols.gd:64
+msgid "Magnetic Satellite"
+msgstr "Magnetic Satellite"
+
+#: data/factions/nmrf/faction.json
+msgid "Malacca Pocket-Sub"
+msgstr "Malacca Pocket-Sub"
+
+#: data/factions/nmrf/faction.json
+msgid "Malacca Recon Drone"
+msgstr "Malacca Recon Drone"
+
+#: game/match_settings.gd:142
+msgid "Malay"
+msgstr "Malay"
+
+#: game/match_settings.gd:138
+msgid "Mandarin"
+msgstr "Mandarin"
+
+#: game/boot.gd:249
+msgid "Market"
+msgstr "Market"
+
+#: game/match_audio.gd:1606
+msgid "Master"
+msgstr "Master"
+
+#: game/boot.gd:254
+msgid "Mekong"
+msgstr "Mekong"
+
+#: data/factions/mvd/faction.json
+msgid "Mekong Assault Destroyer"
+msgstr "Mekong Assault Destroyer"
+
+#: data/factions/mvd/faction.json
+msgid "Mekong Combat Sapper"
+msgstr "Mekong Combat Sapper"
+
+#: game/boot.gd:647
+msgid "Mekong Delta"
+msgstr "Mekong Delta"
+
+#: data/factions/mvd/faction.json
+msgid "Mekong Hawk UAV"
+msgstr "Mekong Hawk UAV"
+
+#: data/factions/gtfc/faction.json
+msgid "Mekong Spider Drone"
+msgstr "Mekong Spider Drone"
+
+#: game/match_audio.gd:1119
+msgid "Menu"
+msgstr "Menu"
+
+#: game/settings_panel.gd:128
+msgid "Menu and match songs. The default sits a little under full."
+msgstr "Menu and match songs. The default sits a little under full."
+
+#: game/settings_panel.gd:129
+msgid "Menu ticks, weapons, and the radio."
+msgstr "Menu ticks, weapons, and the radio."
+
+#: game/settings_panel.gd:171
+msgid "Menus, HUD, briefings, and subtitles. Voices follow; the Audio page can change them."
+msgstr "Menus, HUD, briefings, and subtitles. Voices follow; the Audio page can change them."
+
+#: addons/rts_advanced/sm_bark.gd:32
+msgid "Militia holding."
+msgstr "Militia holding."
+
+#: addons/rts_advanced/sm_bark.gd:25
+msgid "Militia moving."
+msgstr "Militia moving."
+
+#: addons/rts_advanced/sm_bark.gd:31
+msgid "Militia under fire."
+msgstr "Militia under fire."
+
+#: data/factions/nmrf/faction.json
+msgid "Mindanao Striker Walker"
+msgstr "Mindanao Striker Walker"
+
+#: game/mission_kokang.gd:103
+msgid "Mine rubies"
+msgstr "Mine rubies"
+
+#: addons/rts_advanced/sm_protocols.gd:288
+msgid "mine rubies"
+msgstr "mine rubies"
+
+#: addons/rts_advanced/sm_story.gd:717
+msgid "Mine rubies: %d/30"
+msgstr "Mine rubies: %d/30"
+
+#: game/set_piece.gd:290
+msgid "Mines in the cut. Take the boats wide of the line."
+msgstr "Mines in the cut. Take the boats wide of the line."
+
+#: addons/rts_advanced/sm_protocols.gd:111
+msgid "Mines rubies. One cast."
+msgstr "Mines rubies. One cast."
+
+#: addons/rts_advanced/sm_hud.gd:1012
+msgid "Minimap"
+msgstr "Minimap"
+
+#: data/factions/mvd/faction.json
+msgid "Mirage Camo-Tank"
+msgstr "Mirage Camo-Tank"
+
+#: addons/rts_advanced/sm_hud.gd:1949
+msgid "Mission"
+msgstr "Mission"
+
+#: addons/rts_advanced/sm_front.gd:49
+msgid "Mobile core"
+msgstr "Mobile core"
+
+#: addons/rts_advanced/sm_protocols.gd:52
+msgid "Mogok Night-Shift Overdrive"
+msgstr "Mogok Night-Shift Overdrive"
+
+#: addons/rts_advanced/sm_sight.gd:51
+msgid "Monsoon"
+msgstr "Monsoon"
+
+#: data/factions/nmrf/faction.json
+msgid "Monsoon Bull-Charge"
+msgstr "Monsoon Bull-Charge"
+
+#: game/faction_yard.gd:203
+msgid "Move packer"
+msgstr "Move packer"
+
+#: data/factions/nmrf/faction.json
+msgid "Multigunner"
+msgstr "Multigunner"
+
+#: addons/rts_advanced/sm_guns.gd:44
+msgid "multigunner full"
+msgstr "multigunner full"
+
+#: game/boot.gd:141
+msgid "MULTIPLAYER"
+msgstr "MULTIPLAYER"
+
+#: game/credits_panel.gd:7
+msgid "MUSIC"
+msgstr "MUSIC"
+
+#: game/match_audio.gd:141
+msgid "Music"
+msgstr "Music"
+
+#: addons/rts_advanced/sm_front.gd:16
+msgid "MVD"
+msgstr "MVD"
+
+#: addons/rts_advanced/sm_front.gd:37
+msgid "MVD  charcoal / cyan"
+msgstr "MVD  charcoal / cyan"
+
+#: game/faction_yard.gd:239
+msgid "MVD  charcoal / cyan    internal queue"
+msgstr "MVD  charcoal / cyan    internal queue"
+
+#: addons/rts_advanced/sm_story.gd:234
+msgid "MVD cutter"
+msgstr "MVD cutter"
+
+#: game/boot.gd:1383
+msgid "MVD yard"
+msgstr "MVD yard"
+
+#: data/factions/nmrf/faction.json
+msgid "Nano-Deflector Barrier"
+msgstr "Nano-Deflector Barrier"
+
+#: addons/rts_advanced/sm_protocols.gd:309
+msgid "napalm 36"
+msgstr "napalm 36"
+
+#: game/set_piece.gd:330
+msgid "Napalm is armed. Calling it does not sink the fleet."
+msgstr "Napalm is armed. Calling it does not sink the fleet."
+
+#: game/match_hud_view.gd:695
+msgid "Naval"
+msgstr "Naval"
+
+#: data/factions/gtfc/faction.json
+msgid "Naval Yard"
+msgstr "Naval Yard"
+
+#: addons/rts_advanced/sm_hud.gd:689
+msgid "need a naval yard"
+msgstr "need a naval yard"
+
+#: addons/rts_advanced/sm_hud.gd:686
+msgid "need a tech center"
+msgstr "need a tech center"
+
+#: addons/rts_advanced/sm_hud.gd:636
+msgid "need an airfield"
+msgstr "need an airfield"
+
+#: game/boot.gd:1268
+msgid "New to ASEAN 2031?"
+msgstr "New to ASEAN 2031?"
+
+#: game/boot.gd:1131
+msgid "Next skirmish: %s"
+msgstr "Next skirmish: %s"
+
+#: game/match_audio.gd:1145
+msgid "Night"
+msgstr "Night"
+
+#: game/set_piece.gd:34
+msgid "Night commander"
+msgstr "Night commander"
+
+#: game/mission_kokang.gd:154
+msgid "Night shift paying"
+msgstr "Night shift paying"
+
+#: addons/rts_advanced/sm_front.gd:14
+msgid "NMRF"
+msgstr "NMRF"
+
+#: addons/rts_advanced/sm_front.gd:35
+msgid "NMRF  olive / emerald"
+msgstr "NMRF  olive / emerald"
+
+#: game/faction_yard.gd:240
+msgid "NMRF  olive / emerald    mobile core"
+msgstr "NMRF  olive / emerald    mobile core"
+
+#: addons/rts_advanced/sm_story.gd:233
+msgid "NMRF trimaran"
+msgstr "NMRF trimaran"
+
+#: game/boot.gd:1381
+msgid "NMRF yard"
+msgstr "NMRF yard"
+
+#: game/mission_kokang.gd:158
+msgid "No stock yet"
+msgstr "No stock yet"
+
+#: addons/rts_advanced/sm_side.gd:217
+msgid "no target"
+msgstr "no target"
+
+#: game/boot.gd:1097
+msgid "Normal"
+msgstr "Normal"
+
+#: addons/rts_advanced/rts_production.gd:37
+msgid "not enough credits"
+msgstr "not enough credits"
+
+#: game/match_audio.gd:1131
+msgid "Not Needed Anymore"
+msgstr "Not Needed Anymore"
+
+#: game/lan_seat.gd:741
+msgid "not ready"
+msgstr "not ready"
+
+#: addons/rts_advanced/sm_hud.gd:729
+msgid "Nothing selected"
+msgstr "Nothing selected"
+
+#: addons/rts_advanced/sm_hud.gd:653
+msgid "nothing to cancel"
+msgstr "nothing to cancel"
+
+#: addons/rts_advanced/sm_hud.gd:576
+msgid "nothing to repair"
+msgstr "nothing to repair"
+
+#: game/credits_panel.gd:11
+msgid "Noto Sans Myanmar, Noto Sans Thai, and Noto Sans SC, SIL Open Font License 1.1"
+msgstr "Noto Sans Myanmar, Noto Sans Thai, and Noto Sans SC, SIL Open Font License 1.1"
+
+#: game/match_exit.gd:72
+msgid "NOW PLAYING"
+msgstr "NOW PLAYING"
+
+#: data/factions/nmrf/faction.json
+msgid "Nusantara Boarder"
+msgstr "Nusantara Boarder"
+
+#: addons/rts_advanced/sm_campaign.gd:310
+msgid "Objective complete"
+msgstr "Objective complete"
+
+#: addons/rts_advanced/sm_outcome.gd:183
+msgid "Objective failed"
+msgstr "Objective failed"
+
+#: addons/rts_advanced/sm_campaign.gd:310
+msgid "Objective stalled"
+msgstr "Objective stalled"
+
+#: game/boot.gd:469
+msgid "Offer"
+msgstr "Offer"
+
+#: data/factions/nmrf/faction.json
+msgid "Offshore Tidal Turbine"
+msgstr "Offshore Tidal Turbine"
+
+#: addons/rts_advanced/sm_hud.gd:1818
+msgid "OK"
+msgstr "OK"
+
+#: addons/rts_advanced/sm_front.gd:42
+msgid "Olive / emerald"
+msgstr "Olive / emerald"
+
+#: game/settings_panel.gd:177
+msgid "On"
+msgstr "On"
+
+#: addons/rts_advanced/sm_protocols.gd:156
+msgid "One cast, then it is spent."
+msgstr "One cast, then it is spent."
+
+#: addons/rts_advanced/sm_hud.gd:691
+msgid "one hero"
+msgstr "one hero"
+
+#: game/boot.gd:964
+msgid "Open yard"
+msgstr "Open yard"
+
+#: addons/rts_advanced/sm_protocols.gd:115
+msgid "Opens robotic assembly. One cast."
+msgstr "Opens robotic assembly. One cast."
+
+#: addons/rts_advanced/sm_protocols.gd:117
+msgid "Opens trade income. One cast."
+msgstr "Opens trade income. One cast."
+
+#: addons/rts_advanced/sm_campaign.gd:136
+msgid "Operation 1027 drone wave"
+msgstr "Operation 1027 drone wave"
+
+#: addons/rts_advanced/sm_campaign.gd:197
+msgid "Operation 1027. Text briefing. Knock out the junta EW jamming towers while the escorts press in, then destroy the parked Su-30 and CH-4 hangars. The drone swarm can help. Casting it does not end the mission. The hangars scramble, the swarm crosses, and two rifles arrive."
+msgstr "Operation 1027. Text briefing. Knock out the junta EW jamming towers while the escorts press in, then destroy the parked Su-30 and CH-4 hangars. The drone swarm can help. Casting it does not end the mission. The hangars scramble, the swarm crosses, and two rifles arrive."
+
+#: addons/rts_advanced/sm_campaign.gd:158
+msgid "Operation Shattered Monsoon"
+msgstr "Operation Shattered Monsoon"
+
+#: addons/rts_advanced/sm_campaign.gd:219
+msgid "Operation Shattered Monsoon. Text briefing. Destroy both enemy superweapons. A garrison screens the citadel. Protocols can help. Casting them does not end the mission. The garrison comes out, then a countdown runs. Destroy both weapons before it hits zero or the mission fails."
+msgstr "Operation Shattered Monsoon. Text briefing. Destroy both enemy superweapons. A garrison screens the citadel. Protocols can help. Casting them does not end the mission. The garrison comes out, then a countdown runs. Destroy both weapons before it hits zero or the mission fails."
+
+#: game/lan_mirror.gd:113
+msgid "Opponent left. Defeat."
+msgstr "Opponent left. Defeat."
+
+#: game/lan_mirror.gd:111
+msgid "Opponent left. Victory."
+msgstr "Opponent left. Victory."
+
+#: addons/rts_advanced/sm_story.gd:1001
+msgid "Orlan recon"
+msgstr "Orlan recon"
+
+#: addons/rts_advanced/sm_protocols.gd:92
+msgid "Orlan Thermal Scan"
+msgstr "Orlan Thermal Scan"
+
+#: data/factions/black_market/faction.json
+msgid "Orlan-10"
+msgstr "Orlan-10"
+
+#: game/set_piece.gd:260
+msgid "Orlans over the ruby pits. They have not marked the yard."
+msgstr "Orlans over the ruby pits. They have not marked the yard."
+
+#: game/settings_panel.gd:127
+msgid "Overall loudness."
+msgstr "Overall loudness."
+
+#: data/factions/gtfc/faction.json
+msgid "Overload Barrage"
+msgstr "Overload Barrage"
+
+#: addons/rts_advanced/sm_hud.gd:1170
+msgid "P    Protocols"
+msgstr "P    Protocols"
+
+#: addons/rts_advanced/sm_side.gd:190
+msgid "packer already unpacked"
+msgstr "packer already unpacked"
+
+#: game/set_piece.gd:145
+msgid "Packer captain"
+msgstr "Packer captain"
+
+#: addons/rts_advanced/sm_campaign.gd:180
+msgid "Packer sail (mission)"
+msgstr "Packer sail (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:241
+msgid "Packer sail. Text briefing. Sail the packer into shallow water, unpack the wharf, and upgrade it."
+msgstr "Packer sail. Text briefing. Sail the packer into shallow water, unpack the wharf, and upgrade it."
+
+#: addons/rts_advanced/sm_side.gd:80
+msgid "packer sailed"
+msgstr "packer sailed"
+
+#: addons/rts_advanced/sm_side.gd:80
+msgid "packer stayed packed"
+msgstr "packer stayed packed"
+
+#: game/ground_view.gd:124
+msgid "Paddy"
+msgstr "Paddy"
+
+#: game/ground_view.gd:130
+msgid "Palms"
+msgstr "Palms"
+
+#: game/settings_panel.gd:110
+msgid "Pan speed"
+msgstr "Pan speed"
+
+#: game/match_audio.gd:1139
+msgid "Past Cracks"
+msgstr "Past Cracks"
+
+#: game/boot.gd:314
+msgid "Paste the other browser's offer or answer"
+msgstr "Paste the other browser's offer or answer"
+
+#: data/factions/nmrf/faction.json
+msgid "Patani Corsair Guard"
+msgstr "Patani Corsair Guard"
+
+#: addons/rts_advanced/sm_story.gd:294
+msgid "Patani: %d ghosts in the jammer. GPS shots must miss. Fiber stays true."
+msgstr "Patani: %d ghosts in the jammer. GPS shots must miss. Fiber stays true."
+
+#: game/match_exit.gd:140
+msgid "Pause and settings"
+msgstr "Pause and settings"
+
+#: game/match_exit.gd:56
+msgid "PAUSED"
+msgstr "PAUSED"
+
+#: game/lan_mirror.gd:115
+msgid "Paused. Waiting for the other player."
+msgstr "Paused. Waiting for the other player."
+
+#: addons/rts_advanced/sm_protocols.gd:107
+msgid "Pays 250 credits once."
+msgstr "Pays 250 credits once."
+
+#: addons/rts_advanced/sm_story.gd:291
+msgid "phantom frozen"
+msgstr "phantom frozen"
+
+#: addons/rts_advanced/sm_campaign.gd:154
+msgid "Phantom of the Plain of Jars"
+msgstr "Phantom of the Plain of Jars"
+
+#: data/factions/mvd/faction.json
+msgid "Pheromone Bark"
+msgstr "Pheromone Bark"
+
+#: game/boot.gd:250
+msgid "Phillips"
+msgstr "Phillips"
+
+#: game/boot.gd:643
+msgid "Phillips Channel"
+msgstr "Phillips Channel"
+
+#: data/factions/nmrf/faction.json
+msgid "Phillips Wave-Cannon"
+msgstr "Phillips Wave-Cannon"
+
+#: game/boot.gd:244
+msgid "Pick a faction and a map, then ready up."
+msgstr "Pick a faction and a map, then ready up."
+
+#: game/boot.gd:659
+msgid "Pick a map, then Play. The enemy builds, expands, and attacks."
+msgstr "Pick a map, then Play. The enemy builds, expands, and attacks."
+
+#: game/boot.gd:228
+msgid "Pick host or join."
+msgstr "Pick host or join."
+
+#: game/set_piece.gd:332
+msgid "Pickets across the bow. They are not the fleet."
+msgstr "Pickets across the bow. They are not the fleet."
+
+#: addons/rts_advanced/sm_guns.gd:44
+msgid "pillbox full"
+msgstr "pillbox full"
+
+#: game/phillips_channel.gd:205
+msgid "pipeline blocked"
+msgstr "pipeline blocked"
+
+#: game/phillips_channel.gd:205
+msgid "pipeline ready"
+msgstr "pipeline ready"
+
+#: addons/rts_advanced/sm_story.gd:1002
+msgid "Pit guard"
+msgstr "Pit guard"
+
+#: game/lan_mirror.gd:86
+msgid "Place"
+msgstr "Place"
+
+#: game/faction_yard.gd:201
+msgid "Place hub"
+msgstr "Place hub"
+
+#: game/ground_view.gd:208
+msgid "Plain"
+msgstr "Plain"
+
+#: addons/rts_advanced/sm_campaign.gd:215
+msgid "Plain of Jars. Text briefing. Hold the beam until the phantom freezes, then destroy the phantom, both batteries, and the screen. The beam holds, the phantom stutters, and the batteries stay up."
+msgstr "Plain of Jars. Text briefing. Hold the beam until the phantom freezes, then destroy the phantom, both batteries, and the screen. The beam holds, the phantom stutters, and the batteries stay up."
+
+#: addons/rts_advanced/sm_story.gd:292
+msgid "Plain of Jars: %s, %s. Phantom %d, battery %d."
+msgstr "Plain of Jars: %s, %s. Phantom %d, battery %d."
+
+#: addons/rts_advanced/sm_story.gd:212
+msgid "Plain phantom"
+msgstr "Plain phantom"
+
+#: data/factions/nmrf/faction.json
+msgid "Plantation Bomber"
+msgstr "Plantation Bomber"
+
+#: game/boot.gd:686
+msgid "Play"
+msgstr "Play"
+
+#: game/boot.gd:1278
+msgid "Play the training raid"
+msgstr "Play the training raid"
+
+#: game/boot.gd:1932
+msgid "Players: 2"
+msgstr "Players: 2"
+
+#: addons/rts_advanced/sm_protocols.gd:72
+msgid "Point-Defense Drones"
+msgstr "Point-Defense Drones"
+
+#: game/match_audio.gd:1149
+msgid "Poison"
+msgstr "Poison"
+
+#: addons/rts_advanced/sm_power.gd:27
+msgid "Power %d/%d"
+msgstr "Power %d/%d"
+
+#: game/match_hud_view.gd:656
+msgid "Power generated / power drawn"
+msgstr "Power generated / power drawn"
+
+#: game/boot.gd:669
+msgid "Practice map."
+msgstr "Practice map."
+
+#: data/factions/nmrf/faction.json
+msgid "Premature Discharge"
+msgstr "Premature Discharge"
+
+#: game/match_coach.gd:101
+msgid "Press F to use an ability."
+msgstr "Press F to use an ability."
+
+#: addons/rts_advanced/sm_bark.gd:39
+msgid "Print overdrive."
+msgstr "Print overdrive."
+
+#: addons/rts_advanced/sm_protocols.gd:291
+msgid "printed 8"
+msgstr "printed 8"
+
+#: addons/rts_advanced/sm_protocols.gd:113
+msgid "Prints a batch of units. One cast."
+msgstr "Prints a batch of units. One cast."
+
+#: data/factions/gtfc/faction.json
+msgid "Printsmith Rifleman"
+msgstr "Printsmith Rifleman"
+
+#: game/lan_mirror.gd:90
+msgid "Protocol"
+msgstr "Protocol"
+
+#: addons/rts_advanced/sm_campaign.gd:186
+msgid "Protocol bar (mission)"
+msgstr "Protocol bar (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:247
+msgid "Protocol bar. Text briefing. Cast logistics, arsenal, and oracle once each. A second cast does nothing."
+msgstr "Protocol bar. Text briefing. Cast logistics, arsenal, and oracle once each. A second cast does nothing."
+
+#: addons/rts_advanced/sm_protocols.gd:276
+msgid "protocol spent"
+msgstr "protocol spent"
+
+#: addons/rts_advanced/sm_hud.gd:1012
+msgid "Protocols"
+msgstr "Protocols"
+
+#: addons/rts_advanced/sm_protocols.gd:242
+msgid "Protocols (P)"
+msgstr "Protocols (P)"
+
+#: addons/rts_advanced/sm_story.gd:259
+msgid "Psionic Monsoon"
+msgstr "Psionic Monsoon"
+
+#: data/factions/nmrf/faction.json
+msgid "Psionic Monsoon Decimator"
+msgstr "Psionic Monsoon Decimator"
+
+#: addons/rts_advanced/sm_hud.gd:1165
+msgid "Q    Attack-move"
+msgstr "Q    Attack-move"
+
+#: game/settings_panel.gd:97
+msgid "Quality"
+msgstr "Quality"
+
+#: addons/rts_advanced/rts_production.gd:35
+msgid "queue full"
+msgstr "queue full"
+
+#: game/faction_yard.gd:199
+msgid "Queue hub"
+msgstr "Queue hub"
+
+#: game/faction_yard.gd:244
+msgid "Queue the hub inside the pad, buy clearance, then place it. The enemy builds, expands, and attacks."
+msgstr "Queue the hub inside the pad, buy clearance, then place it. The enemy builds, expands, and attacks."
+
+#: game/boot.gd:159
+msgid "QUIT"
+msgstr "QUIT"
+
+#: game/match_exit.gd:69
+msgid "Quit to menu"
+msgstr "Quit to menu"
+
+#: addons/rts_advanced/sm_story.gd:156
+msgid "Radar garrison"
+msgstr "Radar garrison"
+
+#: addons/rts_advanced/sm_story.gd:1032
+msgid "Radar relief"
+msgstr "Radar relief"
+
+#: game/mission_kokang.gd:46
+msgid "Raid complete"
+msgstr "Raid complete"
+
+#: game/mission_kokang.gd:163
+msgid "Raid complete. Scaffold, night ruby, rare-earth stock."
+msgstr "Raid complete. Scaffold, night ruby, rare-earth stock."
+
+#: game/mission_kokang.gd:46
+msgid "Raid stalled"
+msgstr "Raid stalled"
+
+#: game/boot.gd:1877
+msgid "Raider"
+msgstr "Raider"
+
+#: data/factions/black_market/faction.json
+msgid "Rail Strike"
+msgstr "Rail Strike"
+
+#: game/set_piece.gd:258
+msgid "Rain on the pits. Keep the company moving."
+msgstr "Rain on the pits. Keep the company moving."
+
+#: game/phillips_channel.gd:154
+msgid "Raise a yard, claim Golden Slag / Aurum-9, cross, then press F."
+msgstr "Raise a yard, claim Golden Slag / Aurum-9, cross, then press F."
+
+#: game/mission_kokang.gd:102
+msgid "Raise scaffold"
+msgstr "Raise scaffold"
+
+#: addons/rts_advanced/sm_story.gd:714
+msgid "raise the yard"
+msgstr "raise the yard"
+
+#: game/set_piece.gd:256
+msgid "Raise the yard before the Orlans find the pits."
+msgstr "Raise the yard before the Orlans find the pits."
+
+#: addons/rts_advanced/sm_protocols.gd:131
+msgid "Raises a shield. It can be cast again after it cools."
+msgstr "Raises a shield. It can be cast again after it cools."
+
+#: addons/rts_advanced/sm_protocols.gd:119
+msgid "Raises the tech rank. One cast."
+msgstr "Raises the tech rank. One cast."
+
+#: addons/rts_advanced/sm_protocols.gd:121
+msgid "Raises weapon damage. One cast."
+msgstr "Raises weapon damage. One cast."
+
+#: addons/rts_advanced/sm_hud.gd:249
+msgid "Rally set"
+msgstr "Rally set"
+
+#: data/factions/nmrf/faction.json
+msgid "Ramming Hydro-Shield"
+msgstr "Ramming Hydro-Shield"
+
+#: addons/rts_advanced/sm_nodes.gd:24
+msgid "rare earth"
+msgstr "rare earth"
+
+#: addons/rts_advanced/sm_story.gd:718
+msgid "rare earth home"
+msgstr "rare earth home"
+
+#: addons/rts_advanced/sm_campaign.gd:164
+msgid "Rare-earth stock (mission)"
+msgstr "Rare-earth stock (mission)"
+
+#: game/mission_kokang.gd:158
+msgid "Rare-earth stock secured"
+msgstr "Rare-earth stock secured"
+
+#: addons/rts_advanced/sm_campaign.gd:225
+msgid "Rare-earth stock. Text briefing. Claim the rare-earth node and bring one stock home."
+msgstr "Rare-earth stock. Text briefing. Claim the rare-earth node and bring one stock home."
+
+#: game/match_hud_view.gd:302
+msgid "RDY"
+msgstr "RDY"
+
+#: game/campaign_mission.gd:124
+msgid "Read the briefing, then meet it on the field."
+msgstr "Read the briefing, then meet it on the field."
+
+#: game/match_hud_view.gd:419
+msgid "READY"
+msgstr "READY"
+
+#: game/boot.gd:258
+msgid "Ready"
+msgstr "Ready"
+
+#: game/match_audio.gd:1135
+msgid "Ready To Rage Against The Abnormalities"
+msgstr "Ready To Rage Against The Abnormalities"
+
+#: addons/rts_advanced/sm_story.gd:719
+msgid "recon down"
+msgstr "recon down"
+
+#: addons/rts_advanced/sm_hud.gd:1414
+msgid "Recruit"
+msgstr "Recruit"
+
+#: game/lan_mirror.gd:88
+msgid "Repair"
+msgstr "Repair"
+
+#: addons/rts_advanced/sm_hud.gd:500
+msgid "repair off"
+msgstr "repair off"
+
+#: game/match_coach.gd:259
+msgid "Resource pad in sight."
+msgstr "Resource pad in sight."
+
+#: game/match_exit.gd:67
+msgid "Restart"
+msgstr "Restart"
+
+#: game/settings_panel.gd:183
+msgid "Restore Defaults"
+msgstr "Restore Defaults"
+
+#: game/match_exit.gd:66
+msgid "Resume"
+msgstr "Resume"
+
+#: game/settings_panel.gd:180
+msgid "Return to the previous screen."
+msgstr "Return to the previous screen."
+
+#: addons/rts_advanced/sm_protocols.gd:147
+msgid "Reveals the field. One cast."
+msgstr "Reveals the field. One cast."
+
+#: data/factions/nmrf/faction.json
+msgid "Riau Syndicate Fixer"
+msgstr "Riau Syndicate Fixer"
+
+#: addons/rts_advanced/sm_hud.gd:1163
+msgid "Right-click    Move"
+msgstr "Right-click    Move"
+
+#: game/match_coach.gd:95
+msgid "Right-click an enemy to attack."
+msgstr "Right-click an enemy to attack."
+
+#: addons/rts_advanced/sm_hud.gd:1164
+msgid "Right-click enemy    Attack"
+msgstr "Right-click enemy    Attack"
+
+#: game/match_coach.gd:93
+msgid "Right-click the ground to move."
+msgstr "Right-click the ground to move."
+
+#: game/boot.gd:644
+msgid "River"
+msgstr "River"
+
+#: game/set_piece.gd:130
+msgid "River commander"
+msgstr "River commander"
+
+#: addons/rts_advanced/sm_story.gd:1016
+msgid "River gunboat"
+msgstr "River gunboat"
+
+#: game/ground_view.gd:120
+msgid "Road"
+msgstr "Road"
+
+#: addons/rts_advanced/sm_story.gd:1008
+msgid "Road ambush"
+msgstr "Road ambush"
+
+#: addons/rts_advanced/sm_protocols.gd:56
+msgid "Robotic Assembly"
+msgstr "Robotic Assembly"
+
+#: addons/rts_advanced/sm_hud.gd:1807
+msgid "Rotate to landscape for the best experience"
+msgstr "Rotate to landscape for the best experience"
+
+#: game/credits_panel.gd:12
+msgid "RTS CORE"
+msgstr "RTS CORE"
+
+#: addons/rts_advanced/sm_campaign.gd:162
+msgid "Ruby night market (mission)"
+msgstr "Ruby night market (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:223
+msgid "Ruby night market. Text briefing. Snap the ruby pit and run the night shift until the purse fills."
+msgstr "Ruby night market. Text briefing. Snap the ruby pit and run the night shift until the purse fills."
+
+#: game/mission_kokang.gd:154
+msgid "Ruby not paying"
+msgstr "Ruby not paying"
+
+#: addons/rts_advanced/sm_story.gd:715
+msgid "ruby paid"
+msgstr "ruby paid"
+
+#: game/boot.gd:1877
+msgid "Rusher"
+msgstr "Rusher"
+
+#: data/factions/mvd/faction.json
+msgid "S.H.R.I.N.K. Ray"
+msgstr "S.H.R.I.N.K. Ray"
+
+#: data/factions/mvd/faction.json
+msgid "Saigon Prism-Lock Tank"
+msgstr "Saigon Prism-Lock Tank"
+
+#: data/factions/gtfc/faction.json
+msgid "Salvage Leech Beam"
+msgstr "Salvage Leech Beam"
+
+#: addons/rts_advanced/sm_bark.gd:49
+msgid "Salvage leech."
+msgstr "Salvage leech."
+
+#: data/factions/gtfc/faction.json
+msgid "Salween Hydro-Generator"
+msgstr "Salween Hydro-Generator"
+
+#: data/factions/gtfc/faction.json
+msgid "Salween RPG Trooper"
+msgstr "Salween RPG Trooper"
+
+#: data/factions/gtfc/faction.json
+msgid "Salween Smuggler Boat"
+msgstr "Salween Smuggler Boat"
+
+#: game/boot.gd:667
+msgid "Sandbox"
+msgstr "Sandbox"
+
+#: game/greybox.gd:36
+msgid "Sandbox: yards, queues, five nodes, jammer"
+msgstr "Sandbox: yards, queues, five nodes, jammer"
+
+#: data/factions/black_market/faction.json
+msgid "Satellite Laser Designation"
+msgstr "Satellite Laser Designation"
+
+#: addons/rts_advanced/sm_protocols.gd:306
+msgid "satellite lock"
+msgstr "satellite lock"
+
+#: addons/rts_advanced/sm_protocols.gd:88
+msgid "Satellite Recon"
+msgstr "Satellite Recon"
+
+#: game/mission_kokang.gd:63
+msgid "Scaffold"
+msgstr "Scaffold"
+
+#: game/mission_kokang.gd:150
+msgid "Scaffold stalled"
+msgstr "Scaffold stalled"
+
+#: addons/rts_advanced/sm_side.gd:144
+msgid "scaffold stalled"
+msgstr "scaffold stalled"
+
+#: game/mission_kokang.gd:150
+msgid "Scaffold up"
+msgstr "Scaffold up"
+
+#: addons/rts_advanced/sm_front.gd:52
+msgid "Scaffold yard"
+msgstr "Scaffold yard"
+
+#: data/factions/mvd/faction.json
+msgid "Scrambler"
+msgstr "Scrambler"
+
+#: game/ground_view.gd:221
+msgid "Sea"
+msgstr "Sea"
+
+#: game/boot.gd:328
+msgid "Seal answer"
+msgstr "Seal answer"
+
+#: game/mission_kokang.gd:104
+msgid "Secure rare earth"
+msgstr "Secure rare earth"
+
+#: addons/rts_advanced/sm_story.gd:261
+msgid "Seismic Slag Vacuum"
+msgstr "Seismic Slag Vacuum"
+
+#: data/factions/gtfc/faction.json
+msgid "Seismic Slag Vacuum Imploder"
+msgstr "Seismic Slag Vacuum Imploder"
+
+#: game/lan_mirror.gd:87
+msgid "Sell"
+msgstr "Sell"
+
+#: addons/rts_advanced/sm_hud.gd:507
+msgid "sell off"
+msgstr "sell off"
+
+#: game/boot.gd:284
+msgid "Send"
+msgstr "Send"
+
+#: addons/rts_advanced/sm_protocols.gd:129
+msgid "Sends a drone squadron. One cast."
+msgstr "Sends a drone squadron. One cast."
+
+#: addons/rts_advanced/sm_protocols.gd:155
+msgid "Sets an ambush. One cast."
+msgstr "Sets an ambush. One cast."
+
+#: game/boot.gd:132
+msgid "SETTINGS"
+msgstr "SETTINGS"
+
+#: game/match_audio.gd:779
+msgid "SFX"
+msgstr "SFX"
+
+#: data/factions/gtfc/faction.json
+msgid "Shan Behemoth Tank"
+msgstr "Shan Behemoth Tank"
+
+#: data/factions/gtfc/faction.json
+msgid "Shan Insurgent Militia"
+msgstr "Shan Insurgent Militia"
+
+#: data/factions/gtfc/faction.json
+msgid "Shaped Charge"
+msgstr "Shaped Charge"
+
+#: data/factions/gtfc/faction.json
+msgid "Shar Htoo Waw Kloud Drone Truck"
+msgstr "Shar Htoo Waw Cloud Drone Truck"
+
+#: addons/rts_advanced/sm_protocols.gd:318
+msgid "shield %d"
+msgstr "shield %d"
+
+#: addons/rts_advanced/sm_story.gd:1029
+msgid "Shipment guard"
+msgstr "Shipment guard"
+
+#: addons/rts_advanced/sm_story.gd:195
+msgid "Shore boat"
+msgstr "Shore boat"
+
+#: addons/rts_advanced/sm_story.gd:182
+msgid "Shore gun"
+msgstr "Shore gun"
+
+#: addons/rts_advanced/sm_bark.gd:69
+msgid "Shrink ray."
+msgstr "Shrink ray."
+
+#: addons/rts_advanced/sm_campaign.gd:134
+msgid "Shwe Kokko capture"
+msgstr "Shwe Kokko capture"
+
+#: addons/rts_advanced/sm_campaign.gd:195
+msgid "Shwe Kokko. Text briefing. Destroy the garrison and the river gunboats, capture both server blocks, and siphon the enemy purse. Hold a server block for twenty seconds. If you are pushed off, the hack resets. The side cache is optional."
+msgstr "Shwe Kokko. Text briefing. Destroy the garrison and the river gunboats, capture both server blocks, and siphon the enemy purse. Hold a server block for twenty seconds. If you are pushed off, the hack resets. The side cache is optional."
+
+#: game/boot.gd:114
+msgid "Side"
+msgstr "Side"
+
+#: game/boot.gd:648
+msgid "Siege of Chiang Rai"
+msgstr "Siege of Chiang Rai"
+
+#: data/factions/nmrf/faction.json
+msgid "Singapore Trimaran"
+msgstr "Singapore Trimaran"
+
+#: addons/rts_advanced/sm_story.gd:303
+msgid "Sink the boats (%d). Raise the wharf to level 2 (now %d)."
+msgstr "Sink the boats (%d). Raise the wharf to level 2 (now %d)."
+
+#: addons/rts_advanced/sm_story.gd:283
+msgid "Sink the joint fleet (%d)."
+msgstr "Sink the joint fleet (%d)."
+
+#: game/set_piece.gd:278
+msgid "Siphon is up. Stay on the blocks until it pays."
+msgstr "Siphon is up. Stay on the blocks until it pays."
+
+#: data/factions/nmrf/faction.json
+msgid "Siti The Kraken"
+msgstr "Siti The Kraken"
+
+#: addons/rts_advanced/sm_bark.gd:55
+msgid "Skimming out."
+msgstr "Skimming out."
+
+#: game/boot.gd:1285
+msgid "Skip"
+msgstr "Skip"
+
+#: game/match_exit.gd:125
+msgid "Skip >>  N"
+msgstr "Skip >>  N"
+
+#: game/match_exit.gd:126
+msgid "Skip to the next song (N)"
+msgstr "Skip to the next song (N)"
+
+#: game/boot.gd:113
+msgid "SKIRMISH"
+msgstr "SKIRMISH"
+
+#: game/boot.gd:661
+msgid "Skirmish"
+msgstr "Skirmish"
+
+#: data/factions/gtfc/faction.json
+msgid "Slag Jump Mortar"
+msgstr "Slag Jump Mortar"
+
+#: data/factions/gtfc/faction.json
+msgid "Slag Jump Thruster"
+msgstr "Slag Jump Thruster"
+
+#: data/factions/gtfc/faction.json
+msgid "Slag Molotov"
+msgstr "Slag Molotov"
+
+#: addons/rts_advanced/sm_bark.gd:29
+msgid "Slag Molotov."
+msgstr "Slag Molotov."
+
+#: data/factions/gtfc/faction.json
+msgid "Slag Pillbox"
+msgstr "Slag Pillbox"
+
+#: data/factions/gtfc/faction.json
+msgid "Slag Refinery"
+msgstr "Slag Refinery"
+
+#: addons/rts_advanced/sm_protocols.gd:96
+msgid "Sleeper Ambush"
+msgstr "Sleeper Ambush"
+
+#: addons/rts_advanced/sm_hud.gd:763
+msgid "smart-cast"
+msgstr "smart-cast"
+
+#: addons/rts_advanced/sm_campaign.gd:182
+msgid "Smart-cast drill (mission)"
+msgstr "Smart-cast drill (mission)"
+
+#: addons/rts_advanced/sm_campaign.gd:243
+msgid "Smart-cast drill. Text briefing. Toggle the group. Only the closest ready unit fires."
+msgstr "Smart-cast drill. Text briefing. Toggle the group. Only the closest ready unit fires."
+
+#: data/factions/mvd/faction.json
+msgid "Solar-Biomass Plant"
+msgstr "Solar-Biomass Plant"
+
+#: addons/rts_advanced/sm_hud.gd:581
+msgid "sold %d"
+msgstr "sold %d"
+
+#: data/factions/gtfc/faction.json
+msgid "Sonic Howl"
+msgstr "Sonic Howl"
+
+#: game/boot.gd:251
+msgid "Sop Ruak"
+msgstr "Sop Ruak"
+
+#: game/credits_panel.gd:9
+msgid "SOUND EFFECTS"
+msgstr "SOUND EFFECTS"
+
+#: addons/rts_advanced/sm_hud.gd:1172
+msgid "Space    Last alert"
+msgstr "Space    Last alert"
+
+#: data/factions/mvd/faction.json
+msgid "Spectrum Prism"
+msgstr "Spectrum Prism"
+
+#: addons/rts_advanced/sm_protocols.gd:285
+msgid "speed 1.4"
+msgstr "speed 1.4"
+
+#: addons/rts_advanced/sm_protocols.gd:109
+msgid "Speeds the company up. One cast."
+msgstr "Speeds the company up. One cast."
+
+#: data/factions/nmrf/faction.json
+msgid "Spider-Hole Ambush"
+msgstr "Spider-Hole Ambush"
+
+#: addons/rts_advanced/sm_protocols.gd:149
+msgid "Spoofs GPS guidance. One cast."
+msgstr "Spoofs GPS guidance. One cast."
+
+#: data/factions/mvd/faction.json
+msgid "Spool FPV"
+msgstr "Spool FPV"
+
+#: data/factions/nmrf/faction.json
+msgid "Sprint Skates"
+msgstr "Sprint Skates"
+
+#: data/factions/black_market/faction.json
+msgid "Stand-Off Glide Barrage"
+msgstr "Stand-Off Glide Barrage"
+
+#: game/lan_seat.gd:168
+msgid "Start an offer before pasting an answer."
+msgstr "Start an offer before pasting an answer."
+
+#: game/boot.gd:696
+msgid "Start with Kokang and Mogok. The match opens with a short lesson."
+msgstr "Start with Kokang and Mogok. The match opens with a short lesson."
+
+#: game/boot.gd:631
+msgid "Starting in %d."
+msgstr "Starting in %d."
+
+#: addons/rts_advanced/sm_hud.gd:1597
+msgid "Status"
+msgstr "Status"
+
+#: game/set_piece.gd:342
+msgid "Stay on the radar until the murk thins."
+msgstr "Stay on the radar until the murk thins."
+
+#: game/set_piece.gd:266
+msgid "Stay with the wagon. The bazaar is the drop."
+msgstr "Stay with the wagon. The bazaar is the drop."
+
+#: game/phillips_channel.gd:234
+msgid "still fighting"
+msgstr "still fighting"
+
+#: game/ground_view.gd:132
+msgid "Stilts"
+msgstr "Stilts"
+
+#: addons/rts_advanced/sm_hud.gd:441
+msgid "Stop"
+msgstr "Stop"
+
+#: game/set_piece.gd:350
+msgid "Stop the sprayer before it reaches the tanks."
+msgstr "Stop the sprayer before it reaches the tanks."
+
+#: addons/rts_advanced/sm_sight.gd:46
+msgid "Strait Haze"
+msgstr "Strait Haze"
+
+#: addons/rts_advanced/sm_protocols.gd:78
+msgid "Straits Pirate Raid"
+msgstr "Straits Pirate Raid"
+
+#: data/factions/gtfc/faction.json
+msgid "Street Press"
+msgstr "Street Press"
+
+#: game/set_piece.gd:121
+msgid "Strip lead"
+msgstr "Strip lead"
+
+#: game/match_hud_view.gd:690
+msgid "Structures"
+msgstr "Structures"
+
+#: data/factions/black_market/faction.json
+msgid "Su-30"
+msgstr "Su-30"
+
+#: addons/rts_advanced/sm_story.gd:220
+msgid "Su-30 hangar"
+msgstr "Su-30 hangar"
+
+#: addons/rts_advanced/sm_protocols.gd:66
+msgid "Su-30 napalm run"
+msgstr "Su-30 napalm run"
+
+#: data/factions/nmrf/faction.json
+msgid "Submersible or Sky-Jet"
+msgstr "Submersible or Sky-Jet"
+
+#: data/factions/nmrf/faction.json
+msgid "Sulu Tank-Buster"
+msgstr "Sulu Tank-Buster"
+
+#: data/factions/nmrf/faction.json
+msgid "Sumatra Hover-Technical"
+msgstr "Sumatra Hover-Technical"
+
+#: game/match_audio.gd:1137
+msgid "Supayarlat"
+msgstr "Supayarlat"
+
+#: addons/rts_advanced/sm_hud.gd:562
+msgid "superweapon cooling"
+msgstr "superweapon cooling"
+
+#: game/match_coach.gd:250
+msgid "Superweapon ready."
+msgstr "Superweapon ready."
+
+#: addons/rts_advanced/sm_story.gd:90
+msgid "survive: hold the radar through the haze while the enemy attacks"
+msgstr "survive: hold the radar through the haze while the enemy attacks"
+
+#: addons/rts_advanced/sm_story.gd:102
+msgid "survive: the ferry crosses and holds until the timer runs out"
+msgstr "survive: the ferry crosses and holds until the timer runs out"
+
+#: addons/rts_advanced/sm_hud.gd:1271
+msgid "SW"
+msgstr "SW"
+
+#: addons/rts_advanced/sm_protocols.gd:321
+msgid "swarm 23"
+msgstr "swarm 23"
+
+#: data/factions/mvd/faction.json
+msgid "Swarm Cloud"
+msgstr "Swarm Cloud"
+
+#: data/factions/mvd/faction.json
+msgid "Swarm Hive Truck"
+msgstr "Swarm Hive Truck"
+
+#: data/factions/gtfc/faction.json
+msgid "Syndicate Alchemist"
+msgstr "Syndicate Alchemist"
+
+#: addons/rts_advanced/sm_hud.gd:1171
+msgid "Tab    Next tab"
+msgstr "Tab    Next tab"
+
+#: addons/rts_advanced/sm_campaign.gd:132
+msgid "Tachileik caravan"
+msgstr "Tachileik caravan"
+
+#: addons/rts_advanced/sm_campaign.gd:193
+msgid "Tachileik caravan. Text briefing. Break the ambush and the road relief, walk the jade caravan onto the bazaar, then snap the ruby pit and run the night shift until the purse fills. Stay with the wagon while drones harass it. If the wagon dies, the mission fails. The road ambush hits after that. The side cache is optional."
+msgstr "Tachileik caravan. Text briefing. Break the ambush and the road relief, walk the jade caravan onto the bazaar, then snap the ruby pit and run the night shift until the purse fills. Stay with the wagon while drones harass it. If the wagon dies, the mission fails. The road ambush hits after that. The side cache is optional."
+
+#: data/factions/gtfc/faction.json
+msgid "Tachileik Half-Track"
+msgstr "Tachileik Half-Track"
+
+#: data/factions/mvd/faction.json
+msgid "Target Painter"
+msgstr "Target Painter"
+
+#: data/factions/gtfc/faction.json
+msgid "Teak Technical"
+msgstr "Teak Technical"
+
+#: addons/rts_advanced/sm_protocols.gd:300
+msgid "tech 1"
+msgstr "tech 1"
+
+#: data/factions/gtfc/faction.json
+msgid "Tech Center"
+msgstr "Tech Center"
+
+#: addons/rts_advanced/sm_bark.gd:61
+msgid "Technical under fire."
+msgstr "Technical under fire."
+
+#: data/factions/nmrf/faction.json
+msgid "Telekinetic Maelstrom"
+msgstr "Telekinetic Maelstrom"
+
+#: game/boot.gd:646
+msgid "Ten Degree Atolls"
+msgstr "Ten Degree Atolls"
+
+#: game/match_settings.gd:140
+msgid "Thai"
+msgstr "Thai"
+
+#: addons/rts_advanced/sm_protocols.gd:54
+msgid "Thai Border Mass Print"
+msgstr "Thai Border Mass Print"
+
+#: game/web_paste.gd:124
+msgid "That paste is not an answer."
+msgstr "That paste is not an answer."
+
+#: game/lan_seat.gd:155
+msgid "That paste is not an offer."
+msgstr "That paste is not an offer."
+
+#: addons/rts_advanced/sm_campaign.gd:142
+msgid "The 74-Kilometer Watch"
+msgstr "The 74-Kilometer Watch"
+
+#: addons/rts_advanced/sm_campaign.gd:203
+msgid "The 74-Kilometer Watch. Text briefing. Destroy the radar garrison and its relief squad, then hold the hydro radar so water shows. The radar pings, two rifles arrive, and the guide sells the watch."
+msgstr "The 74-Kilometer Watch. Text briefing. Destroy the radar garrison and its relief squad, then hold the hydro radar so water shows. The radar pings, two rifles arrive, and the guide sells the watch."
+
+#: game/web_paste.gd:110
+msgid "The answer did not start."
+msgstr "The answer did not start."
+
+#: game/web_paste.gd:128
+msgid "The answer was rejected."
+msgstr "The answer was rejected."
+
+#: game/set_piece.gd:320
+msgid "The atoll is held by boats. Sail the packer in."
+msgstr "The atoll is held by boats. Sail the packer in."
+
+#: game/web_paste.gd:143
+msgid "The browser did not produce a session description."
+msgstr "The browser did not produce a session description."
+
+#: game/settings_panel.gd:150
+msgid "The camera slides when the pointer nears the screen edge."
+msgstr "The camera slides when the pointer nears the screen edge."
+
+#: addons/rts_advanced/sm_story.gd:471
+msgid "the caravan is lost"
+msgstr "the caravan is lost"
+
+#: game/set_piece.gd:288
+msgid "The channel is mined. Break out and land the far shore."
+msgstr "The channel is mined. Break out and land the far shore."
+
+#: game/set_piece.gd:370
+msgid "The citadel garrison is out. They screen the weapons."
+msgstr "The citadel garrison is out. They screen the weapons."
+
+#: addons/rts_advanced/sm_story.gd:465
+msgid "the company is wiped"
+msgstr "the company is wiped"
+
+#: addons/rts_advanced/sm_story.gd:474
+msgid "the count hit zero"
+msgstr "the count hit zero"
+
+#: game/web_paste.gd:193
+msgid "The data channel did not open."
+msgstr "The data channel did not open."
+
+#: addons/rts_advanced/sm_story.gd:468
+msgid "the defended target is lost"
+msgstr "the defended target is lost"
+
+#: game/sop_ruak.gd:101
+msgid "The enemy builds, expands, and attacks. Cross a ford to reach them."
+msgstr "The enemy builds, expands, and attacks. Cross a ford to reach them."
+
+#: game/set_piece.gd:292
+msgid "The far shore is open. Put a boat on it."
+msgstr "The far shore is open. Put a boat on it."
+
+#: game/set_piece.gd:360
+msgid "The ferry has to live. Hold it through the channel."
+msgstr "The ferry has to live. Hold it through the channel."
+
+#: game/set_piece.gd:362
+msgid "The ferry is in the channel. Keep guns on the water."
+msgstr "The ferry is in the channel. Keep guns on the water."
+
+#: game/set_piece.gd:302
+msgid "The guide turns on us. The span is down."
+msgstr "The guide turns on us. The span is down."
+
+#: game/set_piece.gd:274
+msgid "The hack is running. Twenty seconds on the blocks."
+msgstr "The hack is running. Twenty seconds on the blocks."
+
+#: game/set_piece.gd:314
+msgid "The haze closes over the radar. Do not walk off it."
+msgstr "The haze closes over the radar. Do not walk off it."
+
+#: game/set_piece.gd:340
+msgid "The haze has closed in. Do not leave the radar."
+msgstr "The haze has closed in. Do not leave the radar."
+
+#: game/set_piece.gd:336
+msgid "The haze is the weapon. Hold the radar."
+msgstr "The haze is the weapon. Hold the radar."
+
+#: game/set_piece.gd:312
+msgid "The haze is thick. Take the radar and stay on it."
+msgstr "The haze is thick. Take the radar and stay on it."
+
+#: game/set_piece.gd:304
+msgid "The hydro radar is dark. Light the water."
+msgstr "The hydro radar is dark. Light the water."
+
+#: game/settings_panel.gd:159
+msgid "The intended skirmish and campaign pace."
+msgstr "The intended skirmish and campaign pace."
+
+#: game/set_piece.gd:264
+msgid "The jade wagon is on the road. Walk it through."
+msgstr "The jade wagon is on the road. Walk it through."
+
+#: game/set_piece.gd:296
+msgid "The jammer is live. Fiber holds. GPS does not."
+msgstr "The jammer is live. Fiber holds. GPS does not."
+
+#: game/set_piece.gd:280
+msgid "The jammers are up. The hangars are still parked."
+msgstr "The jammers are up. The hangars are still parked."
+
+#: game/set_piece.gd:328
+msgid "The joint fleet is in the channel. Sink it."
+msgstr "The joint fleet is in the channel. Sink it."
+
+#: game/web_paste.gd:211
+msgid "The local description was rejected."
+msgstr "The local description was rejected."
+
+#: game/settings_panel.gd:175
+msgid "The match keeps the command deck, minimap, and unit card."
+msgstr "The match keeps the command deck, minimap, and unit card."
+
+#: game/set_piece.gd:374
+msgid "The monsoon breaks over the citadel. Drop both weapons."
+msgstr "The monsoon breaks over the citadel. Drop both weapons."
+
+#: game/set_piece.gd:262
+msgid "The night shift is on the road. Bring one stock home."
+msgstr "The night shift is on the road. Bring one stock home."
+
+#: game/web_paste.gd:83
+msgid "The offer did not start."
+msgstr "The offer did not start."
+
+#: game/web_paste.gd:104
+msgid "The offer was rejected."
+msgstr "The offer was rejected."
+
+#: game/set_piece.gd:322
+msgid "The packer is in the shallows. Unpack it."
+msgstr "The packer is in the shallows. Unpack it."
+
+#: game/faction_yard.gd:245
+msgid "The packer sails, unpacks a wharf, then upgrades it. The enemy builds, expands, and attacks."
+msgstr "The packer sails, unpacks a wharf, then upgrades it. The enemy builds, expands, and attacks."
+
+#: game/set_piece.gd:352
+msgid "The phantom is on the plain. Hold the beam until it freezes."
+msgstr "The phantom is on the plain. Hold the beam until it freezes."
+
+#: game/set_piece.gd:356
+msgid "The phantom stutters in the beam. Do not let go."
+msgstr "The phantom stutters in the beam. Do not let go."
+
+#: game/boot.gd:499
+msgid "The port is busy."
+msgstr "The port is busy."
+
+#: game/set_piece.gd:306
+msgid "The radar pings. Water shows along the road."
+msgstr "The radar pings. Water shows along the road."
+
+#: game/boot.gd:726
+msgid "The selected side is who you play on the next skirmish."
+msgstr "The selected side is who you play on the next skirmish."
+
+#: game/web_paste.gd:187
+msgid "The session did not open."
+msgstr "The session did not open."
+
+#: game/set_piece.gd:310
+msgid "The span is cut. The guide has sold the watch."
+msgstr "The span is cut. The guide has sold the watch."
+
+#: game/set_piece.gd:326
+msgid "The squall is on the shallows. Finish the wharf."
+msgstr "The squall is on the shallows. Finish the wharf."
+
+#: game/set_piece.gd:294
+msgid "The squall is on. Cross while it lasts."
+msgstr "The squall is on. Cross while it lasts."
+
+#: game/set_piece.gd:366
+msgid "The squall is on. Keep the ferry afloat."
+msgstr "The squall is on. Keep the ferry afloat."
+
+#: game/set_piece.gd:282
+msgid "The strip scrambles. The Su-30 and the CH-4 are still on the ground."
+msgstr "The strip scrambles. The Su-30 and the CH-4 are still on the ground."
+
+#: game/set_piece.gd:284
+msgid "The swarm is in the air. It does not finish the towers."
+msgstr "The swarm is in the air. It does not finish the towers."
+
+#: game/set_piece.gd:344
+msgid "The tank column is on the road. Freeze it, then break it."
+msgstr "The tank column is on the road. Freeze it, then break it."
+
+#: game/set_piece.gd:324
+msgid "The wharf is up. Take it to the second level."
+msgstr "The wharf is up. Take it to the second level."
+
+#: addons/rts_advanced/sm_bark.gd:27
+msgid "Throwing into them."
+msgstr "Throwing into them."
+
+#: addons/rts_advanced/sm_campaign.gd:156
+msgid "Thunder on the Tonle Sap"
+msgstr "Thunder on the Tonle Sap"
+
+#: data/factions/nmrf/faction.json
+msgid "Tide Refinery"
+msgstr "Tide Refinery"
+
+#: game/match_audio.gd:1151
+msgid "Time"
+msgstr "Time"
+
+#: addons/rts_advanced/sm_protocols.gd:94
+msgid "Time Bomb"
+msgstr "Time Bomb"
+
+#: data/factions/mvd/faction.json
+msgid "Tonkin Supersonic Fighter"
+msgstr "Tonkin Supersonic Fighter"
+
+#: addons/rts_advanced/sm_story.gd:248
+msgid "Tonle ferry"
+msgstr "Tonle Sap ferry"
+
+#: addons/rts_advanced/sm_campaign.gd:217
+msgid "Tonle Sap. Text briefing. Defend the ferry until the longer timer runs out. NMRF trimarans keep arriving. Cryogeddon can help. Casting it does not end the mission. The ferry has to survive the crossing. A squall hits the channel."
+msgstr "Tonle Sap. Text briefing. Defend the ferry until the longer timer runs out. NMRF trimarans keep arriving. Cryogeddon can help. Casting it does not end the mission. The ferry has to survive the crossing. A squall hits the channel."
+
+#: data/factions/nmrf/faction.json
+msgid "Torpedo Fan Spread"
+msgstr "Torpedo Fan Spread"
+
+#: addons/rts_advanced/sm_protocols.gd:76
+msgid "Toxic Defoliation"
+msgstr "Toxic Defoliation"
+
+#: addons/rts_advanced/sm_protocols.gd:297
+msgid "trade open"
+msgstr "trade open"
+
+#: game/lan_mirror.gd:84
+msgid "Train"
+msgstr "Train"
+
+#: game/faction_yard.gd:194
+msgid "Train unit"
+msgstr "Train unit"
+
+#: game/skirmish_map.gd:100
+msgid "Tran"
+msgstr "Tran"
+
+#: game/set_piece.gd:364
+msgid "Trimarans on the ferry. Hold the crossing."
+msgstr "Trimarans on the ferry. Hold the crossing."
+
+#: addons/rts_advanced/sm_bark.gd:35
+msgid "Truck rolling."
+msgstr "Truck rolling."
+
+#: addons/rts_advanced/sm_bark.gd:41
+msgid "Truck taking hits."
+msgstr "Truck taking hits."
+
+#: game/set_piece.gd:334
+msgid "Two gunboats from the river are in."
+msgstr "Two gunboats from the river are in."
+
+#: game/boot.gd:1928
+msgid "Two players. You and one enemy."
+msgstr "Two players. You and one enemy."
+
+#: game/set_piece.gd:286
+msgid "Two rifles for the strip."
+msgstr "Two rifles for the strip."
+
+#: game/set_piece.gd:308
+msgid "Two rifles from the watch are in."
+msgstr "Two rifles from the watch are in."
+
+#: addons/rts_advanced/sm_bark.gd:19
+msgid "Under fire."
+msgstr "Under fire."
+
+#: addons/rts_advanced/sm_guide.gd:17
+msgid "Unit"
+msgstr "Unit"
+
+#: addons/rts_advanced/sm_hud.gd:401
+msgid "Units"
+msgstr "Units"
+
+#: addons/rts_advanced/rts_production.gd:33
+msgid "unknown unit"
+msgstr "unknown unit"
+
+#: addons/rts_advanced/sm_guns.gd:75
+msgid "unloaded %d"
+msgstr "unloaded %d"
+
+#: game/faction_yard.gd:204
+msgid "Unpack"
+msgstr "Unpack"
+
+#: game/faction_yard.gd:205
+msgid "Upgrade wharf"
+msgstr "Upgrade wharf"
+
+#: data/factions/mvd/faction.json
+msgid "Vanguard Shock-Trooper"
+msgstr "Vanguard Shock-Trooper"
+
+#: game/match_hud_view.gd:693
+msgid "Vehicles"
+msgstr "Vehicles"
+
+#: addons/rts_advanced/sm_hud.gd:1414
+msgid "Veteran"
+msgstr "Veteran"
+
+#: addons/rts_advanced/sm_outcome.gd:177
+msgid "Victory"
+msgstr "Victory"
+
+#: game/settings_panel.gd:208
+msgid "VIDEO"
+msgstr "VIDEO"
+
+#: data/factions/mvd/faction.json
+msgid "Viet-Tech Laser Operator"
+msgstr "Viet-Tech Laser Operator"
+
+#: data/factions/mvd/faction.json
+msgid "Vindicator Bomber"
+msgstr "Vindicator Bomber"
+
+#: game/settings_panel.gd:139
+msgid "Voice language"
+msgstr "Voice language"
+
+#: game/lan_mirror.gd:56
+msgid "Waiting for the host."
+msgstr "Waiting for the host."
+
+#: game/boot.gd:497
+msgid "Waiting on port %d."
+msgstr "Waiting on port %d."
+
+#: addons/rts_advanced/sm_story.gd:332
+msgid "walk the caravan"
+msgstr "walk the caravan"
+
+#: data/factions/gtfc/faction.json
+msgid "War Factory"
+msgstr "War Factory"
+
+#: data/factions/gtfc/faction.json
+msgid "Warlord's Bribe"
+msgstr "Warlord's Bribe"
+
+#: game/set_piece.gd:135
+msgid "Watch captain"
+msgstr "Watch captain"
+
+#: game/boot.gd:643
+msgid "Water"
+msgstr "Water"
+
+#: data/factions/nmrf/faction.json
+msgid "Wave-Force Turret"
+msgstr "Wave-Force Turret"
+
+#: addons/rts_advanced/sm_pointer.gd:415
+msgid "Waypoint"
+msgstr "Waypoint"
+
+#: game/web_paste.gd:8
+msgid "Web play uses a copied offer and answer in the browser. This desktop build has no WebRTC addon."
+msgstr "Web play uses a copied offer and answer in the browser. This desktop build has no WebRTC addon."
+
+#: game/web_paste.gd:178
+msgid "WebRTC did not start."
+msgstr "WebRTC did not start."
+
+#: addons/rts_advanced/sm_story.gd:525
+msgid "Wharf"
+msgstr "Wharf"
+
+#: addons/rts_advanced/sm_side.gd:94
+msgid "wharf level %d"
+msgstr "wharf level %d"
+
+#: addons/rts_advanced/sm_side.gd:94
+msgid "wharf not ready"
+msgstr "wharf not ready"
+
+#: addons/rts_advanced/sm_side.gd:87
+msgid "wharf unpacked"
+msgstr "wharf unpacked"
+
+#: addons/rts_advanced/sm_campaign.gd:148
+msgid "Wrath of the Garuda"
+msgstr "Wrath of the Garuda"
+
+#: addons/rts_advanced/sm_campaign.gd:209
+msgid "Wrath of the Garuda. Text briefing. Destroy the joint enemy fleet and its pickets. A napalm run can help. Calling it does not end the mission. Napalm is armed, pickets cross the bow, and two gunboats arrive."
+msgstr "Wrath of the Garuda. Text briefing. Destroy the joint enemy fleet and its pickets. A napalm run can help. Calling it does not end the mission. Napalm is armed, pickets cross the bow, and two gunboats arrive."
+
+#: addons/rts_advanced/sm_hud.gd:1166
+msgid "X    Stop"
+msgstr "X    Stop"
+
+#: game/match_audio.gd:1133
+msgid "Yangonite"
+msgstr "Yangonite"
+
+#: game/credits_panel.gd:8
+msgid "Yangonite, Ready To Rage Against The Abnormalities, Supayarlat, Past Cracks, Machinesfuture, Humanfuture, Night, Love Drunk, Changes, Not Needed Anymore, Poison, Time"
+msgstr "Yangonite, Ready To Rage Against The Abnormalities, Supayarlat, Past Cracks, Machinesfuture, Humanfuture, Night, Love Drunk, Changes, Not Needed Anymore, Poison, Time"
+
+#: addons/rts_advanced/sm_story.gd:714
+msgid "yard up"
+msgstr "yard up"
+
+#: addons/rts_advanced/sm_hud.gd:1167
+msgid "Z    Formation"
+msgstr "Z    Formation"

@@ -9,10 +9,9 @@ extends RefCounted
 ## Settings ids are english, burmese, mandarin, thai, and malay.
 ## Those map to the folders on disk: en, my, zh, th, and ms.
 ## A clip with accent_fail, or status removed, is never played.
-## In English, a failed take uses the unit's faction language:
-## GTFC Burmese then Thai, NMRF Malay, MVD Mandarin, Black Market Malay.
-## Another language uses its own take, then a passing English take.
-## The page fetches the selected language plus that fallback.
+## Only the selected voice language plays. A failed take stays a tone,
+## so English never borrows a Burmese, Thai, Malay, or Mandarin line.
+## The page fetches only the selected language.
 ## Recorded cues live in sfx/<kind>.ogg. sfx/manifest.json can map a
 ## kind onto another filename in that folder. A missing file stays a tone.
 
@@ -184,9 +183,7 @@ static func announce_line(host: Node, faction: String, text: String) -> void:
 ## Hero dialogue for one mission beat.
 ## dialogue/<lang>/<mission>/<beat>.ogg plays when the take passes.
 ## A clip with accent_fail, or status removed, is never played.
-## English tries en, then the mission region: Act I Burmese, Andaman Thai,
-## Act II Malay, Act III Mandarin. Another language tries itself, then English.
-## The page fetches only those languages. A missing take leaves the subtitle.
+## Only the selected voice language plays. A missing take leaves the subtitle.
 static func dialogue(host: Node, mission_id: String, beat: String) -> bool:
 	if host == null or not _clip_name(mission_id) or not _clip_name(beat):
 		return false
@@ -249,31 +246,12 @@ static func _pull_dialogue(lang: String) -> void:
 	_dialogue_state[lang] = "loading"
 	_fetch_index(lang, "dialogue/%s/index.txt" % lang, "dialogue")
 
-static func _region_of(mission_id: String) -> String:
-	if mission_id == "andaman":
-		return "th"
-	if mission_id == "kokang" or mission_id == "tachileik" or mission_id == "shwe_kokko" or mission_id == "operation_1027":
-		return "my"
-	if mission_id == "ghosts_of_patani" or mission_id == "kilometer_watch" or mission_id == "black_haze" or mission_id == "archipelago_rising" or mission_id == "wrath_of_the_garuda":
-		return "ms"
-	if mission_id == "fog_over_pakbeng" or mission_id == "keng_tung" or mission_id == "plain_of_jars" or mission_id == "tonle_sap" or mission_id == "shattered_monsoon":
-		return "zh"
-	return ""
-
-static func _dialogue_order(mission_id: String) -> PackedStringArray:
+## Only the selected voice language plays. A missing take leaves the subtitle.
+static func _dialogue_order(_mission_id: String) -> PackedStringArray:
 	var lang: String = _lang()
-	var order: PackedStringArray = PackedStringArray()
 	if lang != "en" and lang != "my" and lang != "zh" and lang != "th" and lang != "ms":
 		lang = "en"
-	if lang != "en":
-		order.append(lang)
-		order.append("en")
-		return order
-	order.append("en")
-	var region: String = _region_of(mission_id)
-	if region != "":
-		order.append(region)
-	return order
+	return PackedStringArray([lang])
 
 static func _ensure_dialogue() -> void:
 	var stamp: String = _dialogue_stamp_now()
@@ -1275,23 +1253,9 @@ static func _variants(unit_id: String, event: String) -> PackedStringArray:
 static func _lang() -> String:
 	return Settings.voice_folder(Settings.voice)
 
-static func _order_for(lang: String, faction: String) -> PackedStringArray:
-	var order: PackedStringArray = PackedStringArray()
-	if lang != "en":
-		order.append(lang)
-		order.append("en")
-		return order
-	order.append("en")
-	if faction == "gtfc":
-		order.append("my")
-		order.append("th")
-	elif faction == "nmrf":
-		order.append("ms")
-	elif faction == "mvd":
-		order.append("zh")
-	elif faction == "black_market":
-		order.append("ms")
-	return order
+## A bark or announcer line never switches language: a failed take stays a tone.
+static func _order_for(lang: String, _faction: String) -> PackedStringArray:
+	return PackedStringArray([lang if lang != "" else "en"])
 
 static func _match_faction() -> String:
 	if SMFront.faction_id == "nmrf" or SMFront.faction_id == "mvd" or SMFront.faction_id == "black_market":

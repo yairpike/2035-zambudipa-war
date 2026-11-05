@@ -8,3 +8,4 @@ tests/last_run.txt
 # Reference clones stay out of the runtime and out of git.
 _reference_repos/
 build/
+__pycache__/

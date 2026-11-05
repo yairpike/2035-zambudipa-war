@@ -14,6 +14,7 @@ var sfx_slider: HSlider
 var pan_slider: HSlider
 var edge_box: CheckButton
 var voice_value: Button
+var language_value: Button
 var master_readout: Label
 var music_readout: Label
 var sfx_readout: Label
@@ -163,6 +164,13 @@ func _ready() -> void:
 	add_child(easy)
 	add_child(normal)
 	add_child(hard)
+	_section("SectionLanguage", "LANGUAGE")
+	add_child(_caption("LanguageLabel", "Game language"))
+	language_value = _choice("LanguageValue", SMLang.native_name("english"))
+	language_value.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	language_value.set_meta("blurb", "Menus, HUD, briefings, and subtitles. Voices follow; the Audio page can change them.")
+	language_value.pressed.connect(_cycle_language.bind(1))
+	add_child(language_value)
 	var hud_note: Label = _caption("HudNote", "Command deck")
 	hud_note.set_meta("blurb", "The match keeps the command deck, minimap, and unit card.")
 	add_child(hud_note)
@@ -173,7 +181,7 @@ func _ready() -> void:
 	close.pressed.connect(_close)
 	add_child(close)
 	var restore: Button = _choice("SettingsRestore", "Restore Defaults")
-	restore.set_meta("blurb", "High graphics, full volume, English voices, normal difficulty, edge pan on.")
+	restore.set_meta("blurb", "High graphics, full volume, voices in the game language, normal difficulty, edge pan on.")
 	restore.pressed.connect(_restore)
 	add_child(restore)
 	blurb = Label.new()
@@ -194,6 +202,7 @@ func _ready() -> void:
 	_watch(easy)
 	_watch(normal)
 	_watch(hard)
+	_watch(language_value)
 	_watch(close)
 	_watch(restore)
 	_page_tab("SettingsTabVideo", "VIDEO", "video")
@@ -201,6 +210,7 @@ func _ready() -> void:
 	_page_tab("SettingsTabControls", "CONTROLS", "controls")
 	_page_tab("SettingsTabGameplay", "GAMEPLAY", "gameplay")
 	_page_tab("SettingsTabHud", "HUD", "hud")
+	_page_tab("SettingsTabLanguage", "LANGUAGE", "language")
 	_tag_pages()
 	_layout(Vector2(1280, 720))
 	resized.connect(_on_resized)
@@ -242,6 +252,7 @@ func _tag_pages() -> void:
 		"controls": ["SectionControls", "EdgePan", "PanLabel", "PanSpeed", "PanValue"],
 		"gameplay": ["SectionGameplay", "DifficultyLabel", "SettingsDiffEasy", "SettingsDiffNormal", "SettingsDiffHard"],
 		"hud": ["SectionHud", "HudNote", "HudValue"],
+		"language": ["SectionLanguage", "LanguageLabel", "LanguageValue"],
 	}
 	for page: Variant in groups.keys():
 		var names: Array = groups[page]
@@ -279,7 +290,7 @@ func _layout(view: Vector2) -> void:
 		title.add_theme_font_size_override("font_size", 36 if not narrow else 28)
 	var tab_y: float = 8.0 if embedded else 84.0
 	var tabs: PackedStringArray = PackedStringArray([
-		"SettingsTabVideo", "SettingsTabAudio", "SettingsTabControls", "SettingsTabGameplay", "SettingsTabHud",
+		"SettingsTabVideo", "SettingsTabAudio", "SettingsTabControls", "SettingsTabGameplay", "SettingsTabHud", "SettingsTabLanguage",
 	])
 	for i: int in tabs.size():
 		var tab: Control = get_node_or_null(tabs[i])
@@ -318,6 +329,9 @@ func _layout(view: Vector2) -> void:
 	y = _place_section("SectionHud", content_x, y, content_w)
 	y = _place_row(get_node_or_null("HudNote"), content_x, y, label_w)
 	_place_value(get_node_or_null("HudValue"), value_x, y - 44.0, value_w)
+	y = _place_section("SectionLanguage", content_x, y, content_w)
+	y = _place_row(get_node_or_null("LanguageLabel"), content_x, y, label_w)
+	_place_value(language_value, slider_x, y - 44.0, maxf(120.0, content_x + content_w - slider_x))
 	var back: Control = get_node_or_null("SettingsClose")
 	var restore: Control = get_node_or_null("SettingsRestore")
 	var foot: float = view.y - 52.0
@@ -457,6 +471,8 @@ func _nudge(step: int) -> void:
 		return
 	if owner == voice_value:
 		_cycle_voice(step)
+	elif owner == language_value:
+		_cycle_language(step)
 
 func pull() -> void:
 	_syncing = true
@@ -472,6 +488,7 @@ func pull() -> void:
 	edge_box.button_pressed = Settings.edge
 	_mark_difficulty()
 	_paint_voice()
+	_paint_language()
 	_paint_readouts()
 	_syncing = false
 	_layout(size if size.x > 32.0 else Vector2(1280, 720))
@@ -522,6 +539,21 @@ func _cycle_voice(step: int) -> void:
 	_paint_voice()
 	var clips: GDScript = load("res://game/match_audio.gd") as GDScript
 	clips.call("note_voice", self)
+
+func _cycle_language(step: int) -> void:
+	if _syncing:
+		return
+	var order: PackedStringArray = Settings.language_ids()
+	var at: int = maxi(0, order.find(Settings.language))
+	Settings.set_language(order[posmod(at + step, order.size())])
+	_paint_language()
+	_paint_voice()
+	var clips: GDScript = load("res://game/match_audio.gd") as GDScript
+	clips.call("note_voice", self)
+
+func _paint_language() -> void:
+	if language_value != null:
+		language_value.text = SMLang.native_name(Settings.language)
 
 func _paint_voice() -> void:
 	if voice_value == null:

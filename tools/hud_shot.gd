@@ -1,6 +1,6 @@
 extends SceneTree
 ## Windowed screenshot of a match HUD. Not part of the test suite.
-## godot --path . --resolution 1280x720 -s res://tools/hud_shot.gd -- --scene res://game/burma_road.tscn --faction gtfc --out /tmp/a.png [--skin black_market] [--wait 3] [--menu boot|pause|settings|skirmish] [--hover N]
+## godot --path . --resolution 1280x720 -s res://tools/hud_shot.gd -- --scene res://game/burma_road.tscn --faction gtfc --out /tmp/a.png [--skin black_market] [--wait 3] [--menu boot|pause|settings|skirmish|campaign] [--hover N] [--language burmese] [--press NodeName]
 
 var _args: Dictionary = {}
 var _clock: float = 0.0
@@ -16,6 +16,12 @@ func _initialize() -> void:
 		var value: String = raw[i + 1] if i + 1 < raw.size() else ""
 		_args[key] = value
 		i += 2
+	if _args.has("language"):
+		var settings: GDScript = load("res://game/match_settings.gd") as GDScript
+		settings.call("ensure")
+		settings.set("language", str(_args["language"]))
+		settings.set("voice", str(_args["language"]))
+		SMLang.apply(str(_args["language"]))
 	SMFront.faction_id = str(_args.get("faction", "gtfc"))
 	if _args.has("mission"):
 		SMCampaign.selected = str(_args["mission"])
@@ -47,6 +53,10 @@ func _process(delta: float) -> bool:
 	if not _opened and _clock > wait * 0.7:
 		_opened = true
 		var menu: String = str(_args.get("menu", ""))
+		if _args.has("press"):
+			var press: Button = scene.find_child(str(_args["press"]), true, false) as Button
+			if press != null:
+				press.pressed.emit()
 		if menu == "pause":
 			var pause: CanvasItem = scene.find_child("PauseMenu", true, false) as CanvasItem
 			if pause != null:
@@ -66,6 +76,10 @@ func _process(delta: float) -> bool:
 			var pick: Button = scene.find_child(str(_args.get("card", "CardShowcase")), true, false) as Button
 			if pick != null:
 				pick.pressed.emit()
+		elif menu == "campaign":
+			var campaign: Button = scene.find_child("TabCampaign", true, false) as Button
+			if campaign != null:
+				campaign.pressed.emit()
 		elif menu == "credits":
 			var roll: Button = scene.find_child("CreditsButton", true, false) as Button
 			if roll != null:

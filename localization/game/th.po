@@ -1,0 +1,2732 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ASEAN 2031\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid ""
+"\n"
+"Cost %d"
+msgstr ""
+"\n"
+"ราคา %d"
+
+msgid ""
+"\n"
+"Hotkey %d"
+msgstr ""
+"\n"
+"ปุ่ม​ลัด %d"
+
+msgid "  %ds"
+msgstr "  %ds"
+
+msgid " The spray defoliated your line."
+msgstr " การ​พ่น​สาร​ทำลาย​ใบ​ไม้​แนว​รบ​ของ​คุณ​แล้ว"
+
+msgid "%d cr"
+msgstr "%d เครดิต"
+
+msgid "%s    HP %d/%d    F %s"
+msgstr "%s    HP %d/%d    F %s"
+
+msgid "%s  %s is ready to copy."
+msgstr "%s  %s​พร้อม​คัดลอก"
+
+msgid "%s built"
+msgstr "%s สร้าง​เสร็จ"
+
+msgid "%s x%d"
+msgstr "%s x%d"
+
+msgid "%s. %d credits. HP %d. Damage %d. Moves on %s. F: %s."
+msgstr "%s %d เครดิต HP %d ความ​เสียหาย %d เคลื่อน​ที่​บน %s F: %s"
+
+msgid "%s. %s. %d credits. HP %d."
+msgstr "%s %s %d เครดิต HP %d"
+
+msgid "%s. Area hit, then it cools down."
+msgstr "%s โจมตี​เป็น​วง​กว้าง แล้ว​ต้อง​รอ​คูล​ดาวน์"
+
+msgid "+beam"
+msgstr "+ลำ​แสง"
+
+msgid "+smart"
+msgstr "+อัจฉริยะ"
+
+msgid "2 players"
+msgstr "ผู้​เล่น 2 คน"
+
+msgid "23-Drone Swarm"
+msgstr "ฝูง​โดรน 23 ลำ"
+
+msgid "3D-Print Overdrive"
+msgstr "เร่ง​พิมพ์ 3D สุด​ขีด"
+
+msgid "A balloon barrage. One cast."
+msgstr "ระดม​บอลลูน​ระเบิด ใช้​ได้​ครั้ง​เดียว"
+
+msgid "A carpet run. One cast."
+msgstr "ทิ้ง​ระเบิด​ปู​พรม ใช้​ได้​ครั้ง​เดียว"
+
+msgid "A city bank, a jungle bank, and a river between them. The landmark does not burn."
+msgstr "ฝั่ง​เมือง ฝั่ง​ป่า และ​แม่น้ำ​คั่น​กลาง แลนด์มาร์ก​ไม่​ไหม้"
+
+msgid "A faster, tougher enemy."
+msgstr "ศัตรู​ที่​เร็ว​และ​ทน​กว่า"
+
+msgid "A larger field. Fords cross the river. The enemy builds, expands, and attacks."
+msgstr "สนาม​ใหญ่​ขึ้น มี​จุด​ข้าม​น้ำ​ตื้น ศัตรู​สร้าง ขยาย และ​โจมตี"
+
+msgid "A napalm run. It does not finish the mission."
+msgstr "ทิ้ง​นาปาล์ม ไม่​ได้​ทำ​ให้​ภารกิจ​สำเร็จ"
+
+msgid "A pirate haul. One cast."
+msgstr "ของ​ปล้น​โจร​สลัด ใช้​ได้​ครั้ง​เดียว"
+
+msgid "A second wave is in the black haze."
+msgstr "ระลอก​สอง​อยู่​ใน​หมอก​ควัน​ดำ"
+
+msgid "A slower enemy, for learning the company."
+msgstr "ศัตรู​ที่​ช้า​กว่า สำหรับ​ฝึก​ใช้​กองร้อย"
+
+msgid "A spray run is coming down the road. Cut it off."
+msgstr "ขบวน​พ่น​สาร​กำลัง​มา​ตาม​ถนน ตัด​มัน​ซะ"
+
+msgid "A thermal scan. One cast."
+msgstr "สแกน​ความ​ร้อน ใช้​ได้​ครั้ง​เดียว"
+
+msgid "A-Move"
+msgstr "เดิน​โจมตี"
+
+msgid "Ability"
+msgstr "ความ​สามารถ"
+
+msgid "Ability (F)"
+msgstr "ความ​สามารถ (F)"
+
+msgid "Ability (F). A toggle flips every selected toggle unit. Smart-cast fires only the closest ready unit. A finished beam freezes the nearest enemy."
+msgstr "ความ​สามารถ (F) สวิตช์​จะ​สลับ​ทุก​หน่วย​ที่​เลือก ใช้​อัจฉริยะ​จะ​ยิง​เฉพาะ​หน่วย​ที่​พร้อม​และ​ใกล้​ที่สุด ลำ​แสง​ที่​ครบ​จะ​แช่​แข็ง​ศัตรู​ที่​ใกล้​ที่สุด"
+
+msgid "ability fired"
+msgstr "ใช้​ความ​สามารถ​แล้ว"
+
+msgid "ability not ready"
+msgstr "ความ​สามารถ​ยัง​ไม่​พร้อม"
+
+msgid "Aceh Tsunami Tank"
+msgstr "รถ​ถัง​สึนามิ​อาเจะห์"
+
+msgid "Act I"
+msgstr "องก์ 1"
+
+msgid "Act II"
+msgstr "องก์ 2"
+
+msgid "Act III"
+msgstr "องก์ 3"
+
+msgid "Adrenaline Cloud"
+msgstr "เมฆ​อะดรีนาลีน"
+
+msgid "Advanced Rocket Pods"
+msgstr "กระเปาะ​จรวด​ขั้น​สูง"
+
+msgid "Aegis Dome"
+msgstr "โดม​อีจิส"
+
+msgid "Afterburner Return"
+msgstr "สันดาป​ท้าย​กลับ​ฐาน"
+
+msgid "Agent-Zero Cryo-Copter"
+msgstr "ฮอ​แช่​แข็ง​เอเจนต์​ซีโร่"
+
+msgid "Aircraft"
+msgstr "อากาศยาน"
+
+msgid "Airfield"
+msgstr "สนาม​บิน"
+
+msgid "All %s"
+msgstr "ทั้งหมด %s"
+
+msgid "Ally"
+msgstr "พันธมิตร"
+
+msgid "already unpacked"
+msgstr "กาง​แล้ว"
+
+msgid "Ambush clear. %s. Mine rubies: %d/30."
+msgstr "ซุ่ม​โจมตี​เคลียร์ %s ขุด​ทับทิม: %d/30"
+
+msgid "An ally breaks. The span is down."
+msgstr "พันธมิตร​แตก สะพาน​พัง​แล้ว"
+
+msgid "Andaman breakout"
+msgstr "ฝ่า​วง​ล้อม​อันดามัน"
+
+msgid "Andaman breakout. Text briefing. Sink the channel boats and the second wave, then land an amphibious unit on the far shore. A mine line in the channel damages ships. The far shore opens, and a squall crosses. The side cache is optional."
+msgstr "ฝ่า​วง​ล้อม​อันดามัน บรรยาย​สรุป​แบบ​ข้อความ จม​เรือ​ใน​ช่อง​แคบ​และ​ระลอก​สอง แล้ว​ส่ง​หน่วย​สะเทิน​น้ำ​สะเทิน​บก​ขึ้น​ฝั่ง​ตรง​ข้าม แนว​ทุ่น​ระเบิด​ใน​ช่อง​แคบ​ทำ​ความ​เสียหาย​ต่อ​เรือ ฝั่ง​ตรง​ข้าม​เปิด และ​พายุ​ฝน​พัด​ผ่าน คลัง​ข้าง​ทาง​เป็น​ภารกิจ​เสริม"
+
+msgid "Andaman Siege Barge"
+msgstr "เรือ​ล้อม​เมือง​อันดามัน"
+
+msgid "Answer"
+msgstr "คำ​ตอบ"
+
+msgid "Answer applied. Waiting for the guest."
+msgstr "ใช้​คำ​ตอบ​แล้ว รอ​ผู้​เล่น​รับ​เชิญ"
+
+msgid "Archipelago Rising"
+msgstr "หมู่​เกาะ​ผงาด"
+
+msgid "Archipelago Rising. Text briefing. Sink the boats and the second picket, sail the packer into shallow water, unpack the wharf, and upgrade it. The packer reaches the shallows, the wharf rises, and a squall hits."
+msgstr "หมู่​เกาะ​ผงาด บรรยาย​สรุป​แบบ​ข้อความ จม​เรือ​และ​แนว​ลาด​ตระเวน​ที่​สอง แล่น​เรือ​ขน​ฐาน​เข้า​น้ำ​ตื้น กาง​ท่า​เรือ และ​อัป​เกรด เรือ​ขน​ฐาน​ถึง​น้ำ​ตื้น ท่า​เรือ​ตั้ง​ขึ้น และ​พายุ​ฝน​ถล่ม"
+
+msgid "Arms a bomb. One cast."
+msgstr "ติด​อาวุธ​ระเบิด ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Arms bazaar (mission)"
+msgstr "ตลาด​อาวุธ (ภารกิจ)"
+
+msgid "Arms bazaar. Text briefing. Capture the bazaar so infantry and drones draw a discount."
+msgstr "ตลาด​อาวุธ บรรยาย​สรุป​แบบ​ข้อความ ยึด​ตลาด​เพื่อ​ให้​ทหาร​ราบ​และ​โดรน​ได้​ส่วน​ลด"
+
+msgid "Artillery Telemetry Link"
+msgstr "ลิงก์​ข้อมูล​ปืน​ใหญ่"
+
+msgid "ASEAN 2031"
+msgstr "ASEAN 2031"
+
+msgid "Athena Orbital Designator"
+msgstr "เครื่อง​ชี้​เป้า​วง​โคจร​อธีนา"
+
+msgid "Atolls"
+msgstr "อะทอลล์"
+
+msgid "attack move"
+msgstr "เดิน​โจมตี"
+
+msgid "Attack-move"
+msgstr "เดิน​โจมตี"
+
+msgid "Attack-move ahead of the lead unit."
+msgstr "เดิน​โจมตี​นำ​หน้า​หน่วย​หัว​ขบวน"
+
+msgid "AUDIO"
+msgstr "เสียง"
+
+msgid "BACK"
+msgstr "กลับ"
+
+msgid "Back"
+msgstr "กลับ"
+
+msgid "Ballistic Riot Shield"
+msgstr "โล่​ปราบ​จลาจล​กัน​กระสุน"
+
+msgid "Balloon Bomb Barrage"
+msgstr "ระดม​บอลลูน​ระเบิด"
+
+msgid "balloons 9"
+msgstr "บอลลูน 9"
+
+msgid "Bamboo Hide"
+msgstr "ซุ้ม​ไผ่​พราง"
+
+msgid "Banyan Hologram"
+msgstr "โฮโลแกรม​ต้น​ไทร"
+
+msgid "Barracks"
+msgstr "ค่าย​ทหาร"
+
+msgid "Basic training"
+msgstr "การ​ฝึก​พื้น​ฐาน"
+
+msgid "bazaar required"
+msgstr "ต้อง​มี​ตลาด"
+
+msgid "Beach master"
+msgstr "นาย​หาด"
+
+msgid "Beach Rockets"
+msgstr "จรวด​ชาย​หาด"
+
+msgid "beam fired"
+msgstr "ยิง​ลำ​แสง​แล้ว"
+
+msgid "Beam freeze (mission)"
+msgstr "ลำ​แสง​แช่​แข็ง (ภารกิจ)"
+
+msgid "Beam freeze. Text briefing. Hold the beam until the target freezes."
+msgstr "ลำ​แสง​แช่​แข็ง บรรยาย​สรุป​แบบ​ข้อความ ส่อง​ลำ​แสง​ค้าง​ไว้​จน​เป้า​แข็ง"
+
+msgid "Beam officer"
+msgstr "นาย​ทหาร​ลำ​แสง"
+
+msgid "Bench Seat"
+msgstr "เบาะ​ม้า​นั่ง"
+
+msgid "Black Haze"
+msgstr "หมอก​ควัน​ดำ"
+
+msgid "Black Haze. Text briefing. Capture the hydro radar and hold it through the longer haze while a second raider wave attacks. The haze closes, a second wave comes through it, and you hold the radar."
+msgstr "หมอก​ควัน​ดำ บรรยาย​สรุป​แบบ​ข้อความ ยึด​เรดาร์​น้ำ แล้ว​รักษา​ไว้​ตลอด​หมอก​ควัน​ที่​นาน​ขึ้น ขณะ​ที่​โจร​ระลอก​สอง​บุก หมอก​ปิด​ลง ระลอก​สอง​ฝ่า​เข้า​มา และ​คุณ​รักษา​เรดาร์​ไว้"
+
+msgid "Black Market"
+msgstr "ตลาด​มืด"
+
+msgid "Black-Hole Armor"
+msgstr "เกราะ​หลุม​ดำ"
+
+msgid "BlackBloc"
+msgstr "BlackBloc"
+
+msgid "Blackout EMP"
+msgstr "EMP ดับ​ไฟ"
+
+msgid "Bo Mya"
+msgstr "โบ​เมียะ"
+
+msgid "bomb armed"
+msgstr "ติด​ระเบิด​แล้ว"
+
+msgid "Bomblet Carpet"
+msgstr "พรม​ลูก​ระเบิด​ย่อย"
+
+msgid "Bonus complete: side cache"
+msgstr "โบนัส​สำเร็จ: คลัง​ข้าง​ทาง"
+
+msgid "Bonus failed: the spray landed"
+msgstr "โบนัส​ล้มเหลว: สาร​พ่น​ตก​ถึง​แล้ว"
+
+msgid "Bonus: reach the side cache"
+msgstr "โบนัส: ไป​ให้​ถึง​คลัง​ข้าง​ทาง"
+
+msgid "Boot menu"
+msgstr "เมนู​เริ่ม​ต้น"
+
+msgid "Both batteries are still up, and the screen is with them."
+msgstr "ฐาน​ปืน​ทั้ง​สอง​ยัง​อยู่ และ​ทหาร​คุ้มกัน​ก็​อยู่​ด้วย"
+
+msgid "Both server blocks are live. Start the hack."
+msgstr "บล็อก​เซิร์ฟเวอร์​ทั้ง​สอง​ทำงาน​อยู่ เริ่ม​แฮก"
+
+msgid "Both superweapons are live. Break the screen and drop them."
+msgstr "ซูเปอร์​อาวุธ​ทั้ง​สอง​ทำงาน​อยู่ ทลาย​แนว​คุ้มกัน​แล้ว​ทำลาย​มัน"
+
+msgid "Both weapons are armed. The count is running."
+msgstr "อาวุธ​ทั้ง​สอง​พร้อม​ยิง นับ​ถอย​หลัง​เริ่ม​แล้ว"
+
+msgid "Box"
+msgstr "สี่​เหลี่ยม"
+
+msgid "Bridge down"
+msgstr "สะพาน​พัง"
+
+msgid "Briefing"
+msgstr "บรรยาย​สรุป"
+
+msgid "bring one rare-earth stock"
+msgstr "นำ​แร่​หา​ยาก​มา​หนึ่ง​กอง"
+
+msgid "Build"
+msgstr "สร้าง"
+
+msgid "Build a barracks and train 3 infantry."
+msgstr "สร้าง​ค่าย​ทหาร​และ​ฝึก​ทหาร​ราบ 3 นาย"
+
+msgid "Build a power plant."
+msgstr "สร้าง​โรง​ไฟฟ้า"
+
+msgid "build blocked"
+msgstr "สร้าง​ไม่​ได้"
+
+msgid "Build pipeline"
+msgstr "สาย​การ​ผลิต"
+
+msgid "Building"
+msgstr "อาคาร"
+
+msgid "Buildings"
+msgstr "อาคาร"
+
+msgid "Bunker Lock"
+msgstr "ล็อก​บังเกอร์"
+
+msgid "Burma"
+msgstr "พม่า"
+
+msgid "Burma Road"
+msgstr "ถนน​พม่า"
+
+msgid "Burma Road Bulldozer Tank"
+msgstr "รถ​ถัง​ดัน​ดิน​ถนน​พม่า"
+
+msgid "Burmese"
+msgstr "ภาษา​พม่า"
+
+msgid "Buy clearance"
+msgstr "ซื้อ​ใบ​อนุญาต"
+
+msgid "CAMPAIGN"
+msgstr "แคมเปญ"
+
+msgid "Campaign"
+msgstr "แคมเปญ"
+
+msgid "Canals cut the paddies. Right-click a bridge to drop it. The enemy builds, expands, and attacks."
+msgstr "คลอง​ตัด​ผ่าน​นา คลิก​ขวา​ที่​สะพาน​เพื่อ​ทำลาย ศัตรู​สร้าง ขยาย และ​โจมตี"
+
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+msgid "Cancel the building in progress and refund what it has spent."
+msgstr "ยกเลิก​อาคาร​ที่​กำลัง​สร้าง​และ​คืน​เงิน​ที่​ใช้​ไป"
+
+msgid "cannot cross"
+msgstr "ข้าม​ไม่​ได้"
+
+msgid "cannot import"
+msgstr "นำ​เข้า​ไม่​ได้"
+
+msgid "cannot sell"
+msgstr "ขาย​ไม่​ได้"
+
+msgid "cannot train"
+msgstr "ฝึก​ไม่​ได้"
+
+msgid "Capture the radar, then hold it through the haze."
+msgstr "ยึด​เรดาร์ แล้ว​รักษา​ไว้​ตลอด​หมอก​ควัน"
+
+msgid "capture: yard, ruby night shift, and one rare-earth stock, after the recon drones fall"
+msgstr "ยึด: ลาน​ก่อ​สร้าง กะ​กลาง​คืน​ทับทิม และ​แร่​หา​ยาก​หนึ่ง​กอง หลัง​โดรน​ลาด​ตระเวน​ร่วง"
+
+msgid "Caravan ambush"
+msgstr "ซุ่ม​โจมตี​คาราวาน"
+
+msgid "caravan in"
+msgstr "คาราวาน​มา​ถึง"
+
+msgid "Caravan master"
+msgstr "นาย​คาราวาน"
+
+msgid "Cargo Winch Airlift"
+msgstr "ลำเลียง​ทาง​อากาศ​ด้วย​รอก"
+
+msgid "Cash Bounty"
+msgstr "ค่า​หัว​เงิน​สด"
+
+msgid "Cash Bribe"
+msgstr "สินบน​เงิน​สด"
+
+msgid "Century Carpet Bomber"
+msgstr "เครื่อง​บิน​ทิ้ง​ระเบิด​ปู​พรม​เซนจูรี"
+
+msgid "CH-4"
+msgstr "CH-4"
+
+msgid "CH-4 hangar"
+msgstr "โรง​เก็บ CH-4"
+
+msgid "Changes"
+msgstr "Changes"
+
+msgid "Channel boat"
+msgstr "เรือ​ช่อง​แคบ"
+
+msgid "channel clear"
+msgstr "ช่อง​แคบ​ปลอด​ภัย"
+
+msgid "Channel crossing (mission)"
+msgstr "ข้าม​ช่อง​แคบ (ภารกิจ)"
+
+msgid "Channel crossing. Text briefing. Send an amphibious unit across the deep water to the far shore."
+msgstr "ข้าม​ช่อง​แคบ บรรยาย​สรุป​แบบ​ข้อความ ส่ง​หน่วย​สะเทิน​น้ำ​สะเทิน​บก​ข้าม​น้ำ​ลึก​ไป​ฝั่ง​ตรง​ข้าม"
+
+msgid "Charcoal / cyan"
+msgstr "เทา​ถ่าน / ฟ้า​อม​เขียว"
+
+msgid "Chat"
+msgstr "แชต"
+
+msgid "Chemical Afterburner"
+msgstr "สันดาป​ท้าย​เคมี"
+
+msgid "Chiang Rai"
+msgstr "เชียงราย"
+
+msgid "Chips the towers. It does not finish the mission."
+msgstr "บั่น​ทอน​หอ ไม่​ได้​ทำ​ให้​ภารกิจ​สำเร็จ"
+
+msgid "Choose a map"
+msgstr "เลือก​แผนที่"
+
+msgid "Chopper Mode"
+msgstr "โหมด​ฮอ"
+
+msgid "Chrono-Phase Recall"
+msgstr "เรียก​กลับ​ข้าม​เวลา"
+
+msgid "Citadel garrison"
+msgstr "ทหาร​รักษา​ป้อม"
+
+msgid "Citadel officer"
+msgstr "นาย​ทหาร​ป้อม"
+
+msgid "Clear"
+msgstr "ล้าง"
+
+msgid "Clear the ambush (%d). Then walk the caravan to the night shift."
+msgstr "เคลียร์​ซุ่ม​โจมตี (%d) แล้ว​พา​คาราวาน​ไป​กะ​กลาง​คืน"
+
+msgid "Clear the field    Hold the line    Bring it home"
+msgstr "เคลียร์​สนาม    ยึด​แนว    กลับ​บ้าน"
+
+msgid "Clear the garrison (%d) and hold the hydro radar."
+msgstr "เคลียร์​ทหาร​รักษา​การณ์ (%d) และ​ยึด​เรดาร์​น้ำ​ไว้"
+
+msgid "Clear the garrison (%d), then %s."
+msgstr "เคลียร์​ทหาร​รักษา​การณ์ (%d) แล้ว %s"
+
+msgid "Clear the garrison (%d), then siphon the compound."
+msgstr "เคลียร์​ทหาร​รักษา​การณ์ (%d) แล้ว​ดูด​เงิน​จาก​ฐาน"
+
+msgid "clear the Orlan drones"
+msgstr "เคลียร์​โดรน Orlan"
+
+msgid "Clear the shore (%d). A boat is on the far shore."
+msgstr "เคลียร์​ชาย​ฝั่ง (%d) มี​เรือ​อยู่​ฝั่ง​ตรง​ข้าม"
+
+msgid "Clear the shore (%d). Land a boat on the far shore. The mine line hurts ships."
+msgstr "เคลียร์​ชาย​ฝั่ง (%d) ส่ง​เรือ​ขึ้น​ฝั่ง​ตรง​ข้าม แนว​ทุ่น​ระเบิด​ทำ​ร้าย​เรือ"
+
+msgid "clearance %d"
+msgstr "ใบ​อนุญาต %d"
+
+msgid "Clearance commander"
+msgstr "ผู้​บัญชาการ​ใบ​อนุญาต"
+
+msgid "clearance refused"
+msgstr "ไม่​อนุมัติ​ใบ​อนุญาต"
+
+msgid "Clearance two (mission)"
+msgstr "ใบ​อนุญาต​สอง (ภารกิจ)"
+
+msgid "Clearance two. Text briefing. Buy clearance, then queue and place the drone bay inside the pad."
+msgstr "ใบ​อนุญาต​สอง บรรยาย​สรุป​แบบ​ข้อความ ซื้อ​ใบ​อนุญาต แล้ว​สั่ง​สร้าง​และ​วาง​ฐาน​โดรน​ใน​ลาน"
+
+msgid "Colonel Nguyen Phantom"
+msgstr "พัน​เอก​เหงียน​แฟนทอม"
+
+msgid "Column screen"
+msgstr "แนว​คุ้มกัน​ขบวน"
+
+msgid "Command deck"
+msgstr "ดาดฟ้า​บัญชาการ"
+
+msgid "Commander:  %s"
+msgstr "ผู้​บัญชาการ:  %s"
+
+msgid "Company"
+msgstr "กองร้อย"
+
+msgid "Complete objective"
+msgstr "ทำ​ภารกิจ​สำเร็จ"
+
+msgid "Compound garrison"
+msgstr "ทหาร​รักษา​ฐาน"
+
+msgid "Compound runner"
+msgstr "คน​เดิน​ข่าว​ฐาน"
+
+msgid "Connecting to %s."
+msgstr "กำลัง​เชื่อม​ต่อ​กับ %s"
+
+msgid "Construction Yard"
+msgstr "ลาน​ก่อ​สร้าง"
+
+msgid "Contact behind the wagon."
+msgstr "พบ​ข้าศึก​หลัง​เกวียน"
+
+msgid "CONTROLS"
+msgstr "การ​ควบคุม"
+
+msgid "Copter shifting."
+msgstr "ฮอ​เปลี่ยน​ตำแหน่ง"
+
+msgid "Copter under fire."
+msgstr "ฮอ​ถูก​ยิง"
+
+msgid "Copy again"
+msgstr "คัดลอก​อีก​ครั้ง"
+
+msgid "Copy offer"
+msgstr "คัดลอก​ข้อ​เสนอ"
+
+msgid "Copy the answer once it appears and send it back to the host."
+msgstr "คัดลอก​คำ​ตอบ​เมื่อ​ปรากฏ แล้ว​ส่ง​กลับ​ให้​โฮสต์"
+
+msgid "Copy the offer into the other browser, then paste its answer back. No account."
+msgstr "คัดลอก​ข้อ​เสนอ​ไป​ยัง​เบราว์เซอร์​อีก​ตัว แล้ว​วาง​คำ​ตอบ​กลับ​มา ไม่​ต้อง​มี​บัญชี"
+
+msgid "Copy the offer once it appears, then paste the guest's answer."
+msgstr "คัดลอก​ข้อ​เสนอ​เมื่อ​ปรากฏ แล้ว​วาง​คำ​ตอบ​ของ​ผู้​รับ​เชิญ"
+
+msgid "Copy this answer and send it to the host."
+msgstr "คัดลอก​คำ​ตอบ​นี้​แล้ว​ส่ง​ให้​โฮสต์"
+
+msgid "Copy this offer and send it to the guest."
+msgstr "คัดลอก​ข้อ​เสนอ​นี้​แล้ว​ส่ง​ให้​ผู้​รับ​เชิญ"
+
+msgid "Could not join."
+msgstr "เข้า​ร่วม​ไม่​ได้"
+
+msgid "Count: %ds"
+msgstr "นับ​ถอย​หลัง: %ds"
+
+msgid "Count: 16s"
+msgstr "นับ​ถอย​หลัง: 16 วิ"
+
+msgid "CREDITS"
+msgstr "เครดิต"
+
+msgid "Credits %d"
+msgstr "เครดิต %d"
+
+msgid "Credits %d    Power %d/%d%s"
+msgstr "เครดิต %d    พลังงาน %d/%d%s"
+
+msgid "credits +250"
+msgstr "เครดิต +250"
+
+msgid "Credits 0    Power 0/0"
+msgstr "เครดิต 0    พลังงาน 0/0"
+
+msgid "Crimson / amber"
+msgstr "แดง​เข้ม / อำพัน"
+
+msgid "Cross channel"
+msgstr "ข้าม​ช่อง​แคบ"
+
+msgid "Cryo on the target."
+msgstr "แช่​แข็ง​เป้า​แล้ว"
+
+msgid "cryo wave"
+msgstr "คลื่น​เยือก​แข็ง"
+
+msgid "Cryo-copter airborne."
+msgstr "ฮอ​แช่​แข็ง​ขึ้น​บิน​แล้ว"
+
+msgid "Cryogeddon"
+msgstr "วัน​โลก​แข็ง"
+
+msgid "Cryoshot"
+msgstr "นัด​เยือก​แข็ง"
+
+msgid "Cu Chi Tunnel Hound"
+msgstr "สุนัข​อุโมงค์​กู๋​จี"
+
+msgid "Cyber compound (mission)"
+msgstr "ฐาน​ไซเบอร์ (ภารกิจ)"
+
+msgid "Cyber compound. Text briefing. Capture the compound and siphon the enemy purse."
+msgstr "ฐาน​ไซเบอร์ บรรยาย​สรุป​แบบ​ข้อความ ยึด​ฐาน​และ​ดูด​เงิน​ศัตรู"
+
+msgid "damage 1.5"
+msgstr "ความ​เสียหาย 1.5"
+
+msgid "Defeat"
+msgstr "พ่าย​แพ้"
+
+msgid "defender air"
+msgstr "ป้องกัน​ภัย​อากาศ"
+
+msgid "defender ground"
+msgstr "ป้องกัน​ภาค​พื้น"
+
+msgid "Defender-VX"
+msgstr "ดีเฟนเดอร์-VX"
+
+msgid "Defenses"
+msgstr "การ​ป้องกัน"
+
+msgid "Defoliation lead"
+msgstr "หัว​หน้า​ทีม​พ่น​สาร"
+
+msgid "Delta Amphibious IFV"
+msgstr "รถ​รบ​ทหาร​ราบ​สะเทิน​น้ำ​เดลต้า"
+
+msgid "Destroy both superweapons (%d left) before the count (%ds)."
+msgstr "ทำลาย​ซูเปอร์​อาวุธ​ทั้ง​สอง (เหลือ %d) ก่อน​หมด​เวลา (%ds)"
+
+msgid "destroy: both enemy superweapons fall before the count hits zero"
+msgstr "ทำลาย: ซูเปอร์​อาวุธ​ศัตรู​ทั้ง​สอง​ต้อง​พัง​ก่อน​นับ​ถึง​ศูนย์"
+
+msgid "destroy: every ghost inside the jammer dies, GPS cut and fiber full"
+msgstr "ทำลาย: ผี​ทุก​ตัว​ใน​เขต​รบกวน​ต้อง​ตาย GPS ถูก​ตัด​และ​ไฟเบอร์​ครบ"
+
+msgid "destroy: the ambush dies, the jade wagon reaches the bazaar, then the ruby night shift fills the purse"
+msgstr "ทำลาย: กำจัด​ซุ่ม​โจมตี เกวียน​หยก​ถึง​ตลาด แล้ว​กะ​กลาง​คืน​ทับทิม​เติม​เงิน​ให้​เต็ม"
+
+msgid "destroy: the beam freezes the phantom, then the phantom and the battery die"
+msgstr "ทำลาย: ลำ​แสง​แช่​แข็ง​แฟนทอม แล้ว​แฟนทอม​และ​ฐาน​ปืน​ต้อง​ตาย"
+
+msgid "destroy: the boats die, then the wharf is unpacked and upgraded"
+msgstr "ทำลาย: เรือ​ต้อง​จม แล้ว​กาง​ท่า​เรือ​และ​อัป​เกรด"
+
+msgid "destroy: the channel boats die and an amphibious unit reaches the far shore"
+msgstr "ทำลาย: เรือ​ใน​ช่อง​แคบ​ต้อง​จม และ​หน่วย​สะเทิน​น้ำ​สะเทิน​บก​ถึง​ฝั่ง​ตรง​ข้าม"
+
+msgid "destroy: the EW towers fall, then the Su-30 and CH-4 hangars"
+msgstr "ทำลาย: หอ EW ต้อง​พัง แล้ว​ตาม​ด้วย​โรง​เก็บ Su-30 และ CH-4"
+
+msgid "destroy: the garrison dies, the hack is held on the server blocks, then both blocks are siphoned"
+msgstr "ทำลาย: กำจัด​ทหาร​รักษา​การณ์ แฮก​บล็อก​เซิร์ฟเวอร์​ค้าง​ไว้ แล้ว​ดูด​ทั้ง​สอง​บล็อก"
+
+msgid "destroy: the GTFC tank column is frozen, then destroyed"
+msgstr "ทำลาย: แช่​แข็ง​ขบวน​รถ​ถัง GTFC แล้ว​ทำลาย"
+
+msgid "destroy: the joint enemy fleet is sunk"
+msgstr "ทำลาย: จม​กอง​เรือ​ผสม​ของ​ศัตรู"
+
+msgid "destroy: the radar garrison dies and the hydro radar is held"
+msgstr "ทำลาย: กำจัด​ทหาร​รักษา​เรดาร์ และ​ยึด​เรดาร์​น้ำ​ไว้"
+
+msgid "Details"
+msgstr "รายละเอียด"
+
+msgid "Difficulty"
+msgstr "ระดับ​ความ​ยาก"
+
+msgid "Difficulty:  %s"
+msgstr "ระดับ​ความ​ยาก:  %s"
+
+msgid "Discharges a held unit. One cast."
+msgstr "ปลด​ประจำ​การ​หน่วย​ที่​ถูก​ตรึง ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Done"
+msgstr "เสร็จ"
+
+msgid "Dozer advancing."
+msgstr "รถ​ดัน​ดิน​กำลัง​รุก"
+
+msgid "Dozer ready."
+msgstr "รถ​ดัน​ดิน​พร้อม"
+
+msgid "Dozer under fire."
+msgstr "รถ​ดัน​ดิน​ถูก​ยิง"
+
+msgid "Drag a box    Select"
+msgstr "ลาก​กรอบ    เลือก"
+
+msgid "Drag a box around your units."
+msgstr "ลาก​กรอบ​รอบ​หน่วย​ของ​คุณ"
+
+msgid "Drone truck standing by."
+msgstr "รถ​โดรน​พร้อม​รอ​คำสั่ง"
+
+msgid "Drones on the jade wagon. Keep it under the trees."
+msgstr "โดรน​อยู่​เหนือ​เกวียน​หยก เก็บ​ไว้​ใต้​ร่ม​ไม้"
+
+msgid "Drones on the target."
+msgstr "โดรน​ถึง​เป้า​แล้ว"
+
+msgid "Drop the EW towers (%d), then the hangars (%d)."
+msgstr "ทำลาย​หอ EW (%d) แล้ว​ตาม​ด้วย​โรง​เก็บ (%d)"
+
+msgid "Easy"
+msgstr "ง่าย"
+
+msgid "Edge pan"
+msgstr "เลื่อน​ขอบ​จอ"
+
+msgid "Eject and Repair"
+msgstr "ดีด​ตัว​และ​ซ่อม"
+
+msgid "Electro-Latch Detonate"
+msgstr "จุด​ระเบิด​สลัก​ไฟฟ้า"
+
+msgid "Electro-Stasis Tether"
+msgstr "สาย​ตรึง​ไฟฟ้า​สถิต"
+
+msgid "Elite"
+msgstr "ยอด​ฝีมือ"
+
+msgid "Emergency Evasive Return"
+msgstr "ถอย​หลบ​ฉุกเฉิน"
+
+msgid "Enemy"
+msgstr "ศัตรู"
+
+msgid "Enemy spotted."
+msgstr "พบ​ศัตรู"
+
+msgid "Engage"
+msgstr "เข้า​ตี"
+
+msgid "ENGINE"
+msgstr "เอนจิน"
+
+msgid "English"
+msgstr "ภาษา​อังกฤษ"
+
+msgid "English, Burmese, Mandarin, Thai, or Malay. A missing line plays the English take."
+msgstr "อังกฤษ พม่า จีน​กลาง ไทย หรือ​มลายู บท​ที่​ขาด​จะ​เล่น​เสียง​อังกฤษ"
+
+msgid "Esc    Pause"
+msgstr "Esc    หยุด​ชั่ว​คราว"
+
+msgid "Esc  Back    ·    Enter  Select"
+msgstr "Esc  กลับ    ·    Enter  เลือก"
+
+msgid "Evacuate and Lay Mines"
+msgstr "อพยพ​และ​วาง​ทุ่น​ระเบิด"
+
+msgid "EW tower"
+msgstr "หอ EW"
+
+msgid "F    Ability"
+msgstr "F    ความ​สามารถ"
+
+msgid "F ability found no enemy"
+msgstr "ความ​สามารถ F ไม่​พบ​ศัตรู"
+
+msgid "F ability struck an enemy"
+msgstr "ความ​สามารถ F โดน​ศัตรู"
+
+msgid "Faction:  %s"
+msgstr "ฝ่าย:  %s"
+
+msgid "Federal Wings Ag-Bomber Hexacopter"
+msgstr "โดรน​หก​ใบ​พัด​ทิ้ง​ระเบิด​เกษตร​เฟเดอรัล​วิงส์"
+
+msgid "Ferry warden"
+msgstr "ผู้​คุม​เรือ​ข้าม​ฟาก"
+
+msgid "Fiber-Optic Tether"
+msgstr "สาย​ใย​แก้ว​นำ​วิถี"
+
+msgid "Fibre Dive"
+msgstr "ดิ่ง​ไฟเบอร์"
+
+msgid "Field clinic (mission)"
+msgstr "คลินิก​สนาม (ภารกิจ)"
+
+msgid "Field clinic. Text briefing. Capture the clinic and let it heal the company."
+msgstr "คลินิก​สนาม บรรยาย​สรุป​แบบ​ข้อความ ยึด​คลินิก​เพื่อ​รักษา​กองร้อย"
+
+msgid "Field Medical Tent"
+msgstr "เต็นท์​พยาบาล​สนาม"
+
+msgid "Fight the briefing."
+msgstr "สู้​ตาม​บรรยาย​สรุป"
+
+msgid "fire the beam"
+msgstr "ยิง​ลำ​แสง"
+
+msgid "First mission. Select the company, right-click to move, and right-click the raiders to fight. Raise the yard, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails."
+msgstr "ภารกิจ​แรก เลือก​กองร้อย คลิก​ขวา​เพื่อ​เคลื่อน​ที่ และ​คลิก​ขวา​ที่​โจร​เพื่อ​สู้ ตั้ง​ลาน​ก่อ​สร้าง เดิน​กะ​กลาง​คืน​ทับทิม และ​นำ​แร่​หา​ยาก​หนึ่ง​กอง​กลับ​บ้าน ถ้า​กองร้อย​ตาย​หมด การ​บุก​ล้มเหลว"
+
+msgid "Flak-Slag Mast"
+msgstr "เสา​ต่อ​สู้​อากาศยาน​ตะกรัน"
+
+msgid "Fleet captain"
+msgstr "กัปตัน​กอง​เรือ"
+
+msgid "Fleet picket"
+msgstr "เรือ​ลาด​ตระเวน​กอง​เรือ"
+
+msgid "FLH7 Squad"
+msgstr "หมู่ FLH7"
+
+msgid "Fog Over Pakbeng"
+msgstr "หมอก​เหนือ​ปากแบ่ง"
+
+msgid "Fog Over Pakbeng. Text briefing. Hold a hydro radar through the longer haze while a second raider wave attacks. An ally breaks first. The haze stays shut, and the radar has to be held. The side cache is optional."
+msgstr "หมอก​เหนือ​ปากแบ่ง บรรยาย​สรุป​แบบ​ข้อความ รักษา​เรดาร์​น้ำ​ไว้​ตลอด​หมอก​ควัน​ที่​นาน​ขึ้น ขณะ​ที่​โจร​ระลอก​สอง​บุก พันธมิตร​แตก​ก่อน หมอก​ปิด​สนิท และ​ต้อง​รักษา​เรดาร์​ไว้ คลัง​ข้าง​ทาง​เป็น​ภารกิจ​เสริม"
+
+msgid "FONTS"
+msgstr "แบบ​อักษร"
+
+msgid "Form"
+msgstr "จัด​รูป"
+
+msgid "Formation. Switch between a line and a box."
+msgstr "รูป​ขบวน สลับ​ระหว่าง​แถว​หน้า​กระดาน​กับ​สี่​เหลี่ยม"
+
+msgid "Found %s."
+msgstr "พบ %s"
+
+msgid "FPV Strike Drone"
+msgstr "โดรน​โจมตี FPV"
+
+msgid "Free Trade"
+msgstr "การ​ค้า​เสรี"
+
+msgid "Freeze the column (%d/%d), then destroy it (%d left).%s"
+msgstr "แช่​แข็ง​ขบวน (%d/%d) แล้ว​ทำลาย (เหลือ %d)%s"
+
+msgid "freeze the phantom"
+msgstr "แช่​แข็ง​แฟนทอม"
+
+msgid "Freezes one target. One cast."
+msgstr "แช่​แข็ง​เป้า​หนึ่ง​เป้า ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Freezes the tank column. It does not finish the mission."
+msgstr "แช่​แข็ง​ขบวน​รถ​ถัง ไม่​ได้​ทำ​ให้​ภารกิจ​สำเร็จ"
+
+msgid "Freezes the trimarans for a while. It does not finish the mission."
+msgstr "แช่​แข็ง​เรือ​สาม​ลำ​ตัว​ชั่ว​ครู่ ไม่​ได้​ทำ​ให้​ภารกิจ​สำเร็จ"
+
+msgid "Frequency Hop"
+msgstr "กระโดด​ความถี่"
+
+msgid "Game language"
+msgstr "ภาษา​ของ​เกม"
+
+msgid "GAMEPLAY"
+msgstr "การ​เล่น"
+
+msgid "garrison %d"
+msgstr "ทหาร​รักษา​การณ์ %d"
+
+msgid "Garrison clear. %s. Siphon both server blocks (%d)."
+msgstr "ทหาร​รักษา​การณ์​เคลียร์ %s ดูด​บล็อก​เซิร์ฟเวอร์​ทั้ง​สอง (%d)"
+
+msgid "Garrison clear. Hold the hydro radar."
+msgstr "ทหาร​รักษา​การณ์​เคลียร์ ยึด​เรดาร์​น้ำ​ไว้"
+
+msgid "Garrison clear. Hydro radar is held."
+msgstr "ทหาร​รักษา​การณ์​เคลียร์ ยึด​เรดาร์​น้ำ​ได้​แล้ว"
+
+msgid "Garrison clear. Siphon the compound (%d)."
+msgstr "ทหาร​รักษา​การณ์​เคลียร์ ดูด​เงิน​จาก​ฐาน (%d)"
+
+msgid "Garrison in the trees."
+msgstr "ทหาร​รักษา​การณ์​อยู่​ใน​ป่า"
+
+msgid "Garuda Mecha-Overlord"
+msgstr "จ้าว​หุ่น​รบ​ครุฑ"
+
+msgid "General Bo Mya"
+msgstr "นาย​พล​โบ​เมียะ"
+
+msgid "Ghosts in the jammer. Every one of them has to fall."
+msgstr "ผี​อยู่​ใน​เขต​รบกวน ต้อง​ล้ม​ให้​หมด​ทุก​ตัว"
+
+msgid "Ghosts of Patani"
+msgstr "ผี​แห่ง​ปัตตานี"
+
+msgid "Ghosts of Patani. Text briefing. Destroy every ghost in the jammer, including the shipment guards. GPS guidance drops there. A fiber link does not. Losing the company fails the mission. GPS drops, ghosts close in, and then the guide turns. The side cache is optional."
+msgstr "ผี​แห่ง​ปัตตานี บรรยาย​สรุป​แบบ​ข้อความ ทำลาย​ผี​ทุก​ตัว​ใน​เขต​รบกวน รวม​ถึง​ยาม​คุ้มกัน​สินค้า การ​นำ​วิถี GPS ใช้​ไม่​ได้​ที่​นั่น แต่​สาย​ไฟเบอร์​ใช้​ได้ ถ้า​เสีย​กองร้อย ภารกิจ​ล้มเหลว GPS ดับ ผี​เข้า​ประชิด แล้ว​ผู้​นำ​ทาง​ทรยศ คลัง​ข้าง​ทาง​เป็น​ภารกิจ​เสริม"
+
+msgid "Godot Engine, MIT licence"
+msgstr "Godot Engine สัญญา​อนุญาต MIT"
+
+msgid "Godot RTS Advanced, MIT licence"
+msgstr "Godot RTS Advanced สัญญา​อนุญาต MIT"
+
+msgid "gold bullion"
+msgstr "ทองคำ​แท่ง"
+
+msgid "Golden Confluence"
+msgstr "จุด​บรรจบ​ทองคำ"
+
+msgid "Golden Dragon Dirigible"
+msgstr "เรือ​เหาะ​มังกร​ทอง"
+
+msgid "Golden Slag / Aurum-9"
+msgstr "ตะกรัน​ทอง / Aurum-9"
+
+msgid "Golden Slag / Aurum-9 stays in the yard ledger. Ruby and rare earth are the raid."
+msgstr "ตะกรัน​ทอง / Aurum-9 อยู่​ใน​บัญชี​ลาน​ก่อ​สร้าง ทับทิม​และ​แร่​หา​ยาก​คือ​เป้า​การ​บุก"
+
+msgid "Got it"
+msgstr "เข้าใจ​แล้ว"
+
+msgid "GPS drops in the mist. Fiber shots still land."
+msgstr "GPS ดับ​ใน​หมอก กระสุน​นำ​วิถี​ไฟเบอร์​ยัง​เข้า​เป้า"
+
+msgid "GPS Spoofing"
+msgstr "ปลอม​สัญญาณ GPS"
+
+msgid "GRAPHICS"
+msgstr "กราฟิก"
+
+msgid "Greybox"
+msgstr "กล่อง​เทา"
+
+msgid "Grinder Treads"
+msgstr "สายพาน​บด"
+
+msgid "Ground"
+msgstr "ภาค​พื้น"
+
+msgid "Group %d"
+msgstr "กลุ่ม %d"
+
+msgid "Group %d empty"
+msgstr "กลุ่ม %d ว่าง"
+
+msgid "Group %d stored"
+msgstr "บันทึก​กลุ่ม %d แล้ว"
+
+msgid "group toggle"
+msgstr "สลับ​กลุ่ม"
+
+msgid "GTFC"
+msgstr "GTFC"
+
+msgid "GTFC  crimson / amber"
+msgstr "GTFC  แดง​เข้ม / อำพัน"
+
+msgid "GTFC gunboat"
+msgstr "เรือ​ปืน GTFC"
+
+msgid "GTFC tank"
+msgstr "รถ​ถัง GTFC"
+
+msgid "Guard"
+msgstr "เฝ้า"
+
+msgid "Guard. Fire at enemies in range."
+msgstr "เฝ้า ยิง​ศัตรู​ใน​ระยะ"
+
+msgid "Guide"
+msgstr "คู่​มือ"
+
+msgid "Gun Wharf"
+msgstr "ท่า​เรือ​ปืน"
+
+msgid "H    Controls"
+msgstr "H    การ​ควบคุม"
+
+msgid "H guide    P protocols"
+msgstr "H คู่​มือ    P โปรโตคอล"
+
+msgid "Ha Long Hydrofoil"
+msgstr "เรือ​ไฮโดรฟอยล์​ฮาลอง"
+
+msgid "hack held"
+msgstr "แฮก​ค้าง​ไว้"
+
+msgid "Hack: %ds"
+msgstr "แฮก: %ds"
+
+msgid "Hack: 20s"
+msgstr "แฮก: 20 วิ"
+
+msgid "Halt"
+msgstr "หยุด"
+
+msgid "Hard"
+msgstr "ยาก"
+
+msgid "haul 120"
+msgstr "ขน 120"
+
+msgid "Hawk Missiles"
+msgstr "ขีปนาวุธ​เหยี่ยว"
+
+msgid "Haze coxswain"
+msgstr "นาย​ท้าย​เรือ​หมอก"
+
+msgid "Haze raider"
+msgstr "โจร​หมอก"
+
+msgid "Hide mission"
+msgstr "ซ่อน​ภารกิจ"
+
+msgid "High"
+msgstr "สูง"
+
+msgid "High graphics, full volume, voices in the game language, normal difficulty, edge pan on."
+msgstr "กราฟิก​สูง เสียง​เต็ม เสียง​พากย์​ตาม​ภาษา​เกม ความ​ยาก​ปกติ เปิด​เลื่อน​ขอบ​จอ"
+
+msgid "High keeps trees, rain, fog, and shadows."
+msgstr "ระดับ​สูง​มี​ต้น​ไม้ ฝน หมอก และ​เงา"
+
+msgid "High Technology"
+msgstr "เทคโนโลยี​ขั้น​สูง"
+
+msgid "Highland cliffs block the climb. The road is open ground. The enemy builds, expands, and attacks."
+msgstr "หน้า​ผา​บน​ที่​สูง​กั้น​ทาง​ขึ้น ถนน​เป็น​ที่​โล่ง ศัตรู​สร้าง ขยาย และ​โจมตี"
+
+msgid "Highland Saboteur"
+msgstr "นัก​ก่อ​วินาศ​กรรม​ที่​สูง"
+
+msgid "Highlight a row to read what it changes."
+msgstr "เลือก​แถว​เพื่อ​อ่าน​ว่า​เปลี่ยน​อะไร"
+
+msgid "Hold"
+msgstr "ยึด​ที่"
+
+msgid "hold the blocks %ds"
+msgstr "ยึด​บล็อก​ไว้ %ds"
+
+msgid "Hold the radar through the haze. %d seconds left."
+msgstr "รักษา​เรดาร์​ไว้​ตลอด​หมอก​ควัน เหลือ %d วินาที"
+
+msgid "Hold the radar. The haze is the clock."
+msgstr "รักษา​เรดาร์​ไว้ หมอก​ควัน​คือ​นาฬิกา"
+
+msgid "Hold. Do not acquire targets."
+msgstr "ยึด​ที่ ไม่​เล็ง​เป้า"
+
+msgid "Holder"
+msgstr "ผู้​ถือ​ครอง"
+
+msgid "Honorable Discharge"
+msgstr "ปลด​ประจำ​การ​อย่าง​มี​เกียรติ"
+
+msgid "Host %s %s    Guest %s %s"
+msgstr "โฮสต์ %s %s    ผู้​รับ​เชิญ %s %s"
+
+msgid "Host a 1v1 on this LAN, or join one. Each player brings a faction and a base."
+msgstr "เป็น​โฮสต์ 1v1 ใน LAN นี้ หรือ​เข้า​ร่วม ผู้​เล่น​แต่ละ​คน​นำ​ฝ่าย​และ​ฐาน​มา​เอง"
+
+msgid "Host LAN"
+msgstr "โฮสต์ LAN"
+
+msgid "Houses"
+msgstr "บ้าน​เรือน"
+
+msgid "Hover-technical set."
+msgstr "ตั้ง​รถ​ติด​อาวุธ​ลอย​ตัว​แล้ว"
+
+msgid "How fast the camera slides."
+msgstr "กล้อง​เลื่อน​เร็ว​แค่​ไหน"
+
+msgid "How to play"
+msgstr "วิธี​เล่น"
+
+msgid "How to play (H)"
+msgstr "วิธี​เล่น (H)"
+
+msgid "hub not queued"
+msgstr "ยัง​ไม่​ได้​สั่ง​สร้าง​ฮับ"
+
+msgid "hub not ready"
+msgstr "ฮับ​ยัง​ไม่​พร้อม"
+
+msgid "hub placed"
+msgstr "วาง​ฮับ​แล้ว"
+
+msgid "hub ready to place"
+msgstr "ฮับ​พร้อม​วาง"
+
+msgid "Hub Refinery"
+msgstr "ฮับ​โรง​กลั่น"
+
+msgid "HUD"
+msgstr "HUD"
+
+msgid "Humanfuture"
+msgstr "Humanfuture"
+
+msgid "Hydro radar (mission)"
+msgstr "เรดาร์​น้ำ (ภารกิจ)"
+
+msgid "Hydro radar. Text briefing. Capture the radar so water nodes show on the map."
+msgstr "เรดาร์​น้ำ บรรยาย​สรุป​แบบ​ข้อความ ยึด​เรดาร์​เพื่อ​ให้​จุด​น้ำ​แสดง​บน​แผนที่"
+
+msgid "Indochina Drone Carrier"
+msgstr "เรือ​บรรทุก​โดรน​อินโดจีน"
+
+msgid "Infantry"
+msgstr "ทหาร​ราบ"
+
+msgid "Infantry screen the tanks. They are not the column."
+msgstr "ทหาร​ราบ​คุ้มกัน​รถ​ถัง พวก​มัน​ไม่​ใช่​ขบวน"
+
+msgid "Infiltrator Operative"
+msgstr "สาย​ลับ​แทรก​ซึม"
+
+msgid "Inflatable Raft and C4"
+msgstr "แพ​ยาง​และ C4"
+
+msgid "Interceptor up."
+msgstr "เครื่อง​สกัด​กั้น​ขึ้น​บิน"
+
+msgid "Internal queue"
+msgstr "คิว​ภายใน"
+
+msgid "Ion-Cryo Collider"
+msgstr "เครื่อง​ชน​อนุภาค​ไอออน​เยือก​แข็ง"
+
+msgid "Irrawaddy Gyro-Gunship"
+msgstr "ฮอ​ไจโร​ติด​อาวุธ​อิรวดี"
+
+msgid "Iskandar"
+msgstr "อิสกันดาร์"
+
+msgid "Islands in deep water. Shoals are the crossings. The enemy builds, expands, and attacks."
+msgstr "เกาะ​กลาง​น้ำ​ลึก สันดอน​คือ​ทาง​ข้าม ศัตรู​สร้าง ขยาย และ​โจมตี"
+
+msgid "Jade caravan"
+msgstr "คาราวาน​หยก"
+
+msgid "Jammer"
+msgstr "เครื่อง​รบกวน"
+
+msgid "Jammer drill (mission)"
+msgstr "ฝึก​เขต​รบกวน (ภารกิจ)"
+
+msgid "Jammer drill. Text briefing. GPS guidance drops inside the jammer. A fiber link does not."
+msgstr "ฝึก​เขต​รบกวน บรรยาย​สรุป​แบบ​ข้อความ การ​นำ​วิถี GPS ใช้​ไม่​ได้​ใน​เขต​รบกวน แต่​สาย​ไฟเบอร์​ใช้​ได้"
+
+msgid "Jammer ghost"
+msgstr "ผี​เขต​รบกวน"
+
+msgid "Jar battery"
+msgstr "ฐาน​ปืน​ไห"
+
+msgid "Jar screen"
+msgstr "แนว​คุ้มกัน​ไห"
+
+msgid "Jet Interceptor"
+msgstr "เครื่อง​บิน​ไอพ่น​สกัด​กั้น"
+
+msgid "Jets on the target."
+msgstr "เครื่อง​บิน​ถึง​เป้า​แล้ว"
+
+msgid "Johor Loiter-Swarm"
+msgstr "ฝูง​โดรน​วน​รอ​ยะโฮร์"
+
+msgid "Join LAN"
+msgstr "เข้า​ร่วม LAN"
+
+msgid "Join offer"
+msgstr "ข้อ​เสนอ​เข้า​ร่วม"
+
+msgid "Joint picket"
+msgstr "แนว​ลาด​ตระเวน​ผสม"
+
+msgid "Junta escort"
+msgstr "ทหาร​คุ้มกัน​รัฐ​บาล​ทหาร"
+
+msgid "Kachin Sapper Dog"
+msgstr "สุนัข​ทหาร​ช่าง​คะฉิ่น"
+
+msgid "kamikaze 6"
+msgstr "กามิกาเซ่ 6"
+
+msgid "Kamikaze Drone Squadron"
+msgstr "ฝูง​โดรน​กามิกาเซ่"
+
+msgid "Keep the beam on the phantom. It is not frozen yet."
+msgstr "ส่อง​ลำ​แสง​ไว้​ที่​แฟนทอม มัน​ยัง​ไม่​แข็ง"
+
+msgid "Keep the ferry alive (%s). %d seconds left."
+msgstr "รักษา​เรือ​ข้าม​ฟาก​ไว้ (%s) เหลือ %d วินาที"
+
+msgid "Keep the ferry alive. %d seconds left."
+msgstr "รักษา​เรือ​ข้าม​ฟาก​ไว้ เหลือ %d วินาที"
+
+msgid "Keng Tung Defoliation"
+msgstr "เชียงตุง​ไร้​ใบ"
+
+msgid "Keng Tung. Text briefing. Freeze the GTFC tank column, then destroy it. Infantry screens the tanks. Toxic Defoliation can freeze them. Casting it does not end the mission. A spray run comes down the road and has to be cut off. If it lands, it defoliates your line and the side cache is lost."
+msgstr "เชียงตุง บรรยาย​สรุป​แบบ​ข้อความ แช่​แข็ง​ขบวน​รถ​ถัง GTFC แล้ว​ทำลาย ทหาร​ราบ​คุ้มกัน​รถ​ถัง สาร​ทำลาย​ใบ​ไม้​พิษ​แช่​แข็ง​พวก​มัน​ได้ การ​ใช้​ไม่​ได้​จบ​ภารกิจ ขบวน​พ่น​สาร​มา​ตาม​ถนน​และ​ต้อง​ตัด​ให้​ได้ ถ้า​มัน​ถึง แนว​รบ​ของ​คุณ​จะ​ไร้​ใบ​ไม้ และ​เสีย​คลัง​ข้าง​ทาง"
+
+msgid "Kenney (kenney.nl) and other CC0 sources, listed in game/sfx/CREDITS.md"
+msgstr "Kenney (kenney.nl) และ​แหล่ง CC0 อื่นๆ ตาม​รายการ​ใน game/sfx/CREDITS.md"
+
+msgid "Key guide"
+msgstr "คู่​มือ​ปุ่ม"
+
+msgid "Kite Loiterer"
+msgstr "โดรน​ว่าว​วน​รอ"
+
+msgid "Kokang and Mogok night raid"
+msgstr "บุก​กลาง​คืน​โกกั้ง​และ​โมกก"
+
+msgid "Kokang and Mogok night raid. Raise the scaffold yard, run the ruby pits on night shift, and bring one rare-earth stock home before dawn. If the company dies, the raid fails. An ambush, a blown bridge, a turned guide, and rain can arrive while you work. The side cache is optional."
+msgstr "บุก​กลาง​คืน​โกกั้ง​และ​โมกก ตั้ง​ลาน​นั่ง​ร้าน เดิน​บ่อ​ทับทิม​กะ​กลาง​คืน และ​นำ​แร่​หา​ยาก​หนึ่ง​กอง​กลับ​บ้าน​ก่อน​รุ่ง​สาง ถ้า​กองร้อย​ตาย​หมด การ​บุก​ล้มเหลว การ​ซุ่ม​โจมตี สะพาน​ถูก​ระเบิด ผู้​นำ​ทาง​ทรยศ และ​ฝน​อาจ​มา​ระหว่าง​ทำงาน คลัง​ข้าง​ทาง​เป็น​ภารกิจ​เสริม"
+
+msgid "Kokang and Mogok. Text briefing. Raise the yard, clear the Orlan recon over the pits, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails. Rain hits, Orlans pass the pits, and the night shift starts. The side cache is optional."
+msgstr "โกกั้ง​และ​โมกก บรรยาย​สรุป​แบบ​ข้อความ ตั้ง​ลาน เคลียร์​โดรน​ลาด​ตระเวน Orlan เหนือ​บ่อ เดิน​กะ​กลาง​คืน​ทับทิม และ​นำ​แร่​หา​ยาก​หนึ่ง​กอง​กลับ​บ้าน ถ้า​กองร้อย​ตาย​หมด การ​บุก​ล้มเหลว ฝน​ตก Orlan บิน​ผ่าน​บ่อ และ​กะ​กลาง​คืน​เริ่ม คลัง​ข้าง​ทาง​เป็น​ภารกิจ​เสริม"
+
+msgid "Kokang: %s. %s. %s. %s."
+msgstr "โกกั้ง: %s %s %s %s"
+
+msgid "Krakatoa Dreadnought"
+msgstr "เรือ​ประจัญ​บาน​กรากะตัว"
+
+msgid "Kris Plasma Rush"
+msgstr "บุก​พลาสมา​กริช"
+
+msgid "LAN guest. Your company, your base."
+msgstr "ผู้​รับ​เชิญ LAN กองร้อย​ของ​คุณ ฐาน​ของ​คุณ"
+
+msgid "Land"
+msgstr "ลง​จอด"
+
+msgid "Land Legs"
+msgstr "ขา​บก"
+
+msgid "LANGUAGE"
+msgstr "ภาษา / LANGUAGE"
+
+msgid "Laser Target Lock"
+msgstr "ล็อก​เป้า​เลเซอร์"
+
+msgid "Last-Stand Ram"
+msgstr "ชน​สู้​ตาย"
+
+msgid "Leech beam on."
+msgstr "เปิด​ลำ​แสง​ดูด"
+
+msgid "Left click selects. Right click moves. F ability."
+msgstr "คลิก​ซ้าย​เลือก คลิก​ขวา​เคลื่อน​ที่ F ความ​สามารถ"
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
+"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+"คลิก​ซ้าย​ที่​หน่วย หรือ​ลาก​กรอบ​รอบ​กองร้อย​ของ​คุณ วง​แหวน​สี​ส้ม​แสดง​ระยะ​อาวุธ​ของ​หน่วย​ที่​เลือก และ​วง​แหวน​เดียวกัน​จะ​ปรากฏ​เมื่อ​ตัว​ชี้​วาง​อยู่​บน​หน่วย\n"
+"คลิก​ขวา​ที่​พื้น​โล่ง​เพื่อ​เคลื่อน​ที่ คลิก​ขวา​ที่​ศัตรู​เพื่อ​โจมตี วง​แหวน​จะ​ทำ​เครื่องหมาย​ที่​จุด​นั้น แล้ว​ค่อยๆ​จาง​หาย\n"
+"กด Q เพื่อ​โจมตี​ขณะ​เคลื่อน​ที่​ไป​ยัง​เคอร์เซอร์ กด X เพื่อ​หยุด Ctrl กับ 1 ถึง 9 เก็บ​กลุ่ม กด​ตัว​เลข​เพื่อ​เรียก​กลุ่ม และ​กด​อีก​ครั้ง​เพื่อ​จัด​กล้อง​ไว้​ตรง​กลาง\n"
+"Shift-คลิก​เพิ่ม​หน่วย Ctrl-คลิก​สลับ​การ​เลือก ดับเบิล​คลิก หรือ E เลือก​ทุก​หน่วย​ประเภท​นั้น Z จัด​แถว​กองร้อย​สำหรับ​การ​เคลื่อน​ที่​ครั้ง​ถัดไป Shift-คลิก​ขวา​บน​พื้น​โล่ง​เพิ่ม​ขั้น​ต่อ​ไป R ปัก​ธง​จุด​รวม​พล และ​หน่วย​ใหม่​จะ​ปรากฏ​ข้างๆ แถบ​ด้าน​บน​แสดง​เครดิต​ที่​ได้​ต่อ​วินาที\n"
+"รูป​เพชร​อยู่​ที่​ขั้น​ถัดไป​ของ​หน่วย​นำ ชีพจร​บางๆ​ทำ​เครื่องหมาย​เป้า​หมาย​ปัจจุบัน และ​มินิแมพ​ตี​กรอบ​จุด​นั้น การ​โจมตี​ที่​ถูก​เป้า​แสดง​ตัว​เลข​ลอย\n"
+"คลิก​มินิแมพ​เพื่อ​ย้าย​กล้อง​ไป​ที่​นั่น\n"
+"กด F หรือ​ปุ่ม​ความ​สามารถ เพื่อ​ใช้​พลัง​ของ​หน่วย​ที่​เลือก สมาร์ท​คาสต์​ยิง​เฉพาะ​หน่วย​ที่​พร้อม​และ​ใกล้​ที่สุด\n"
+"คอลัมน์​ด้าน​ขวา​ฝึก​หน่วย​และ​สร้าง​อาคาร เดิน​ขึ้น​แท่น​สี​เพื่อ​ยึด\n"
+"เรือ​ข้าม​น้ำ​ลึก​ได้ รถ​ถัง​และ​ทหาร​ราบ​อยู่​บน​บก และ​ใช้​ทาง​ข้าม​น้ำ​ตื้น​เมื่อ​เปิด​อยู่\n"
+"โคลน​มรสุม​ทำ​ให้​รถ​ถัง​และ​ทหาร​ราบ​ช้า​ลง หมอก​ช่อง​แคบ​ลด​ระยะ​มอง​เห็น เว้น​แต่​คุณ​ครอง​เรดาร์​พลัง​น้ำ บน​แม่น้ำ​โขง คลิก​ขวา​ที่​สะพาน​เพื่อ​ทำลาย​และ​เปิด​คลอง ตลาด​อาวุธ​ที่​ยึด​ได้​ขาย CH-4, Su-30, Orlan-10 และ​หน่วย FLH7 และ​สูบ​เงิน​จาก​คลัง​ศัตรู\n"
+"พลังงาน​ต่ำ​หยุด​การ​ผลิต​ใหม่ จน​กว่า​โรง​ไฟฟ้า​จะ​รองรับ​การ​ใช้​ไฟ และ​ทำ​ให้​แนว​ป้องกัน​เงียบ ยกเลิก​จะ​ทิ้ง​อาคาร​ที่​กำลัง​สร้าง เรดาร์​พลัง​น้ำ​ส่อง​แนว​แม่น้ำ คลิก​ขวา​ที่​บังเกอร์​ตะกรัน หรือ​ป้อม​ปืน​หลาย​กระบอก ด้วย​ทหาร​ราบ​เพื่อ​เข้า​ประจำ​การ แล้ว​คลิก​อาคาร​ที่​เสร็จ​แล้ว​เพื่อ​ถอน​ออก คลิก​ครั้ง​ที่​สอง​บน Defender-VX ที่​เสร็จ​แล้ว จะ​สลับ​ปืน​ภาค​พื้น​กับ​ปืน​ต่อ​สู้​อากาศ​ยาน\n"
+"P เปิด​โพรโทคอล H เปิด​คู่มือ​นี้\n"
+"แถบ​สถานะ​จะ​แสดง ภารกิจ​สำเร็จ เมื่อ​คุณ​ชนะ และ ภารกิจ​ล้มเหลว หาก​กองร้อย​ของ​คุณ​ถูก​ทำลาย"
+
+msgid "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr "คลิก​ซ้าย​เลือก Shift-คลิก​เพิ่ม ดับเบิล​คลิก หรือ E เลือก​ประเภท​นั้น คลิก​ขวา​ที่​พื้น​เพื่อ​เคลื่อน​ที่ ที่​ศัตรู​เพื่อ​โจมตี Shift-คลิก​ขวา​เพิ่ม​จุด​ทาง​ผ่าน Z จัด​แถว​กองร้อย Q โจมตี​ขณะ​เคลื่อน​ที่ X หยุด R ย้าย​ธง​จุด​รวม​พล Ctrl+1-9 เก็บ​กลุ่ม ตัว​เลข​เรียก​กลุ่ม วง​แหวน​ทำ​เครื่องหมาย​คำ​สั่ง คลิก​มินิแมพ​เพื่อ​ย้าย F ความ​สามารถ H คู่มือ P เปิด​โพรโทคอล"
+
+msgid "Line"
+msgstr "แถว​หน้า​กระดาน"
+
+msgid "Linked. %d units."
+msgstr "เชื่อม​ต่อ​แล้ว %d หน่วย"
+
+msgid "LOADING"
+msgstr "กำลัง​โหลด"
+
+msgid "Loading"
+msgstr "กำลัง​โหลด"
+
+msgid "Locks a satellite on the target. One cast."
+msgstr "ล็อก​ดาวเทียม​ที่​เป้า​หมาย ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Longtail Raider"
+msgstr "เรือ​หาง​ยาว​จู่​โจม"
+
+msgid "Love Drunk"
+msgstr "Love Drunk"
+
+msgid "Low"
+msgstr "ต่ำ"
+
+msgid "Low drops trees, rain, fog, and shadows."
+msgstr "ต่ำ: ตัด​ต้นไม้ ฝน หมอก และ​เงา"
+
+msgid "low power"
+msgstr "พลังงาน​ต่ำ"
+
+msgid "Low power. Build a plant."
+msgstr "พลังงาน​ต่ำ สร้าง​โรง​ไฟฟ้า"
+
+msgid "Machinesfuture"
+msgstr "Machinesfuture"
+
+msgid "Mae Sai scaffold (mission)"
+msgstr "นั่ง​ร้าน​แม่สาย (ภารกิจ)"
+
+msgid "Mae Sai. Text briefing. Raise the scaffold yard and keep the drain running until the frame is finished."
+msgstr "แม่สาย บรรยาย​สรุป​แบบ​ข้อความ สร้าง​ลาน​นั่ง​ร้าน​และ​รักษา​การ​สูบ​ให้​ทำงาน​จน​โครง​เสร็จ"
+
+msgid "Magnetic Harpoon Grinder"
+msgstr "เครื่อง​บด​ฉมวก​แม่เหล็ก"
+
+msgid "Magnetic Hull Breach"
+msgstr "เจาะ​ตัว​ถัง​แม่เหล็ก"
+
+msgid "Magnetic Satellite"
+msgstr "ดาวเทียม​แม่เหล็ก"
+
+msgid "Malacca Pocket-Sub"
+msgstr "เรือ​ดำ​น้ำ​จิ๋ว​มะละกา"
+
+msgid "Malacca Recon Drone"
+msgstr "โดรน​ลาด​ตระเวน​มะละกา"
+
+msgid "Malay"
+msgstr "มาเลย์"
+
+msgid "Mandarin"
+msgstr "จีน​กลาง"
+
+msgid "Market"
+msgstr "ตลาด"
+
+msgid "Master"
+msgstr "หลัก"
+
+msgid "Mekong"
+msgstr "แม่น้ำ​โขง"
+
+msgid "Mekong Assault Destroyer"
+msgstr "เรือ​พิฆาต​จู่​โจม​แม่น้ำ​โขง"
+
+msgid "Mekong Combat Sapper"
+msgstr "ทหาร​ช่าง​รบ​แม่น้ำ​โขง"
+
+msgid "Mekong Delta"
+msgstr "สาม​เหลี่ยม​ปาก​แม่น้ำ​โขง"
+
+msgid "Mekong Hawk UAV"
+msgstr "UAV เหยี่ยว​แม่น้ำ​โขง"
+
+msgid "Mekong Spider Drone"
+msgstr "โดรน​แมงมุม​แม่น้ำ​โขง"
+
+msgid "Menu"
+msgstr "เมนู"
+
+msgid "Menu and match songs. The default sits a little under full."
+msgstr "เพลง​เมนู​และ​เพลง​ระหว่าง​เกม ค่า​เริ่ม​ต้น​ต่ำ​กว่า​สุด​เล็ก​น้อย"
+
+msgid "Menu ticks, weapons, and the radio."
+msgstr "เสียง​เมนู อาวุธ และ​วิทยุ"
+
+msgid "Menus, HUD, briefings, and subtitles. Voices follow; the Audio page can change them."
+msgstr "เมนู HUD การ​บรรยาย​สรุป และ​คำ​บรรยาย เสียง​พากย์​เปลี่ยน​ตาม เปลี่ยน​แยก​ได้​ที่​หน้า​เสียง"
+
+msgid "Militia holding."
+msgstr "กอง​กำลัง​อาสา​ตั้ง​รับ"
+
+msgid "Militia moving."
+msgstr "กอง​กำลัง​อาสา​เคลื่อน​ที่"
+
+msgid "Militia under fire."
+msgstr "กอง​กำลัง​อาสา​ถูก​ยิง"
+
+msgid "Mindanao Striker Walker"
+msgstr "หุ่น​เดิน​จู่​โจม​มินดาเนา"
+
+msgid "Mine rubies"
+msgstr "ขุด​ทับทิม"
+
+msgid "mine rubies"
+msgstr "ขุด​ทับทิม"
+
+msgid "Mine rubies: %d/30"
+msgstr "ขุด​ทับทิม: %d/30"
+
+msgid "Mines in the cut. Take the boats wide of the line."
+msgstr "มี​ทุ่น​ระเบิด​ใน​ร่อง​น้ำ พา​เรือ​อ้อม​ห่าง​แนว"
+
+msgid "Mines rubies. One cast."
+msgstr "ขุด​ทับทิม ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Minimap"
+msgstr "มินิแมพ"
+
+msgid "Mirage Camo-Tank"
+msgstr "รถ​ถัง​พราง​ภาพ​ลวง"
+
+msgid "Mission"
+msgstr "ภารกิจ"
+
+msgid "Mobile core"
+msgstr "แกน​เคลื่อน​ที่"
+
+msgid "Mogok Night-Shift Overdrive"
+msgstr "เร่ง​กะ​ดึก​โมก๊ก"
+
+msgid "Monsoon"
+msgstr "มรสุม"
+
+msgid "Monsoon Bull-Charge"
+msgstr "พุ่ง​ชน​กระทิง​มรสุม"
+
+msgid "Move packer"
+msgstr "ย้าย​เรือ​ฐาน"
+
+msgid "Multigunner"
+msgstr "ป้อม​ปืน​หลาย​กระบอก"
+
+msgid "multigunner full"
+msgstr "ป้อม​ปืน​หลาย​กระบอก​เต็ม"
+
+msgid "MULTIPLAYER"
+msgstr "ผู้​เล่น​หลาย​คน"
+
+msgid "MUSIC"
+msgstr "ดนตรี"
+
+msgid "Music"
+msgstr "ดนตรี"
+
+msgid "MVD"
+msgstr "MVD"
+
+msgid "MVD  charcoal / cyan"
+msgstr "MVD  ถ่าน / ฟ้า​ไซแอน"
+
+msgid "MVD  charcoal / cyan    internal queue"
+msgstr "MVD  ถ่าน / ฟ้า​ไซแอน    คิว​ภายใน"
+
+msgid "MVD cutter"
+msgstr "เรือ​ตัด MVD"
+
+msgid "MVD yard"
+msgstr "ลาน MVD"
+
+msgid "Nano-Deflector Barrier"
+msgstr "กำแพง​นาโน​เบี่ยง​กระสุน"
+
+msgid "napalm 36"
+msgstr "นาปาล์ม 36"
+
+msgid "Napalm is armed. Calling it does not sink the fleet."
+msgstr "นาปาล์ม​พร้อม​แล้ว การ​เรียก​ใช้​ไม่​ได้​จม​กอง​เรือ"
+
+msgid "Naval"
+msgstr "กอง​ทัพ​เรือ"
+
+msgid "Naval Yard"
+msgstr "อู่​ทหาร​เรือ"
+
+msgid "need a naval yard"
+msgstr "ต้อง​มี​อู่​ทหาร​เรือ"
+
+msgid "need a tech center"
+msgstr "ต้อง​มี​ศูนย์​เทคโนโลยี"
+
+msgid "need an airfield"
+msgstr "ต้อง​มี​สนาม​บิน"
+
+msgid "New to ASEAN 2031?"
+msgstr "เพิ่ง​เริ่ม​เล่น ASEAN 2031 ใช่​ไหม?"
+
+msgid "Next skirmish: %s"
+msgstr "สมรภูมิ​ถัดไป: %s"
+
+msgid "Night"
+msgstr "Night"
+
+msgid "Night commander"
+msgstr "ผู้​บัญชา​การ​กลาง​คืน"
+
+msgid "Night shift paying"
+msgstr "กะ​ดึก​ทำ​เงิน"
+
+msgid "NMRF"
+msgstr "NMRF"
+
+msgid "NMRF  olive / emerald"
+msgstr "NMRF  เขียว​มะกอก / มรกต"
+
+msgid "NMRF  olive / emerald    mobile core"
+msgstr "NMRF  เขียว​มะกอก / มรกต    แกน​เคลื่อน​ที่"
+
+msgid "NMRF trimaran"
+msgstr "เรือ​สาม​ลำ​ตัว NMRF"
+
+msgid "NMRF yard"
+msgstr "ลาน NMRF"
+
+msgid "No stock yet"
+msgstr "ยัง​ไม่​มี​สินค้า"
+
+msgid "no target"
+msgstr "ไม่​มี​เป้า​หมาย"
+
+msgid "Normal"
+msgstr "ปกติ"
+
+msgid "not enough credits"
+msgstr "เครดิต​ไม่​พอ"
+
+msgid "Not Needed Anymore"
+msgstr "Not Needed Anymore"
+
+msgid "not ready"
+msgstr "ยัง​ไม่​พร้อม"
+
+msgid "Nothing selected"
+msgstr "ไม่​ได้​เลือก​อะไร"
+
+msgid "nothing to cancel"
+msgstr "ไม่​มี​อะไร​ให้​ยกเลิก"
+
+msgid "nothing to repair"
+msgstr "ไม่​มี​อะไร​ให้​ซ่อม"
+
+msgid "Noto Sans Myanmar, Noto Sans Thai, and Noto Sans SC, SIL Open Font License 1.1"
+msgstr "Noto Sans Myanmar, Noto Sans Thai และ Noto Sans SC, SIL Open Font License 1.1"
+
+msgid "NOW PLAYING"
+msgstr "กำลัง​เล่น"
+
+msgid "Nusantara Boarder"
+msgstr "หน่วย​บุก​ขึ้น​เรือ​นูซันตารา"
+
+msgid "Objective complete"
+msgstr "ภารกิจ​สำเร็จ"
+
+msgid "Objective failed"
+msgstr "ภารกิจ​ล้มเหลว"
+
+msgid "Objective stalled"
+msgstr "ภารกิจ​หยุด​ชะงัก"
+
+msgid "Offer"
+msgstr "ข้อ​เสนอ"
+
+msgid "Offshore Tidal Turbine"
+msgstr "กังหัน​น้ำ​ขึ้น​น้ำ​ลง​นอก​ชายฝั่ง"
+
+msgid "OK"
+msgstr "ตกลง"
+
+msgid "Olive / emerald"
+msgstr "เขียว​มะกอก / มรกต"
+
+msgid "On"
+msgstr "เปิด"
+
+msgid "One cast, then it is spent."
+msgstr "ใช้​ได้​ครั้ง​เดียว แล้ว​หมด"
+
+msgid "one hero"
+msgstr "ฮีโร่​หนึ่ง​คน"
+
+msgid "Open yard"
+msgstr "เปิด​ลาน"
+
+msgid "Opens robotic assembly. One cast."
+msgstr "เปิด​สาย​ประกอบ​หุ่น​ยนต์ ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Opens trade income. One cast."
+msgstr "เปิด​รายได้​การ​ค้า ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Operation 1027 drone wave"
+msgstr "ฝูง​โดรน​ปฏิบัติ​การ 1027"
+
+msgid "Operation 1027. Text briefing. Knock out the junta EW jamming towers while the escorts press in, then destroy the parked Su-30 and CH-4 hangars. The drone swarm can help. Casting it does not end the mission. The hangars scramble, the swarm crosses, and two rifles arrive."
+msgstr "ปฏิบัติ​การ 1027 บรรยาย​สรุป​แบบ​ข้อความ ทำลาย​หอ​รบกวน​สัญญาณ EW ของ​รัฐบาล​ทหาร ขณะ​ที่​หน่วย​คุ้ม​กัน​รุก​เข้า​ไป แล้ว​ทำลาย​โรง​เก็บ​เครื่อง​บิน Su-30 และ CH-4 ที่​จอด​อยู่ ฝูง​โดรน​ช่วย​ได้ การ​ใช้​ไม่​ได้​จบ​ภารกิจ โรง​เก็บ​เครื่อง​บิน​จะ​ส่ง​เครื่อง​ขึ้น ฝูง​โดรน​บิน​ข้าม และ​ทหาร​ปืน​ไรเฟิล​สอง​นาย​มา​ถึง"
+
+msgid "Operation Shattered Monsoon"
+msgstr "ปฏิบัติ​การ​มรสุม​แตก​สลาย"
+
+msgid "Operation Shattered Monsoon. Text briefing. Destroy both enemy superweapons. A garrison screens the citadel. Protocols can help. Casting them does not end the mission. The garrison comes out, then a countdown runs. Destroy both weapons before it hits zero or the mission fails."
+msgstr "ปฏิบัติ​การ​มรสุม​แตก​สลาย บรรยาย​สรุป​แบบ​ข้อความ ทำลาย​อาวุธ​ทำลาย​ล้าง​ของ​ศัตรู​ทั้ง​สอง กอง​รักษา​การณ์​คุ้ม​กัน​ป้อม​ปราการ โพรโทคอล​ช่วย​ได้ การ​ใช้​ไม่​ได้​จบ​ภารกิจ กอง​รักษา​การณ์​จะ​ออก​มา แล้ว​การ​นับ​ถอย​หลัง​เริ่ม ทำลาย​อาวุธ​ทั้ง​สอง​ก่อน​ถึง​ศูนย์ มิ​ฉะนั้น​ภารกิจ​ล้มเหลว"
+
+msgid "Opponent left. Defeat."
+msgstr "คู่​ต่อ​สู้​ออก​ไป​แล้ว พ่าย​แพ้"
+
+msgid "Opponent left. Victory."
+msgstr "คู่​ต่อ​สู้​ออก​ไป​แล้ว ชนะ"
+
+msgid "Orlan recon"
+msgstr "ลาด​ตระเวน Orlan"
+
+msgid "Orlan Thermal Scan"
+msgstr "สแกน​ความ​ร้อน Orlan"
+
+msgid "Orlan-10"
+msgstr "Orlan-10"
+
+msgid "Orlans over the ruby pits. They have not marked the yard."
+msgstr "Orlan บิน​เหนือ​บ่อ​ทับทิม พวก​มัน​ยัง​ไม่​ได้​ระบุ​ตำแหน่ง​ลาน"
+
+msgid "Overall loudness."
+msgstr "ความ​ดัง​รวม"
+
+msgid "Overload Barrage"
+msgstr "ระดม​ยิง​เกิน​พิกัด"
+
+msgid "P    Protocols"
+msgstr "P    โพรโทคอล"
+
+msgid "packer already unpacked"
+msgstr "เรือ​ฐาน​กาง​ออก​แล้ว"
+
+msgid "Packer captain"
+msgstr "กัปตัน​เรือ​ฐาน"
+
+msgid "Packer sail (mission)"
+msgstr "แล่น​เรือ​ฐาน (ภารกิจ)"
+
+msgid "Packer sail. Text briefing. Sail the packer into shallow water, unpack the wharf, and upgrade it."
+msgstr "แล่น​เรือ​ฐาน บรรยาย​สรุป​แบบ​ข้อความ แล่น​เรือ​ฐาน​เข้า​น้ำ​ตื้น กาง​ท่า​เรือ และ​อัปเกรด"
+
+msgid "packer sailed"
+msgstr "เรือ​ฐาน​ออก​แล่น​แล้ว"
+
+msgid "packer stayed packed"
+msgstr "เรือ​ฐาน​ยัง​ไม่​กาง"
+
+msgid "Paddy"
+msgstr "นา​ข้าว"
+
+msgid "Palms"
+msgstr "ต้น​ปาล์ม"
+
+msgid "Pan speed"
+msgstr "ความ​เร็ว​เลื่อน​กล้อง"
+
+msgid "Past Cracks"
+msgstr "Past Cracks"
+
+msgid "Paste the other browser's offer or answer"
+msgstr "วาง​ข้อ​เสนอ​หรือ​คำ​ตอบ​จาก​เบราว์เซอร์​อีก​ฝั่ง"
+
+msgid "Patani Corsair Guard"
+msgstr "ยาม​โจร​สลัด​ปัตตานี"
+
+msgid "Patani: %d ghosts in the jammer. GPS shots must miss. Fiber stays true."
+msgstr "ปัตตานี: ผี %d ตัว​ใน​เครื่อง​รบกวน การ​ยิง GPS ต้อง​พลาด ไฟเบอร์​ยัง​แม่น"
+
+msgid "Pause and settings"
+msgstr "หยุด​ชั่ว​คราว​และ​ตั้ง​ค่า"
+
+msgid "PAUSED"
+msgstr "หยุด​ชั่ว​คราว"
+
+msgid "Paused. Waiting for the other player."
+msgstr "หยุด​ชั่ว​คราว รอ​ผู้​เล่น​อีก​ฝ่าย"
+
+msgid "Pays 250 credits once."
+msgstr "จ่าย 250 เครดิต​ครั้ง​เดียว"
+
+msgid "phantom frozen"
+msgstr "ภูต​ถูก​แช่​แข็ง"
+
+msgid "Phantom of the Plain of Jars"
+msgstr "ภูต​แห่ง​ทุ่ง​ไห​หิน"
+
+msgid "Pheromone Bark"
+msgstr "เสียง​เห่า​ฟีโรโมน"
+
+msgid "Phillips"
+msgstr "ฟิลลิปส์"
+
+msgid "Phillips Channel"
+msgstr "ช่อง​แคบ​ฟิลลิปส์"
+
+msgid "Phillips Wave-Cannon"
+msgstr "ปืน​ใหญ่​คลื่น​ฟิลลิปส์"
+
+msgid "Pick a faction and a map, then ready up."
+msgstr "เลือก​ฝ่าย​และ​แผนที่ แล้ว​กด​พร้อม"
+
+msgid "Pick a map, then Play. The enemy builds, expands, and attacks."
+msgstr "เลือก​แผนที่ แล้ว​กด​เล่น ศัตรู​จะ​สร้าง ขยาย​ฐาน และ​โจมตี"
+
+msgid "Pick host or join."
+msgstr "เลือก​เป็น​โฮสต์​หรือ​เข้า​ร่วม"
+
+msgid "Pickets across the bow. They are not the fleet."
+msgstr "เรือ​ลาด​ตระเวน​ขวาง​หน้า​หัว​เรือ พวก​มัน​ไม่​ใช่​กอง​เรือ​หลัก"
+
+msgid "pillbox full"
+msgstr "บังเกอร์​เต็ม"
+
+msgid "pipeline blocked"
+msgstr "ท่อ​ถูก​ปิด​กั้น"
+
+msgid "pipeline ready"
+msgstr "ท่อ​พร้อม"
+
+msgid "Pit guard"
+msgstr "ยาม​บ่อ​แร่"
+
+msgid "Place"
+msgstr "วาง"
+
+msgid "Place hub"
+msgstr "วาง​ศูนย์​กลาง"
+
+msgid "Plain"
+msgstr "ที่​ราบ"
+
+msgid "Plain of Jars. Text briefing. Hold the beam until the phantom freezes, then destroy the phantom, both batteries, and the screen. The beam holds, the phantom stutters, and the batteries stay up."
+msgstr "ทุ่ง​ไห​หิน บรรยาย​สรุป​แบบ​ข้อความ ยิง​ลำ​แสง​ค้าง​ไว้​จน​ภูต​แข็ง​ตัว แล้ว​ทำลาย​ภูต ปืน​ใหญ่​ทั้ง​สอง​ชุด และ​ฉาก​กำบัง ลำ​แสง​ยัง​คง​อยู่ ภูต​สะดุด และ​ปืน​ใหญ่​ยัง​ยืน​หยัด"
+
+msgid "Plain of Jars: %s, %s. Phantom %d, battery %d."
+msgstr "ทุ่ง​ไห​หิน: %s, %s ภูต %d ปืน​ใหญ่ %d"
+
+msgid "Plain phantom"
+msgstr "ภูต​ที่​ราบ"
+
+msgid "Plantation Bomber"
+msgstr "เครื่อง​บิน​ทิ้ง​ระเบิด​สวน​ไร่"
+
+msgid "Play"
+msgstr "เล่น"
+
+msgid "Play the training raid"
+msgstr "เล่น​การ​ฝึก​จู่​โจม"
+
+msgid "Players: 2"
+msgstr "ผู้​เล่น: 2"
+
+msgid "Point-Defense Drones"
+msgstr "โดรน​ป้องกัน​จุด"
+
+msgid "Poison"
+msgstr "Poison"
+
+msgid "Power %d/%d"
+msgstr "พลังงาน %d/%d"
+
+msgid "Power generated / power drawn"
+msgstr "พลังงาน​ที่​ผลิต / พลังงาน​ที่​ใช้"
+
+msgid "Practice map."
+msgstr "แผนที่​ฝึก​ซ้อม"
+
+msgid "Premature Discharge"
+msgstr "ปล่อย​พลัง​ก่อน​กำหนด"
+
+msgid "Press F to use an ability."
+msgstr "กด F เพื่อ​ใช้​ความ​สามารถ"
+
+msgid "Print overdrive."
+msgstr "เร่ง​การ​พิมพ์"
+
+msgid "printed 8"
+msgstr "พิมพ์​แล้ว 8"
+
+msgid "Prints a batch of units. One cast."
+msgstr "พิมพ์​หน่วย​ชุด​หนึ่ง ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Printsmith Rifleman"
+msgstr "พล​ปืน​ไรเฟิล​ช่าง​พิมพ์"
+
+msgid "Protocol"
+msgstr "โพรโทคอล"
+
+msgid "Protocol bar (mission)"
+msgstr "แถบ​โพรโทคอล (ภารกิจ)"
+
+msgid "Protocol bar. Text briefing. Cast logistics, arsenal, and oracle once each. A second cast does nothing."
+msgstr "แถบ​โพรโทคอล บรรยาย​สรุป​แบบ​ข้อความ ใช้​ส่ง​กำลัง​บำรุง คลัง​แสง​อาวุธ และ​โหร อย่าง​ละ​ครั้ง การ​ใช้​ครั้ง​ที่​สอง​ไม่​มี​ผล"
+
+msgid "protocol spent"
+msgstr "โพรโทคอล​ถูก​ใช้​แล้ว"
+
+msgid "Protocols"
+msgstr "โพรโทคอล"
+
+msgid "Protocols (P)"
+msgstr "โพรโทคอล (P)"
+
+msgid "Psionic Monsoon"
+msgstr "มรสุม​พลัง​จิต"
+
+msgid "Psionic Monsoon Decimator"
+msgstr "เครื่อง​ทำลาย​ล้าง​มรสุม​พลัง​จิต"
+
+msgid "Q    Attack-move"
+msgstr "Q    โจมตี​ขณะ​เคลื่อน​ที่"
+
+msgid "Quality"
+msgstr "คุณภาพ"
+
+msgid "queue full"
+msgstr "คิว​เต็ม"
+
+msgid "Queue hub"
+msgstr "เข้า​คิว​ศูนย์​กลาง"
+
+msgid "Queue the hub inside the pad, buy clearance, then place it. The enemy builds, expands, and attacks."
+msgstr "เข้า​คิว​ศูนย์​กลาง​ใน​แท่น ซื้อ​ใบ​อนุญาต แล้ว​วาง ศัตรู​จะ​สร้าง ขยาย​ฐาน และ​โจมตี"
+
+msgid "QUIT"
+msgstr "ออก"
+
+msgid "Quit to menu"
+msgstr "ออก​ไป​เมนู"
+
+msgid "Radar garrison"
+msgstr "กอง​รักษา​การณ์​เรดาร์"
+
+msgid "Radar relief"
+msgstr "กำลัง​เสริม​เรดาร์"
+
+msgid "Raid complete"
+msgstr "การ​จู่​โจม​สำเร็จ"
+
+msgid "Raid complete. Scaffold, night ruby, rare-earth stock."
+msgstr "การ​จู่​โจม​สำเร็จ นั่ง​ร้าน ทับทิม​กลาง​คืน คลัง​แร่​หายาก"
+
+msgid "Raid stalled"
+msgstr "การ​จู่​โจม​หยุด​ชะงัก"
+
+msgid "Raider"
+msgstr "หน่วย​จู่​โจม"
+
+msgid "Rail Strike"
+msgstr "โจมตี​ราง​ปืน"
+
+msgid "Rain on the pits. Keep the company moving."
+msgstr "ฝน​ตก​ที่​บ่อ​แร่ ให้​กองร้อย​เคลื่อน​ต่อ​ไป"
+
+msgid "Raise a yard, claim Golden Slag / Aurum-9, cross, then press F."
+msgstr "สร้าง​ลาน ยึด​ตะกรัน​ทองคำ / Aurum-9 ข้าม​ไป แล้ว​กด F"
+
+msgid "Raise scaffold"
+msgstr "สร้าง​นั่ง​ร้าน"
+
+msgid "raise the yard"
+msgstr "สร้าง​ลาน"
+
+msgid "Raise the yard before the Orlans find the pits."
+msgstr "สร้าง​ลาน​ก่อน​ที่ Orlan จะ​พบ​บ่อ​แร่"
+
+msgid "Raises a shield. It can be cast again after it cools."
+msgstr "กาง​โล่ ใช้​ได้​อีก​เมื่อ​คูล​ดาวน์​เสร็จ"
+
+msgid "Raises the tech rank. One cast."
+msgstr "เพิ่ม​ระดับ​เทคโนโลยี ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Raises weapon damage. One cast."
+msgstr "เพิ่ม​ความ​เสียหาย​อาวุธ ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Rally set"
+msgstr "ตั้ง​จุด​รวม​พล​แล้ว"
+
+msgid "Ramming Hydro-Shield"
+msgstr "โล่​น้ำ​พุ่ง​ชน"
+
+msgid "rare earth"
+msgstr "แร่​หายาก"
+
+msgid "rare earth home"
+msgstr "แร่​หายาก​ถึง​ฐาน"
+
+msgid "Rare-earth stock (mission)"
+msgstr "คลัง​แร่​หายาก (ภารกิจ)"
+
+msgid "Rare-earth stock secured"
+msgstr "ยึด​คลัง​แร่​หายาก​แล้ว"
+
+msgid "Rare-earth stock. Text briefing. Claim the rare-earth node and bring one stock home."
+msgstr "คลัง​แร่​หายาก บรรยาย​สรุป​แบบ​ข้อความ ยึด​จุด​แร่​หายาก และ​นำ​สินค้า​หนึ่ง​ชุด​กลับ​ฐาน"
+
+msgid "RDY"
+msgstr "พร้อม"
+
+msgid "Read the briefing, then meet it on the field."
+msgstr "อ่าน​บรรยาย​สรุป แล้ว​ไป​เผชิญ​ใน​สนาม"
+
+msgid "READY"
+msgstr "พร้อม"
+
+msgid "Ready"
+msgstr "พร้อม"
+
+msgid "Ready To Rage Against The Abnormalities"
+msgstr "Ready To Rage Against The Abnormalities"
+
+msgid "recon down"
+msgstr "หน่วย​ลาด​ตระเวน​ถูก​ทำลาย"
+
+msgid "Recruit"
+msgstr "เกณฑ์​พล"
+
+msgid "Repair"
+msgstr "ซ่อม"
+
+msgid "repair off"
+msgstr "ปิด​ซ่อม"
+
+msgid "Resource pad in sight."
+msgstr "พบ​แท่น​ทรัพยากร"
+
+msgid "Restart"
+msgstr "เริ่ม​ใหม่"
+
+msgid "Restore Defaults"
+msgstr "คืน​ค่า​เริ่ม​ต้น"
+
+msgid "Resume"
+msgstr "เล่น​ต่อ"
+
+msgid "Return to the previous screen."
+msgstr "กลับ​ไป​หน้า​จอ​ก่อน​หน้า"
+
+msgid "Reveals the field. One cast."
+msgstr "เปิด​เผย​สนาม​รบ ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Riau Syndicate Fixer"
+msgstr "นัก​เจรจา​แก๊ง​เรียว"
+
+msgid "Right-click    Move"
+msgstr "คลิก​ขวา    เคลื่อน​ที่"
+
+msgid "Right-click an enemy to attack."
+msgstr "คลิก​ขวา​ที่​ศัตรู​เพื่อ​โจมตี"
+
+msgid "Right-click enemy    Attack"
+msgstr "คลิก​ขวา​ที่​ศัตรู    โจมตี"
+
+msgid "Right-click the ground to move."
+msgstr "คลิก​ขวา​ที่​พื้น​เพื่อ​เคลื่อน​ที่"
+
+msgid "River"
+msgstr "แม่น้ำ"
+
+msgid "River commander"
+msgstr "ผู้​บัญชา​การ​แม่น้ำ"
+
+msgid "River gunboat"
+msgstr "เรือ​ปืน​ลำ​น้ำ"
+
+msgid "Road"
+msgstr "ถนน"
+
+msgid "Road ambush"
+msgstr "ซุ่ม​โจมตี​บน​ถนน"
+
+msgid "Robotic Assembly"
+msgstr "สาย​ประกอบ​หุ่น​ยนต์"
+
+msgid "Rotate to landscape for the best experience"
+msgstr "หมุน​เป็น​แนว​นอน​เพื่อ​ประสบการณ์​ที่​ดี​ที่สุด"
+
+msgid "RTS CORE"
+msgstr "แกน​หลัก RTS"
+
+msgid "Ruby night market (mission)"
+msgstr "ตลาด​ทับทิม​กลาง​คืน (ภารกิจ)"
+
+msgid "Ruby night market. Text briefing. Snap the ruby pit and run the night shift until the purse fills."
+msgstr "ตลาด​ทับทิม​กลาง​คืน บรรยาย​สรุป​แบบ​ข้อความ ยึด​บ่อ​ทับทิม และ​เดิน​กะ​ดึก​จน​คลัง​เงิน​เต็ม"
+
+msgid "Ruby not paying"
+msgstr "ทับทิม​ไม่​ทำ​เงิน"
+
+msgid "ruby paid"
+msgstr "ทับทิม​จ่าย​แล้ว"
+
+msgid "Rusher"
+msgstr "หน่วย​บุก​เร็ว"
+
+msgid "S.H.R.I.N.K. Ray"
+msgstr "รังสี​ย่อ​ส่วน S.H.R.I.N.K."
+
+msgid "Saigon Prism-Lock Tank"
+msgstr "รถ​ถัง​ล็อก​ปริซึม​ไซ่ง่อน"
+
+msgid "Salvage Leech Beam"
+msgstr "ลำ​แสง​ดูด​ซาก"
+
+msgid "Salvage leech."
+msgstr "ดูด​ซาก"
+
+msgid "Salween Hydro-Generator"
+msgstr "เครื่อง​ผลิต​ไฟฟ้า​พลัง​น้ำ​สาละวิน"
+
+msgid "Salween RPG Trooper"
+msgstr "พล RPG สาละวิน"
+
+msgid "Salween Smuggler Boat"
+msgstr "เรือ​ลักลอบ​สาละวิน"
+
+msgid "Sandbox"
+msgstr "แซนด์​บ็อกซ์"
+
+msgid "Sandbox: yards, queues, five nodes, jammer"
+msgstr "แซนด์​บ็อกซ์: ลาน คิว จุด​แร่​ห้า​จุด เครื่อง​รบกวน"
+
+msgid "Satellite Laser Designation"
+msgstr "ชี้​เป้า​เลเซอร์​ดาวเทียม"
+
+msgid "satellite lock"
+msgstr "ล็อก​ดาวเทียม"
+
+msgid "Satellite Recon"
+msgstr "ลาด​ตระเวน​ดาวเทียม"
+
+msgid "Scaffold"
+msgstr "นั่ง​ร้าน"
+
+msgid "Scaffold stalled"
+msgstr "นั่ง​ร้าน​หยุด​ชะงัก"
+
+msgid "scaffold stalled"
+msgstr "นั่ง​ร้าน​หยุด​ชะงัก"
+
+msgid "Scaffold up"
+msgstr "นั่ง​ร้าน​ตั้ง​แล้ว"
+
+msgid "Scaffold yard"
+msgstr "ลาน​นั่ง​ร้าน"
+
+msgid "Scrambler"
+msgstr "หน่วย​ป่วน​สัญญาณ"
+
+msgid "Sea"
+msgstr "ทะเล"
+
+msgid "Seal answer"
+msgstr "ปิด​ผนึก​คำ​ตอบ"
+
+msgid "Secure rare earth"
+msgstr "ยึด​แร่​หายาก"
+
+msgid "Seismic Slag Vacuum"
+msgstr "เครื่อง​ดูด​ตะกรัน​แผ่น​ดิน​ไหว"
+
+msgid "Seismic Slag Vacuum Imploder"
+msgstr "เครื่อง​ดูด​ยุบ​ตะกรัน​แผ่น​ดิน​ไหว"
+
+msgid "Sell"
+msgstr "ขาย"
+
+msgid "sell off"
+msgstr "ปิด​ขาย"
+
+msgid "Send"
+msgstr "ส่ง"
+
+msgid "Sends a drone squadron. One cast."
+msgstr "ส่ง​ฝูง​โดรน ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Sets an ambush. One cast."
+msgstr "วาง​กำลัง​ซุ่ม​โจมตี ใช้​ได้​ครั้ง​เดียว"
+
+msgid "SETTINGS"
+msgstr "ตั้ง​ค่า"
+
+msgid "SFX"
+msgstr "SFX"
+
+msgid "Shan Behemoth Tank"
+msgstr "รถ​ถัง​ยักษ์​ฉาน"
+
+msgid "Shan Insurgent Militia"
+msgstr "กอง​กำลัง​ติด​อาวุธ​ฉาน"
+
+msgid "Shaped Charge"
+msgstr "ระเบิด​เจาะ​เกราะ"
+
+msgid "Shar Htoo Waw Kloud Drone Truck"
+msgstr "รถ​บรรทุก​โดรน​เมฆ ฉ่าทูวอ"
+
+msgid "shield %d"
+msgstr "โล่ %d"
+
+msgid "Shipment guard"
+msgstr "ยาม​คุ้ม​กัน​สินค้า"
+
+msgid "Shore boat"
+msgstr "เรือ​ชายฝั่ง"
+
+msgid "Shore gun"
+msgstr "ปืน​ชายฝั่ง"
+
+msgid "Shrink ray."
+msgstr "รังสี​ย่อ​ส่วน"
+
+msgid "Shwe Kokko capture"
+msgstr "ยึด​ชเวโก๊กโก่"
+
+msgid "Shwe Kokko. Text briefing. Destroy the garrison and the river gunboats, capture both server blocks, and siphon the enemy purse. Hold a server block for twenty seconds. If you are pushed off, the hack resets. The side cache is optional."
+msgstr "ชเวโก๊กโก่ บรรยาย​สรุป​แบบ​ข้อความ ทำลาย​กอง​รักษา​การณ์​และ​เรือ​ปืน​ลำ​น้ำ ยึด​อาคาร​เซิร์ฟเวอร์​ทั้ง​สอง และ​สูบ​เงิน​จาก​คลัง​ศัตรู ยึด​อาคาร​เซิร์ฟเวอร์​ไว้​ยี่​สิบ​วินาที หาก​ถูก​ผลัก​ออก การ​แฮ็ก​จะ​เริ่ม​ใหม่ คลัง​ลับ​ข้าง​ทาง​ไม่​บังคับ"
+
+msgid "Side"
+msgstr "ฝ่าย"
+
+msgid "Siege of Chiang Rai"
+msgstr "การ​ล้อม​เชียงราย"
+
+msgid "Singapore Trimaran"
+msgstr "เรือ​สาม​ลำ​ตัว​สิงคโปร์"
+
+msgid "Sink the boats (%d). Raise the wharf to level 2 (now %d)."
+msgstr "จม​เรือ (%d) อัปเกรด​ท่า​เรือ​เป็น​ระดับ 2 (ตอนนี้ %d)"
+
+msgid "Sink the joint fleet (%d)."
+msgstr "จม​กอง​เรือ​ผสม (%d)"
+
+msgid "Siphon is up. Stay on the blocks until it pays."
+msgstr "การ​สูบ​เริ่ม​แล้ว อยู่​บน​อาคาร​จน​กว่า​จะ​ได้​เงิน"
+
+msgid "Siti The Kraken"
+msgstr "สิตี​ปลา​หมึก​ยักษ์"
+
+msgid "Skimming out."
+msgstr "กำลัง​สูบ​เงิน​ออก"
+
+msgid "Skip"
+msgstr "ข้าม"
+
+msgid "Skip >>  N"
+msgstr "ข้าม >>  N"
+
+msgid "Skip to the next song (N)"
+msgstr "ข้าม​ไป​เพลง​ถัดไป (N)"
+
+msgid "SKIRMISH"
+msgstr "สมรภูมิ"
+
+msgid "Skirmish"
+msgstr "สมรภูมิ"
+
+msgid "Slag Jump Mortar"
+msgstr "ปืน​ครก​กระโดด​ตะกรัน"
+
+msgid "Slag Jump Thruster"
+msgstr "เครื่อง​ขับ​ดัน​กระโดด​ตะกรัน"
+
+msgid "Slag Molotov"
+msgstr "ระเบิด​ขวด​ตะกรัน"
+
+msgid "Slag Molotov."
+msgstr "ระเบิด​ขวด​ตะกรัน"
+
+msgid "Slag Pillbox"
+msgstr "บังเกอร์​ตะกรัน"
+
+msgid "Slag Refinery"
+msgstr "โรง​กลั่น​ตะกรัน"
+
+msgid "Sleeper Ambush"
+msgstr "การ​ซุ่ม​โจมตี​ของ​สาย​ลับ"
+
+msgid "smart-cast"
+msgstr "สมาร์ท​คาสต์"
+
+msgid "Smart-cast drill (mission)"
+msgstr "ฝึก​สมาร์ท​คาสต์ (ภารกิจ)"
+
+msgid "Smart-cast drill. Text briefing. Toggle the group. Only the closest ready unit fires."
+msgstr "ฝึก​สมาร์ท​คาสต์ บรรยาย​สรุป​แบบ​ข้อความ สลับ​กลุ่ม เฉพาะ​หน่วย​ที่​พร้อม​และ​ใกล้​ที่สุด​เท่านั้น​ที่​ยิง"
+
+msgid "Solar-Biomass Plant"
+msgstr "โรง​ไฟฟ้า​แสง​อาทิตย์​ชีว​มวล"
+
+msgid "sold %d"
+msgstr "ขาย​แล้ว %d"
+
+msgid "Sonic Howl"
+msgstr "เสียง​หอน​โซนิค"
+
+msgid "Sop Ruak"
+msgstr "สบรวก"
+
+msgid "SOUND EFFECTS"
+msgstr "เสียง​ประกอบ"
+
+msgid "Space    Last alert"
+msgstr "Space    การ​แจ้ง​เตือน​ล่าสุด"
+
+msgid "Spectrum Prism"
+msgstr "ปริซึม​สเปกตรัม"
+
+msgid "speed 1.4"
+msgstr "ความ​เร็ว 1.4"
+
+msgid "Speeds the company up. One cast."
+msgstr "เร่ง​ความ​เร็ว​กองร้อย ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Spider-Hole Ambush"
+msgstr "ซุ่ม​โจมตี​จาก​หลุม​แมงมุม"
+
+msgid "Spoofs GPS guidance. One cast."
+msgstr "ปลอม​สัญญาณ​นำ​ทาง GPS ใช้​ได้​ครั้ง​เดียว"
+
+msgid "Spool FPV"
+msgstr "FPV สาย​ไฟเบอร์"
+
+msgid "Sprint Skates"
+msgstr "รองเท้า​สเก็ต​วิ่ง​เร็ว"
+
+msgid "Stand-Off Glide Barrage"
+msgstr "ระดม​ยิง​ร่อน​ระยะ​ไกล"
+
+msgid "Start an offer before pasting an answer."
+msgstr "เริ่ม​ข้อ​เสนอ​ก่อน​วาง​คำ​ตอบ"
+
+msgid "Start with Kokang and Mogok. The match opens with a short lesson."
+msgstr "เริ่ม​ที่​โกกั้ง​และ​โมก๊ก การ​แข่ง​เริ่ม​ด้วย​บท​เรียน​สั้นๆ"
+
+msgid "Starting in %d."
+msgstr "เริ่ม​ใน %d"
+
+msgid "Status"
+msgstr "สถานะ"
+
+msgid "Stay on the radar until the murk thins."
+msgstr "อยู่​ที่​เรดาร์​จน​กว่า​หมอก​จะ​จาง"
+
+msgid "Stay with the wagon. The bazaar is the drop."
+msgstr "อยู่​กับ​เกวียน ตลาด​คือ​จุด​ส่ง"
+
+msgid "still fighting"
+msgstr "ยัง​สู้​อยู่"
+
+msgid "Stilts"
+msgstr "บ้าน​เสา​สูง"
+
+msgid "Stop"
+msgstr "หยุด"
+
+msgid "Stop the sprayer before it reaches the tanks."
+msgstr "หยุด​รถ​พ่น​ก่อน​ถึง​รถ​ถัง"
+
+msgid "Strait Haze"
+msgstr "หมอก​ช่อง​แคบ"
+
+msgid "Straits Pirate Raid"
+msgstr "โจร​สลัด​ช่อง​แคบ​บุก"
+
+msgid "Street Press"
+msgstr "แท่น​พิมพ์​ข้าง​ถนน"
+
+msgid "Strip lead"
+msgstr "นำ​ทัพ​ลาน​บิน"
+
+msgid "Structures"
+msgstr "สิ่ง​ปลูก​สร้าง"
+
+msgid "Su-30"
+msgstr "Su-30"
+
+msgid "Su-30 hangar"
+msgstr "โรง​เก็บ Su-30"
+
+msgid "Su-30 napalm run"
+msgstr "Su-30 ทิ้ง​นาปาล์ม"
+
+msgid "Submersible or Sky-Jet"
+msgstr "เรือ​ดำ​น้ำ​หรือ​เจ็ต​ฟ้า"
+
+msgid "Sulu Tank-Buster"
+msgstr "หน่วย​ล่า​รถ​ถัง​ซูลู"
+
+msgid "Sumatra Hover-Technical"
+msgstr "รถ​กระบะ​โฮเวอร์​สุมาตรา"
+
+msgid "Supayarlat"
+msgstr "Supayarlat"
+
+msgid "superweapon cooling"
+msgstr "อาวุธ​ทำลาย​ล้าง​กำลัง​คูล​ดาวน์"
+
+msgid "Superweapon ready."
+msgstr "อาวุธ​ทำลาย​ล้าง​พร้อม"
+
+msgid "survive: hold the radar through the haze while the enemy attacks"
+msgstr "เอา​ตัว​รอด: ยึด​เรดาร์​ไว้​ฝ่า​หมอก ขณะ​ศัตรู​โจมตี"
+
+msgid "survive: the ferry crosses and holds until the timer runs out"
+msgstr "เอา​ตัว​รอด: เรือ​ข้าม​ฟาก​ข้าม​และ​ยืน​หยัด​จน​หมด​เวลา"
+
+msgid "SW"
+msgstr "อาวุธ​ทำลาย​ล้าง"
+
+msgid "swarm 23"
+msgstr "ฝูง 23"
+
+msgid "Swarm Cloud"
+msgstr "เมฆ​ฝูง​โดรน"
+
+msgid "Swarm Hive Truck"
+msgstr "รถ​บรรทุก​รัง​ฝูง​โดรน"
+
+msgid "Syndicate Alchemist"
+msgstr "นัก​เล่น​แร่​แปร​ธาตุ​แก๊ง"
+
+msgid "Tab    Next tab"
+msgstr "Tab    แท็บ​ถัดไป"
+
+msgid "Tachileik caravan"
+msgstr "กอง​คาราวาน​ท่าขี้เหล็ก"
+
+msgid "Tachileik caravan. Text briefing. Break the ambush and the road relief, walk the jade caravan onto the bazaar, then snap the ruby pit and run the night shift until the purse fills. Stay with the wagon while drones harass it. If the wagon dies, the mission fails. The road ambush hits after that. The side cache is optional."
+msgstr "กอง​คาราวาน​ท่าขี้เหล็ก บรรยาย​สรุป​แบบ​ข้อความ ทำลาย​การ​ซุ่ม​โจมตี​และ​กำลัง​เสริม​บน​ถนน พา​คาราวาน​หยก​ไป​ถึง​ตลาด แล้ว​ยึด​บ่อ​ทับทิม​และ​เดิน​กะ​ดึก​จน​คลัง​เงิน​เต็ม อยู่​กับ​เกวียน​ขณะ​โดรน​รังควาน หาก​เกวียน​ถูก​ทำลาย ภารกิจ​ล้มเหลว จาก​นั้น​จะ​มี​การ​ซุ่ม​โจมตี​บน​ถนน คลัง​ลับ​ข้าง​ทาง​ไม่​บังคับ"
+
+msgid "Tachileik Half-Track"
+msgstr "รถ​กึ่ง​สายพาน​ท่าขี้เหล็ก"
+
+msgid "Target Painter"
+msgstr "ตัว​ชี้​เป้า"
+
+msgid "Teak Technical"
+msgstr "รถ​กระบะ​ติด​อาวุธ​ไม้​สัก"
+
+msgid "tech 1"
+msgstr "เทค 1"
+
+msgid "Tech Center"
+msgstr "ศูนย์​เทคโนโลยี"
+
+msgid "Technical under fire."
+msgstr "รถ​กระบะ​ถูก​ยิง"
+
+msgid "Telekinetic Maelstrom"
+msgstr "พายุ​หมุน​พลัง​จิต"
+
+msgid "Ten Degree Atolls"
+msgstr "หมู่​เกาะ​ปะการัง​สิบ​องศา"
+
+msgid "Thai"
+msgstr "ไทย"
+
+msgid "Thai Border Mass Print"
+msgstr "การ​พิมพ์​มวล​ชายแดน​ไทย"
+
+msgid "That paste is not an answer."
+msgstr "สิ่ง​ที่​วาง​ไม่​ใช่​คำ​ตอบ"
+
+msgid "That paste is not an offer."
+msgstr "สิ่ง​ที่​วาง​ไม่​ใช่​ข้อ​เสนอ"
+
+msgid "The 74-Kilometer Watch"
+msgstr "หอ​เฝ้า 74 กิโลเมตร"
+
+msgid "The 74-Kilometer Watch. Text briefing. Destroy the radar garrison and its relief squad, then hold the hydro radar so water shows. The radar pings, two rifles arrive, and the guide sells the watch."
+msgstr "หอ​เฝ้า 74 กิโลเมตร บรรยาย​สรุป​แบบ​ข้อความ ทำลาย​กอง​รักษา​การณ์​เรดาร์​และ​หน่วย​เสริม แล้ว​ยึด​เรดาร์​พลัง​น้ำ​ไว้​ให้​เห็น​น้ำ เรดาร์​ส่ง​สัญญาณ ทหาร​ปืน​ไรเฟิล​สอง​นาย​มา​ถึง และ​ผู้​นำ​ทาง​ขาย​หอ​เฝ้า"
+
+msgid "The answer did not start."
+msgstr "คำ​ตอบ​ไม่​เริ่ม​ทำงาน"
+
+msgid "The answer was rejected."
+msgstr "คำ​ตอบ​ถูก​ปฏิเสธ"
+
+msgid "The atoll is held by boats. Sail the packer in."
+msgstr "เกาะ​ปะการัง​ถูก​เรือ​ยึด​ไว้ แล่น​เรือ​ฐาน​เข้า​ไป"
+
+msgid "The browser did not produce a session description."
+msgstr "เบราว์เซอร์​ไม่​ได้​สร้าง​คำ​อธิบาย​เซสชัน"
+
+msgid "The camera slides when the pointer nears the screen edge."
+msgstr "กล้อง​เลื่อน​เมื่อ​ตัว​ชี้​เข้า​ใกล้​ขอบ​จอ"
+
+msgid "the caravan is lost"
+msgstr "เสีย​คาราวาน"
+
+msgid "The channel is mined. Break out and land the far shore."
+msgstr "ช่อง​น้ำ​มี​ทุ่น​ระเบิด ฝ่า​ออก​ไป​และ​ขึ้น​ฝั่ง​ตรง​ข้าม"
+
+msgid "The citadel garrison is out. They screen the weapons."
+msgstr "กอง​รักษา​การณ์​ป้อม​ปราการ​ออก​มา​แล้ว พวก​มัน​คุ้ม​กัน​อาวุธ"
+
+msgid "the company is wiped"
+msgstr "กองร้อย​ถูก​กวาด​ล้าง"
+
+msgid "the count hit zero"
+msgstr "นับ​ถึง​ศูนย์"
+
+msgid "The data channel did not open."
+msgstr "ช่อง​ข้อมูล​ไม่​เปิด"
+
+msgid "the defended target is lost"
+msgstr "เสีย​เป้า​หมาย​ที่​ต้อง​ป้องกัน"
+
+msgid "The enemy builds, expands, and attacks. Cross a ford to reach them."
+msgstr "ศัตรู​จะ​สร้าง ขยาย​ฐาน และ​โจมตี ข้าม​ทาง​น้ำ​ตื้น​เพื่อ​ไป​ถึง"
+
+msgid "The far shore is open. Put a boat on it."
+msgstr "ฝั่ง​ตรง​ข้าม​เปิด​แล้ว ส่ง​เรือ​ไป"
+
+msgid "The ferry has to live. Hold it through the channel."
+msgstr "เรือ​ข้าม​ฟาก​ต้อง​รอด คุ้ม​กัน​ผ่าน​ช่อง​น้ำ"
+
+msgid "The ferry is in the channel. Keep guns on the water."
+msgstr "เรือ​ข้าม​ฟาก​อยู่​ใน​ช่อง​น้ำ เล็ง​ปืน​ไว้​ที่​ผิว​น้ำ"
+
+msgid "The guide turns on us. The span is down."
+msgstr "ผู้​นำ​ทาง​หัก​หลัง​เรา สะพาน​พัง​แล้ว"
+
+msgid "The hack is running. Twenty seconds on the blocks."
+msgstr "กำลัง​แฮ็ก ยี่​สิบ​วินาที​บน​อาคาร"
+
+msgid "The haze closes over the radar. Do not walk off it."
+msgstr "หมอก​ปก​คลุม​เรดาร์ อย่า​ออก​ไป"
+
+msgid "The haze has closed in. Do not leave the radar."
+msgstr "หมอก​ปิด​ล้อม​แล้ว อย่า​ทิ้ง​เรดาร์"
+
+msgid "The haze is the weapon. Hold the radar."
+msgstr "หมอก​คือ​อาวุธ ยึด​เรดาร์​ไว้"
+
+msgid "The haze is thick. Take the radar and stay on it."
+msgstr "หมอก​หนา ยึด​เรดาร์​และ​อยู่​ที่​นั่น"
+
+msgid "The hydro radar is dark. Light the water."
+msgstr "เรดาร์​พลัง​น้ำ​ดับ ส่อง​ผิว​น้ำ"
+
+msgid "The intended skirmish and campaign pace."
+msgstr "จังหวะ​ปกติ​ของ​สมรภูมิ​และ​แคมเปญ"
+
+msgid "The jade wagon is on the road. Walk it through."
+msgstr "เกวียน​หยก​อยู่​บน​ถนน พา​ผ่าน​ไป"
+
+msgid "The jammer is live. Fiber holds. GPS does not."
+msgstr "เครื่อง​รบกวน​ทำงาน ไฟเบอร์​ใช้​ได้ GPS ใช้​ไม่​ได้"
+
+msgid "The jammers are up. The hangars are still parked."
+msgstr "หอ​รบกวน​ตั้ง​อยู่ โรง​เก็บ​เครื่อง​บิน​ยัง​จอด​อยู่"
+
+msgid "The joint fleet is in the channel. Sink it."
+msgstr "กอง​เรือ​ผสม​อยู่​ใน​ช่อง​น้ำ จม​มัน"
+
+msgid "The local description was rejected."
+msgstr "คำ​อธิบาย​ฝั่ง​นี้​ถูก​ปฏิเสธ"
+
+msgid "The match keeps the command deck, minimap, and unit card."
+msgstr "การ​แข่ง​คง​แผง​บัญชา​การ มินิแมพ และ​การ์ด​หน่วย​ไว้"
+
+msgid "The monsoon breaks over the citadel. Drop both weapons."
+msgstr "มรสุม​ถล่ม​ป้อม​ปราการ ทำลาย​อาวุธ​ทั้ง​สอง"
+
+msgid "The night shift is on the road. Bring one stock home."
+msgstr "กะ​ดึก​อยู่​บน​ถนน นำ​สินค้า​หนึ่ง​ชุด​กลับ​ฐาน"
+
+msgid "The offer did not start."
+msgstr "ข้อ​เสนอ​ไม่​เริ่ม​ทำงาน"
+
+msgid "The offer was rejected."
+msgstr "ข้อ​เสนอ​ถูก​ปฏิเสธ"
+
+msgid "The packer is in the shallows. Unpack it."
+msgstr "เรือ​ฐาน​อยู่​ใน​น้ำ​ตื้น กาง​ออก"
+
+msgid "The packer sails, unpacks a wharf, then upgrades it. The enemy builds, expands, and attacks."
+msgstr "เรือ​ฐาน​แล่น กาง​ท่า​เรือ แล้ว​อัปเกรด ศัตรู​จะ​สร้าง ขยาย​ฐาน และ​โจมตี"
+
+msgid "The phantom is on the plain. Hold the beam until it freezes."
+msgstr "ภูต​อยู่​บน​ที่​ราบ ยิง​ลำ​แสง​ค้าง​ไว้​จน​มัน​แข็ง"
+
+msgid "The phantom stutters in the beam. Do not let go."
+msgstr "ภูต​สะดุด​ใน​ลำ​แสง อย่า​ปล่อย"
+
+msgid "The port is busy."
+msgstr "พอร์ต​ไม่​ว่าง"
+
+msgid "The radar pings. Water shows along the road."
+msgstr "เรดาร์​ส่ง​สัญญาณ เห็น​น้ำ​ตาม​แนว​ถนน"
+
+msgid "The selected side is who you play on the next skirmish."
+msgstr "ฝ่าย​ที่​เลือก​คือ​ฝ่าย​ที่​คุณ​เล่น​ใน​สมรภูมิ​ถัดไป"
+
+msgid "The session did not open."
+msgstr "เซสชัน​ไม่​เปิด"
+
+msgid "The span is cut. The guide has sold the watch."
+msgstr "สะพาน​ถูก​ตัด ผู้​นำ​ทาง​ขาย​หอ​เฝ้า​ไป​แล้ว"
+
+msgid "The squall is on the shallows. Finish the wharf."
+msgstr "พายุ​อยู่​เหนือ​น้ำ​ตื้น สร้าง​ท่า​เรือ​ให้​เสร็จ"
+
+msgid "The squall is on. Cross while it lasts."
+msgstr "พายุ​มา​แล้ว ข้าม​ไป​ขณะ​ยัง​มี"
+
+msgid "The squall is on. Keep the ferry afloat."
+msgstr "พายุ​มา​แล้ว รักษา​เรือ​ข้าม​ฟาก​ไม่​ให้​จม"
+
+msgid "The strip scrambles. The Su-30 and the CH-4 are still on the ground."
+msgstr "ลาน​บิน​ส่ง​เครื่อง​ขึ้น Su-30 และ CH-4 ยัง​อยู่​บน​พื้น"
+
+msgid "The swarm is in the air. It does not finish the towers."
+msgstr "ฝูง​โดรน​ขึ้น​บิน​แล้ว แต่​ไม่​ได้​ทำลาย​หอ​จน​หมด"
+
+msgid "The tank column is on the road. Freeze it, then break it."
+msgstr "ขบวน​รถ​ถัง​อยู่​บน​ถนน แช่​แข็ง​มัน แล้ว​ทำลาย"
+
+msgid "The wharf is up. Take it to the second level."
+msgstr "ท่า​เรือ​ตั้ง​แล้ว อัปเกรด​เป็น​ระดับ​ที่​สอง"
+
+msgid "Throwing into them."
+msgstr "ทุ่ม​ใส่​พวก​มัน"
+
+msgid "Thunder on the Tonle Sap"
+msgstr "ฟ้า​ร้อง​เหนือ​โตนเลสาบ"
+
+msgid "Tide Refinery"
+msgstr "โรง​กลั่น​น้ำ​ขึ้น"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Time Bomb"
+msgstr "ระเบิด​เวลา"
+
+msgid "Tonkin Supersonic Fighter"
+msgstr "เครื่อง​บิน​ขับ​ไล่​ความ​เร็ว​เหนือ​เสียง​ตังเกี๋ย"
+
+msgid "Tonle ferry"
+msgstr "เรือ​ข้าม​ฟาก​โตนเลสาบ"
+
+msgid "Tonle Sap. Text briefing. Defend the ferry until the longer timer runs out. NMRF trimarans keep arriving. Cryogeddon can help. Casting it does not end the mission. The ferry has to survive the crossing. A squall hits the channel."
+msgstr "โตนเลสาบ บรรยาย​สรุป​แบบ​ข้อความ ป้องกัน​เรือ​ข้าม​ฟาก​จน​หมด​เวลา​ที่​ยาว​กว่า เรือ​สาม​ลำ​ตัว NMRF ยัง​คง​มา​เรื่อยๆ ไครโอเก็ดดอน​ช่วย​ได้ การ​ใช้​ไม่​ได้​จบ​ภารกิจ เรือ​ข้าม​ฟาก​ต้อง​รอด​จาก​การ​ข้าม พายุ​ถล่ม​ช่อง​น้ำ"
+
+msgid "Torpedo Fan Spread"
+msgstr "ยิง​ตอร์ปิโด​แบบ​พัด"
+
+msgid "Toxic Defoliation"
+msgstr "พ่น​สาร​พิษ​ทำลาย​ใบ​ไม้"
+
+msgid "trade open"
+msgstr "เปิด​การ​ค้า"
+
+msgid "Train"
+msgstr "ฝึก"
+
+msgid "Train unit"
+msgstr "ฝึก​หน่วย"
+
+msgid "Tran"
+msgstr "ตรัน"
+
+msgid "Trimarans on the ferry. Hold the crossing."
+msgstr "เรือ​สาม​ลำ​ตัว​บุก​เรือ​ข้าม​ฟาก ยึด​จุด​ข้าม​ไว้"
+
+msgid "Truck rolling."
+msgstr "รถ​บรรทุก​เคลื่อน​ที่"
+
+msgid "Truck taking hits."
+msgstr "รถ​บรรทุก​ถูก​ยิง"
+
+msgid "Two gunboats from the river are in."
+msgstr "เรือ​ปืน​สอง​ลำ​จาก​แม่น้ำ​มา​ถึง​แล้ว"
+
+msgid "Two players. You and one enemy."
+msgstr "ผู้​เล่น​สอง​คน คุณ​และ​ศัตรู​หนึ่ง​ฝ่าย"
+
+msgid "Two rifles for the strip."
+msgstr "ทหาร​ปืน​ไรเฟิล​สอง​นาย​สำหรับ​ลาน​บิน"
+
+msgid "Two rifles from the watch are in."
+msgstr "ทหาร​ปืน​ไรเฟิล​สอง​นาย​จาก​หอ​เฝ้า​มา​ถึง​แล้ว"
+
+msgid "Under fire."
+msgstr "ถูก​ยิง"
+
+msgid "Unit"
+msgstr "หน่วย"
+
+msgid "Units"
+msgstr "หน่วย"
+
+msgid "unknown unit"
+msgstr "หน่วย​ไม่​ทราบ​ชนิด"
+
+msgid "unloaded %d"
+msgstr "ถอน​ออก​แล้ว %d"
+
+msgid "Unpack"
+msgstr "กาง​ออก"
+
+msgid "Upgrade wharf"
+msgstr "อัปเกรด​ท่า​เรือ"
+
+msgid "Vanguard Shock-Trooper"
+msgstr "ทหาร​จู่​โจม​แนว​หน้า"
+
+msgid "Vehicles"
+msgstr "ยาน​พาหนะ"
+
+msgid "Veteran"
+msgstr "ทหาร​ผ่าน​ศึก"
+
+msgid "Victory"
+msgstr "ชัยชนะ"
+
+msgid "VIDEO"
+msgstr "วิดีโอ"
+
+msgid "Viet-Tech Laser Operator"
+msgstr "พล​เลเซอร์​เทค​เวียดนาม"
+
+msgid "Vindicator Bomber"
+msgstr "เครื่อง​บิน​ทิ้ง​ระเบิด​ผู้​พิทักษ์"
+
+msgid "Voice language"
+msgstr "ภาษา​เสียง​พากย์"
+
+msgid "Waiting for the host."
+msgstr "รอ​โฮสต์"
+
+msgid "Waiting on port %d."
+msgstr "รอ​ที่​พอร์ต %d"
+
+msgid "walk the caravan"
+msgstr "พา​คาราวาน​เดิน"
+
+msgid "War Factory"
+msgstr "โรง​งาน​สงคราม"
+
+msgid "Warlord's Bribe"
+msgstr "สินบน​ขุน​ศึก"
+
+msgid "Watch captain"
+msgstr "กัปตัน​หอ​เฝ้า"
+
+msgid "Water"
+msgstr "น้ำ"
+
+msgid "Wave-Force Turret"
+msgstr "ป้อม​พลัง​คลื่น"
+
+msgid "Waypoint"
+msgstr "จุด​ทาง​ผ่าน"
+
+msgid "Web play uses a copied offer and answer in the browser. This desktop build has no WebRTC addon."
+msgstr "การ​เล่น​บน​เว็บ​ใช้​ข้อ​เสนอ​และ​คำ​ตอบ​ที่​คัด​ลอก​ใน​เบราว์เซอร์ เวอร์ชัน​เดสก์ท็อป​นี้​ไม่​มี​ส่วน​เสริม WebRTC"
+
+msgid "WebRTC did not start."
+msgstr "WebRTC ไม่​เริ่ม​ทำงาน"
+
+msgid "Wharf"
+msgstr "ท่า​เรือ"
+
+msgid "wharf level %d"
+msgstr "ท่า​เรือ​ระดับ %d"
+
+msgid "wharf not ready"
+msgstr "ท่า​เรือ​ยัง​ไม่​พร้อม"
+
+msgid "wharf unpacked"
+msgstr "กาง​ท่า​เรือ​แล้ว"
+
+msgid "Wrath of the Garuda"
+msgstr "พิโรธ​แห่ง​ครุฑ"
+
+msgid "Wrath of the Garuda. Text briefing. Destroy the joint enemy fleet and its pickets. A napalm run can help. Calling it does not end the mission. Napalm is armed, pickets cross the bow, and two gunboats arrive."
+msgstr "พิโรธ​แห่ง​ครุฑ บรรยาย​สรุป​แบบ​ข้อความ ทำลาย​กอง​เรือ​ผสม​ของ​ศัตรู​และ​เรือ​ลาด​ตระเวน การ​ทิ้ง​นาปาล์ม​ช่วย​ได้ การ​เรียก​ใช้​ไม่​ได้​จบ​ภารกิจ นาปาล์ม​พร้อม เรือ​ลาด​ตระเวน​ขวาง​หัว​เรือ และ​เรือ​ปืน​สอง​ลำ​มา​ถึง"
+
+msgid "X    Stop"
+msgstr "X    หยุด"
+
+msgid "Yangonite"
+msgstr "Yangonite"
+
+msgid "Yangonite, Ready To Rage Against The Abnormalities, Supayarlat, Past Cracks, Machinesfuture, Humanfuture, Night, Love Drunk, Changes, Not Needed Anymore, Poison, Time"
+msgstr "Yangonite, Ready To Rage Against The Abnormalities, Supayarlat, Past Cracks, Machinesfuture, Humanfuture, Night, Love Drunk, Changes, Not Needed Anymore, Poison, Time"
+
+msgid "yard up"
+msgstr "ลาน​ตั้ง​แล้ว"
+
+msgid "Z    Formation"
+msgstr "Z    รูป​ขบวน"

@@ -15,10 +15,14 @@ static var pan: float = 1.0
 static var edge: bool = true
 static var difficulty: String = "normal"
 static var voice: String = "english"
+static var language: String = "english"
 static var lock: String = ""
 
 static func voice_ids() -> PackedStringArray:
 	return PackedStringArray(["english", "burmese", "mandarin", "thai", "malay"])
+
+static func language_ids() -> PackedStringArray:
+	return SMLang.ids()
 
 static func hold(q: String) -> void:
 	lock = q
@@ -35,7 +39,12 @@ static func ensure() -> void:
 	if FileAccess.file_exists(PATH):
 		loaded = true
 		_read()
+		SMLang.apply(language)
 		return
+	if OS.has_feature("web"):
+		language = SMLang.from_locale(OS.get_locale())
+		voice = language
+	SMLang.apply(language)
 	var adapter: String = _adapter()
 	if adapter.strip_edges() == "" and OS.has_feature("web"):
 		return
@@ -108,7 +117,7 @@ static func restore() -> void:
 	pan = 1.0
 	edge = true
 	difficulty = "normal"
-	voice = "english"
+	voice = language
 	_write()
 
 static func voice_folder(id: String) -> String:
@@ -136,6 +145,14 @@ static func voice_name(id: String) -> String:
 static func set_voice(id: String) -> void:
 	ensure()
 	voice = id if voice_ids().has(id) else "english"
+	_write()
+
+## Menus, HUD, briefings, and subtitles. The voice follows; the Audio page can set it apart afterwards.
+static func set_language(id: String) -> void:
+	ensure()
+	language = id if language_ids().has(id) else "english"
+	voice = language
+	SMLang.apply(language)
 	_write()
 
 static func set_difficulty(id: String) -> void:
@@ -262,6 +279,8 @@ static func _read() -> void:
 		difficulty = "normal"
 	var stored_voice: String = str(cfg.get_value("game", "voice", "english"))
 	voice = stored_voice if voice_ids().has(stored_voice) else "english"
+	var stored_language: String = str(cfg.get_value("game", "language", "english"))
+	language = stored_language if language_ids().has(stored_language) else "english"
 
 static func _write() -> void:
 	var cfg: ConfigFile = ConfigFile.new()
@@ -273,6 +292,7 @@ static func _write() -> void:
 	cfg.set_value("game", "edge", edge)
 	cfg.set_value("game", "difficulty", difficulty)
 	cfg.set_value("game", "voice", voice)
+	cfg.set_value("game", "language", language)
 	cfg.save(PATH)
 	_mirror()
 
@@ -288,6 +308,7 @@ static func _mirror() -> void:
 		"edge": edge,
 		"difficulty": difficulty,
 		"voice": voice,
+		"language": language,
 	}
 	var body: String = JSON.stringify(payload)
 	JavaScriptBridge.eval(IDB_JS % JSON.stringify(body))

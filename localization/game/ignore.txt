@@ -1,0 +1,18 @@
+# Literals the extractor picks up that are never shown to the player.
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=
+QWERASDFZXCV
+stun:stun.l.google.com:19302
+ground:%s:%s:%s
+Ch4Hangar
+Su30Hangar
+Header
+Diff
+Personality
+Glass
+Dialogue
+Radio
+Announcer
+music/user/love-drunk.ogg
+music/user/not-needed-anymore.ogg
+music/user/past-cracks.ogg
+music/user/ready-to-rage-against-the-abnormalities.ogg

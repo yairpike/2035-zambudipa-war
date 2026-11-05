@@ -1,0 +1,2732 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ASEAN 2031\n"
+"Language: my\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid ""
+"\n"
+"Cost %d"
+msgstr ""
+"\n"
+"ကုန်ကျ​စရိတ် %d"
+
+msgid ""
+"\n"
+"Hotkey %d"
+msgstr ""
+"\n"
+"အမြန်​ခလုတ် %d"
+
+msgid "  %ds"
+msgstr "  %ds"
+
+msgid " The spray defoliated your line."
+msgstr " ဆေးဖျန်း​မှု​က​သင့်​တပ်လိုင်း​ကို​အရွက်ကြွေ​စေ​ခဲ့​သည်။"
+
+msgid "%d cr"
+msgstr "%d ခရက်ဒစ်"
+
+msgid "%s    HP %d/%d    F %s"
+msgstr "%s    HP %d/%d    F %s"
+
+msgid "%s  %s is ready to copy."
+msgstr "%s  %s​ကို​ကူးယူ​ရန်​အသင့်​ဖြစ်​ပြီ။"
+
+msgid "%s built"
+msgstr "%s တည်ဆောက်​ပြီး"
+
+msgid "%s x%d"
+msgstr "%s x%d"
+
+msgid "%s. %d credits. HP %d. Damage %d. Moves on %s. F: %s."
+msgstr "%s။ %d ခရက်ဒစ်။ HP %d။ ပျက်စီး​အား %d။ ရွေ့လျား​ရာ %s။ F: %s။"
+
+msgid "%s. %s. %d credits. HP %d."
+msgstr "%s။ %s။ %d ခရက်ဒစ်။ HP %d။"
+
+msgid "%s. Area hit, then it cools down."
+msgstr "%s။ ဧရိယာ​ကို​တိုက်ခိုက်​ပြီး​နောက်​အအေးခံ​သည်။"
+
+msgid "+beam"
+msgstr "+ရောင်ခြည်"
+
+msgid "+smart"
+msgstr "+စမတ်​ပစ်"
+
+msgid "2 players"
+msgstr "ကစားသမား​၂​ဦး"
+
+msgid "23-Drone Swarm"
+msgstr "23-ဒရုန်း​အုပ်"
+
+msgid "3D-Print Overdrive"
+msgstr "3D-ပုံနှိပ်​အရှိန်မြှင့်"
+
+msgid "A balloon barrage. One cast."
+msgstr "မီးပုံးပျံ​ဗုံး​မိုး။ တစ်ကြိမ်​သာ။"
+
+msgid "A carpet run. One cast."
+msgstr "ကော်ဇော​ဗုံးကြဲ​မှု။ တစ်ကြိမ်​သာ။"
+
+msgid "A city bank, a jungle bank, and a river between them. The landmark does not burn."
+msgstr "မြို့​ဘက်​ကမ်း၊ တော​ဘက်​ကမ်း​နှင့်​ကြား​တွင်​မြစ်​တစ်​စင်း။ အထိမ်းအမှတ်​အဆောက်အအုံ​မ​လောင်​ပါ။"
+
+msgid "A faster, tougher enemy."
+msgstr "ပို​မြန်​ပြီး​ပို​ခံနိုင်​သော​ရန်သူ။"
+
+msgid "A larger field. Fords cross the river. The enemy builds, expands, and attacks."
+msgstr "ပို​ကျယ်​သော​ကွင်း။ ရေတိမ်​ဖြတ်ကူး​ရာ​များ​က​မြစ်​ကို​ဖြတ်​သည်။ ရန်သူ​သည်​တည်ဆောက်၊ ချဲ့ထွင်​ပြီး​တိုက်ခိုက်​သည်။"
+
+msgid "A napalm run. It does not finish the mission."
+msgstr "နပါလ်မ်​ဗုံးကြဲ​မှု။ မစ်ရှင်​ကို​မ​ပြီးဆုံး​စေ​ပါ။"
+
+msgid "A pirate haul. One cast."
+msgstr "ပင်လယ်ဓားပြ​လုယက်​ပစ္စည်း။ တစ်ကြိမ်​သာ။"
+
+msgid "A second wave is in the black haze."
+msgstr "ဒုတိယ​လှိုင်း​သည်​မည်း​သော​မြူခိုး​ထဲ​တွင်​ရှိ​သည်။"
+
+msgid "A slower enemy, for learning the company."
+msgstr "ပို​နှေး​သော​ရန်သူ၊ တပ်ခွဲ​ကို​လေ့လာ​ရန်။"
+
+msgid "A spray run is coming down the road. Cut it off."
+msgstr "ဆေးဖျန်း​တပ်​လမ်း​အတိုင်း​လာ​နေ​သည်။ ဖြတ်​တား​ပါ။"
+
+msgid "A thermal scan. One cast."
+msgstr "အပူ​စကင်ဖတ်​မှု။ တစ်ကြိမ်​သာ။"
+
+msgid "A-Move"
+msgstr "တိုက်​ရွေ့"
+
+msgid "Ability"
+msgstr "စွမ်းရည်"
+
+msgid "Ability (F)"
+msgstr "စွမ်းရည် (F)"
+
+msgid "Ability (F). A toggle flips every selected toggle unit. Smart-cast fires only the closest ready unit. A finished beam freezes the nearest enemy."
+msgstr "စွမ်းရည် (F)။ ဖွင့်ပိတ်​စွမ်းရည်​သည်​ရွေး​ထား​သော​ဖွင့်ပိတ်​ယူနစ်​အားလုံး​ကို​ပြောင်း​သည်။ စမတ်​ပစ်​သည်​အနီးဆုံး​အသင့်​ယူနစ်​ကို​သာ​ပစ်​သည်။ ပြီးဆုံး​သော​ရောင်ခြည်​သည်​အနီးဆုံး​ရန်သူ​ကို​အေးခဲ​စေ​သည်။"
+
+msgid "ability fired"
+msgstr "စွမ်းရည်​ပစ်​ပြီ"
+
+msgid "ability not ready"
+msgstr "စွမ်းရည်​မ​အသင့်"
+
+msgid "Aceh Tsunami Tank"
+msgstr "အာချေး​ဆူနာမီ​တင့်ကား"
+
+msgid "Act I"
+msgstr "ပထမ​အခန်း"
+
+msgid "Act II"
+msgstr "ဒုတိယ​အခန်း"
+
+msgid "Act III"
+msgstr "တတိယ​အခန်း"
+
+msgid "Adrenaline Cloud"
+msgstr "အဒရီနလင်​တိမ်"
+
+msgid "Advanced Rocket Pods"
+msgstr "အဆင့်မြင့်​ဒုံးကျည်​အိမ်"
+
+msgid "Aegis Dome"
+msgstr "အကာအကွယ်​အမိုးခုံး"
+
+msgid "Afterburner Return"
+msgstr "အရှိန်မြှင့်​ပြန်လှည့်"
+
+msgid "Agent-Zero Cryo-Copter"
+msgstr "သုည​အေးဂျင့်​အေးခဲ​ရဟတ်ယာဉ်"
+
+msgid "Aircraft"
+msgstr "လေယာဉ်​များ"
+
+msgid "Airfield"
+msgstr "လေယာဉ်ကွင်း"
+
+msgid "All %s"
+msgstr "%s အားလုံး"
+
+msgid "Ally"
+msgstr "မဟာမိတ်"
+
+msgid "already unpacked"
+msgstr "ဖြည်​ပြီး​သား"
+
+msgid "Ambush clear. %s. Mine rubies: %d/30."
+msgstr "ချုံခို​တပ်​ရှင်း​ပြီ။ %s။ ပတ္တမြား​တူးဖော်: %d/30။"
+
+msgid "An ally breaks. The span is down."
+msgstr "မဟာမိတ်​တစ်​ဖွဲ့​ပြို​သည်။ တံတား​ပြိုကျ​ပြီ။"
+
+msgid "Andaman breakout"
+msgstr "အန္ဒမန်​ဖောက်ထွက်​မှု"
+
+msgid "Andaman breakout. Text briefing. Sink the channel boats and the second wave, then land an amphibious unit on the far shore. A mine line in the channel damages ships. The far shore opens, and a squall crosses. The side cache is optional."
+msgstr "အန္ဒမန်​ဖောက်ထွက်​မှု။ စာသား​အကျဉ်းချုပ်။ ရေလက်ကြား​လှေ​များ​နှင့်​ဒုတိယ​လှိုင်း​ကို​နစ်မြုပ်​စေ​ပြီး​ကုန်းရေ​နှစ်သွယ်​ယူနစ်​တစ်​ခု​ကို​တစ်ဖက်​ကမ်း​သို့​ဆိုက်ကပ်​ပါ။ ရေလက်ကြား​ရှိ​မိုင်း​တန်း​သည်​သင်္ဘော​များ​ကို​ထိခိုက်​စေ​သည်။ တစ်ဖက်​ကမ်း​ပွင့်​လာ​ပြီး​မုန်တိုင်း​တစ်​ခု​ဖြတ်​သွား​သည်။ ဘေး​သိုလှောင်ရုံ​သည်​ရွေးချယ်​နိုင်​သည်။"
+
+msgid "Andaman Siege Barge"
+msgstr "အန္ဒမန်​ဝိုင်းရံ​တိုက်​ဖောင်"
+
+msgid "Answer"
+msgstr "အဖြေ"
+
+msgid "Answer applied. Waiting for the guest."
+msgstr "အဖြေ​ထည့်​ပြီး။ ဧည့်သည်​ကို​စောင့်​နေ​သည်။"
+
+msgid "Archipelago Rising"
+msgstr "ကျွန်းစု​နိုးထ​ခြင်း"
+
+msgid "Archipelago Rising. Text briefing. Sink the boats and the second picket, sail the packer into shallow water, unpack the wharf, and upgrade it. The packer reaches the shallows, the wharf rises, and a squall hits."
+msgstr "ကျွန်းစု​နိုးထ​ခြင်း။ စာသား​အကျဉ်းချုပ်။ လှေ​များ​နှင့်​ဒုတိယ​ကင်း​တပ်​ကို​နစ်မြုပ်​စေ၊ ထုပ်ပိုး​ယာဉ်​ကို​ရေတိမ်​ပိုင်း​သို့​ရွက်လွှင့်၊ ဆိပ်ခံ​ကို​ဖြည်​ပြီး​အဆင့်မြှင့်​ပါ။ ထုပ်ပိုး​ယာဉ်​ရေတိမ်​ပိုင်း​ရောက်၊ ဆိပ်ခံ​ထ​လာ​ပြီး​မုန်တိုင်း​ဝင်​သည်။"
+
+msgid "Arms a bomb. One cast."
+msgstr "ဗုံး​တစ်​လုံး​အသင့်​ပြင်​သည်။ တစ်ကြိမ်​သာ။"
+
+msgid "Arms bazaar (mission)"
+msgstr "လက်နက်​ဈေး (မစ်ရှင်)"
+
+msgid "Arms bazaar. Text briefing. Capture the bazaar so infantry and drones draw a discount."
+msgstr "လက်နက်​ဈေး။ စာသား​အကျဉ်းချုပ်။ ခြေလျင်​နှင့်​ဒရုန်း​များ​လျှော့စျေး​ရ​စေ​ရန်​ဈေး​ကို​သိမ်းယူ​ပါ။"
+
+msgid "Artillery Telemetry Link"
+msgstr "အမြောက်​အဝေးတိုင်း​ချိတ်ဆက်​မှု"
+
+msgid "ASEAN 2031"
+msgstr "ASEAN 2031"
+
+msgid "Athena Orbital Designator"
+msgstr "အေသီနာ​ပတ်လမ်း​ပစ်မှတ်​သတ်မှတ်​ကိရိယာ"
+
+msgid "Atolls"
+msgstr "သန္တာ​ကျွန်း​များ"
+
+msgid "attack move"
+msgstr "တိုက်ခိုက်​ရွေ့လျား"
+
+msgid "Attack-move"
+msgstr "တိုက်ခိုက်​ရွေ့လျား"
+
+msgid "Attack-move ahead of the lead unit."
+msgstr "ရှေ့ဆောင်​ယူနစ်​၏​ရှေ့​သို့​တိုက်ခိုက်​ရွေ့လျား​ပါ။"
+
+msgid "AUDIO"
+msgstr "အသံ"
+
+msgid "BACK"
+msgstr "နောက်သို့"
+
+msgid "Back"
+msgstr "နောက်သို့"
+
+msgid "Ballistic Riot Shield"
+msgstr "ကျည်ကာ​အဓိကရုဏ်း​ဒိုင်း"
+
+msgid "Balloon Bomb Barrage"
+msgstr "မီးပုံးပျံ​ဗုံး​မိုး"
+
+msgid "balloons 9"
+msgstr "မီးပုံးပျံ 9"
+
+msgid "Bamboo Hide"
+msgstr "ဝါး​ပုန်း"
+
+msgid "Banyan Hologram"
+msgstr "ညောင်ပင်​ဟိုလိုဂရမ်"
+
+msgid "Barracks"
+msgstr "စစ်တန်းလျား"
+
+msgid "Basic training"
+msgstr "အခြေခံ​လေ့ကျင့်​ရေး"
+
+msgid "bazaar required"
+msgstr "ဈေး​လို​သည်"
+
+msgid "Beach master"
+msgstr "ကမ်းခြေ​မှူး"
+
+msgid "Beach Rockets"
+msgstr "ကမ်းခြေ​ဒုံးကျည်"
+
+msgid "beam fired"
+msgstr "ရောင်ခြည်​ပစ်​ပြီ"
+
+msgid "Beam freeze (mission)"
+msgstr "ရောင်ခြည်​အေးခဲ (မစ်ရှင်)"
+
+msgid "Beam freeze. Text briefing. Hold the beam until the target freezes."
+msgstr "ရောင်ခြည်​အေးခဲ။ စာသား​အကျဉ်းချုပ်။ ပစ်မှတ်​အေးခဲ​သည်​အထိ​ရောင်ခြည်​ကို​ထိန်း​ထား​ပါ။"
+
+msgid "Beam officer"
+msgstr "ရောင်ခြည်​အရာရှိ"
+
+msgid "Bench Seat"
+msgstr "ခုံတန်း​ထိုင်ခုံ"
+
+msgid "Black Haze"
+msgstr "မြူခိုး​မည်း"
+
+msgid "Black Haze. Text briefing. Capture the hydro radar and hold it through the longer haze while a second raider wave attacks. The haze closes, a second wave comes through it, and you hold the radar."
+msgstr "မြူခိုး​မည်း။ စာသား​အကျဉ်းချုပ်။ ရေ​ရေဒါ​ကို​သိမ်းယူ​ပြီး​ဒုတိယ​စီးနင်း​တပ်​လှိုင်း​တိုက်ခိုက်​နေ​စဉ်​ပို​ရှည်​သော​မြူခိုး​တစ်လျှောက်​ထိန်း​ထား​ပါ။ မြူခိုး​ပိတ်​လာ၊ ဒုတိယ​လှိုင်း​ထို​မှ​ဖြတ်​လာ​ပြီး​သင်​ရေဒါ​ကို​ထိန်း​ထား​သည်။"
+
+msgid "Black Market"
+msgstr "မှောင်ခို​ဈေး"
+
+msgid "Black-Hole Armor"
+msgstr "တွင်းနက်​ချပ်ဝတ်"
+
+msgid "BlackBloc"
+msgstr "BlackBloc"
+
+msgid "Blackout EMP"
+msgstr "မီးပျက် EMP"
+
+msgid "Bo Mya"
+msgstr "ဘိုမြ"
+
+msgid "bomb armed"
+msgstr "ဗုံး​အသင့်"
+
+msgid "Bomblet Carpet"
+msgstr "ဗုံးငယ်​ကော်ဇော"
+
+msgid "Bonus complete: side cache"
+msgstr "ဆုကြေး​ပြီး: ဘေး​သိုလှောင်ရုံ"
+
+msgid "Bonus failed: the spray landed"
+msgstr "ဆုကြေး​ကျရှုံး: ဆေးဖျန်း​ကျ​သွား​ပြီ"
+
+msgid "Bonus: reach the side cache"
+msgstr "ဆုကြေး: ဘေး​သိုလှောင်ရုံ​သို့​ရောက်​ပါ"
+
+msgid "Boot menu"
+msgstr "စတင်​မီနူး"
+
+msgid "Both batteries are still up, and the screen is with them."
+msgstr "အမြောက်တပ်​နှစ်​ခု​လုံး​ရှိ​နေ​ဆဲ​ဖြစ်​ပြီး​ကာကွယ်​တပ်​သည်​၎င်း​တို့​နှင့်​အတူ​ရှိ​သည်။"
+
+msgid "Both server blocks are live. Start the hack."
+msgstr "ဆာဗာ​အစု​နှစ်​ခု​လုံး​အသက်ဝင်​နေ​သည်။ ဟက်​စတင်​ပါ။"
+
+msgid "Both superweapons are live. Break the screen and drop them."
+msgstr "စူပါ​လက်နက်​နှစ်​ခု​လုံး​အသက်ဝင်​နေ​သည်။ ကာကွယ်​တပ်​ကို​ချိုး​ပြီး​၎င်း​တို့​ကို​ဖြိုချ​ပါ။"
+
+msgid "Both weapons are armed. The count is running."
+msgstr "လက်နက်​နှစ်​ခု​လုံး​အသင့်​ဖြစ်​ပြီ။ ရေတွက်​ချိန်​စ​နေ​ပြီ။"
+
+msgid "Box"
+msgstr "လေးထောင့်"
+
+msgid "Bridge down"
+msgstr "တံတား​ပြိုကျ"
+
+msgid "Briefing"
+msgstr "အကျဉ်းချုပ်"
+
+msgid "bring one rare-earth stock"
+msgstr "ရှားပါး​မြေ​အစုအပုံ​တစ်​ခု​ယူ​လာ​ပါ"
+
+msgid "Build"
+msgstr "တည်ဆောက်"
+
+msgid "Build a barracks and train 3 infantry."
+msgstr "စစ်တန်းလျား​တစ်​ခု​ဆောက်​ပြီး​ခြေလျင်​၃​ဦး​လေ့ကျင့်​ပါ။"
+
+msgid "Build a power plant."
+msgstr "ဓာတ်အား​ပေး​စက်ရုံ​တစ်​ခု​ဆောက်​ပါ။"
+
+msgid "build blocked"
+msgstr "ဆောက်​မ​ရ"
+
+msgid "Build pipeline"
+msgstr "တည်ဆောက်​လုပ်ငန်းစဉ်"
+
+msgid "Building"
+msgstr "အဆောက်အအုံ"
+
+msgid "Buildings"
+msgstr "အဆောက်အအုံ​များ"
+
+msgid "Bunker Lock"
+msgstr "ကတုတ်​သော့ခတ်"
+
+msgid "Burma"
+msgstr "ဗမာ"
+
+msgid "Burma Road"
+msgstr "ဗမာ​လမ်း"
+
+msgid "Burma Road Bulldozer Tank"
+msgstr "ဗမာ​လမ်း​မြေထိုး​တင့်ကား"
+
+msgid "Burmese"
+msgstr "မြန်မာ"
+
+msgid "Buy clearance"
+msgstr "ခွင့်ပြုချက်​ဝယ်​ပါ"
+
+msgid "CAMPAIGN"
+msgstr "စစ်ဆင်ရေး​စဉ်"
+
+msgid "Campaign"
+msgstr "စစ်ဆင်ရေး​စဉ်"
+
+msgid "Canals cut the paddies. Right-click a bridge to drop it. The enemy builds, expands, and attacks."
+msgstr "တူးမြောင်း​များ​က​လယ်ကွင်း​များ​ကို​ဖြတ်​သည်။ တံတား​ဖြိုချ​ရန်​ညာ​ကလစ်​နှိပ်​ပါ။ ရန်သူ​သည်​တည်ဆောက်၊ ချဲ့ထွင်​ပြီး​တိုက်ခိုက်​သည်။"
+
+msgid "Cancel"
+msgstr "ပယ်ဖျက်"
+
+msgid "Cancel the building in progress and refund what it has spent."
+msgstr "ဆောက်​နေ​သော​အဆောက်အအုံ​ကို​ပယ်ဖျက်​ပြီး​သုံး​ထား​သမျှ​ပြန်​အမ်း​ပါ။"
+
+msgid "cannot cross"
+msgstr "ဖြတ်​မ​ရ"
+
+msgid "cannot import"
+msgstr "တင်သွင်း​မ​ရ"
+
+msgid "cannot sell"
+msgstr "ရောင်း​မ​ရ"
+
+msgid "cannot train"
+msgstr "လေ့ကျင့်​မ​ရ"
+
+msgid "Capture the radar, then hold it through the haze."
+msgstr "ရေဒါ​ကို​သိမ်းယူ​ပြီး​မြူခိုး​တစ်လျှောက်​ထိန်း​ထား​ပါ။"
+
+msgid "capture: yard, ruby night shift, and one rare-earth stock, after the recon drones fall"
+msgstr "သိမ်းယူ: ကင်းထောက်​ဒရုန်း​များ​ကျ​ပြီး​နောက်​ဝင်း၊ ပတ္တမြား​ည​အဆိုင်း​နှင့်​ရှားပါး​မြေ​အစုအပုံ​တစ်​ခု"
+
+msgid "Caravan ambush"
+msgstr "ကုန်တင်​တန်း​ချုံခို​တိုက်ခိုက်​မှု"
+
+msgid "caravan in"
+msgstr "ကုန်တင်​တန်း​ရောက်​ပြီ"
+
+msgid "Caravan master"
+msgstr "ကုန်တင်​တန်း​မှူး"
+
+msgid "Cargo Winch Airlift"
+msgstr "ကုန်​ကြိုးဆွဲ​လေကြောင်း​သယ်ယူ"
+
+msgid "Cash Bounty"
+msgstr "ငွေသား​ဆုကြေး"
+
+msgid "Cash Bribe"
+msgstr "ငွေသား​လာဘ်"
+
+msgid "Century Carpet Bomber"
+msgstr "ရာစု​ကော်ဇော​ဗုံးကြဲ​လေယာဉ်"
+
+msgid "CH-4"
+msgstr "CH-4"
+
+msgid "CH-4 hangar"
+msgstr "CH-4 လေယာဉ်​ရုံ"
+
+msgid "Changes"
+msgstr "Changes"
+
+msgid "Channel boat"
+msgstr "ရေလက်ကြား​လှေ"
+
+msgid "channel clear"
+msgstr "ရေလက်ကြား​ရှင်း​ပြီ"
+
+msgid "Channel crossing (mission)"
+msgstr "ရေလက်ကြား​ဖြတ်ကူး​ခြင်း (မစ်ရှင်)"
+
+msgid "Channel crossing. Text briefing. Send an amphibious unit across the deep water to the far shore."
+msgstr "ရေလက်ကြား​ဖြတ်ကူး​ခြင်း။ စာသား​အကျဉ်းချုပ်။ ကုန်းရေ​နှစ်သွယ်​ယူနစ်​တစ်​ခု​ကို​ရေနက်​ဖြတ်​၍​တစ်ဖက်​ကမ်း​သို့​ပို့​ပါ။"
+
+msgid "Charcoal / cyan"
+msgstr "မီးသွေး​ရောင် / စိမ်းပြာ​ရောင်"
+
+msgid "Chat"
+msgstr "စကားပြော"
+
+msgid "Chemical Afterburner"
+msgstr "ဓာတု​အရှိန်မြှင့်"
+
+msgid "Chiang Rai"
+msgstr "ချင်းရိုင်"
+
+msgid "Chips the towers. It does not finish the mission."
+msgstr "မျှော်စင်​များ​ကို​ပဲ့​စေ​သည်။ မစ်ရှင်​ကို​မ​ပြီးဆုံး​စေ​ပါ။"
+
+msgid "Choose a map"
+msgstr "မြေပုံ​ရွေး​ပါ"
+
+msgid "Chopper Mode"
+msgstr "ရဟတ်ယာဉ်​မုဒ်"
+
+msgid "Chrono-Phase Recall"
+msgstr "အချိန်​အဆင့်​ပြန်ခေါ်"
+
+msgid "Citadel garrison"
+msgstr "ခံတပ်​ကင်း​တပ်"
+
+msgid "Citadel officer"
+msgstr "ခံတပ်​အရာရှိ"
+
+msgid "Clear"
+msgstr "ရှင်း"
+
+msgid "Clear the ambush (%d). Then walk the caravan to the night shift."
+msgstr "ချုံခို​တပ်​ကို​ရှင်း​ပါ (%d)။ ထို့နောက်​ကုန်တင်​တန်း​ကို​ည​အဆိုင်း​သို့​ခေါ်​သွား​ပါ။"
+
+msgid "Clear the field    Hold the line    Bring it home"
+msgstr "ကွင်း​ရှင်း    တပ်လိုင်း​ထိန်း    အိမ်​ပြန်​ယူ"
+
+msgid "Clear the garrison (%d) and hold the hydro radar."
+msgstr "ကင်း​တပ်​ကို​ရှင်း (%d) ပြီး​ရေ​ရေဒါ​ကို​ထိန်း​ပါ။"
+
+msgid "Clear the garrison (%d), then %s."
+msgstr "ကင်း​တပ်​ကို​ရှင်း (%d)၊ ထို့နောက် %s။"
+
+msgid "Clear the garrison (%d), then siphon the compound."
+msgstr "ကင်း​တပ်​ကို​ရှင်း (%d)၊ ထို့နောက်​ဝင်း​ကို​စုပ်ယူ​ပါ။"
+
+msgid "clear the Orlan drones"
+msgstr "Orlan ဒရုန်း​များ​ကို​ရှင်း"
+
+msgid "Clear the shore (%d). A boat is on the far shore."
+msgstr "ကမ်း​ကို​ရှင်း (%d)။ လှေ​တစ်​စင်း​တစ်ဖက်​ကမ်း​ပေါ်​ရောက်​ပြီ။"
+
+msgid "Clear the shore (%d). Land a boat on the far shore. The mine line hurts ships."
+msgstr "ကမ်း​ကို​ရှင်း (%d)။ တစ်ဖက်​ကမ်း​သို့​လှေ​ဆိုက်ကပ်​ပါ။ မိုင်း​တန်း​သည်​သင်္ဘော​များ​ကို​ထိခိုက်​စေ​သည်။"
+
+msgid "clearance %d"
+msgstr "ခွင့်ပြုချက် %d"
+
+msgid "Clearance commander"
+msgstr "ခွင့်ပြုချက်​တပ်မှူး"
+
+msgid "clearance refused"
+msgstr "ခွင့်ပြုချက်​ငြင်း​ခံ​ရ"
+
+msgid "Clearance two (mission)"
+msgstr "ခွင့်ပြုချက်​နှစ် (မစ်ရှင်)"
+
+msgid "Clearance two. Text briefing. Buy clearance, then queue and place the drone bay inside the pad."
+msgstr "ခွင့်ပြုချက်​နှစ်။ စာသား​အကျဉ်းချုပ်။ ခွင့်ပြုချက်​ဝယ်​ပြီး​ဒရုန်း​ရုံ​ကို​တန်းစီ​ကာ​ကွင်း​အတွင်း​နေရာချ​ပါ။"
+
+msgid "Colonel Nguyen Phantom"
+msgstr "ဗိုလ်မှူးကြီး​ငုယင်​သရဲ"
+
+msgid "Column screen"
+msgstr "တပ်တန်း​ကာကွယ်​တပ်"
+
+msgid "Command deck"
+msgstr "အမိန့်​ကုန်းပတ်"
+
+msgid "Commander:  %s"
+msgstr "တပ်မှူး:  %s"
+
+msgid "Company"
+msgstr "တပ်ခွဲ"
+
+msgid "Complete objective"
+msgstr "ရည်မှန်းချက်​ပြီးမြောက်​ပါ"
+
+msgid "Compound garrison"
+msgstr "ဝင်း​ကင်း​တပ်"
+
+msgid "Compound runner"
+msgstr "ဝင်း​သတင်း​ပြေး"
+
+msgid "Connecting to %s."
+msgstr "%s သို့​ချိတ်ဆက်​နေ​သည်။"
+
+msgid "Construction Yard"
+msgstr "ဆောက်လုပ်ရေး​ဝင်း"
+
+msgid "Contact behind the wagon."
+msgstr "လှည်း​နောက်​တွင်​ရန်သူ​တွေ့​သည်။"
+
+msgid "CONTROLS"
+msgstr "ထိန်းချုပ်​ခလုတ်​များ"
+
+msgid "Copter shifting."
+msgstr "ရဟတ်ယာဉ်​ပုံစံ​ပြောင်း​နေ​သည်။"
+
+msgid "Copter under fire."
+msgstr "ရဟတ်ယာဉ်​ပစ်ခတ်​ခံ​နေ​ရ​သည်။"
+
+msgid "Copy again"
+msgstr "ထပ်​ကူးယူ"
+
+msgid "Copy offer"
+msgstr "ကမ်းလှမ်း​ချက်​ကူးယူ"
+
+msgid "Copy the answer once it appears and send it back to the host."
+msgstr "အဖြေ​ပေါ်​လာ​သည်​နှင့်​ကူးယူ​ပြီး​အိမ်ရှင်​ထံ​ပြန်​ပို့​ပါ။"
+
+msgid "Copy the offer into the other browser, then paste its answer back. No account."
+msgstr "ကမ်းလှမ်း​ချက်​ကို​အခြား​ဘရောက်ဇာ​ထဲ​ကူးယူ​ပြီး​၎င်း​၏​အဖြေ​ကို​ပြန်​ကူးထည့်​ပါ။ အကောင့်​မ​လို​ပါ။"
+
+msgid "Copy the offer once it appears, then paste the guest's answer."
+msgstr "ကမ်းလှမ်း​ချက်​ပေါ်​လာ​သည်​နှင့်​ကူးယူ​ပြီး​ဧည့်သည်​၏​အဖြေ​ကို​ကူးထည့်​ပါ။"
+
+msgid "Copy this answer and send it to the host."
+msgstr "ဤ​အဖြေ​ကို​ကူးယူ​ပြီး​အိမ်ရှင်​ထံ​ပို့​ပါ။"
+
+msgid "Copy this offer and send it to the guest."
+msgstr "ဤ​ကမ်းလှမ်း​ချက်​ကို​ကူးယူ​ပြီး​ဧည့်သည်​ထံ​ပို့​ပါ။"
+
+msgid "Could not join."
+msgstr "ဝင်​မ​ရ​ပါ။"
+
+msgid "Count: %ds"
+msgstr "ရေတွက်​ချိန်: %ds"
+
+msgid "Count: 16s"
+msgstr "ရေတွက်​ချိန်: ၁၆​စက္ကန့်"
+
+msgid "CREDITS"
+msgstr "ဖန်တီးသူ​များ"
+
+msgid "Credits %d"
+msgstr "ခရက်ဒစ် %d"
+
+msgid "Credits %d    Power %d/%d%s"
+msgstr "ခရက်ဒစ် %d    ဓာတ်အား %d/%d%s"
+
+msgid "credits +250"
+msgstr "ခရက်ဒစ် +250"
+
+msgid "Credits 0    Power 0/0"
+msgstr "ခရက်ဒစ် 0    ဓာတ်အား 0/0"
+
+msgid "Crimson / amber"
+msgstr "နီရဲ​ရောင် / ပယင်း​ရောင်"
+
+msgid "Cross channel"
+msgstr "ရေလက်ကြား​ဖြတ်ကူး"
+
+msgid "Cryo on the target."
+msgstr "ပစ်မှတ်​ပေါ်​အေးခဲ​ပစ်​သည်။"
+
+msgid "cryo wave"
+msgstr "အေးခဲ​လှိုင်း"
+
+msgid "Cryo-copter airborne."
+msgstr "အေးခဲ​ရဟတ်ယာဉ်​ပျံ​တက်​ပြီ။"
+
+msgid "Cryogeddon"
+msgstr "အေးခဲ​ကပ်ဘေး"
+
+msgid "Cryoshot"
+msgstr "အေးခဲ​ကျည်"
+
+msgid "Cu Chi Tunnel Hound"
+msgstr "ကူချီ​ဥမင်​ခွေး"
+
+msgid "Cyber compound (mission)"
+msgstr "ဆိုက်ဘာ​ဝင်း (မစ်ရှင်)"
+
+msgid "Cyber compound. Text briefing. Capture the compound and siphon the enemy purse."
+msgstr "ဆိုက်ဘာ​ဝင်း။ စာသား​အကျဉ်းချုပ်။ ဝင်း​ကို​သိမ်းယူ​ပြီး​ရန်သူ​၏​ငွေအိတ်​ကို​စုပ်ယူ​ပါ။"
+
+msgid "damage 1.5"
+msgstr "ပျက်စီး​အား 1.5"
+
+msgid "Defeat"
+msgstr "ရှုံးနိမ့်"
+
+msgid "defender air"
+msgstr "ကာကွယ်​သူ​လေ"
+
+msgid "defender ground"
+msgstr "ကာကွယ်​သူ​မြေ"
+
+msgid "Defender-VX"
+msgstr "ကာကွယ်သူ-VX"
+
+msgid "Defenses"
+msgstr "ကာကွယ်ရေး​များ"
+
+msgid "Defoliation lead"
+msgstr "အရွက်ကြွေ​ဆေးဖျန်း​ခေါင်းဆောင်"
+
+msgid "Delta Amphibious IFV"
+msgstr "မြစ်ဝကျွန်းပေါ်​ကုန်းရေ​နှစ်သွယ် IFV"
+
+msgid "Destroy both superweapons (%d left) before the count (%ds)."
+msgstr "စူပါ​လက်နက်​နှစ်​ခု​လုံး​ကို​ဖျက်ဆီး​ပါ (%d ကျန်)၊ ရေတွက်​ချိန် (%ds) မ​ကုန်​မီ။"
+
+msgid "destroy: both enemy superweapons fall before the count hits zero"
+msgstr "ဖျက်ဆီး: ရေတွက်​ချိန်​သုည​မ​ရောက်​မီ​ရန်သူ​စူပါ​လက်နက်​နှစ်​ခု​လုံး​ကျ​ရ​မည်"
+
+msgid "destroy: every ghost inside the jammer dies, GPS cut and fiber full"
+msgstr "ဖျက်ဆီး: နှောင့်ယှက်​စက်​အတွင်း​သရဲ​တပ်သား​အားလုံး​သေ​ရ​မည်၊ GPS ပြတ်​ပြီး​ဖိုက်ဘာ​အပြည့်"
+
+msgid "destroy: the ambush dies, the jade wagon reaches the bazaar, then the ruby night shift fills the purse"
+msgstr "ဖျက်ဆီး: ချုံခို​တပ်​သေ၊ ကျောက်စိမ်း​လှည်း​ဈေး​သို့​ရောက်၊ ထို့နောက်​ပတ္တမြား​ည​အဆိုင်း​က​ငွေအိတ်​ကို​ဖြည့်"
+
+msgid "destroy: the beam freezes the phantom, then the phantom and the battery die"
+msgstr "ဖျက်ဆီး: ရောင်ခြည်​က​သရဲ​ကို​အေးခဲ​စေ၊ ထို့နောက်​သရဲ​နှင့်​အမြောက်တပ်​သေ"
+
+msgid "destroy: the boats die, then the wharf is unpacked and upgraded"
+msgstr "ဖျက်ဆီး: လှေ​များ​ပျက်၊ ထို့နောက်​ဆိပ်ခံ​ကို​ဖြည်​ပြီး​အဆင့်မြှင့်"
+
+msgid "destroy: the channel boats die and an amphibious unit reaches the far shore"
+msgstr "ဖျက်ဆီး: ရေလက်ကြား​လှေ​များ​ပျက်​ပြီး​ကုန်းရေ​နှစ်သွယ်​ယူနစ်​တစ်​ခု​တစ်ဖက်​ကမ်း​ရောက်"
+
+msgid "destroy: the EW towers fall, then the Su-30 and CH-4 hangars"
+msgstr "ဖျက်ဆီး: EW မျှော်စင်​များ​ကျ၊ ထို့နောက် Su-30 နှင့် CH-4 လေယာဉ်​ရုံ​များ"
+
+msgid "destroy: the garrison dies, the hack is held on the server blocks, then both blocks are siphoned"
+msgstr "ဖျက်ဆီး: ကင်း​တပ်​သေ၊ ဆာဗာ​အစု​များ​ပေါ်​ဟက်​ထိန်း၊ ထို့နောက်​အစု​နှစ်​ခု​လုံး​စုပ်ယူ"
+
+msgid "destroy: the GTFC tank column is frozen, then destroyed"
+msgstr "ဖျက်ဆီး: GTFC တင့်ကား​တန်း​အေးခဲ​ပြီး​ဖျက်ဆီး​ခံ​ရ"
+
+msgid "destroy: the joint enemy fleet is sunk"
+msgstr "ဖျက်ဆီး: ပူးတွဲ​ရန်သူ​ရေတပ်​နစ်မြုပ်"
+
+msgid "destroy: the radar garrison dies and the hydro radar is held"
+msgstr "ဖျက်ဆီး: ရေဒါ​ကင်း​တပ်​သေ​ပြီး​ရေ​ရေဒါ​ကို​ထိန်း"
+
+msgid "Details"
+msgstr "အသေးစိတ်"
+
+msgid "Difficulty"
+msgstr "ခက်ခဲ​မှု"
+
+msgid "Difficulty:  %s"
+msgstr "ခက်ခဲ​မှု:  %s"
+
+msgid "Discharges a held unit. One cast."
+msgstr "ကိုင်​ထား​သော​ယူနစ်​ကို​ချ​ပေး​သည်။ တစ်ကြိမ်​သာ။"
+
+msgid "Done"
+msgstr "ပြီး​ပြီ"
+
+msgid "Dozer advancing."
+msgstr "မြေထိုး​ယာဉ်​ရှေ့​တိုး​နေ​သည်။"
+
+msgid "Dozer ready."
+msgstr "မြေထိုး​ယာဉ်​အသင့်။"
+
+msgid "Dozer under fire."
+msgstr "မြေထိုး​ယာဉ်​ပစ်ခတ်​ခံ​နေ​ရ​သည်။"
+
+msgid "Drag a box    Select"
+msgstr "လေးထောင့်​ဆွဲ    ရွေး"
+
+msgid "Drag a box around your units."
+msgstr "သင့်​ယူနစ်​များ​ပတ်လည်​လေးထောင့်​ဆွဲ​ပါ။"
+
+msgid "Drone truck standing by."
+msgstr "ဒရုန်း​ကုန်တင်ကား​အသင့်​စောင့်​နေ​သည်။"
+
+msgid "Drones on the jade wagon. Keep it under the trees."
+msgstr "ကျောက်စိမ်း​လှည်း​ပေါ်​ဒရုန်း​များ။ သစ်ပင်​အောက်​တွင်​ထား​ပါ။"
+
+msgid "Drones on the target."
+msgstr "ပစ်မှတ်​ပေါ်​ဒရုန်း​များ။"
+
+msgid "Drop the EW towers (%d), then the hangars (%d)."
+msgstr "EW မျှော်စင်​များ​ကို​ဖြိုချ (%d)၊ ထို့နောက်​လေယာဉ်​ရုံ​များ (%d)။"
+
+msgid "Easy"
+msgstr "လွယ်"
+
+msgid "Edge pan"
+msgstr "အစွန်း​ရွှေ့"
+
+msgid "Eject and Repair"
+msgstr "ခုန်ထွက်​ပြီး​ပြုပြင်"
+
+msgid "Electro-Latch Detonate"
+msgstr "လျှပ်စစ်​ချိတ်​ပေါက်ကွဲ"
+
+msgid "Electro-Stasis Tether"
+msgstr "လျှပ်စစ်​ငြိမ်သက်​ကြိုး"
+
+msgid "Elite"
+msgstr "ထိပ်တန်း"
+
+msgid "Emergency Evasive Return"
+msgstr "အရေးပေါ်​ရှောင်​ပြန်လှည့်"
+
+msgid "Enemy"
+msgstr "ရန်သူ"
+
+msgid "Enemy spotted."
+msgstr "ရန်သူ​တွေ့​ပြီ။"
+
+msgid "Engage"
+msgstr "တိုက်ခိုက်"
+
+msgid "ENGINE"
+msgstr "အင်ဂျင်"
+
+msgid "English"
+msgstr "အင်္ဂလိပ်"
+
+msgid "English, Burmese, Mandarin, Thai, or Malay. A missing line plays the English take."
+msgstr "အင်္ဂလိပ်၊ မြန်မာ၊ မန်ဒရင်၊ ထိုင်း၊ သို့မဟုတ်​မလေး။ မ​ရှိ​သော​စာကြောင်း​သည်​အင်္ဂလိပ်​အသံ​ဖြင့်​ဖွင့်​သည်။"
+
+msgid "Esc    Pause"
+msgstr "Esc    ခဏရပ်"
+
+msgid "Esc  Back    ·    Enter  Select"
+msgstr "Esc  နောက်သို့    ·    Enter  ရွေး"
+
+msgid "Evacuate and Lay Mines"
+msgstr "ဆုတ်ခွာ​ပြီး​မိုင်း​ချ"
+
+msgid "EW tower"
+msgstr "EW မျှော်စင်"
+
+msgid "F    Ability"
+msgstr "F    စွမ်းရည်"
+
+msgid "F ability found no enemy"
+msgstr "F စွမ်းရည်​ရန်သူ​မ​တွေ့"
+
+msgid "F ability struck an enemy"
+msgstr "F စွမ်းရည်​ရန်သူ​ကို​ထိ"
+
+msgid "Faction:  %s"
+msgstr "အုပ်စု:  %s"
+
+msgid "Federal Wings Ag-Bomber Hexacopter"
+msgstr "ဖက်ဒရယ်​အတောင်​စိုက်ပျိုး​ဗုံးကြဲ​ပန်ကာ​ခြောက်​လုံး​ဒရုန်း"
+
+msgid "Ferry warden"
+msgstr "ကူးတို့​စောင့်"
+
+msgid "Fiber-Optic Tether"
+msgstr "ဖိုက်ဘာ​အော့ပတစ်​ကြိုး"
+
+msgid "Fibre Dive"
+msgstr "ဖိုက်ဘာ​ထိုးဆင်း"
+
+msgid "Field clinic (mission)"
+msgstr "ကွင်း​ဆေးခန်း (မစ်ရှင်)"
+
+msgid "Field clinic. Text briefing. Capture the clinic and let it heal the company."
+msgstr "ကွင်း​ဆေးခန်း။ စာသား​အကျဉ်းချုပ်။ ဆေးခန်း​ကို​သိမ်းယူ​ပြီး​တပ်ခွဲ​ကို​ကုသ​ခိုင်း​ပါ။"
+
+msgid "Field Medical Tent"
+msgstr "ကွင်း​ဆေး​တဲ"
+
+msgid "Fight the briefing."
+msgstr "အကျဉ်းချုပ်​အတိုင်း​တိုက်​ပါ။"
+
+msgid "fire the beam"
+msgstr "ရောင်ခြည်​ပစ်"
+
+msgid "First mission. Select the company, right-click to move, and right-click the raiders to fight. Raise the yard, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails."
+msgstr "ပထမ​မစ်ရှင်။ တပ်ခွဲ​ကို​ရွေး၊ ရွေ့​ရန်​ညာ​ကလစ်​နှိပ်​ပြီး​တိုက်​ရန်​စီးနင်း​တပ်​ကို​ညာ​ကလစ်​နှိပ်​ပါ။ ဝင်း​ကို​တည်ဆောက်၊ ပတ္တမြား​ည​အဆိုင်း​ကို​လည်ပတ်​ပြီး​ရှားပါး​မြေ​အစုအပုံ​တစ်​ခု​ကို​အိမ်​ပြန်​ယူ​လာ​ပါ။ တပ်ခွဲ​သေ​လျှင်​စီးနင်း​မှု​ကျရှုံး​သည်။"
+
+msgid "Flak-Slag Mast"
+msgstr "လေယာဉ်ပစ်​ချေး​တိုင်"
+
+msgid "Fleet captain"
+msgstr "ရေတပ်​ကပ္ပတိန်"
+
+msgid "Fleet picket"
+msgstr "ရေတပ်​ကင်း"
+
+msgid "FLH7 Squad"
+msgstr "FLH7 တပ်စု"
+
+msgid "Fog Over Pakbeng"
+msgstr "ပက်ဘင်း​ပေါ်​မှ​မြူ"
+
+msgid "Fog Over Pakbeng. Text briefing. Hold a hydro radar through the longer haze while a second raider wave attacks. An ally breaks first. The haze stays shut, and the radar has to be held. The side cache is optional."
+msgstr "ပက်ဘင်း​ပေါ်​မှ​မြူ။ စာသား​အကျဉ်းချုပ်။ ဒုတိယ​စီးနင်း​တပ်​လှိုင်း​တိုက်ခိုက်​နေ​စဉ်​ပို​ရှည်​သော​မြူခိုး​တစ်လျှောက်​ရေ​ရေဒါ​ကို​ထိန်း​ထား​ပါ။ မဟာမိတ်​တစ်​ဖွဲ့​အရင်​ပြို​သည်။ မြူခိုး​ပိတ်​နေ​ပြီး​ရေဒါ​ကို​ထိန်း​ထား​ရ​မည်။ ဘေး​သိုလှောင်ရုံ​သည်​ရွေးချယ်​နိုင်​သည်။"
+
+msgid "FONTS"
+msgstr "စာလုံး​ပုံစံ​များ"
+
+msgid "Form"
+msgstr "ဖွဲ့စည်း"
+
+msgid "Formation. Switch between a line and a box."
+msgstr "တပ်ဖွဲ့ပုံ။ တန်း​နှင့်​လေးထောင့်​ကြား​ပြောင်း​ပါ။"
+
+msgid "Found %s."
+msgstr "%s တွေ့​ပြီ။"
+
+msgid "FPV Strike Drone"
+msgstr "FPV တိုက်ခိုက်​ဒရုန်း"
+
+msgid "Free Trade"
+msgstr "လွတ်လပ်​ကုန်သွယ်​ရေး"
+
+msgid "Freeze the column (%d/%d), then destroy it (%d left).%s"
+msgstr "တပ်တန်း​ကို​အေးခဲ​စေ (%d/%d)၊ ထို့နောက်​ဖျက်ဆီး​ပါ (%d ကျန်)။%s"
+
+msgid "freeze the phantom"
+msgstr "သရဲ​ကို​အေးခဲ​စေ"
+
+msgid "Freezes one target. One cast."
+msgstr "ပစ်မှတ်​တစ်​ခု​ကို​အေးခဲ​စေ​သည်။ တစ်ကြိမ်​သာ။"
+
+msgid "Freezes the tank column. It does not finish the mission."
+msgstr "တင့်ကား​တန်း​ကို​အေးခဲ​စေ​သည်။ မစ်ရှင်​ကို​မ​ပြီးဆုံး​စေ​ပါ။"
+
+msgid "Freezes the trimarans for a while. It does not finish the mission."
+msgstr "ကိုယ်ထည်​သုံး​ခု​လှေ​များ​ကို​ခဏ​အေးခဲ​စေ​သည်။ မစ်ရှင်​ကို​မ​ပြီးဆုံး​စေ​ပါ။"
+
+msgid "Frequency Hop"
+msgstr "လှိုင်းနှုန်း​ခုန်"
+
+msgid "Game language"
+msgstr "ဂိမ်း​ဘာသာ​စကား"
+
+msgid "GAMEPLAY"
+msgstr "ဂိမ်း​ကစား​မှု"
+
+msgid "garrison %d"
+msgstr "ကင်း​တပ် %d"
+
+msgid "Garrison clear. %s. Siphon both server blocks (%d)."
+msgstr "ကင်း​တပ်​ရှင်း​ပြီ။ %s။ ဆာဗာ​အစု​နှစ်​ခု​လုံး​ကို​စုပ်ယူ​ပါ (%d)။"
+
+msgid "Garrison clear. Hold the hydro radar."
+msgstr "ကင်း​တပ်​ရှင်း​ပြီ။ ရေ​ရေဒါ​ကို​ထိန်း​ပါ။"
+
+msgid "Garrison clear. Hydro radar is held."
+msgstr "ကင်း​တပ်​ရှင်း​ပြီ။ ရေ​ရေဒါ​ထိန်း​ထား​ပြီ။"
+
+msgid "Garrison clear. Siphon the compound (%d)."
+msgstr "ကင်း​တပ်​ရှင်း​ပြီ။ ဝင်း​ကို​စုပ်ယူ​ပါ (%d)။"
+
+msgid "Garrison in the trees."
+msgstr "သစ်ပင်​များ​ကြား​ကင်း​တပ်​ရှိ​သည်။"
+
+msgid "Garuda Mecha-Overlord"
+msgstr "ဂဠုန်​စက်ရုပ်​အရှင်သခင်"
+
+msgid "General Bo Mya"
+msgstr "ဗိုလ်ချုပ်​ဘိုမြ"
+
+msgid "Ghosts in the jammer. Every one of them has to fall."
+msgstr "နှောင့်ယှက်​စက်​အတွင်း​သရဲ​တပ်သား​များ။ အားလုံး​ကျ​ရ​မည်။"
+
+msgid "Ghosts of Patani"
+msgstr "ပတ္တာနီ​၏​သရဲ​များ"
+
+msgid "Ghosts of Patani. Text briefing. Destroy every ghost in the jammer, including the shipment guards. GPS guidance drops there. A fiber link does not. Losing the company fails the mission. GPS drops, ghosts close in, and then the guide turns. The side cache is optional."
+msgstr "ပတ္တာနီ​၏​သရဲ​များ။ စာသား​အကျဉ်းချုပ်။ ပစ္စည်း​အစောင့်​များ​အပါအဝင်​နှောင့်ယှက်​စက်​အတွင်း​ရှိ​သရဲ​တပ်သား​အားလုံး​ကို​ဖျက်ဆီး​ပါ။ ထို​နေရာ​တွင် GPS လမ်းညွှန်​ပြတ်​သည်။ ဖိုက်ဘာ​ချိတ်ဆက်​မှု​မ​ပြတ်​ပါ။ တပ်ခွဲ​ဆုံးရှုံး​လျှင်​မစ်ရှင်​ကျရှုံး​သည်။ GPS ပြတ်၊ သရဲ​များ​ချဉ်းကပ်​လာ​ပြီး​လမ်းပြ​သစ္စာဖောက်​သည်။ ဘေး​သိုလှောင်ရုံ​သည်​ရွေးချယ်​နိုင်​သည်။"
+
+msgid "Godot Engine, MIT licence"
+msgstr "Godot အင်ဂျင်၊ MIT လိုင်စင်"
+
+msgid "Godot RTS Advanced, MIT licence"
+msgstr "Godot RTS Advanced၊ MIT လိုင်စင်"
+
+msgid "gold bullion"
+msgstr "ရွှေ​အချောင်း"
+
+msgid "Golden Confluence"
+msgstr "ရွှေ​မြစ်ဆုံ"
+
+msgid "Golden Dragon Dirigible"
+msgstr "ရွှေ​နဂါး​လေသင်္ဘော"
+
+msgid "Golden Slag / Aurum-9"
+msgstr "ရွှေ​ချေး / Aurum-9"
+
+msgid "Golden Slag / Aurum-9 stays in the yard ledger. Ruby and rare earth are the raid."
+msgstr "ရွှေ​ချေး / Aurum-9 သည်​ဝင်း​စာရင်း​ထဲ​တွင်​ကျန်​သည်။ ပတ္တမြား​နှင့်​ရှားပါး​မြေ​သည်​စီးနင်း​မှု​ဖြစ်​သည်။"
+
+msgid "Got it"
+msgstr "နားလည်​ပြီ"
+
+msgid "GPS drops in the mist. Fiber shots still land."
+msgstr "မြူ​ထဲ​တွင် GPS ပြတ်​သည်။ ဖိုက်ဘာ​ပစ်ချက်​များ​ထိ​ဆဲ။"
+
+msgid "GPS Spoofing"
+msgstr "GPS လှည့်စား​ခြင်း"
+
+msgid "GRAPHICS"
+msgstr "ဂရပ်ဖစ်"
+
+msgid "Greybox"
+msgstr "မီးခိုး​သေတ္တာ"
+
+msgid "Grinder Treads"
+msgstr "ကြိတ်စက်​သံကြိုး​ဘီး"
+
+msgid "Ground"
+msgstr "မြေပြင်"
+
+msgid "Group %d"
+msgstr "အုပ်စု %d"
+
+msgid "Group %d empty"
+msgstr "အုပ်စု %d ဗလာ"
+
+msgid "Group %d stored"
+msgstr "အုပ်စု %d သိမ်း​ပြီ"
+
+msgid "group toggle"
+msgstr "အုပ်စု​ဖွင့်ပိတ်"
+
+msgid "GTFC"
+msgstr "GTFC"
+
+msgid "GTFC  crimson / amber"
+msgstr "GTFC  နီရဲ​ရောင် / ပယင်း​ရောင်"
+
+msgid "GTFC gunboat"
+msgstr "GTFC သေနတ်​လှေ"
+
+msgid "GTFC tank"
+msgstr "GTFC တင့်ကား"
+
+msgid "Guard"
+msgstr "စောင့်ကြပ်"
+
+msgid "Guard. Fire at enemies in range."
+msgstr "စောင့်ကြပ်။ ပစ်ကွင်း​အတွင်း​ရန်သူ​များ​ကို​ပစ်​ပါ။"
+
+msgid "Guide"
+msgstr "လမ်းညွှန်"
+
+msgid "Gun Wharf"
+msgstr "သေနတ်​ဆိပ်ခံ"
+
+msgid "H    Controls"
+msgstr "H    ထိန်းချုပ်​ခလုတ်​များ"
+
+msgid "H guide    P protocols"
+msgstr "H လမ်းညွှန်    P လုပ်ထုံး​များ"
+
+msgid "Ha Long Hydrofoil"
+msgstr "ဟာလောင်း​ရေပျံ​လှေ"
+
+msgid "hack held"
+msgstr "ဟက်​ထိန်း​ထား"
+
+msgid "Hack: %ds"
+msgstr "ဟက်: %ds"
+
+msgid "Hack: 20s"
+msgstr "ဟက်: ၂၀​စက္ကန့်"
+
+msgid "Halt"
+msgstr "ရပ်"
+
+msgid "Hard"
+msgstr "ခက်"
+
+msgid "haul 120"
+msgstr "လုယက်​ပစ္စည်း 120"
+
+msgid "Hawk Missiles"
+msgstr "သိမ်းငှက်​ဒုံးကျည်"
+
+msgid "Haze coxswain"
+msgstr "မြူခိုး​လှေထိုး"
+
+msgid "Haze raider"
+msgstr "မြူခိုး​စီးနင်း​သူ"
+
+msgid "Hide mission"
+msgstr "မစ်ရှင်​ဝှက်"
+
+msgid "High"
+msgstr "မြင့်"
+
+msgid "High graphics, full volume, voices in the game language, normal difficulty, edge pan on."
+msgstr "ဂရပ်ဖစ်​မြင့်၊ အသံ​အပြည့်၊ ဂိမ်း​ဘာသာ​ဖြင့် အသံ​သရုပ်ဆောင်၊ ပုံမှန်​ခက်ခဲ​မှု၊ အစွန်း​ရွှေ့​ခြင်း​ဖွင့်။"
+
+msgid "High keeps trees, rain, fog, and shadows."
+msgstr "မြင့်​တွင်​သစ်ပင်၊ မိုး၊ မြူ​နှင့်​အရိပ်​များ​ပါ​သည်။"
+
+msgid "High Technology"
+msgstr "အဆင့်မြင့်​နည်းပညာ"
+
+msgid "Highland cliffs block the climb. The road is open ground. The enemy builds, expands, and attacks."
+msgstr "ကုန်းမြင့်​ချောက်ကမ်း​များ​က​တက်​ခြင်း​ကို​ပိတ်​သည်။ လမ်း​သည်​ဟင်းလင်း​မြေ​ဖြစ်​သည်။ ရန်သူ​သည်​တည်ဆောက်၊ ချဲ့ထွင်​ပြီး​တိုက်ခိုက်​သည်။"
+
+msgid "Highland Saboteur"
+msgstr "ကုန်းမြင့်​ဖျက်လိုဖျက်ဆီး​သမား"
+
+msgid "Highlight a row to read what it changes."
+msgstr "ပြောင်းလဲ​သည့်​အရာ​ကို​ဖတ်​ရန်​အတန်း​တစ်​ခု​ကို​ရွေး​ပါ။"
+
+msgid "Hold"
+msgstr "ကိုင်​ထား"
+
+msgid "hold the blocks %ds"
+msgstr "အစု​များ​ကို​ထိန်း %ds"
+
+msgid "Hold the radar through the haze. %d seconds left."
+msgstr "မြူခိုး​တစ်လျှောက်​ရေဒါ​ကို​ထိန်း​ပါ။ %d စက္ကန့်​ကျန်​သည်။"
+
+msgid "Hold the radar. The haze is the clock."
+msgstr "ရေဒါ​ကို​ထိန်း​ပါ။ မြူခိုး​သည်​နာရီ​ဖြစ်​သည်။"
+
+msgid "Hold. Do not acquire targets."
+msgstr "ကိုင်​ထား။ ပစ်မှတ်​မ​ရှာ​နှင့်။"
+
+msgid "Holder"
+msgstr "ကိုင်ဆောင်​သူ"
+
+msgid "Honorable Discharge"
+msgstr "ဂုဏ်ထူး​ဖြင့်​အငြိမ်းစား"
+
+msgid "Host %s %s    Guest %s %s"
+msgstr "အိမ်ရှင် %s %s    ဧည့်သည် %s %s"
+
+msgid "Host a 1v1 on this LAN, or join one. Each player brings a faction and a base."
+msgstr "ဤ LAN ပေါ်​တွင် 1v1 တစ်​ပွဲ​ဖွင့်​ပါ၊ သို့မဟုတ်​ဝင်​ပါ။ ကစားသမား​တိုင်း​အုပ်စု​တစ်​ခု​နှင့်​အခြေစိုက်​စခန်း​တစ်​ခု​ယူ​လာ​သည်။"
+
+msgid "Host LAN"
+msgstr "LAN ဖွင့်"
+
+msgid "Houses"
+msgstr "အိမ်​များ"
+
+msgid "Hover-technical set."
+msgstr "လေဖိ​တိုက်ယာဉ်​အသင့်။"
+
+msgid "How fast the camera slides."
+msgstr "ကင်မရာ​ရွှေ့​သည့်​အမြန်နှုန်း။"
+
+msgid "How to play"
+msgstr "ကစား​နည်း"
+
+msgid "How to play (H)"
+msgstr "ကစား​နည်း (H)"
+
+msgid "hub not queued"
+msgstr "ဗဟို​တန်းစီ​မ​ထား"
+
+msgid "hub not ready"
+msgstr "ဗဟို​မ​အသင့်"
+
+msgid "hub placed"
+msgstr "ဗဟို​နေရာချ​ပြီ"
+
+msgid "hub ready to place"
+msgstr "ဗဟို​နေရာချ​ရန်​အသင့်"
+
+msgid "Hub Refinery"
+msgstr "ဗဟို​သန့်စင်​စက်ရုံ"
+
+msgid "HUD"
+msgstr "HUD"
+
+msgid "Humanfuture"
+msgstr "Humanfuture"
+
+msgid "Hydro radar (mission)"
+msgstr "ရေ​ရေဒါ (မစ်ရှင်)"
+
+msgid "Hydro radar. Text briefing. Capture the radar so water nodes show on the map."
+msgstr "ရေ​ရေဒါ။ စာသား​အကျဉ်းချုပ်။ ရေ​ဆုံမှတ်​များ​မြေပုံ​ပေါ်​ပေါ်​စေ​ရန်​ရေဒါ​ကို​သိမ်းယူ​ပါ။"
+
+msgid "Indochina Drone Carrier"
+msgstr "အင်ဒိုချိုင်းနား​ဒရုန်း​သယ်​သင်္ဘော"
+
+msgid "Infantry"
+msgstr "ခြေလျင်"
+
+msgid "Infantry screen the tanks. They are not the column."
+msgstr "ခြေလျင်​က​တင့်ကား​များ​ကို​ကာကွယ်​သည်။ ၎င်း​တို့​သည်​တပ်တန်း​မ​ဟုတ်​ပါ။"
+
+msgid "Infiltrator Operative"
+msgstr "စိမ့်ဝင်​ထောက်လှမ်း​သူ"
+
+msgid "Inflatable Raft and C4"
+msgstr "လေထိုး​ဖောင်​နှင့် C4"
+
+msgid "Interceptor up."
+msgstr "ကြားဖြတ်​လေယာဉ်​တက်​ပြီ။"
+
+msgid "Internal queue"
+msgstr "အတွင်း​တန်းစီ"
+
+msgid "Ion-Cryo Collider"
+msgstr "အိုင်းယွန်း​အေးခဲ​တိုက်မိ​စက်"
+
+msgid "Irrawaddy Gyro-Gunship"
+msgstr "ဧရာဝတီ​ဂိုင်ရို​တိုက်​ရဟတ်ယာဉ်"
+
+msgid "Iskandar"
+msgstr "အစ္စကန်ဒါ"
+
+msgid "Islands in deep water. Shoals are the crossings. The enemy builds, expands, and attacks."
+msgstr "ရေနက်​ထဲ​ရှိ​ကျွန်း​များ။ သောင်​များ​သည်​ဖြတ်ကူး​ရာ​ဖြစ်​သည်။ ရန်သူ​သည်​တည်ဆောက်၊ ချဲ့ထွင်​ပြီး​တိုက်ခိုက်​သည်။"
+
+msgid "Jade caravan"
+msgstr "ကျောက်စိမ်း​ကုန်တင်​တန်း"
+
+msgid "Jammer"
+msgstr "နှောင့်ယှက်​စက်"
+
+msgid "Jammer drill (mission)"
+msgstr "နှောင့်ယှက်​စက်​လေ့ကျင့်​ခန်း (မစ်ရှင်)"
+
+msgid "Jammer drill. Text briefing. GPS guidance drops inside the jammer. A fiber link does not."
+msgstr "နှောင့်ယှက်​စက်​လေ့ကျင့်​ခန်း။ စာသား​အကျဉ်းချုပ်။ နှောင့်ယှက်​စက်​အတွင်း GPS လမ်းညွှန်​ပြတ်​သည်။ ဖိုက်ဘာ​ချိတ်ဆက်​မှု​မ​ပြတ်​ပါ။"
+
+msgid "Jammer ghost"
+msgstr "နှောင့်ယှက်​စက်​သရဲ"
+
+msgid "Jar battery"
+msgstr "ကျောက်အိုး​အမြောက်တပ်"
+
+msgid "Jar screen"
+msgstr "ကျောက်အိုး​ကာကွယ်​တပ်"
+
+msgid "Jet Interceptor"
+msgstr "ဂျက်​ကြားဖြတ်​လေယာဉ်"
+
+msgid "Jets on the target."
+msgstr "ပစ်မှတ်​ပေါ်​ဂျက်​များ။"
+
+msgid "Johor Loiter-Swarm"
+msgstr "ဂျိုဟိုး​ဝဲပျံ​အုပ်"
+
+msgid "Join LAN"
+msgstr "LAN ဝင်"
+
+msgid "Join offer"
+msgstr "ဝင်ရောက်​ကမ်းလှမ်း​ချက်"
+
+msgid "Joint picket"
+msgstr "ပူးတွဲ​ကင်း"
+
+msgid "Junta escort"
+msgstr "စစ်အစိုးရ​အစောင့်"
+
+msgid "Kachin Sapper Dog"
+msgstr "ကချင်​မိုင်းရှင်း​ခွေး"
+
+msgid "kamikaze 6"
+msgstr "အသေခံ 6"
+
+msgid "Kamikaze Drone Squadron"
+msgstr "အသေခံ​ဒရုန်း​တပ်ဖွဲ့"
+
+msgid "Keep the beam on the phantom. It is not frozen yet."
+msgstr "ရောင်ခြည်​ကို​သရဲ​ပေါ်​ထိန်း​ထား​ပါ။ မ​အေးခဲ​သေး​ပါ။"
+
+msgid "Keep the ferry alive (%s). %d seconds left."
+msgstr "ကူးတို့​ကို​အသက်ရှင်​အောင်​ထား​ပါ (%s)။ %d စက္ကန့်​ကျန်​သည်။"
+
+msgid "Keep the ferry alive. %d seconds left."
+msgstr "ကူးတို့​ကို​အသက်ရှင်​အောင်​ထား​ပါ။ %d စက္ကန့်​ကျန်​သည်။"
+
+msgid "Keng Tung Defoliation"
+msgstr "ကျိုင်းတုံ​အရွက်ကြွေ​ဆေးဖျန်း"
+
+msgid "Keng Tung. Text briefing. Freeze the GTFC tank column, then destroy it. Infantry screens the tanks. Toxic Defoliation can freeze them. Casting it does not end the mission. A spray run comes down the road and has to be cut off. If it lands, it defoliates your line and the side cache is lost."
+msgstr "ကျိုင်းတုံ။ စာသား​အကျဉ်းချုပ်။ GTFC တင့်ကား​တန်း​ကို​အေးခဲ​စေ​ပြီး​ဖျက်ဆီး​ပါ။ ခြေလျင်​က​တင့်ကား​များ​ကို​ကာကွယ်​သည်။ အဆိပ်​အရွက်ကြွေ​ဆေးဖျန်း​က​၎င်း​တို့​ကို​အေးခဲ​စေ​နိုင်​သည်။ ၎င်း​ကို​သုံး​ခြင်း​က​မစ်ရှင်​ကို​မ​ပြီးဆုံး​စေ​ပါ။ ဆေးဖျန်း​တပ်​လမ်း​အတိုင်း​လာ​မည်​ဖြစ်​၍​ဖြတ်​တား​ရ​မည်။ ကျ​သွား​လျှင်​သင့်​တပ်လိုင်း​အရွက်ကြွေ​ပြီး​ဘေး​သိုလှောင်ရုံ​ဆုံးရှုံး​မည်။"
+
+msgid "Kenney (kenney.nl) and other CC0 sources, listed in game/sfx/CREDITS.md"
+msgstr "Kenney (kenney.nl) နှင့်​အခြား CC0 ရင်းမြစ်​များ၊ game/sfx/CREDITS.md တွင်​စာရင်း​ပါ"
+
+msgid "Key guide"
+msgstr "ခလုတ်​လမ်းညွှန်"
+
+msgid "Kite Loiterer"
+msgstr "စွန်​ဝဲပျံ​ဒရုန်း"
+
+msgid "Kokang and Mogok night raid"
+msgstr "ကိုးကန့်​နှင့်​မိုးကုတ်​ည​စီးနင်း​မှု"
+
+msgid "Kokang and Mogok night raid. Raise the scaffold yard, run the ruby pits on night shift, and bring one rare-earth stock home before dawn. If the company dies, the raid fails. An ambush, a blown bridge, a turned guide, and rain can arrive while you work. The side cache is optional."
+msgstr "ကိုးကန့်​နှင့်​မိုးကုတ်​ည​စီးနင်း​မှု။ ငြမ်း​ဝင်း​ကို​တည်ဆောက်၊ ပတ္တမြား​တွင်း​များ​ကို​ည​အဆိုင်း​ဖြင့်​လည်ပတ်​ပြီး​မိုး​မ​လင်း​မီ​ရှားပါး​မြေ​အစုအပုံ​တစ်​ခု​ကို​အိမ်​ပြန်​ယူ​လာ​ပါ။ တပ်ခွဲ​သေ​လျှင်​စီးနင်း​မှု​ကျရှုံး​သည်။ သင်​အလုပ်​လုပ်​နေ​စဉ်​ချုံခို​တိုက်ခိုက်​မှု၊ ဖောက်ခွဲ​ခံ​ရ​သော​တံတား၊ သစ္စာဖောက်​လမ်းပြ​နှင့်​မိုး​ရောက်​လာ​နိုင်​သည်။ ဘေး​သိုလှောင်ရုံ​သည်​ရွေးချယ်​နိုင်​သည်။"
+
+msgid "Kokang and Mogok. Text briefing. Raise the yard, clear the Orlan recon over the pits, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails. Rain hits, Orlans pass the pits, and the night shift starts. The side cache is optional."
+msgstr "ကိုးကန့်​နှင့်​မိုးကုတ်။ စာသား​အကျဉ်းချုပ်။ ဝင်း​ကို​တည်ဆောက်၊ တွင်း​များ​အထက်​ရှိ Orlan ကင်းထောက်​ကို​ရှင်း၊ ပတ္တမြား​ည​အဆိုင်း​ကို​လည်ပတ်​ပြီး​ရှားပါး​မြေ​အစုအပုံ​တစ်​ခု​ကို​အိမ်​ပြန်​ယူ​လာ​ပါ။ တပ်ခွဲ​သေ​လျှင်​စီးနင်း​မှု​ကျရှုံး​သည်။ မိုး​ရွာ၊ Orlan များ​တွင်း​များ​ကို​ဖြတ်​ပြီး​ည​အဆိုင်း​စ​သည်။ ဘေး​သိုလှောင်ရုံ​သည်​ရွေးချယ်​နိုင်​သည်။"
+
+msgid "Kokang: %s. %s. %s. %s."
+msgstr "ကိုးကန့်: %s။ %s။ %s။ %s။"
+
+msgid "Krakatoa Dreadnought"
+msgstr "ကရာကာတိုအာ​စစ်သင်္ဘောကြီး"
+
+msgid "Kris Plasma Rush"
+msgstr "ကရစ်​ဓား​ပလာစမာ​အလျင်အမြန်​တိုက်"
+
+msgid "LAN guest. Your company, your base."
+msgstr "LAN ဧည့်သည်။ သင့်​တပ်ခွဲ၊ သင့်​စခန်း။"
+
+msgid "Land"
+msgstr "ဆိုက်ကပ်"
+
+msgid "Land Legs"
+msgstr "ကုန်း​ခြေထောက်"
+
+msgid "LANGUAGE"
+msgstr "ဘာသာ​စကား / LANGUAGE"
+
+msgid "Laser Target Lock"
+msgstr "လေဆာ​ပစ်မှတ်​ချိတ်"
+
+msgid "Last-Stand Ram"
+msgstr "နောက်ဆုံး​ခုခံ​တိုက်​ဝင်"
+
+msgid "Leech beam on."
+msgstr "သွေးစုပ်​ရောင်ခြည်​ဖွင့်​ပြီ။"
+
+msgid "Left click selects. Right click moves. F ability."
+msgstr "ဘယ်​ကလစ်​က​ရွေး​သည်။ ညာ​ကလစ်​က​ရွေ့​သည်။ F စွမ်းရည်။"
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
+"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+"ယူနစ်​တစ်ခု​ကို​ဘယ်​ကလစ်​နှိပ်ပါ၊ သို့မဟုတ်​သင့်​တပ်ခွဲ​ပတ်လည်​ဘောင်​ဆွဲပါ။ လိမ္မော်ရောင်​ကွင်း​က​ရွေးထားသော​ယူနစ်​၏​လက်နက်​အကွာအဝေး​ကို​ပြ​ပြီး၊ ညွှန်ပြ​မြား​ယူနစ်​ပေါ်​ရပ်နေစဉ်​လည်း​ထို​ကွင်း​ပေါ်လာ​သည်။\n"
+"ရွှေ့​ရန်​ဗလာ​မြေပြင်​ကို​ညာ​ကလစ်​နှိပ်ပါ။ တိုက်ခိုက်​ရန်​ရန်သူ​ကို​ညာ​ကလစ်​နှိပ်ပါ။ ထို​နေရာ​ကို​ကွင်း​တစ်ခု​မှတ်သား​ပြီး​မှိန်​ပျောက်​သွား​သည်။\n"
+"ကာဆာ​ဘက်​သို့ တိုက်ရင်း​ရွှေ့​ရန် Q ကို​နှိပ်ပါ။ ရပ်​ရန် X ကို​နှိပ်ပါ။ Ctrl နှင့် 1 မှ 9 အထိ​နှိပ်​လျှင်​အုပ်စု​သိမ်း​သည်။ ပြန်​ခေါ်​ရန်​နံပါတ်​ကို​နှိပ်ပါ၊ ကင်မရာ​ကို​အလယ်​ထား​ရန်​ထပ်​နှိပ်ပါ။\n"
+"Shift-ကလစ်​က​ယူနစ်​ထည့်​သည်။ Ctrl-ကလစ်​က​ဖွင့်​ပိတ်​လုပ်​သည်။ နှစ်ချက်​ကလစ်​သို့မဟုတ် E က​ထို​အမျိုးအစား​ယူနစ်​အားလုံး​ကို​ရွေး​သည်။ Z က​နောက်​ရွှေ့​မှု​အတွက်​တပ်ခွဲ​ကို​တန်းစီ​သည်။ ဗလာ​မြေပြင်​ပေါ် Shift-ညာ​ကလစ်​က​နောက်ထပ်​အဆင့်​ထည့်​သည်။ R က​စုရပ်​အလံ​စိုက်​ပြီး​ယူနစ်​သစ်​များ​၎င်း​ဘေး​တွင်​ပေါ်လာ​သည်။ အပေါ်​ဘား​က​တစ်​စက္ကန့်​လျှင်​ရ​သော​ခရက်ဒစ်​ကို​ပြ​သည်။\n"
+"ဦးဆောင်​ယူနစ်​၏​နောက်​အဆင့်​ပေါ်​တွင်​စိန်​ပုံ​ရှိ​သည်။ ပါးလွှာ​သော​လှိုင်း​က​လက်ရှိ​ရည်မှန်းချက်​ကို​မှတ်သား​ပြီး​မြေပုံ​ငယ်​က​ထို​နေရာ​ကို​ဘောင်​ခတ်​သည်။ ထိမှန်​မှု​တိုင်း​တွင် ပေါ်​နေ​သော​ဂဏန်း​ပြ​သည်။\n"
+"ကင်မရာ​ကို​ထို​နေရာ​သို့ ခုန်​ရန်​မြေပုံ​ငယ်​ကို​ကလစ်​နှိပ်ပါ။\n"
+"ရွေးထားသော​ယူနစ်​၏​စွမ်းရည်​ကို​သုံး​ရန် F သို့မဟုတ်​စွမ်းရည်​ကို​နှိပ်ပါ။ စမတ်​ပစ်​က​အနီးဆုံး​အသင့်​ယူနစ်​ကိုသာ​ပစ်​စေ​သည်။\n"
+"ညာဘက်​ကော်လံ​က​ယူနစ်​လေ့ကျင့်​ပြီး​အဆောက်အအုံ​ဆောက်​သည်။ အရောင်​ပြား​ကို​သိမ်း​ရန် ၎င်း​ပေါ်​လမ်းလျှောက်​သွားပါ။\n"
+"လှေ​များ​သည်​ရေနက်​ကို​ဖြတ်​သည်။ တင့်ကား​နှင့်​ခြေလျင်​တပ်​သည် ကုန်းပေါ်​တွင်​သာ​နေ​ပြီး ရေတိမ်​ဖြတ်ကူး​ရာ​ဖွင့်​ထား​လျှင်​သုံး​သည်။\n"
+"မုတ်သုံ​ရွှံ့​က​တင့်ကား​နှင့်​ခြေလျင်​ကို​နှေး​စေ​သည်။ ရေလက်ကြား​မြူ​သည် ရေအား​ရေဒါ​သင့်​လက်​မ​ရှိ​လျှင် မြင်ကွင်း​ကို​တို​စေ​သည်။ မဲခေါင်​တွင် တံတား​ကို​ဖြို​ပြီး​တူးမြောင်း​ဖွင့်​ရန်​ညာ​ကလစ်​နှိပ်ပါ။ သိမ်းယူ​ထား​သော​လက်နက်​ဈေး​က CH-4, Su-30, Orlan-10 နှင့် FLH7 အဖွဲ့​ကို​ရောင်း​ပြီး ရန်သူ​ငွေအိတ်​မှ​ခိုး​ယူ​သည်။\n"
+"စွမ်းအင်​နည်း​လျှင် စက်ရုံ​က​သုံးစွဲ​မှု​ကို​ဖုံး​နိုင်​သည်​အထိ ထုတ်လုပ်​မှု​သစ်​ရပ်​ပြီး ကာကွယ်ရေး​များ​ကို​ငြိမ်​စေ​သည်။ ပယ်ဖျက်​က​ဆောက်​နေ​သော​အဆောက်အအုံ​ကို​ဖယ်​သည်။ ရေအား​ရေဒါ​က​မြစ်​လမ်းကြောင်း​ကို​လင်း​စေ​သည်။ ခံတပ်​ဝင်​ရန် ခြေလျင်​ဖြင့် ချေး​ခံကျင်း​သို့မဟုတ်​ဘက်စုံ​သေနတ်​ကို​ညာ​ကလစ်​နှိပ်ပါ၊ ထုတ်​ရန် ပြီးဆုံး​သော​အဆောက်အအုံ​ကို​ကလစ်​နှိပ်ပါ။ ပြီးဆုံး​သော​ကာကွယ်သူ-VX ကို​ဒုတိယ​အကြိမ်​ကလစ်​လျှင် မြေပြင်​နှင့်​လေ​ပစ်​သေနတ်​ကို​လဲ​သည်။\n"
+"P က​ပရိုတိုကော​များ​ကို​ဖွင့်​သည်။ H က​ဤ​လမ်းညွှန်​ကို​ဖွင့်​သည်။\n"
+"အနိုင်ရ​လျှင် အခြေအနေ​စာကြောင်း​တွင် ရည်မှန်းချက်​ပြီးမြောက်​ဟု​ပြ​ပြီး တပ်ခွဲ​ကျဆုံး​လျှင် ရည်မှန်းချက်​မအောင်မြင်​ဟု​ပြ​သည်။"
+
+msgid "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr "ဘယ်​ကလစ်​ရွေး။ Shift-ကလစ်​ထည့်။ နှစ်ချက်​ကလစ်​သို့မဟုတ် E ဖြင့်​အမျိုးအစား​ရွေး။ ရွှေ့​ရန်​မြေပြင်၊ တိုက်​ရန်​ရန်သူ​ကို​ညာ​ကလစ်။ Shift-ညာ​ကလစ်​က​လမ်းမှတ်​ထည့်။ Z တပ်ခွဲ​တန်းစီ။ Q တိုက်ရင်း​ရွှေ့။ X ရပ်။ R စုရပ်​အလံ​ရွှေ့။ Ctrl+1-9 အုပ်စု​သိမ်း၊ နံပါတ်​က​ပြန်​ခေါ်။ ကွင်း​က​အမိန့်​ကို​မှတ်။ ခုန်​ရန်​မြေပုံ​ငယ်​ကလစ်။ F စွမ်းရည်။ H လမ်းညွှန်။ P ပရိုတိုကော​ဖွင့်။"
+
+msgid "Line"
+msgstr "တန်း"
+
+msgid "Linked. %d units."
+msgstr "ချိတ်ဆက်​ပြီး။ ယူနစ် %d ခု။"
+
+msgid "LOADING"
+msgstr "ဖွင့်​နေ​သည်"
+
+msgid "Loading"
+msgstr "ဖွင့်​နေ​သည်"
+
+msgid "Locks a satellite on the target. One cast."
+msgstr "ပစ်မှတ်​ပေါ်​ဂြိုဟ်တု​ချိန်​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "Longtail Raider"
+msgstr "အမြီးရှည်​လှေ​စီးနင်း​တပ်"
+
+msgid "Love Drunk"
+msgstr "Love Drunk"
+
+msgid "Low"
+msgstr "နိမ့်"
+
+msgid "Low drops trees, rain, fog, and shadows."
+msgstr "နိမ့်​တွင် သစ်ပင်၊ မိုး၊ မြူ​နှင့်​အရိပ်​များ​ဖြုတ်​သည်။"
+
+msgid "low power"
+msgstr "စွမ်းအင်​နည်း"
+
+msgid "Low power. Build a plant."
+msgstr "စွမ်းအင်​နည်း​သည်။ စက်ရုံ​ဆောက်ပါ။"
+
+msgid "Machinesfuture"
+msgstr "Machinesfuture"
+
+msgid "Mae Sai scaffold (mission)"
+msgstr "မဲဆိုင်​ငြမ်း (မစ်ရှင်)"
+
+msgid "Mae Sai. Text briefing. Raise the scaffold yard and keep the drain running until the frame is finished."
+msgstr "မဲဆိုင်။ စာသား​အကျဉ်းချုပ်။ ငြမ်း​ဝင်း​ဆောက်​ပြီး ဘောင်​ပြီး​သည်​အထိ ရေနုတ်​စက်​ကို​ဆက်​လည်​စေပါ။"
+
+msgid "Magnetic Harpoon Grinder"
+msgstr "သံလိုက်​မှိန်း​ကြိတ်စက်"
+
+msgid "Magnetic Hull Breach"
+msgstr "သံလိုက်​ကိုယ်ထည်​ဖောက်​ခွဲ"
+
+msgid "Magnetic Satellite"
+msgstr "သံလိုက်​ဂြိုဟ်တု"
+
+msgid "Malacca Pocket-Sub"
+msgstr "မလက္ကာ​အိတ်ဆောင်​ရေငုပ်"
+
+msgid "Malacca Recon Drone"
+msgstr "မလက္ကာ​ကင်းထောက်​ဒရုန်း"
+
+msgid "Malay"
+msgstr "မလေး"
+
+msgid "Mandarin"
+msgstr "မန်ဒရင်း"
+
+msgid "Market"
+msgstr "ဈေး"
+
+msgid "Master"
+msgstr "ပင်မ​အသံ"
+
+msgid "Mekong"
+msgstr "မဲခေါင်"
+
+msgid "Mekong Assault Destroyer"
+msgstr "မဲခေါင်​တိုက်ခိုက်ရေး​ဖျက်သင်္ဘော"
+
+msgid "Mekong Combat Sapper"
+msgstr "မဲခေါင်​တိုက်ပွဲ​ဖောက်ခွဲရေး​တပ်သား"
+
+msgid "Mekong Delta"
+msgstr "မဲခေါင်​မြစ်ဝကျွန်းပေါ်"
+
+msgid "Mekong Hawk UAV"
+msgstr "မဲခေါင်​သိမ်းငှက် UAV"
+
+msgid "Mekong Spider Drone"
+msgstr "မဲခေါင်​ပင့်ကူ​ဒရုန်း"
+
+msgid "Menu"
+msgstr "မီနူး"
+
+msgid "Menu and match songs. The default sits a little under full."
+msgstr "မီနူး​နှင့် ပွဲ​သီချင်း​များ။ မူလ​တန်ဖိုး​သည် အပြည့်​ထက် အနည်း​ငယ်​လျော့​သည်။"
+
+msgid "Menu ticks, weapons, and the radio."
+msgstr "မီနူး​အသံ၊ လက်နက်​နှင့်​ရေဒီယို။"
+
+msgid "Menus, HUD, briefings, and subtitles. Voices follow; the Audio page can change them."
+msgstr "မီနူး၊ HUD၊ လုပ်ငန်း​ရှင်းလင်း​ချက်​နှင့် စာတန်း​များ။ အသံ​များ​လည်း​လိုက်​ပြောင်း​သည်၊ အသံ​စာမျက်နှာ​တွင် ပြင်​နိုင်​သည်။"
+
+msgid "Militia holding."
+msgstr "ပြည်သူ့စစ်​ထိန်း​နေ​သည်။"
+
+msgid "Militia moving."
+msgstr "ပြည်သူ့စစ်​ရွှေ့​နေ​သည်။"
+
+msgid "Militia under fire."
+msgstr "ပြည်သူ့စစ်​ပစ်ခတ်​ခံ​နေ​ရ​သည်။"
+
+msgid "Mindanao Striker Walker"
+msgstr "မင်ဒါနာအို​တိုက်ခိုက်​လမ်းလျှောက်​စက်"
+
+msgid "Mine rubies"
+msgstr "ပတ္တမြား​တူး"
+
+msgid "mine rubies"
+msgstr "ပတ္တမြား​တူး"
+
+msgid "Mine rubies: %d/30"
+msgstr "ပတ္တမြား​တူး: %d/30"
+
+msgid "Mines in the cut. Take the boats wide of the line."
+msgstr "ချောက်​ထဲ​မိုင်း​ရှိ​သည်။ လှေ​များ​ကို​တန်း​နှင့်​ဝေး​ဝေး​ယူ​သွားပါ။"
+
+msgid "Mines rubies. One cast."
+msgstr "ပတ္တမြား​တူး​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "Minimap"
+msgstr "မြေပုံ​ငယ်"
+
+msgid "Mirage Camo-Tank"
+msgstr "သဲထင်ရေယောင်​ဖုံးကွယ်​တင့်ကား"
+
+msgid "Mission"
+msgstr "မစ်ရှင်"
+
+msgid "Mobile core"
+msgstr "ရွေ့လျား​ဗဟို"
+
+msgid "Mogok Night-Shift Overdrive"
+msgstr "မိုးကုတ်​ညဆိုင်း​အရှိန်မြှင့်"
+
+msgid "Monsoon"
+msgstr "မုတ်သုံ"
+
+msgid "Monsoon Bull-Charge"
+msgstr "မုတ်သုံ​နွားသိုး​တိုက်"
+
+msgid "Move packer"
+msgstr "ထုပ်ပိုး​ယာဉ်​ရွှေ့"
+
+msgid "Multigunner"
+msgstr "ဘက်စုံ​သေနတ်"
+
+msgid "multigunner full"
+msgstr "ဘက်စုံ​သေနတ်​ပြည့်"
+
+msgid "MULTIPLAYER"
+msgstr "ကစားသမား​အများ"
+
+msgid "MUSIC"
+msgstr "ဂီတ"
+
+msgid "Music"
+msgstr "ဂီတ"
+
+msgid "MVD"
+msgstr "MVD"
+
+msgid "MVD  charcoal / cyan"
+msgstr "MVD  မီးသွေး​ရောင် / စိမ်းပြာ"
+
+msgid "MVD  charcoal / cyan    internal queue"
+msgstr "MVD  မီးသွေး​ရောင် / စိမ်းပြာ    အတွင်း​တန်းစီ"
+
+msgid "MVD cutter"
+msgstr "MVD ဖြတ်​လှေ"
+
+msgid "MVD yard"
+msgstr "MVD ဝင်း"
+
+msgid "Nano-Deflector Barrier"
+msgstr "နာနို​လွှဲ​အကာ​အတား"
+
+msgid "napalm 36"
+msgstr "နပါမ် 36"
+
+msgid "Napalm is armed. Calling it does not sink the fleet."
+msgstr "နပါမ်​အသင့်​ဖြစ်​ပြီ။ ခေါ်​ရုံ​ဖြင့် ရေတပ်​မ​နစ်​ပါ။"
+
+msgid "Naval"
+msgstr "ရေ​တပ်"
+
+msgid "Naval Yard"
+msgstr "ရေတပ်​ဝင်း"
+
+msgid "need a naval yard"
+msgstr "ရေတပ်​ဝင်း​လို"
+
+msgid "need a tech center"
+msgstr "နည်းပညာ​စင်တာ​လို"
+
+msgid "need an airfield"
+msgstr "လေ​ကွင်း​လို"
+
+msgid "New to ASEAN 2031?"
+msgstr "ASEAN 2031 ကို​အသစ်​ကစား​သလား?"
+
+msgid "Next skirmish: %s"
+msgstr "နောက်​တိုက်ပွဲ: %s"
+
+msgid "Night"
+msgstr "Night"
+
+msgid "Night commander"
+msgstr "ည​တပ်မှူး"
+
+msgid "Night shift paying"
+msgstr "ညဆိုင်း​ငွေ​ရ​နေ​သည်"
+
+msgid "NMRF"
+msgstr "NMRF"
+
+msgid "NMRF  olive / emerald"
+msgstr "NMRF  သံလွင်​ရောင် / မြစိမ်း"
+
+msgid "NMRF  olive / emerald    mobile core"
+msgstr "NMRF  သံလွင်​ရောင် / မြစိမ်း    ရွေ့လျား​ဗဟို"
+
+msgid "NMRF trimaran"
+msgstr "NMRF သုံးကိုယ်​လှေ"
+
+msgid "NMRF yard"
+msgstr "NMRF ဝင်း"
+
+msgid "No stock yet"
+msgstr "ကုန်​မ​ရှိ​သေး"
+
+msgid "no target"
+msgstr "ပစ်မှတ်​မ​ရှိ"
+
+msgid "Normal"
+msgstr "ပုံမှန်"
+
+msgid "not enough credits"
+msgstr "ခရက်ဒစ်​မ​လုံ"
+
+msgid "Not Needed Anymore"
+msgstr "Not Needed Anymore"
+
+msgid "not ready"
+msgstr "မ​အသင့်"
+
+msgid "Nothing selected"
+msgstr "ဘာ​မှ​မ​ရွေး​ရ"
+
+msgid "nothing to cancel"
+msgstr "ပယ်ဖျက်​စရာ​မ​ရှိ"
+
+msgid "nothing to repair"
+msgstr "ပြင်​စရာ​မ​ရှိ"
+
+msgid "Noto Sans Myanmar, Noto Sans Thai, and Noto Sans SC, SIL Open Font License 1.1"
+msgstr "Noto Sans Myanmar, Noto Sans Thai နှင့် Noto Sans SC၊ SIL Open Font License 1.1"
+
+msgid "NOW PLAYING"
+msgstr "ယခု​ဖွင့်​နေ​သည်"
+
+msgid "Nusantara Boarder"
+msgstr "နူဆန်တာရာ​တက်​စီး​တပ်"
+
+msgid "Objective complete"
+msgstr "ရည်မှန်းချက်​ပြီးမြောက်"
+
+msgid "Objective failed"
+msgstr "ရည်မှန်းချက်​မအောင်မြင်"
+
+msgid "Objective stalled"
+msgstr "ရည်မှန်းချက်​ရပ်တန့်"
+
+msgid "Offer"
+msgstr "ကမ်းလှမ်း​ချက်"
+
+msgid "Offshore Tidal Turbine"
+msgstr "ကမ်းလွန်​ဒီရေ​တာဘိုင်"
+
+msgid "OK"
+msgstr "အိုကေ"
+
+msgid "Olive / emerald"
+msgstr "သံလွင်​ရောင် / မြစိမ်း"
+
+msgid "On"
+msgstr "ဖွင့်"
+
+msgid "One cast, then it is spent."
+msgstr "တစ်​ကြိမ်​သုံး​ပြီး​ကုန်​သည်။"
+
+msgid "one hero"
+msgstr "သူရဲကောင်း​တစ်​ဦး"
+
+msgid "Open yard"
+msgstr "ဝင်း​ဖွင့်"
+
+msgid "Opens robotic assembly. One cast."
+msgstr "စက်ရုပ်​တပ်ဆင်ရေး​ဖွင့်​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "Opens trade income. One cast."
+msgstr "ကုန်သွယ်​ဝင်ငွေ​ဖွင့်​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "Operation 1027 drone wave"
+msgstr "စစ်ဆင်ရေး 1027 ဒရုန်း​လှိုင်း"
+
+msgid "Operation 1027. Text briefing. Knock out the junta EW jamming towers while the escorts press in, then destroy the parked Su-30 and CH-4 hangars. The drone swarm can help. Casting it does not end the mission. The hangars scramble, the swarm crosses, and two rifles arrive."
+msgstr "စစ်ဆင်ရေး 1027။ စာသား​အကျဉ်းချုပ်။ အစောင့်​တပ်​များ​တိုး​ဝင်​နေစဉ် စစ်ကောင်စီ EW နှောင့်ယှက်​မျှော်စင်​များ​ကို​ဖြို​ပြီး ရပ်​ထား​သော Su-30 နှင့် CH-4 လေယာဉ်​ရုံ​များ​ကို​ဖျက်ဆီးပါ။ ဒရုန်း​အုပ်​က​ကူညီ​နိုင်​သည်။ ၎င်း​ကို​သုံး​ရုံ​ဖြင့် မစ်ရှင်​မ​ပြီး​ပါ။ လေယာဉ်​ရုံ​များ​အလျင်အမြန်​ထွက်​ပြီး ဒရုန်း​အုပ်​ဖြတ်​ကာ ရိုင်ဖယ်​တပ်သား​နှစ်​ဦး​ရောက်​လာ​သည်။"
+
+msgid "Operation Shattered Monsoon"
+msgstr "မုတ်သုံ​ပြိုကွဲ​စစ်ဆင်ရေး"
+
+msgid "Operation Shattered Monsoon. Text briefing. Destroy both enemy superweapons. A garrison screens the citadel. Protocols can help. Casting them does not end the mission. The garrison comes out, then a countdown runs. Destroy both weapons before it hits zero or the mission fails."
+msgstr "မုတ်သုံ​ပြိုကွဲ​စစ်ဆင်ရေး။ စာသား​အကျဉ်းချုပ်။ ရန်သူ​၏​စူပါ​လက်နက်​နှစ်​ခု​လုံး​ကို​ဖျက်ဆီးပါ။ ခံတပ်​ကို​အစောင့်​တပ်​က​ကာ​ထား​သည်။ ပရိုတိုကော​များ​ကူညီ​နိုင်​သည်။ ၎င်း​တို့​ကို​သုံး​ရုံ​ဖြင့် မစ်ရှင်​မ​ပြီး​ပါ။ အစောင့်​တပ်​ထွက်​လာ​ပြီး​နောက် နောက်ပြန်​ရေတွက်​ချိန်​စ​သည်။ သုည​မ​ရောက်​မီ​လက်နက်​နှစ်​ခု​လုံး​ကို​ဖျက်ဆီးပါ၊ မဟုတ်​လျှင် မစ်ရှင်​ကျရှုံး​မည်။"
+
+msgid "Opponent left. Defeat."
+msgstr "ပြိုင်ဘက်​ထွက်​သွား​သည်။ ရှုံး​ပြီ။"
+
+msgid "Opponent left. Victory."
+msgstr "ပြိုင်ဘက်​ထွက်​သွား​သည်။ အနိုင်ရ​ပြီ။"
+
+msgid "Orlan recon"
+msgstr "Orlan ကင်းထောက်"
+
+msgid "Orlan Thermal Scan"
+msgstr "Orlan အပူ​စကင်"
+
+msgid "Orlan-10"
+msgstr "Orlan-10"
+
+msgid "Orlans over the ruby pits. They have not marked the yard."
+msgstr "ပတ္တမြား​တွင်း​များ​အထက် Orlan များ​ရှိ​သည်။ ဝင်း​ကို​မ​မှတ်​ရ​သေး​ပါ။"
+
+msgid "Overall loudness."
+msgstr "စုစုပေါင်း​အသံ​ကျယ်​မှု။"
+
+msgid "Overload Barrage"
+msgstr "ဝန်ပို​အမြောက်​မိုး"
+
+msgid "P    Protocols"
+msgstr "P    ပရိုတိုကော​များ"
+
+msgid "packer already unpacked"
+msgstr "ထုပ်ပိုး​ယာဉ်​ဖြည်​ပြီး​သား"
+
+msgid "Packer captain"
+msgstr "ထုပ်ပိုး​ယာဉ်​ကပ္ပတိန်"
+
+msgid "Packer sail (mission)"
+msgstr "ထုပ်ပိုး​ယာဉ်​ရွက်လွှင့် (မစ်ရှင်)"
+
+msgid "Packer sail. Text briefing. Sail the packer into shallow water, unpack the wharf, and upgrade it."
+msgstr "ထုပ်ပိုး​ယာဉ်​ရွက်လွှင့်။ စာသား​အကျဉ်းချုပ်။ ထုပ်ပိုး​ယာဉ်​ကို​ရေတိမ်​ထဲ​မောင်း​ပြီး ဆိပ်ခံ​ကို​ဖြည်​ကာ အဆင့်မြှင့်ပါ။"
+
+msgid "packer sailed"
+msgstr "ထုပ်ပိုး​ယာဉ်​ထွက်​ပြီ"
+
+msgid "packer stayed packed"
+msgstr "ထုပ်ပိုး​ယာဉ်​မ​ဖြည်​ရ"
+
+msgid "Paddy"
+msgstr "စပါး​ခင်း"
+
+msgid "Palms"
+msgstr "ထန်း​ပင်"
+
+msgid "Pan speed"
+msgstr "ရွှေ့​နှုန်း"
+
+msgid "Past Cracks"
+msgstr "Past Cracks"
+
+msgid "Paste the other browser's offer or answer"
+msgstr "အခြား​ဘရောက်ဇာ​၏​ကမ်းလှမ်း​ချက်​သို့မဟုတ်​အဖြေ​ကို​ကူး​ထည့်ပါ"
+
+msgid "Patani Corsair Guard"
+msgstr "ပတ္တနီ​ပင်လယ်ဓားပြ​အစောင့်"
+
+msgid "Patani: %d ghosts in the jammer. GPS shots must miss. Fiber stays true."
+msgstr "ပတ္တနီ: နှောင့်ယှက်​စက်​ထဲ​တွင် တစ္ဆေ %d ခု။ GPS ပစ်​ချက်​များ​လွဲ​ရ​မည်။ ဖိုက်ဘာ​မှန်​သည်။"
+
+msgid "Pause and settings"
+msgstr "ခဏ​ရပ်​နှင့်​ဆက်တင်"
+
+msgid "PAUSED"
+msgstr "ခဏ​ရပ်​ထား​သည်"
+
+msgid "Paused. Waiting for the other player."
+msgstr "ခဏ​ရပ်​ထား​သည်။ အခြား​ကစားသမား​ကို​စောင့်​နေ​သည်။"
+
+msgid "Pays 250 credits once."
+msgstr "ခရက်ဒစ် 250 တစ်​ကြိမ်​ပေး​သည်။"
+
+msgid "phantom frozen"
+msgstr "တစ္ဆေ​ခဲ​သွား​ပြီ"
+
+msgid "Phantom of the Plain of Jars"
+msgstr "ကျောက်အိုး​လွင်ပြင်​၏​တစ္ဆေ"
+
+msgid "Pheromone Bark"
+msgstr "ဖိရိုမုန်း​ဟောင်"
+
+msgid "Phillips"
+msgstr "ဖိလစ်"
+
+msgid "Phillips Channel"
+msgstr "ဖိလစ်​ရေလက်ကြား"
+
+msgid "Phillips Wave-Cannon"
+msgstr "ဖိလစ်​လှိုင်း​အမြောက်"
+
+msgid "Pick a faction and a map, then ready up."
+msgstr "အဖွဲ့​နှင့်​မြေပုံ​ရွေး​ပြီး အသင့်​ပြင်ပါ။"
+
+msgid "Pick a map, then Play. The enemy builds, expands, and attacks."
+msgstr "မြေပုံ​ရွေး​ပြီး ကစား​ကို​နှိပ်ပါ။ ရန်သူ​က​ဆောက်၊ ချဲ့​ပြီး​တိုက်​သည်။"
+
+msgid "Pick host or join."
+msgstr "အိမ်ရှင်​သို့မဟုတ်​ပါဝင်​ကို​ရွေးပါ။"
+
+msgid "Pickets across the bow. They are not the fleet."
+msgstr "ဦးပိုင်း​ဖြတ်​ကင်း​လှေ​များ။ ၎င်း​တို့​သည် ရေတပ်​မဟုတ်​ပါ။"
+
+msgid "pillbox full"
+msgstr "ခံကျင်း​ပြည့်"
+
+msgid "pipeline blocked"
+msgstr "ပိုက်လိုင်း​ပိတ်"
+
+msgid "pipeline ready"
+msgstr "ပိုက်လိုင်း​အသင့်"
+
+msgid "Pit guard"
+msgstr "တွင်း​အစောင့်"
+
+msgid "Place"
+msgstr "နေရာ​ချ"
+
+msgid "Place hub"
+msgstr "ဗဟို​နေရာ​ချ"
+
+msgid "Plain"
+msgstr "လွင်ပြင်"
+
+msgid "Plain of Jars. Text briefing. Hold the beam until the phantom freezes, then destroy the phantom, both batteries, and the screen. The beam holds, the phantom stutters, and the batteries stay up."
+msgstr "ကျောက်အိုး​လွင်ပြင်။ စာသား​အကျဉ်းချုပ်။ တစ္ဆေ​ခဲ​သည်​အထိ​ရောင်ခြည်​ကို​ထိန်း​ပြီး တစ္ဆေ၊ အမြောက်​တပ်​နှစ်​ခု​နှင့်​အကာ​ကို​ဖျက်ဆီးပါ။ ရောင်ခြည်​ထိန်း​ထား​ပြီး တစ္ဆေ​တုန်​ကာ အမြောက်​တပ်​များ​ဆက်​ရှိ​နေ​သည်။"
+
+msgid "Plain of Jars: %s, %s. Phantom %d, battery %d."
+msgstr "ကျောက်အိုး​လွင်ပြင်: %s, %s။ တစ္ဆေ %d၊ အမြောက်​တပ် %d။"
+
+msgid "Plain phantom"
+msgstr "လွင်ပြင်​တစ္ဆေ"
+
+msgid "Plantation Bomber"
+msgstr "စိုက်ခင်း​ဗုံးကြဲ​လေယာဉ်"
+
+msgid "Play"
+msgstr "ကစား"
+
+msgid "Play the training raid"
+msgstr "လေ့ကျင့်​စီးနင်း​တိုက်ခိုက်​မှု​ကစား"
+
+msgid "Players: 2"
+msgstr "ကစားသမား: 2"
+
+msgid "Point-Defense Drones"
+msgstr "အမှတ်​ကာကွယ်​ဒရုန်း​များ"
+
+msgid "Poison"
+msgstr "Poison"
+
+msgid "Power %d/%d"
+msgstr "စွမ်းအင် %d/%d"
+
+msgid "Power generated / power drawn"
+msgstr "ထုတ်​စွမ်းအင် / သုံး​စွမ်းအင်"
+
+msgid "Practice map."
+msgstr "လေ့ကျင့်​မြေပုံ။"
+
+msgid "Premature Discharge"
+msgstr "အချိန်မတန်​ပေါက်ကွဲ​မှု"
+
+msgid "Press F to use an ability."
+msgstr "စွမ်းရည်​သုံး​ရန် F ကို​နှိပ်ပါ။"
+
+msgid "Print overdrive."
+msgstr "ပုံနှိပ်​အရှိန်မြှင့်။"
+
+msgid "printed 8"
+msgstr "ပုံနှိပ်​ပြီး 8"
+
+msgid "Prints a batch of units. One cast."
+msgstr "ယူနစ်​တစ်​သုတ်​ပုံနှိပ်​ထုတ်​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "Printsmith Rifleman"
+msgstr "ပုံနှိပ်​ပန်းပဲ​ရိုင်ဖယ်​တပ်သား"
+
+msgid "Protocol"
+msgstr "ပရိုတိုကော"
+
+msgid "Protocol bar (mission)"
+msgstr "ပရိုတိုကော​ဘား (မစ်ရှင်)"
+
+msgid "Protocol bar. Text briefing. Cast logistics, arsenal, and oracle once each. A second cast does nothing."
+msgstr "ပရိုတိုကော​ဘား။ စာသား​အကျဉ်းချုပ်။ ထောက်ပံ့ရေး၊ လက်နက်တိုက်​နှင့်​ဗေဒင်​ကို​တစ်​ကြိမ်​စီ​သုံးပါ။ ဒုတိယ​အကြိမ်​သုံး​လျှင် ဘာ​မှ​မ​ဖြစ်​ပါ။"
+
+msgid "protocol spent"
+msgstr "ပရိုတိုကော​သုံး​ပြီး"
+
+msgid "Protocols"
+msgstr "ပရိုတိုကော​များ"
+
+msgid "Protocols (P)"
+msgstr "ပရိုတိုကော​များ (P)"
+
+msgid "Psionic Monsoon"
+msgstr "စိတ်စွမ်း​မုတ်သုံ"
+
+msgid "Psionic Monsoon Decimator"
+msgstr "စိတ်စွမ်း​မုတ်သုံ​ချေမှုန်း​စက်"
+
+msgid "Q    Attack-move"
+msgstr "Q    တိုက်ရင်း​ရွှေ့"
+
+msgid "Quality"
+msgstr "အရည်အသွေး"
+
+msgid "queue full"
+msgstr "တန်းစီ​ပြည့်"
+
+msgid "Queue hub"
+msgstr "ဗဟို​တန်းစီ"
+
+msgid "Queue the hub inside the pad, buy clearance, then place it. The enemy builds, expands, and attacks."
+msgstr "ဗဟို​ကို​ပြား​အတွင်း​တန်းစီ​ပြီး ခွင့်ပြုချက်​ဝယ်​ကာ နေရာ​ချပါ။ ရန်သူ​က​ဆောက်၊ ချဲ့​ပြီး​တိုက်​သည်။"
+
+msgid "QUIT"
+msgstr "ထွက်"
+
+msgid "Quit to menu"
+msgstr "မီနူး​သို့ ထွက်"
+
+msgid "Radar garrison"
+msgstr "ရေဒါ​အစောင့်​တပ်"
+
+msgid "Radar relief"
+msgstr "ရေဒါ​အကူ​တပ်"
+
+msgid "Raid complete"
+msgstr "စီးနင်း​တိုက်ခိုက်​မှု​ပြီး"
+
+msgid "Raid complete. Scaffold, night ruby, rare-earth stock."
+msgstr "စီးနင်း​တိုက်ခိုက်​မှု​ပြီး​ပြီ။ ငြမ်း၊ ည​ပတ္တမြား၊ ရှားပါး​မြေ​ကုန်။"
+
+msgid "Raid stalled"
+msgstr "စီးနင်း​တိုက်ခိုက်​မှု​ရပ်တန့်"
+
+msgid "Raider"
+msgstr "စီးနင်း​တပ်"
+
+msgid "Rail Strike"
+msgstr "သံလမ်း​ပစ်​ခတ်"
+
+msgid "Rain on the pits. Keep the company moving."
+msgstr "တွင်း​များ​ပေါ်​မိုး​ရွာ​သည်။ တပ်ခွဲ​ကို​ဆက်​ရွှေ့​ပါ။"
+
+msgid "Raise a yard, claim Golden Slag / Aurum-9, cross, then press F."
+msgstr "ဝင်း​ဆောက်၊ ရွှေ​သတ္တုချေး / Aurum-9 သိမ်း၊ ဖြတ်​ကူး​ပြီး F ကို​နှိပ်ပါ။"
+
+msgid "Raise scaffold"
+msgstr "ငြမ်း​ဆောက်"
+
+msgid "raise the yard"
+msgstr "ဝင်း​ဆောက်"
+
+msgid "Raise the yard before the Orlans find the pits."
+msgstr "Orlan များ​တွင်း​ကို​မ​တွေ့​မီ​ဝင်း​ဆောက်ပါ။"
+
+msgid "Raises a shield. It can be cast again after it cools."
+msgstr "အကာ​တင်​သည်။ အေး​ပြီး​နောက် ထပ်​သုံး​နိုင်​သည်။"
+
+msgid "Raises the tech rank. One cast."
+msgstr "နည်းပညာ​အဆင့်​မြှင့်​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "Raises weapon damage. One cast."
+msgstr "လက်နက်​ပျက်စီး​အား​မြှင့်​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "Rally set"
+msgstr "စုရပ်​သတ်မှတ်​ပြီး"
+
+msgid "Ramming Hydro-Shield"
+msgstr "တိုက်​ဝင်​ရေ​အကာ"
+
+msgid "rare earth"
+msgstr "ရှားပါး​မြေ"
+
+msgid "rare earth home"
+msgstr "ရှားပါး​မြေ​ပြန်​ရောက်"
+
+msgid "Rare-earth stock (mission)"
+msgstr "ရှားပါး​မြေ​ကုန် (မစ်ရှင်)"
+
+msgid "Rare-earth stock secured"
+msgstr "ရှားပါး​မြေ​ကုန်​လုံခြုံ​ပြီ"
+
+msgid "Rare-earth stock. Text briefing. Claim the rare-earth node and bring one stock home."
+msgstr "ရှားပါး​မြေ​ကုန်။ စာသား​အကျဉ်းချုပ်။ ရှားပါး​မြေ​အမှတ်​ကို​သိမ်း​ပြီး ကုန်​တစ်​ခု​အိမ်​ပြန်​ယူ​လာပါ။"
+
+msgid "RDY"
+msgstr "အသင့်"
+
+msgid "Read the briefing, then meet it on the field."
+msgstr "အကျဉ်းချုပ်​ဖတ်​ပြီး တိုက်ပွဲ​မြေ​တွင် ရင်ဆိုင်ပါ။"
+
+msgid "READY"
+msgstr "အသင့်"
+
+msgid "Ready"
+msgstr "အသင့်"
+
+msgid "Ready To Rage Against The Abnormalities"
+msgstr "Ready To Rage Against The Abnormalities"
+
+msgid "recon down"
+msgstr "ကင်းထောက်​ကျ​ပြီ"
+
+msgid "Recruit"
+msgstr "စုဆောင်း"
+
+msgid "Repair"
+msgstr "ပြင်"
+
+msgid "repair off"
+msgstr "ပြင်​ခြင်း​ပိတ်"
+
+msgid "Resource pad in sight."
+msgstr "အရင်းအမြစ်​ပြား​မြင်​ရ​ပြီ။"
+
+msgid "Restart"
+msgstr "ပြန်​စ"
+
+msgid "Restore Defaults"
+msgstr "မူလ​ပြန်​ထား"
+
+msgid "Resume"
+msgstr "ဆက်​ကစား"
+
+msgid "Return to the previous screen."
+msgstr "ယခင်​မျက်နှာပြင်​သို့ ပြန်​သွား​ပါ။"
+
+msgid "Reveals the field. One cast."
+msgstr "တိုက်ပွဲ​မြေ​ကို​ဖော်ပြ​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "Riau Syndicate Fixer"
+msgstr "ရီအောင်း​ဂိုဏ်း​ပြင်ဆင်​သူ"
+
+msgid "Right-click    Move"
+msgstr "ညာ​ကလစ်    ရွှေ့"
+
+msgid "Right-click an enemy to attack."
+msgstr "တိုက်ခိုက်​ရန်​ရန်သူ​ကို​ညာ​ကလစ်​နှိပ်ပါ။"
+
+msgid "Right-click enemy    Attack"
+msgstr "ရန်သူ​ကို​ညာ​ကလစ်    တိုက်ခိုက်"
+
+msgid "Right-click the ground to move."
+msgstr "ရွှေ့​ရန်​မြေပြင်​ကို​ညာ​ကလစ်​နှိပ်ပါ။"
+
+msgid "River"
+msgstr "မြစ်"
+
+msgid "River commander"
+msgstr "မြစ်​တပ်မှူး"
+
+msgid "River gunboat"
+msgstr "မြစ်​သေနတ်​လှေ"
+
+msgid "Road"
+msgstr "လမ်း"
+
+msgid "Road ambush"
+msgstr "လမ်း​ချောင်း​တိုက်"
+
+msgid "Robotic Assembly"
+msgstr "စက်ရုပ်​တပ်ဆင်ရေး"
+
+msgid "Rotate to landscape for the best experience"
+msgstr "အကောင်းဆုံး​အတွေ့အကြုံ​အတွက် အလျား​လိုက်​လှည့်ပါ"
+
+msgid "RTS CORE"
+msgstr "RTS ပင်မ"
+
+msgid "Ruby night market (mission)"
+msgstr "ပတ္တမြား​ညဈေး (မစ်ရှင်)"
+
+msgid "Ruby night market. Text briefing. Snap the ruby pit and run the night shift until the purse fills."
+msgstr "ပတ္တမြား​ညဈေး။ စာသား​အကျဉ်းချုပ်။ ပတ္တမြား​တွင်း​ကို​အမြန်​သိမ်း​ပြီး ငွေအိတ်​ပြည့်​သည်​အထိ ညဆိုင်း​ကို​လည်​ပတ်​စေပါ။"
+
+msgid "Ruby not paying"
+msgstr "ပတ္တမြား​ငွေ​မ​ရ"
+
+msgid "ruby paid"
+msgstr "ပတ္တမြား​ငွေ​ရ"
+
+msgid "Rusher"
+msgstr "အလျင်​တိုက်​တပ်"
+
+msgid "S.H.R.I.N.K. Ray"
+msgstr "ချုံ့​ရောင်ခြည်"
+
+msgid "Saigon Prism-Lock Tank"
+msgstr "ဆိုင်ဂုံ​ပရစ်ဇမ်​သော့ခတ်​တင့်ကား"
+
+msgid "Salvage Leech Beam"
+msgstr "အပိုင်းအစ​စုပ်​ရောင်ခြည်"
+
+msgid "Salvage leech."
+msgstr "အပိုင်းအစ​စုပ်​ယူ။"
+
+msgid "Salween Hydro-Generator"
+msgstr "သံလွင်​ရေအား​လျှပ်စစ်​စက်"
+
+msgid "Salween RPG Trooper"
+msgstr "သံလွင် RPG တပ်သား"
+
+msgid "Salween Smuggler Boat"
+msgstr "သံလွင်​မှောင်ခို​လှေ"
+
+msgid "Sandbox"
+msgstr "စမ်းသပ်​ကွင်း"
+
+msgid "Sandbox: yards, queues, five nodes, jammer"
+msgstr "စမ်းသပ်​ကွင်း: ဝင်း၊ တန်းစီ၊ အမှတ်​ငါး​ခု၊ နှောင့်ယှက်​စက်"
+
+msgid "Satellite Laser Designation"
+msgstr "ဂြိုဟ်တု​လေဆာ​ပစ်မှတ်​သတ်မှတ်"
+
+msgid "satellite lock"
+msgstr "ဂြိုဟ်တု​ချိန်​ပြီး"
+
+msgid "Satellite Recon"
+msgstr "ဂြိုဟ်တု​ကင်းထောက်"
+
+msgid "Scaffold"
+msgstr "ငြမ်း"
+
+msgid "Scaffold stalled"
+msgstr "ငြမ်း​ရပ်တန့်"
+
+msgid "scaffold stalled"
+msgstr "ငြမ်း​ရပ်တန့်"
+
+msgid "Scaffold up"
+msgstr "ငြမ်း​ပြီး"
+
+msgid "Scaffold yard"
+msgstr "ငြမ်း​ဝင်း"
+
+msgid "Scrambler"
+msgstr "နှောင့်ယှက်​သူ"
+
+msgid "Sea"
+msgstr "ပင်လယ်"
+
+msgid "Seal answer"
+msgstr "အဖြေ​ပိတ်​သိမ်း"
+
+msgid "Secure rare earth"
+msgstr "ရှားပါး​မြေ​လုံခြုံ​အောင်​လုပ်"
+
+msgid "Seismic Slag Vacuum"
+msgstr "ငလျင်​ချေး​စုပ်​စက်"
+
+msgid "Seismic Slag Vacuum Imploder"
+msgstr "ငလျင်​ချေး​စုပ်​ပြိုချ​စက်"
+
+msgid "Sell"
+msgstr "ရောင်း"
+
+msgid "sell off"
+msgstr "ရောင်း​ခြင်း​ပိတ်"
+
+msgid "Send"
+msgstr "ပို့"
+
+msgid "Sends a drone squadron. One cast."
+msgstr "ဒရုန်း​တပ်ဖွဲ့​ပို့​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "Sets an ambush. One cast."
+msgstr "ချောင်း​တိုက်​ရန်​စီ​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "SETTINGS"
+msgstr "ဆက်တင်"
+
+msgid "SFX"
+msgstr "SFX"
+
+msgid "Shan Behemoth Tank"
+msgstr "ရှမ်း​ဧရာမ​တင့်ကား"
+
+msgid "Shan Insurgent Militia"
+msgstr "ရှမ်း​သူပုန်​ပြည်သူ့စစ်"
+
+msgid "Shaped Charge"
+msgstr "ပုံသွင်း​ဖောက်ခွဲ​ယမ်း"
+
+msgid "Shar Htoo Waw Kloud Drone Truck"
+msgstr "ရှာထူးဝေါ​မိုးတိမ်​ဒရုန်း​ကား"
+
+msgid "shield %d"
+msgstr "အကာ %d"
+
+msgid "Shipment guard"
+msgstr "ကုန်တင်​အစောင့်"
+
+msgid "Shore boat"
+msgstr "ကမ်း​လှေ"
+
+msgid "Shore gun"
+msgstr "ကမ်း​အမြောက်"
+
+msgid "Shrink ray."
+msgstr "ချုံ့​ရောင်ခြည်။"
+
+msgid "Shwe Kokko capture"
+msgstr "ရွှေကုက္ကိုလ်​သိမ်း"
+
+msgid "Shwe Kokko. Text briefing. Destroy the garrison and the river gunboats, capture both server blocks, and siphon the enemy purse. Hold a server block for twenty seconds. If you are pushed off, the hack resets. The side cache is optional."
+msgstr "ရွှေကုက္ကိုလ်။ စာသား​အကျဉ်းချုပ်။ အစောင့်​တပ်​နှင့်​မြစ်​သေနတ်​လှေ​များ​ကို​ဖျက်ဆီး​ပြီး ဆာဗာ​အဆောင်​နှစ်​ခု​လုံး​ကို​သိမ်း​ကာ ရန်သူ​ငွေအိတ်​ကို​စုပ်​ယူပါ။ ဆာဗာ​အဆောင်​ကို​စက္ကန့်​နှစ်ဆယ်​ထိန်းပါ။ တွန်း​ထုတ်​ခံ​ရ​လျှင် ဟက်​ခြင်း​ပြန်​စ​သည်။ ဘေး​သိုလှောင်​ရာ​သည် မဖြစ်မနေ​မ​လို​ပါ။"
+
+msgid "Side"
+msgstr "ဘက်"
+
+msgid "Siege of Chiang Rai"
+msgstr "ချင်းရိုင်​ဝိုင်းရံ​တိုက်ပွဲ"
+
+msgid "Singapore Trimaran"
+msgstr "စင်ကာပူ​သုံးကိုယ်​လှေ"
+
+msgid "Sink the boats (%d). Raise the wharf to level 2 (now %d)."
+msgstr "လှေ​များ​ကို​နှစ်ပါ (%d)။ ဆိပ်ခံ​ကို​အဆင့် 2 အထိ​မြှင့်ပါ (ယခု %d)။"
+
+msgid "Sink the joint fleet (%d)."
+msgstr "ပူးတွဲ​ရေတပ်​ကို​နှစ်ပါ (%d)။"
+
+msgid "Siphon is up. Stay on the blocks until it pays."
+msgstr "စုပ်​ယူ​မှု​စ​ပြီ။ ငွေ​ရ​သည်​အထိ​အဆောင်​ပေါ်​နေပါ။"
+
+msgid "Siti The Kraken"
+msgstr "စီတီ​ကရာကင်"
+
+msgid "Skimming out."
+msgstr "ခိုး​ယူ​နေ​သည်။"
+
+msgid "Skip"
+msgstr "ကျော်"
+
+msgid "Skip >>  N"
+msgstr "ကျော် >>  N"
+
+msgid "Skip to the next song (N)"
+msgstr "နောက်​သီချင်း​သို့ ကျော် (N)"
+
+msgid "SKIRMISH"
+msgstr "အပြန်အလှန်​တိုက်ပွဲ"
+
+msgid "Skirmish"
+msgstr "အပြန်အလှန်​တိုက်ပွဲ"
+
+msgid "Slag Jump Mortar"
+msgstr "ချေး​ခုန်​စိန်ပြောင်း"
+
+msgid "Slag Jump Thruster"
+msgstr "ချေး​ခုန်​တွန်း​စက်"
+
+msgid "Slag Molotov"
+msgstr "ချေး​မော်လိုတော့"
+
+msgid "Slag Molotov."
+msgstr "ချေး​မော်လိုတော့။"
+
+msgid "Slag Pillbox"
+msgstr "ချေး​ခံကျင်း"
+
+msgid "Slag Refinery"
+msgstr "ချေး​သန့်စင်​စက်ရုံ"
+
+msgid "Sleeper Ambush"
+msgstr "အိပ်​နေ​သော​ချောင်း​တိုက်"
+
+msgid "smart-cast"
+msgstr "စမတ်​ပစ်"
+
+msgid "Smart-cast drill (mission)"
+msgstr "စမတ်​ပစ်​လေ့ကျင့်​ခန်း (မစ်ရှင်)"
+
+msgid "Smart-cast drill. Text briefing. Toggle the group. Only the closest ready unit fires."
+msgstr "စမတ်​ပစ်​လေ့ကျင့်​ခန်း။ စာသား​အကျဉ်းချုပ်။ အုပ်စု​ကို​ဖွင့်​ပိတ်​လုပ်ပါ။ အနီးဆုံး​အသင့်​ယူနစ်​သာ​ပစ်​သည်။"
+
+msgid "Solar-Biomass Plant"
+msgstr "နေရောင်​ဇီဝလောင်စာ​စက်ရုံ"
+
+msgid "sold %d"
+msgstr "ရောင်း​ပြီး %d"
+
+msgid "Sonic Howl"
+msgstr "အသံ​အူ​သံ"
+
+msgid "Sop Ruak"
+msgstr "ဆော့ပ်ရွက်"
+
+msgid "SOUND EFFECTS"
+msgstr "အသံ​အထူးပြု"
+
+msgid "Space    Last alert"
+msgstr "Space    နောက်ဆုံး​သတိပေး​ချက်"
+
+msgid "Spectrum Prism"
+msgstr "ရောင်စဉ်​ပရစ်ဇမ်"
+
+msgid "speed 1.4"
+msgstr "အမြန်နှုန်း 1.4"
+
+msgid "Speeds the company up. One cast."
+msgstr "တပ်ခွဲ​ကို​မြန်​စေ​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "Spider-Hole Ambush"
+msgstr "ပင့်ကူ​တွင်း​ချောင်း​တိုက်"
+
+msgid "Spoofs GPS guidance. One cast."
+msgstr "GPS လမ်းညွှန်​မှု​ကို​လှည့်စား​သည်။ တစ်​ကြိမ်​သာ။"
+
+msgid "Spool FPV"
+msgstr "FPV ရစ်​ပတ်"
+
+msgid "Sprint Skates"
+msgstr "အပြေး​စကိတ်"
+
+msgid "Stand-Off Glide Barrage"
+msgstr "အဝေး​မှ​လွင့်​ပစ်​အမြောက်​မိုး"
+
+msgid "Start an offer before pasting an answer."
+msgstr "အဖြေ​မ​ကူး​ထည့်​မီ ကမ်းလှမ်း​ချက်​စ​ပါ။"
+
+msgid "Start with Kokang and Mogok. The match opens with a short lesson."
+msgstr "ကိုးကန့်​နှင့်​မိုးကုတ်​မှ​စ​ပါ။ ပွဲ​သည် သင်ခန်းစာ​တို​ဖြင့်​စ​သည်။"
+
+msgid "Starting in %d."
+msgstr "%d တွင် စ​မည်။"
+
+msgid "Status"
+msgstr "အခြေအနေ"
+
+msgid "Stay on the radar until the murk thins."
+msgstr "မြူ​ပါး​သည်​အထိ​ရေဒါ​ပေါ်​နေပါ။"
+
+msgid "Stay with the wagon. The bazaar is the drop."
+msgstr "လှည်း​နှင့်​အတူ​နေပါ။ ဈေး​သည် ချ​ရာ​နေရာ​ဖြစ်​သည်။"
+
+msgid "still fighting"
+msgstr "တိုက်​နေ​ဆဲ"
+
+msgid "Stilts"
+msgstr "ခြေတံရှည်​အိမ်"
+
+msgid "Stop"
+msgstr "ရပ်"
+
+msgid "Stop the sprayer before it reaches the tanks."
+msgstr "ဖြန်း​စက်​တင့်ကား​များ​ဆီ​မ​ရောက်​မီ​ရပ်​တန့်​စေပါ။"
+
+msgid "Strait Haze"
+msgstr "ရေလက်ကြား​မြူ"
+
+msgid "Straits Pirate Raid"
+msgstr "ရေလက်ကြား​ပင်လယ်ဓားပြ​စီးနင်း​မှု"
+
+msgid "Street Press"
+msgstr "လမ်း​ပုံနှိပ်​စက်"
+
+msgid "Strip lead"
+msgstr "လေယာဉ်​ပြေးလမ်း​ဦးဆောင်​သူ"
+
+msgid "Structures"
+msgstr "အဆောက်အအုံ​များ"
+
+msgid "Su-30"
+msgstr "Su-30"
+
+msgid "Su-30 hangar"
+msgstr "Su-30 လေယာဉ်​ရုံ"
+
+msgid "Su-30 napalm run"
+msgstr "Su-30 နပါမ်​ကြဲ​ချ​မှု"
+
+msgid "Submersible or Sky-Jet"
+msgstr "ရေငုပ်​သို့မဟုတ်​ကောင်းကင်​ဂျက်"
+
+msgid "Sulu Tank-Buster"
+msgstr "ဆူးလူး​တင့်ကား​ဖျက်​သူ"
+
+msgid "Sumatra Hover-Technical"
+msgstr "ဆူမတြာ​လေ​ပေါ်​တိုက်ကား"
+
+msgid "Supayarlat"
+msgstr "Supayarlat"
+
+msgid "superweapon cooling"
+msgstr "စူပါ​လက်နက်​အေး​နေ​သည်"
+
+msgid "Superweapon ready."
+msgstr "စူပါ​လက်နက်​အသင့်။"
+
+msgid "survive: hold the radar through the haze while the enemy attacks"
+msgstr "အသက်ရှင်​ရန်: ရန်သူ​တိုက်​နေစဉ် မြူ​ထဲ​တွင် ရေဒါ​ကို​ထိန်း"
+
+msgid "survive: the ferry crosses and holds until the timer runs out"
+msgstr "အသက်ရှင်​ရန်: ကူးတို့​ဖြတ်​ကူး​ပြီး အချိန်​ကုန်​သည်​အထိ​ထိန်း"
+
+msgid "SW"
+msgstr "စူပါ​လက်နက်"
+
+msgid "swarm 23"
+msgstr "အုပ် 23"
+
+msgid "Swarm Cloud"
+msgstr "အုပ်​လိုက်​တိမ်"
+
+msgid "Swarm Hive Truck"
+msgstr "ပျားအုံ​ဒရုန်း​ကား"
+
+msgid "Syndicate Alchemist"
+msgstr "ဂိုဏ်း​ဓာတုဗေဒ​ပညာရှင်"
+
+msgid "Tab    Next tab"
+msgstr "Tab    နောက်​တဘ်"
+
+msgid "Tachileik caravan"
+msgstr "တာချီလိတ်​ကုန်သည်​ယာဉ်တန်း"
+
+msgid "Tachileik caravan. Text briefing. Break the ambush and the road relief, walk the jade caravan onto the bazaar, then snap the ruby pit and run the night shift until the purse fills. Stay with the wagon while drones harass it. If the wagon dies, the mission fails. The road ambush hits after that. The side cache is optional."
+msgstr "တာချီလိတ်​ကုန်သည်​ယာဉ်တန်း။ စာသား​အကျဉ်းချုပ်။ ချောင်း​တိုက်​မှု​နှင့်​လမ်း​အကူ​တပ်​ကို​ချေ​ပြီး ကျောက်စိမ်း​ယာဉ်တန်း​ကို​ဈေး​ပေါ်​သို့ ပို့​ကာ ပတ္တမြား​တွင်း​ကို​အမြန်​သိမ်း​၍ ငွေအိတ်​ပြည့်​သည်​အထိ ညဆိုင်း​ကို​လည်​ပတ်​စေပါ။ ဒရုန်း​များ​နှောင့်ယှက်​နေစဉ် လှည်း​နှင့်​အတူ​နေပါ။ လှည်း​ပျက်​လျှင် မစ်ရှင်​ကျရှုံး​မည်။ ထို​နောက် လမ်း​ချောင်း​တိုက်​မှု​ဝင်​လာ​မည်။ ဘေး​သိုလှောင်​ရာ​သည် မဖြစ်မနေ​မ​လို​ပါ။"
+
+msgid "Tachileik Half-Track"
+msgstr "တာချီလိတ်​တစ်ဝက်​သံကြိုး​ကား"
+
+msgid "Target Painter"
+msgstr "ပစ်မှတ်​ဆေးသုတ်​သူ"
+
+msgid "Teak Technical"
+msgstr "ကျွန်း​တိုက်ကား"
+
+msgid "tech 1"
+msgstr "နည်းပညာ 1"
+
+msgid "Tech Center"
+msgstr "နည်းပညာ​စင်တာ"
+
+msgid "Technical under fire."
+msgstr "တိုက်ကား​ပစ်ခတ်​ခံ​နေ​ရ​သည်။"
+
+msgid "Telekinetic Maelstrom"
+msgstr "စိတ်စွမ်း​ဝဲဂယက်"
+
+msgid "Ten Degree Atolls"
+msgstr "ဆယ်​ဒီဂရီ​သန္တာ​ကျွန်း​များ"
+
+msgid "Thai"
+msgstr "ထိုင်း"
+
+msgid "Thai Border Mass Print"
+msgstr "ထိုင်း​နယ်စပ်​အစုလိုက်​ပုံနှိပ်"
+
+msgid "That paste is not an answer."
+msgstr "ထို​ကူး​ထည့်​မှု​သည် အဖြေ​မဟုတ်​ပါ။"
+
+msgid "That paste is not an offer."
+msgstr "ထို​ကူး​ထည့်​မှု​သည် ကမ်းလှမ်း​ချက်​မဟုတ်​ပါ။"
+
+msgid "The 74-Kilometer Watch"
+msgstr "၇၄-ကီလိုမီတာ​ကင်း"
+
+msgid "The 74-Kilometer Watch. Text briefing. Destroy the radar garrison and its relief squad, then hold the hydro radar so water shows. The radar pings, two rifles arrive, and the guide sells the watch."
+msgstr "၇၄-ကီလိုမီတာ​ကင်း။ စာသား​အကျဉ်းချုပ်။ ရေဒါ​အစောင့်​တပ်​နှင့်​၎င်း​၏​အကူ​အဖွဲ့​ကို​ဖျက်ဆီး​ပြီး ရေ​ပေါ်​လာ​စေ​ရန် ရေအား​ရေဒါ​ကို​ထိန်းပါ။ ရေဒါ​အချက်ပြ​ပြီး ရိုင်ဖယ်​တပ်သား​နှစ်​ဦး​ရောက်​လာ​ကာ လမ်းပြ​က​ကင်း​ကို​ရောင်းစား​သည်။"
+
+msgid "The answer did not start."
+msgstr "အဖြေ​မ​စ​နိုင်​ပါ။"
+
+msgid "The answer was rejected."
+msgstr "အဖြေ​ကို​ငြင်းပယ်​လိုက်​သည်။"
+
+msgid "The atoll is held by boats. Sail the packer in."
+msgstr "သန္တာ​ကျွန်း​ကို​လှေ​များ​ထိန်း​ထား​သည်။ ထုပ်ပိုး​ယာဉ်​ကို​မောင်း​ဝင်ပါ။"
+
+msgid "The browser did not produce a session description."
+msgstr "ဘရောက်ဇာ​က​ဆက်ရှင်​ဖော်ပြ​ချက်​မ​ထုတ်​ပေး​ပါ။"
+
+msgid "The camera slides when the pointer nears the screen edge."
+msgstr "ညွှန်ပြ​မြား​မျက်နှာပြင်​အစွန်း​နား​ရောက်​လျှင် ကင်မရာ​ရွေ့​သည်။"
+
+msgid "the caravan is lost"
+msgstr "ကုန်သည်​ယာဉ်တန်း​ဆုံးရှုံး"
+
+msgid "The channel is mined. Break out and land the far shore."
+msgstr "ရေလက်ကြား​တွင်​မိုင်း​ချ​ထား​သည်။ ဖောက်​ထွက်​ပြီး တစ်ဖက်​ကမ်း​ကို​ဆိုက်​ပါ။"
+
+msgid "The citadel garrison is out. They screen the weapons."
+msgstr "ခံတပ်​အစောင့်​တပ်​ထွက်​လာ​ပြီ။ ၎င်း​တို့​က​လက်နက်​များ​ကို​ကာ​ထား​သည်။"
+
+msgid "the company is wiped"
+msgstr "တပ်ခွဲ​ကျဆုံး"
+
+msgid "the count hit zero"
+msgstr "ရေတွက်​ချိန်​သုည​ရောက်"
+
+msgid "The data channel did not open."
+msgstr "ဒေတာ​လိုင်း​မ​ပွင့်​ပါ။"
+
+msgid "the defended target is lost"
+msgstr "ကာကွယ်​ရ​မည့်​ပစ်မှတ်​ဆုံးရှုံး"
+
+msgid "The enemy builds, expands, and attacks. Cross a ford to reach them."
+msgstr "ရန်သူ​က​ဆောက်၊ ချဲ့​ပြီး​တိုက်​သည်။ ၎င်း​တို့​ဆီ​ရောက်​ရန် ရေတိမ်​ကို​ဖြတ်ပါ။"
+
+msgid "The far shore is open. Put a boat on it."
+msgstr "တစ်ဖက်​ကမ်း​ပွင့်​ပြီ။ လှေ​တစ်​စင်း​ချ​ပါ။"
+
+msgid "The ferry has to live. Hold it through the channel."
+msgstr "ကူးတို့​အသက်ရှင်​ရ​မည်။ ရေလက်ကြား​တစ်လျှောက် ထိန်း​ပါ။"
+
+msgid "The ferry is in the channel. Keep guns on the water."
+msgstr "ကူးတို့​ရေလက်ကြား​ထဲ​ရောက်​ပြီ။ ရေ​ပေါ်​သေနတ်​ချိန်​ထား​ပါ။"
+
+msgid "The guide turns on us. The span is down."
+msgstr "လမ်းပြ​သစ္စာဖောက်​ပြီ။ တံတား​ပြို​ပြီ။"
+
+msgid "The hack is running. Twenty seconds on the blocks."
+msgstr "ဟက်​နေ​ပြီ။ အဆောင်​ပေါ်​တွင် စက္ကန့်​နှစ်ဆယ်။"
+
+msgid "The haze closes over the radar. Do not walk off it."
+msgstr "မြူ​က​ရေဒါ​ကို​ဖုံး​သည်။ မ​ခွာ​ပါ​နှင့်။"
+
+msgid "The haze has closed in. Do not leave the radar."
+msgstr "မြူ​ထူ​လာ​ပြီ။ ရေဒါ​ကို​မ​ခွာ​ပါ​နှင့်။"
+
+msgid "The haze is the weapon. Hold the radar."
+msgstr "မြူ​သည် လက်နက်​ဖြစ်​သည်။ ရေဒါ​ကို​ထိန်း​ပါ။"
+
+msgid "The haze is thick. Take the radar and stay on it."
+msgstr "မြူ​ထူ​သည်။ ရေဒါ​ကို​ယူ​ပြီး​ပေါ်​မှာ​နေ​ပါ။"
+
+msgid "The hydro radar is dark. Light the water."
+msgstr "ရေအား​ရေဒါ​မှောင်​နေ​သည်။ ရေ​ကို​လင်း​စေ​ပါ။"
+
+msgid "The intended skirmish and campaign pace."
+msgstr "ရည်ရွယ်​ထား​သော​တိုက်ပွဲ​နှင့်​စစ်ဆင်ရေး​အရှိန်။"
+
+msgid "The jade wagon is on the road. Walk it through."
+msgstr "ကျောက်စိမ်း​လှည်း​လမ်း​ပေါ်​ရောက်​ပြီ။ ဖြတ်​လျှောက်​ပို့​ပါ။"
+
+msgid "The jammer is live. Fiber holds. GPS does not."
+msgstr "နှောင့်ယှက်​စက်​အလုပ်လုပ်​နေ​သည်။ ဖိုက်ဘာ​ခံ​သည်။ GPS မ​ခံ​ပါ။"
+
+msgid "The jammers are up. The hangars are still parked."
+msgstr "နှောင့်ယှက်​စက်​များ​ထ​ပြီ။ လေယာဉ်​ရုံ​များ​ရပ်​ထား​ဆဲ။"
+
+msgid "The joint fleet is in the channel. Sink it."
+msgstr "ပူးတွဲ​ရေတပ်​ရေလက်ကြား​ထဲ​ရှိ​သည်။ နှစ်​ပါ။"
+
+msgid "The local description was rejected."
+msgstr "ဒေသတွင်း​ဖော်ပြ​ချက်​ကို​ငြင်းပယ်​လိုက်​သည်။"
+
+msgid "The match keeps the command deck, minimap, and unit card."
+msgstr "ပွဲ​တွင် အမိန့်​ကုန်းပတ်၊ မြေပုံ​ငယ်​နှင့်​ယူနစ်​ကတ်​ပါ​သည်။"
+
+msgid "The monsoon breaks over the citadel. Drop both weapons."
+msgstr "မုတ်သုံ​ခံတပ်​ပေါ်​ကျ​ပြီ။ လက်နက်​နှစ်​ခု​လုံး​ဖြို​ပါ။"
+
+msgid "The night shift is on the road. Bring one stock home."
+msgstr "ညဆိုင်း​လမ်း​ပေါ်​ရှိ​သည်။ ကုန်​တစ်​ခု​အိမ်​ပြန်​ယူ​ပါ။"
+
+msgid "The offer did not start."
+msgstr "ကမ်းလှမ်း​ချက်​မ​စ​နိုင်​ပါ။"
+
+msgid "The offer was rejected."
+msgstr "ကမ်းလှမ်း​ချက်​ကို​ငြင်းပယ်​လိုက်​သည်။"
+
+msgid "The packer is in the shallows. Unpack it."
+msgstr "ထုပ်ပိုး​ယာဉ်​ရေတိမ်​ထဲ​ရောက်​ပြီ။ ဖြည်​ပါ။"
+
+msgid "The packer sails, unpacks a wharf, then upgrades it. The enemy builds, expands, and attacks."
+msgstr "ထုပ်ပိုး​ယာဉ်​ရွက်လွှင့်​ပြီး ဆိပ်ခံ​ဖြည်​ကာ အဆင့်မြှင့်​သည်။ ရန်သူ​က​ဆောက်၊ ချဲ့​ပြီး​တိုက်​သည်။"
+
+msgid "The phantom is on the plain. Hold the beam until it freezes."
+msgstr "တစ္ဆေ​လွင်ပြင်​ပေါ်​ရှိ​သည်။ ခဲ​သည်​အထိ ရောင်ခြည်​ထိန်း​ပါ။"
+
+msgid "The phantom stutters in the beam. Do not let go."
+msgstr "တစ္ဆေ​ရောင်ခြည်​ထဲ​တုန်​နေ​သည်။ မ​လွှတ်​ပါ​နှင့်။"
+
+msgid "The port is busy."
+msgstr "ပို့တ်​အလုပ်များ​နေ​သည်။"
+
+msgid "The radar pings. Water shows along the road."
+msgstr "ရေဒါ​အချက်ပြ​သည်။ လမ်း​တစ်လျှောက် ရေ​ပေါ်​လာ​သည်။"
+
+msgid "The selected side is who you play on the next skirmish."
+msgstr "ရွေးထား​သော​ဘက်​သည် နောက်​တိုက်ပွဲ​တွင် သင်​ကစား​မည့်​ဘက်​ဖြစ်​သည်။"
+
+msgid "The session did not open."
+msgstr "ဆက်ရှင်​မ​ပွင့်​ပါ။"
+
+msgid "The span is cut. The guide has sold the watch."
+msgstr "တံတား​ပြတ်​ပြီ။ လမ်းပြ​က​ကင်း​ကို​ရောင်းစား​ပြီ။"
+
+msgid "The squall is on the shallows. Finish the wharf."
+msgstr "မုန်တိုင်း​ရေတိမ်​ပေါ်​ကျ​ပြီ။ ဆိပ်ခံ​ကို​ပြီး​အောင်​လုပ်​ပါ။"
+
+msgid "The squall is on. Cross while it lasts."
+msgstr "မုန်တိုင်း​ကျ​နေ​ပြီ။ ရှိ​နေ​တုန်း​ဖြတ်​ပါ။"
+
+msgid "The squall is on. Keep the ferry afloat."
+msgstr "မုန်တိုင်း​ကျ​နေ​ပြီ။ ကူးတို့​ကို​မ​နစ်​စေ​နှင့်။"
+
+msgid "The strip scrambles. The Su-30 and the CH-4 are still on the ground."
+msgstr "ပြေးလမ်း​မှ​အလျင်အမြန်​ထွက်​သည်။ Su-30 နှင့် CH-4 မြေပြင်​ပေါ်​ရှိ​ဆဲ။"
+
+msgid "The swarm is in the air. It does not finish the towers."
+msgstr "ဒရုန်း​အုပ်​လေ​ထဲ​ရောက်​ပြီ။ မျှော်စင်​များ​ကို​မ​ဖြို​နိုင်​ပါ။"
+
+msgid "The tank column is on the road. Freeze it, then break it."
+msgstr "တင့်ကား​တန်း​လမ်း​ပေါ်​ရှိ​သည်။ ခဲ​စေ​ပြီး ချေ​ပါ။"
+
+msgid "The wharf is up. Take it to the second level."
+msgstr "ဆိပ်ခံ​ပြီး​ပြီ။ ဒုတိယ​အဆင့်​သို့ မြှင့်​ပါ။"
+
+msgid "Throwing into them."
+msgstr "၎င်း​တို့​ထဲ​ပစ်​ထည့်​နေ​သည်။"
+
+msgid "Thunder on the Tonle Sap"
+msgstr "တုန်လေဆပ်​ပေါ်​မိုးကြိုး"
+
+msgid "Tide Refinery"
+msgstr "ဒီရေ​သန့်စင်​စက်ရုံ"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Time Bomb"
+msgstr "အချိန်​ဗုံး"
+
+msgid "Tonkin Supersonic Fighter"
+msgstr "တုံကင်း​အသံထက်မြန်​တိုက်လေယာဉ်"
+
+msgid "Tonle ferry"
+msgstr "တုန်လေဆပ်​ကူးတို့"
+
+msgid "Tonle Sap. Text briefing. Defend the ferry until the longer timer runs out. NMRF trimarans keep arriving. Cryogeddon can help. Casting it does not end the mission. The ferry has to survive the crossing. A squall hits the channel."
+msgstr "တုန်လေဆပ်။ စာသား​အကျဉ်းချုပ်။ ပိုရှည်​သော​အချိန်​ကုန်​သည်​အထိ ကူးတို့​ကို​ကာကွယ်​ပါ။ NMRF သုံးကိုယ်​လှေ​များ​ဆက်​ရောက်​လာ​မည်။ ခဲရေ​ကပ်ဘေး​က​ကူညီ​နိုင်​သည်။ ၎င်း​ကို​သုံး​ရုံ​ဖြင့် မစ်ရှင်​မ​ပြီး​ပါ။ ကူးတို့​သည် ဖြတ်​ကူး​ချိန်​အသက်ရှင်​ရ​မည်။ ရေလက်ကြား​ကို​မုန်တိုင်း​ဝင်​မည်။"
+
+msgid "Torpedo Fan Spread"
+msgstr "တော်ပီဒို​ယပ်တောင်​ဖြန့်​ပစ်"
+
+msgid "Toxic Defoliation"
+msgstr "အဆိပ်​အရွက်​ကြွေ​ဆေး"
+
+msgid "trade open"
+msgstr "ကုန်သွယ်​ဖွင့်"
+
+msgid "Train"
+msgstr "လေ့ကျင့်"
+
+msgid "Train unit"
+msgstr "ယူနစ်​လေ့ကျင့်"
+
+msgid "Tran"
+msgstr "ထရန်"
+
+msgid "Trimarans on the ferry. Hold the crossing."
+msgstr "ကူးတို့​ပေါ် သုံးကိုယ်​လှေ​များ။ ဖြတ်​ကူး​ရာ​ကို​ထိန်း​ပါ။"
+
+msgid "Truck rolling."
+msgstr "ကား​ထွက်​ပြီ။"
+
+msgid "Truck taking hits."
+msgstr "ကား​ထိ​နေ​သည်။"
+
+msgid "Two gunboats from the river are in."
+msgstr "မြစ်​မှ​သေနတ်​လှေ​နှစ်​စင်း​ရောက်​ပြီ။"
+
+msgid "Two players. You and one enemy."
+msgstr "ကစားသမား​နှစ်​ဦး။ သင်​နှင့် ရန်သူ​တစ်​ဦး။"
+
+msgid "Two rifles for the strip."
+msgstr "ပြေးလမ်း​အတွက် ရိုင်ဖယ်​နှစ်​ဦး။"
+
+msgid "Two rifles from the watch are in."
+msgstr "ကင်း​မှ​ရိုင်ဖယ်​နှစ်​ဦး​ရောက်​ပြီ။"
+
+msgid "Under fire."
+msgstr "ပစ်ခတ်​ခံ​နေ​ရ​သည်။"
+
+msgid "Unit"
+msgstr "ယူနစ်"
+
+msgid "Units"
+msgstr "ယူနစ်​များ"
+
+msgid "unknown unit"
+msgstr "အမည်မသိ​ယူနစ်"
+
+msgid "unloaded %d"
+msgstr "ချ​ပြီး %d"
+
+msgid "Unpack"
+msgstr "ဖြည်"
+
+msgid "Upgrade wharf"
+msgstr "ဆိပ်ခံ​မြှင့်"
+
+msgid "Vanguard Shock-Trooper"
+msgstr "ရှေ့တန်း​ရှော့​တပ်သား"
+
+msgid "Vehicles"
+msgstr "ယာဉ်​များ"
+
+msgid "Veteran"
+msgstr "ဝါရင့်"
+
+msgid "Victory"
+msgstr "အနိုင်ရ"
+
+msgid "VIDEO"
+msgstr "ဗီဒီယို"
+
+msgid "Viet-Tech Laser Operator"
+msgstr "ဗီယက်​နည်းပညာ​လေဆာ​ပစ်​သူ"
+
+msgid "Vindicator Bomber"
+msgstr "လက်စားချေ​ဗုံးကြဲ​လေယာဉ်"
+
+msgid "Voice language"
+msgstr "အသံ​ဘာသာ"
+
+msgid "Waiting for the host."
+msgstr "အိမ်ရှင်​ကို​စောင့်​နေ​သည်။"
+
+msgid "Waiting on port %d."
+msgstr "ပို့တ် %d တွင် စောင့်​နေ​သည်။"
+
+msgid "walk the caravan"
+msgstr "ယာဉ်တန်း​ကို​ပို့"
+
+msgid "War Factory"
+msgstr "စစ်​စက်ရုံ"
+
+msgid "Warlord's Bribe"
+msgstr "စစ်ဘုရင်​၏​လာဘ်"
+
+msgid "Watch captain"
+msgstr "ကင်း​ကပ္ပတိန်"
+
+msgid "Water"
+msgstr "ရေ"
+
+msgid "Wave-Force Turret"
+msgstr "လှိုင်း​အား​ပစ်​စင်"
+
+msgid "Waypoint"
+msgstr "လမ်းမှတ်"
+
+msgid "Web play uses a copied offer and answer in the browser. This desktop build has no WebRTC addon."
+msgstr "ဝဘ်​ကစား​မှု​သည် ဘရောက်ဇာ​တွင် ကူး​ထား​သော​ကမ်းလှမ်း​ချက်​နှင့်​အဖြေ​ကို​သုံး​သည်။ ဤ​ဒက်စ်တော့​ဗားရှင်း​တွင် WebRTC ထပ်ဆောင်း​မ​ရှိ​ပါ။"
+
+msgid "WebRTC did not start."
+msgstr "WebRTC မ​စ​နိုင်​ပါ။"
+
+msgid "Wharf"
+msgstr "ဆိပ်ခံ"
+
+msgid "wharf level %d"
+msgstr "ဆိပ်ခံ​အဆင့် %d"
+
+msgid "wharf not ready"
+msgstr "ဆိပ်ခံ​မ​အသင့်"
+
+msgid "wharf unpacked"
+msgstr "ဆိပ်ခံ​ဖြည်​ပြီး"
+
+msgid "Wrath of the Garuda"
+msgstr "ဂဠုန်​၏​ဒေါသ"
+
+msgid "Wrath of the Garuda. Text briefing. Destroy the joint enemy fleet and its pickets. A napalm run can help. Calling it does not end the mission. Napalm is armed, pickets cross the bow, and two gunboats arrive."
+msgstr "ဂဠုန်​၏​ဒေါသ။ စာသား​အကျဉ်းချုပ်။ ရန်သူ​ပူးတွဲ​ရေတပ်​နှင့်​၎င်း​၏​ကင်း​လှေ​များ​ကို​ဖျက်ဆီး​ပါ။ နပါမ်​ကြဲ​ချ​မှု​က​ကူညီ​နိုင်​သည်။ ၎င်း​ကို​ခေါ်​ရုံ​ဖြင့် မစ်ရှင်​မ​ပြီး​ပါ။ နပါမ်​အသင့်​ဖြစ်​ပြီး ကင်း​လှေ​များ​ဦးပိုင်း​ဖြတ်​ကာ သေနတ်​လှေ​နှစ်​စင်း​ရောက်​လာ​သည်။"
+
+msgid "X    Stop"
+msgstr "X    ရပ်"
+
+msgid "Yangonite"
+msgstr "Yangonite"
+
+msgid "Yangonite, Ready To Rage Against The Abnormalities, Supayarlat, Past Cracks, Machinesfuture, Humanfuture, Night, Love Drunk, Changes, Not Needed Anymore, Poison, Time"
+msgstr "Yangonite, Ready To Rage Against The Abnormalities, Supayarlat, Past Cracks, Machinesfuture, Humanfuture, Night, Love Drunk, Changes, Not Needed Anymore, Poison, Time"
+
+msgid "yard up"
+msgstr "ဝင်း​ပြီး"
+
+msgid "Z    Formation"
+msgstr "Z    တပ်​ဖွဲ့​ပုံ"

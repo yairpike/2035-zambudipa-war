@@ -1,0 +1,2732 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ASEAN 2031\n"
+"Language: zh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid ""
+"\n"
+"Cost %d"
+msgstr ""
+"\n"
+"费用 %d"
+
+msgid ""
+"\n"
+"Hotkey %d"
+msgstr ""
+"\n"
+"快捷键 %d"
+
+msgid "  %ds"
+msgstr "  %ds"
+
+msgid " The spray defoliated your line."
+msgstr " 落叶剂喷洒摧毁了你的防线。"
+
+msgid "%d cr"
+msgstr "%d 资金"
+
+msgid "%s    HP %d/%d    F %s"
+msgstr "%s    HP %d/%d    F %s"
+
+msgid "%s  %s is ready to copy."
+msgstr "%s  %s 已可复制。"
+
+msgid "%s built"
+msgstr "%s 已建成"
+
+msgid "%s x%d"
+msgstr "%s x%d"
+
+msgid "%s. %d credits. HP %d. Damage %d. Moves on %s. F: %s."
+msgstr "%s。%d 资金。HP %d。伤害 %d。移动于%s。F：%s。"
+
+msgid "%s. %s. %d credits. HP %d."
+msgstr "%s。%s。%d 资金。HP %d。"
+
+msgid "%s. Area hit, then it cools down."
+msgstr "%s。范围打击，随后冷却。"
+
+msgid "+beam"
+msgstr "+光束"
+
+msgid "+smart"
+msgstr "+智能"
+
+msgid "2 players"
+msgstr "2 名玩家"
+
+msgid "23-Drone Swarm"
+msgstr "23 架无人机蜂群"
+
+msgid "3D-Print Overdrive"
+msgstr "3D 打印超频"
+
+msgid "A balloon barrage. One cast."
+msgstr "气球弹幕。一次施放。"
+
+msgid "A carpet run. One cast."
+msgstr "地毯式轰炸。一次施放。"
+
+msgid "A city bank, a jungle bank, and a river between them. The landmark does not burn."
+msgstr "城市一岸，丛林一岸，中间一条河。地标不会燃烧。"
+
+msgid "A faster, tougher enemy."
+msgstr "更快、更强硬的敌人。"
+
+msgid "A larger field. Fords cross the river. The enemy builds, expands, and attacks."
+msgstr "更大的战场。浅滩可以渡河。敌人会建造、扩张并进攻。"
+
+msgid "A napalm run. It does not finish the mission."
+msgstr "凝固汽油弹轰炸。无法直接完成任务。"
+
+msgid "A pirate haul. One cast."
+msgstr "海盗劫掠。一次施放。"
+
+msgid "A second wave is in the black haze."
+msgstr "第二波敌人藏在黑霾中。"
+
+msgid "A slower enemy, for learning the company."
+msgstr "较慢的敌人，用于熟悉连队。"
+
+msgid "A spray run is coming down the road. Cut it off."
+msgstr "喷洒车队正沿公路驶来。拦截它。"
+
+msgid "A thermal scan. One cast."
+msgstr "热成像扫描。一次施放。"
+
+msgid "A-Move"
+msgstr "攻击移动"
+
+msgid "Ability"
+msgstr "技能"
+
+msgid "Ability (F)"
+msgstr "技能（F）"
+
+msgid "Ability (F). A toggle flips every selected toggle unit. Smart-cast fires only the closest ready unit. A finished beam freezes the nearest enemy."
+msgstr "技能（F）。切换类技能会切换所有选中的切换类单位。智能施放只触发最近的就绪单位。光束完成后冻结最近的敌人。"
+
+msgid "ability fired"
+msgstr "技能已发动"
+
+msgid "ability not ready"
+msgstr "技能未就绪"
+
+msgid "Aceh Tsunami Tank"
+msgstr "亚齐海啸坦克"
+
+msgid "Act I"
+msgstr "第一幕"
+
+msgid "Act II"
+msgstr "第二幕"
+
+msgid "Act III"
+msgstr "第三幕"
+
+msgid "Adrenaline Cloud"
+msgstr "肾上腺素云雾"
+
+msgid "Advanced Rocket Pods"
+msgstr "先进火箭巢"
+
+msgid "Aegis Dome"
+msgstr "神盾穹顶"
+
+msgid "Afterburner Return"
+msgstr "加力返航"
+
+msgid "Agent-Zero Cryo-Copter"
+msgstr "零号特工冷冻直升机"
+
+msgid "Aircraft"
+msgstr "空中单位"
+
+msgid "Airfield"
+msgstr "机场"
+
+msgid "All %s"
+msgstr "全部%s"
+
+msgid "Ally"
+msgstr "盟友"
+
+msgid "already unpacked"
+msgstr "已展开"
+
+msgid "Ambush clear. %s. Mine rubies: %d/30."
+msgstr "伏兵已清除。%s。开采红宝石：%d/30。"
+
+msgid "An ally breaks. The span is down."
+msgstr "一名盟友溃退。桥梁已断。"
+
+msgid "Andaman breakout"
+msgstr "安达曼突围"
+
+msgid "Andaman breakout. Text briefing. Sink the channel boats and the second wave, then land an amphibious unit on the far shore. A mine line in the channel damages ships. The far shore opens, and a squall crosses. The side cache is optional."
+msgstr "安达曼突围。文字简报。击沉海峡中的船只和第二波敌人，然后让一支两栖单位登上对岸。海峡中的水雷带会损伤舰船。对岸开放后，一场暴风雨将掠过。侧翼物资点为可选目标。"
+
+msgid "Andaman Siege Barge"
+msgstr "安达曼攻城驳船"
+
+msgid "Answer"
+msgstr "应答码"
+
+msgid "Answer applied. Waiting for the guest."
+msgstr "已应用应答码。等待客机。"
+
+msgid "Archipelago Rising"
+msgstr "群岛崛起"
+
+msgid "Archipelago Rising. Text briefing. Sink the boats and the second picket, sail the packer into shallow water, unpack the wharf, and upgrade it. The packer reaches the shallows, the wharf rises, and a squall hits."
+msgstr "群岛崛起。文字简报。击沉船只和第二道巡逻线，把打包船驶入浅水区，展开码头并升级。打包船抵达浅水区，码头建起，暴风雨随即袭来。"
+
+msgid "Arms a bomb. One cast."
+msgstr "装填炸弹。一次施放。"
+
+msgid "Arms bazaar (mission)"
+msgstr "军火集市（任务）"
+
+msgid "Arms bazaar. Text briefing. Capture the bazaar so infantry and drones draw a discount."
+msgstr "军火集市。文字简报。占领集市，步兵和无人机即可享受折扣。"
+
+msgid "Artillery Telemetry Link"
+msgstr "炮兵遥测链路"
+
+msgid "ASEAN 2031"
+msgstr "ASEAN 2031"
+
+msgid "Athena Orbital Designator"
+msgstr "雅典娜轨道指示器"
+
+msgid "Atolls"
+msgstr "环礁"
+
+msgid "attack move"
+msgstr "攻击移动"
+
+msgid "Attack-move"
+msgstr "攻击移动"
+
+msgid "Attack-move ahead of the lead unit."
+msgstr "在领头单位前方进行攻击移动。"
+
+msgid "AUDIO"
+msgstr "音频"
+
+msgid "BACK"
+msgstr "返回"
+
+msgid "Back"
+msgstr "返回"
+
+msgid "Ballistic Riot Shield"
+msgstr "防弹防暴盾"
+
+msgid "Balloon Bomb Barrage"
+msgstr "气球炸弹弹幕"
+
+msgid "balloons 9"
+msgstr "气球 9"
+
+msgid "Bamboo Hide"
+msgstr "竹林隐蔽"
+
+msgid "Banyan Hologram"
+msgstr "榕树全息影像"
+
+msgid "Barracks"
+msgstr "兵营"
+
+msgid "Basic training"
+msgstr "基础训练"
+
+msgid "bazaar required"
+msgstr "需要集市"
+
+msgid "Beach master"
+msgstr "滩头指挥官"
+
+msgid "Beach Rockets"
+msgstr "海滩火箭"
+
+msgid "beam fired"
+msgstr "光束已发射"
+
+msgid "Beam freeze (mission)"
+msgstr "光束冻结（任务）"
+
+msgid "Beam freeze. Text briefing. Hold the beam until the target freezes."
+msgstr "光束冻结。文字简报。保持光束照射，直到目标被冻结。"
+
+msgid "Beam officer"
+msgstr "光束军官"
+
+msgid "Bench Seat"
+msgstr "长条座椅"
+
+msgid "Black Haze"
+msgstr "黑霾"
+
+msgid "Black Haze. Text briefing. Capture the hydro radar and hold it through the longer haze while a second raider wave attacks. The haze closes, a second wave comes through it, and you hold the radar."
+msgstr "黑霾。文字简报。占领水文雷达，并在更长的黑霾期间守住它，同时第二波袭击者来袭。黑霾合拢，第二波敌人穿霾而来，你要守住雷达。"
+
+msgid "Black Market"
+msgstr "黑市"
+
+msgid "Black-Hole Armor"
+msgstr "黑洞装甲"
+
+msgid "BlackBloc"
+msgstr "BlackBloc"
+
+msgid "Blackout EMP"
+msgstr "断电 EMP"
+
+msgid "Bo Mya"
+msgstr "波米亚"
+
+msgid "bomb armed"
+msgstr "炸弹已装填"
+
+msgid "Bomblet Carpet"
+msgstr "子母弹地毯"
+
+msgid "Bonus complete: side cache"
+msgstr "额外目标完成：侧翼物资点"
+
+msgid "Bonus failed: the spray landed"
+msgstr "额外目标失败：喷洒已落地"
+
+msgid "Bonus: reach the side cache"
+msgstr "额外目标：抵达侧翼物资点"
+
+msgid "Boot menu"
+msgstr "启动菜单"
+
+msgid "Both batteries are still up, and the screen is with them."
+msgstr "两座炮台仍在运作，掩护部队也在它们身边。"
+
+msgid "Both server blocks are live. Start the hack."
+msgstr "两座服务器机组都已上线。开始入侵。"
+
+msgid "Both superweapons are live. Break the screen and drop them."
+msgstr "两座超级武器都已上线。突破掩护，摧毁它们。"
+
+msgid "Both weapons are armed. The count is running."
+msgstr "两件武器都已装填。倒计时开始。"
+
+msgid "Box"
+msgstr "方阵"
+
+msgid "Bridge down"
+msgstr "桥梁被毁"
+
+msgid "Briefing"
+msgstr "简报"
+
+msgid "bring one rare-earth stock"
+msgstr "带回一份稀土储备"
+
+msgid "Build"
+msgstr "建造"
+
+msgid "Build a barracks and train 3 infantry."
+msgstr "建造兵营并训练 3 名步兵。"
+
+msgid "Build a power plant."
+msgstr "建造一座发电厂。"
+
+msgid "build blocked"
+msgstr "无法建造"
+
+msgid "Build pipeline"
+msgstr "建造流程"
+
+msgid "Building"
+msgstr "建筑"
+
+msgid "Buildings"
+msgstr "建筑"
+
+msgid "Bunker Lock"
+msgstr "地堡封锁"
+
+msgid "Burma"
+msgstr "缅甸"
+
+msgid "Burma Road"
+msgstr "滇缅公路"
+
+msgid "Burma Road Bulldozer Tank"
+msgstr "滇缅公路推土坦克"
+
+msgid "Burmese"
+msgstr "缅甸语"
+
+msgid "Buy clearance"
+msgstr "购买许可"
+
+msgid "CAMPAIGN"
+msgstr "战役"
+
+msgid "Campaign"
+msgstr "战役"
+
+msgid "Canals cut the paddies. Right-click a bridge to drop it. The enemy builds, expands, and attacks."
+msgstr "运河切割稻田。右键点击桥梁可将其炸毁。敌人会建造、扩张并进攻。"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Cancel the building in progress and refund what it has spent."
+msgstr "取消正在建造的建筑，并退还已花费的资金。"
+
+msgid "cannot cross"
+msgstr "无法通过"
+
+msgid "cannot import"
+msgstr "无法导入"
+
+msgid "cannot sell"
+msgstr "无法出售"
+
+msgid "cannot train"
+msgstr "无法训练"
+
+msgid "Capture the radar, then hold it through the haze."
+msgstr "占领雷达，然后在黑霾中坚守。"
+
+msgid "capture: yard, ruby night shift, and one rare-earth stock, after the recon drones fall"
+msgstr "占领：侦察无人机被击落后，夺取基地、红宝石夜班和一份稀土储备"
+
+msgid "Caravan ambush"
+msgstr "商队伏击"
+
+msgid "caravan in"
+msgstr "商队已抵达"
+
+msgid "Caravan master"
+msgstr "商队首领"
+
+msgid "Cargo Winch Airlift"
+msgstr "货运绞盘空运"
+
+msgid "Cash Bounty"
+msgstr "现金悬赏"
+
+msgid "Cash Bribe"
+msgstr "现金贿赂"
+
+msgid "Century Carpet Bomber"
+msgstr "世纪地毯轰炸机"
+
+msgid "CH-4"
+msgstr "CH-4"
+
+msgid "CH-4 hangar"
+msgstr "CH-4 机库"
+
+msgid "Changes"
+msgstr "Changes"
+
+msgid "Channel boat"
+msgstr "海峡船只"
+
+msgid "channel clear"
+msgstr "海峡已肃清"
+
+msgid "Channel crossing (mission)"
+msgstr "渡过海峡（任务）"
+
+msgid "Channel crossing. Text briefing. Send an amphibious unit across the deep water to the far shore."
+msgstr "渡过海峡。文字简报。派一支两栖单位穿越深水抵达对岸。"
+
+msgid "Charcoal / cyan"
+msgstr "炭黑 / 青色"
+
+msgid "Chat"
+msgstr "聊天"
+
+msgid "Chemical Afterburner"
+msgstr "化学加力燃烧"
+
+msgid "Chiang Rai"
+msgstr "清莱"
+
+msgid "Chips the towers. It does not finish the mission."
+msgstr "削弱塔楼。无法直接完成任务。"
+
+msgid "Choose a map"
+msgstr "选择地图"
+
+msgid "Chopper Mode"
+msgstr "直升机模式"
+
+msgid "Chrono-Phase Recall"
+msgstr "时相召回"
+
+msgid "Citadel garrison"
+msgstr "要塞守军"
+
+msgid "Citadel officer"
+msgstr "要塞军官"
+
+msgid "Clear"
+msgstr "清除"
+
+msgid "Clear the ambush (%d). Then walk the caravan to the night shift."
+msgstr "清除伏兵（%d）。然后护送商队前往夜班矿场。"
+
+msgid "Clear the field    Hold the line    Bring it home"
+msgstr "肃清战场    守住防线    凯旋而归"
+
+msgid "Clear the garrison (%d) and hold the hydro radar."
+msgstr "清除守军（%d）并守住水文雷达。"
+
+msgid "Clear the garrison (%d), then %s."
+msgstr "清除守军（%d），然后%s。"
+
+msgid "Clear the garrison (%d), then siphon the compound."
+msgstr "清除守军（%d），然后抽取据点资金。"
+
+msgid "clear the Orlan drones"
+msgstr "清除 Orlan 无人机"
+
+msgid "Clear the shore (%d). A boat is on the far shore."
+msgstr "清除海岸守军（%d）。已有船只抵达对岸。"
+
+msgid "Clear the shore (%d). Land a boat on the far shore. The mine line hurts ships."
+msgstr "清除海岸守军（%d）。让一艘船登上对岸。水雷带会损伤舰船。"
+
+msgid "clearance %d"
+msgstr "许可 %d"
+
+msgid "Clearance commander"
+msgstr "许可指挥官"
+
+msgid "clearance refused"
+msgstr "许可被拒"
+
+msgid "Clearance two (mission)"
+msgstr "第二道许可（任务）"
+
+msgid "Clearance two. Text briefing. Buy clearance, then queue and place the drone bay inside the pad."
+msgstr "第二道许可。文字简报。购买许可，然后排队生产无人机舱并将其放置在停机坪内。"
+
+msgid "Colonel Nguyen Phantom"
+msgstr "阮上校幻影"
+
+msgid "Column screen"
+msgstr "纵队掩护"
+
+msgid "Command deck"
+msgstr "指挥甲板"
+
+msgid "Commander:  %s"
+msgstr "指挥官：  %s"
+
+msgid "Company"
+msgstr "连队"
+
+msgid "Complete objective"
+msgstr "完成目标"
+
+msgid "Compound garrison"
+msgstr "据点守军"
+
+msgid "Compound runner"
+msgstr "据点信使"
+
+msgid "Connecting to %s."
+msgstr "正在连接 %s。"
+
+msgid "Construction Yard"
+msgstr "建造厂"
+
+msgid "Contact behind the wagon."
+msgstr "货车后方发现敌情。"
+
+msgid "CONTROLS"
+msgstr "操作"
+
+msgid "Copter shifting."
+msgstr "直升机转移中。"
+
+msgid "Copter under fire."
+msgstr "直升机遭到攻击。"
+
+msgid "Copy again"
+msgstr "再次复制"
+
+msgid "Copy offer"
+msgstr "复制邀请码"
+
+msgid "Copy the answer once it appears and send it back to the host."
+msgstr "应答码出现后复制，并发回给主机。"
+
+msgid "Copy the offer into the other browser, then paste its answer back. No account."
+msgstr "将邀请码复制到另一个浏览器，再把应答码粘贴回来。无需账号。"
+
+msgid "Copy the offer once it appears, then paste the guest's answer."
+msgstr "邀请码出现后复制，然后粘贴客机的应答码。"
+
+msgid "Copy this answer and send it to the host."
+msgstr "复制此应答码并发送给主机。"
+
+msgid "Copy this offer and send it to the guest."
+msgstr "复制此邀请码并发送给客机。"
+
+msgid "Could not join."
+msgstr "无法加入。"
+
+msgid "Count: %ds"
+msgstr "倒计时：%ds"
+
+msgid "Count: 16s"
+msgstr "倒计时：16秒"
+
+msgid "CREDITS"
+msgstr "制作人员"
+
+msgid "Credits %d"
+msgstr "资金 %d"
+
+msgid "Credits %d    Power %d/%d%s"
+msgstr "资金 %d    电力 %d/%d%s"
+
+msgid "credits +250"
+msgstr "资金 +250"
+
+msgid "Credits 0    Power 0/0"
+msgstr "资金 0    电力 0/0"
+
+msgid "Crimson / amber"
+msgstr "深红 / 琥珀"
+
+msgid "Cross channel"
+msgstr "渡过海峡"
+
+msgid "Cryo on the target."
+msgstr "冷冻锁定目标。"
+
+msgid "cryo wave"
+msgstr "冷冻波"
+
+msgid "Cryo-copter airborne."
+msgstr "冷冻直升机已升空。"
+
+msgid "Cryogeddon"
+msgstr "冰封末日"
+
+msgid "Cryoshot"
+msgstr "冷冻射击"
+
+msgid "Cu Chi Tunnel Hound"
+msgstr "古芝地道猎犬"
+
+msgid "Cyber compound (mission)"
+msgstr "网络据点（任务）"
+
+msgid "Cyber compound. Text briefing. Capture the compound and siphon the enemy purse."
+msgstr "网络据点。文字简报。占领据点并抽取敌方资金。"
+
+msgid "damage 1.5"
+msgstr "伤害 1.5"
+
+msgid "Defeat"
+msgstr "失败"
+
+msgid "defender air"
+msgstr "防空守军"
+
+msgid "defender ground"
+msgstr "地面守军"
+
+msgid "Defender-VX"
+msgstr "防御者-VX"
+
+msgid "Defenses"
+msgstr "防御"
+
+msgid "Defoliation lead"
+msgstr "落叶行动指挥"
+
+msgid "Delta Amphibious IFV"
+msgstr "三角洲两栖 IFV"
+
+msgid "Destroy both superweapons (%d left) before the count (%ds)."
+msgstr "摧毁两座超级武器（剩余 %d），赶在倒计时（%ds）结束前。"
+
+msgid "destroy: both enemy superweapons fall before the count hits zero"
+msgstr "摧毁：在倒计时归零前摧毁两座敌方超级武器"
+
+msgid "destroy: every ghost inside the jammer dies, GPS cut and fiber full"
+msgstr "摧毁：干扰区内所有幽灵全部歼灭，GPS 中断，光纤满载"
+
+msgid "destroy: the ambush dies, the jade wagon reaches the bazaar, then the ruby night shift fills the purse"
+msgstr "摧毁：歼灭伏兵，翡翠货车抵达集市，然后红宝石夜班填满资金"
+
+msgid "destroy: the beam freezes the phantom, then the phantom and the battery die"
+msgstr "摧毁：光束冻结幻影，然后摧毁幻影和炮台"
+
+msgid "destroy: the boats die, then the wharf is unpacked and upgraded"
+msgstr "摧毁：击沉船只，然后展开并升级码头"
+
+msgid "destroy: the channel boats die and an amphibious unit reaches the far shore"
+msgstr "摧毁：击沉海峡船只，并让一支两栖单位抵达对岸"
+
+msgid "destroy: the EW towers fall, then the Su-30 and CH-4 hangars"
+msgstr "摧毁：摧毁 EW 塔，然后摧毁 Su-30 和 CH-4 机库"
+
+msgid "destroy: the garrison dies, the hack is held on the server blocks, then both blocks are siphoned"
+msgstr "摧毁：歼灭守军，在服务器机组上保持入侵，然后抽取两座机组"
+
+msgid "destroy: the GTFC tank column is frozen, then destroyed"
+msgstr "摧毁：冻结 GTFC 坦克纵队，然后将其摧毁"
+
+msgid "destroy: the joint enemy fleet is sunk"
+msgstr "摧毁：击沉敌方联合舰队"
+
+msgid "destroy: the radar garrison dies and the hydro radar is held"
+msgstr "摧毁：歼灭雷达守军并守住水文雷达"
+
+msgid "Details"
+msgstr "详情"
+
+msgid "Difficulty"
+msgstr "难度"
+
+msgid "Difficulty:  %s"
+msgstr "难度：  %s"
+
+msgid "Discharges a held unit. One cast."
+msgstr "释放一个被困单位。一次施放。"
+
+msgid "Done"
+msgstr "完成"
+
+msgid "Dozer advancing."
+msgstr "推土车推进中。"
+
+msgid "Dozer ready."
+msgstr "推土车就绪。"
+
+msgid "Dozer under fire."
+msgstr "推土车遭到攻击。"
+
+msgid "Drag a box    Select"
+msgstr "拖框    选择"
+
+msgid "Drag a box around your units."
+msgstr "拖动方框框选你的单位。"
+
+msgid "Drone truck standing by."
+msgstr "无人机卡车待命。"
+
+msgid "Drones on the jade wagon. Keep it under the trees."
+msgstr "无人机盯上了翡翠货车。让它保持在树荫下。"
+
+msgid "Drones on the target."
+msgstr "无人机锁定目标。"
+
+msgid "Drop the EW towers (%d), then the hangars (%d)."
+msgstr "摧毁 EW 塔（%d），然后摧毁机库（%d）。"
+
+msgid "Easy"
+msgstr "简单"
+
+msgid "Edge pan"
+msgstr "边缘平移"
+
+msgid "Eject and Repair"
+msgstr "弹射并维修"
+
+msgid "Electro-Latch Detonate"
+msgstr "电磁锁引爆"
+
+msgid "Electro-Stasis Tether"
+msgstr "电磁静滞系索"
+
+msgid "Elite"
+msgstr "精英"
+
+msgid "Emergency Evasive Return"
+msgstr "紧急规避返航"
+
+msgid "Enemy"
+msgstr "敌人"
+
+msgid "Enemy spotted."
+msgstr "发现敌人。"
+
+msgid "Engage"
+msgstr "交战"
+
+msgid "ENGINE"
+msgstr "引擎"
+
+msgid "English"
+msgstr "英语"
+
+msgid "English, Burmese, Mandarin, Thai, or Malay. A missing line plays the English take."
+msgstr "英语、缅甸语、普通话、泰语或马来语。缺失的台词将播放英语版本。"
+
+msgid "Esc    Pause"
+msgstr "Esc    暂停"
+
+msgid "Esc  Back    ·    Enter  Select"
+msgstr "Esc  返回    ·    Enter  选择"
+
+msgid "Evacuate and Lay Mines"
+msgstr "撤离并布雷"
+
+msgid "EW tower"
+msgstr "EW 塔"
+
+msgid "F    Ability"
+msgstr "F    技能"
+
+msgid "F ability found no enemy"
+msgstr "F 技能未找到敌人"
+
+msgid "F ability struck an enemy"
+msgstr "F 技能命中敌人"
+
+msgid "Faction:  %s"
+msgstr "阵营：  %s"
+
+msgid "Federal Wings Ag-Bomber Hexacopter"
+msgstr "联邦之翼农用轰炸六旋翼机"
+
+msgid "Ferry warden"
+msgstr "渡口守卫"
+
+msgid "Fiber-Optic Tether"
+msgstr "光纤系索"
+
+msgid "Fibre Dive"
+msgstr "光纤俯冲"
+
+msgid "Field clinic (mission)"
+msgstr "野战诊所（任务）"
+
+msgid "Field clinic. Text briefing. Capture the clinic and let it heal the company."
+msgstr "野战诊所。文字简报。占领诊所，让它为连队治疗。"
+
+msgid "Field Medical Tent"
+msgstr "野战医疗帐篷"
+
+msgid "Fight the briefing."
+msgstr "按简报作战。"
+
+msgid "fire the beam"
+msgstr "发射光束"
+
+msgid "First mission. Select the company, right-click to move, and right-click the raiders to fight. Raise the yard, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails."
+msgstr "第一个任务。选中连队，右键点击移动，右键点击袭击者进行战斗。建起基地，运作红宝石夜班，并带回一份稀土储备。如果连队全灭，突袭失败。"
+
+msgid "Flak-Slag Mast"
+msgstr "防空熔渣桅杆"
+
+msgid "Fleet captain"
+msgstr "舰队舰长"
+
+msgid "Fleet picket"
+msgstr "舰队巡逻"
+
+msgid "FLH7 Squad"
+msgstr "FLH7 小队"
+
+msgid "Fog Over Pakbeng"
+msgstr "北本迷雾"
+
+msgid "Fog Over Pakbeng. Text briefing. Hold a hydro radar through the longer haze while a second raider wave attacks. An ally breaks first. The haze stays shut, and the radar has to be held. The side cache is optional."
+msgstr "北本迷雾。文字简报。在更长的黑霾期间守住水文雷达，同时第二波袭击者来袭。一名盟友会先溃退。黑霾持续封闭，雷达必须守住。侧翼物资点为可选目标。"
+
+msgid "FONTS"
+msgstr "字体"
+
+msgid "Form"
+msgstr "阵型"
+
+msgid "Formation. Switch between a line and a box."
+msgstr "阵型。在横队和方阵之间切换。"
+
+msgid "Found %s."
+msgstr "发现 %s。"
+
+msgid "FPV Strike Drone"
+msgstr "FPV 攻击无人机"
+
+msgid "Free Trade"
+msgstr "自由贸易"
+
+msgid "Freeze the column (%d/%d), then destroy it (%d left).%s"
+msgstr "冻结坦克纵队（%d/%d），然后将其摧毁（剩余 %d）。%s"
+
+msgid "freeze the phantom"
+msgstr "冻结幻影"
+
+msgid "Freezes one target. One cast."
+msgstr "冻结一个目标。一次施放。"
+
+msgid "Freezes the tank column. It does not finish the mission."
+msgstr "冻结坦克纵队。无法直接完成任务。"
+
+msgid "Freezes the trimarans for a while. It does not finish the mission."
+msgstr "暂时冻结三体船。无法直接完成任务。"
+
+msgid "Frequency Hop"
+msgstr "跳频"
+
+msgid "Game language"
+msgstr "游戏语言"
+
+msgid "GAMEPLAY"
+msgstr "游戏"
+
+msgid "garrison %d"
+msgstr "守军 %d"
+
+msgid "Garrison clear. %s. Siphon both server blocks (%d)."
+msgstr "守军已清除。%s。抽取两座服务器机组（%d）。"
+
+msgid "Garrison clear. Hold the hydro radar."
+msgstr "守军已清除。守住水文雷达。"
+
+msgid "Garrison clear. Hydro radar is held."
+msgstr "守军已清除。水文雷达已守住。"
+
+msgid "Garrison clear. Siphon the compound (%d)."
+msgstr "守军已清除。抽取据点资金（%d）。"
+
+msgid "Garrison in the trees."
+msgstr "树林中有守军。"
+
+msgid "Garuda Mecha-Overlord"
+msgstr "迦楼罗机甲霸主"
+
+msgid "General Bo Mya"
+msgstr "波米亚将军"
+
+msgid "Ghosts in the jammer. Every one of them has to fall."
+msgstr "干扰区内有幽灵。必须全部歼灭。"
+
+msgid "Ghosts of Patani"
+msgstr "北大年幽灵"
+
+msgid "Ghosts of Patani. Text briefing. Destroy every ghost in the jammer, including the shipment guards. GPS guidance drops there. A fiber link does not. Losing the company fails the mission. GPS drops, ghosts close in, and then the guide turns. The side cache is optional."
+msgstr "北大年幽灵。文字简报。摧毁干扰区内的所有幽灵，包括货物护卫。GPS 制导在那里失效，光纤链路则不受影响。连队覆灭则任务失败。GPS 失效，幽灵逼近，随后向导倒戈。侧翼物资点为可选目标。"
+
+msgid "Godot Engine, MIT licence"
+msgstr "Godot 引擎，MIT 许可证"
+
+msgid "Godot RTS Advanced, MIT licence"
+msgstr "Godot RTS Advanced，MIT 许可证"
+
+msgid "gold bullion"
+msgstr "金条"
+
+msgid "Golden Confluence"
+msgstr "黄金汇流"
+
+msgid "Golden Dragon Dirigible"
+msgstr "金龙飞艇"
+
+msgid "Golden Slag / Aurum-9"
+msgstr "金渣 / Aurum-9"
+
+msgid "Golden Slag / Aurum-9 stays in the yard ledger. Ruby and rare earth are the raid."
+msgstr "金渣 / Aurum-9 计入基地账本。红宝石和稀土才是突袭目标。"
+
+msgid "Got it"
+msgstr "知道了"
+
+msgid "GPS drops in the mist. Fiber shots still land."
+msgstr "GPS 在迷雾中失效。光纤制导仍能命中。"
+
+msgid "GPS Spoofing"
+msgstr "GPS 欺骗"
+
+msgid "GRAPHICS"
+msgstr "画面"
+
+msgid "Greybox"
+msgstr "白模"
+
+msgid "Grinder Treads"
+msgstr "碾压履带"
+
+msgid "Ground"
+msgstr "地面"
+
+msgid "Group %d"
+msgstr "编队 %d"
+
+msgid "Group %d empty"
+msgstr "编队 %d 为空"
+
+msgid "Group %d stored"
+msgstr "编队 %d 已保存"
+
+msgid "group toggle"
+msgstr "编队切换"
+
+msgid "GTFC"
+msgstr "GTFC"
+
+msgid "GTFC  crimson / amber"
+msgstr "GTFC  深红 / 琥珀"
+
+msgid "GTFC gunboat"
+msgstr "GTFC 炮艇"
+
+msgid "GTFC tank"
+msgstr "GTFC 坦克"
+
+msgid "Guard"
+msgstr "警戒"
+
+msgid "Guard. Fire at enemies in range."
+msgstr "警戒。攻击射程内的敌人。"
+
+msgid "Guide"
+msgstr "指南"
+
+msgid "Gun Wharf"
+msgstr "炮台码头"
+
+msgid "H    Controls"
+msgstr "H    操作"
+
+msgid "H guide    P protocols"
+msgstr "H 指南    P 协议"
+
+msgid "Ha Long Hydrofoil"
+msgstr "下龙水翼艇"
+
+msgid "hack held"
+msgstr "入侵保持中"
+
+msgid "Hack: %ds"
+msgstr "入侵：%ds"
+
+msgid "Hack: 20s"
+msgstr "入侵：20秒"
+
+msgid "Halt"
+msgstr "停止"
+
+msgid "Hard"
+msgstr "困难"
+
+msgid "haul 120"
+msgstr "劫掠 120"
+
+msgid "Hawk Missiles"
+msgstr "鹰式导弹"
+
+msgid "Haze coxswain"
+msgstr "黑霾舵手"
+
+msgid "Haze raider"
+msgstr "黑霾袭击者"
+
+msgid "Hide mission"
+msgstr "隐藏任务"
+
+msgid "High"
+msgstr "高"
+
+msgid "High graphics, full volume, voices in the game language, normal difficulty, edge pan on."
+msgstr "高画质，满音量，语音使用游戏语言，普通难度，开启边缘平移。"
+
+msgid "High keeps trees, rain, fog, and shadows."
+msgstr "高画质保留树木、雨、雾和阴影。"
+
+msgid "High Technology"
+msgstr "高科技"
+
+msgid "Highland cliffs block the climb. The road is open ground. The enemy builds, expands, and attacks."
+msgstr "高地悬崖阻挡攀爬。公路是开阔地。敌人会建造、扩张并进攻。"
+
+msgid "Highland Saboteur"
+msgstr "高地破坏者"
+
+msgid "Highlight a row to read what it changes."
+msgstr "高亮某一行以查看其作用。"
+
+msgid "Hold"
+msgstr "坚守"
+
+msgid "hold the blocks %ds"
+msgstr "守住机组 %ds"
+
+msgid "Hold the radar through the haze. %d seconds left."
+msgstr "在黑霾中守住雷达。剩余 %d 秒。"
+
+msgid "Hold the radar. The haze is the clock."
+msgstr "守住雷达。黑霾就是计时器。"
+
+msgid "Hold. Do not acquire targets."
+msgstr "坚守。不主动索敌。"
+
+msgid "Holder"
+msgstr "占领方"
+
+msgid "Honorable Discharge"
+msgstr "光荣退役"
+
+msgid "Host %s %s    Guest %s %s"
+msgstr "主机 %s %s    客机 %s %s"
+
+msgid "Host a 1v1 on this LAN, or join one. Each player brings a faction and a base."
+msgstr "在此局域网上创建 1v1 对战，或加入一场。每位玩家带一个阵营和一座基地。"
+
+msgid "Host LAN"
+msgstr "创建 LAN 对战"
+
+msgid "Houses"
+msgstr "房屋"
+
+msgid "Hover-technical set."
+msgstr "悬浮武装皮卡就位。"
+
+msgid "How fast the camera slides."
+msgstr "镜头滑动的速度。"
+
+msgid "How to play"
+msgstr "玩法说明"
+
+msgid "How to play (H)"
+msgstr "玩法说明（H）"
+
+msgid "hub not queued"
+msgstr "枢纽未排队"
+
+msgid "hub not ready"
+msgstr "枢纽未就绪"
+
+msgid "hub placed"
+msgstr "枢纽已放置"
+
+msgid "hub ready to place"
+msgstr "枢纽可放置"
+
+msgid "Hub Refinery"
+msgstr "枢纽精炼厂"
+
+msgid "HUD"
+msgstr "HUD"
+
+msgid "Humanfuture"
+msgstr "Humanfuture"
+
+msgid "Hydro radar (mission)"
+msgstr "水文雷达（任务）"
+
+msgid "Hydro radar. Text briefing. Capture the radar so water nodes show on the map."
+msgstr "水文雷达。文字简报。占领雷达，让水域节点显示在地图上。"
+
+msgid "Indochina Drone Carrier"
+msgstr "印度支那无人机母舰"
+
+msgid "Infantry"
+msgstr "步兵"
+
+msgid "Infantry screen the tanks. They are not the column."
+msgstr "步兵掩护坦克。他们不属于纵队。"
+
+msgid "Infiltrator Operative"
+msgstr "渗透特工"
+
+msgid "Inflatable Raft and C4"
+msgstr "充气筏与 C4"
+
+msgid "Interceptor up."
+msgstr "拦截机升空。"
+
+msgid "Internal queue"
+msgstr "内部队列"
+
+msgid "Ion-Cryo Collider"
+msgstr "离子冷冻对撞机"
+
+msgid "Irrawaddy Gyro-Gunship"
+msgstr "伊洛瓦底旋翼炮艇"
+
+msgid "Iskandar"
+msgstr "伊斯坎达尔"
+
+msgid "Islands in deep water. Shoals are the crossings. The enemy builds, expands, and attacks."
+msgstr "深水中的岛屿。浅滩是渡口。敌人会建造、扩张并进攻。"
+
+msgid "Jade caravan"
+msgstr "翡翠商队"
+
+msgid "Jammer"
+msgstr "干扰器"
+
+msgid "Jammer drill (mission)"
+msgstr "干扰器演练（任务）"
+
+msgid "Jammer drill. Text briefing. GPS guidance drops inside the jammer. A fiber link does not."
+msgstr "干扰器演练。文字简报。GPS 制导在干扰区内失效，光纤链路则不受影响。"
+
+msgid "Jammer ghost"
+msgstr "干扰区幽灵"
+
+msgid "Jar battery"
+msgstr "石缸炮台"
+
+msgid "Jar screen"
+msgstr "石缸掩护"
+
+msgid "Jet Interceptor"
+msgstr "喷气拦截机"
+
+msgid "Jets on the target."
+msgstr "战机锁定目标。"
+
+msgid "Johor Loiter-Swarm"
+msgstr "柔佛巡飞蜂群"
+
+msgid "Join LAN"
+msgstr "加入 LAN 对战"
+
+msgid "Join offer"
+msgstr "加入邀请"
+
+msgid "Joint picket"
+msgstr "联合巡逻"
+
+msgid "Junta escort"
+msgstr "军政府护卫"
+
+msgid "Kachin Sapper Dog"
+msgstr "克钦工兵犬"
+
+msgid "kamikaze 6"
+msgstr "自杀式 6"
+
+msgid "Kamikaze Drone Squadron"
+msgstr "自杀式无人机中队"
+
+msgid "Keep the beam on the phantom. It is not frozen yet."
+msgstr "保持光束照射幻影。它尚未被冻结。"
+
+msgid "Keep the ferry alive (%s). %d seconds left."
+msgstr "保住渡船（%s）。剩余 %d 秒。"
+
+msgid "Keep the ferry alive. %d seconds left."
+msgstr "保住渡船。剩余 %d 秒。"
+
+msgid "Keng Tung Defoliation"
+msgstr "景栋落叶行动"
+
+msgid "Keng Tung. Text briefing. Freeze the GTFC tank column, then destroy it. Infantry screens the tanks. Toxic Defoliation can freeze them. Casting it does not end the mission. A spray run comes down the road and has to be cut off. If it lands, it defoliates your line and the side cache is lost."
+msgstr "景栋。文字简报。冻结 GTFC 坦克纵队，然后将其摧毁。步兵掩护着坦克。剧毒落叶剂可以冻结它们，但施放并不会结束任务。一支喷洒车队正沿公路驶来，必须拦截。如果喷洒落地，你的防线将被落叶剂摧毁，侧翼物资点也会丢失。"
+
+msgid "Kenney (kenney.nl) and other CC0 sources, listed in game/sfx/CREDITS.md"
+msgstr "Kenney (kenney.nl) 及其他 CC0 素材来源，详见 game/sfx/CREDITS.md"
+
+msgid "Key guide"
+msgstr "按键指南"
+
+msgid "Kite Loiterer"
+msgstr "风筝巡飞弹"
+
+msgid "Kokang and Mogok night raid"
+msgstr "果敢与抹谷夜袭"
+
+msgid "Kokang and Mogok night raid. Raise the scaffold yard, run the ruby pits on night shift, and bring one rare-earth stock home before dawn. If the company dies, the raid fails. An ambush, a blown bridge, a turned guide, and rain can arrive while you work. The side cache is optional."
+msgstr "果敢与抹谷夜袭。建起脚手架基地，让红宝石矿坑连夜开工，并在黎明前带回一份稀土储备。如果连队全灭，突袭失败。作业期间可能遭遇伏击、桥梁被炸、向导倒戈和降雨。侧翼物资点为可选目标。"
+
+msgid "Kokang and Mogok. Text briefing. Raise the yard, clear the Orlan recon over the pits, run the ruby night shift, and bring one rare-earth stock home. If the company dies, the raid fails. Rain hits, Orlans pass the pits, and the night shift starts. The side cache is optional."
+msgstr "果敢与抹谷。文字简报。建起基地，清除矿坑上空的 Orlan 侦察机，运作红宝石夜班，并带回一份稀土储备。如果连队全灭，突袭失败。大雨来袭，Orlan 飞过矿坑，夜班开工。侧翼物资点为可选目标。"
+
+msgid "Kokang: %s. %s. %s. %s."
+msgstr "果敢：%s。%s。%s。%s。"
+
+msgid "Krakatoa Dreadnought"
+msgstr "喀拉喀托无畏舰"
+
+msgid "Kris Plasma Rush"
+msgstr "克里斯短剑等离子突袭"
+
+msgid "LAN guest. Your company, your base."
+msgstr "LAN 客机。你的连队，你的基地。"
+
+msgid "Land"
+msgstr "着陆"
+
+msgid "Land Legs"
+msgstr "陆地行走"
+
+msgid "LANGUAGE"
+msgstr "语言 / LANGUAGE"
+
+msgid "Laser Target Lock"
+msgstr "激光目标锁定"
+
+msgid "Last-Stand Ram"
+msgstr "背水一撞"
+
+msgid "Leech beam on."
+msgstr "吸取光束开启。"
+
+msgid "Left click selects. Right click moves. F ability."
+msgstr "左键选择。右键移动。F 技能。"
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
+"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+"左键单击单位，或拖框选中你的连队。橙色圆环显示所选单位的武器射程，指针停在单位上时也会出现同样的圆环。\n"
+"右键单击空地移动。右键单击敌人攻击。圆环标记该位置，随后淡出。\n"
+"按 Q 向光标处攻击移动。按 X 停止。Ctrl 加 1 至 9 保存编队。按数字调出编队，再按一次将镜头居中。\n"
+"Shift 单击添加单位。Ctrl 单击切换选中。双击或按 E 选中同类全部单位。Z 让连队为下次移动列队。Shift 右键单击空地添加下一步路径点。R 放置集结旗，新单位会在旗旁出现。顶栏显示每秒获得的资金。\n"
+"菱形标记领头单位的下一步。细脉冲标记当前目标，小地图会框出该位置。命中时显示浮动数字。\n"
+"单击小地图可将镜头跳转到该处。\n"
+"按 F 或技能键使用所选单位的技能。智能施放只让最近的就绪单位开火。\n"
+"右侧栏用于训练单位和建造建筑。走上彩色资源台即可占领。\n"
+"船只可穿越深水。坦克和步兵只能在陆地行动，浅滩开放时可涉水通过。\n"
+"季风泥泞减慢坦克和步兵。海峡迷雾缩短视野，除非你拥有水文雷达。在湄公河上，右键单击桥梁可将其炸毁并打通运河。占领的军火集市出售 CH-4、Su-30、Orlan-10 和 FLH7 小队，并抽取敌方资金。\n"
+"电力不足时新生产会停止，直到电厂满足用电需求，防御设施也会停火。取消会撤销正在建造的建筑。水文雷达照亮河道走廊。用步兵右键单击熔渣碉堡或多管炮塔即可驻守，然后单击该建成建筑卸载。再次单击已建成的守卫者-VX 可切换对地和对空武器。\n"
+"P 打开协议。H 打开本指南。\n"
+"获胜时状态栏显示“目标完成”，连队覆灭则显示“目标失败”。"
+
+msgid "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr "左键单击选择。Shift 单击添加。双击或按 E 选中同类。右键单击地面移动，单击敌人攻击。Shift 右键单击添加路径点。Z 让连队列队。Q 攻击移动。X 停止。R 移动集结旗。Ctrl+1-9 保存编队，按数字调出。圆环标记命令位置。单击小地图跳转。F 技能。H 指南。P 打开协议。"
+
+msgid "Line"
+msgstr "横列"
+
+msgid "Linked. %d units."
+msgstr "已连接。%d 个单位。"
+
+msgid "LOADING"
+msgstr "加载中"
+
+msgid "Loading"
+msgstr "加载中"
+
+msgid "Locks a satellite on the target. One cast."
+msgstr "卫星锁定目标。限用一次。"
+
+msgid "Longtail Raider"
+msgstr "长尾快艇突袭者"
+
+msgid "Love Drunk"
+msgstr "Love Drunk"
+
+msgid "Low"
+msgstr "低"
+
+msgid "Low drops trees, rain, fog, and shadows."
+msgstr "低画质会去除树木、雨、雾和阴影。"
+
+msgid "low power"
+msgstr "电力不足"
+
+msgid "Low power. Build a plant."
+msgstr "电力不足。建造电厂。"
+
+msgid "Machinesfuture"
+msgstr "Machinesfuture"
+
+msgid "Mae Sai scaffold (mission)"
+msgstr "美赛脚手架（任务）"
+
+msgid "Mae Sai. Text briefing. Raise the scaffold yard and keep the drain running until the frame is finished."
+msgstr "美赛。文字简报。建立脚手架工场，并保持抽取运转，直到框架完工。"
+
+msgid "Magnetic Harpoon Grinder"
+msgstr "磁力鱼叉粉碎机"
+
+msgid "Magnetic Hull Breach"
+msgstr "磁力破壳"
+
+msgid "Magnetic Satellite"
+msgstr "磁力卫星"
+
+msgid "Malacca Pocket-Sub"
+msgstr "马六甲袖珍潜艇"
+
+msgid "Malacca Recon Drone"
+msgstr "马六甲侦察无人机"
+
+msgid "Malay"
+msgstr "马来语"
+
+msgid "Mandarin"
+msgstr "普通话"
+
+msgid "Market"
+msgstr "市场"
+
+msgid "Master"
+msgstr "主音量"
+
+msgid "Mekong"
+msgstr "湄公河"
+
+msgid "Mekong Assault Destroyer"
+msgstr "湄公河突击驱逐舰"
+
+msgid "Mekong Combat Sapper"
+msgstr "湄公河战斗工兵"
+
+msgid "Mekong Delta"
+msgstr "湄公河三角洲"
+
+msgid "Mekong Hawk UAV"
+msgstr "湄公河猎鹰 UAV"
+
+msgid "Mekong Spider Drone"
+msgstr "湄公河蜘蛛无人机"
+
+msgid "Menu"
+msgstr "菜单"
+
+msgid "Menu and match songs. The default sits a little under full."
+msgstr "菜单与对战音乐。默认值略低于满音量。"
+
+msgid "Menu ticks, weapons, and the radio."
+msgstr "菜单音效、武器和无线电。"
+
+msgid "Menus, HUD, briefings, and subtitles. Voices follow; the Audio page can change them."
+msgstr "菜单、HUD、简报和字幕。语音随之切换，可在音频页单独更改。"
+
+msgid "Militia holding."
+msgstr "民兵坚守中。"
+
+msgid "Militia moving."
+msgstr "民兵移动中。"
+
+msgid "Militia under fire."
+msgstr "民兵遭受攻击。"
+
+msgid "Mindanao Striker Walker"
+msgstr "棉兰老突击机甲"
+
+msgid "Mine rubies"
+msgstr "开采红宝石"
+
+msgid "mine rubies"
+msgstr "开采红宝石"
+
+msgid "Mine rubies: %d/30"
+msgstr "开采红宝石：%d/30"
+
+msgid "Mines in the cut. Take the boats wide of the line."
+msgstr "航道有水雷。让船只绕开封锁线。"
+
+msgid "Mines rubies. One cast."
+msgstr "开采红宝石。限用一次。"
+
+msgid "Minimap"
+msgstr "小地图"
+
+msgid "Mirage Camo-Tank"
+msgstr "幻影迷彩坦克"
+
+msgid "Mission"
+msgstr "任务"
+
+msgid "Mobile core"
+msgstr "移动核心"
+
+msgid "Mogok Night-Shift Overdrive"
+msgstr "抹谷夜班超载"
+
+msgid "Monsoon"
+msgstr "季风"
+
+msgid "Monsoon Bull-Charge"
+msgstr "季风蛮牛冲锋"
+
+msgid "Move packer"
+msgstr "移动码头船"
+
+msgid "Multigunner"
+msgstr "多管炮塔"
+
+msgid "multigunner full"
+msgstr "多管炮塔已满"
+
+msgid "MULTIPLAYER"
+msgstr "多人游戏"
+
+msgid "MUSIC"
+msgstr "音乐"
+
+msgid "Music"
+msgstr "音乐"
+
+msgid "MVD"
+msgstr "MVD"
+
+msgid "MVD  charcoal / cyan"
+msgstr "MVD  炭黑 / 青色"
+
+msgid "MVD  charcoal / cyan    internal queue"
+msgstr "MVD  炭黑 / 青色    内部队列"
+
+msgid "MVD cutter"
+msgstr "MVD 切割艇"
+
+msgid "MVD yard"
+msgstr "MVD 工场"
+
+msgid "Nano-Deflector Barrier"
+msgstr "纳米偏导屏障"
+
+msgid "napalm 36"
+msgstr "凝固汽油弹 36"
+
+msgid "Napalm is armed. Calling it does not sink the fleet."
+msgstr "凝固汽油弹已就绪。呼叫它不会击沉舰队。"
+
+msgid "Naval"
+msgstr "海军"
+
+msgid "Naval Yard"
+msgstr "海军船坞"
+
+msgid "need a naval yard"
+msgstr "需要海军船坞"
+
+msgid "need a tech center"
+msgstr "需要科技中心"
+
+msgid "need an airfield"
+msgstr "需要机场"
+
+msgid "New to ASEAN 2031?"
+msgstr "初次接触 ASEAN 2031？"
+
+msgid "Next skirmish: %s"
+msgstr "下一场遭遇战：%s"
+
+msgid "Night"
+msgstr "Night"
+
+msgid "Night commander"
+msgstr "夜战指挥官"
+
+msgid "Night shift paying"
+msgstr "夜班收益中"
+
+msgid "NMRF"
+msgstr "NMRF"
+
+msgid "NMRF  olive / emerald"
+msgstr "NMRF  橄榄 / 翡翠绿"
+
+msgid "NMRF  olive / emerald    mobile core"
+msgstr "NMRF  橄榄 / 翡翠绿    移动核心"
+
+msgid "NMRF trimaran"
+msgstr "NMRF 三体船"
+
+msgid "NMRF yard"
+msgstr "NMRF 工场"
+
+msgid "No stock yet"
+msgstr "暂无存货"
+
+msgid "no target"
+msgstr "无目标"
+
+msgid "Normal"
+msgstr "普通"
+
+msgid "not enough credits"
+msgstr "资金不足"
+
+msgid "Not Needed Anymore"
+msgstr "Not Needed Anymore"
+
+msgid "not ready"
+msgstr "未就绪"
+
+msgid "Nothing selected"
+msgstr "未选中任何单位"
+
+msgid "nothing to cancel"
+msgstr "无可取消项"
+
+msgid "nothing to repair"
+msgstr "无需修理"
+
+msgid "Noto Sans Myanmar, Noto Sans Thai, and Noto Sans SC, SIL Open Font License 1.1"
+msgstr "Noto Sans Myanmar、Noto Sans Thai 和 Noto Sans SC，SIL Open Font License 1.1"
+
+msgid "NOW PLAYING"
+msgstr "正在播放"
+
+msgid "Nusantara Boarder"
+msgstr "努山塔拉登船兵"
+
+msgid "Objective complete"
+msgstr "目标完成"
+
+msgid "Objective failed"
+msgstr "目标失败"
+
+msgid "Objective stalled"
+msgstr "目标停滞"
+
+msgid "Offer"
+msgstr "邀请码"
+
+msgid "Offshore Tidal Turbine"
+msgstr "近海潮汐涡轮机"
+
+msgid "OK"
+msgstr "确定"
+
+msgid "Olive / emerald"
+msgstr "橄榄 / 翡翠绿"
+
+msgid "On"
+msgstr "开"
+
+msgid "One cast, then it is spent."
+msgstr "限用一次，用后即耗尽。"
+
+msgid "one hero"
+msgstr "一名英雄"
+
+msgid "Open yard"
+msgstr "开放工场"
+
+msgid "Opens robotic assembly. One cast."
+msgstr "开启机器人装配。限用一次。"
+
+msgid "Opens trade income. One cast."
+msgstr "开启贸易收入。限用一次。"
+
+msgid "Operation 1027 drone wave"
+msgstr "1027 行动无人机波次"
+
+msgid "Operation 1027. Text briefing. Knock out the junta EW jamming towers while the escorts press in, then destroy the parked Su-30 and CH-4 hangars. The drone swarm can help. Casting it does not end the mission. The hangars scramble, the swarm crosses, and two rifles arrive."
+msgstr "1027 行动。文字简报。在护卫部队推进时摧毁军政府的 EW 干扰塔，然后摧毁停放的 Su-30 和 CH-4 机库。无人机蜂群可以协助。施放它不会结束任务。机库紧急起飞，蜂群飞越，两名步枪兵赶到。"
+
+msgid "Operation Shattered Monsoon"
+msgstr "破碎季风行动"
+
+msgid "Operation Shattered Monsoon. Text briefing. Destroy both enemy superweapons. A garrison screens the citadel. Protocols can help. Casting them does not end the mission. The garrison comes out, then a countdown runs. Destroy both weapons before it hits zero or the mission fails."
+msgstr "破碎季风行动。文字简报。摧毁敌方两座超级武器。驻军掩护着要塞。协议可以协助。施放协议不会结束任务。驻军出击后倒计时开始。在归零前摧毁两座武器，否则任务失败。"
+
+msgid "Opponent left. Defeat."
+msgstr "对手已离开。失败。"
+
+msgid "Opponent left. Victory."
+msgstr "对手已离开。胜利。"
+
+msgid "Orlan recon"
+msgstr "Orlan 侦察"
+
+msgid "Orlan Thermal Scan"
+msgstr "Orlan 热成像扫描"
+
+msgid "Orlan-10"
+msgstr "Orlan-10"
+
+msgid "Orlans over the ruby pits. They have not marked the yard."
+msgstr "Orlan 无人机飞过红宝石矿坑。它们还没有标记工场。"
+
+msgid "Overall loudness."
+msgstr "总音量。"
+
+msgid "Overload Barrage"
+msgstr "过载弹幕"
+
+msgid "P    Protocols"
+msgstr "P    协议"
+
+msgid "packer already unpacked"
+msgstr "码头船已展开"
+
+msgid "Packer captain"
+msgstr "码头船船长"
+
+msgid "Packer sail (mission)"
+msgstr "码头船启航（任务）"
+
+msgid "Packer sail. Text briefing. Sail the packer into shallow water, unpack the wharf, and upgrade it."
+msgstr "码头船启航。文字简报。将码头船驶入浅水，展开码头并升级。"
+
+msgid "packer sailed"
+msgstr "码头船已启航"
+
+msgid "packer stayed packed"
+msgstr "码头船未展开"
+
+msgid "Paddy"
+msgstr "稻田"
+
+msgid "Palms"
+msgstr "棕榈"
+
+msgid "Pan speed"
+msgstr "平移速度"
+
+msgid "Past Cracks"
+msgstr "Past Cracks"
+
+msgid "Paste the other browser's offer or answer"
+msgstr "粘贴对方浏览器的邀请或应答"
+
+msgid "Patani Corsair Guard"
+msgstr "北大年海盗卫队"
+
+msgid "Patani: %d ghosts in the jammer. GPS shots must miss. Fiber stays true."
+msgstr "北大年：干扰器中有 %d 个幽灵目标。GPS 射击必然落空。光纤制导依然精准。"
+
+msgid "Pause and settings"
+msgstr "暂停与设置"
+
+msgid "PAUSED"
+msgstr "已暂停"
+
+msgid "Paused. Waiting for the other player."
+msgstr "已暂停。等待另一名玩家。"
+
+msgid "Pays 250 credits once."
+msgstr "一次性支付 250 资金。"
+
+msgid "phantom frozen"
+msgstr "幻影已冻结"
+
+msgid "Phantom of the Plain of Jars"
+msgstr "石缸平原幻影"
+
+msgid "Pheromone Bark"
+msgstr "信息素吠叫"
+
+msgid "Phillips"
+msgstr "菲利普"
+
+msgid "Phillips Channel"
+msgstr "菲利普海峡"
+
+msgid "Phillips Wave-Cannon"
+msgstr "菲利普波动炮"
+
+msgid "Pick a faction and a map, then ready up."
+msgstr "选择阵营和地图，然后准备。"
+
+msgid "Pick a map, then Play. The enemy builds, expands, and attacks."
+msgstr "选择地图，然后开始游戏。敌人会建造、扩张并进攻。"
+
+msgid "Pick host or join."
+msgstr "选择主机或加入。"
+
+msgid "Pickets across the bow. They are not the fleet."
+msgstr "船首前方有警戒船。它们不是主力舰队。"
+
+msgid "pillbox full"
+msgstr "碉堡已满"
+
+msgid "pipeline blocked"
+msgstr "管道受阻"
+
+msgid "pipeline ready"
+msgstr "管道就绪"
+
+msgid "Pit guard"
+msgstr "矿坑守卫"
+
+msgid "Place"
+msgstr "放置"
+
+msgid "Place hub"
+msgstr "放置枢纽"
+
+msgid "Plain"
+msgstr "平原"
+
+msgid "Plain of Jars. Text briefing. Hold the beam until the phantom freezes, then destroy the phantom, both batteries, and the screen. The beam holds, the phantom stutters, and the batteries stay up."
+msgstr "石缸平原。文字简报。保持光束照射直到幻影冻结，然后摧毁幻影、两座炮台和屏障。光束持续，幻影卡顿，炮台仍在。"
+
+msgid "Plain of Jars: %s, %s. Phantom %d, battery %d."
+msgstr "石缸平原：%s，%s。幻影 %d，炮台 %d。"
+
+msgid "Plain phantom"
+msgstr "平原幻影"
+
+msgid "Plantation Bomber"
+msgstr "种植园轰炸机"
+
+msgid "Play"
+msgstr "开始游戏"
+
+msgid "Play the training raid"
+msgstr "进行训练突袭"
+
+msgid "Players: 2"
+msgstr "玩家：2"
+
+msgid "Point-Defense Drones"
+msgstr "点防御无人机"
+
+msgid "Poison"
+msgstr "Poison"
+
+msgid "Power %d/%d"
+msgstr "电力 %d/%d"
+
+msgid "Power generated / power drawn"
+msgstr "发电量 / 用电量"
+
+msgid "Practice map."
+msgstr "练习地图。"
+
+msgid "Premature Discharge"
+msgstr "提前放电"
+
+msgid "Press F to use an ability."
+msgstr "按 F 使用技能。"
+
+msgid "Print overdrive."
+msgstr "打印超载。"
+
+msgid "printed 8"
+msgstr "已打印 8"
+
+msgid "Prints a batch of units. One cast."
+msgstr "打印一批单位。限用一次。"
+
+msgid "Printsmith Rifleman"
+msgstr "打印工匠步枪兵"
+
+msgid "Protocol"
+msgstr "协议"
+
+msgid "Protocol bar (mission)"
+msgstr "协议栏（任务）"
+
+msgid "Protocol bar. Text briefing. Cast logistics, arsenal, and oracle once each. A second cast does nothing."
+msgstr "协议栏。文字简报。后勤、军械库和神谕各施放一次。第二次施放无效。"
+
+msgid "protocol spent"
+msgstr "协议已耗尽"
+
+msgid "Protocols"
+msgstr "协议"
+
+msgid "Protocols (P)"
+msgstr "协议（P）"
+
+msgid "Psionic Monsoon"
+msgstr "心灵季风"
+
+msgid "Psionic Monsoon Decimator"
+msgstr "心灵季风歼灭者"
+
+msgid "Q    Attack-move"
+msgstr "Q    攻击移动"
+
+msgid "Quality"
+msgstr "画质"
+
+msgid "queue full"
+msgstr "队列已满"
+
+msgid "Queue hub"
+msgstr "排队建造枢纽"
+
+msgid "Queue the hub inside the pad, buy clearance, then place it. The enemy builds, expands, and attacks."
+msgstr "在资源台内排队建造枢纽，购买许可，然后放置。敌人会建造、扩张并进攻。"
+
+msgid "QUIT"
+msgstr "退出"
+
+msgid "Quit to menu"
+msgstr "退出到菜单"
+
+msgid "Radar garrison"
+msgstr "雷达驻军"
+
+msgid "Radar relief"
+msgstr "雷达援军"
+
+msgid "Raid complete"
+msgstr "突袭完成"
+
+msgid "Raid complete. Scaffold, night ruby, rare-earth stock."
+msgstr "突袭完成。脚手架、夜间红宝石、稀土存货。"
+
+msgid "Raid stalled"
+msgstr "突袭停滞"
+
+msgid "Raider"
+msgstr "突袭者"
+
+msgid "Rail Strike"
+msgstr "轨道打击"
+
+msgid "Rain on the pits. Keep the company moving."
+msgstr "矿坑下雨了。让连队保持移动。"
+
+msgid "Raise a yard, claim Golden Slag / Aurum-9, cross, then press F."
+msgstr "建立工场，占领金渣 / Aurum-9，渡河，然后按 F。"
+
+msgid "Raise scaffold"
+msgstr "搭建脚手架"
+
+msgid "raise the yard"
+msgstr "建立工场"
+
+msgid "Raise the yard before the Orlans find the pits."
+msgstr "在 Orlan 无人机发现矿坑前建立工场。"
+
+msgid "Raises a shield. It can be cast again after it cools."
+msgstr "升起护盾。冷却后可再次施放。"
+
+msgid "Raises the tech rank. One cast."
+msgstr "提升科技等级。限用一次。"
+
+msgid "Raises weapon damage. One cast."
+msgstr "提升武器伤害。限用一次。"
+
+msgid "Rally set"
+msgstr "集结点已设置"
+
+msgid "Ramming Hydro-Shield"
+msgstr "冲撞水力护盾"
+
+msgid "rare earth"
+msgstr "稀土"
+
+msgid "rare earth home"
+msgstr "稀土已运回"
+
+msgid "Rare-earth stock (mission)"
+msgstr "稀土存货（任务）"
+
+msgid "Rare-earth stock secured"
+msgstr "稀土存货已获取"
+
+msgid "Rare-earth stock. Text briefing. Claim the rare-earth node and bring one stock home."
+msgstr "稀土存货。文字简报。占领稀土节点，将一份存货运回基地。"
+
+msgid "RDY"
+msgstr "就绪"
+
+msgid "Read the briefing, then meet it on the field."
+msgstr "阅读简报，然后在战场上应对。"
+
+msgid "READY"
+msgstr "准备"
+
+msgid "Ready"
+msgstr "就绪"
+
+msgid "Ready To Rage Against The Abnormalities"
+msgstr "Ready To Rage Against The Abnormalities"
+
+msgid "recon down"
+msgstr "侦察被击落"
+
+msgid "Recruit"
+msgstr "招募"
+
+msgid "Repair"
+msgstr "修理"
+
+msgid "repair off"
+msgstr "修理关闭"
+
+msgid "Resource pad in sight."
+msgstr "发现资源台。"
+
+msgid "Restart"
+msgstr "重新开始"
+
+msgid "Restore Defaults"
+msgstr "恢复默认"
+
+msgid "Resume"
+msgstr "继续"
+
+msgid "Return to the previous screen."
+msgstr "返回上一界面。"
+
+msgid "Reveals the field. One cast."
+msgstr "揭示战场。限用一次。"
+
+msgid "Riau Syndicate Fixer"
+msgstr "廖内集团掮客"
+
+msgid "Right-click    Move"
+msgstr "右键单击    移动"
+
+msgid "Right-click an enemy to attack."
+msgstr "右键单击敌人进行攻击。"
+
+msgid "Right-click enemy    Attack"
+msgstr "右键单击敌人    攻击"
+
+msgid "Right-click the ground to move."
+msgstr "右键单击地面进行移动。"
+
+msgid "River"
+msgstr "河流"
+
+msgid "River commander"
+msgstr "河流指挥官"
+
+msgid "River gunboat"
+msgstr "内河炮艇"
+
+msgid "Road"
+msgstr "道路"
+
+msgid "Road ambush"
+msgstr "道路伏击"
+
+msgid "Robotic Assembly"
+msgstr "机器人装配"
+
+msgid "Rotate to landscape for the best experience"
+msgstr "横屏以获得最佳体验"
+
+msgid "RTS CORE"
+msgstr "RTS 核心"
+
+msgid "Ruby night market (mission)"
+msgstr "红宝石夜市（任务）"
+
+msgid "Ruby night market. Text briefing. Snap the ruby pit and run the night shift until the purse fills."
+msgstr "红宝石夜市。文字简报。夺取红宝石矿坑，运转夜班直到资金装满。"
+
+msgid "Ruby not paying"
+msgstr "红宝石无收益"
+
+msgid "ruby paid"
+msgstr "红宝石已入账"
+
+msgid "Rusher"
+msgstr "突击兵"
+
+msgid "S.H.R.I.N.K. Ray"
+msgstr "缩小射线"
+
+msgid "Saigon Prism-Lock Tank"
+msgstr "西贡棱镜锁定坦克"
+
+msgid "Salvage Leech Beam"
+msgstr "残骸吸取光束"
+
+msgid "Salvage leech."
+msgstr "残骸吸取。"
+
+msgid "Salween Hydro-Generator"
+msgstr "萨尔温江水力发电机"
+
+msgid "Salween RPG Trooper"
+msgstr "萨尔温江 RPG 步兵"
+
+msgid "Salween Smuggler Boat"
+msgstr "萨尔温江走私船"
+
+msgid "Sandbox"
+msgstr "沙盒"
+
+msgid "Sandbox: yards, queues, five nodes, jammer"
+msgstr "沙盒：工场、队列、五个节点、干扰器"
+
+msgid "Satellite Laser Designation"
+msgstr "卫星激光指示"
+
+msgid "satellite lock"
+msgstr "卫星锁定"
+
+msgid "Satellite Recon"
+msgstr "卫星侦察"
+
+msgid "Scaffold"
+msgstr "脚手架"
+
+msgid "Scaffold stalled"
+msgstr "脚手架停滞"
+
+msgid "scaffold stalled"
+msgstr "脚手架停滞"
+
+msgid "Scaffold up"
+msgstr "脚手架已搭起"
+
+msgid "Scaffold yard"
+msgstr "脚手架工场"
+
+msgid "Scrambler"
+msgstr "干扰兵"
+
+msgid "Sea"
+msgstr "海洋"
+
+msgid "Seal answer"
+msgstr "封存应答"
+
+msgid "Secure rare earth"
+msgstr "获取稀土"
+
+msgid "Seismic Slag Vacuum"
+msgstr "地震熔渣吸尘器"
+
+msgid "Seismic Slag Vacuum Imploder"
+msgstr "地震熔渣真空内爆器"
+
+msgid "Sell"
+msgstr "出售"
+
+msgid "sell off"
+msgstr "出售关闭"
+
+msgid "Send"
+msgstr "发送"
+
+msgid "Sends a drone squadron. One cast."
+msgstr "派出无人机中队。限用一次。"
+
+msgid "Sets an ambush. One cast."
+msgstr "设下伏击。限用一次。"
+
+msgid "SETTINGS"
+msgstr "设置"
+
+msgid "SFX"
+msgstr "SFX"
+
+msgid "Shan Behemoth Tank"
+msgstr "掸邦巨兽坦克"
+
+msgid "Shan Insurgent Militia"
+msgstr "掸邦叛军民兵"
+
+msgid "Shaped Charge"
+msgstr "聚能装药"
+
+msgid "Shar Htoo Waw Kloud Drone Truck"
+msgstr "沙图瓦云端无人机卡车"
+
+msgid "shield %d"
+msgstr "护盾 %d"
+
+msgid "Shipment guard"
+msgstr "货运守卫"
+
+msgid "Shore boat"
+msgstr "岸边船"
+
+msgid "Shore gun"
+msgstr "岸防炮"
+
+msgid "Shrink ray."
+msgstr "缩小射线。"
+
+msgid "Shwe Kokko capture"
+msgstr "占领水沟谷"
+
+msgid "Shwe Kokko. Text briefing. Destroy the garrison and the river gunboats, capture both server blocks, and siphon the enemy purse. Hold a server block for twenty seconds. If you are pushed off, the hack resets. The side cache is optional."
+msgstr "水沟谷。文字简报。摧毁驻军和内河炮艇，占领两座服务器楼，并抽取敌方资金。在服务器楼坚守二十秒。若被逐出，入侵将重置。支线物资点为可选目标。"
+
+msgid "Side"
+msgstr "阵营"
+
+msgid "Siege of Chiang Rai"
+msgstr "清莱围城战"
+
+msgid "Singapore Trimaran"
+msgstr "新加坡三体船"
+
+msgid "Sink the boats (%d). Raise the wharf to level 2 (now %d)."
+msgstr "击沉船只（%d）。将码头升至 2 级（当前 %d）。"
+
+msgid "Sink the joint fleet (%d)."
+msgstr "击沉联合舰队（%d）。"
+
+msgid "Siphon is up. Stay on the blocks until it pays."
+msgstr "抽取已开始。留在服务器楼直到入账。"
+
+msgid "Siti The Kraken"
+msgstr "海妖西蒂"
+
+msgid "Skimming out."
+msgstr "正在撤出。"
+
+msgid "Skip"
+msgstr "跳过"
+
+msgid "Skip >>  N"
+msgstr "跳过 >>  N"
+
+msgid "Skip to the next song (N)"
+msgstr "跳到下一首歌（N）"
+
+msgid "SKIRMISH"
+msgstr "遭遇战"
+
+msgid "Skirmish"
+msgstr "遭遇战"
+
+msgid "Slag Jump Mortar"
+msgstr "熔渣跳跃迫击炮"
+
+msgid "Slag Jump Thruster"
+msgstr "熔渣跳跃推进器"
+
+msgid "Slag Molotov"
+msgstr "熔渣燃烧瓶"
+
+msgid "Slag Molotov."
+msgstr "熔渣燃烧瓶。"
+
+msgid "Slag Pillbox"
+msgstr "熔渣碉堡"
+
+msgid "Slag Refinery"
+msgstr "熔渣精炼厂"
+
+msgid "Sleeper Ambush"
+msgstr "潜伏伏击"
+
+msgid "smart-cast"
+msgstr "智能施放"
+
+msgid "Smart-cast drill (mission)"
+msgstr "智能施放演练（任务）"
+
+msgid "Smart-cast drill. Text briefing. Toggle the group. Only the closest ready unit fires."
+msgstr "智能施放演练。文字简报。切换编队。只有最近的就绪单位开火。"
+
+msgid "Solar-Biomass Plant"
+msgstr "太阳能-生物质电厂"
+
+msgid "sold %d"
+msgstr "已出售 %d"
+
+msgid "Sonic Howl"
+msgstr "音波咆哮"
+
+msgid "Sop Ruak"
+msgstr "索鲁"
+
+msgid "SOUND EFFECTS"
+msgstr "音效"
+
+msgid "Space    Last alert"
+msgstr "Space    最近警报"
+
+msgid "Spectrum Prism"
+msgstr "光谱棱镜"
+
+msgid "speed 1.4"
+msgstr "速度 1.4"
+
+msgid "Speeds the company up. One cast."
+msgstr "提升连队速度。限用一次。"
+
+msgid "Spider-Hole Ambush"
+msgstr "蜘蛛洞伏击"
+
+msgid "Spoofs GPS guidance. One cast."
+msgstr "欺骗 GPS 制导。限用一次。"
+
+msgid "Spool FPV"
+msgstr "线控 FPV"
+
+msgid "Sprint Skates"
+msgstr "冲刺滑轮"
+
+msgid "Stand-Off Glide Barrage"
+msgstr "防区外滑翔弹幕"
+
+msgid "Start an offer before pasting an answer."
+msgstr "粘贴应答前请先发起邀请。"
+
+msgid "Start with Kokang and Mogok. The match opens with a short lesson."
+msgstr "从果敢和抹谷开始。比赛开局有简短教学。"
+
+msgid "Starting in %d."
+msgstr "%d 秒后开始。"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Stay on the radar until the murk thins."
+msgstr "留在雷达上，直到浓雾散去。"
+
+msgid "Stay with the wagon. The bazaar is the drop."
+msgstr "跟紧货车。集市就是交货点。"
+
+msgid "still fighting"
+msgstr "仍在战斗"
+
+msgid "Stilts"
+msgstr "高脚屋"
+
+msgid "Stop"
+msgstr "停止"
+
+msgid "Stop the sprayer before it reaches the tanks."
+msgstr "在喷洒机抵达坦克前拦下它。"
+
+msgid "Strait Haze"
+msgstr "海峡迷雾"
+
+msgid "Straits Pirate Raid"
+msgstr "海峡海盗突袭"
+
+msgid "Street Press"
+msgstr "街头印刷机"
+
+msgid "Strip lead"
+msgstr "跑道领队"
+
+msgid "Structures"
+msgstr "建筑"
+
+msgid "Su-30"
+msgstr "Su-30"
+
+msgid "Su-30 hangar"
+msgstr "Su-30 机库"
+
+msgid "Su-30 napalm run"
+msgstr "Su-30 凝固汽油弹轰炸"
+
+msgid "Submersible or Sky-Jet"
+msgstr "潜航器或天空喷气机"
+
+msgid "Sulu Tank-Buster"
+msgstr "苏禄坦克杀手"
+
+msgid "Sumatra Hover-Technical"
+msgstr "苏门答腊悬浮皮卡"
+
+msgid "Supayarlat"
+msgstr "Supayarlat"
+
+msgid "superweapon cooling"
+msgstr "超级武器冷却中"
+
+msgid "Superweapon ready."
+msgstr "超级武器就绪。"
+
+msgid "survive: hold the radar through the haze while the enemy attacks"
+msgstr "生存：在敌人进攻时于迷雾中守住雷达"
+
+msgid "survive: the ferry crosses and holds until the timer runs out"
+msgstr "生存：渡船渡河并坚守至计时结束"
+
+msgid "SW"
+msgstr "超武"
+
+msgid "swarm 23"
+msgstr "蜂群 23"
+
+msgid "Swarm Cloud"
+msgstr "蜂群云"
+
+msgid "Swarm Hive Truck"
+msgstr "蜂巢卡车"
+
+msgid "Syndicate Alchemist"
+msgstr "集团炼金师"
+
+msgid "Tab    Next tab"
+msgstr "Tab    下一标签"
+
+msgid "Tachileik caravan"
+msgstr "大其力商队"
+
+msgid "Tachileik caravan. Text briefing. Break the ambush and the road relief, walk the jade caravan onto the bazaar, then snap the ruby pit and run the night shift until the purse fills. Stay with the wagon while drones harass it. If the wagon dies, the mission fails. The road ambush hits after that. The side cache is optional."
+msgstr "大其力商队。文字简报。击破伏击和道路援军，护送翡翠商队进入集市，然后夺取红宝石矿坑，运转夜班直到资金装满。无人机骚扰时跟紧货车。货车被毁则任务失败。之后会遭遇道路伏击。支线物资点为可选目标。"
+
+msgid "Tachileik Half-Track"
+msgstr "大其力半履带车"
+
+msgid "Target Painter"
+msgstr "目标指示器"
+
+msgid "Teak Technical"
+msgstr "柚木皮卡"
+
+msgid "tech 1"
+msgstr "科技 1"
+
+msgid "Tech Center"
+msgstr "科技中心"
+
+msgid "Technical under fire."
+msgstr "皮卡遭受攻击。"
+
+msgid "Telekinetic Maelstrom"
+msgstr "念力漩涡"
+
+msgid "Ten Degree Atolls"
+msgstr "十度环礁"
+
+msgid "Thai"
+msgstr "泰语"
+
+msgid "Thai Border Mass Print"
+msgstr "泰国边境大批量打印"
+
+msgid "That paste is not an answer."
+msgstr "粘贴的内容不是应答。"
+
+msgid "That paste is not an offer."
+msgstr "粘贴的内容不是邀请。"
+
+msgid "The 74-Kilometer Watch"
+msgstr "74 公里守望"
+
+msgid "The 74-Kilometer Watch. Text briefing. Destroy the radar garrison and its relief squad, then hold the hydro radar so water shows. The radar pings, two rifles arrive, and the guide sells the watch."
+msgstr "74 公里守望。文字简报。摧毁雷达驻军及其援军小队，然后守住水文雷达以显示水域。雷达发出信号，两名步枪兵赶到，向导出卖了守望哨。"
+
+msgid "The answer did not start."
+msgstr "应答未能启动。"
+
+msgid "The answer was rejected."
+msgstr "应答被拒绝。"
+
+msgid "The atoll is held by boats. Sail the packer in."
+msgstr "环礁被船只占据。将码头船驶入。"
+
+msgid "The browser did not produce a session description."
+msgstr "浏览器未生成会话描述。"
+
+msgid "The camera slides when the pointer nears the screen edge."
+msgstr "指针靠近屏幕边缘时镜头会滑动。"
+
+msgid "the caravan is lost"
+msgstr "商队已丢失"
+
+msgid "The channel is mined. Break out and land the far shore."
+msgstr "航道布满水雷。突围并登陆对岸。"
+
+msgid "The citadel garrison is out. They screen the weapons."
+msgstr "要塞驻军已出击。他们在掩护武器。"
+
+msgid "the company is wiped"
+msgstr "连队已全灭"
+
+msgid "the count hit zero"
+msgstr "倒计时归零"
+
+msgid "The data channel did not open."
+msgstr "数据通道未能打开。"
+
+msgid "the defended target is lost"
+msgstr "防守目标已丢失"
+
+msgid "The enemy builds, expands, and attacks. Cross a ford to reach them."
+msgstr "敌人会建造、扩张并进攻。涉过浅滩才能抵达。"
+
+msgid "The far shore is open. Put a boat on it."
+msgstr "对岸已开放。派一艘船过去。"
+
+msgid "The ferry has to live. Hold it through the channel."
+msgstr "渡船必须存活。护送它穿过航道。"
+
+msgid "The ferry is in the channel. Keep guns on the water."
+msgstr "渡船已进入航道。火力盯紧水面。"
+
+msgid "The guide turns on us. The span is down."
+msgstr "向导背叛了我们。桥梁已断。"
+
+msgid "The hack is running. Twenty seconds on the blocks."
+msgstr "入侵进行中。在服务器楼坚守二十秒。"
+
+msgid "The haze closes over the radar. Do not walk off it."
+msgstr "迷雾笼罩雷达。不要离开。"
+
+msgid "The haze has closed in. Do not leave the radar."
+msgstr "迷雾已逼近。不要离开雷达。"
+
+msgid "The haze is the weapon. Hold the radar."
+msgstr "迷雾就是武器。守住雷达。"
+
+msgid "The haze is thick. Take the radar and stay on it."
+msgstr "迷雾浓重。夺取雷达并守在上面。"
+
+msgid "The hydro radar is dark. Light the water."
+msgstr "水文雷达已失效。照亮水面。"
+
+msgid "The intended skirmish and campaign pace."
+msgstr "预设的遭遇战和战役节奏。"
+
+msgid "The jade wagon is on the road. Walk it through."
+msgstr "翡翠货车已上路。护送它通过。"
+
+msgid "The jammer is live. Fiber holds. GPS does not."
+msgstr "干扰器已启动。光纤有效，GPS 失效。"
+
+msgid "The jammers are up. The hangars are still parked."
+msgstr "干扰器已开启。机库仍停着飞机。"
+
+msgid "The joint fleet is in the channel. Sink it."
+msgstr "联合舰队已进入航道。击沉它。"
+
+msgid "The local description was rejected."
+msgstr "本地描述被拒绝。"
+
+msgid "The match keeps the command deck, minimap, and unit card."
+msgstr "比赛中保留指挥面板、小地图和单位卡。"
+
+msgid "The monsoon breaks over the citadel. Drop both weapons."
+msgstr "季风席卷要塞。摧毁两座武器。"
+
+msgid "The night shift is on the road. Bring one stock home."
+msgstr "夜班已上路。将一份存货运回基地。"
+
+msgid "The offer did not start."
+msgstr "邀请未能启动。"
+
+msgid "The offer was rejected."
+msgstr "邀请被拒绝。"
+
+msgid "The packer is in the shallows. Unpack it."
+msgstr "码头船已到浅滩。展开它。"
+
+msgid "The packer sails, unpacks a wharf, then upgrades it. The enemy builds, expands, and attacks."
+msgstr "码头船启航，展开码头，然后升级。敌人会建造、扩张并进攻。"
+
+msgid "The phantom is on the plain. Hold the beam until it freezes."
+msgstr "幻影出现在平原上。保持光束直到它冻结。"
+
+msgid "The phantom stutters in the beam. Do not let go."
+msgstr "幻影在光束中卡顿。不要松手。"
+
+msgid "The port is busy."
+msgstr "端口被占用。"
+
+msgid "The radar pings. Water shows along the road."
+msgstr "雷达发出信号。道路沿线显示水域。"
+
+msgid "The selected side is who you play on the next skirmish."
+msgstr "所选阵营即你在下一场遭遇战中使用的阵营。"
+
+msgid "The session did not open."
+msgstr "会话未能打开。"
+
+msgid "The span is cut. The guide has sold the watch."
+msgstr "桥梁被切断。向导出卖了守望哨。"
+
+msgid "The squall is on the shallows. Finish the wharf."
+msgstr "暴风雨已到浅滩。完成码头建设。"
+
+msgid "The squall is on. Cross while it lasts."
+msgstr "暴风雨来了。趁现在渡河。"
+
+msgid "The squall is on. Keep the ferry afloat."
+msgstr "暴风雨来了。让渡船保持漂浮。"
+
+msgid "The strip scrambles. The Su-30 and the CH-4 are still on the ground."
+msgstr "跑道紧急起飞。Su-30 和 CH-4 仍在地面。"
+
+msgid "The swarm is in the air. It does not finish the towers."
+msgstr "蜂群已升空。它无法摧毁干扰塔。"
+
+msgid "The tank column is on the road. Freeze it, then break it."
+msgstr "坦克纵队已上路。先冻结，再击破。"
+
+msgid "The wharf is up. Take it to the second level."
+msgstr "码头已建成。将其升至二级。"
+
+msgid "Throwing into them."
+msgstr "正在投掷。"
+
+msgid "Thunder on the Tonle Sap"
+msgstr "洞里萨湖惊雷"
+
+msgid "Tide Refinery"
+msgstr "潮汐精炼厂"
+
+msgid "Time"
+msgstr "Time"
+
+msgid "Time Bomb"
+msgstr "定时炸弹"
+
+msgid "Tonkin Supersonic Fighter"
+msgstr "东京湾超音速战斗机"
+
+msgid "Tonle ferry"
+msgstr "洞里萨湖渡船"
+
+msgid "Tonle Sap. Text briefing. Defend the ferry until the longer timer runs out. NMRF trimarans keep arriving. Cryogeddon can help. Casting it does not end the mission. The ferry has to survive the crossing. A squall hits the channel."
+msgstr "洞里萨湖。文字简报。保卫渡船直到较长的计时结束。NMRF 三体船不断赶来。冰封末日可以协助。施放它不会结束任务。渡船必须撑过渡河。暴风雨袭击航道。"
+
+msgid "Torpedo Fan Spread"
+msgstr "鱼雷扇形齐射"
+
+msgid "Toxic Defoliation"
+msgstr "毒性落叶"
+
+msgid "trade open"
+msgstr "贸易已开启"
+
+msgid "Train"
+msgstr "训练"
+
+msgid "Train unit"
+msgstr "训练单位"
+
+msgid "Tran"
+msgstr "陈"
+
+msgid "Trimarans on the ferry. Hold the crossing."
+msgstr "三体船逼近渡船。守住渡口。"
+
+msgid "Truck rolling."
+msgstr "卡车行进中。"
+
+msgid "Truck taking hits."
+msgstr "卡车遭受攻击。"
+
+msgid "Two gunboats from the river are in."
+msgstr "两艘内河炮艇已抵达。"
+
+msgid "Two players. You and one enemy."
+msgstr "两名玩家。你和一名敌人。"
+
+msgid "Two rifles for the strip."
+msgstr "两名步枪兵增援跑道。"
+
+msgid "Two rifles from the watch are in."
+msgstr "守望哨的两名步枪兵已抵达。"
+
+msgid "Under fire."
+msgstr "遭受攻击。"
+
+msgid "Unit"
+msgstr "单位"
+
+msgid "Units"
+msgstr "单位"
+
+msgid "unknown unit"
+msgstr "未知单位"
+
+msgid "unloaded %d"
+msgstr "已卸载 %d"
+
+msgid "Unpack"
+msgstr "展开"
+
+msgid "Upgrade wharf"
+msgstr "升级码头"
+
+msgid "Vanguard Shock-Trooper"
+msgstr "先锋突击兵"
+
+msgid "Vehicles"
+msgstr "载具"
+
+msgid "Veteran"
+msgstr "老兵"
+
+msgid "Victory"
+msgstr "胜利"
+
+msgid "VIDEO"
+msgstr "视频"
+
+msgid "Viet-Tech Laser Operator"
+msgstr "越南科技激光操作员"
+
+msgid "Vindicator Bomber"
+msgstr "复仇者轰炸机"
+
+msgid "Voice language"
+msgstr "语音语言"
+
+msgid "Waiting for the host."
+msgstr "等待主机。"
+
+msgid "Waiting on port %d."
+msgstr "正在端口 %d 等待。"
+
+msgid "walk the caravan"
+msgstr "护送商队"
+
+msgid "War Factory"
+msgstr "战争工厂"
+
+msgid "Warlord's Bribe"
+msgstr "军阀的贿赂"
+
+msgid "Watch captain"
+msgstr "守望哨队长"
+
+msgid "Water"
+msgstr "水域"
+
+msgid "Wave-Force Turret"
+msgstr "波动力炮塔"
+
+msgid "Waypoint"
+msgstr "路径点"
+
+msgid "Web play uses a copied offer and answer in the browser. This desktop build has no WebRTC addon."
+msgstr "网页版通过在浏览器中复制邀请和应答进行联机。此桌面版没有 WebRTC 插件。"
+
+msgid "WebRTC did not start."
+msgstr "WebRTC 未能启动。"
+
+msgid "Wharf"
+msgstr "码头"
+
+msgid "wharf level %d"
+msgstr "码头等级 %d"
+
+msgid "wharf not ready"
+msgstr "码头未就绪"
+
+msgid "wharf unpacked"
+msgstr "码头已展开"
+
+msgid "Wrath of the Garuda"
+msgstr "迦楼罗之怒"
+
+msgid "Wrath of the Garuda. Text briefing. Destroy the joint enemy fleet and its pickets. A napalm run can help. Calling it does not end the mission. Napalm is armed, pickets cross the bow, and two gunboats arrive."
+msgstr "迦楼罗之怒。文字简报。摧毁敌方联合舰队及其警戒船。凝固汽油弹轰炸可以协助。呼叫它不会结束任务。凝固汽油弹已就绪，警戒船横越船首，两艘炮艇赶到。"
+
+msgid "X    Stop"
+msgstr "X    停止"
+
+msgid "Yangonite"
+msgstr "Yangonite"
+
+msgid "Yangonite, Ready To Rage Against The Abnormalities, Supayarlat, Past Cracks, Machinesfuture, Humanfuture, Night, Love Drunk, Changes, Not Needed Anymore, Poison, Time"
+msgstr "Yangonite, Ready To Rage Against The Abnormalities, Supayarlat, Past Cracks, Machinesfuture, Humanfuture, Night, Love Drunk, Changes, Not Needed Anymore, Poison, Time"
+
+msgid "yard up"
+msgstr "工场已建成"
+
+msgid "Z    Formation"
+msgstr "Z    阵型"
