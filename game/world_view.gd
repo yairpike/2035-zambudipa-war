@@ -40,55 +40,110 @@ static func paint_fog(sight: SMSight, host: Node3D) -> void:
 	if host == null or sight == null or sight.grid == null:
 		return
 	var grid: SMDomainGrid = sight.grid
-	var hash: int = grid.cols * 1000 + grid.rows
-	for row: int in grid.rows:
-		for col: int in grid.cols:
-			hash = hash * 33 + sight.cell_state(Vector2i(col, row))
+	if grid.cols <= 0 or grid.rows <= 0 or sight.explored.size() != grid.cols * grid.rows:
+		return
 	var veil: MeshInstance3D = host.get_node_or_null("FogVeil") as MeshInstance3D
 	if veil == null:
 		veil = MeshInstance3D.new()
 		veil.name = "FogVeil"
-		var mat: StandardMaterial3D = StandardMaterial3D.new()
-		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-		mat.vertex_color_use_as_albedo = true
-		mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-		mat.albedo_color = Color.WHITE
+		var mat: ShaderMaterial = ShaderMaterial.new()
+		mat.shader = _veil_shader()
 		veil.material_override = mat
 		veil.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		host.add_child(veil)
-	if int(veil.get_meta("hash", -1)) == hash and veil.mesh != null:
+	var span: Vector2 = Vector2(float(grid.cols), float(grid.rows)) * grid.cell_size
+	var plane: PlaneMesh = veil.mesh as PlaneMesh
+	if plane == null or not plane.size.is_equal_approx(span):
+		plane = PlaneMesh.new()
+		plane.size = span
+		veil.mesh = plane
+		veil.position = grid.origin + Vector3(span.x * 0.5, 0.42, span.y * 0.5)
+		veil.set_meta("hash", -1)
+	var sig: int = hash([sight.seers, sight.radii, sight.river_lit, sight.explored, grid.origin, grid.cell_size])
+	if int(veil.get_meta("hash", -1)) == sig:
 		return
-	veil.set_meta("hash", hash)
-	var tool: SurfaceTool = SurfaceTool.new()
-	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var hidden: Color = Color(0.03, 0.04, 0.05, 0.92)
-	var dim: Color = Color(0.04, 0.05, 0.07, 0.42)
-	var y: float = 0.42
-	var half: float = grid.cell_size * 0.5
-	for row: int in grid.rows:
-		for col: int in grid.cols:
-			var state: int = sight.cell_state(Vector2i(col, row))
-			if state == SMSight.CLEAR:
-				continue
-			var ink: Color = hidden if state == SMSight.HIDDEN else dim
-			var center: Vector3 = grid.cell_center(Vector2i(col, row))
-			_quad(tool, center, half, y, ink)
-	veil.mesh = tool.commit()
+	veil.set_meta("hash", sig)
+	var lit: Image = _lit_mask(sight, grid, veil)
+	var known: Image = Image.create_from_data(grid.cols, grid.rows, false, Image.FORMAT_R8, sight.explored)
+	var mat_now: ShaderMaterial = veil.material_override as ShaderMaterial
+	mat_now.set_shader_parameter("seen", _texture(veil, "seen_tex", lit))
+	mat_now.set_shader_parameter("explored", _texture(veil, "known_tex", known))
 
-static func _quad(tool: SurfaceTool, center: Vector3, half: float, y: float, ink: Color) -> void:
-	var a: Vector3 = Vector3(center.x - half, y, center.z - half)
-	var b: Vector3 = Vector3(center.x + half, y, center.z - half)
-	var c: Vector3 = Vector3(center.x + half, y, center.z + half)
-	var d: Vector3 = Vector3(center.x - half, y, center.z + half)
-	tool.set_color(ink)
-	tool.add_vertex(a)
-	tool.add_vertex(b)
-	tool.add_vertex(c)
-	tool.set_color(ink)
-	tool.add_vertex(a)
-	tool.add_vertex(c)
-	tool.add_vertex(d)
+## Cells whose centre is inside a seer's circle, matching SMSight.cell_state. Stamped one row span at a time.
+static func _lit_mask(sight: SMSight, grid: SMDomainGrid, veil: Node) -> Image:
+	var lit: Image
+	if sight.river_lit:
+		lit = (_corridor(grid, veil)).duplicate() as Image
+	else:
+		lit = Image.create(grid.cols, grid.rows, false, Image.FORMAT_R8)
+	var on: Color = Color(1.0, 0.0, 0.0)
+	var cs: float = grid.cell_size
+	var ox: float = grid.origin.x
+	var oz: float = grid.origin.z
+	for i: int in mini(sight.seers.size(), sight.radii.size()):
+		var at: Vector3 = sight.seers[i]
+		var r: float = sight.radii[i]
+		var y0: int = maxi(0, ceili((at.z - r - oz) / cs - 0.5))
+		var y1: int = mini(grid.rows - 1, floori((at.z + r - oz) / cs - 0.5))
+		for y: int in range(y0, y1 + 1):
+			var dz: float = oz + (float(y) + 0.5) * cs - at.z
+			var reach: float = r * r - dz * dz
+			if reach < 0.0:
+				continue
+			var half: float = sqrt(reach)
+			var x0: int = maxi(0, ceili((at.x - half - ox) / cs - 0.5))
+			var x1: int = mini(grid.cols - 1, floori((at.x + half - ox) / cs - 0.5))
+			if x1 >= x0:
+				lit.fill_rect(Rect2i(x0, y, x1 - x0 + 1, 1), on)
+	return lit
+
+## Water cells and their four neighbours, lit while the radar holds the river.
+static func _corridor(grid: SMDomainGrid, veil: Node) -> Image:
+	var kept: Image = veil.get_meta("corridor") as Image if veil.has_meta("corridor") else null
+	if kept != null and kept.get_width() == grid.cols and kept.get_height() == grid.rows:
+		return kept
+	var img: Image = Image.create(grid.cols, grid.rows, false, Image.FORMAT_R8)
+	var on: Color = Color(1.0, 0.0, 0.0)
+	var steps: Array[Vector2i] = [Vector2i.ZERO, Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
+	for y: int in grid.rows:
+		for x: int in grid.cols:
+			for step: Vector2i in steps:
+				var c: Vector2i = Vector2i(x, y) + step
+				if not grid.in_bounds(c):
+					continue
+				var d: int = grid.domain_at_cell(c)
+				if d == SMDomainGrid.Domain.SHALLOW or d == SMDomainGrid.Domain.DEEP:
+					img.set_pixel(x, y, on)
+					break
+	veil.set_meta("corridor", img)
+	return img
+
+static func _texture(veil: Node, key: String, img: Image) -> ImageTexture:
+	var tex: ImageTexture = veil.get_meta(key) as ImageTexture if veil.has_meta(key) else null
+	if tex != null and tex.get_width() == img.get_width() and tex.get_height() == img.get_height():
+		tex.update(img)
+		return tex
+	tex = ImageTexture.create_from_image(img)
+	veil.set_meta(key, tex)
+	return tex
+
+static var _shader: Shader
+
+static func _veil_shader() -> Shader:
+	if _shader != null:
+		return _shader
+	_shader = Shader.new()
+	_shader.code = """shader_type spatial;
+render_mode unshaded, cull_disabled, depth_draw_never, shadows_disabled;
+uniform sampler2D seen : filter_nearest, repeat_disable;
+uniform sampler2D explored : filter_nearest, repeat_disable;
+void fragment() {
+	vec4 ink = texture(explored, UV).r > 0.0 ? vec4(0.04, 0.05, 0.07, 0.42) : vec4(0.03, 0.04, 0.05, 0.92);
+	ALBEDO = ink.rgb;
+	ALPHA = texture(seen, UV).r > 0.5 ? 0.0 : ink.a;
+}
+"""
+	return _shader
 
 static func place_site(host: Node3D, node_name: String, pos: Vector3, size: Vector3, color: Color, form: String) -> void:
 	var mi: MeshInstance3D = MeshInstance3D.new()
