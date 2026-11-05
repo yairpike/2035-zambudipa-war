@@ -73,6 +73,16 @@ func _ready() -> void:
 	title.add_theme_font_size_override("font_size", 64)
 	title.add_theme_color_override("font_color", Color(1, 1, 1))
 	add_child(title)
+	var wordmark_tex: Texture2D = load("res://brand/wordmark-vanguard-1024.png") as Texture2D
+	if wordmark_tex != null:
+		var wordmark := TextureRect.new()
+		wordmark.name = "TitleWordmark"
+		wordmark.texture = wordmark_tex
+		wordmark.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		wordmark.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		wordmark.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(wordmark)
+		title.self_modulate.a = 0.0
 	var rule: ColorRect = ColorRect.new()
 	rule.name = "TitleRule"
 	rule.color = Color(1, 1, 1, 0.9)
@@ -1175,7 +1185,7 @@ func settings_closed() -> void:
 
 func _show_menu_chrome() -> void:
 	var names: PackedStringArray = PackedStringArray([
-		"GameTitle", "TitleRule", "VersionMark", "ControlBar", "QuitButton",
+		"GameTitle", "TitleWordmark", "TitleRule", "VersionMark", "ControlBar", "QuitButton",
 	])
 	for node_name: String in names:
 		var node: CanvasItem = find_child(node_name, true, false) as CanvasItem
@@ -1243,7 +1253,7 @@ func _hide_menu_chrome() -> void:
 
 func _chrome_names() -> PackedStringArray:
 	return PackedStringArray([
-		"GameTitle", "TitleRule", "VersionMark", "NowPlaying", "ControlBar",
+		"GameTitle", "TitleWordmark", "TitleRule", "VersionMark", "NowPlaying", "ControlBar",
 		"MultiplayerNote", "FactionSubmenu", "LanPanel", "PastePanel", "PanelSkirmish",
 		"PanelCampaign", "PanelFaction", "QuitButton", "MenuBack", "TrainingOffer",
 	])
@@ -1359,8 +1369,8 @@ func _open(path: String) -> void:
 		move_child(loading, get_child_count() - 1)
 		var art: Node = loading.get_child(0)
 		if art != null and art.has_method("set_faction"):
-			art.call("set_screen", "faction")
-			art.call("set_faction", SMFront.current())
+			art.call("set_screen", "loading")
+			art.call("set_faction", "")
 		var title: Label = loading.find_child("LoadingTitle", true, false) as Label
 		if title != null:
 			title.text = _mission_title(path)
@@ -1532,6 +1542,14 @@ func _layout_menu(size: Vector2) -> void:
 		var title_label: Label = title as Label
 		if title_label != null:
 			title_label.clip_text = true
+		var wordmark: Control = find_child("TitleWordmark", true, false) as Control
+		if wordmark != null:
+			wordmark.visible = title.visible
+			wordmark.position = title.position
+			var wm_w: float = maxf(200.0, (size.x if portrait else rail_w) - title_x - 16.0)
+			if sub_open:
+				wm_w = minf(wm_w, 340.0)
+			wordmark.size = Vector2(wm_w, 60.0 if sub_open or narrow else 74.0)
 	var settings_open: bool = false
 	var settings_panel: Control = find_child("SettingsPanel", true, false) as Control
 	if settings_panel != null:
@@ -2075,23 +2093,23 @@ func _place_skirmish(panel_w: float, panel_h: float) -> void:
 	var rail_w: float = panel_w if narrow else panel_w * 0.4
 	var list_x: float = 16.0 if narrow else 28.0
 	var list_w: float = maxf(160.0, rail_w - list_x - 16.0)
-	var row_y: float = 112.0 if narrow else 136.0
-	var card_step: float = 36.0
+	var row_y: float = 112.0 if narrow else 140.0
+	var card_step: float = 34.0
 	for i: int in names.size():
 		var card: Control = find_child(names[i], true, false) as Control
 		if card == null:
 			continue
 		card.position = Vector2(list_x, row_y + float(i) * card_step)
-		card.size = Vector2(list_w, 34.0)
-		card.custom_minimum_size = Vector2(list_w, 34.0)
-	var after: float = row_y + float(names.size()) * card_step + 8.0
+		card.size = Vector2(list_w, 32.0)
+		card.custom_minimum_size = Vector2(list_w, 32.0)
+	var after: float = row_y + float(names.size()) * card_step + 6.0
 	var playing: Control = find_child("PlayingAs", true, false) as Control
 	if playing != null:
 		playing.position = Vector2(list_x, after)
 		playing.size = Vector2(list_w, 26.0)
-	_cycle_row("SkirmishFactionCycle", list_x, after + 28.0, list_w, 36.0)
-	_cycle_row("SkirmishDiffCycle", list_x, after + 66.0, list_w, 36.0)
-	_cycle_row("SkirmishBotCycle", list_x, after + 104.0, list_w, 36.0)
+	_cycle_row("SkirmishFactionCycle", list_x, after + 28.0, list_w, 34.0)
+	_cycle_row("SkirmishDiffCycle", list_x, after + 64.0, list_w, 34.0)
+	_cycle_row("SkirmishBotCycle", list_x, after + 100.0, list_w, 34.0)
 	var foot: float = panel_h - 72.0
 	var foot_x: float = list_x if narrow else rail_w + 16.0
 	var play: Control = find_child("PlayButton", true, false) as Control

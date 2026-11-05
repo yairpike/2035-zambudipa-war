@@ -6716,4 +6716,14 @@ func test_render_budget() -> void:
 	haze_sight.force_weather(true)
 	Ground._fog(haze_env, haze_sight)
 	check(haze_env.fog_enabled and haze_env.fog_density <= 0.008, "Strait haze keeps fog density light enough to see terrain and units")
+	var backdrop_script: GDScript = load("res://game/menu_backdrop.gd") as GDScript
+	var bgs_ok: bool = true
+	for bg_name: String in ["main_menu", "gtfc", "nmrf", "mvd", "black_market", "loading"]:
+		var bg_tex: Texture2D = backdrop_script.call("texture", bg_name) as Texture2D
+		if bg_tex == null or bg_tex.get_width() < 1920:
+			bgs_ok = false
+	var presets_cfg: String = FileAccess.get_file_as_string("res://export_presets.cfg")
+	var splash_ok: bool = str(ProjectSettings.get_setting("application/boot_splash/image")) == "res://brand/boot_splash.png" and FileAccess.file_exists("res://brand/boot_splash.webp") and FileAccess.file_exists("res://brand/wordmark-vanguard-1024.png")
+	var icons_ok: bool = FileAccess.file_exists("res://icon.png") and FileAccess.file_exists("res://brand/icon.ico") and FileAccess.file_exists("res://brand/icon.icns") and presets_cfg.contains("res://brand/icon.ico") and presets_cfg.contains("res://brand/icon.icns")
+	check(bgs_ok and splash_ok and icons_ok, "Four Fronts splash, Vanguard wordmark, six 4K menu backgrounds, and Chevron app icons are wired")
 	Settings.set_graphics("high")

@@ -85,6 +85,14 @@ while [ $# -gt 0 ]; do
       TRIPO_SRC="$2"
       shift 2
       ;;
+    --key-art)
+      if [ $# -lt 2 ]; then
+        echo "finish_web_export: --key-art needs a directory"
+        exit 1
+      fi
+      KEY_ART_SRC="$2"
+      shift 2
+      ;;
     *)
       echo "finish_web_export: unknown argument $1"
       exit 1
@@ -100,6 +108,7 @@ VIDEO_SRC="${VIDEO_SRC:-}"
 MODEL_SRC="${MODEL_SRC:-}"
 BRIEFINGS_SRC="${BRIEFINGS_SRC:-}"
 TRIPO_SRC="${TRIPO_SRC:-}"
+KEY_ART_SRC="${KEY_ART_SRC:-}"
 # Keep the project worker. Godot's exported worker reloads every open client
 # when it receives "update", which boots a match back to the menu.
 cp "$ROOT/web/sw.js" "$DEST/sw.js"
@@ -191,6 +200,25 @@ if [ -f "$ROOT/brand/pwa_180.png" ]; then
 fi
 if [ -f "$ROOT/brand/pwa_512.png" ]; then
   cp "$ROOT/brand/pwa_512.png" "$DEST/index.512x512.png"
+fi
+if [ -f "$ROOT/brand/boot_splash.png" ]; then
+  cp "$ROOT/brand/boot_splash.png" "$DEST/index.png"
+fi
+if [ -f "$ROOT/brand/boot_splash.webp" ]; then
+  mkdir -p "$DEST/splash"
+  cp "$ROOT/brand/boot_splash.webp" "$DEST/splash/splash-four-fronts.webp"
+  : > "$DEST/splash/.gdignore"
+  if [ -f "$DEST/index.html" ]; then
+    sed -i 's#src="index\.png"#src="splash/splash-four-fronts.webp"#' "$DEST/index.html"
+  fi
+fi
+if [ -f "$ROOT/brand/wordmark-vanguard-1024.png" ]; then
+  mkdir -p "$DEST/wordmark"
+  cp "$ROOT/brand/wordmark-vanguard-1024.png" "$DEST/wordmark/wordmark-vanguard-1024.png"
+  if [ -f "$ROOT/brand/wordmark-vanguard.svg" ]; then
+    cp "$ROOT/brand/wordmark-vanguard.svg" "$DEST/wordmark/wordmark-vanguard.svg"
+  fi
+  : > "$DEST/wordmark/.gdignore"
 fi
 if [ -f "$DEST/index.html" ] && ! grep -q 'href="index.icon.png"' "$DEST/index.html"; then
   sed -i 's#</head>#<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png"></head>#' "$DEST/index.html"
@@ -426,13 +454,15 @@ if [ -n "$MENU_SRC" ]; then
     echo "finish_web_export: menu source is not a directory"
     exit 1
   fi
-  if [ ! -d "$MENU_SRC/cinematic" ]; then
-    echo "finish_web_export: menu source has no cinematic folder"
-    exit 1
+  MENU_DIR="$MENU_SRC"
+  if [ -d "$MENU_SRC/cinematic" ]; then
+    MENU_DIR="$MENU_SRC/cinematic"
+  elif [ -d "$MENU_SRC/backgrounds" ]; then
+    MENU_DIR="$MENU_SRC/backgrounds"
   fi
-  rm -rf "$DEST/ui/menu"
+  rm -rf "$DEST/ui/menu/cinematic"
   mkdir -p "$DEST/ui/menu/cinematic"
-  find "$MENU_SRC/cinematic" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -exec cp {} "$DEST/ui/menu/cinematic/" \;
+  find "$MENU_DIR" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -exec cp {} "$DEST/ui/menu/cinematic/" \;
   find "$DEST/ui/menu/cinematic" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -printf 'cinematic/%f\n' | sort > "$DEST/ui/menu/index.txt"
   : > "$DEST/ui/menu/.gdignore"
   : > "$DEST/ui/menu/cinematic/.gdignore"
@@ -443,14 +473,42 @@ if [ -n "$VIDEO_SRC" ]; then
     exit 1
   fi
   mkdir -p "$DEST/ui/menu/video/bed"
-  find "$VIDEO_SRC" -maxdepth 1 -type f -name '*.ogv' -exec cp {} "$DEST/ui/menu/video/" \;
+  find "$VIDEO_SRC" -maxdepth 1 -type f \( -name '*.ogv' -o -name '*.webm' -o -name '*.mp4' -o -name '*.webp' \) -exec cp {} "$DEST/ui/menu/video/" \;
   if [ -d "$VIDEO_SRC/bed" ]; then
     find "$VIDEO_SRC/bed" -maxdepth 1 -type f -name '*.ogg' -exec cp {} "$DEST/ui/menu/video/bed/" \;
   fi
   : > "$DEST/ui/menu/video/.gdignore"
-  if [ ! -f "$DEST/ui/menu/video/gtfc.ogv" ]; then
-    echo "finish_web_export: video folder is missing gtfc.ogv"
+  if [ ! -f "$DEST/ui/menu/video/main-menu-loop.ogv" ] && [ ! -f "$DEST/ui/menu/video/main-menu-loop.webm" ] && [ ! -f "$DEST/ui/menu/video/gtfc.ogv" ]; then
+    echo "finish_web_export: video folder has no menu loop"
     exit 1
+  fi
+fi
+if [ -n "$KEY_ART_SRC" ]; then
+  if [ ! -d "$KEY_ART_SRC" ]; then
+    echo "finish_web_export: key-art source is not a directory"
+    exit 1
+  fi
+  if [ -d "$KEY_ART_SRC/backgrounds" ]; then
+    mkdir -p "$DEST/ui/menu/cinematic"
+    find "$KEY_ART_SRC/backgrounds" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -exec cp {} "$DEST/ui/menu/cinematic/" \;
+    find "$DEST/ui/menu/cinematic" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -printf 'cinematic/%f\n' | sort > "$DEST/ui/menu/index.txt"
+    : > "$DEST/ui/menu/.gdignore"
+    : > "$DEST/ui/menu/cinematic/.gdignore"
+  fi
+  if [ -d "$KEY_ART_SRC/video" ]; then
+    mkdir -p "$DEST/ui/menu/video"
+    find "$KEY_ART_SRC/video" -maxdepth 1 -type f \( -name '*.ogv' -o -name '*.webm' -o -name '*.mp4' -o -name '*.webp' \) -exec cp {} "$DEST/ui/menu/video/" \;
+    : > "$DEST/ui/menu/video/.gdignore"
+  fi
+  if [ -d "$KEY_ART_SRC/splash" ]; then
+    mkdir -p "$DEST/splash"
+    find "$KEY_ART_SRC/splash" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' \) -exec cp {} "$DEST/splash/" \;
+    : > "$DEST/splash/.gdignore"
+  fi
+  if [ -d "$KEY_ART_SRC/wordmark" ]; then
+    mkdir -p "$DEST/wordmark"
+    find "$KEY_ART_SRC/wordmark" -maxdepth 1 -type f \( -name '*.png' -o -name '*.svg' \) -exec cp {} "$DEST/wordmark/" \;
+    : > "$DEST/wordmark/.gdignore"
   fi
 fi
 if [ -n "$MODEL_SRC" ]; then

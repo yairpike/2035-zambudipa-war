@@ -23,6 +23,15 @@ copy_assets() {
     rm -rf "$into/$folder"
     cp -a "$ASSETS/$folder" "$into/$folder"
   done
+  for folder in splash wordmark briefings; do
+    if [ -d "$ASSETS/$folder" ]; then
+      rm -rf "$into/$folder"
+      cp -a "$ASSETS/$folder" "$into/$folder"
+    fi
+  done
+  if [ -f "$ROOT/icon.png" ]; then
+    cp "$ROOT/icon.png" "$into/icon.png"
+  fi
   find "$into" -type d -name '_retired' -prune -exec rm -rf {} +
   find "$into/audio/barks" -maxdepth 1 -type f -name '*.ogg' -delete 2>/dev/null || true
 }

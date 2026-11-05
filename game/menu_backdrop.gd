@@ -5,14 +5,17 @@ extends Control
 ## Headless runs never open a video. A missing file keeps the still.
 ## Quiet beds in ui/menu/video/bed/ are not played.
 
-const HOLD: float = 8.0
+const HOLD: float = 12.0
 const FADE: float = 0.65
 
 var _main_reel: PackedStringArray = PackedStringArray([
-	"gtfc", "nmrf", "mvd", "mvd_bunker",
+	"main-menu-loop",
 ])
 var _neutral_reel: PackedStringArray = PackedStringArray([
-	"neutral_embers", "neutral_rain",
+	"black_market", "loading",
+])
+var _bg_reel: PackedStringArray = PackedStringArray([
+	"main_menu", "gtfc", "nmrf", "mvd", "black_market", "loading",
 ])
 
 var faction_id: String = ""
@@ -57,10 +60,10 @@ func _ready() -> void:
 	scrim.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(scrim)
 	if OS.has_feature("web"):
-		for stem: String in _main_reel:
-			var poster: String = "mvd" if stem == "mvd_bunker" else stem
+		for poster: String in _bg_reel:
 			if texture(poster) == null:
 				_pull("cinematic/%s.webp" % poster, poster)
+		_start_web_video()
 
 func set_faction(id: String) -> void:
 	faction_id = id
@@ -80,21 +83,20 @@ func _apply_art() -> void:
 	queue_redraw()
 
 func _stem() -> String:
-	if faction_id == "gtfc" or faction_id == "nmrf" or faction_id == "mvd":
+	if faction_id == "gtfc" or faction_id == "nmrf" or faction_id == "mvd" or faction_id == "black_market":
 		return faction_id
+	if screen == "loading":
+		return "loading"
 	if screen == "settings":
 		if _neutral_reel.is_empty():
-			return ""
+			return "black_market"
 		return _neutral_reel[_reel_i % _neutral_reel.size()]
-	var clip: String = _video_stem()
-	if clip == "mvd_bunker":
-		return "mvd"
-	return clip
+	return "main_menu"
 
 func _video_stem() -> String:
-	if screen == "settings" or _headless:
+	if screen == "settings" or screen == "loading" or _headless:
 		return ""
-	if faction_id == "gtfc" or faction_id == "nmrf" or faction_id == "mvd":
+	if faction_id == "gtfc" or faction_id == "nmrf" or faction_id == "mvd" or faction_id == "black_market":
 		return faction_id
 	if _main_reel.is_empty():
 		return ""
@@ -102,8 +104,8 @@ func _video_stem() -> String:
 
 func _process(delta: float) -> void:
 	_spin += delta * 0.22
-	var held: bool = faction_id == "gtfc" or faction_id == "nmrf" or faction_id == "mvd"
-	if not held and screen != "settings":
+	var held: bool = faction_id == "gtfc" or faction_id == "nmrf" or faction_id == "mvd" or faction_id == "black_market"
+	if not held and screen != "settings" and screen != "loading":
 		_reel_t += delta
 		if _reel_t >= HOLD:
 			_reel_t = 0.0
@@ -121,6 +123,8 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _sync_video(fade: bool) -> void:
+	if OS.has_feature("web"):
+		_sync_web_video()
 	if _headless or _players.size() < 2:
 		return
 	var stem: String = _video_stem()
@@ -340,6 +344,18 @@ func _page() -> String:
 	if slash >= 0:
 		href = href.substr(0, slash + 1)
 	return href
+
+func _start_web_video() -> void:
+	if not OS.has_feature("web") or _headless:
+		return
+	var base: String = _page() + "ui/menu/video/main-menu-loop"
+	JavaScriptBridge.eval("try{(function(u){var v=document.getElementById('asean-menu-video');if(!v){v=document.createElement('video');v.id='asean-menu-video';v.muted=true;v.loop=true;v.playsInline=true;v.preload='auto';v.poster=u+'-poster.webp';v.style.display='none';var s1=document.createElement('source');s1.src=u+'.webm';s1.type='video/webm';v.appendChild(s1);var s2=document.createElement('source');s2.src=u+'.mp4';s2.type='video/mp4';v.appendChild(s2);document.body.appendChild(v);v.play().catch(function(){});}})(%s)}catch(_){}" % JSON.stringify(base), true)
+
+func _sync_web_video() -> void:
+	if not OS.has_feature("web") or _headless:
+		return
+	var active: bool = screen == "main" and faction_id == ""
+	JavaScriptBridge.eval("try{var v=document.getElementById('asean-menu-video');if(v){if(%s){v.play().catch(function(){});}else{v.pause();}}}catch(_){}" % ("true" if active else "false"), true)
 
 static var _cache: Dictionary = {}
 
