@@ -53,7 +53,7 @@ func prepare(p_host: Node3D, p_status: Label, grid: SMDomainGrid, center: Vector
 		yard.clearance = 1
 		yard.radius = 25.0
 		hub_mesh = _slab("HubShell", SMPointer.building_at(plot_of(&"command_hub", center)), SMPointer.BUILDING_SIZE, Color.html("#26BFD1"))
-		if hub_mesh != null:
+		if hub_mesh != null and not bool(hub_mesh.get_meta("standin_held", false)):
 			hub_mesh.visible = false
 	elif style_name == "mobile":
 		yard.style = SMBuildYard.Style.MOBILE
@@ -136,7 +136,9 @@ func place_hub() -> bool:
 	var ok: bool = yard.place_finished(&"command_hub", pos)
 	if ok and hub_mesh != null:
 		hub_mesh.position = SMPointer.building_at(pos)
-		hub_mesh.visible = true
+		hub_mesh.set_meta("hub_placed", true)
+		if not bool(hub_mesh.get_meta("standin_held", false)):
+			hub_mesh.visible = true
 	_say("hub placed" if ok else "hub not ready")
 	return ok
 
@@ -176,7 +178,9 @@ func _order_internal(id: StringName) -> String:
 			return "hub not ready"
 	if hub_mesh != null and yard.placed.size() == 1:
 		hub_mesh.position = SMPointer.building_at(pos)
-		hub_mesh.visible = true
+		hub_mesh.set_meta("hub_placed", true)
+		if not bool(hub_mesh.get_meta("standin_held", false)):
+			hub_mesh.visible = true
 	else:
 		_slab("Built_%s" % str(id), SMPointer.building_at(pos), SMPointer.BUILDING_SIZE, SMFront.accent())
 	_say("hub placed")

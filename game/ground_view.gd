@@ -287,15 +287,17 @@ static func _fog(env: Environment, sight: SMSight) -> void:
 	if sight.hazy:
 		env.fog_enabled = true
 		env.fog_mode = Environment.FOG_MODE_EXPONENTIAL
-		env.fog_density = 0.032
-		env.fog_light_color = Color(0.72, 0.66, 0.52)
-		env.fog_aerial_perspective = 0.4
+		env.fog_density = 0.0055
+		env.fog_light_color = Color(0.68, 0.63, 0.52)
+		env.fog_light_energy = 0.45
+		env.fog_aerial_perspective = 0.12
 	elif sight.monsoon:
 		env.fog_enabled = true
 		env.fog_mode = Environment.FOG_MODE_EXPONENTIAL
-		env.fog_density = 0.012
+		env.fog_density = 0.004
 		env.fog_light_color = Color(0.55, 0.58, 0.62)
-		env.fog_aerial_perspective = 0.2
+		env.fog_light_energy = 0.45
+		env.fog_aerial_perspective = 0.1
 	else:
 		env.fog_enabled = false
 

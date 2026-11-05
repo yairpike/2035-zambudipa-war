@@ -16,3 +16,4 @@ music/user/love-drunk.ogg
 music/user/not-needed-anymore.ogg
 music/user/past-cracks.ogg
 music/user/ready-to-rage-against-the-abnormalities.ogg
+Graphics

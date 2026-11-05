@@ -1433,10 +1433,45 @@ func _paint_card() -> void:
 		var first: RTSUnit = field.selection.units[0]
 		if first != null:
 			id = str(first.unit_type)
+			if id == "raider" or id == "wave" or id == "":
+				var role: String = str(first.get_meta("role", "infantry"))
+				var loco: String = str(first.get_meta("locomotion", "ground"))
+				id = _fallback_cameo(role, loco, _faction_id())
 	var portrait: Texture2D = _cameo_texture(_faction_id(), id)
 	card_cameo.texture = portrait
 	card_cameo.visible = portrait != null
 	_paint_card_stats()
+
+func _fallback_cameo(role: String, loco: String, faction: String) -> String:
+	if faction == "mvd":
+		if role == "armor":
+			return "cyan_ifv"
+		if role == "artillery":
+			return "charcoal_mortar"
+		if role == "boat" or role == "amphibious" or loco == "naval":
+			return "cyan_skiff"
+		if role == "air" or role == "drone" or loco == "air":
+			return "hub_drone"
+		return "clearance_trooper"
+	if faction == "nmrf":
+		if role == "armor":
+			return "mangrove_skiff"
+		if role == "artillery":
+			return "mangrove_tube"
+		if role == "boat" or role == "amphibious" or loco == "naval":
+			return "emerald_gunboat"
+		if role == "air" or role == "drone" or loco == "air":
+			return "jade_skiff"
+		return "river_rifle"
+	if role == "armor":
+		return "amber_tank"
+	if role == "artillery":
+		return "monsoon_tube"
+	if role == "boat" or role == "amphibious" or loco == "naval":
+		return "channel_skiff"
+	if role == "air" or role == "drone" or loco == "air":
+		return "bullion_truck"
+	return "militia"
 
 func _paint_card_stats() -> void:
 	var selected: int = 0

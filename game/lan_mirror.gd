@@ -308,13 +308,15 @@ func _process(delta: float) -> void:
 	World.sync(self, sight, _cam)
 	hud.refresh()
 	if seat.winner == "guest":
-		_status.text = "Opponent left. Victory."
 		if not outcome.over:
 			outcome.finish(true)
+		_status.text = "The other player left the match. Opponent left. Victory."
+		hud.show_line("The other player left the match.")
 	elif seat.winner == "host":
-		_status.text = "Opponent left. Defeat."
 		if not outcome.over:
 			outcome.finish(false)
+		_status.text = "The other player left the match. Opponent left. Defeat."
+		hud.show_line("The other player left the match.")
 	elif seat.paused:
 		_status.text = "Paused. Waiting for the other player."
 
@@ -482,7 +484,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _move_dot(uid: int, x: float, z: float, hp: float, host_team: int, kind: String = "militia") -> void:
 	var local_team: int = SMPointer.PLAYER if host_team == SMPointer.ENEMY else SMPointer.ENEMY
-	var unit_kind: StringName = StringName(kind if kind != "" else "militia")
+	var resolved_kind: String = kind if kind != "" else "militia"
+	if resolved_kind == "raider" or resolved_kind == "wave":
+		var side_fac: String = field.faction_id if local_team == SMPointer.PLAYER else (Lan.seat().faction if Lan.seat().faction != "" else "gtfc")
+		resolved_kind = Models.fallback_unit("infantry", "ground", side_fac)
+	var unit_kind: StringName = StringName(resolved_kind)
 	var u: RTSUnit = _dots.get(uid, null) as RTSUnit
 	var target: Vector3 = Vector3(x, 0.0, z)
 	if u == null or not is_instance_valid(u):
@@ -491,6 +497,8 @@ func _move_dot(uid: int, x: float, z: float, hp: float, host_team: int, kind: St
 		u = field.spawn(local_team, target, unit_kind, false)
 		u.set_meta("host_uid", uid)
 		_dots[uid] = u
+		if local_team == SMPointer.PLAYER and field.selection.count() == 0:
+			field.select_only([u])
 	else:
 		u.team = local_team
 		if u.global_position.distance_to(target) > 0.25 and u.global_position.distance_to(target) < 28.0:

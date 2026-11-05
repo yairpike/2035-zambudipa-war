@@ -109,6 +109,8 @@ func _start_raise() -> void:
 	if stage == null:
 		phase = Phase.STAND
 		return
+	if not target.visible or bool(target.get_meta("standin_held", false)):
+		return
 	cage = _scaffold(box)
 	cage.name = "Scaffold_%s" % target.name
 	stage.add_child(cage)
@@ -173,7 +175,9 @@ const FOGGED: PackedStringArray = ["EnemyYard", "EnemyClaim"]
 func _on_visibility() -> void:
 	if target.visible or phase == Phase.COLLAPSE or phase == Phase.RUBBLE:
 		return
-	if FOGGED.has(str(target.name)) and not bool(target.get_meta("destroyed", false)):
+	if bool(target.get_meta("standin_held", false)):
+		return
+	if not bool(target.get_meta("destroyed", false)) and (FOGGED.has(str(target.name)) or str(target.name) == "HubShell"):
 		return
 	if not is_inside_tree() or _stage() == null:
 		return

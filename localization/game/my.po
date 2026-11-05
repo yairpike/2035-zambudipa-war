@@ -1046,8 +1046,8 @@ msgstr "မြင့်"
 msgid "High graphics, full volume, voices in the game language, normal difficulty, edge pan on."
 msgstr "ဂရပ်ဖစ်​မြင့်၊ အသံ​အပြည့်၊ ဂိမ်း​ဘာသာ​ဖြင့် အသံ​သရုပ်ဆောင်၊ ပုံမှန်​ခက်ခဲ​မှု၊ အစွန်း​ရွှေ့​ခြင်း​ဖွင့်။"
 
-msgid "High keeps trees, rain, fog, and shadows."
-msgstr "မြင့်​တွင်​သစ်ပင်၊ မိုး၊ မြူ​နှင့်​အရိပ်​များ​ပါ​သည်။"
+msgid "High keeps trees, rain, fog, and two-split shadows."
+msgstr "အမြင့်သည် သစ်ပင်များ၊ မိုး၊ မြူနှင့် အရိပ်နှစ်ဆင့်ကို ထားရှိသည်။"
 
 msgid "High Technology"
 msgstr "အဆင့်မြင့်​နည်းပညာ"
@@ -1339,8 +1339,8 @@ msgstr "Love Drunk"
 msgid "Low"
 msgstr "နိမ့်"
 
-msgid "Low drops trees, rain, fog, and shadows."
-msgstr "နိမ့်​တွင် သစ်ပင်၊ မိုး၊ မြူ​နှင့်​အရိပ်​များ​ဖြုတ်​သည်။"
+msgid "Low drops trees, rain, fog, and shadows, and renders the 3D view smaller."
+msgstr "အနိမ့်သည် သစ်ပင်များ၊ မိုး၊ မြူနှင့် အရိပ်များကို ပိတ်ထားပြီး 3D မြင်ကွင်းကို ပိုသေးငယ်စွာ ဆွဲပေးသည်။"
 
 msgid "low power"
 msgstr "စွမ်းအင်​နည်း"
@@ -1383,6 +1383,12 @@ msgstr "ဈေး"
 
 msgid "Master"
 msgstr "ပင်မ​အသံ"
+
+msgid "Medium"
+msgstr "အလယ်အလတ်"
+
+msgid "Medium keeps trees, rain, and fog. One light shadow map on desktop, none in the browser."
+msgstr "အလယ်အလတ်သည် သစ်ပင်များ၊ မိုးနှင့် မြူကို ထားရှိသည်။ ကွန်ပျူတာတွင် အရိပ်တစ်ထပ်ပါပြီး ဘရောက်ဇာတွင် အရိပ်မပါပါ။"
 
 msgid "Mekong"
 msgstr "မဲခေါင်"
@@ -2508,6 +2514,15 @@ msgstr "ကမ်းလှမ်း​ချက်​မ​စ​နိုင်
 
 msgid "The offer was rejected."
 msgstr "ကမ်းလှမ်း​ချက်​ကို​ငြင်းပယ်​လိုက်​သည်။"
+
+msgid "The other player left the match."
+msgstr "အခြားကစားသမား ပွဲမှထွက်သွားပါပြီ။"
+
+msgid "The other player left the match. Opponent left. Defeat."
+msgstr "အခြားကစားသမား ပွဲမှထွက်သွားပါပြီ။ ပြိုင်ဘက်ထွက်ခွာသွားသဖြင့် ရှုံးနိမ့်သည်။"
+
+msgid "The other player left the match. Opponent left. Victory."
+msgstr "အခြားကစားသမား ပွဲမှထွက်သွားပါပြီ။ ပြိုင်ဘက်ထွက်ခွာသွားသဖြင့် အနိုင်ရရှိသည်။"
 
 msgid "The packer is in the shallows. Unpack it."
 msgstr "ထုပ်ပိုး​ယာဉ်​ရေတိမ်​ထဲ​ရောက်​ပြီ။ ဖြည်​ပါ။"

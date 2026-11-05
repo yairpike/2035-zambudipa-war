@@ -307,12 +307,8 @@ static func _add_http(owner: Node, http: HTTPRequest, start_fn: Callable) -> voi
 	var host: Node = owner
 	if owner.get_tree() != null and owner.get_tree().root != null:
 		host = owner.get_tree().root
-	if host.is_inside_tree():
-		host.add_child(http)
-		start_fn.call()
-	else:
-		host.add_child.call_deferred(http)
-		http.ready.connect(start_fn, CONNECT_ONE_SHOT)
+	http.ready.connect(start_fn, CONNECT_ONE_SHOT)
+	host.add_child.call_deferred(http)
 
 static func _fetch_dialogue_manifest() -> void:
 	var http: HTTPRequest = HTTPRequest.new()

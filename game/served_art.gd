@@ -80,16 +80,14 @@ static func _fetch(owner: Node, rel: String) -> void:
 	var host: Node = owner
 	if owner.get_tree() != null and owner.get_tree().root != null:
 		host = owner.get_tree().root
-	if host.is_inside_tree():
-		host.add_child(http)
-		_start_fetch(http, rel)
-	else:
-		host.add_child.call_deferred(http)
-		http.ready.connect(_start_fetch.bind(http, rel), CONNECT_ONE_SHOT)
+	http.ready.connect(_start_fetch.bind(http, rel), CONNECT_ONE_SHOT)
+	host.add_child.call_deferred(http)
 
 static func _start_fetch(http: HTTPRequest, rel: String) -> void:
-	if not is_instance_valid(http):
+	if not is_instance_valid(http) or not http.is_inside_tree():
 		_inflight.erase(rel)
+		if is_instance_valid(http):
+			http.queue_free()
 		return
 	http.request_completed.connect(_got.bind(http, rel))
 	var err: Error = http.request(_page() + rel)

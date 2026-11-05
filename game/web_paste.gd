@@ -152,6 +152,16 @@ func poll() -> void:
 		else:
 			note = "Copy this answer and send it to the host."
 
+func is_disconnected() -> bool:
+	if _pc == null:
+		return false
+	var st: int = _pc.get_connection_state()
+	if st == WebRTCPeerConnection.STATE_DISCONNECTED or st == WebRTCPeerConnection.STATE_FAILED or st == WebRTCPeerConnection.STATE_CLOSED:
+		return true
+	if peer != null and peer.get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED:
+		return true
+	return false
+
 func shutdown() -> void:
 	if _pc != null:
 		if _pc.session_description_created.is_connected(_on_sdp):

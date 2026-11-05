@@ -3,9 +3,12 @@ extends RefCounted
 ## Web builds also mirror the same record into IndexedDB.
 
 const PATH: String = "user://settings.cfg"
-const IDB_JS: String = "(function(payload){if(!self.indexedDB)return;var openReq=indexedDB.open('asean2031',1);openReq.onupgradeneeded=function(){if(!openReq.result.objectStoreNames.contains('saves'))openReq.result.createObjectStore('saves');};openReq.onsuccess=function(){var tx=openReq.result.transaction('saves','readwrite');tx.objectStore('saves').put(payload,'settings');};})(%s);"
+const IDB_JS: String = "(function(payload){try{if(self.localStorage)localStorage.setItem('asean2031_settings',payload);}catch(e){}if(!self.indexedDB)return;var openReq=indexedDB.open('asean2031',1);openReq.onupgradeneeded=function(){if(!openReq.result.objectStoreNames.contains('saves'))openReq.result.createObjectStore('saves');};openReq.onsuccess=function(){var tx=openReq.result.transaction('saves','readwrite');tx.objectStore('saves').put(payload,'settings');};})(%s);"
+const PULL_JS: String = "(function(){window.__settingsReady=false;window.__settingsSave='';try{if(self.localStorage){var ls=localStorage.getItem('asean2031_settings');if(ls){window.__settingsSave=String(ls);}}}catch(e){}if(!self.indexedDB){window.__settingsReady=true;return;}var openReq=indexedDB.open('asean2031',1);openReq.onupgradeneeded=function(){if(!openReq.result.objectStoreNames.contains('saves'))openReq.result.createObjectStore('saves');};openReq.onerror=function(){window.__settingsReady=true;};openReq.onsuccess=function(){try{var tx=openReq.result.transaction('saves','readonly');var req=tx.objectStore('saves').get('settings');req.onerror=function(){window.__settingsReady=true;};req.onsuccess=function(){var v=req.result;if(v!=null&&String(v)!=='')window.__settingsSave=String(v);window.__settingsReady=true;};}catch(e){window.__settingsReady=true;}};})();"
 
 static var loaded: bool = false
+static var _web_pull: bool = false
+static var _web_done: bool = false
 static var graphics: String = "high"
 static var master: float = 1.0
 static var sfx: float = 1.0
@@ -49,9 +52,18 @@ static func ensure() -> void:
 	if FileAccess.file_exists(PATH):
 		loaded = true
 		_read()
+		if OS.has_feature("web") and not _web_done:
+			pull_web()
 		SMLang.apply(language)
 		return
 	if OS.has_feature("web"):
+		var raw: String = str(JavaScriptBridge.eval("(function(){try{return self.localStorage?String(localStorage.getItem('asean2031_settings')||''):'';}catch(e){return'';}})()", true))
+		if raw.strip_edges() != "" and _apply_payload_dict(raw):
+			loaded = true
+			_write()
+			SMLang.apply(language)
+			return
+		pull_web()
 		language = SMLang.from_locale(OS.get_locale())
 		voice = language
 	SMLang.apply(language)
@@ -62,6 +74,63 @@ static func ensure() -> void:
 	loaded = true
 	graphics = quality_for_adapter(adapter)
 	_write()
+
+static func pull_web() -> void:
+	if not OS.has_feature("web") or _web_pull or _web_done:
+		return
+	_web_pull = true
+	JavaScriptBridge.eval(PULL_JS, true)
+
+static func poll_web() -> bool:
+	if not OS.has_feature("web"):
+		return true
+	if _web_done:
+		return true
+	if not _web_pull:
+		pull_web()
+		return false
+	if not bool(JavaScriptBridge.eval("window.__settingsReady===true", true)):
+		return false
+	_web_done = true
+	var raw: String = str(JavaScriptBridge.eval("String(window.__settingsSave||'')", true))
+	if raw.strip_edges() != "" and _apply_payload_dict(raw):
+		loaded = true
+		SMLang.apply(language)
+		_write()
+	return true
+
+static func _apply_payload_dict(raw: String) -> bool:
+	var text: String = raw.strip_edges()
+	if text == "":
+		return false
+	var parsed: Variant = JSON.parse_string(text)
+	if parsed is String:
+		parsed = JSON.parse_string(str(parsed))
+	if not (parsed is Dictionary):
+		return false
+	var row: Dictionary = parsed as Dictionary
+	if row.has("graphics"):
+		graphics = _quality(str(row.get("graphics", default_graphics())))
+	if row.has("master"):
+		master = clampf(float(row.get("master", 1.0)), 0.0, 1.0)
+	if row.has("sfx"):
+		sfx = clampf(float(row.get("sfx", 1.0)), 0.0, 1.0)
+	if row.has("music"):
+		music = clampf(float(row.get("music", 0.55)), 0.0, 1.0)
+	if row.has("pan"):
+		pan = clampf(float(row.get("pan", 1.0)), 0.4, 2.2)
+	if row.has("edge"):
+		edge = bool(row.get("edge", true))
+	if row.has("difficulty"):
+		var d: String = str(row.get("difficulty", "normal"))
+		difficulty = d if (d == "easy" or d == "hard") else "normal"
+	if row.has("language"):
+		var l: String = str(row.get("language", "english"))
+		language = l if language_ids().has(l) else "english"
+	if row.has("voice"):
+		var v: String = str(row.get("voice", language))
+		voice = v if voice_ids().has(v) else "english"
+	return true
 
 static func _adapter() -> String:
 	var name: String = RenderingServer.get_video_adapter_name()

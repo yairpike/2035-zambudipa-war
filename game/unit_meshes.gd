@@ -295,6 +295,8 @@ static func structure_form(node_name: String) -> String:
 		return "yard"
 	if n.begins_with("built_"):
 		return _building_form(n.trim_prefix("built_"))
+	if n.begins_with("foebuilt_"):
+		return _building_form(n.trim_prefix("foebuilt_"))
 	return ""
 
 static func muzzle_pos(form: String) -> Vector3:

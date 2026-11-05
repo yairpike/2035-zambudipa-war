@@ -1046,8 +1046,8 @@ msgstr "高"
 msgid "High graphics, full volume, voices in the game language, normal difficulty, edge pan on."
 msgstr "高画质，满音量，语音使用游戏语言，普通难度，开启边缘平移。"
 
-msgid "High keeps trees, rain, fog, and shadows."
-msgstr "高画质保留树木、雨、雾和阴影。"
+msgid "High keeps trees, rain, fog, and two-split shadows."
+msgstr "高画质保留树木、雨、雾和双重阴影。"
 
 msgid "High Technology"
 msgstr "高科技"
@@ -1339,8 +1339,8 @@ msgstr "Love Drunk"
 msgid "Low"
 msgstr "低"
 
-msgid "Low drops trees, rain, fog, and shadows."
-msgstr "低画质会去除树木、雨、雾和阴影。"
+msgid "Low drops trees, rain, fog, and shadows, and renders the 3D view smaller."
+msgstr "低画质会去除树木、雨、雾和阴影，并缩小 3D 视野。"
 
 msgid "low power"
 msgstr "电力不足"
@@ -1383,6 +1383,12 @@ msgstr "市场"
 
 msgid "Master"
 msgstr "主音量"
+
+msgid "Medium"
+msgstr "中"
+
+msgid "Medium keeps trees, rain, and fog. One light shadow map on desktop, none in the browser."
+msgstr "中画质保留树木、雨和雾。桌面端开启单重阴影，浏览器中无阴影。"
 
 msgid "Mekong"
 msgstr "湄公河"
@@ -2508,6 +2514,15 @@ msgstr "邀请未能启动。"
 
 msgid "The offer was rejected."
 msgstr "邀请被拒绝。"
+
+msgid "The other player left the match."
+msgstr "另一名玩家已离开。"
+
+msgid "The other player left the match. Opponent left. Defeat."
+msgstr "另一名玩家已离开。对手已离开。失败。"
+
+msgid "The other player left the match. Opponent left. Victory."
+msgstr "另一名玩家已离开。对手已离开。胜利。"
 
 msgid "The packer is in the shallows. Unpack it."
 msgstr "码头船已到浅滩。展开它。"

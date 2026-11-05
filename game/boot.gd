@@ -183,6 +183,7 @@ func _ready() -> void:
 	_paste_panel()
 	set_process_unhandled_input(true)
 	SMSave.pull_web()
+	preload("res://game/match_settings.gd").pull_web()
 	preload("res://game/settings_panel.gd").attach(self)
 	preload("res://game/credits_panel.gd").attach(self)
 	preload("res://game/match_settings.gd").apply_scene(self)
@@ -801,7 +802,9 @@ func _mission_row(box: VBoxContainer, mission_id: String) -> void:
 	var b: Button = Plate.new() as Button
 	b.name = "Mission_%s" % mission_id
 	b.text = SMCampaign.title_of(mission_id)
-	b.custom_minimum_size = Vector2(720, 44)
+	b.custom_minimum_size = Vector2(720, 52)
+	b.clip_text = true
+	b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	b.pressed.connect(_start_mission.bind(mission_id))
 	box.add_child(b)
@@ -833,6 +836,7 @@ func _mission_row(box: VBoxContainer, mission_id: String) -> void:
 func _process(delta: float) -> void:
 	_tick_now(delta)
 	_lan_poll(delta)
+	preload("res://game/match_settings.gd").poll_web()
 	if not _save_polled and SMSave.poll_web():
 		_save_polled = true
 		for id: String in SMCampaign.ids():
@@ -1235,7 +1239,7 @@ func _chrome_names() -> PackedStringArray:
 	return PackedStringArray([
 		"GameTitle", "TitleRule", "VersionMark", "NowPlaying", "ControlBar",
 		"MultiplayerNote", "FactionSubmenu", "LanPanel", "PastePanel", "PanelSkirmish",
-		"PanelCampaign", "PanelFaction", "QuitButton", "MenuBack",
+		"PanelCampaign", "PanelFaction", "QuitButton", "MenuBack", "TrainingOffer",
 	])
 
 func _play() -> void:
@@ -1566,7 +1570,9 @@ func _layout_menu(size: Vector2) -> void:
 	var offer: Control = find_child("TrainingOffer", true, false) as Control
 	if offer != null:
 		var seen: bool = FileAccess.file_exists("user://training_offer.cfg")
-		offer.visible = _menu_tab == "main" and not seen and not narrow
+		var credits_panel: Control = find_child("CreditsPanel", true, false) as Control
+		var credits_open: bool = credits_panel != null and credits_panel.visible
+		offer.visible = _menu_tab == "main" and not seen and not narrow and not settings_open and not credits_open and (faction_submenu == null or not faction_submenu.visible)
 		offer.position = Vector2(minf(640.0, size.x * 0.46), 240.0)
 		offer.size = Vector2(minf(460.0, maxf(280.0, size.x - offer.position.x - 24.0)), 150.0)
 	var card: Control = find_child("MenuDetail", true, false) as Control
@@ -1844,13 +1850,13 @@ func _make_cycle(node_name: String, kind: String) -> void:
 		button.add_child(logo)
 	skirmish_panel.add_child(button)
 
-func _cycle_row(node_name: String, x: float, y: float, width: float) -> void:
+func _cycle_row(node_name: String, x: float, y: float, width: float, height: float = 36.0) -> void:
 	var row: Control = find_child(node_name, true, false) as Control
 	if row == null:
 		return
 	row.position = Vector2(x, y)
-	row.size = Vector2(width, 44)
-	row.custom_minimum_size = Vector2(width, 44)
+	row.size = Vector2(width, height)
+	row.custom_minimum_size = Vector2(width, height)
 
 func _spin_cycle(kind: String) -> void:
 	if kind == "faction":
@@ -2030,22 +2036,23 @@ func _place_skirmish(panel_w: float, panel_h: float) -> void:
 	var rail_w: float = panel_w if narrow else panel_w * 0.4
 	var list_x: float = 16.0 if narrow else 28.0
 	var list_w: float = maxf(160.0, rail_w - list_x - 16.0)
-	var row_y: float = 120.0 if narrow else 176.0
+	var row_y: float = 112.0 if narrow else 148.0
+	var card_step: float = 36.0
 	for i: int in names.size():
 		var card: Control = find_child(names[i], true, false) as Control
 		if card == null:
 			continue
-		card.position = Vector2(list_x, row_y + float(i) * 40.0)
-		card.size = Vector2(list_w, 36.0)
-		card.custom_minimum_size = Vector2(list_w, 36.0)
-	var after: float = row_y + float(names.size()) * 40.0 + 8.0
+		card.position = Vector2(list_x, row_y + float(i) * card_step)
+		card.size = Vector2(list_w, 34.0)
+		card.custom_minimum_size = Vector2(list_w, 34.0)
+	var after: float = row_y + float(names.size()) * card_step + 6.0
 	var playing: Control = find_child("PlayingAs", true, false) as Control
 	if playing != null:
 		playing.position = Vector2(list_x, after)
-		playing.size = Vector2(list_w, 28.0)
-	_cycle_row("SkirmishFactionCycle", list_x, after + 32.0, list_w)
-	_cycle_row("SkirmishDiffCycle", list_x, after + 80.0, list_w)
-	_cycle_row("SkirmishBotCycle", list_x, after + 128.0, list_w)
+		playing.size = Vector2(list_w, 26.0)
+	_cycle_row("SkirmishFactionCycle", list_x, after + 28.0, list_w, 36.0)
+	_cycle_row("SkirmishDiffCycle", list_x, after + 66.0, list_w, 36.0)
+	_cycle_row("SkirmishBotCycle", list_x, after + 104.0, list_w, 36.0)
 	var foot: float = panel_h - 72.0
 	var foot_x: float = list_x if narrow else rail_w + 16.0
 	var play: Control = find_child("PlayButton", true, false) as Control
@@ -2126,10 +2133,11 @@ func _place_campaign(panel_w: float, panel_h: float, start_y: float) -> void:
 		if act == null:
 			continue
 		act.position = Vector2(left + float(i) * (tab_w + gap), act_y)
-		act.size = Vector2(tab_w, 40)
-		act.custom_minimum_size = Vector2(tab_w, 40)
-	var list_top: float = act_y + 48.0
-	var list_h: float = maxf(80.0, panel_h - list_top - 168.0)
+		act.size = Vector2(tab_w, 44)
+		act.custom_minimum_size = Vector2(tab_w, 44)
+	var list_top: float = act_y + 54.0
+	var diff_y: float = panel_h - 140.0
+	var list_h: float = maxf(80.0, diff_y - list_top - 14.0)
 	for list_name: String in lists:
 		var scroll: Control = find_child(list_name, true, false) as Control
 		if scroll == null:
@@ -2138,23 +2146,33 @@ func _place_campaign(panel_w: float, panel_h: float, start_y: float) -> void:
 		scroll.position = Vector2(left, list_top)
 		scroll.size = Vector2(list_w, list_h)
 		if scroll.get_child_count() > 0:
-			var inner: Control = scroll.get_child(0) as Control
+			var inner: VBoxContainer = scroll.get_child(0) as VBoxContainer
 			if inner != null:
 				inner.custom_minimum_size = Vector2(maxf(80.0, list_w - 16.0), 0)
+				inner.add_theme_constant_override("separation", 10)
 	for mission_id: String in SMCampaign.ids():
-		var row: Control = find_child("Mission_%s" % mission_id, true, false) as Control
+		var row: Button = find_child("Mission_%s" % mission_id, true, false) as Button
 		if row == null:
 			continue
-		row.custom_minimum_size = Vector2(maxf(80.0, list_w - 16.0), 44)
+		row.clip_text = true
+		row.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		row.custom_minimum_size = Vector2(maxf(80.0, list_w - 16.0), 50)
+		var done: Control = row.find_child("Done_%s" % mission_id, true, false) as Control
+		if done != null:
+			done.position = Vector2(maxf(120.0, list_w - 84.0), 10.0)
 	var camp_names: PackedStringArray = PackedStringArray(["CampaignDiffEasy", "CampaignDiffNormal", "CampaignDiffHard"])
-	var camp_w: float = (list_w - gap * 2.0) / 3.0
+	var camp_gap: float = 12.0
+	var camp_w: float = (list_w - camp_gap * 2.0) / 3.0
 	for slot: int in camp_names.size():
-		var choice: Control = find_child(camp_names[slot], true, false) as Control
+		var choice: Button = find_child(camp_names[slot], true, false) as Button
 		if choice == null:
 			continue
-		choice.position = Vector2(left + float(slot) * (camp_w + gap), panel_h - 148.0)
-		choice.size = Vector2(camp_w, 40)
-		choice.custom_minimum_size = Vector2(camp_w, 40)
+		choice.clip_text = true
+		choice.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		choice.alignment = HORIZONTAL_ALIGNMENT_CENTER
+		choice.position = Vector2(left + float(slot) * (camp_w + camp_gap), diff_y)
+		choice.size = Vector2(camp_w, 44)
+		choice.custom_minimum_size = Vector2(camp_w, 44)
 	var camp_label: Control = find_child("CampaignDiffLabel", true, false) as Control
 	if camp_label != null:
 		camp_label.visible = false

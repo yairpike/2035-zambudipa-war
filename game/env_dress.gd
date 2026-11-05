@@ -302,15 +302,15 @@ static func pull_web(host: Node, ids: PackedStringArray) -> void:
 		var http := HTTPRequest.new()
 		http.timeout = 60.0
 		http.accept_gzip = false
-		req_owner.add_child(http)
-		if http.is_inside_tree():
-			_start_web_request(http, id)
-		else:
-			http.ready.connect(_start_web_request.bind(http, id), CONNECT_ONE_SHOT)
+		http.ready.connect(_start_web_request.bind(http, id), CONNECT_ONE_SHOT)
+		req_owner.add_child.call_deferred(http)
 
 static func _start_web_request(http: HTTPRequest, id: String) -> void:
-	if not is_instance_valid(http):
+	if not is_instance_valid(http) or not http.is_inside_tree():
 		_inflight.erase(id)
+		if is_instance_valid(http):
+			http.queue_free()
+		_release_waiters(id)
 		return
 	http.request_completed.connect(_got_web.bind(http, id))
 	var err: Error = http.request(_page() + "models/env/%s.glb" % id)

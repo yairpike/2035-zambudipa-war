@@ -53,4 +53,4 @@ static func structure_footprint(node_name: String, role: String) -> Vector2:
 	var n: String = node_name.to_lower()
 	if n == "hubshell" or n == "packercore" or n == "playeryard" or n == "enemyyard" or n == "enemybase":
 		return SMBasePlan.footprint_m("", "yard")
-	return SMBasePlan.footprint_m(n.trim_prefix("built_"), role)
+	return SMBasePlan.footprint_m(n.trim_prefix("built_").trim_prefix("foebuilt_"), role)

@@ -3607,6 +3607,14 @@ func test_lan_match() -> void:
 	var mirror_field: SMPointer = mirror.get("field") as SMPointer
 	var mirror_built: MeshInstance3D = mirror.get_node_or_null("Built_command_hub") as MeshInstance3D
 	check(mirror_land != null and mirror_water != null and mirror_column != null and mirror_fac != null and mirror_fac.text == "MVD" and mirror_field != null and mirror_field.units.size() == 2 and mirror_built != null, "the multiplayer guest mirror renders terrain, units, structures, and the guest faction HUD")
+	var mirror_hud: SMHud = mirror.get("hud") as SMHud
+	if mirror_hud != null:
+		mirror_hud.refresh()
+	var mirror_cameo: TextureRect = mirror.find_child("CardCameo", true, false) as TextureRect
+	Lan.seat().ingest(JSON.stringify({"k": "bye"}))
+	mirror.call("_process", 0.05)
+	var mirror_status: Label = mirror.find_child("Status", true, false) as Label
+	check(mirror_cameo != null and mirror_cameo.visible and mirror_cameo.texture != null and mirror_status != null and mirror_status.text.contains("The other player left the match"), "the guest selection card shows a unit cameo and host departure notifies the guest")
 	mirror.free()
 	await process_frame
 	Lan.seat().paused = true
@@ -6570,6 +6578,10 @@ func test_game_language() -> void:
 	if panel != null:
 		panel.call("_show_page", "language")
 	await process_frame
+	var lang_label: Control = boot.find_child("LanguageLabel", true, false) as Control
+	var offer_card: Control = boot.find_child("TrainingOffer", true, false) as Control
+	var blurb_label: Control = boot.find_child("SettingsBlurb", true, false) as Control
+	check(lang_label != null and row != null and row.position.x >= lang_label.position.x + lang_label.size.x + 8.0 and (offer_card == null or not offer_card.visible) and blurb_label != null and blurb_label.size.y >= 88.0, "settings hides the first-visit prompt, spaces the language label from its value, and gives help text two-line height")
 	var english_texts: PackedStringArray = PackedStringArray()
 	_shown_texts(boot, english_texts)
 	var english_foreign: PackedStringArray = PackedStringArray()
@@ -6587,6 +6599,14 @@ func test_game_language() -> void:
 		if _foreign_letters(line, PackedStringArray()) != "":
 			burmese_lines += 1
 	check(Settings.language == "burmese" and row != null and row.text == "မြန်မာ" and burmese_lines * 2 > burmese_texts.size(), "the Language row switches the open menu to Burmese (%d of %d lines)" % [burmese_lines, burmese_texts.size()])
+	boot.call("_show_tab", "skirmish")
+	await process_frame
+	var bot_row: Control = boot.find_child("SkirmishBotCycle", true, false) as Control
+	var menu_back: Control = boot.find_child("MenuBack", true, false) as Control
+	var back_hit: Rect2 = bot_row.get_global_rect().intersection(menu_back.get_global_rect()) if bot_row != null and menu_back != null else Rect2()
+	check(bot_row != null and menu_back != null and (back_hit.size.x < 1.0 or back_hit.size.y < 1.0), "the Skirmish Back button stays clear of the Commander and Difficulty rows")
+	var zh_cat: Dictionary = _catalog("zh")
+	check(str(zh_cat.get("Medium", "")) == "中" and str(zh_cat.get("Low", "")) == "低" and str(zh_cat.get("High", "")) == "高", "Mandarin translates Low, Medium, and High")
 	boot.free()
 	await process_frame
 	Settings.set_language(held_language)
@@ -6660,4 +6680,19 @@ func test_render_budget() -> void:
 	var reg_script: String = FileAccess.get_file_as_string("res://game/model_registry.gd")
 	var audio_script: String = FileAccess.get_file_as_string("res://game/match_audio.gd")
 	check(pack_script.contains("Contents/Resources") and reg_script.contains("Resources/models") and audio_script.contains("Resources/audio"), "macOS bundles load external folders from Contents/Resources")
+	var mvd_stage: Node3D = Node3D.new()
+	root.add_child(mvd_stage)
+	var mvd_side: SMSide = SMSide.new()
+	var mvd_grid: SMDomainGrid = SMDomainGrid.new(16, 16, 4.0, Vector3(-32.0, 0.0, -32.0))
+	mvd_side.slab_made.connect(Callable(WorldView, "slab"))
+	mvd_side.prepare(mvd_stage, null, mvd_grid, Vector3.ZERO, RTSEconomy.new(), "mvd")
+	await process_frame
+	var mvd_ruin: Node = mvd_stage.get_node_or_null("Ruin_HubShell")
+	check(mvd_ruin == null and mvd_side.hub_mesh != null and not mvd_side.hub_mesh.visible, "the MVD HQ shell stays hidden without spawning a collapse ruin dome")
+	mvd_stage.free()
+	var haze_env: Environment = Environment.new()
+	var haze_sight: SMSight = SMSight.new()
+	haze_sight.force_weather(true)
+	Ground._fog(haze_env, haze_sight)
+	check(haze_env.fog_enabled and haze_env.fog_density <= 0.008, "Strait haze keeps fog density light enough to see terrain and units")
 	Settings.set_graphics("high")

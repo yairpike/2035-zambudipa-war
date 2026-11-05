@@ -255,7 +255,14 @@ func _pull(file_name: String, slot: String) -> void:
 		return
 	var http := HTTPRequest.new()
 	http.timeout = 20.0
-	add_child(http)
+	http.ready.connect(_start_pull.bind(http, file_name, slot), CONNECT_ONE_SHOT)
+	add_child.call_deferred(http)
+
+func _start_pull(http: HTTPRequest, file_name: String, slot: String) -> void:
+	if not is_instance_valid(http) or not http.is_inside_tree():
+		if is_instance_valid(http):
+			http.queue_free()
+		return
 	http.request_completed.connect(_got.bind(http, slot))
 	var err: Error = http.request(_page() + "ui/menu/" + file_name)
 	if err != OK:
@@ -290,7 +297,15 @@ func _pull_video(stem: String) -> void:
 	var http := HTTPRequest.new()
 	http.timeout = 60.0
 	http.accept_gzip = false
-	add_child(http)
+	http.ready.connect(_start_pull_video.bind(http, stem), CONNECT_ONE_SHOT)
+	add_child.call_deferred(http)
+
+func _start_pull_video(http: HTTPRequest, stem: String) -> void:
+	if not is_instance_valid(http) or not http.is_inside_tree():
+		_video_wait.erase(stem)
+		if is_instance_valid(http):
+			http.queue_free()
+		return
 	http.request_completed.connect(_got_video.bind(http, stem))
 	var err: Error = http.request(_page() + "ui/menu/video/%s.ogv" % stem)
 	if err != OK:

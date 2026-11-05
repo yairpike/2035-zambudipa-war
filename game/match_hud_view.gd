@@ -547,6 +547,14 @@ func _paint_selection(hud: SMHud) -> void:
 			rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 			rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			var well_bg: ColorRect = ColorRect.new()
+			well_bg.name = "WellBg"
+			well_bg.color = Color(0.08, 0.09, 0.12, 0.92)
+			well_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			well_bg.position = Vector2.ZERO
+			well_bg.size = Vector2(36, 36)
+			well_bg.show_behind_parent = true
+			rect.add_child(well_bg)
 			var life: ColorRect = ColorRect.new()
 			life.name = "Life"
 			life.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -558,7 +566,7 @@ func _paint_selection(hud: SMHud) -> void:
 		var tex: Texture2D = null
 		var hp: float = 0.0
 		if unit != null and is_instance_valid(unit):
-			tex = hud._cameo_texture(hud._faction_id(), str(unit.unit_type))
+			tex = hud._cameo_texture(hud._faction_id(), _cameo_id_of(unit))
 			hp = clampf(unit.hp / maxf(unit.max_hp, 1.0), 0.0, 1.0)
 		rect.texture = tex
 		rect.visible = true
@@ -567,6 +575,15 @@ func _paint_selection(hud: SMHud) -> void:
 			bar.position = Vector2(0, 32)
 			bar.size = Vector2(36.0 * hp, 4)
 			bar.color = Color(0.3, 0.85, 0.38) if hp > 0.5 else (Color(0.95, 0.78, 0.22) if hp > 0.25 else Color(0.9, 0.25, 0.2))
+
+func _cameo_id_of(unit: RTSUnit) -> String:
+	var id: String = str(unit.unit_type)
+	if id == "raider" or id == "wave" or id == "":
+		var fac: String = str(unit.get_meta("look", SMFront.current()))
+		var role: String = str(unit.get_meta("role", "infantry"))
+		var loco: String = str(unit.get_meta("locomotion", "ground"))
+		id = preload("res://game/model_registry.gd").fallback_unit(role, loco, fac)
+	return id
 
 func _faction(hud: SMHud) -> String:
 	if hud != null and hud.field != null:
@@ -1230,7 +1247,7 @@ func _seat_context() -> void:
 	if slots == null:
 		return
 	var slot_x: float = maxf(x + 8.0 + 102.0 + 8.0, 360.0)
-	_anchor(slots, 0.0, 1.0, 0.0, 1.0, slot_x, -120.0, minf(slot_x + 392.0, x + width - 10.0), -84.0)
+	_anchor(slots, 0.0, 1.0, 0.0, 1.0, slot_x, -124.0, minf(slot_x + 392.0, x + width - 10.0), -82.0)
 
 func _seat_message() -> void:
 	var lane: Control = get_node_or_null("MessageLane") as Control

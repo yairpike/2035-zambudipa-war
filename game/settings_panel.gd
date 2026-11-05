@@ -249,6 +249,8 @@ func _page_tab(node_name: String, caption: String, page: String) -> void:
 
 func _show_page(page: String) -> void:
 	_page = page
+	if highlight != null:
+		highlight.visible = false
 	_layout(size if size.x > 32.0 else Vector2(1280, 720))
 
 func _tag_pages() -> void:
@@ -324,8 +326,11 @@ func _layout(view: Vector2) -> void:
 	y = _place_slider(master_readout, master_slider, master_value, content_x, y, label_w, slider_x, slider_w, value_x)
 	y = _place_slider(music_readout, music_slider, music_value, content_x, y, label_w, slider_x, slider_w, value_x)
 	y = _place_slider(sfx_readout, sfx_slider, sfx_value, content_x, y, label_w, slider_x, slider_w, value_x)
-	y = _place_row(get_node_or_null("VoiceLabel"), content_x, y, maxf(96.0, value_x - content_x - 12.0))
-	_place_value(voice_value, value_x, y - 44.0, value_w)
+	var voice_label_w: float = minf(156.0, content_w * 0.5)
+	var voice_val_x: float = content_x + voice_label_w + 16.0
+	var voice_val_w: float = maxf(88.0, content_x + content_w - voice_val_x)
+	y = _place_row(get_node_or_null("VoiceLabel"), content_x, y, voice_label_w)
+	_place_value(voice_value, voice_val_x, y - 44.0, voice_val_w)
 	y = _place_section("SectionControls", content_x, y, content_w)
 	y = _place_row(edge_box, content_x, y, content_w)
 	y = _place_slider(pan_readout, pan_slider, pan_value, content_x, y, label_w, slider_x, slider_w, value_x)
@@ -335,11 +340,15 @@ func _layout(view: Vector2) -> void:
 	_place_value(get_node_or_null("SettingsDiffNormal"), slider_x + 68.0, y - 44.0, 72.0)
 	_place_value(get_node_or_null("SettingsDiffHard"), slider_x + 144.0, y - 44.0, 64.0)
 	y = _place_section("SectionHud", content_x, y, content_w)
-	y = _place_row(get_node_or_null("HudNote"), content_x, y, label_w)
-	_place_value(get_node_or_null("HudValue"), value_x, y - 44.0, value_w)
+	var hud_label_w: float = minf(156.0, content_w * 0.5)
+	y = _place_row(get_node_or_null("HudNote"), content_x, y, hud_label_w)
+	_place_value(get_node_or_null("HudValue"), content_x + hud_label_w + 16.0, y - 44.0, value_w)
 	y = _place_section("SectionLanguage", content_x, y, content_w)
-	y = _place_row(get_node_or_null("LanguageLabel"), content_x, y, label_w)
-	_place_value(language_value, slider_x, y - 44.0, maxf(120.0, content_x + content_w - slider_x))
+	var lang_label_w: float = minf(164.0, content_w * 0.52)
+	var lang_val_x: float = content_x + lang_label_w + 16.0
+	var lang_val_w: float = maxf(108.0, content_x + content_w - lang_val_x)
+	y = _place_row(get_node_or_null("LanguageLabel"), content_x, y, lang_label_w)
+	_place_value(language_value, lang_val_x, y - 44.0, lang_val_w)
 	var back: Control = get_node_or_null("SettingsClose")
 	var restore: Control = get_node_or_null("SettingsRestore")
 	var foot: float = view.y - 52.0
@@ -352,8 +361,9 @@ func _layout(view: Vector2) -> void:
 		restore.size = Vector2(minf(200.0, rail_w - 140.0), 40)
 		restore.custom_minimum_size = Vector2(restore.size.x, 40)
 	if blurb != null:
-		blurb.position = Vector2(left, foot - 72.0)
-		blurb.size = Vector2(maxf(120.0, rail_w - 40.0), 64)
+		blurb.position = Vector2(left, foot - 108.0)
+		blurb.size = Vector2(maxf(120.0, rail_w - 40.0), 96)
+		blurb.custom_minimum_size = Vector2(maxf(120.0, rail_w - 40.0), 96)
 	var card: CanvasItem = get_node_or_null("SettingsCard") as CanvasItem
 	if card != null:
 		card.visible = false
@@ -557,6 +567,12 @@ func _cycle_language(step: int) -> void:
 	Settings.set_language(order[posmod(at + step, order.size())])
 	_paint_language()
 	_paint_voice()
+	_apply()
+	var scene: Node = get_tree().current_scene if get_tree() != null else null
+	if scene != null and scene.has_method("_paint_detail"):
+		scene.call("_paint_detail")
+	if scene != null and scene.has_method("mark_difficulty"):
+		scene.call("mark_difficulty")
 	var clips: GDScript = load("res://game/match_audio.gd") as GDScript
 	clips.call("note_voice", self)
 
@@ -687,6 +703,9 @@ func _show_blurb(node: Control) -> void:
 	if text != "":
 		blurb.text = text
 	if highlight == null:
+		return
+	if not node.is_visible_in_tree():
+		highlight.visible = false
 		return
 	highlight.visible = true
 	highlight.position = node.position

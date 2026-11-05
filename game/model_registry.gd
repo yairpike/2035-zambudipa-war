@@ -266,6 +266,8 @@ static func yard_of(faction: String) -> String:
 
 static func structure_id(node_name: String) -> String:
 	var id: String = model_id_for(node_name)
+	if id.begins_with("foebuilt_"):
+		id = id.trim_prefix("foebuilt_")
 	if id == "playeryard":
 		return yard_of(SMFront.current())
 	if id == "enemyyard" or id == "enemybase":
@@ -397,8 +399,10 @@ static func _release_standin(body: MeshInstance3D) -> void:
 		return
 	if not bool(body.get_meta("standin_held", false)):
 		return
-	body.visible = true
 	body.set_meta("standin_held", false)
+	if str(body.name) == "HubShell" and not bool(body.get_meta("hub_placed", false)):
+		return
+	body.visible = true
 
 static func _release_unlisted() -> void:
 	var still: Array[MeshInstance3D] = []
@@ -475,7 +479,14 @@ static func _pull_index(owner: Node) -> void:
 	var http := HTTPRequest.new()
 	http.timeout = 20.0
 	http.accept_gzip = false
-	host.add_child(http)
+	http.ready.connect(_start_index.bind(http, host), CONNECT_ONE_SHOT)
+	host.add_child.call_deferred(http)
+
+static func _start_index(http: HTTPRequest, host: Node) -> void:
+	if not is_instance_valid(http) or not http.is_inside_tree():
+		if is_instance_valid(http):
+			http.queue_free()
+		return
 	http.request_completed.connect(_got_index.bind(http, host))
 	var err: Error = http.request(_page() + "models/index.txt")
 	if err != OK:
@@ -540,7 +551,7 @@ static func _fetch_waiting(owner: Node) -> void:
 static func _fetch(owner: Node, id: String) -> void:
 	if owner == null or _inflight.has(id) or id.contains(".."):
 		return
-	if _cached(id) != "":
+	if _cached(id) != "" or _again(id) != null:
 		_redress(id)
 		return
 	var host: Node = _request_owner(owner)
@@ -551,7 +562,16 @@ static func _fetch(owner: Node, id: String) -> void:
 	var http := HTTPRequest.new()
 	http.timeout = 60.0
 	http.accept_gzip = false
-	host.add_child(http)
+	http.ready.connect(_start_model.bind(http, id), CONNECT_ONE_SHOT)
+	host.add_child.call_deferred(http)
+
+static func _start_model(http: HTTPRequest, id: String) -> void:
+	if not is_instance_valid(http) or not http.is_inside_tree():
+		_inflight.erase(id)
+		if is_instance_valid(http):
+			http.queue_free()
+		_give_up(id)
+		return
 	http.request_completed.connect(_got_model.bind(http, id))
 	var err: Error = http.request("%smodels/%s.glb" % [_page(), id])
 	if err != OK:
@@ -569,11 +589,12 @@ static func _got_model(result: int, code: int, _headers: PackedStringArray, body
 	var cache_path: String = _cache_file(id)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(cache_path.get_base_dir()))
 	var file := FileAccess.open(cache_path, FileAccess.WRITE)
-	if file == null:
-		_give_up(id)
-		return
-	file.store_buffer(body)
-	file.close()
+	if file != null:
+		file.store_buffer(body)
+		file.close()
+	var parsed: Node3D = _from_buffer(id, body)
+	if parsed != null:
+		parsed.free()
 	_redress(id)
 
 static func _give_up(id: String) -> void:
@@ -699,7 +720,8 @@ static func _mount(body: MeshInstance3D, scene: Node3D, footprint: AABB, fill: b
 	body.material_override = null
 	body.set_meta("model", scene.name)
 	body.set_meta("hull_parts_ready", false)
-	body.visible = true
+	var keep_hidden: bool = str(body.name) == "HubShell" and not bool(body.get_meta("hub_placed", false)) and body.is_inside_tree()
+	body.visible = not keep_hidden
 	body.set_meta("standin_held", false)
 
 static func _hoist(body: MeshInstance3D, scene: Node3D, node_name: String) -> void:

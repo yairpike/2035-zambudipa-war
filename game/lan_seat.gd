@@ -182,6 +182,10 @@ func paste_note() -> String:
 	return _paste_note
 
 func close() -> void:
+	if started:
+		send({"k": "bye"})
+		if peer != null:
+			peer.poll()
 	var web_peer: MultiplayerPeer = null
 	if _web != null:
 		web_peer = _web.peer
@@ -496,16 +500,25 @@ func ingest(raw: String) -> String:
 		guest_faction = known_faction(str(row.get("guest", guest_faction)))
 	elif kind == "ack":
 		last_note = str(row.get("note", ""))
+	elif kind == "bye":
+		paused = true
+		winner = "host" if role == "host" else "guest"
 	return kind
 
 func watch(delta: float) -> void:
 	if not started or winner != "":
 		return
+	var peer_gone: bool = peer == null or peer.get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED or (_web != null and _web.is_disconnected())
+	if peer_gone and quiet >= silence_pause:
+		paused = true
+		winner = "host" if role == "host" else "guest"
+		return
 	quiet += delta
 	if quiet < silence_pause:
 		return
 	paused = true
-	if quiet >= silence_pause + drop_after:
+	var timeout: float = 4.0 if role == "client" and drop_after >= 10.0 else drop_after
+	if peer_gone or quiet >= silence_pause + timeout:
 		winner = "host" if role == "host" else "guest"
 
 func try_seat(host: Node) -> bool:

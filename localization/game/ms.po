@@ -1046,8 +1046,8 @@ msgstr "Tinggi"
 msgid "High graphics, full volume, voices in the game language, normal difficulty, edge pan on."
 msgstr "Grafik tinggi, kelantangan penuh, suara dalam bahasa permainan, kesukaran biasa, anjak tepi dihidupkan."
 
-msgid "High keeps trees, rain, fog, and shadows."
-msgstr "Tinggi mengekalkan pokok, hujan, kabus dan bayang-bayang."
+msgid "High keeps trees, rain, fog, and two-split shadows."
+msgstr "Tinggi mengekalkan pokok, hujan, kabus dan bayang dua belahan."
 
 msgid "High Technology"
 msgstr "Teknologi Tinggi"
@@ -1339,8 +1339,8 @@ msgstr "Love Drunk"
 msgid "Low"
 msgstr "Rendah"
 
-msgid "Low drops trees, rain, fog, and shadows."
-msgstr "Rendah membuang pokok, hujan, kabus, dan bayang."
+msgid "Low drops trees, rain, fog, and shadows, and renders the 3D view smaller."
+msgstr "Rendah menggugurkan pokok, hujan, kabus dan bayang, serta memaparkan pandangan 3D lebih kecil."
 
 msgid "low power"
 msgstr "kuasa rendah"
@@ -1383,6 +1383,12 @@ msgstr "Pasar"
 
 msgid "Master"
 msgstr "Induk"
+
+msgid "Medium"
+msgstr "Sederhana"
+
+msgid "Medium keeps trees, rain, and fog. One light shadow map on desktop, none in the browser."
+msgstr "Sederhana mengekalkan pokok, hujan dan kabus. Satu peta bayang ringan pada desktop, tiada dalam pelayar."
 
 msgid "Mekong"
 msgstr "Mekong"
@@ -2508,6 +2514,15 @@ msgstr "Tawaran tidak bermula."
 
 msgid "The offer was rejected."
 msgstr "Tawaran ditolak."
+
+msgid "The other player left the match."
+msgstr "Pemain lain telah meninggalkan perlawanan."
+
+msgid "The other player left the match. Opponent left. Defeat."
+msgstr "Pemain lain telah meninggalkan perlawanan. Lawan keluar. Kekalahan."
+
+msgid "The other player left the match. Opponent left. Victory."
+msgstr "Pemain lain telah meninggalkan perlawanan. Lawan keluar. Kemenangan."
 
 msgid "The packer is in the shallows. Unpack it."
 msgstr "Pengemas berada di air cetek. Bukanya."

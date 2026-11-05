@@ -1046,8 +1046,8 @@ msgstr "สูง"
 msgid "High graphics, full volume, voices in the game language, normal difficulty, edge pan on."
 msgstr "กราฟิก​สูง เสียง​เต็ม เสียง​พากย์​ตาม​ภาษา​เกม ความ​ยาก​ปกติ เปิด​เลื่อน​ขอบ​จอ"
 
-msgid "High keeps trees, rain, fog, and shadows."
-msgstr "ระดับ​สูง​มี​ต้น​ไม้ ฝน หมอก และ​เงา"
+msgid "High keeps trees, rain, fog, and two-split shadows."
+msgstr "ระดับสูงจะแสดงต้นไม้ ฝน หมอก และเงาแบบสองระยะ"
 
 msgid "High Technology"
 msgstr "เทคโนโลยี​ขั้น​สูง"
@@ -1339,8 +1339,8 @@ msgstr "Love Drunk"
 msgid "Low"
 msgstr "ต่ำ"
 
-msgid "Low drops trees, rain, fog, and shadows."
-msgstr "ต่ำ: ตัด​ต้นไม้ ฝน หมอก และ​เงา"
+msgid "Low drops trees, rain, fog, and shadows, and renders the 3D view smaller."
+msgstr "ระดับต่ำจะตัดต้นไม้ ฝน หมอก และเงาออก และลดขนาดการเรนเดอร์มุมมอง 3 มิติ"
 
 msgid "low power"
 msgstr "พลังงาน​ต่ำ"
@@ -1383,6 +1383,12 @@ msgstr "ตลาด"
 
 msgid "Master"
 msgstr "หลัก"
+
+msgid "Medium"
+msgstr "ปานกลาง"
+
+msgid "Medium keeps trees, rain, and fog. One light shadow map on desktop, none in the browser."
+msgstr "ระดับปานกลางจะแสดงต้นไม้ ฝน และหมอก มีเงาหนึ่งชั้นบนเดสก์ท็อป และไม่มีเงาในเบราว์เซอร์"
 
 msgid "Mekong"
 msgstr "แม่น้ำ​โขง"
@@ -2508,6 +2514,15 @@ msgstr "ข้อ​เสนอ​ไม่​เริ่ม​ทำงาน
 
 msgid "The offer was rejected."
 msgstr "ข้อ​เสนอ​ถูก​ปฏิเสธ"
+
+msgid "The other player left the match."
+msgstr "ผู้เล่นอีกฝ่ายออกจากแมตช์แล้ว"
+
+msgid "The other player left the match. Opponent left. Defeat."
+msgstr "ผู้เล่นอีกฝ่ายออกจากแมตช์แล้ว คู่ต่อสู้ออก พ่ายแพ้"
+
+msgid "The other player left the match. Opponent left. Victory."
+msgstr "ผู้เล่นอีกฝ่ายออกจากแมตช์แล้ว คู่ต่อสู้ออก ชัยชนะ"
 
 msgid "The packer is in the shallows. Unpack it."
 msgstr "เรือ​ฐาน​อยู่​ใน​น้ำ​ตื้น กาง​ออก"

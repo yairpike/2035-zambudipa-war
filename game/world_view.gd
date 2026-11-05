@@ -138,7 +138,7 @@ render_mode unshaded, cull_disabled, depth_draw_never, shadows_disabled;
 uniform sampler2D seen : filter_nearest, repeat_disable;
 uniform sampler2D explored : filter_nearest, repeat_disable;
 void fragment() {
-	vec4 ink = texture(explored, UV).r > 0.0 ? vec4(0.04, 0.05, 0.07, 0.42) : vec4(0.03, 0.04, 0.05, 0.92);
+	vec4 ink = texture(explored, UV).r > 0.0 ? vec4(0.04, 0.05, 0.07, 0.28) : vec4(0.03, 0.04, 0.05, 0.78);
 	ALBEDO = ink.rgb;
 	ALPHA = texture(seen, UV).r > 0.5 ? 0.0 : ink.a;
 }
