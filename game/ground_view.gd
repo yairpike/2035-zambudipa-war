@@ -444,9 +444,13 @@ static func _spread(spots: Array[Transform3D], cap: int) -> Array[Transform3D]:
 	return out
 
 static func _tag_prop(host: Node3D, node_name: String, id: String) -> void:
-	var node: Node = host.get_node_or_null(node_name)
-	if node != null and id != "":
-		node.set_meta("env_id", id)
+	var node: MultiMeshInstance3D = host.get_node_or_null(node_name) as MultiMeshInstance3D
+	if node == null or id == "":
+		return
+	node.set_meta("env_id", id)
+	if OS.has_feature("web") and not Env.has_mesh(id):
+		node.set_meta("standin_held", true)
+		node.visible = false
 
 static func _multi(host: Node3D, node_name: String, mesh: Mesh, spots: Array[Transform3D]) -> void:
 	if spots.is_empty():
@@ -676,8 +680,6 @@ static func _terrain_tex(stem: String) -> Texture2D:
 
 static func _prop(kind: String, profile: String) -> Mesh:
 	var key: String = "%s:%s" % [kind, profile]
-	if _prop_cache.has(key):
-		return _prop_cache[key] as Mesh
 	var env_id: String = ""
 	if kind == "palm":
 		env_id = Env.palm_id(profile)
@@ -691,6 +693,8 @@ static func _prop(kind: String, profile: String) -> Mesh:
 	if taken != null:
 		_prop_cache[key] = taken
 		return taken
+	if _prop_cache.has(key):
+		return _prop_cache[key] as Mesh
 	var st: SurfaceTool = _begin(_land_material())
 	if kind == "palm":
 		_palm(st)
@@ -837,6 +841,10 @@ static func cull_props(host: Node3D, cam: RTSCamera) -> void:
 		_cull_named(host, "Palms", focus, low)
 		_cull_named(host, "Houses", focus, low)
 		_cull_named(host, "Stilts", focus, low)
+		for child: Node in host.get_children():
+			var mname: String = String(child.name)
+			if mname.begins_with("Town_") or mname.begins_with("Orchard_"):
+				_cull_named(host, mname, focus, low)
 	if cam != null and not low:
 		fade_occluders(host, cam)
 
@@ -876,6 +884,12 @@ static func fade_occluders(host: Node3D, cam: RTSCamera) -> void:
 	for node_name: String in ["JungleTrees", "Palms", "Houses", "Stilts"]:
 		_fade_multi(host.get_node_or_null(node_name) as MultiMeshInstance3D, eye, aim)
 	for child: Node in host.get_children():
+		var multi: MultiMeshInstance3D = child as MultiMeshInstance3D
+		if multi != null:
+			var mname: String = String(multi.name)
+			if mname.begins_with("Town_") or mname.begins_with("Orchard_"):
+				_fade_multi(multi, eye, aim)
+				continue
 		var node: Node3D = child as Node3D
 		if node == null:
 			continue
@@ -991,7 +1005,7 @@ static func _cull_named(host: Node3D, node_name: String, focus: Vector3, hide: b
 	var node: MultiMeshInstance3D = host.get_node_or_null(node_name) as MultiMeshInstance3D
 	if node == null or node.multimesh == null:
 		return
-	if hide:
+	if hide or bool(node.get_meta("standin_held", false)):
 		node.visible = false
 		return
 	node.visible = true

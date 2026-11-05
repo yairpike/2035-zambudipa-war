@@ -10,6 +10,7 @@ var used_f: bool = false
 var toasted: Dictionary[String, bool] = {}
 var super_seen: float = -1.0
 var toast_until: int = 0
+var toast_queue: PackedStringArray = PackedStringArray()
 var pulsed: bool = false
 var card: Control
 var prompt: Label
@@ -264,18 +265,54 @@ func _once(key: String, text: String) -> void:
 	toasted[key] = true
 	if toast_line == null or toast_panel == null:
 		return
+	if _briefing_shown() or toast_until > Time.get_ticks_msec():
+		toast_queue.append(text)
+		return
+	_show_toast(text)
+
+func _show_toast(text: String) -> void:
+	if toast_line == null or toast_panel == null:
+		return
 	toast_line.text = text
 	toast_panel.modulate.a = 1.0
 	toast_panel.visible = true
 	toast_until = Time.get_ticks_msec() + 5000
 
+func _briefing_shown() -> bool:
+	var host: Node = get_parent()
+	if host == null:
+		return false
+	var brief: CanvasItem = host.find_child("Briefing", true, false) as CanvasItem
+	if brief != null:
+		return brief.visible
+	var piece: Node = host.get_node_or_null("SetPiece")
+	if piece != null and not bool(piece.get("intro_done")):
+		return true
+	return false
+
 func _fade_toast() -> void:
-	if toast_panel == null or toast_until <= 0:
+	if toast_panel == null:
+		return
+	if _briefing_shown():
+		if toast_until > 0 and toast_line != null and toast_line.text != "":
+			toast_queue.insert(0, toast_line.text)
+			toast_until = 0
+		toast_panel.visible = false
+		return
+	if toast_until <= 0:
+		if not toast_queue.is_empty():
+			var next_text: String = toast_queue[0]
+			toast_queue.remove_at(0)
+			_show_toast(next_text)
 		return
 	var left: int = toast_until - Time.get_ticks_msec()
 	if left <= 0:
 		toast_panel.visible = false
 		toast_until = 0
+		if not toast_queue.is_empty():
+			var next_text: String = toast_queue[0]
+			toast_queue.remove_at(0)
+			_show_toast(next_text)
 		return
 	toast_panel.visible = true
 	toast_panel.modulate.a = 1.0 if left >= 800 else clampf(float(left) / 800.0, 0.0, 1.0)
@@ -308,6 +345,27 @@ func _cap_brief(host: Node) -> void:
 	details.add_theme_font_size_override("font_size", 16)
 	details.pressed.connect(_toggle_brief.bind(brief))
 	parent.add_child(details)
+	var dismiss: Button = Button.new()
+	dismiss.name = "BriefingDismiss"
+	dismiss.text = "Got it"
+	dismiss.focus_mode = Control.FOCUS_NONE
+	dismiss.position = Vector2(brief.position.x + brief.size.x - 212.0, brief.position.y + 4.0)
+	dismiss.custom_minimum_size = Vector2(96, 28)
+	dismiss.add_theme_font_size_override("font_size", 16)
+	dismiss.pressed.connect(_dismiss_brief.bind(brief))
+	parent.add_child(dismiss)
+
+func _dismiss_brief(brief: Label) -> void:
+	if brief == null:
+		return
+	brief.visible = false
+	var base: Node = brief.get_parent()
+	if base == null:
+		return
+	for node_name: String in ["MissionHeading", "BriefingShade", "BriefingShadeGlass", "BriefingDetails", "BriefingDismiss", "BriefingStill"]:
+		var item: CanvasItem = base.get_node_or_null(node_name) as CanvasItem
+		if item != null:
+			item.visible = false
 
 func _toggle_brief(brief: Label) -> void:
 	if brief == null:

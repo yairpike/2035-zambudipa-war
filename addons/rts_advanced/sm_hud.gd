@@ -41,6 +41,7 @@ var tip_name: Label
 var tip_chip: Label
 var radio_label: Label
 var radio_until: int = 0
+var radio_queue: PackedStringArray = PackedStringArray()
 var unit_card: PanelContainer
 var card_cameo: TextureRect
 var match_strip: PanelContainer
@@ -295,19 +296,62 @@ func _paint_income() -> void:
 func show_line(text: String) -> void:
 	if radio_label == null:
 		return
+	if text == "":
+		radio_label.text = ""
+		radio_label.visible = false
+		return
+	if _briefing_shown():
+		if not radio_queue.has(text):
+			radio_queue.append(text)
+		return
+	_display_radio(text)
+
+func _display_radio(text: String) -> void:
+	if radio_label == null:
+		return
 	radio_label.text = text
 	radio_label.visible = text != ""
 	radio_label.modulate.a = 1.0
 	radio_until = Time.get_ticks_msec() + 5000
 	_sync_card()
 
+func _briefing_shown() -> bool:
+	if layer_node == null:
+		return false
+	var brief: CanvasItem = layer_node.find_child("Briefing", true, false) as CanvasItem
+	if brief != null:
+		return brief.visible
+	var host: Node = layer_node.get_parent()
+	if host != null:
+		var piece: Node = host.get_node_or_null("SetPiece")
+		if piece != null and not bool(piece.get("intro_done")):
+			return true
+	return false
+
 func _paint_radio() -> void:
-	if radio_label == null or not radio_label.visible:
+	if radio_label == null:
+		return
+	if _briefing_shown():
+		if radio_label.visible and radio_label.text != "":
+			if not radio_queue.has(radio_label.text):
+				radio_queue.insert(0, radio_label.text)
+		radio_label.visible = false
+		radio_until = 0
+		return
+	if not radio_label.visible:
+		if not radio_queue.is_empty():
+			var next_line: String = radio_queue[0]
+			radio_queue.remove_at(0)
+			_display_radio(next_line)
 		return
 	var left: int = radio_until - Time.get_ticks_msec()
 	if left <= 0:
 		radio_label.visible = false
 		radio_label.modulate.a = 1.0
+		if not radio_queue.is_empty():
+			var next_line: String = radio_queue[0]
+			radio_queue.remove_at(0)
+			_display_radio(next_line)
 		return
 	radio_label.modulate.a = 1.0 if left >= 800 else clampf(float(left) / 800.0, 0.0, 1.0)
 

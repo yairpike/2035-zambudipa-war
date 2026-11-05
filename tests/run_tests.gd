@@ -115,6 +115,7 @@ func _run() -> void:
 	await H.section("test_street_towns", test_street_towns)
 	await H.section("test_game_language", test_game_language)
 	await H.section("test_render_budget", test_render_budget)
+	preload("res://game/render_budget.gd").shutdown(self)
 	quit(H.finish())
 
 func test_scripts() -> void:
@@ -3584,6 +3585,51 @@ func test_lan_match() -> void:
 	check(host_seat.guest_faction == "mvd" and host_seat.guest_ready and guest_seat.faction == "gtfc", "ready keeps the guest faction instead of resetting it to GTFC")
 	host_seat.close()
 	guest_seat.close()
+	Lan.seat().faction = "gtfc"
+	Lan.seat().guest_faction = "mvd"
+	Lan.seat().map_path = "res://game/phillips_channel.tscn"
+	var mirror: Node = (load("res://game/lan_mirror.tscn") as PackedScene).instantiate()
+	root.add_child(mirror)
+	await process_frame
+	await process_frame
+	var mirror_land: MeshInstance3D = mirror.get_node_or_null("TerrainLand") as MeshInstance3D
+	var mirror_water: MeshInstance3D = mirror.get_node_or_null("TerrainWater") as MeshInstance3D
+	var mirror_column: Control = mirror.find_child("CommandColumn", true, false) as Control
+	var mirror_fac: Label = mirror.find_child("HudFaction", true, false) as Label
+	var mirror_sample: Dictionary = {
+		"k": "state", "full": true, "n": 2, "credits": 4980, "gen": 100, "use": 30, "q": [],
+		"home": [48.0, -20.0],
+		"u": [[101, 48.0, -20.0, 80, 1, "clearance_trooper"], [102, 42.0, -18.0, 120, 0, "militia"]],
+		"b": [["command_hub", 48.0, -20.0, 200.0, 1]],
+		"gone": [],
+	}
+	mirror.call("_apply", JSON.stringify(mirror_sample))
+	await process_frame
+	var mirror_field: SMPointer = mirror.get("field") as SMPointer
+	var mirror_built: MeshInstance3D = mirror.get_node_or_null("Built_command_hub") as MeshInstance3D
+	check(mirror_land != null and mirror_water != null and mirror_column != null and mirror_fac != null and mirror_fac.text == "MVD" and mirror_field != null and mirror_field.units.size() == 2 and mirror_built != null, "the multiplayer guest mirror renders terrain, units, structures, and the guest faction HUD")
+	mirror.free()
+	await process_frame
+	Lan.seat().paused = true
+	Lan.seat().winner = "host"
+	Lan.seat().started = true
+	var post_mp: Node = (load("res://game/phillips_channel.tscn") as PackedScene).instantiate()
+	root.add_child(post_mp)
+	await process_frame
+	var post_exit: Node = post_mp.get_node_or_null("MatchExit")
+	if post_exit != null:
+		post_exit.call("_exit_tree")
+	check(not Lan.holding() and Lan.seat().winner == "" and not Lan.started, "leaving a multiplayer match tears down the peer and lockstep state")
+	var post_outcome: SMOutcome = post_mp.get("outcome") as SMOutcome
+	if post_outcome != null:
+		post_outcome.finish(true)
+	await process_frame
+	var post_boot: CanvasItem = post_mp.find_child("MissionBoot", true, false) as CanvasItem
+	var post_end_btn: CanvasItem = post_mp.find_child("BootMenuButton", true, false) as CanvasItem
+	check(post_end_btn != null and post_end_btn.is_visible_in_tree() and (post_boot == null or not post_boot.visible), "the victory screen hides the left-rail boot chip so buttons do not overlap")
+	post_mp.free()
+	await process_frame
+	Lan.close()
 	Lan.port = 7777
 	Lan.silence_pause = 2.0
 	Lan.drop_after = 15.0
@@ -4402,17 +4448,44 @@ func test_sm_guide() -> void:
 	var status_box: Rect2 = raid_status.get_global_rect() if raid_status != null else Rect2()
 	var brief_hit: Rect2 = brief_box.intersection(status_box)
 	check(raid_status != null and brief_box.size.y >= 60.0 and status_box.size.y >= 8.0 and (brief_hit.size.x < 1.0 or brief_hit.size.y < 1.0), "the kokang briefing lines do not overlap")
+	var raid_hud: SMHud = raid.get("hud") as SMHud
+	var raid_coach: Node = raid.get_node_or_null("MatchCoach")
+	var raid_toast: Control = raid.find_child("ToastLane", true, false) as Control
+	var raid_eva: Control = raid.find_child("MessageLane", true, false) as Control
+	if raid_hud != null:
+		raid_hud.show_line("Under fire.")
+	if raid_coach != null:
+		raid_coach.call("_once", "pad", "Resource pad in sight.")
+	await process_frame
+	check(raid_brief != null and raid_brief.visible and (raid_toast == null or not raid_toast.visible) and (raid_eva == null or not raid_eva.visible), "toasts and EVA lines queue while a briefing is shown")
+	var raid_dismiss: Button = raid.find_child("BriefingDismiss", true, false) as Button
+	if raid_dismiss != null:
+		raid_dismiss.pressed.emit()
+	await process_frame
+	await process_frame
+	check(raid_brief != null and not raid_brief.visible and raid_toast != null and raid_toast.visible, "queued toasts appear in their lane once the briefing closes")
 	check(not _plain_box(raid.get_node_or_null("Scaffold")) and not _plain_box(raid.get_node_or_null("RubyNode")) and not _plain_box(raid.get_node_or_null("RareNode")), "kokang yard and ore nodes are not plain boxes")
 	var teak: MultiMeshInstance3D = raid.get_node_or_null("JungleTrees") as MultiMeshInstance3D
 	var teak_mesh: Mesh = teak.multimesh.mesh if teak != null and teak.multimesh != null else null
+	var teak_faces: int = teak_mesh.get_faces().size() if teak_mesh != null else 0
 	var fallback_tree: Mesh = Ground.fallback_tree()
-	check(teak_mesh != null and teak_mesh.get_faces().size() > 200 and fallback_tree.get_faces().size() > 200, "kokang trees are a crown, not a green cube")
+	check(teak_mesh != null and teak_faces > 200 and fallback_tree.get_faces().size() > 200, "kokang trees are a crown, not a green cube")
 	var raid_map: SMMinimap = raid.find_child("Minimap", true, false) as SMMinimap
 	check(raid_map != null and raid_map.backdrop != null and not _flat_olive(raid_map.backdrop), "the kokang minimap is not a flat olive square")
 	var worker: String = FileAccess.get_file_as_string("res://web/sw.js")
 	check(worker.contains("shattered-monsoon-v3") and worker.contains("cache.put") and worker.contains("/models/") and worker.contains("/audio/") and worker.contains("index.wasm") and worker.contains("index.pck"), "the service worker precaches the shell and stores models and audio")
 	check(raid_boot != null and raid_boot.visible and raid_boot.text == "Boot menu", "kokang can return to the boot menu")
 	raid.free()
+	await process_frame
+	var raid_second: Node = (load("res://game/mission_kokang.tscn") as PackedScene).instantiate()
+	root.add_child(raid_second)
+	await process_frame
+	var second_teak: MultiMeshInstance3D = raid_second.get_node_or_null("JungleTrees") as MultiMeshInstance3D
+	var second_house: MultiMeshInstance3D = raid_second.get_node_or_null("Town_border_guesthouse") as MultiMeshInstance3D
+	var st_faces: int = second_teak.multimesh.mesh.get_faces().size() if second_teak != null and second_teak.multimesh != null and second_teak.multimesh.mesh != null else -1
+	var sh_faces: int = second_house.multimesh.mesh.get_faces().size() if second_house != null and second_house.multimesh != null and second_house.multimesh.mesh != null else -1
+	check(st_faces == teak_faces and sh_faces > 100, "a second Kokang entry reuses the cached tree and house models (%d/%d, %d)" % [st_faces, teak_faces, sh_faces])
+	raid_second.free()
 	await process_frame
 	SMCampaign.selected = "tachileik"
 	SMFront.faction_id = "gtfc"
@@ -6499,4 +6572,8 @@ func test_render_budget() -> void:
 				mip_ok = mip_ok and img.has_mipmaps() and img.get_width() <= 512
 		model.free()
 	check(mip_ok and faces > 1000 and faces < 8000, "a shipped Tripo tank is simplified, 512 px, and mipmapped (%d triangles)" % faces)
+	var pack_script: String = FileAccess.get_file_as_string("res://tools/pack_desktop.sh")
+	var reg_script: String = FileAccess.get_file_as_string("res://game/model_registry.gd")
+	var audio_script: String = FileAccess.get_file_as_string("res://game/match_audio.gd")
+	check(pack_script.contains("Contents/Resources") and reg_script.contains("Resources/models") and audio_script.contains("Resources/audio"), "macOS bundles load external folders from Contents/Resources")
 	Settings.set_graphics("high")

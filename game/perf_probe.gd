@@ -160,6 +160,7 @@ func _finish() -> void:
 	if OS.has_feature("web"):
 		JavaScriptBridge.eval("window.__perf = %s; console.log('PERF_DONE');" % line, true)
 	elif not _args.has("stay"):
+		preload("res://game/render_budget.gd").shutdown(get_tree())
 		get_tree().quit()
 
 ## Scene triangles (before culling) per top-level child, grouped by name prefix.
@@ -203,9 +204,11 @@ func _mesh_tris(mesh: Mesh) -> int:
 
 ## Parse time for the GLBs this run already cached or ships beside the binary.
 func _bench_models(limit: int) -> Dictionary:
+	var base: String = OS.get_executable_path().get_base_dir()
 	var dirs: PackedStringArray = PackedStringArray([
 		"user://models/tripo",
-		OS.get_executable_path().get_base_dir().path_join("models"),
+		base.path_join("models"),
+		base.get_base_dir().path_join("Resources/models"),
 		ProjectSettings.globalize_path("res://game/models/tripo"),
 	])
 	var files: PackedStringArray = PackedStringArray()

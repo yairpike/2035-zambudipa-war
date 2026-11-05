@@ -29,6 +29,8 @@ var camera_rect: Rect2 = Rect2()
 var frustum: PackedVector2Array = PackedVector2Array()
 var fog_image: Image
 var _fog_tex: ImageTexture
+var _terrain_scanned: bool = false
+var _corridor_cache: Image
 
 func setup(p_grid: SMDomainGrid, p_field: SMPointer, p_camera: RTSCamera) -> void:
 	grid = p_grid
@@ -56,20 +58,22 @@ func fogged() -> bool:
 	return sight != null and sight.grid != null
 
 func sample() -> void:
-	saw_land = false
-	saw_water = false
+	if not _terrain_scanned:
+		saw_land = false
+		saw_water = false
+		if grid != null:
+			for y: int in grid.rows:
+				for x: int in grid.cols:
+					if terrain_kind(Vector2i(x, y)) == "water":
+						saw_water = true
+					else:
+						saw_land = true
+			_terrain_scanned = true
 	player_dots = 0
 	enemy_dots = 0
 	building_dots = 0
 	claimed_dots = 0
 	structure_dots = 0
-	if grid != null:
-		for y: int in grid.rows:
-			for x: int in grid.cols:
-				if terrain_kind(Vector2i(x, y)) == "water":
-					saw_water = true
-				else:
-					saw_land = true
 	if field != null:
 		player_dots = field.units_of(SMPointer.PLAYER).size()
 		for u: RTSUnit in field.units_of(SMPointer.ENEMY):
@@ -120,18 +124,40 @@ func _paint_fog() -> void:
 	if not fogged() or grid == null or grid.cols <= 0 or grid.rows <= 0:
 		fog_image = null
 		return
-	if fog_image == null or fog_image.get_width() != grid.cols or fog_image.get_height() != grid.rows:
-		fog_image = Image.create(grid.cols, grid.rows, false, Image.FORMAT_RGBA8)
+	var cols: int = grid.cols
+	var rows: int = grid.rows
+	if fog_image == null or fog_image.get_width() != cols or fog_image.get_height() != rows:
+		fog_image = Image.create(cols, rows, false, Image.FORMAT_RGBA8)
 		_fog_tex = null
-	for y: int in grid.rows:
-		for x: int in grid.cols:
-			var state: int = sight.cell_state(Vector2i(x, y))
-			var ink: Color = Color(0, 0, 0, 0)
-			if state == SMSight.HIDDEN:
-				ink = FOG_HIDDEN
-			elif state == SMSight.DIM:
-				ink = FOG_DIM
-			fog_image.set_pixel(x, y, ink)
+	var clear_ink: Color = Color(0, 0, 0, 0)
+	for y: int in rows:
+		var row_base: int = y * cols
+		for x: int in cols:
+			var exp_val: int = sight.explored[row_base + x] if row_base + x < sight.explored.size() else 0
+			fog_image.set_pixel(x, y, FOG_DIM if exp_val == 1 else FOG_HIDDEN)
+	if sight.river_lit:
+		for y: int in rows:
+			for x: int in cols:
+				if sight._on_corridor(grid.cell_center(Vector2i(x, y))):
+					fog_image.set_pixel(x, y, clear_ink)
+	var cs: float = grid.cell_size
+	var ox: float = grid.origin.x
+	var oz: float = grid.origin.z
+	for i: int in mini(sight.seers.size(), sight.radii.size()):
+		var at: Vector3 = sight.seers[i]
+		var r: float = sight.radii[i]
+		var y0: int = maxi(0, ceili((at.z - r - oz) / cs - 0.5))
+		var y1: int = mini(rows - 1, floori((at.z + r - oz) / cs - 0.5))
+		for y: int in range(y0, y1 + 1):
+			var dz: float = oz + (float(y) + 0.5) * cs - at.z
+			var reach: float = r * r - dz * dz
+			if reach < 0.0:
+				continue
+			var half: float = sqrt(reach)
+			var x0: int = maxi(0, ceili((at.x - half - ox) / cs - 0.5))
+			var x1: int = mini(cols - 1, floori((at.x + half - ox) / cs - 0.5))
+			if x1 >= x0:
+				fog_image.fill_rect(Rect2i(x0, y, x1 - x0 + 1, 1), clear_ink)
 	if _fog_tex == null:
 		_fog_tex = ImageTexture.create_from_image(fog_image)
 	else:

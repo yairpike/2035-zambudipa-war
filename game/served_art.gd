@@ -46,9 +46,11 @@ static func _read(rel: String) -> PackedByteArray:
 	if FileAccess.file_exists(packed):
 		return FileAccess.get_file_as_bytes(packed)
 	if not skip_export:
+		var base: String = OS.get_executable_path().get_base_dir()
 		var roots: PackedStringArray = PackedStringArray()
 		roots.append(ProjectSettings.globalize_path("res://").path_join("build/web"))
-		roots.append(OS.get_executable_path().get_base_dir())
+		roots.append(base)
+		roots.append(base.get_base_dir().path_join("Resources"))
 		for root: String in roots:
 			var path: String = root.path_join(rel)
 			if FileAccess.file_exists(path):
@@ -75,7 +77,20 @@ static func _fetch(owner: Node, rel: String) -> void:
 	var http := HTTPRequest.new()
 	http.timeout = 20.0
 	http.accept_gzip = false
-	owner.add_child(http)
+	var host: Node = owner
+	if owner.get_tree() != null and owner.get_tree().root != null:
+		host = owner.get_tree().root
+	if host.is_inside_tree():
+		host.add_child(http)
+		_start_fetch(http, rel)
+	else:
+		host.add_child.call_deferred(http)
+		http.ready.connect(_start_fetch.bind(http, rel), CONNECT_ONE_SHOT)
+
+static func _start_fetch(http: HTTPRequest, rel: String) -> void:
+	if not is_instance_valid(http):
+		_inflight.erase(rel)
+		return
 	http.request_completed.connect(_got.bind(http, rel))
 	var err: Error = http.request(_page() + rel)
 	if err != OK:

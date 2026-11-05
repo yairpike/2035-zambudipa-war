@@ -11,7 +11,10 @@ var _open: bool = false
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	if OS.has_feature("web"):
-		_fetch_list()
+		if is_inside_tree():
+			_fetch_list()
+		else:
+			_fetch_list.call_deferred()
 
 func _input(event: InputEvent) -> void:
 	if _open or not OS.has_feature("web") or not _gesture(event):
@@ -73,6 +76,9 @@ func _process(_delta: float) -> void:
 	Clips.tick(host)
 
 func _fetch_list() -> void:
+	if not is_inside_tree():
+		_fetch_list.call_deferred()
+		return
 	var http: HTTPRequest = HTTPRequest.new()
 	http.timeout = 30.0
 	http.accept_gzip = false

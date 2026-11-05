@@ -65,7 +65,11 @@ if [ -z "$app" ] || [ ! -d "$app/Contents/MacOS" ]; then
   echo "pack_desktop: macOS app bundle is missing"
   exit 1
 fi
-copy_assets "$app/Contents/MacOS"
+mkdir -p "$app/Contents/Resources"
+copy_assets "$app/Contents/Resources"
+if command -v codesign >/dev/null 2>&1; then
+  codesign --force --deep --sign - "$app"
+fi
 rm -f "$DEST/ASEAN2031-macos-universal.zip"
 (cd "$mac_dir" && zip -qr "$DEST/ASEAN2031-macos-universal.zip" "$(basename "$app")")
 echo "pack_desktop: wrote zips in $DEST"

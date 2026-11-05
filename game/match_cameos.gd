@@ -52,8 +52,10 @@ static func _read_local(file_name: String) -> PackedByteArray:
 	if FileAccess.file_exists(packed):
 		return FileAccess.get_file_as_bytes(packed)
 	var roots: PackedStringArray = PackedStringArray()
+	var base: String = OS.get_executable_path().get_base_dir()
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/cameos"))
-	roots.append(OS.get_executable_path().get_base_dir().path_join("cameos"))
+	roots.append(base.path_join("cameos"))
+	roots.append(base.get_base_dir().path_join("Resources/cameos"))
 	for root: String in roots:
 		var path: String = root.path_join(file_name)
 		if FileAccess.file_exists(path):
@@ -61,6 +63,11 @@ static func _read_local(file_name: String) -> PackedByteArray:
 	return PackedByteArray()
 
 static func _fetch_list(node: Node) -> void:
+	if node == null or not is_instance_valid(node):
+		return
+	if not node.is_inside_tree():
+		_fetch_list.call_deferred(node)
+		return
 	var http: HTTPRequest = HTTPRequest.new()
 	http.timeout = 30.0
 	http.accept_gzip = false

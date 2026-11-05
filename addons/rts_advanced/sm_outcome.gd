@@ -173,6 +173,11 @@ func _finish(win: bool) -> void:
 	if panel != null:
 		panel.visible = true
 		panel.mouse_filter = Control.MOUSE_FILTER_STOP
+		var layer: Node = panel.get_parent()
+		if layer != null:
+			var boot_chip: CanvasItem = layer.find_child("MissionBoot", true, false) as CanvasItem
+			if boot_chip != null:
+				boot_chip.visible = false
 	if banner != null:
 		banner.text = "Victory" if win else "Defeat"
 		banner.add_theme_color_override("font_color", Color(1, 1, 1))

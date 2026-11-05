@@ -982,6 +982,8 @@ func _expand_campaign() -> void:
 	_show_tab("main")
 
 func _show_tab(which: String) -> void:
+	if which != "multi" and Lan.role != "":
+		Lan.close()
 	_menu_tab = which
 	_show_menu_chrome()
 	skirmish_panel.visible = which == "skirmish"
@@ -1210,6 +1212,8 @@ func _go_back() -> void:
 	_show_tab("main")
 
 func _fade() -> void:
+	if not is_inside_tree():
+		return
 	var veil: CanvasItem = find_child("MenuFade", true, false) as CanvasItem
 	if veil == null:
 		return
@@ -1237,9 +1241,11 @@ func _chrome_names() -> PackedStringArray:
 func _play() -> void:
 	if selected_map == "":
 		return
+	Lan.close()
 	_open(selected_map)
 
 func _basic_training() -> void:
+	Lan.close()
 	preload("res://game/match_coach.gd").armed = true
 	if selected_map == "":
 		selected_map = "res://game/phillips_channel.tscn"
@@ -1307,6 +1313,7 @@ func _mark_training_seen() -> void:
 	file.close()
 
 func _start_mission(mission_id: String) -> void:
+	Lan.close()
 	if mission_id == "kokang":
 		_open("res://game/mission_kokang.tscn")
 		return
@@ -1452,6 +1459,8 @@ func layout_for(size: Vector2) -> void:
 	_layout_menu(size)
 
 func _view_size() -> Vector2:
+	if not is_inside_tree():
+		return Vector2(1280, 720)
 	var view: Vector2 = get_viewport_rect().size
 	if view.x < 32.0 or view.y < 32.0:
 		return Vector2(1280, 720)
@@ -1607,6 +1616,7 @@ func _fit_mark(card: Button) -> void:
 		title.size = Vector2(maxf(80.0, card.size.x - 96.0), 24.0)
 
 func _quit() -> void:
+	preload("res://game/render_budget.gd").shutdown(get_tree())
 	get_tree().quit()
 
 func _focusables() -> Array[Button]:

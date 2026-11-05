@@ -85,16 +85,48 @@ func note_post(at: Vector3) -> void:
 func commit() -> void:
 	if grid == null:
 		return
-	for y: int in grid.rows:
-		for x: int in grid.cols:
-			if sees(grid.cell_center(Vector2i(x, y))):
-				explored[_index(Vector2i(x, y))] = 1
+	var cols: int = grid.cols
+	var rows: int = grid.rows
+	if cols <= 0 or rows <= 0:
+		return
+	if explored.size() != cols * rows:
+		explored.resize(cols * rows)
+	if river_lit:
+		for y: int in rows:
+			for x: int in cols:
+				if explored[y * cols + x] == 0 and _on_corridor(grid.cell_center(Vector2i(x, y))):
+					explored[y * cols + x] = 1
+	var cs: float = grid.cell_size
+	var ox: float = grid.origin.x
+	var oz: float = grid.origin.z
+	for i: int in mini(seers.size(), radii.size()):
+		var at: Vector3 = seers[i]
+		var r: float = radii[i]
+		var y0: int = maxi(0, ceili((at.z - r - oz) / cs - 0.5))
+		var y1: int = mini(rows - 1, floori((at.z + r - oz) / cs - 0.5))
+		for y: int in range(y0, y1 + 1):
+			var dz: float = oz + (float(y) + 0.5) * cs - at.z
+			var reach: float = r * r - dz * dz
+			if reach < 0.0:
+				continue
+			var half: float = sqrt(reach)
+			var x0: int = maxi(0, ceili((at.x - half - ox) / cs - 0.5))
+			var x1: int = mini(cols - 1, floori((at.x + half - ox) / cs - 0.5))
+			var row_base: int = y * cols
+			for x: int in range(x0, x1 + 1):
+				explored[row_base + x] = 1
 
 func sees(at: Vector3) -> bool:
 	if river_lit and _on_corridor(at):
 		return true
+	var ax: float = at.x
+	var az: float = at.z
 	for i: int in seers.size():
-		if _flat(at, seers[i]) <= radii[i]:
+		var s: Vector3 = seers[i]
+		var dx: float = ax - s.x
+		var dz: float = az - s.z
+		var r: float = radii[i]
+		if dx * dx + dz * dz <= r * r:
 			return true
 	return false
 

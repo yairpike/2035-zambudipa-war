@@ -983,12 +983,17 @@ func _tick_ability(u: RTSUnit, delta: float) -> void:
 
 func nearest_enemy(from: Vector3, reach: float) -> RTSUnit:
 	var best: RTSUnit = null
-	var best_d: float = reach
+	var best_d2: float = reach * reach
+	var fx: float = from.x
+	var fz: float = from.z
 	for u: RTSUnit in units:
 		if is_instance_valid(u) and u.is_alive() and not bool(u.get_meta("garrisoned", false)) and teams.are_enemies(PLAYER, u.team):
-			var d: float = Vector2(from.x, from.z).distance_to(Vector2(u.global_position.x, u.global_position.z))
-			if d <= best_d:
-				best_d = d
+			var p: Vector3 = u.position
+			var dx: float = fx - p.x
+			var dz: float = fz - p.z
+			var d2: float = dx * dx + dz * dz
+			if d2 <= best_d2:
+				best_d2 = d2
 				best = u
 	return best
 
@@ -1081,7 +1086,7 @@ func tick(delta: float) -> void:
 		alive.append(u)
 	units = alive
 	_park_hides()
-	_paint_names(alive)
+	_paint_names(alive, hover_unit)
 	_paint_path()
 
 func _drop_wreck(at: Vector3) -> void:
@@ -1151,27 +1156,16 @@ func _hovered(alive: Array[RTSUnit]) -> RTSUnit:
 	var hover_unit: RTSUnit = null
 	var hover_d: float = PICK_PX
 	for u: RTSUnit in alive:
-		if not is_instance_valid(u) or not u.is_alive():
+		if not is_instance_valid(u) or not u.is_alive() or not u.visible:
 			continue
-		var screen: Vector2 = project_point(u.global_position)
+		var screen: Vector2 = project_point(u.position)
 		var d: float = screen.distance_to(hover_at)
 		if d <= hover_d:
 			hover_d = d
 			hover_unit = u
 	return hover_unit
 
-func _paint_names(alive: Array[RTSUnit]) -> void:
-	var hover_unit: RTSUnit = null
-	var hover_d: float = PICK_PX
-	if hover_at != Vector2.INF and cam != null:
-		for u: RTSUnit in alive:
-			if u.selected:
-				continue
-			var screen: Vector2 = project_point(u.global_position)
-			var d: float = screen.distance_to(hover_at)
-			if d <= hover_d:
-				hover_d = d
-				hover_unit = u
+func _paint_names(alive: Array[RTSUnit], hover_unit: RTSUnit = null) -> void:
 	var lead: RTSUnit = null
 	var chosen: int = 0
 	for u: RTSUnit in alive:
@@ -1195,7 +1189,7 @@ func _bar_fit(u: RTSUnit) -> float:
 	if vp == null:
 		return 1.0
 	var view: Vector2 = vp.get_visible_rect().size
-	var dist: float = cam.global_position.distance_to(u.global_position)
+	var dist: float = cam.global_position.distance_to(u.position)
 	var cap: float = minf(view.x * 0.16, 120.0)
 	return _screen_span(view, cam.fov, dist, 2.0, cap)
 
@@ -1213,7 +1207,7 @@ func _screen_span(viewport: Vector2, fov_deg: float, dist: float, world_span: fl
 
 func _paint_vitals(u: RTSUnit, delta: float) -> void:
 	var bar: MeshInstance3D = u.get_node_or_null("HealthBar") as MeshInstance3D
-	if bar != null:
+	if bar != null and bar.visible:
 		var ratio: float = clampf(u.hp / maxf(u.max_hp, 1.0), 0.0, 1.0)
 		var fit: float = _bar_fit(u)
 		bar.scale = Vector3(maxf(0.04, ratio), 1.0, 1.0)

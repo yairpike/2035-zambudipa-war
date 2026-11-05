@@ -304,8 +304,14 @@ static func _on_chrome(outcome: SMOutcome, panel: Control, faction: String) -> v
 	back.pressed.connect(_boot.bind(outcome))
 	panel.add_child(back)
 	outcome.back = back
+	var layer: Node = panel.get_parent()
+	if layer != null:
+		var boot_chip: CanvasItem = layer.find_child("MissionBoot", true, false) as CanvasItem
+		if boot_chip != null and panel.visible:
+			boot_chip.visible = false
 
 static func _boot(outcome: SMOutcome) -> void:
+	preload("res://game/lan_link.gd").close()
 	if outcome == null or outcome.host == null:
 		return
 	outcome.host.get_tree().change_scene_to_file("res://game/boot.tscn")

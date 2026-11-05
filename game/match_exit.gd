@@ -383,6 +383,7 @@ func _restart() -> void:
 
 func _to_boot() -> void:
 	_resume()
+	Lan.close()
 	var tree: SceneTree = get_tree()
 	if tree == null:
 		return
@@ -390,6 +391,8 @@ func _to_boot() -> void:
 
 func _exit_tree() -> void:
 	_unpause()
+	if Lan.started:
+		Lan.close()
 
 func _settings() -> Control:
 	var host: Node = get_parent()

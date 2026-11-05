@@ -4,10 +4,18 @@ const Fx = preload("res://game/fx_view.gd")
 const Ground = preload("res://game/ground_view.gd")
 const Served = preload("res://game/served_art.gd")
 const Models = preload("res://game/model_registry.gd")
+const Env = preload("res://game/env_dress.gd")
 const MapArt = preload("res://game/hud_minimap_art.gd")
 ## GTFC night raid. Scaffold, ruby night shift, one rare-earth node. Text briefing.
 
 static var _model_cache: Dictionary = {}
+
+static func clear_cache() -> void:
+	for key: Variant in _model_cache.keys():
+		var node: Node = _model_cache[key] as Node
+		if node != null and is_instance_valid(node):
+			node.free()
+	_model_cache.clear()
 
 var mission: SMMission = SMMission.new()
 var field: SMPointer = SMPointer.new()
@@ -172,6 +180,10 @@ func _say(text: String) -> void:
 	(load("res://game/match_audio.gd") as GDScript).call("announce_line", self, "gtfc", text)
 
 func _feature(node_name: String, model_id: String, at: Vector3, footprint: Vector3, tint: Color, kind: String) -> void:
+	var existing: Node = get_node_or_null(node_name)
+	if existing != null:
+		remove_child(existing)
+		existing.free()
 	var root: Node3D = _instance_model(model_id)
 	if root != null:
 		var bounds: AABB = _merged_aabb(root)
@@ -201,42 +213,56 @@ func _feature(node_name: String, model_id: String, at: Vector3, footprint: Vecto
 		_scaffold_mesh(built, tint)
 	else:
 		_ore_mesh(built, tint)
+	if OS.has_feature("web"):
+		built.visible = false
+		built.set_meta("standin_held", true)
+		if model_id == "rock_set":
+			Env.pull_web(self, PackedStringArray(["rock_set"]))
+
+func _on_env_ready(id: String) -> void:
+	if id == "rock_set":
+		_feature("RubyNode", "rock_set", Vector3(6.0, 0.0, 2.0), Vector3(2.4, 1.4, 2.4), Color(0.78, 0.1, 0.22), "ruby")
+		_feature("RareNode", "rock_set", Vector3(-6.0, 0.0, 4.0), Vector3(2.4, 1.4, 2.4), Color(0.42, 0.62, 0.3), "rare")
 
 func _instance_model(model_id: String) -> Node3D:
-	if _model_cache.has(model_id):
+	if model_id == "rock_set":
+		var env_root: Node3D = Env._load("rock_set")
+		if env_root != null:
+			return env_root
+	else:
+		var reg_root: Node3D = Models._scene(model_id)
+		if reg_root != null:
+			return reg_root
+	if _model_cache.has(model_id) and _model_cache[model_id] != null:
 		var kept: Node = _model_cache[model_id] as Node
-		if kept == null:
-			return null
-		return kept.duplicate() as Node3D
+		if is_instance_valid(kept):
+			return kept.duplicate() as Node3D
 	var path: String = _model_path(model_id)
 	if path == "":
-		_model_cache[model_id] = null
 		return null
 	var doc: GLTFDocument = GLTFDocument.new()
 	var state: GLTFState = GLTFState.new()
-	if doc.append_from_file(path, state) != OK:
-		_model_cache[model_id] = null
+	var err: Error = FAILED
+	if path.begins_with("user://") or path.begins_with("res://"):
+		var bytes: PackedByteArray = FileAccess.get_file_as_bytes(path)
+		if not bytes.is_empty():
+			err = doc.append_from_buffer(bytes, "", state)
+		if err != OK:
+			err = doc.append_from_file(ProjectSettings.globalize_path(path), state)
+	else:
+		err = doc.append_from_file(path, state)
+	if err != OK:
 		return null
 	var generated: Node = doc.generate_scene(state)
 	var root: Node3D = generated as Node3D
 	if root == null:
-		_model_cache[model_id] = null
 		return null
 	_model_cache[model_id] = root
 	return root.duplicate() as Node3D
 
 func _model_path(model_id: String) -> String:
 	if model_id == "rock_set":
-		var res_path: String = "res://game/models/env/rock_set.glb"
-		if FileAccess.file_exists(res_path):
-			return res_path
-		var packed: String = ProjectSettings.globalize_path(res_path)
-		if FileAccess.file_exists(packed):
-			return packed
-		var beside: String = OS.get_executable_path().get_base_dir().path_join("models/env/rock_set.glb")
-		if FileAccess.file_exists(beside):
-			return beside
-		return ""
+		return Env._file("rock_set")
 	return Models._path(model_id)
 
 func _merged_aabb(root: Node3D) -> AABB:
@@ -382,6 +408,9 @@ func _process(delta: float) -> void:
 		_outro(true)
 	elif status != null:
 		status.text = story.progress()
+	var scaf: Node3D = get_node_or_null("Scaffold") as Node3D
+	if scaf != null and bool(scaf.get_meta("standin_held", false)) and Models._again("scaffold_yard") != null:
+		_feature("Scaffold", "scaffold_yard", Vector3(2.0, 0.0, 0.0), Vector3(6.0, 4.5, 6.0), Color(0.72, 0.12, 0.18), "scaffold")
 	hud.refresh()
 
 func _outro(won: bool) -> void:

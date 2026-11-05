@@ -205,6 +205,15 @@ func close() -> void:
 	chat_lines.clear()
 	_hello_sent = false
 	_picked_faction = ""
+	_prev.clear()
+	_prev_fog = PackedByteArray()
+	_seq = 0
+	guest_side = null
+	guest_roster = null
+	guest_protocols = null
+	guest_powers = null
+	guest_sight = null
+	bound = null
 	_stop_beacon()
 	hush_listen()
 

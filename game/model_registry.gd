@@ -137,6 +137,14 @@ static func source_of(key: String) -> String:
 
 ## One parsed glTF per id, kept as an off-tree template. Each unit gets a duplicate; _paint then gives it its own meshes.
 ## Re-running generate_scene on a kept GLTFState renames nodes and bones (R_Hand_2, ...), which unbinds sockets and clips.
+static func clear_templates() -> void:
+	for key: Variant in _templates.keys():
+		var node: Node = _templates[key] as Node
+		if node != null and is_instance_valid(node):
+			node.free()
+	_templates.clear()
+	_waiting.clear()
+
 static func _again(id: String) -> Node3D:
 	var template: Node3D = _templates.get(id) as Node3D
 	if template == null or not is_instance_valid(template):
@@ -316,12 +324,14 @@ static func _path(key: String) -> String:
 	for packed: String in packed_try:
 		if ResourceLoader.exists(packed) or FileAccess.file_exists(packed):
 			return packed
+	var base: String = OS.get_executable_path().get_base_dir()
 	var roots: PackedStringArray = PackedStringArray()
 	if _tripo_id(id):
 		roots.append(ProjectSettings.globalize_path("res://").path_join("game/models/tripo"))
 	roots.append(ProjectSettings.globalize_path("res://").path_join("game/models"))
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/models"))
-	roots.append(OS.get_executable_path().get_base_dir().path_join("models"))
+	roots.append(base.path_join("models"))
+	roots.append(base.get_base_dir().path_join("Resources/models"))
 	for root: String in roots:
 		var found: String = root.path_join("%s.glb" % id)
 		if FileAccess.file_exists(found):
@@ -337,9 +347,11 @@ static func _rigged_path(id: String) -> String:
 	var tries: PackedStringArray = PackedStringArray()
 	tries.append("res://game/models/rigged/%s.glb" % id)
 	tries.append(_cache_file(RIGGED + id))
+	var base: String = OS.get_executable_path().get_base_dir()
 	tries.append(ProjectSettings.globalize_path("res://").path_join("game/models/rigged/%s.glb" % id))
 	tries.append(ProjectSettings.globalize_path("res://").path_join("build/web/models/rigged/%s.glb" % id))
-	tries.append(OS.get_executable_path().get_base_dir().path_join("models/rigged/%s.glb" % id))
+	tries.append(base.path_join("models/rigged/%s.glb" % id))
+	tries.append(base.get_base_dir().path_join("Resources/models/rigged/%s.glb" % id))
 	for path: String in tries:
 		if FileAccess.file_exists(path):
 			return path
@@ -457,6 +469,9 @@ static func _pull_index(owner: Node) -> void:
 	if owner == null or _index_read:
 		return
 	var host: Node = _request_owner(owner)
+	if not host.is_inside_tree():
+		_pull_index.call_deferred(owner)
+		return
 	var http := HTTPRequest.new()
 	http.timeout = 20.0
 	http.accept_gzip = false
@@ -494,8 +509,10 @@ static func _index_text() -> String:
 	if FileAccess.file_exists(packed):
 		return FileAccess.get_file_as_string(packed)
 	var roots: PackedStringArray = PackedStringArray()
+	var base: String = OS.get_executable_path().get_base_dir()
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/models/index.txt"))
-	roots.append(OS.get_executable_path().get_base_dir().path_join("models/index.txt"))
+	roots.append(base.path_join("models/index.txt"))
+	roots.append(base.get_base_dir().path_join("Resources/models/index.txt"))
 	for path: String in roots:
 		if FileAccess.file_exists(path):
 			return FileAccess.get_file_as_string(path)
@@ -526,8 +543,11 @@ static func _fetch(owner: Node, id: String) -> void:
 	if _cached(id) != "":
 		_redress(id)
 		return
-	_inflight[id] = true
 	var host: Node = _request_owner(owner)
+	if not host.is_inside_tree():
+		_fetch.call_deferred(owner, id)
+		return
+	_inflight[id] = true
 	var http := HTTPRequest.new()
 	http.timeout = 60.0
 	http.accept_gzip = false

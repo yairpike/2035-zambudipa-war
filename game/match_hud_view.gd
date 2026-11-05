@@ -177,7 +177,8 @@ func _process(delta: float) -> void:
 		return
 	hud.side.tick_modes(delta)
 	SMGuns.tick(hud.side, hud.field, delta)
-	paint(hud)
+	if hud.paint_extra != Callable(self, "paint"):
+		paint(hud)
 
 func _seat_tip() -> void:
 	var layer: Node = get_parent()
@@ -1169,7 +1170,8 @@ func _seat_desktop() -> void:
 	if portrait != null:
 		portrait.custom_minimum_size = Vector2(96, 96)
 	_fit_commands(false)
-	var side: float = 224.0 if size.y >= 600.0 or size.y < 240.0 else clampf(size.y - 278.0, 112.0, 224.0)
+	var view: Vector2 = _view_rect()
+	var side: float = 224.0 if view.y >= 600.0 or view.y < 240.0 else clampf(view.y - 278.0, 112.0, 224.0)
 	var monitor: Control = find_child("MonitorFrame", true, false) as Control
 	var stack: Control = find_child("MonitorStack", true, false) as Control
 	var hud: SMHud = get_meta("hud", null) as SMHud
@@ -1202,12 +1204,23 @@ func _fit_commands(narrow: bool) -> void:
 			button.custom_minimum_size = Vector2(56, 56)
 			button.add_theme_font_size_override("font_size", 12)
 
+func _view_rect() -> Vector2:
+	if size.x >= 64.0 and size.y >= 64.0:
+		return size
+	var vp: Viewport = get_viewport()
+	if vp != null:
+		var visible: Vector2 = vp.get_visible_rect().size
+		if visible.x >= 64.0 and visible.y >= 64.0:
+			return visible
+	return Vector2(1280.0, 720.0)
+
 func _seat_context() -> void:
 	var card: Control = get_node_or_null("UnitCard") as Control
 	if card == null:
 		return
+	var view: Vector2 = _view_rect()
 	var width: float = 540.0
-	var sidebar: float = size.x - SIDE_W - 8.0
+	var sidebar: float = view.x - SIDE_W - 8.0
 	var x: float = (sidebar - width) * 0.5
 	if x < 80.0:
 		x = 80.0
@@ -1226,13 +1239,17 @@ func _seat_message() -> void:
 		return
 	var column: Rect2 = _story_column()
 	_anchor(lane, 0.0, 0.0, 0.0, 0.0, column.position.x, 70.0, column.end.x, 106.0)
-	lane.visible = radio.visible and radio.text != ""
+	var layer: Node = get_parent()
+	var brief: CanvasItem = layer.find_child("Briefing", true, false) as CanvasItem if layer != null else null
+	var brief_up: bool = brief != null and brief.visible
+	lane.visible = radio.visible and radio.text != "" and not brief_up
 	lane.modulate.a = radio.modulate.a
 
 ## The centre column under the top bar, right of the objective and coach stack:
 ## EVA line, then toast, then mission heading and briefing, so none of them overlap.
 func _story_column() -> Rect2:
-	var play_w: float = size.x - SIDE_W
+	var view: Vector2 = _view_rect()
+	var play_w: float = view.x - SIDE_W
 	var x: float = 448.0
 	var width: float = clampf(play_w - x - 12.0, 280.0, 560.0)
 	if x + width > play_w - 8.0:
@@ -1267,6 +1284,14 @@ func _seat_briefing() -> void:
 	var details: Control = base.get_node_or_null("BriefingDetails") as Control if base != null else null
 	if details != null:
 		details.position = Vector2(brief.position.x + brief.size.x - 104.0, brief.position.y + brief.size.y + 4.0)
+	var dismiss: Control = base.get_node_or_null("BriefingDismiss") as Control if base != null else null
+	if dismiss != null:
+		dismiss.position = Vector2(brief.position.x + brief.size.x - 208.0, brief.position.y + brief.size.y + 4.0)
+	var dialogue: Control = layer.find_child("SetDialogue", true, false) as Control
+	if dialogue != null:
+		var dialogue_top: float = brief.position.y + brief.size.y + 40.0
+		if dialogue.position.y < dialogue_top:
+			dialogue.position.y = dialogue_top
 
 func _seat_toast() -> void:
 	var layer: Node = get_parent()
@@ -1274,6 +1299,10 @@ func _seat_toast() -> void:
 		return
 	var toast: Control = layer.find_child("ToastLane", true, false) as Control
 	if toast == null or not toast.visible:
+		return
+	var brief: CanvasItem = layer.find_child("Briefing", true, false) as CanvasItem
+	if brief != null and brief.visible:
+		toast.visible = false
 		return
 	var column: Rect2 = _story_column()
 	var width: float = minf(column.size.x, 420.0)
@@ -1332,7 +1361,8 @@ func _seat_flyout() -> void:
 	var fly: Control = layer.find_child("Protocols", true, false) as Control
 	if fly == null:
 		return
-	var card_top: float = size.y - 136.0
+	var view: Vector2 = _view_rect()
+	var card_top: float = view.y - 136.0
 	var bottom: float = minf(340.0, card_top - 8.0)
 	if bottom < 148.0:
 		bottom = 148.0
@@ -1349,7 +1379,8 @@ func _seat_strip() -> void:
 	var strip: Control = layer.find_child("MatchStrip", true, false) as Control
 	if strip == null or not strip.visible:
 		return
-	var sidebar: float = size.x - SIDE_W - 8.0
+	var view: Vector2 = _view_rect()
+	var sidebar: float = view.x - SIDE_W - 8.0
 	var right: float = minf(700.0, sidebar - 8.0)
 	if right - 448.0 < 96.0:
 		return
@@ -1363,7 +1394,13 @@ func _seat_boot() -> void:
 	var boot: Control = layer.find_child("MissionBoot", true, false) as Control
 	if boot == null:
 		return
-	var y: float = clampf(size.y - 176.0, 290.0, size.y - 52.0)
+	var match_end: CanvasItem = layer.get_node_or_null("MatchEnd") as CanvasItem
+	var outro_plate: CanvasItem = layer.get_node_or_null("OutroPlate") as CanvasItem
+	if (match_end != null and match_end.visible) or (outro_plate != null and outro_plate.visible):
+		boot.visible = false
+		return
+	var view: Vector2 = _view_rect()
+	var y: float = clampf(view.y - 176.0, 290.0, view.y - 52.0)
 	boot.position = Vector2(8.0, y)
 	boot.size = Vector2(64.0, 40.0)
 	boot.custom_minimum_size = Vector2(64.0, 40.0)
@@ -1376,12 +1413,13 @@ func _seat_now_playing() -> void:
 	var line: Control = get_node_or_null("NowPlaying") as Control
 	if line == null:
 		return
-	if size.x < 1200.0:
+	var view: Vector2 = _view_rect()
+	if view.x < 1200.0:
 		line.visible = false
 		return
 	line.visible = true
-	var right: float = size.x - SIDE_W - 12.0
-	_anchor(line, 0.0, 0.0, 0.0, 0.0, right - 240.0, size.y - 156.0, right, size.y - 138.0)
+	var right: float = view.x - SIDE_W - 12.0
+	_anchor(line, 0.0, 0.0, 0.0, 0.0, right - 240.0, view.y - 156.0, right, view.y - 138.0)
 	(line as Label).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 
 func _anchor(node: Control, left: float, top: float, right: float, bottom: float, ol: float, ot: float, orr: float, ob: float) -> void:

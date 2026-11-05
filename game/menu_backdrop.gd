@@ -196,8 +196,10 @@ func _video_file(stem: String) -> String:
 	if FileAccess.file_exists(packed):
 		return ProjectSettings.globalize_path(packed)
 	var roots: PackedStringArray = PackedStringArray()
+	var base: String = OS.get_executable_path().get_base_dir()
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/ui/menu/video"))
-	roots.append(OS.get_executable_path().get_base_dir().path_join("ui/menu/video"))
+	roots.append(base.path_join("ui/menu/video"))
+	roots.append(base.get_base_dir().path_join("Resources/ui/menu/video"))
 	for root: String in roots:
 		var path: String = root.path_join(name)
 		if FileAccess.file_exists(path):
@@ -248,6 +250,9 @@ func _fit_videos() -> void:
 func _pull(file_name: String, slot: String) -> void:
 	if not OS.has_feature("web") or file_name.contains("..") or file_name.contains("\\"):
 		return
+	if not is_inside_tree():
+		_pull.call_deferred(file_name, slot)
+		return
 	var http := HTTPRequest.new()
 	http.timeout = 20.0
 	add_child(http)
@@ -277,6 +282,9 @@ func _got(result: int, code: int, _headers: PackedStringArray, body: PackedByteA
 
 func _pull_video(stem: String) -> void:
 	if _video_wait.has(stem) or stem.contains(".."):
+		return
+	if not is_inside_tree():
+		_pull_video.call_deferred(stem)
 		return
 	_video_wait[stem] = true
 	var http := HTTPRequest.new()
@@ -351,8 +359,10 @@ static func _read(file_name: String) -> PackedByteArray:
 	if FileAccess.file_exists(packed):
 		return FileAccess.get_file_as_bytes(packed)
 	var roots: PackedStringArray = PackedStringArray()
+	var base: String = OS.get_executable_path().get_base_dir()
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/ui/menu"))
-	roots.append(OS.get_executable_path().get_base_dir().path_join("ui/menu"))
+	roots.append(base.path_join("ui/menu"))
+	roots.append(base.get_base_dir().path_join("Resources/ui/menu"))
 	for root: String in roots:
 		var path: String = root.path_join(file_name)
 		if FileAccess.file_exists(path):

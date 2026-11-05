@@ -73,8 +73,12 @@ static func arm(host: Node, mode: String) -> void:
 	node.set_meta("mode", mode)
 	host.add_child(node)
 	_owner = host
-	note_voice(host)
-	_pull_sfx(host)
+	if host.is_inside_tree():
+		note_voice(host)
+		_pull_sfx(host)
+	else:
+		note_voice.call_deferred(host)
+		_pull_sfx.call_deferred(host)
 
 static func play_menu(host: Node) -> void:
 	_buses()
@@ -296,18 +300,35 @@ static func _file_stamp(path: String) -> String:
 	handle.close()
 	return "%s:%d:%d" % [path, FileAccess.get_modified_time(path), size]
 
+static func _add_http(owner: Node, http: HTTPRequest, start_fn: Callable) -> void:
+	if owner == null or not is_instance_valid(owner):
+		http.queue_free()
+		return
+	var host: Node = owner
+	if owner.get_tree() != null and owner.get_tree().root != null:
+		host = owner.get_tree().root
+	if host.is_inside_tree():
+		host.add_child(http)
+		start_fn.call()
+	else:
+		host.add_child.call_deferred(http)
+		http.ready.connect(start_fn, CONNECT_ONE_SHOT)
+
 static func _fetch_dialogue_manifest() -> void:
 	var http: HTTPRequest = HTTPRequest.new()
 	http.timeout = 30.0
 	http.accept_gzip = false
 	http.name = "DialogueManifest"
-	_owner.add_child(http)
-	http.request_completed.connect(_got_dialogue_manifest.bind(http))
-	var err: Error = http.request(_page_base() + "audio/dialogue/manifest.json")
-	if err != OK:
-		http.queue_free()
-		_dialogue_loading = false
-		_dialogue_gave_up = true
+	_add_http(_owner, http, func() -> void:
+		if not is_instance_valid(http):
+			return
+		http.request_completed.connect(_got_dialogue_manifest.bind(http))
+		var err: Error = http.request(_page_base() + "audio/dialogue/manifest.json")
+		if err != OK:
+			http.queue_free()
+			_dialogue_loading = false
+			_dialogue_gave_up = true
+	)
 
 static func _got_dialogue_manifest(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest) -> void:
 	if is_instance_valid(http):
@@ -943,17 +964,20 @@ static func _hold_loop(host: Node, unit: RTSUnit, kind: String) -> void:
 	_loop_unit[slot] = id
 
 static func _pull_sfx(host: Node) -> void:
-	if not OS.has_feature("web") or host == null:
+	if not OS.has_feature("web") or host == null or not is_instance_valid(host):
 		return
 	var http: HTTPRequest = HTTPRequest.new()
 	http.timeout = 20.0
 	http.accept_gzip = false
 	http.name = "SfxIndex"
-	host.add_child(http)
-	http.request_completed.connect(_got_sfx.bind(http, host))
-	var err: Error = http.request(_page_base() + "audio/sfx/index.txt")
-	if err != OK:
-		http.queue_free()
+	_add_http(host, http, func() -> void:
+		if not is_instance_valid(http):
+			return
+		http.request_completed.connect(_got_sfx.bind(http, host))
+		var err: Error = http.request(_page_base() + "audio/sfx/index.txt")
+		if err != OK:
+			http.queue_free()
+	)
 
 static func _got_sfx(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, host: Node) -> void:
 	if is_instance_valid(http):
@@ -1001,12 +1025,16 @@ static func prefetch(owner: Node, rel: String) -> void:
 	http.timeout = 60.0
 	http.accept_gzip = false
 	http.name = "ClipFetch"
-	owner.add_child(http)
-	http.request_completed.connect(_prefetched.bind(http, rel))
-	var err: Error = http.request(_page_base() + "audio/" + rel)
-	if err != OK:
-		_inflight.erase(rel)
-		http.queue_free()
+	_add_http(owner, http, func() -> void:
+		if not is_instance_valid(http):
+			_inflight.erase(rel)
+			return
+		http.request_completed.connect(_prefetched.bind(http, rel))
+		var err: Error = http.request(_page_base() + "audio/" + rel)
+		if err != OK:
+			_inflight.erase(rel)
+			http.queue_free()
+	)
 
 static func unlock() -> void:
 	_web_open = true
@@ -1334,13 +1362,18 @@ static func _fetch_manifest(rel: String) -> void:
 	http.timeout = 30.0
 	http.accept_gzip = false
 	http.name = "VoiceManifest"
-	_owner.add_child(http)
-	http.request_completed.connect(_got_manifest.bind(http, rel))
-	var err: Error = http.request(_page_base() + "audio/" + rel)
-	if err != OK:
-		http.queue_free()
-		_manifest_left -= 1
-		_finish_manifests()
+	_add_http(_owner, http, func() -> void:
+		if not is_instance_valid(http):
+			_manifest_left -= 1
+			_finish_manifests()
+			return
+		http.request_completed.connect(_got_manifest.bind(http, rel))
+		var err: Error = http.request(_page_base() + "audio/" + rel)
+		if err != OK:
+			http.queue_free()
+			_manifest_left -= 1
+			_finish_manifests()
+	)
 
 static func _got_manifest(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, rel: String) -> void:
 	if is_instance_valid(http):
@@ -1496,12 +1529,16 @@ static func _fetch_index(lang: String, rel: String, kind: String) -> void:
 	var http: HTTPRequest = HTTPRequest.new()
 	http.timeout = 20.0
 	http.accept_gzip = false
-	_owner.add_child(http)
-	http.request_completed.connect(_got_index.bind(http, lang, kind))
-	var err: Error = http.request(_page_base() + "audio/" + rel)
-	if err != OK:
-		http.queue_free()
-		_finish_index(lang, kind, PackedStringArray())
+	_add_http(_owner, http, func() -> void:
+		if not is_instance_valid(http):
+			_finish_index(lang, kind, PackedStringArray())
+			return
+		http.request_completed.connect(_got_index.bind(http, lang, kind))
+		var err: Error = http.request(_page_base() + "audio/" + rel)
+		if err != OK:
+			http.queue_free()
+			_finish_index(lang, kind, PackedStringArray())
+	)
 
 static func _got_index(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, lang: String, kind: String) -> void:
 	if is_instance_valid(http):
@@ -1564,8 +1601,10 @@ static func _read_text(rel: String) -> String:
 
 static func _roots() -> PackedStringArray:
 	var roots: PackedStringArray = PackedStringArray()
+	var base: String = OS.get_executable_path().get_base_dir()
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/audio"))
-	roots.append(OS.get_executable_path().get_base_dir().path_join("audio"))
+	roots.append(base.path_join("audio"))
+	roots.append(base.get_base_dir().path_join("Resources/audio"))
 	return roots
 
 static func _decode(bytes: PackedByteArray) -> AudioStream:
@@ -1624,11 +1663,17 @@ static func _begin_fetch(player: AudioStreamPlayer, rel: String, loop: bool) -> 
 	http.name = "AudioFetch"
 	http.timeout = 120.0
 	http.accept_gzip = false
-	player.add_child(http)
-	http.request_completed.connect(_fetched.bind(player, http, rel, loop))
-	var err: Error = http.request(_page_base() + "audio/" + rel)
-	if err != OK:
-		player.set_meta("fetching", false)
+	_add_http(player, http, func() -> void:
+		if not is_instance_valid(http) or not is_instance_valid(player):
+			if is_instance_valid(player):
+				player.set_meta("fetching", false)
+			return
+		http.request_completed.connect(_fetched.bind(player, http, rel, loop))
+		var err: Error = http.request(_page_base() + "audio/" + rel)
+		if err != OK:
+			player.set_meta("fetching", false)
+			http.queue_free()
+	)
 
 static func _fetched(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, player: AudioStreamPlayer, http: HTTPRequest, rel: String, loop: bool) -> void:
 	if is_instance_valid(player):
