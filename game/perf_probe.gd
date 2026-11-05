@@ -79,6 +79,9 @@ func _crowd() -> void:
 	var count: int = int(_args.get("crowd", "0"))
 	var field: SMPointer = scene.get("field") as SMPointer
 	var cam: RTSCamera = scene.get_node_or_null("Camera") as RTSCamera
+	if cam != null:
+		cam.set_meta("edge_authored", 0.0)
+		cam.edge_pan_px = 0.0
 	if field == null or cam == null or count <= 0:
 		return
 	var cols: int = 10
