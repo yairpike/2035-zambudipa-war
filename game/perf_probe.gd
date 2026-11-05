@@ -1,6 +1,6 @@
 extends Node
 ## Frame profiler for one match. Idle unless asked.
-## Desktop: godot --path . -- --perf burma_road [--crowd 60] [--warm 8] [--time 20] [--gfx medium] [--models 12]
+## Desktop: godot --path . -- --perf burma_road [--crowd 60] [--warm 8] [--time 20] [--gfx medium] [--models 12] [--out report.json]
 ## Web: index.html?perf=burma_road&crowd=60&warm=8&time=20&gfx=medium
 ## `campaign:<mission id>` opens that campaign mission. Prints one `PERF {json}` line; the web page also sets window.__perf.
 
@@ -152,6 +152,11 @@ func _finish() -> void:
 		report["triangles_by_group"] = _breakdown(get_tree().current_scene)
 	var line: String = JSON.stringify(report)
 	print("PERF " + line)
+	if _args.has("out"):
+		var file: FileAccess = FileAccess.open(str(_args["out"]), FileAccess.WRITE)
+		if file != null:
+			file.store_line(line)
+			file.close()
 	if OS.has_feature("web"):
 		JavaScriptBridge.eval("window.__perf = %s; console.log('PERF_DONE');" % line, true)
 	elif not _args.has("stay"):
