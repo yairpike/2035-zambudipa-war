@@ -43,4 +43,8 @@ A grey stand-in multiplies `Body` by about 60% of the faction primary, mixed int
 
 `.glb` and `.gltf` files in this folder are left out of the web pack. The export copies them to `models/` beside the page, with `models/index.txt`, and copies a Tripo file over the stand-in of the same name. The page does not download them at startup. A match fetches the index, then each model when that unit or building appears, and writes it under `user://models/` (Tripo files under `user://models/tripo/`). The parsed file is kept, so later copies of that unit do not read it again. The procedural mesh stays in place until that file is on disk.
 
+## Shipped Tripo files
+
+`tripo/`, `env/`, and `rigged/` hold simplified copies: about half the triangles of the generated originals, textures capped at 512 px, with every named node, material, skin, and clip kept. `bash tools/optimize_models.sh` rebuilds them from the full-detail originals at commit `20332a0`. Run it again, rather than editing a file by hand, after replacing an original. The game builds mipmaps for these textures when it loads them, and halves them again on Low graphics.
+
 CC0 stand-in credits are in `CREDITS.md` next to the models.

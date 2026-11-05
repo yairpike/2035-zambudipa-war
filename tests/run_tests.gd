@@ -110,6 +110,7 @@ func _run() -> void:
 	await H.section("test_building_materials", test_building_materials)
 	await H.section("test_hud_redesign", test_hud_redesign)
 	await H.section("test_hud_pause", test_hud_pause)
+	await H.section("test_render_budget", test_render_budget)
 	quit(H.finish())
 
 func test_scripts() -> void:
@@ -5941,3 +5942,67 @@ func _flat_olive(tex: Texture2D) -> bool:
 		y += 4
 	return seen.size() < 3
 
+func test_render_budget() -> void:
+	check(Settings.quality_for_adapter("llvmpipe") == "low" and Settings.quality_for_adapter("NVIDIA GeForce RTX") == Settings.default_graphics() and Settings.default_graphics() == "high", "desktop GPUs default high, software renderers low")
+	Settings.set_graphics("medium")
+	Settings.reread()
+	check(Settings.graphics == "medium" and Settings.quality_ids().size() == 3, "medium graphics round-trips through user://")
+	Settings.set_graphics("ultra")
+	check(Settings.graphics == Settings.default_graphics(), "an unknown level falls back to the platform default")
+	var sun: DirectionalLight3D = DirectionalLight3D.new()
+	Settings.hold("high")
+	Settings.budget_shadow(sun)
+	var high_ok: bool = sun.shadow_enabled and sun.directional_shadow_mode == DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS and sun.directional_shadow_max_distance <= 90.0 and is_equal_approx(Settings.render_scale(), 1.0)
+	Settings.hold("medium")
+	Settings.budget_shadow(sun)
+	var medium_ok: bool = sun.shadow_enabled and sun.directional_shadow_mode == DirectionalLight3D.SHADOW_ORTHOGONAL and is_equal_approx(Settings.render_scale(), 1.0)
+	Settings.hold("low")
+	Settings.budget_shadow(sun)
+	var low_ok: bool = not sun.shadow_enabled and Settings.render_scale() < 0.8
+	Settings.hold("")
+	sun.free()
+	check(high_ok and medium_ok and low_ok, "high casts two splits, medium one map, low none and renders smaller")
+	var grid: SMDomainGrid = SMDomainGrid.new(24, 16, 2.0, Vector3(-24.0, 0.0, -16.0))
+	for y: int in range(0, 16):
+		grid.set_domain(Vector2i(12, y), SMDomainGrid.Domain.SHALLOW)
+	var sight: SMSight = SMSight.new()
+	sight.bind(grid)
+	sight.begin()
+	sight.add_seer(Vector3(-15.3, 0.0, -6.1), 7.0)
+	sight.add_seer(Vector3(9.0, 0.0, 4.4), 5.5)
+	sight.commit()
+	var host: Node3D = Node3D.new()
+	root.add_child(host)
+	var mismatch: int = 0
+	for river: bool in [false, true]:
+		sight.river_lit = river
+		var lit: Image = WorldView._lit_mask(sight, grid, host)
+		for y: int in grid.rows:
+			for x: int in grid.cols:
+				if (lit.get_pixel(x, y).r > 0.5) != (sight.cell_state(Vector2i(x, y)) == SMSight.CLEAR):
+					mismatch += 1
+	check(mismatch == 0, "the fog mask matches cell_state with and without the river radar (%d off)" % mismatch)
+	sight.river_lit = false
+	WorldView.paint_fog(sight, host)
+	var veil: MeshInstance3D = host.get_node_or_null("FogVeil") as MeshInstance3D
+	var plane: PlaneMesh = veil.mesh as PlaneMesh if veil != null else null
+	check(plane != null and plane.size.is_equal_approx(Vector2(48.0, 32.0)) and veil.material_override is ShaderMaterial, "the fog veil is one quad over the grid")
+	host.free()
+	preload("res://game/render_budget.gd").install()
+	var doc: GLTFDocument = GLTFDocument.new()
+	var state: GLTFState = GLTFState.new()
+	var loaded: bool = doc.append_from_file(ProjectSettings.globalize_path("res://game/models/tripo/amber_tank.glb"), state) == OK
+	var model: Node = doc.generate_scene(state) if loaded else null
+	var faces: int = 0
+	var mip_ok: bool = model != null
+	if model != null:
+		for node: Node in model.find_children("*", "MeshInstance3D", true, false):
+			var mesh: Mesh = (node as MeshInstance3D).mesh
+			faces += mesh.get_faces().size() / 3
+			var mat: BaseMaterial3D = mesh.surface_get_material(0) as BaseMaterial3D
+			if mat != null and mat.albedo_texture != null:
+				var img: Image = mat.albedo_texture.get_image()
+				mip_ok = mip_ok and img.has_mipmaps() and img.get_width() <= 512
+		model.free()
+	check(mip_ok and faces > 1000 and faces < 8000, "a shipped Tripo tank is simplified, 512 px, and mipmapped (%d triangles)" % faces)
+	Settings.set_graphics("high")
