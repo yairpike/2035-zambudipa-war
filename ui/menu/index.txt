@@ -1,5 +1,8 @@
+cinematic/black_market.webp
 cinematic/gtfc_tank.webp
 cinematic/gtfc.webp
+cinematic/loading.webp
+cinematic/main_menu.webp
 cinematic/mvd.webp
 cinematic/neutral_embers.webp
 cinematic/neutral_rain.webp
