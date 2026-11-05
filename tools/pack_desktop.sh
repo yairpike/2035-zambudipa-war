@@ -76,9 +76,16 @@ if [ -z "$app" ] || [ ! -d "$app/Contents/MacOS" ]; then
 fi
 mkdir -p "$app/Contents/Resources"
 copy_assets "$app/Contents/Resources"
+# The side folders land after Godot signed the bundle, so re-sign ad hoc or the
+# seal no longer matches and Gatekeeper reports the app as damaged.
+RCODESIGN="${RCODESIGN:-rcodesign}"
 if command -v codesign >/dev/null 2>&1; then
   codesign --force --deep --sign - "$app"
+elif command -v "$RCODESIGN" >/dev/null 2>&1; then
+  "$RCODESIGN" sign "$app" >/dev/null
+else
+  echo "pack_desktop: no codesign or rcodesign; the macOS seal does not cover the side folders"
 fi
 rm -f "$DEST/ASEAN2031-macos-universal.zip"
-(cd "$mac_dir" && zip -qr "$DEST/ASEAN2031-macos-universal.zip" "$(basename "$app")")
+(cd "$mac_dir" && zip -qry "$DEST/ASEAN2031-macos-universal.zip" "$(basename "$app")")
 echo "pack_desktop: wrote zips in $DEST"
