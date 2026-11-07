@@ -52,8 +52,10 @@ static func _read_local(file_name: String) -> PackedByteArray:
 	if FileAccess.file_exists(packed):
 		return FileAccess.get_file_as_bytes(packed)
 	var roots: PackedStringArray = PackedStringArray()
+	var base: String = OS.get_executable_path().get_base_dir()
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/cameos"))
-	roots.append(OS.get_executable_path().get_base_dir().path_join("cameos"))
+	roots.append(base.path_join("cameos"))
+	roots.append(base.get_base_dir().path_join("Resources/cameos"))
 	for root: String in roots:
 		var path: String = root.path_join(file_name)
 		if FileAccess.file_exists(path):
@@ -61,11 +63,23 @@ static func _read_local(file_name: String) -> PackedByteArray:
 	return PackedByteArray()
 
 static func _fetch_list(node: Node) -> void:
+	if node == null or not is_instance_valid(node):
+		return
+	if not node.is_inside_tree():
+		_fetch_list.call_deferred(node)
+		return
 	var http: HTTPRequest = HTTPRequest.new()
 	http.timeout = 30.0
 	http.accept_gzip = false
 	http.name = "CameoList"
-	node.add_child(http)
+	http.ready.connect(_start_list.bind(node, http), CONNECT_ONE_SHOT)
+	node.add_child.call_deferred(http)
+
+static func _start_list(node: Node, http: HTTPRequest) -> void:
+	if not is_instance_valid(http) or not http.is_inside_tree() or not is_instance_valid(node):
+		if is_instance_valid(http):
+			http.queue_free()
+		return
 	http.request_completed.connect(_got_list.bind(node, http))
 	var err: Error = http.request(Clips.page_base() + "cameos/index.txt")
 	if err != OK:
@@ -83,14 +97,22 @@ static func _got_list(result: int, code: int, _headers: PackedStringArray, body:
 			_prefetch(node, file_name)
 
 static func _prefetch(node: Node, file_name: String) -> void:
-	if _cache.has(file_name) or _inflight.has(file_name):
+	if _cache.has(file_name) or _inflight.has(file_name) or node == null or not is_instance_valid(node):
 		return
 	_inflight[file_name] = true
 	var http: HTTPRequest = HTTPRequest.new()
 	http.timeout = 60.0
 	http.accept_gzip = false
 	http.name = "CameoFetch"
-	node.add_child(http)
+	http.ready.connect(_start_prefetch.bind(node, http, file_name), CONNECT_ONE_SHOT)
+	node.add_child.call_deferred(http)
+
+static func _start_prefetch(node: Node, http: HTTPRequest, file_name: String) -> void:
+	if not is_instance_valid(http) or not http.is_inside_tree() or not is_instance_valid(node):
+		_inflight.erase(file_name)
+		if is_instance_valid(http):
+			http.queue_free()
+		return
 	http.request_completed.connect(_prefetched.bind(node, http, file_name))
 	var err: Error = http.request(Clips.page_base() + "cameos/" + file_name)
 	if err != OK:

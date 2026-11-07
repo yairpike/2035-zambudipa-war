@@ -1,0 +1,68 @@
+{
+ "place": "kawthaung",
+ "note": "Kawthaung waterfront: shophouse row on the jetty road, kampung houses up the slope, rubber behind.",
+ "towns": [
+  {
+   "id": "kawthaung",
+   "place": "kawthaung",
+   "rect": [
+    28,
+    1,
+    8,
+    21
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    4
+   ],
+   "homes": [
+    "kampong_ayer_house",
+    "malay_kampung_house"
+   ],
+   "shops": "peranakan_shophouse",
+   "high": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "kawthaung_row",
+   "place": "kawthaung",
+   "rect": [
+    0,
+    19,
+    22,
+    4
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    2
+   ],
+   "homes": [
+    "peranakan_shophouse"
+   ],
+   "shops": "peranakan_shophouse",
+   "high": [
+    0
+   ]
+  }
+ ],
+ "orchards": [
+  {
+   "id": "rubber_estate",
+   "tree": "rubber_tree",
+   "rect": [
+    0,
+    1,
+    4,
+    17
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  }
+ ]
+}

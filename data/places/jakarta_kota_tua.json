@@ -1,0 +1,55 @@
+{
+ "place": "Jakarta, Kota Tua",
+ "maps": [
+  "wrath_of_the_garuda"
+ ],
+ "bbox_swne": [
+  -6.14,
+  106.808,
+  -6.13,
+  106.818
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 74,
+  "grid_share": 0.76,
+  "street_m": 36827,
+  "spacing_across_u_m": 27.6,
+  "spacing_across_v_m": 24.7,
+  "streets_along_u": 44,
+  "streets_along_v": 33,
+  "main_streets": [
+   {
+    "name": "Jalan Asemka",
+    "m": 2215,
+    "runs": "east-west"
+   },
+   {
+    "name": "Jalan Pangeran Jayakarta",
+    "m": 1394,
+    "runs": "east-west"
+   },
+   {
+    "name": "Jalan Lodan Raya",
+    "m": 1362,
+    "runs": "east-west"
+   },
+   {
+    "name": "Jalan Kunir",
+    "m": 1354,
+    "runs": "east-west"
+   },
+   {
+    "name": "Jalan Kampung Bandan",
+    "m": 920,
+    "runs": "east-west"
+   },
+   {
+    "name": "Jalan Pintu Besar Selatan",
+    "m": 786,
+    "runs": "north-south"
+   }
+  ]
+ }
+}

@@ -22,6 +22,7 @@ var building_tier: Dictionary[StringName, int] = {}
 var building_time: Dictionary[StringName, float] = {}
 var building_cost: Dictionary[StringName, int] = {}
 var building_role: Dictionary[StringName, String] = {}
+var building_optional: Dictionary[StringName, bool] = {}
 var finished: Array[StringName] = []
 var scaffold_id: StringName = &""
 var scaffold_pos: Vector3 = Vector3.ZERO
@@ -58,6 +59,7 @@ var super_water: bool = false
 
 func load_catalog(data: Dictionary) -> void:
 	tech_order.clear()
+	building_optional.clear()
 	var order: Variant = data.get("tech_order", [])
 	if order is Array:
 		for step: Variant in order:
@@ -72,6 +74,7 @@ func load_catalog(data: Dictionary) -> void:
 				building_time[id] = float(row.get("time", 4.0))
 				building_cost[id] = int(row.get("cost", 0))
 				building_role[id] = str(row.get("role", ""))
+				building_optional[id] = bool(row.get("optional", false))
 				structure_max[id] = float(row.get("hp", 200.0))
 				if bool(row.get("water", false)):
 					water_marked[id] = true
@@ -176,7 +179,7 @@ func can_build(id: StringName) -> bool:
 	if style == Style.SCAFFOLD:
 		var idx: int = tech_order.find(id)
 		if idx < 0:
-			return false
+			return bool(building_optional.get(id, false)) and (tech_order.is_empty() or finished.has(tech_order[0]))
 		if idx > 0 and not finished.has(tech_order[idx - 1]):
 			return false
 	return true
@@ -401,6 +404,14 @@ func position_of(id: StringName) -> Vector3:
 	if structure_pos.has(id):
 		return structure_pos[id]
 	return center
+
+## Half the narrow side of the footprint, so attackers stop at the wall rather than the centre.
+func reach_of(id: StringName) -> float:
+	var role: String = str(building_role.get(id, ""))
+	if id == &"enemy_yard" or id == &"packer" or role == "yard":
+		role = "yard"
+	var size: Vector2 = SMBasePlan.footprint_m(str(id), role)
+	return minf(size.x, size.y) * 0.5
 
 func _stored_hp(id: StringName) -> float:
 	if structure_hp.has(id):

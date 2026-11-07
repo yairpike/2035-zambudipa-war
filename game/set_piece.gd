@@ -83,6 +83,7 @@ func drive(delta: float) -> void:
 	if _host == null:
 		return
 	_clock += maxf(delta, 0.0)
+	_sync_portrait()
 	_retry_voice()
 	if not _armed:
 		_arm_camera()
@@ -440,7 +441,7 @@ func _fire(beat: String) -> void:
 		"hold":
 			_say(_line(beat), "", beat)
 		"packer":
-			_quiet(SMPointer.PLAYER, Vector3(-14.0, 0.0, -6.0), "packer", &"channel_skiff")
+			_quiet(SMPointer.PLAYER, Vector3(-14.0, 0.0, -6.0), "packer", &"sampan")
 			_say(_line(beat), "", beat)
 		"wharf":
 			_marker("SetWharf", Vector3(8.0, 0.5, 5.0), Vector3(3.2, 0.4, 1.4), Color(0.35, 0.48, 0.42), false)
@@ -460,7 +461,7 @@ func _fire(beat: String) -> void:
 			_quiet(SMPointer.ENEMY, Vector3(7.0, 0.0, 4.0), "spectacle", &"militia")
 			_say(_line(beat), "", beat)
 		"spray":
-			var sprayer: RTSUnit = _quiet(SMPointer.ENEMY, Vector3(16.0, 0.0, 10.0), "spray", &"charcoal_mortar")
+			var sprayer: RTSUnit = _quiet(SMPointer.ENEMY, Vector3(16.0, 0.0, 10.0), "spray", &"monsoon_tube")
 			if sprayer != null:
 				sprayer.speed = 4.5
 				sprayer.set_path(PackedVector3Array([Vector3(6.0, 0.0, 2.0)]))
@@ -477,8 +478,8 @@ func _fire(beat: String) -> void:
 		"crossing":
 			_say(_line(beat), "", beat)
 		"under_fire":
-			_quiet(SMPointer.ENEMY, Vector3(11.0, 0.0, 7.0), "spectacle", &"channel_skiff")
-			_quiet(SMPointer.ENEMY, Vector3(9.0, 0.0, 8.0), "spectacle", &"channel_skiff")
+			_quiet(SMPointer.ENEMY, Vector3(11.0, 0.0, 7.0), "spectacle", &"sampan")
+			_quiet(SMPointer.ENEMY, Vector3(9.0, 0.0, 8.0), "spectacle", &"sampan")
 			_say(_line(beat), "", beat)
 		"garrison":
 			_quiet(SMPointer.ENEMY, Vector3(8.0, 0.0, 5.0), "spectacle", &"militia")
@@ -525,7 +526,7 @@ func _chrome() -> void:
 	_plate.name = "SetPortraitPlate"
 	_plate.position = Vector2(0.0, 8.0)
 	_plate.size = Vector2(84.0, 84.0)
-	_plate.color = _tint()
+	_plate.color = Color(0.07, 0.08, 0.1, 0.92)
 	_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(_plate)
 	_portrait = TextureRect.new()
@@ -537,6 +538,7 @@ func _chrome() -> void:
 	_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_portrait.texture = Cameos.texture(faction, cameo_id)
 	panel.add_child(_portrait)
+	_sync_portrait()
 	_speaker = Label.new()
 	_speaker.name = "SetSpeaker"
 	_speaker.position = Vector2(96.0, 4.0)
@@ -567,6 +569,27 @@ func _chrome() -> void:
 	_bonus.add_theme_font_size_override("font_size", 16)
 	_bonus.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
 	panel.add_child(_bonus)
+
+func _sync_portrait() -> void:
+	if _portrait == null:
+		return
+	if _portrait.texture == null:
+		_portrait.texture = Cameos.texture(faction, cameo_id)
+	var ready: bool = _portrait.texture != null
+	_portrait.visible = ready
+	if _plate != null:
+		_plate.visible = ready
+	var text_x: float = 96.0 if ready else 12.0
+	var text_w: float = 600.0 if ready else 684.0
+	if _speaker != null:
+		_speaker.position.x = text_x
+		_speaker.size.x = text_w
+	if _subtitle != null:
+		_subtitle.position.x = text_x
+		_subtitle.size.x = text_w
+	if _bonus != null:
+		_bonus.position.x = text_x
+		_bonus.size.x = text_w
 
 func _tint() -> Color:
 	if faction == "nmrf":

@@ -1,0 +1,55 @@
+{
+ "place": "Chiang Rai old town",
+ "maps": [
+  "chiang_rai"
+ ],
+ "bbox_swne": [
+  19.904,
+  99.826,
+  19.915,
+  99.837
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 2,
+  "grid_share": 0.54,
+  "street_m": 39669,
+  "spacing_across_u_m": 25.4,
+  "spacing_across_v_m": 26.7,
+  "streets_along_u": 46,
+  "streets_along_v": 38,
+  "main_streets": [
+   {
+    "name": "Banphaprakarn Avenue",
+    "m": 3064,
+    "runs": "east-west"
+   },
+   {
+    "name": "Thanalai Road",
+    "m": 1422,
+    "runs": "east-west"
+   },
+   {
+    "name": "Uttarakit Road",
+    "m": 1275,
+    "runs": "east-west"
+   },
+   {
+    "name": "Singhaklai Road",
+    "m": 1012,
+    "runs": "east-west"
+   },
+   {
+    "name": "Krisorasit Road",
+    "m": 803,
+    "runs": "east-west"
+   },
+   {
+    "name": "Prasopsuk Road",
+    "m": 800,
+    "runs": "east-west"
+   }
+  ]
+ }
+}

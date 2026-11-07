@@ -1,0 +1,345 @@
+{
+  "about": "One scale chart for every model. 1 unit = 1 m. Cells are 4 m. Units fit a height or a hull length, buildings fill their footprint in cells, scenery fits its class. See docs/map-scale.md in the project store.",
+  "cell_m": 4.0,
+  "building_fill": 0.88,
+  "building_height_ratio_max": 1.35,
+  "unit_classes": {
+    "infantry": {
+      "height": 1.8
+    },
+    "hero": {
+      "height": 2.05
+    },
+    "dog": {
+      "length": 1.3
+    },
+    "walker": {
+      "height": 4.2
+    },
+    "small_drone": {
+      "length": 1.4
+    },
+    "uav": {
+      "length": 3.6
+    },
+    "light_vehicle": {
+      "length": 4.6,
+      "height_max": 3.2
+    },
+    "armour": {
+      "length": 5.6,
+      "height_max": 3.6
+    },
+    "heavy_vehicle": {
+      "length": 7.0,
+      "height_max": 4.8
+    },
+    "mobile_yard": {
+      "length": 8.5,
+      "height_max": 8.0
+    },
+    "helicopter": {
+      "length": 7.0
+    },
+    "jet": {
+      "length": 10.0
+    },
+    "airship": {
+      "length": 14.0
+    },
+    "skiff": {
+      "length": 6.0,
+      "height_max": 3.6
+    },
+    "warship": {
+      "length": 11.0
+    },
+    "capital_ship": {
+      "length": 15.0
+    }
+  },
+  "units": {
+    "militia": "infantry",
+    "ruby_lancer": "infantry",
+    "crimson_sapper": "infantry",
+    "amber_scout": "infantry",
+    "printsmith": "infantry",
+    "clearance_trooper": "infantry",
+    "clearance_engineer": "infantry",
+    "charcoal_bike": "infantry",
+    "river_rifle": "infantry",
+    "olive_ranger": "infantry",
+    "emerald_cutter": "infantry",
+    "olive_sapper": "infantry",
+    "ruby_mortar": "hero",
+    "relay_van": "hero",
+    "packer_escort": "hero",
+    "kachin_dog": "dog",
+    "cyan_sentry": "dog",
+    "wharf_gun": "walker",
+    "fpv_kamikaze": "small_drone",
+    "spool_fpv": "small_drone",
+    "monsoon_spotter": "small_drone",
+    "river_tug": "small_drone",
+    "flh7": "small_drone",
+    "orlan10": "uav",
+    "kite_loiterer": "uav",
+    "mekong_uav": "uav",
+    "plantation_bomber": "uav",
+    "river_drone": "uav",
+    "jade_skiff": "uav",
+    "slag_hauler": "light_vehicle",
+    "teak_technical": "light_vehicle",
+    "yard_crane": "light_vehicle",
+    "hub_lifter": "light_vehicle",
+    "swarm_hive": "light_vehicle",
+    "amber_tank": "armour",
+    "cyan_ifv": "armour",
+    "charcoal_apc": "armour",
+    "mangrove_skiff": "armour",
+    "monsoon_tube": "armour",
+    "charcoal_mortar": "armour",
+    "mangrove_tube": "armour",
+    "jade_mortar": "armour",
+    "slag_dozer": "heavy_vehicle",
+    "packer": "mobile_yard",
+    "hub_drone": "helicopter",
+    "bullion_truck": "helicopter",
+    "amber_welder": "helicopter",
+    "ch4": "helicopter",
+    "cyan_gunship": "jet",
+    "siege_tube": "jet",
+    "su30": "jet",
+    "scaffold_rig": "airship",
+    "channel_skiff": "skiff",
+    "cyan_skiff": "skiff",
+    "longtail_raider": "skiff",
+    "sampan": "skiff",
+    "emerald_ferry": "warship",
+    "channel_ferry": "warship",
+    "emerald_gunboat": "capital_ship",
+    "relay_mast": "capital_ship",
+    "hub_hauler": "capital_ship"
+  },
+  "building_roles": {
+    "yard": [
+      4,
+      4
+    ],
+    "power": [
+      2,
+      2
+    ],
+    "refinery": [
+      3,
+      3
+    ],
+    "barracks": [
+      3,
+      3
+    ],
+    "factory": [
+      4,
+      4
+    ],
+    "naval": [
+      4,
+      4
+    ],
+    "air": [
+      4,
+      4
+    ],
+    "tech": [
+      3,
+      3
+    ],
+    "defense": [
+      2,
+      2
+    ],
+    "conceal": [
+      2,
+      2
+    ]
+  },
+  "buildings": {
+    "gun_wharf": [
+      2,
+      4
+    ],
+    "tide_refinery": [
+      4,
+      2
+    ]
+  },
+  "scenery_classes": {
+    "tree": {
+      "height": 9.0
+    },
+    "big_tree": {
+      "height": 11.0
+    },
+    "small_tree": {
+      "height": 5.5
+    },
+    "palm": {
+      "height": 8.5
+    },
+    "clump": {
+      "height": 4.5
+    },
+    "house": {
+      "length": 7.5,
+      "height_max": 8.0
+    },
+    "hall": {
+      "length": 11.0,
+      "height_max": 11.0
+    },
+    "tower": {
+      "height": 16.0
+    },
+    "landmark": {
+      "length": 22.0,
+      "height_max": 24.0
+    },
+    "grand_landmark": {
+      "length": 30.0,
+      "height_max": 32.0
+    },
+    "crag": {
+      "height": 22.0
+    },
+    "rocks": {
+      "length": 5.0
+    },
+    "street": {
+      "length": 2.8
+    },
+    "vehicle": {
+      "length": 5.0
+    },
+    "kiosk": {
+      "height": 2.6
+    },
+    "yard_prop": {
+      "length": 8.0,
+      "height_max": 8.0
+    },
+    "span": {
+      "scale": 1.0
+    },
+    "scooter": {
+      "length": 1.9
+    }
+  },
+  "scenery": {
+    "teak_tree": "tree",
+    "rubber_tree": "tree",
+    "khasi_pine": "tree",
+    "banyan_tree": "big_tree",
+    "dipterocarp": "big_tree",
+    "mangrove": "small_tree",
+    "frangipani": "small_tree",
+    "coconut_palm": "palm",
+    "sugar_palm": "palm",
+    "oil_palm": "palm",
+    "banana_clump": "clump",
+    "bamboo_clump": "clump",
+    "shan_stilt_house": "house",
+    "mekong_stilt_house": "house",
+    "khmer_stilt_house": "house",
+    "kampong_ayer_house": "house",
+    "malay_kampung_house": "house",
+    "tonle_floating_house": "house",
+    "vn_tube_house": "house",
+    "neon_shophouse": "house",
+    "peranakan_shophouse": "house",
+    "border_guesthouse": "house",
+    "uma_lulik": "house",
+    "minang_rumah_gadang": "house",
+    "maranao_torogan": "house",
+    "kampung_surau": "house",
+    "city_food_stalls": "house",
+    "lanna_wat": "hall",
+    "teak_kyaung": "hall",
+    "rice_mill": "hall",
+    "palm_oil_mill": "hall",
+    "wet_market": "hall",
+    "highland_longhouse": "hall",
+    "floating_market": "hall",
+    "server_compound": "hall",
+    "border_casino": "hall",
+    "checkpoint": "hall",
+    "burmese_pagoda": "hall",
+    "lao_sim": "hall",
+    "lao_that": "hall",
+    "chedi_ruin": "hall",
+    "prasat_ruin": "hall",
+    "city_colonial": "hall",
+    "longtail_dock": "hall",
+    "drone_hub": "hall",
+    "casino_tower": "tower",
+    "city_highrise": "tower",
+    "city_hdb": "tower",
+    "cell_tower": "tower",
+    "pylon": "tower",
+    "watchtower": "yard_prop",
+    "lm_sule": "landmark",
+    "lm_intramuros": "landmark",
+    "lm_tha_phae": "landmark",
+    "lm_doi_suthep": "landmark",
+    "lm_turtle_tower": "landmark",
+    "lm_bali_gate": "landmark",
+    "lm_mandalay_moat": "landmark",
+    "lm_wat_arun": "landmark",
+    "lm_baroque_church": "landmark",
+    "lm_ben_thanh": "landmark",
+    "lm_hanoi_opera": "landmark",
+    "lm_kek_lok_si": "landmark",
+    "lm_kl_clocktower": "landmark",
+    "lm_patuxai": "landmark",
+    "lm_pp_independence": "landmark",
+    "lm_pp_market": "landmark",
+    "lm_that_luang": "landmark",
+    "lm_supertrees": "landmark",
+    "lm_durian_domes": "landmark",
+    "lm_monas": "landmark",
+    "lm_omar_ali": "landmark",
+    "lm_grand_palace": "landmark",
+    "lm_shwedagon": "grand_landmark",
+    "lm_angkor": "grand_landmark",
+    "lm_borobudur": "grand_landmark",
+    "lm_marina_bay": "grand_landmark",
+    "lm_twin_towers": "grand_landmark",
+    "lm_lotus_tower": "grand_landmark",
+    "karst_tower": "crag",
+    "karst_sea_stack": "crag",
+    "jungle_waterfall": "landmark",
+    "cave_mouth": "hall",
+    "cascade": "yard_prop",
+    "fish_stakes": "yard_prop",
+    "rock_set": "rocks",
+    "city_trishaw": "street",
+    "city_tuktuk": "street",
+    "e_scooter": "scooter",
+    "city_jeepney": "vehicle",
+    "longtail_boat": "vehicle",
+    "charging_kiosk": "kiosk",
+    "starlink_terminal": "kiosk",
+    "cctv_pole": "yard_prop",
+    "holo_screen": "yard_prop",
+    "battery_swap": "yard_prop",
+    "solar_farm": "hall",
+    "micro_hydro": "yard_prop",
+    "concrete_bridge": "span",
+    "truss_bridge": "span",
+    "bamboo_footbridge": "span",
+    "lm_u_bein": "span",
+    "lm_long_bien": "span",
+    "city_flyover": "span",
+    "city_skytrain": "span",
+    "jetty": "span"
+  }
+}

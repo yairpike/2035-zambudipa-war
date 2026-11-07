@@ -92,6 +92,7 @@ static func tick(side: SMSide, field: SMPointer, delta: float) -> void:
 		var shots: int = _fire(side, field, id)
 		if shots > 0:
 			side.gun_cool[id] = INTERVAL
+			side.defense_fired.emit(id, side.yard.position_of(id))
 
 static func _fire(side: SMSide, field: SMPointer, id: StringName) -> int:
 	var at: Vector3 = side.yard.position_of(id)

@@ -8,6 +8,7 @@ const Ground = preload("res://game/ground_view.gd")
 @export var map_id: String = "burma_road"
 
 var grid: SMDomainGrid
+var plan: SMMapPlan
 var sim: SMMatch = SMMatch.new()
 var field: SMPointer = SMPointer.new()
 var raider: SMRaider = SMRaider.new()
@@ -21,6 +22,7 @@ var ui_layer: CanvasLayer
 
 func _ready() -> void:
 	preload("res://game/sim_presenter.gd").follow(self)
+	plan = SMMapPlan.of(map_id)
 	grid = _grid_for(map_id)
 	sim.place_sites(map_id, grid)
 	roster.setup(SMFront.current())
@@ -28,8 +30,11 @@ func _ready() -> void:
 	_prepare_ability()
 	_world()
 	_ui()
-	var rally: Vector3 = grid.cell_center(_player_cells()[0])
+	var rally: Vector3 = grid.cell_center(_yard_cell())
 	side.prepare(self, status, grid, rally, roster.economy)
+	if side.yard.style != SMBuildYard.Style.INTERNAL:
+		side.yard.radius = maxf(side.yard.radius, 48.0)
+	side.plan.keep_nets(sim.goods, sim.tech)
 	_arm_units()
 	var cam: RTSCamera = get_node("Camera") as RTSCamera
 	hud.mount(ui_layer, field, roster, side, _map_name(), rally, Callable(self, "fire_ability"), grid, cam)
@@ -38,7 +43,7 @@ func _ready() -> void:
 	outcome.mount(self, ui_layer)
 	sight.bind(grid)
 	hud.use_sight(sight)
-	SMSight.update_match(sight, field, self, sim.tech, raider)
+	SMSight.update_match(sight, field, self, sim.tech, raider, side.yard)
 	preload("res://game/match_settings.gd").apply_scene(self)
 
 func train_unit() -> String:
@@ -47,7 +52,7 @@ func train_unit() -> String:
 	var done: StringName = roster.train_and_finish(SMFront.train_kind())
 	if done == &"":
 		return ""
-	var at: Vector3 = grid.cell_center(_player_cells()[0]) + Vector3(6.0, 0.0, 0.0)
+	var at: Vector3 = grid.cell_center(_player_cells()[0]) + Vector3(2.0, 0.0, 0.0)
 	var u: RTSUnit = field.spawn(SMPointer.PLAYER, at, done)
 	var label: String = field.name_of(u)
 	_say(label)
@@ -63,78 +68,64 @@ func fire_ability() -> bool:
 func _prepare_ability() -> void:
 	sim.abilities = SMAbilities.new()
 	sim.yard = SMBuildYard.new()
-	sim.yard.center = grid.cell_center(_player_cells()[0])
+	sim.yard.center = grid.cell_center(_yard_cell())
 	sim.abilities.add_unit(10, sim.yard.center, SMAbilities.TOGGLE, 2.0, 0.6)
 	sim.abilities.add_unit(11, sim.yard.center + Vector3(2.0, 0.0, 0.0), SMAbilities.SMART, 3.0, 0.6)
 	sim.abilities.add_unit(12, sim.yard.center + Vector3(8.0, 0.0, 0.0), SMAbilities.SMART, 3.0, 0.6)
 
 func _grid_for(id: String) -> SMDomainGrid:
-	if id == "ten_degree_atolls":
-		return SMDomainGrid.ten_degree_atolls_layout()
-	if id == "mekong_delta":
-		return SMDomainGrid.mekong_delta_layout()
-	if id == "chiang_rai":
-		return SMDomainGrid.chiang_rai_layout()
+	if plan != null:
+		return plan.grid()
+	if id == "showcase":
+		return SMDomainGrid.showcase_layout()
 	return SMDomainGrid.burma_road_layout()
 
 func _player_cells() -> Array[Vector2i]:
-	var cells: Array[Vector2i] = []
-	if map_id == "ten_degree_atolls":
-		cells = [Vector2i(3, 16), Vector2i(5, 16), Vector2i(7, 16), Vector2i(3, 19), Vector2i(5, 19), Vector2i(7, 19)]
-	elif map_id == "mekong_delta":
-		cells = [Vector2i(3, 15), Vector2i(5, 15), Vector2i(7, 15), Vector2i(3, 18), Vector2i(5, 18), Vector2i(7, 18)]
-	elif map_id == "chiang_rai":
-		cells = [Vector2i(4, 33), Vector2i(6, 33), Vector2i(8, 33), Vector2i(4, 36), Vector2i(6, 36), Vector2i(8, 36)]
-	else:
-		cells = [Vector2i(3, 13), Vector2i(5, 13), Vector2i(7, 13), Vector2i(3, 16), Vector2i(5, 16), Vector2i(7, 16)]
-	return cells
+	if plan != null:
+		return plan.spawn_cells(0, 6)
+	return _shift_cells([Vector2i(8, 40), Vector2i(10, 40), Vector2i(12, 40), Vector2i(8, 43), Vector2i(10, 43), Vector2i(12, 43)])
+
+## Construction yard cell. Planned maps put it on the start; spawns stand beside it.
+func _yard_cell() -> Vector2i:
+	if plan != null:
+		return plan.start(0)
+	return _player_cells()[0]
+
+func _enemy_yard_cell() -> Vector2i:
+	if plan != null:
+		return plan.start(plan.starts.size() / 2)
+	return _enemy_cells()[0]
 
 func _plan_name() -> String:
-	if map_id == "burma_road":
-		return "Tran"
+	if plan != null:
+		return plan.bot("name", "Bo Mya")
 	return "Bo Mya"
 
 func _plan_a() -> StringName:
-	if map_id == "ten_degree_atolls":
-		return &"isle_d"
-	if map_id == "mekong_delta":
-		return &"paddy_i"
-	if map_id == "chiang_rai":
-		return &"chiang_12"
-	return &"ruby_d"
+	return StringName(plan.bot("plan_a")) if plan != null else &""
 
 func _plan_b() -> StringName:
-	if map_id == "ten_degree_atolls":
-		return &"isle_e"
-	if map_id == "mekong_delta":
-		return &"paddy_j"
-	if map_id == "chiang_rai":
-		return &"chiang_13"
-	return &"jade_b"
+	return StringName(plan.bot("plan_b")) if plan != null else &""
 
 func _plan_site() -> StringName:
-	if map_id == "ten_degree_atolls":
-		return &"radar_b"
-	if map_id == "mekong_delta":
-		return &"clinic_b"
-	if map_id == "chiang_rai":
-		return &"cyber_c"
-	return &"radar_b"
+	return StringName(plan.bot("site")) if plan != null else &""
 
 func _extra_sides() -> void:
-	if map_id == "ten_degree_atolls" or map_id == "mekong_delta":
-		_seat(2, Color(0.85, 0.72, 0.28), 0, _player_cells()[0], "Tran", "PersonalityTran")
-		_seat(3, Color(0.85, 0.45, 0.12), 1, _enemy_cells()[0], "Iskandar", "PersonalityIskandar")
-		field.teams.set_relation(1, 3, RTSTeams.Relation.ALLY)
-	elif map_id == "chiang_rai":
-		_seat(2, Color(0.85, 0.72, 0.28), 0, _player_cells()[0], "Ally", "PersonalityAlly")
-		_seat(4, Color(0.45, 0.7, 0.4), 0, _player_cells()[3], "Ally", "PersonalityAllyB")
-		_seat(3, Color(0.85, 0.45, 0.12), 1, _enemy_cells()[0], "Iskandar", "PersonalityIskandar")
-		_seat(5, Color(0.55, 0.35, 0.75), 1, _enemy_cells()[3], "Tran", "PersonalityTran")
+	if plan != null and plan.starts.size() >= 4:
+		var ally: Array[Vector2i] = plan.spawn_cells(1, 6)
+		var foe: Array[Vector2i] = plan.spawn_cells(3, 6)
+		_seat(2, Color(0.85, 0.72, 0.28), 0, ally[0], "Ally", "PersonalityAlly")
+		_seat(4, Color(0.45, 0.7, 0.4), 0, ally[3], "Ally", "PersonalityAllyB")
+		_seat(3, Color(0.85, 0.45, 0.12), 1, foe[0], "Iskandar", "PersonalityIskandar")
+		_seat(5, Color(0.55, 0.35, 0.75), 1, foe[3], "Tran", "PersonalityTran")
 		field.teams.set_relation(2, 4, RTSTeams.Relation.ALLY)
 		field.teams.set_relation(1, 3, RTSTeams.Relation.ALLY)
 		field.teams.set_relation(1, 5, RTSTeams.Relation.ALLY)
 		field.teams.set_relation(3, 5, RTSTeams.Relation.ALLY)
+	elif map_id == "ten_degree_atolls" or map_id == "mekong_delta":
+		_seat(2, Color(0.85, 0.72, 0.28), 0, _player_cells()[3], "Tran", "PersonalityTran")
+		_seat(3, Color(0.85, 0.45, 0.12), 1, _enemy_cells()[2], "Iskandar", "PersonalityIskandar")
+		field.teams.set_relation(1, 3, RTSTeams.Relation.ALLY)
 
 func _seat(team: int, color: Color, ally_of: int, cell: Vector2i, caption: String, node_name: String) -> void:
 	field.teams.add_team(team, color)
@@ -153,25 +144,21 @@ func _seat(team: int, color: Color, ally_of: int, cell: Vector2i, caption: Strin
 	add_child(tag)
 
 func _enemy_cells() -> Array[Vector2i]:
-	var cells: Array[Vector2i] = []
-	if map_id == "ten_degree_atolls":
-		cells = [Vector2i(27, 16), Vector2i(29, 16), Vector2i(28, 19)]
-	elif map_id == "mekong_delta":
-		cells = [Vector2i(32, 15), Vector2i(34, 15), Vector2i(33, 18)]
-	elif map_id == "chiang_rai":
-		cells = [Vector2i(44, 6), Vector2i(46, 6), Vector2i(48, 6), Vector2i(44, 9), Vector2i(46, 9), Vector2i(48, 9)]
-	else:
-		cells = [Vector2i(32, 13), Vector2i(34, 13), Vector2i(33, 16)]
-	return cells
+	if plan != null:
+		return plan.spawn_cells(plan.starts.size() / 2, 3)
+	return _shift_cells([Vector2i(58, 8), Vector2i(60, 8), Vector2i(62, 8)])
 
 func _move_cell() -> Vector2i:
-	if map_id == "ten_degree_atolls":
-		return Vector2i(6, 18)
-	if map_id == "mekong_delta":
-		return Vector2i(6, 20)
-	if map_id == "chiang_rai":
-		return Vector2i(10, 34)
-	return Vector2i(10, 20)
+	if plan != null:
+		return plan.spawn_cells(0, 9)[8]
+	return Vector2i(12, 40) + SMDomainGrid.pad_of(map_id)
+
+func _shift_cells(cells: Array[Vector2i]) -> Array[Vector2i]:
+	var pad: Vector2i = SMDomainGrid.pad_of(map_id)
+	var out: Array[Vector2i] = []
+	for cell: Vector2i in cells:
+		out.append(cell + pad)
+	return out
 
 func _world() -> void:
 	var env: WorldEnvironment = WorldEnvironment.new()
@@ -185,7 +172,9 @@ func _world() -> void:
 	var sun: DirectionalLight3D = DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-48, 25, 0)
 	add_child(sun)
-	if map_id == "ten_degree_atolls":
+	if map_id == "showcase":
+		Ground.dress(self, grid, "showcase")
+	elif map_id == "ten_degree_atolls":
 		_atoll_world()
 	elif map_id == "mekong_delta":
 		_mekong_world()
@@ -197,26 +186,35 @@ func _world() -> void:
 	cam.name = "Camera"
 	var span: Vector2 = Vector2(float(grid.cols) * grid.cell_size, float(grid.rows) * grid.cell_size)
 	cam.bounds = Rect2(grid.origin.x - 8.0, grid.origin.z - 8.0, span.x + 16.0, span.y + 16.0)
-	cam.distance = 32.0 if map_id == "chiang_rai" else 28.0
+	cam.distance = 60.0 if map_id == "showcase" else (56.0 if map_id == "chiang_rai" else 52.0)
+	cam.zoom_max = 90.0
 	cam.edge_pan_px = 20.0
-	cam.focus = grid.cell_center(_player_cells()[0])
+	cam.focus = grid.cell_center(_yard_cell())
 	add_child(cam)
 	cam.current = true
 	sim.paint_sites(self)
 
 func _burma_world() -> void:
-	Ground.dress(self, grid, "burma")
+	Ground.dress(self, grid, "burma", plan)
 
 func _atoll_world() -> void:
-	Ground.dress(self, grid, "atolls")
+	Ground.dress(self, grid, "atolls", plan)
 
 func _mekong_world() -> void:
-	Ground.dress(self, grid, "mekong")
-	_slab("BridgeWest", Vector3(-26, 0.15, 0), Vector3(14, 0.28, 16), Color(0.45, 0.4, 0.3))
-	_slab("BridgeEast", Vector3(30, 0.15, 0), Vector3(14, 0.28, 16), Color(0.45, 0.4, 0.3))
+	Ground.dress(self, grid, "mekong", plan)
+	if plan == null:
+		_slab("BridgeWest", Vector3(-26, 0.15, 0), Vector3(14, 0.28, 16), Color(0.45, 0.4, 0.3))
+		_slab("BridgeEast", Vector3(30, 0.15, 0), Vector3(14, 0.28, 16), Color(0.45, 0.4, 0.3))
+		return
+	_deck("BridgeWest", plan.site_span(&"bridge_a").merge(plan.site_span(&"bridge_b")))
+	_deck("BridgeEast", plan.site_span(&"bridge_c").merge(plan.site_span(&"bridge_d")))
+
+func _deck(node_name: String, span: Rect2i) -> void:
+	var size: Vector3 = Vector3(float(span.size.x) * grid.cell_size + 2.0, 0.28, float(span.size.y) * grid.cell_size)
+	_slab(node_name, plan.rect_center(span) + Vector3(0.0, 0.15, 0.0), size, Color(0.45, 0.4, 0.3))
 
 func _chiang_world() -> void:
-	Ground.dress(self, grid, "chiang")
+	Ground.dress(self, grid, "chiang", plan)
 
 func _ui() -> void:
 	ui_layer = CanvasLayer.new()
@@ -237,6 +235,8 @@ func _ui() -> void:
 	sim.protocols.mount_panel(ui_layer, roster.economy, SMPointer.PLAYER, sim.abilities, Callable(self, "_say"))
 
 func _map_name() -> String:
+	if map_id == "showcase":
+		return "Golden Confluence"
 	if map_id == "ten_degree_atolls":
 		return "Ten Degree Atolls"
 	if map_id == "mekong_delta":
@@ -246,6 +246,8 @@ func _map_name() -> String:
 	return "Burma Road"
 
 func _blurb() -> String:
+	if map_id == "showcase":
+		return "A city bank, a jungle bank, and a river between them. The landmark does not burn."
 	if map_id == "ten_degree_atolls":
 		return "Islands in deep water. Shoals are the crossings. The enemy builds, expands, and attacks."
 	if map_id == "mekong_delta":
@@ -267,7 +269,7 @@ func _arm_units() -> void:
 	field.spawn_support(grid.cell_center(cells[0]) + Vector3(0.0, 0.0, 4.0))
 	for cell: Vector2i in _enemy_cells():
 		field.spawn(SMPointer.ENEMY, grid.cell_center(cell), &"raider")
-	raider.attach(field, grid.cell_center(_enemy_cells()[0]))
+	raider.attach(field, grid.cell_center(_enemy_yard_cell()))
 	raider.bind_plan(sim.goods, sim.tech, _plan_a(), _plan_b(), _plan_site(), _plan_name())
 	preload("res://game/match_settings.gd").apply_raider(raider)
 	_extra_sides()
@@ -317,7 +319,7 @@ func _process(delta: float) -> void:
 	field.place_beacon(field.enemy_anchor())
 	tick_world(delta)
 	sight.advance_weather(delta)
-	SMSight.update_match(sight, field, self, sim.tech, raider)
+	SMSight.update_match(sight, field, self, sim.tech, raider, side.yard)
 	Fx.drive(self, field, sim.goods, sim.ew)
 	hud.refresh()
 	var players: Array[SMBuildYard] = [side.yard, sim.yard]

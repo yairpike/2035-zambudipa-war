@@ -1,0 +1,55 @@
+{
+ "place": "Bangkok, Yaowarat and Talat Noi",
+ "maps": [
+  "black_haze"
+ ],
+ "bbox_swne": [
+  13.736,
+  100.505,
+  13.746,
+  100.515
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 36,
+  "grid_share": 0.49,
+  "street_m": 28526,
+  "spacing_across_u_m": 36.5,
+  "spacing_across_v_m": 31.2,
+  "streets_along_u": 24,
+  "streets_along_v": 31,
+  "main_streets": [
+   {
+    "name": "Charoen Krung Road",
+    "m": 1948,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Yaowarat Road",
+    "m": 1301,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Song Wat Road",
+    "m": 1066,
+    "runs": "east-west"
+   },
+   {
+    "name": "Maitri Chit Road",
+    "m": 870,
+    "runs": "north-south"
+   },
+   {
+    "name": "Mittraphan Road",
+    "m": 623,
+    "runs": "north-south"
+   },
+   {
+    "name": "Ratchawong Road",
+    "m": 579,
+    "runs": "diagonal"
+   }
+  ]
+ }
+}

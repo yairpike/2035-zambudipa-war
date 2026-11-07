@@ -1,0 +1,55 @@
+{
+ "place": "Kengtung",
+ "maps": [
+  "keng_tung"
+ ],
+ "bbox_swne": [
+  21.286,
+  99.598,
+  21.298,
+  99.61
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 80,
+  "grid_share": 0.36,
+  "street_m": 47170,
+  "spacing_across_u_m": 31.3,
+  "spacing_across_v_m": 27.0,
+  "streets_along_u": 43,
+  "streets_along_v": 33,
+  "main_streets": [
+   {
+    "name": "Airport Road",
+    "m": 955,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Loi Meaw Road",
+    "m": 569,
+    "runs": "east-west"
+   },
+   {
+    "name": "Zaydan Loan Road",
+    "m": 473,
+    "runs": "east-west"
+   },
+   {
+    "name": "Tar Yaw Road",
+    "m": 434,
+    "runs": "east-west"
+   },
+   {
+    "name": "Zay Tan Lay Road",
+    "m": 427,
+    "runs": "north-south"
+   },
+   {
+    "name": "Mine Khat Road",
+    "m": 338,
+    "runs": "north-south"
+   }
+  ]
+ }
+}

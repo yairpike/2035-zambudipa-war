@@ -1,0 +1,61 @@
+{
+ "place": "tachileik",
+ "note": "Mae Sai across the Sai river from Tachileik, the border post block at the top of the market street.",
+ "towns": [
+  {
+   "id": "mae_sai",
+   "place": "tachileik",
+   "rect": [
+    28,
+    1,
+    8,
+    21
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    4
+   ],
+   "homes": [
+    "border_guesthouse",
+    "neon_shophouse"
+   ],
+   "shops": "neon_shophouse",
+   "high": [
+    1,
+    2
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      0
+     ],
+     "id": "checkpoint"
+    }
+   ]
+  },
+  {
+   "id": "mae_sai_row",
+   "place": "tachileik",
+   "rect": [
+    0,
+    19,
+    22,
+    4
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    2
+   ],
+   "homes": [
+    "neon_shophouse"
+   ],
+   "shops": "neon_shophouse",
+   "high": [
+    0
+   ]
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "place": "Phonsavan",
+ "maps": [
+  "plain_of_jars"
+ ],
+ "bbox_swne": [
+  19.444,
+  103.209,
+  19.456,
+  103.221
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 26,
+  "grid_share": 0.46,
+  "street_m": 34083,
+  "spacing_across_u_m": 43.4,
+  "spacing_across_v_m": 36.1,
+  "streets_along_u": 31,
+  "streets_along_v": 33,
+  "main_streets": [
+   {
+    "name": "Xieng Khouang - Nghe An Friendship Road",
+    "m": 5931,
+    "runs": "east-west"
+   }
+  ]
+ }
+}

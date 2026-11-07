@@ -119,6 +119,16 @@
       "time": 7,
       "cost": 300,
       "hp": 320
+    },
+    {
+      "id": "bamboo_hide",
+      "display_name": "Bamboo Hide",
+      "role": "conceal",
+      "tier": 1,
+      "time": 3,
+      "cost": 80,
+      "hp": 160,
+      "optional": true
     }
   ],
   "superweapon": {
@@ -472,6 +482,64 @@
       ],
       "ability": "Sonic Howl",
       "f_stat": "damage"
+    },
+    {
+      "id": "fpv_kamikaze",
+      "display_name": "FPV Strike Drone",
+      "cameo": "FPV",
+      "role": "drone",
+      "cost": 90,
+      "time": 4,
+      "hp": 26,
+      "speed": 9.0,
+      "weapon": "shaped_charge",
+      "weapon_damage": 34,
+      "attack_range": 6,
+      "flight": 3,
+      "secondary": "smart_cast",
+      "guidance": "fpv",
+      "locomotion": "air",
+      "tags": ["drone", "air"],
+      "ability": "Shaped Charge",
+      "f_stat": "damage"
+    },
+    {
+      "id": "printsmith",
+      "display_name": "Printsmith Rifleman",
+      "cameo": "PSM",
+      "role": "infantry",
+      "cost": 50,
+      "time": 2,
+      "hp": 62,
+      "speed": 5.4,
+      "weapon": "rifle",
+      "weapon_damage": 7,
+      "attack_range": 7,
+      "secondary": "group_toggle",
+      "guidance": "none",
+      "locomotion": "ground",
+      "tags": ["infantry"],
+      "ability": "Street Press",
+      "f_stat": "damage"
+    },
+    {
+      "id": "teak_technical",
+      "display_name": "Teak Technical",
+      "cameo": "TEK",
+      "role": "vehicle",
+      "cost": 140,
+      "time": 4,
+      "hp": 85,
+      "speed": 8.8,
+      "weapon": "pintle",
+      "weapon_damage": 9,
+      "attack_range": 8,
+      "secondary": "smart_cast",
+      "guidance": "none",
+      "locomotion": "ground",
+      "tags": ["vehicle"],
+      "ability": "Bench Seat",
+      "f_stat": "speed"
     }
   ],
   "balance": "pass1"

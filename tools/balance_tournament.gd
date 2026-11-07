@@ -147,28 +147,17 @@ func _seed_count() -> int:
 func _layout(map_id: String) -> SMDomainGrid:
 	if map_id == "sop_ruak":
 		return SMDomainGrid.sop_ruak_layout()
-	if map_id == "burma_road":
-		return SMDomainGrid.burma_road_layout()
-	if map_id == "ten_degree_atolls":
-		return SMDomainGrid.ten_degree_atolls_layout()
-	if map_id == "mekong_delta":
-		return SMDomainGrid.mekong_delta_layout()
-	if map_id == "chiang_rai":
-		return SMDomainGrid.chiang_rai_layout()
+	if SMMapPlan.exists(map_id):
+		return SMMapPlan.of(map_id).grid()
 	return SMDomainGrid.phillips_layout()
 
 func _homes(map_id: String) -> Array[Vector2i]:
 	var cells: Array[Vector2i] = []
-	if map_id == "sop_ruak":
-		cells = [Vector2i(8, 22), Vector2i(26, 22)]
-	elif map_id == "burma_road":
-		cells = [Vector2i(3, 13), Vector2i(32, 13)]
-	elif map_id == "ten_degree_atolls":
-		cells = [Vector2i(3, 16), Vector2i(27, 16)]
-	elif map_id == "mekong_delta":
-		cells = [Vector2i(3, 15), Vector2i(32, 15)]
-	elif map_id == "chiang_rai":
-		cells = [Vector2i(4, 33), Vector2i(44, 6)]
+	if SMMapPlan.exists(map_id):
+		var plan: SMMapPlan = SMMapPlan.of(map_id)
+		cells = [plan.start(0), plan.start(plan.starts.size() / 2)]
+	elif map_id == "sop_ruak":
+		cells = [SMDomainGrid.at("sop_ruak", Vector2i(8, 22)), SMDomainGrid.at("sop_ruak", Vector2i(26, 22))]
 	else:
-		cells = [Vector2i(1, 8), Vector2i(30, 12)]
+		cells = [SMDomainGrid.at("phillips", Vector2i(1, 8)), SMDomainGrid.at("phillips", Vector2i(30, 12))]
 	return cells

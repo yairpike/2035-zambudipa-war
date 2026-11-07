@@ -1,0 +1,24 @@
+{
+ "place": "Shwe Kokko",
+ "maps": [
+  "shwe_kokko"
+ ],
+ "bbox_swne": [
+  16.828,
+  98.506,
+  16.84,
+  98.518
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 16,
+  "grid_share": 0.53,
+  "street_m": 21328,
+  "spacing_across_u_m": 104.7,
+  "spacing_across_v_m": 38.0,
+  "streets_along_u": 13,
+  "streets_along_v": 23,
+  "main_streets": []
+ }
+}

@@ -46,7 +46,7 @@ func train_unit() -> String:
 	var done: StringName = roster.train_and_finish(id)
 	if done == &"":
 		return ""
-	var at: Vector3 = grid.cell_center(Vector2i(1, 6))
+	var at: Vector3 = grid.cell_center(SMDomainGrid.at("phillips", Vector2i(1, 6)))
 	var u: RTSUnit = field.spawn(SMPointer.PLAYER, at, done)
 	var label: String = field.name_of(u)
 	_say(label)
@@ -63,7 +63,7 @@ func fire_ability() -> bool:
 func move_packer() -> bool:
 	if faction_id != "nmrf":
 		return false
-	var dest: Vector3 = grid.cell_center(Vector2i(18, 5))
+	var dest: Vector3 = grid.cell_center(SMDomainGrid.at("phillips", Vector2i(18, 5)))
 	var ok: bool = yard.move_packer(dest)
 	if ok and packer_mesh != null:
 		packer_mesh.position = SMPointer.building_at(dest)
@@ -126,7 +126,7 @@ func _prepare_yard() -> void:
 	else:
 		yard.style = SMBuildYard.Style.MOBILE
 		yard.grid = grid
-		yard.packer_pos = grid.cell_center(Vector2i(4, 8))
+		yard.packer_pos = grid.cell_center(SMDomainGrid.at("phillips", Vector2i(4, 8)))
 
 func _load_buildings(data: Dictionary) -> void:
 	var raw: Variant = data.get("buildings", [])
@@ -167,9 +167,10 @@ func _world() -> void:
 	var cam: RTSCamera = RTSCamera.new()
 	cam.name = "Camera"
 	cam.bounds = Rect2(-90, -60, 180, 120)
-	cam.distance = 28.0
+	cam.distance = 32.0
+	cam.zoom_max = 90.0
 	cam.edge_pan_px = 20.0
-	cam.focus = grid.cell_center(Vector2i(4, 8))
+	cam.focus = grid.cell_center(SMDomainGrid.at("phillips", Vector2i(4, 8)))
 	add_child(cam)
 	cam.current = true
 
@@ -250,13 +251,13 @@ func _arm_units() -> void:
 	field.use_domain(grid)
 	field.attach_box(ui_layer)
 	var kinds: Array[StringName] = SMPointer.MVD_KINDS if faction_id == "mvd" else SMPointer.NMRF_KINDS
-	var cells: Array[Vector2i] = [Vector2i(1, 8), Vector2i(3, 8), Vector2i(5, 8), Vector2i(8, 8), Vector2i(10, 8), Vector2i(12, 8)]
+	var cells: Array[Vector2i] = [SMDomainGrid.at("phillips", Vector2i(1, 8)), SMDomainGrid.at("phillips", Vector2i(3, 8)), SMDomainGrid.at("phillips", Vector2i(5, 8)), SMDomainGrid.at("phillips", Vector2i(8, 8)), SMDomainGrid.at("phillips", Vector2i(10, 8)), SMDomainGrid.at("phillips", Vector2i(12, 8))]
 	for i: int in kinds.size():
 		field.spawn(SMPointer.PLAYER, grid.cell_center(cells[i]), kinds[i])
-	field.spawn_support(grid.cell_center(Vector2i(1, 6)))
-	for cell: Vector2i in [Vector2i(30, 12), Vector2i(31, 14), Vector2i(33, 11)]:
+	field.spawn_support(grid.cell_center(SMDomainGrid.at("phillips", Vector2i(1, 6))))
+	for cell: Vector2i in [SMDomainGrid.at("phillips", Vector2i(30, 12)), SMDomainGrid.at("phillips", Vector2i(31, 14)), SMDomainGrid.at("phillips", Vector2i(33, 11))]:
 		field.spawn(SMPointer.ENEMY, grid.cell_center(cell), &"raider")
-	raider.attach(field, grid.cell_center(Vector2i(30, 12)))
+	raider.attach(field, grid.cell_center(SMDomainGrid.at("phillips", Vector2i(30, 12))))
 	preload("res://game/match_settings.gd").apply_raider(raider)
 
 func _say(text: String) -> void:

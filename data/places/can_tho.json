@@ -1,0 +1,55 @@
+{
+ "place": "Can Tho, Ninh Kieu riverside",
+ "maps": [
+  "mekong_delta"
+ ],
+ "bbox_swne": [
+  10.027,
+  105.777,
+  10.039,
+  105.789
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 47,
+  "grid_share": 0.35,
+  "street_m": 46848,
+  "spacing_across_u_m": 32.9,
+  "spacing_across_v_m": 44.3,
+  "streets_along_u": 22,
+  "streets_along_v": 29,
+  "main_streets": [
+   {
+    "name": "H\u00f2a B\u00ecnh",
+    "m": 1748,
+    "runs": "diagonal"
+   },
+   {
+    "name": "\u0110\u01b0\u1eddng 30 Th\u00e1ng 4",
+    "m": 1651,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Quang Trung Bridge",
+    "m": 1322,
+    "runs": "north-south"
+   },
+   {
+    "name": "Phan \u0110\u00ecnh Ph\u00f9ng",
+    "m": 1003,
+    "runs": "north-south"
+   },
+   {
+    "name": "L\u00fd T\u1ef1 Tr\u1ecdng",
+    "m": 953,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Hai B\u00e0 Tr\u01b0ng",
+    "m": 944,
+    "runs": "north-south"
+   }
+  ]
+ }
+}

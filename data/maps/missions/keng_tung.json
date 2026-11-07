@@ -1,0 +1,77 @@
+{
+ "place": "kengtung",
+ "note": "Kengtung: market grid by Naung Tung lake, Shan houses and Wat Jong Kham.",
+ "towns": [
+  {
+   "id": "kengtung",
+   "place": "kengtung",
+   "rect": [
+    28,
+    1,
+    8,
+    21
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    4
+   ],
+   "homes": [
+    "shan_stilt_house",
+    "border_guesthouse"
+   ],
+   "shops": "neon_shophouse",
+   "high": [
+    1,
+    2
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      1
+     ],
+     "id": "lanna_wat"
+    }
+   ]
+  },
+  {
+   "id": "kengtung_row",
+   "place": "kengtung",
+   "rect": [
+    0,
+    19,
+    22,
+    4
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    2
+   ],
+   "homes": [
+    "neon_shophouse"
+   ],
+   "shops": "neon_shophouse",
+   "high": [
+    0
+   ]
+  }
+ ],
+ "orchards": [
+  {
+   "id": "tea_rows",
+   "tree": "banana_clump",
+   "rect": [
+    0,
+    1,
+    4,
+    17
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  }
+ ]
+}

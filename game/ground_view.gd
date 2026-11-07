@@ -6,8 +6,10 @@ const WATER_SHADER = preload("res://game/shaders/channel_water.gdshader")
 const RAIN_SHADER = preload("res://game/shaders/monsoon_rain.gdshader")
 const Settings = preload("res://game/match_settings.gd")
 const Art = preload("res://game/served_art.gd")
+const Env = preload("res://game/env_dress.gd")
 const RAIN_CAP: int = 24
 const TREE_REACH: float = 80.0
+const CANOPY_MIN: float = 5.0
 
 const GRASS: Color = Color(0.3, 0.46, 0.22)
 const MUD: Color = Color(0.38, 0.29, 0.18)
@@ -17,16 +19,26 @@ const ROCK: Color = Color(0.46, 0.44, 0.4)
 const WOOD: Color = Color(0.42, 0.3, 0.18)
 const LEAF: Color = Color(0.18, 0.4, 0.16)
 const PADDY: Color = Color(0.42, 0.58, 0.28)
+## Tripo scenery puts its street face on -Z, so a house facing yaw turns half round from its authored pose.
+const FRONT_TURN: float = 180.0
 
 static var _land_ink: StandardMaterial3D
 static var _water_ink: ShaderMaterial
 static var _rain_ink: ShaderMaterial
 static var _site_ink: StandardMaterial3D
 static var _prop_cache: Dictionary = {}
+static var _plan: SMMapPlan
+static var _keep: Rect2i = Rect2i()
+static var _dressing: SMMapPlan
 
-static func dress(host: Node3D, grid: SMDomainGrid, profile: String) -> void:
+## A map plan draws its own roads and keeps scenery to cliffs and the margins, off plateaus, lanes and resources.
+## Towns and orchards come from the plan, or from a campaign dressing: streets are road, every house squares to its street.
+static func dress(host: Node3D, grid: SMDomainGrid, profile: String, plan: SMMapPlan = null, keep_clear: Rect2i = Rect2i(), dressing: SMMapPlan = null) -> void:
 	if host == null or grid == null:
 		return
+	_plan = plan
+	_keep = keep_clear
+	_dressing = dressing
 	var land_stem: String = "sand" if profile == "atolls" else "grass"
 	var land: SurfaceTool = _begin(_ground(land_stem, profile != "atolls"))
 	var mud: SurfaceTool = _begin(_ground("mud", false))
@@ -42,6 +54,10 @@ static func dress(host: Node3D, grid: SMDomainGrid, profile: String) -> void:
 	var palms: Array[Transform3D] = []
 	var houses: Array[Transform3D] = []
 	var stilts: Array[Transform3D] = []
+	var campaign: bool = profile == "kokang" or profile == "mission"
+	var tree_cap: int = 28 if campaign else (16 if grid.cols < 24 else (160 if plan != null else 64))
+	var palm_cap: int = 16 if campaign else (10 if grid.cols < 24 else (60 if plan != null else 36))
+	var house_cap: int = 8 if campaign else (6 if grid.cols < 24 else 14)
 	var land_n: int = 0
 	var mud_n: int = 0
 	var sand_n: int = 0
@@ -64,9 +80,8 @@ static func dress(host: Node3D, grid: SMDomainGrid, profile: String) -> void:
 			var high: float = 1.55 if domain == SMDomainGrid.Domain.CLIFF else 0.22
 			var bank: bool = _bank(grid, cell)
 			var track: bool = domain == SMDomainGrid.Domain.LAND and _track(profile, cell)
-			var cut: bool = profile == "burma" and _burma_cut(cell)
-			var tint: Color = _tint(profile, cell, domain, bank, track or cut)
-			var kind: String = _kind(profile, tint, track, cut)
+			var tint: Color = _tint(profile, cell, domain, bank, track)
+			var kind: String = _kind(profile, tint, track, false)
 			var shade: float = _vary(cell)
 			var ink: Color = _ink(kind, tint, shade, 1.0)
 			if kind == "road":
@@ -90,17 +105,29 @@ static func dress(host: Node3D, grid: SMDomainGrid, profile: String) -> void:
 				sand_fade_n += 1
 			if fade_kind.contains("road"):
 				road_fade_n += 1
-			if domain != SMDomainGrid.Domain.LAND or _busy(profile, cell) or cut:
+			if _plan != null:
+				_scatter(grid, cell, domain, high, bank, trees, palms)
+				var key: Vector2i = _plan.canon(cell)
+				var field_roll: int = _hash(key.x, key.y)
+				var paddy_ok: bool = domain == SMDomainGrid.Domain.LAND and not track and not bank and paddy_n < 64 and _plan.clear_of_props(cell)
+				if paddy_ok and (profile == "mekong" and field_roll % 3 == 0 or field_roll % 23 == 1):
+					var plan_shade: float = _vary(cell)
+					_flat(paddy, grid, cell, high + 0.05, Color(plan_shade, plan_shade, plan_shade, 1.0))
+					paddy_n += 1
+				continue
+			if domain != SMDomainGrid.Domain.LAND or _busy(profile, cell):
+				continue
+			if _dressing != null and not _dressing.clear_of_props(cell):
 				continue
 			var roll: int = _hash(x, y)
-			if bank and roll % 7 == 0 and palms.size() < 48:
+			if bank and roll % 7 == 0:
 				palms.append(_xf(grid, cell, high, roll))
-			elif not bank and roll % 9 == 0 and trees.size() < 90:
+			elif not bank and roll % 11 == 0:
 				trees.append(_xf(grid, cell, high, roll))
-			if bank and roll % 17 == 3 and stilts.size() < 18:
-				stilts.append(_xf(grid, cell, high, roll))
-			elif not bank and not track and roll % 29 == 4 and houses.size() < 28:
-				houses.append(_xf(grid, cell, high, roll))
+			if bank and roll % 17 == 3:
+				stilts.append(_square(grid, cell, high, _to_water(grid, cell)))
+			elif not bank and not track and roll % 37 == 4 and (_dressing == null or _dressing.lots.is_empty()):
+				houses.append(_square(grid, cell, high, 0.0 if posmod(cell.y, 8) < 3 else 180.0))
 			var rice: bool = profile == "mekong" and roll % 3 == 0 or roll % 23 == 1
 			if rice and not track and not bank and paddy_n < 48 and not _bridge_cell(cell):
 				var rice_shade: float = _vary(cell)
@@ -120,13 +147,102 @@ static func dress(host: Node3D, grid: SMDomainGrid, profile: String) -> void:
 	_commit(host, "TerrainMudBlend", mud_fade, mud_fade_n > 0)
 	_commit(host, "TerrainSandBlend", sand_fade, sand_fade_n > 0)
 	_commit(host, "TerrainRoadBlend", road_fade, road_fade_n > 0)
-	_multi(host, "JungleTrees", _prop("tree"), trees)
-	_multi(host, "Palms", _prop("palm"), palms)
-	_multi(host, "Houses", _prop("house"), houses)
-	_multi(host, "Stilts", _prop("stilt"), stilts)
+	_multi(host, "JungleTrees", _prop("tree", profile), _spread(trees, tree_cap))
+	_multi(host, "Palms", _prop("palm", profile), _spread(palms, palm_cap))
+	_multi(host, "Houses", _prop("house", profile), _spread(houses, house_cap))
+	_multi(host, "Stilts", _prop("stilt", profile), _spread(stilts, 10))
+	_settle(host, grid, _plan if _plan != null else _dressing)
+	_tag_prop(host, "JungleTrees", Env.tree_id(profile))
+	_tag_prop(host, "Palms", Env.palm_id(profile))
+	_tag_prop(host, "Houses", Env.house_id(profile))
+	_tag_prop(host, "Stilts", "mekong_stilt_house" if profile == "mekong" or profile == "atolls" else "shan_stilt_house")
+	host.set_meta("env_profile", profile)
+	host.set_meta("env_grid", grid)
+	host.set_meta("map_plan", "" if plan == null else plan.id)
+	Env.pull_web(host, Env.wanted(profile, plan if plan != null else dressing))
 	_markers(host, profile)
 	_ocean_skirt(host, grid)
 	_sky(host)
+	Env.stamp(host, grid, profile)
+	_plan = null
+	_keep = Rect2i()
+	_dressing = null
+
+## One MultiMesh per model: "Town_<id>" for lots, "Orchard_<id>" for planted rows. Missing models fall back to boxes until the web pack lands.
+static func _settle(host: Node3D, grid: SMDomainGrid, layout: SMMapPlan) -> void:
+	if layout == null:
+		return
+	var built: Dictionary = {}
+	for lot: Dictionary in layout.lots:
+		var r: Rect2i = lot["rect"] as Rect2i
+		var at: Vector3 = grid.origin + Vector3((float(r.position.x) + float(r.size.x) * 0.5) * grid.cell_size, 0.22, (float(r.position.y) + float(r.size.y) * 0.5) * grid.cell_size)
+		_gather(built, "Town_%s" % lot["id"], Transform3D(Basis(Vector3.UP, deg_to_rad(float(lot["yaw"]) + FRONT_TURN)), at))
+	for tree: Dictionary in layout.groves:
+		var cell: Vector2i = tree["cell"] as Vector2i
+		if not grid.in_bounds(cell) or grid.domain_at_cell(cell) != SMDomainGrid.Domain.LAND:
+			continue
+		var spot: Vector3 = grid.cell_center(cell)
+		spot.y = 0.22
+		_gather(built, "Orchard_%s" % tree["id"], Transform3D(Basis.IDENTITY, spot))
+	for key: String in built:
+		var model: String = key.substr(key.find("_") + 1)
+		var mesh: Mesh = Env.mesh_of(model)
+		if mesh == null:
+			mesh = _prop("tree" if key.begins_with("Orchard_") else "house", "")
+		var spots: Array[Transform3D] = []
+		spots.assign(built[key] as Array)
+		_multi(host, key, mesh, spots)
+		_tag_prop(host, key, model)
+
+static func _gather(built: Dictionary, key: String, xf: Transform3D) -> void:
+	if not built.has(key):
+		built[key] = []
+	(built[key] as Array).append(xf)
+
+static func _square(grid: SMDomainGrid, cell: Vector2i, high: float, yaw_deg: float) -> Transform3D:
+	var at: Vector3 = grid.cell_center(cell)
+	at.y = high
+	return Transform3D(Basis(Vector3.UP, deg_to_rad(snappedf(yaw_deg, 90.0) + FRONT_TURN)), at)
+
+## Stilt houses face the nearest water, squared to the bank.
+static func _to_water(grid: SMDomainGrid, cell: Vector2i) -> float:
+	var dirs: Array[Vector2i] = [Vector2i(0, 1), Vector2i(1, 0), Vector2i(0, -1), Vector2i(-1, 0)]
+	for i: int in dirs.size():
+		var next: Vector2i = cell + dirs[i]
+		if grid.in_bounds(next) and _wet(grid.domain_at_cell(next)):
+			return float(i) * 90.0
+	return 0.0
+
+## Planned maps: forest on cliffs, a fringe of trees along cliff feet and the margin. Houses only stand in towns.
+static func _scatter(grid: SMDomainGrid, cell: Vector2i, domain: int, high: float, bank: bool, trees: Array[Transform3D], palms: Array[Transform3D]) -> void:
+	if domain != SMDomainGrid.Domain.LAND and domain != SMDomainGrid.Domain.CLIFF:
+		return
+	if grid.holding(cell) or not _plan.clear_of_props(cell):
+		return
+	var key: Vector2i = _plan.canon(cell)
+	var roll: int = _hash(key.x, key.y)
+	if domain == SMDomainGrid.Domain.CLIFF:
+		if roll % 5 == 0:
+			palms.append(_xf(grid, cell, high, roll))
+		elif roll % 3 == 0:
+			trees.append(_xf(grid, cell, high, roll))
+		return
+	var margin: int = mini(mini(cell.x, cell.y), mini(grid.cols - 1 - cell.x, grid.rows - 1 - cell.y))
+	var foot: bool = _near_cliff(grid, cell)
+	if not foot and not bank and margin > 4:
+		return
+	if bank and roll % 4 == 0:
+		palms.append(_xf(grid, cell, high, roll))
+	elif roll % 4 == 1:
+		trees.append(_xf(grid, cell, high, roll))
+
+static func _near_cliff(grid: SMDomainGrid, cell: Vector2i) -> bool:
+	for dy: int in range(-1, 2):
+		for dx: int in range(-1, 2):
+			var next: Vector2i = cell + Vector2i(dx, dy)
+			if grid.in_bounds(next) and grid.domain_at_cell(next) == SMDomainGrid.Domain.CLIFF:
+				return true
+	return false
 
 static func _ocean_skirt(host: Node3D, grid: SMDomainGrid) -> void:
 	if host.get_node_or_null("OceanSkirt") != null:
@@ -171,15 +287,17 @@ static func _fog(env: Environment, sight: SMSight) -> void:
 	if sight.hazy:
 		env.fog_enabled = true
 		env.fog_mode = Environment.FOG_MODE_EXPONENTIAL
-		env.fog_density = 0.032
-		env.fog_light_color = Color(0.72, 0.66, 0.52)
-		env.fog_aerial_perspective = 0.4
+		env.fog_density = 0.0055
+		env.fog_light_color = Color(0.68, 0.63, 0.52)
+		env.fog_light_energy = 0.45
+		env.fog_aerial_perspective = 0.12
 	elif sight.monsoon:
 		env.fog_enabled = true
 		env.fog_mode = Environment.FOG_MODE_EXPONENTIAL
-		env.fog_density = 0.012
+		env.fog_density = 0.004
 		env.fog_light_color = Color(0.55, 0.58, 0.62)
-		env.fog_aerial_perspective = 0.2
+		env.fog_light_energy = 0.45
+		env.fog_aerial_perspective = 0.1
 	else:
 		env.fog_enabled = false
 
@@ -255,23 +373,31 @@ static func _touches_water(grid: SMDomainGrid, cell: Vector2i, sx: int, sz: int)
 	return false
 
 static func _track(profile: String, cell: Vector2i) -> bool:
-	if profile == "chiang" and cell.x >= 26 and cell.x < 30 and ((cell.y >= 8 and cell.y < 12) or (cell.y >= 28 and cell.y < 32)):
+	if _plan != null:
+		for r: Rect2i in _plan.roads:
+			if r.has_point(cell):
+				return true
+		return _plan.on_street(cell)
+	if _dressing != null and _dressing.on_street(cell):
 		return true
 	return cell.y % 8 == 3
 
-static func _burma_cut(cell: Vector2i) -> bool:
-	return cell.x >= 16 and cell.x < 24 and cell.y >= 12 and cell.y < 16
-
 static func _bridge_cell(cell: Vector2i) -> bool:
-	var west: bool = cell.x >= 12 and cell.x < 15 and cell.y >= 14 and cell.y < 18
-	var east: bool = cell.x >= 26 and cell.x < 29 and cell.y >= 14 and cell.y < 18
-	return west or east
+	if _plan != null:
+		for row: Dictionary in _plan.sites:
+			if (row["span"] as Rect2i).grow(1).has_point(cell):
+				return true
+	return false
 
 static func _busy(profile: String, cell: Vector2i) -> bool:
-	if profile == "phillips" and cell.y >= 7 and cell.y <= 9 and cell.x <= 14:
+	if _keep.has_point(cell):
 		return true
-	if profile == "phillips" and cell.x >= 29 and cell.x <= 34 and cell.y >= 10 and cell.y <= 15:
-		return true
+	if profile == "phillips":
+		var pad: Vector2i = SMDomainGrid.pad_of("phillips")
+		if cell.y >= 7 + pad.y and cell.y <= 9 + pad.y and cell.x <= 14 + pad.x:
+			return true
+		if cell.x >= 29 + pad.x and cell.x <= 34 + pad.x and cell.y >= 10 + pad.y and cell.y <= 15 + pad.y:
+			return true
 	return false
 
 static func _tint(profile: String, cell: Vector2i, domain: int, bank: bool, road: bool) -> Color:
@@ -281,13 +407,9 @@ static func _tint(profile: String, cell: Vector2i, domain: int, bank: bool, road
 		return DIRT
 	if profile == "atolls":
 		return SAND
-	var roll: int = _hash(cell.x + 3, cell.y + 9)
 	if bank:
+		var roll: int = _hash(cell.x + 3, cell.y + 9)
 		return SAND if roll % 2 == 0 else MUD
-	if roll % 7 == 0:
-		return MUD
-	if roll % 7 == 1:
-		return SAND
 	return GRASS
 
 static func _hash(x: int, y: int) -> int:
@@ -311,16 +433,40 @@ static func _commit(host: Node3D, node_name: String, st: SurfaceTool, keep: bool
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	host.add_child(mi)
 
-static func _multi(host: Node3D, node_name: String, mesh: ArrayMesh, spots: Array[Transform3D]) -> void:
+## Keep props from both ends of a long map. Filling the cap from the north-west corner left the far shore bare.
+static func _spread(spots: Array[Transform3D], cap: int) -> Array[Transform3D]:
+	if cap <= 0 or spots.size() <= cap:
+		return spots
+	var out: Array[Transform3D] = []
+	var step: float = float(spots.size()) / float(cap)
+	var i: int = 0
+	while out.size() < cap:
+		out.append(spots[mini(spots.size() - 1, int(float(i) * step))])
+		i += 1
+	return out
+
+static func _tag_prop(host: Node3D, node_name: String, id: String) -> void:
+	var node: MultiMeshInstance3D = host.get_node_or_null(node_name) as MultiMeshInstance3D
+	if node == null or id == "":
+		return
+	node.set_meta("env_id", id)
+	if OS.has_feature("web") and not Env.has_mesh(id):
+		node.set_meta("standin_held", true)
+		node.visible = false
+
+static func _multi(host: Node3D, node_name: String, mesh: Mesh, spots: Array[Transform3D]) -> void:
 	if spots.is_empty():
 		return
 	var mm: MultiMesh = MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
-	mm.mesh = mesh
+	mm.use_colors = true
+	mm.mesh = _fade_mesh(mesh)
 	mm.instance_count = spots.size()
 	for i: int in spots.size():
 		mm.set_instance_transform(i, spots[i])
+		mm.set_instance_color(i, Color(1.0, 1.0, 1.0, 1.0))
 	var node: MultiMeshInstance3D = MultiMeshInstance3D.new()
+	node.set_meta("all_spots", spots)
 	node.name = node_name
 	node.multimesh = mm
 	node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
@@ -352,17 +498,16 @@ static func _kind_at(profile: String, grid: SMDomainGrid, cell: Vector2i) -> Str
 		return "water"
 	var bank: bool = _bank(grid, cell)
 	var track: bool = domain == SMDomainGrid.Domain.LAND and _track(profile, cell)
-	var cut: bool = profile == "burma" and _burma_cut(cell)
-	var tint: Color = _tint(profile, cell, domain, bank, track or cut)
-	return _kind(profile, tint, track, cut)
+	var tint: Color = _tint(profile, cell, domain, bank, track)
+	return _kind(profile, tint, track, false)
 
 static func _vary(cell: Vector2i) -> float:
 	return 0.88 + float(_hash(cell.x + 11, cell.y + 5) % 13) * 0.01
 
 static func _ink(kind: String, tint: Color, shade: float, alpha: float) -> Color:
-	if kind == "land" and tint != SAND:
+	if kind == "land" and tint == ROCK:
 		return Color(tint.r * shade, tint.g * shade, tint.b * shade, alpha)
-	return Color(shade, shade, shade, alpha)
+	return Color(shade, shade * 0.98, shade * 0.94, alpha)
 
 static func _blend(profile: String, grid: SMDomainGrid, cell: Vector2i, kind: String, high: float, shade: float, land: SurfaceTool, mud: SurfaceTool, sand: SurfaceTool, road: SurfaceTool) -> String:
 	var dirs: Array[Vector2i] = [Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, -1), Vector2i(0, 1)]
@@ -424,7 +569,7 @@ static func _quad(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, d: Vector
 	_vert(st, d, color)
 
 static func _vert(st: SurfaceTool, p: Vector3, color: Color) -> void:
-	st.set_uv(Vector2(p.x, p.z) / 0.32)
+	st.set_uv(Vector2(p.x, p.z) / 4.0)
 	st.set_color(color)
 	st.add_vertex(p)
 
@@ -491,7 +636,7 @@ static func _ground(stem: String, tint: bool, fade: bool = false) -> ShaderMater
 	mat.shader = load("res://game/shaders/ground_fade.gdshader" if fade else "res://game/shaders/ground_tile.gdshader")
 	if fade:
 		mat.render_priority = 2
-	var tex: Texture2D = Art.texture("terrain/%s.webp" % stem)
+	var tex: Texture2D = _terrain_tex(stem)
 	if tex != null:
 		mat.set_shader_parameter("albedo_tex", tex)
 		mat.set_shader_parameter("use_tex", 1.0)
@@ -505,8 +650,8 @@ static func _water_material() -> ShaderMaterial:
 	if _water_ink == null:
 		_water_ink = ShaderMaterial.new()
 		_water_ink.shader = WATER_SHADER
-	var shallow: Texture2D = Art.texture("terrain/shallow_water.webp")
-	var deep: Texture2D = Art.texture("terrain/deep_water.webp")
+	var shallow: Texture2D = _terrain_tex("shallow_water")
+	var deep: Texture2D = _terrain_tex("deep_water")
 	if shallow != null and deep != null:
 		_water_ink.set_shader_parameter("shallow_tex", shallow)
 		_water_ink.set_shader_parameter("deep_tex", deep)
@@ -521,9 +666,37 @@ static func _site_material() -> StandardMaterial3D:
 		_site_ink.cull_mode = BaseMaterial3D.CULL_DISABLED
 	return _site_ink
 
-static func _prop(kind: String) -> ArrayMesh:
-	if _prop_cache.has(kind):
-		return _prop_cache[kind] as ArrayMesh
+static func _terrain_tex(stem: String) -> Texture2D:
+	var rel: String = "res://game/terrain/%s.webp" % stem
+	if ResourceLoader.exists(rel):
+		var loaded: Resource = load(rel)
+		if loaded is Texture2D:
+			return loaded as Texture2D
+	var bytes: PackedByteArray = FileAccess.get_file_as_bytes(rel)
+	if bytes.is_empty():
+		return Art.texture("terrain/%s.webp" % stem)
+	var image := Image.new()
+	if image.load_webp_from_buffer(bytes) != OK:
+		return null
+	return ImageTexture.create_from_image(image)
+
+static func _prop(kind: String, profile: String) -> Mesh:
+	var key: String = "%s:%s" % [kind, profile]
+	var env_id: String = ""
+	if kind == "palm":
+		env_id = Env.palm_id(profile)
+	elif kind == "house":
+		env_id = Env.house_id(profile)
+	elif kind == "stilt":
+		env_id = "mekong_stilt_house" if profile == "mekong" or profile == "atolls" else "shan_stilt_house"
+	else:
+		env_id = Env.tree_id(profile)
+	var taken: Mesh = Env.mesh_of(env_id) if env_id != "" else null
+	if taken != null:
+		_prop_cache[key] = taken
+		return taken
+	if _prop_cache.has(key):
+		return _prop_cache[key] as Mesh
 	var st: SurfaceTool = _begin(_land_material())
 	if kind == "palm":
 		_palm(st)
@@ -535,13 +708,32 @@ static func _prop(kind: String) -> ArrayMesh:
 		_tree(st)
 	st.generate_normals()
 	var mesh: ArrayMesh = st.commit()
-	_prop_cache[kind] = mesh
+	_prop_cache[key] = mesh
 	return mesh
 
+## Used when the teak glb is not on disk yet. A tapered trunk and a crown of
+## small clumps, so the stand-in is not one green cube.
+static func fallback_tree() -> Mesh:
+	var st: SurfaceTool = _begin(_land_material())
+	_tree(st)
+	st.generate_normals()
+	return st.commit()
+
 static func _tree(st: SurfaceTool) -> void:
-	_box(st, Vector3(0.0, 0.7, 0.0), Vector3(0.28, 1.4, 0.28), WOOD)
-	_box(st, Vector3(0.0, 1.7, 0.0), Vector3(1.5, 0.9, 1.5), LEAF)
-	_box(st, Vector3(0.15, 2.2, -0.1), Vector3(1.0, 0.6, 1.0), Color(0.22, 0.48, 0.2))
+	_box(st, Vector3(0.0, 0.28, 0.0), Vector3(0.42, 0.16, 0.42), Color(0.28, 0.2, 0.1))
+	_box(st, Vector3(0.0, 0.55, 0.0), Vector3(0.32, 0.5, 0.32), WOOD)
+	_box(st, Vector3(0.02, 1.05, 0.0), Vector3(0.22, 0.55, 0.22), WOOD)
+	_box(st, Vector3(0.04, 1.5, -0.02), Vector3(0.14, 0.42, 0.14), Color(0.32, 0.22, 0.12))
+	_box(st, Vector3(0.28, 1.55, 0.05), Vector3(0.46, 0.08, 0.1), WOOD)
+	_box(st, Vector3(-0.22, 1.48, -0.08), Vector3(0.4, 0.08, 0.1), WOOD)
+	_box(st, Vector3(0.0, 1.85, 0.0), Vector3(0.55, 0.42, 0.5), LEAF)
+	_box(st, Vector3(0.38, 1.72, 0.12), Vector3(0.42, 0.36, 0.38), Color(0.16, 0.36, 0.14))
+	_box(st, Vector3(-0.34, 1.78, -0.1), Vector3(0.4, 0.34, 0.36), Color(0.2, 0.42, 0.16))
+	_box(st, Vector3(0.08, 2.15, -0.28), Vector3(0.38, 0.32, 0.34), LEAF)
+	_box(st, Vector3(-0.1, 2.18, 0.26), Vector3(0.36, 0.3, 0.32), Color(0.14, 0.38, 0.15))
+	_box(st, Vector3(0.22, 2.28, 0.02), Vector3(0.32, 0.28, 0.3), Color(0.22, 0.46, 0.18))
+	_box(st, Vector3(-0.16, 2.42, -0.04), Vector3(0.28, 0.26, 0.26), LEAF)
+	_box(st, Vector3(0.02, 2.62, 0.0), Vector3(0.22, 0.22, 0.2), Color(0.26, 0.5, 0.2))
 
 static func _palm(st: SurfaceTool) -> void:
 	_box(st, Vector3(0.0, 0.5, 0.0), Vector3(0.18, 1.0, 0.18), WOOD)
@@ -643,19 +835,179 @@ static func cull_props(host: Node3D, cam: RTSCamera) -> void:
 	var now: int = Time.get_ticks_msec()
 	var moved: bool = Vector2(focus.x - _cull_at.x, focus.z - _cull_at.z).length() > 6.0
 	var flipped: bool = low != _cull_low
-	if not flipped and not low and not moved and now - _cull_ms < 300:
+	if flipped or low or moved or now - _cull_ms >= 300:
+		_cull_ms = now
+		_cull_at = focus
+		_cull_low = low
+		_cull_named(host, "JungleTrees", focus, low)
+		_cull_named(host, "Palms", focus, low)
+		_cull_named(host, "Houses", focus, low)
+		_cull_named(host, "Stilts", focus, low)
+		for child: Node in host.get_children():
+			var mname: String = String(child.name)
+			if mname.begins_with("Town_") or mname.begins_with("Orchard_"):
+				_cull_named(host, mname, focus, low)
+	if cam != null and not low:
+		fade_occluders(host, cam)
+
+## 0 is solid. 1 hides a tall prop whose crown crosses the segment from the camera to the ground.
+## A camera sitting above the crown leaves the prop alone. Short props stay put.
+static func view_fade(origin: Vector3, height: float, radius: float, eye: Vector3, aim: Vector3) -> float:
+	if height < CANOPY_MIN:
+		return 0.0
+	if eye.y >= origin.y + height + 1.25:
+		return 0.0
+	var a: Vector2 = Vector2(eye.x, eye.z)
+	var b: Vector2 = Vector2(aim.x, aim.z)
+	var p: Vector2 = Vector2(origin.x, origin.z)
+	var ab: Vector2 = b - a
+	var denom: float = ab.length_squared()
+	var t: float = 0.0
+	if denom > 0.01:
+		t = clampf((p - a).dot(ab) / denom, 0.0, 1.0)
+	var closest: Vector2 = a + ab * t
+	var dist: float = p.distance_to(closest)
+	var reach: float = maxf(radius, 1.2)
+	if dist >= reach:
+		return 0.0
+	var ray_y: float = lerpf(eye.y, aim.y, t)
+	var top: float = origin.y + height
+	if ray_y > top + 0.35:
+		return 0.0
+	var radial: float = clampf(1.0 - dist / reach, 0.0, 1.0)
+	var climb: float = clampf((top + 0.35 - ray_y) / 3.0, 0.0, 1.0)
+	return radial * radial * climb
+
+static func fade_occluders(host: Node3D, cam: RTSCamera) -> void:
+	if host == null or cam == null:
 		return
-	_cull_ms = now
-	_cull_at = focus
-	_cull_low = low
-	_cull_named(host, "JungleTrees", focus, low)
-	_cull_named(host, "Palms", focus, low)
+	var eye: Vector3 = cam.global_position
+	var aim: Vector3 = cam.focus
+	for node_name: String in ["JungleTrees", "Palms", "Houses", "Stilts"]:
+		_fade_multi(host.get_node_or_null(node_name) as MultiMeshInstance3D, eye, aim)
+	for child: Node in host.get_children():
+		var multi: MultiMeshInstance3D = child as MultiMeshInstance3D
+		if multi != null:
+			var mname: String = String(multi.name)
+			if mname.begins_with("Town_") or mname.begins_with("Orchard_"):
+				_fade_multi(multi, eye, aim)
+				continue
+		var node: Node3D = child as Node3D
+		if node == null:
+			continue
+		var label: String = String(node.name)
+		if label.begins_with("Landmark_") or label.begins_with("Scenery_"):
+			_fade_placed(node, eye, aim)
+
+static func _fade_mesh(mesh: Mesh) -> Mesh:
+	var copy: Mesh = mesh.duplicate(true) as Mesh
+	if copy == null:
+		return mesh
+	for surface: int in copy.get_surface_count():
+		var mat: Material = copy.surface_get_material(surface)
+		if mat is StandardMaterial3D:
+			var ink: StandardMaterial3D = (mat as StandardMaterial3D).duplicate() as StandardMaterial3D
+			ink.vertex_color_use_as_albedo = true
+			ink.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
+			copy.surface_set_material(surface, ink)
+	return copy
+
+static func _fade_multi(node: MultiMeshInstance3D, eye: Vector3, aim: Vector3) -> void:
+	if node == null or node.multimesh == null or node.multimesh.mesh == null:
+		return
+	var mm: MultiMesh = node.multimesh
+	var shown: Array = node.get_meta("shown", [])
+	if shown.is_empty():
+		shown = node.get_meta("all_spots", [])
+	if shown.is_empty():
+		return
+	var aabb: AABB = mm.mesh.get_aabb()
+	var count: int = mini(mm.instance_count, shown.size())
+	var fades: PackedFloat32Array = PackedFloat32Array()
+	fades.resize(count)
+	for i: int in count:
+		var base: Transform3D = shown[i] as Transform3D
+		var sc: Vector3 = base.basis.get_scale()
+		var base_y: float = base.origin.y + aabb.position.y * sc.y
+		var height: float = aabb.size.y * sc.y
+		var radius: float = maxf(aabb.size.x * sc.x, aabb.size.z * sc.z) * 0.5
+		var fade: float = view_fade(Vector3(base.origin.x, base_y, base.origin.z), height, radius, eye, aim)
+		fades[i] = fade
+		var keep: float = 1.0 - fade
+		if keep < 0.04:
+			keep = 0.001
+		mm.set_instance_transform(i, Transform3D(base.basis.scaled(Vector3(keep, keep, keep)), base.origin))
+		if mm.use_colors:
+			mm.set_instance_color(i, Color(1.0, 1.0, 1.0, keep))
+	node.set_meta("canopy_fade", fades)
+
+static func _fade_placed(node: Node3D, eye: Vector3, aim: Vector3) -> void:
+	var bounds: Vector3 = _canopy_bounds(node)
+	var fade: float = view_fade(Vector3(node.global_position.x, bounds.z, node.global_position.z), bounds.y, bounds.x, eye, aim)
+	if fade >= 0.95:
+		if node.visible:
+			node.visible = false
+			node.set_meta("canopy_hold", true)
+		return
+	if node.has_meta("canopy_hold") and bool(node.get_meta("canopy_hold")):
+		node.visible = true
+		node.set_meta("canopy_hold", false)
+	var meshes: Array[Node] = node.find_children("*", "MeshInstance3D", true, false)
+	if node is MeshInstance3D:
+		meshes.append(node)
+	for item: Node in meshes:
+		var mi: MeshInstance3D = item as MeshInstance3D
+		if mi != null:
+			mi.transparency = fade
+
+static func _canopy_bounds(node: Node3D) -> Vector3:
+	if node.has_meta("canopy_bounds"):
+		return node.get_meta("canopy_bounds") as Vector3
+	var top: float = node.global_position.y
+	var bottom: float = node.global_position.y
+	var radius: float = 0.0
+	var found: bool = false
+	var meshes: Array[Node] = node.find_children("*", "MeshInstance3D", true, false)
+	if node is MeshInstance3D:
+		meshes.append(node)
+	for item: Node in meshes:
+		var mi: MeshInstance3D = item as MeshInstance3D
+		if mi == null or mi.mesh == null:
+			continue
+		var xf: Transform3D = mi.global_transform
+		for corner: Vector3 in _aabb_corners(mi.mesh.get_aabb()):
+			var world: Vector3 = xf * corner
+			if not found:
+				top = world.y
+				bottom = world.y
+				found = true
+			else:
+				top = maxf(top, world.y)
+				bottom = minf(bottom, world.y)
+			radius = maxf(radius, Vector2(world.x - node.global_position.x, world.z - node.global_position.z).length())
+	var bounds: Vector3 = Vector3(radius, maxf(0.0, top - bottom), bottom)
+	node.set_meta("canopy_bounds", bounds)
+	return bounds
+
+static func _aabb_corners(aabb: AABB) -> Array[Vector3]:
+	var p: Vector3 = aabb.position
+	var s: Vector3 = aabb.size
+	var out: Array[Vector3] = []
+	out.append(p)
+	out.append(p + Vector3(s.x, 0.0, 0.0))
+	out.append(p + Vector3(0.0, s.y, 0.0))
+	out.append(p + Vector3(0.0, 0.0, s.z))
+	out.append(p + Vector3(s.x, s.y, 0.0))
+	out.append(p + Vector3(s.x, 0.0, s.z))
+	out.append(p + Vector3(0.0, s.y, s.z))
+	out.append(p + s)
+	return out
 
 static func _cull_named(host: Node3D, node_name: String, focus: Vector3, hide: bool) -> void:
 	var node: MultiMeshInstance3D = host.get_node_or_null(node_name) as MultiMeshInstance3D
 	if node == null or node.multimesh == null:
 		return
-	if hide:
+	if hide or bool(node.get_meta("standin_held", false)):
 		node.visible = false
 		return
 	node.visible = true
@@ -670,5 +1022,8 @@ static func _cull_named(host: Node3D, node_name: String, focus: Vector3, hide: b
 		if Vector2(xf.origin.x - focus.x, xf.origin.z - focus.z).length() <= TREE_REACH:
 			keep.append(xf)
 	node.multimesh.instance_count = keep.size()
+	node.set_meta("shown", keep)
 	for i: int in keep.size():
 		node.multimesh.set_instance_transform(i, keep[i])
+		if node.multimesh.use_colors:
+			node.multimesh.set_instance_color(i, Color(1.0, 1.0, 1.0, 1.0))

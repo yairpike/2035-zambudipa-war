@@ -98,6 +98,25 @@
       ],
       "ability": "Frequency Hop",
       "f_stat": "speed"
+    },
+    {
+      "id": "kite_loiterer",
+      "display_name": "Kite Loiterer",
+      "cameo": "KITE",
+      "role": "air",
+      "cost": 280,
+      "time": 7,
+      "hp": 70,
+      "speed": 3.6,
+      "weapon": "warhead",
+      "weapon_damage": 42,
+      "attack_range": 10,
+      "secondary": "smart_cast",
+      "guidance": "none",
+      "locomotion": "air",
+      "tags": ["air"],
+      "ability": "Rail Strike",
+      "f_stat": "damage"
     }
   ],
   "buildings": [],

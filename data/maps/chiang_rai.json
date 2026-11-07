@@ -1,0 +1,67 @@
+{
+  "name": "Siege of Chiang Rai",
+  "cols": 80,
+  "rows": 56,
+  "cell": 4.0,
+  "symmetry": "rot180",
+  "ground": "land",
+  "paint": [
+    {"rect": [0, 54, 80, 2], "domain": "cliff"},
+    {"rect": [0, 0, 2, 56], "domain": "cliff"},
+    {"rect": [38, 0, 4, 56], "domain": "deep"},
+    {"rect": [38, 10, 4, 4], "domain": "land"},
+    {"rect": [38, 26, 4, 4], "domain": "land"},
+    {"rect": [3, 35, 6, 2], "domain": "cliff"},
+    {"rect": [13, 35, 8, 2], "domain": "cliff"},
+    {"rect": [20, 37, 2, 5], "domain": "cliff"},
+    {"rect": [20, 46, 2, 8], "domain": "cliff"},
+    {"rect": [3, 19, 6, 2], "domain": "cliff"},
+    {"rect": [13, 19, 8, 2], "domain": "cliff"},
+    {"rect": [20, 2, 2, 8], "domain": "cliff"},
+    {"rect": [20, 13, 2, 6], "domain": "cliff"}
+  ],
+  "starts": [[10, 44], [10, 11]],
+  "plateaus": [[3, 37, 16, 15], [3, 3, 16, 15]],
+  "roads": [
+    [10, 21, 2, 15],
+    [12, 27, 12, 2],
+    [31, 27, 7, 2],
+    [22, 11, 16, 2],
+    [22, 43, 8, 2]
+  ],
+  "holds": [[25, 25, 6, 6]],
+  "landmark": {"id": "lm_doi_suthep", "rect": [25, 25, 6, 6]},
+  "nodes": [
+    {"id": "home_a", "kind": "slag", "cell": [4, 39], "rate": 12},
+    {"id": "home_b", "kind": "ruby", "cell": [4, 50], "rate": 12},
+    {"id": "ally_a", "kind": "slag", "cell": [4, 5], "rate": 12},
+    {"id": "ally_b", "kind": "jade", "cell": [4, 16], "rate": 12},
+    {"id": "mid_jade", "kind": "jade", "cell": [14, 27], "rate": 12},
+    {"id": "mid_ruby", "kind": "ruby", "cell": [22, 31], "rate": 12},
+    {"id": "ford_n", "kind": "slag", "cell": [33, 8], "rate": 12},
+    {"id": "ford_s", "kind": "slag", "cell": [33, 47], "rate": 12},
+    {"id": "river_n", "kind": "rare", "cell": [36, 20], "rate": 0, "water": true},
+    {"id": "river_s", "kind": "rare", "cell": [36, 36], "rate": 0, "water": true},
+    {"id": "far_n", "kind": "bullion", "cell": [26, 3], "rate": 12},
+    {"id": "far_s", "kind": "bullion", "cell": [26, 52], "rate": 12}
+  ],
+  "sites": [
+    {"id": "cyber_n", "kind": "cyber", "cell": [28, 16]},
+    {"id": "cyber_s", "kind": "cyber", "cell": [28, 40]},
+    {"id": "bazaar", "kind": "bazaar", "cell": [18, 24]},
+    {"id": "garrison", "kind": "garrison", "cell": [24, 21]},
+    {"id": "garrison_s", "kind": "garrison", "cell": [31, 51]}
+  ],
+  "props": [
+    {"id": "checkpoint", "cell": [36, 13], "yaw": 90},
+    {"id": "karst_tower", "cell": [21, 52], "yaw": 0},
+    {"id": "karst_tower", "cell": [1, 2], "yaw": 40}
+  ],
+  "towns": [
+    {"id": "old_town", "place": "chiang_rai", "rect": [2, 22, 8, 11], "axis": "x", "block": [6, 4], "high": [1], "shops": "neon_shophouse", "homes": ["border_guesthouse", "shan_stilt_house", "neon_shophouse"], "civic": [{"block": [0, 0], "id": "lanna_wat"}]}
+  ],
+  "orchards": [
+    {"id": "lychee_orchard", "tree": "frangipani", "rect": [32, 14, 6, 5], "pitch": [1, 2]}
+  ],
+  "bot": {"plan_a": "ford_s_b", "plan_b": "mid_jade_b", "site": "cyber_s_b", "name": "Bo Mya"}
+}

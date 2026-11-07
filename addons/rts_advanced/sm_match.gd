@@ -27,6 +27,7 @@ var f_toggles: int = 0
 var pipeline_ok: bool = false
 var claimed: bool = false
 var faction_id: String = "gtfc"
+var spans: Dictionary = {}
 
 func setup_phillips(faction: String = "gtfc") -> void:
 	faction_id = faction
@@ -38,8 +39,8 @@ func setup_phillips(faction: String = "gtfc") -> void:
 	yard.style = SMBuildYard.Style.SCAFFOLD
 	yard.team = player
 	yard.economy = economy
-	yard.center = grid.cell_center(Vector2i(6, 12))
-	yard.radius = 22.0
+	yard.center = grid.cell_center(SMDomainGrid.at("phillips", Vector2i(6, 12)))
+	yard.radius = 36.0
 	yard.drain_per_sec = 5
 	yard.tech_order = [&"scaffold_yard", &"barracks"]
 	yard.building_time[&"scaffold_yard"] = 4.0
@@ -51,7 +52,7 @@ func setup_phillips(faction: String = "gtfc") -> void:
 	_sites_phillips()
 	abilities = SMAbilities.new()
 	ew = SMEwField.new()
-	ew.center = grid.cell_center(Vector2i(10, 6))
+	ew.center = grid.cell_center(SMDomainGrid.at("phillips", Vector2i(10, 6)))
 	protocols = SMProtocols.new()
 	audio = SMAudioDirector.new()
 	domain_log.clear()
@@ -71,10 +72,10 @@ func _on_domain(_unit_id: int, from_domain: int, to_domain: int) -> void:
 func has_two_lands() -> bool:
 	if grid == null:
 		return false
-	var west: int = grid.domain_at_cell(Vector2i(8, 4))
-	var east: int = grid.domain_at_cell(Vector2i(30, 12))
-	var deep: int = grid.domain_at_cell(Vector2i(20, 12))
-	var shallow: int = grid.domain_at_cell(Vector2i(16, 5))
+	var west: int = grid.domain_at_cell(SMDomainGrid.at("phillips", Vector2i(8, 4)))
+	var east: int = grid.domain_at_cell(SMDomainGrid.at("phillips", Vector2i(30, 12)))
+	var deep: int = grid.domain_at_cell(SMDomainGrid.at("phillips", Vector2i(20, 12)))
+	var shallow: int = grid.domain_at_cell(SMDomainGrid.at("phillips", Vector2i(16, 5)))
 	return west == SMDomainGrid.Domain.LAND and east == SMDomainGrid.Domain.LAND and deep == SMDomainGrid.Domain.DEEP and shallow == SMDomainGrid.Domain.SHALLOW
 
 func run_player_pipeline() -> bool:
@@ -109,15 +110,15 @@ func run_player_pipeline() -> bool:
 
 func cross_channel() -> bool:
 	var pts: Array[Vector3] = [
-		grid.cell_center(Vector2i(12, 5)),
-		grid.cell_center(Vector2i(16, 5)),
-		grid.cell_center(Vector2i(22, 5)),
-		grid.cell_center(Vector2i(26, 5)),
+		grid.cell_center(SMDomainGrid.at("phillips", Vector2i(12, 5))),
+		grid.cell_center(SMDomainGrid.at("phillips", Vector2i(16, 5))),
+		grid.cell_center(SMDomainGrid.at("phillips", Vector2i(22, 5))),
+		grid.cell_center(SMDomainGrid.at("phillips", Vector2i(26, 5))),
 	]
 	for p: Vector3 in pts:
 		if not grid.move_unit(12, p, SMDomainGrid.Loco.AMPHIBIOUS):
 			return false
-	var deep: Vector3 = grid.cell_center(Vector2i(20, 12))
+	var deep: Vector3 = grid.cell_center(SMDomainGrid.at("phillips", Vector2i(20, 12)))
 	if grid.move_unit(99, deep, SMDomainGrid.Loco.GROUND):
 		return false
 	return domain_log.size() >= 2 and grid.unit_domain(12) == SMDomainGrid.Domain.LAND
@@ -192,7 +193,7 @@ func run_bot(bot: SMBot) -> Dictionary:
 		abilities.advance(2.0)
 		frozen = abilities.status_of(2) == SMAbilities.ST_FROZEN
 	if bot.personality == &"iskandar":
-		naval = grid.move_unit(7, grid.cell_center(Vector2i(20, 12)), SMDomainGrid.Loco.NAVAL)
+		naval = grid.move_unit(7, grid.cell_center(SMDomainGrid.at("phillips", Vector2i(20, 12))), SMDomainGrid.Loco.NAVAL)
 	if bot.personality == &"tran":
 		flew = grid.move_unit(8, grid.cell_center(Vector2i(19, 10)), SMDomainGrid.Loco.AIR)
 		frozen = frozen or abilities.status_of(2) == SMAbilities.ST_FROZEN
@@ -228,16 +229,10 @@ func place_sites(map_id: String, p_grid: SMDomainGrid) -> void:
 	grid = p_grid
 	goods = SMCommodityNet.new()
 	tech = SMTechNet.new()
-	if map_id == "sop_ruak":
+	if SMMapPlan.exists(map_id):
+		_sites_plan(SMMapPlan.of(map_id))
+	elif map_id == "sop_ruak":
 		_sites_sop()
-	elif map_id == "burma_road":
-		_sites_burma()
-	elif map_id == "ten_degree_atolls":
-		_sites_atolls()
-	elif map_id == "mekong_delta":
-		_sites_mekong()
-	elif map_id == "chiang_rai":
-		_sites_chiang()
 	else:
 		_sites_phillips()
 
@@ -311,16 +306,9 @@ func collapse_bridge(id: StringName, squad: SMPointer, host: Node3D) -> void:
 	_fit_deck(host, id)
 
 func _bridge_span(id: StringName) -> Rect2i:
-	var key: String = str(id)
-	if key == "bridge_a":
-		return Rect2i(12, 14, 3, 2)
-	if key == "bridge_b":
-		return Rect2i(12, 16, 3, 2)
-	if key == "bridge_c":
-		return Rect2i(26, 14, 3, 2)
-	if key == "bridge_d":
-		return Rect2i(26, 16, 3, 2)
-	return Rect2i(0, 0, 0, 0)
+	if spans.has(id):
+		return spans[id] as Rect2i
+	return Rect2i()
 
 func _fit_deck(host: Node3D, id: StringName) -> void:
 	var west: bool = str(id) == "bridge_a" or str(id) == "bridge_b"
@@ -336,120 +324,45 @@ func _owns(kind: StringName) -> bool:
 	return false
 
 func _sites_phillips() -> void:
-	_node(&"slag_west", SMCommodityNet.KIND_SLAG, Vector2i(8, 8), 20, false)
-	_node(&"slag_north", SMCommodityNet.KIND_SLAG, Vector2i(6, 4), 12, false)
-	_node(&"slag_south", SMCommodityNet.KIND_SLAG, Vector2i(4, 16), 12, false)
-	_node(&"slag_mid", SMCommodityNet.KIND_SLAG, Vector2i(10, 14), 12, false)
-	_node(&"bullion_east", SMCommodityNet.KIND_BULLION, Vector2i(32, 16), 25, false)
-	_node(&"bullion_north", SMCommodityNet.KIND_BULLION, Vector2i(34, 6), 18, false)
-	_node(&"rare_shore", SMCommodityNet.KIND_RARE, Vector2i(13, 12), 0, true)
-	_node(&"rare_ford", SMCommodityNet.KIND_RARE, Vector2i(14, 18), 0, true)
-	tech.add_site(&"cyber", SMTechNet.CYBER, grid.cell_center(Vector2i(28, 18)))
-	tech.add_site(&"cyber_north", SMTechNet.CYBER, grid.cell_center(Vector2i(24, 4)))
-	tech.add_site(&"salvage_wreck", SMTechNet.SALVAGE, grid.cell_center(Vector2i(18, 12)))
+	_node(&"slag_west", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("phillips", Vector2i(8, 8)), 20, false)
+	_node(&"slag_north", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("phillips", Vector2i(6, 4)), 12, false)
+	_node(&"slag_south", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("phillips", Vector2i(4, 16)), 12, false)
+	_node(&"slag_mid", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("phillips", Vector2i(10, 14)), 12, false)
+	_node(&"bullion_east", SMCommodityNet.KIND_BULLION, SMDomainGrid.at("phillips", Vector2i(32, 16)), 25, false)
+	_node(&"bullion_north", SMCommodityNet.KIND_BULLION, SMDomainGrid.at("phillips", Vector2i(34, 6)), 18, false)
+	_node(&"rare_shore", SMCommodityNet.KIND_RARE, SMDomainGrid.at("phillips", Vector2i(13, 12)), 0, true)
+	_node(&"rare_ford", SMCommodityNet.KIND_RARE, SMDomainGrid.at("phillips", Vector2i(14, 18)), 0, true)
+	tech.add_site(&"cyber", SMTechNet.CYBER, grid.cell_center(SMDomainGrid.at("phillips", Vector2i(28, 18))))
+	tech.add_site(&"cyber_north", SMTechNet.CYBER, grid.cell_center(SMDomainGrid.at("phillips", Vector2i(24, 4))))
+	tech.add_site(&"salvage_wreck", SMTechNet.SALVAGE, grid.cell_center(SMDomainGrid.at("phillips", Vector2i(18, 12))))
 
 func _sites_sop() -> void:
-	_node(&"slag_a", SMCommodityNet.KIND_SLAG, Vector2i(4, 20), 14, false)
-	_node(&"slag_b", SMCommodityNet.KIND_SLAG, Vector2i(8, 30), 14, false)
-	_node(&"slag_c", SMCommodityNet.KIND_SLAG, Vector2i(12, 32), 12, false)
-	_node(&"slag_d", SMCommodityNet.KIND_SLAG, Vector2i(2, 28), 12, false)
-	_node(&"slag_e", SMCommodityNet.KIND_SLAG, Vector2i(14, 24), 12, false)
-	_node(&"slag_f", SMCommodityNet.KIND_SLAG, Vector2i(6, 34), 12, false)
-	_node(&"jade_a", SMCommodityNet.KIND_JADE, Vector2i(4, 6), 15, false)
-	_node(&"jade_b", SMCommodityNet.KIND_JADE, Vector2i(8, 4), 15, false)
-	_node(&"jade_c", SMCommodityNet.KIND_JADE, Vector2i(12, 8), 15, false)
-	_node(&"bullion_a", SMCommodityNet.KIND_BULLION, Vector2i(24, 28), 20, false)
-	_node(&"bullion_b", SMCommodityNet.KIND_BULLION, Vector2i(30, 24), 20, false)
-	_node(&"bullion_c", SMCommodityNet.KIND_BULLION, Vector2i(32, 30), 18, false)
-	tech.add_site(&"cyber_a", SMTechNet.CYBER, grid.cell_center(Vector2i(10, 26)))
-	tech.add_site(&"cyber_b", SMTechNet.CYBER, grid.cell_center(Vector2i(28, 32)))
-	tech.add_site(&"cyber_c", SMTechNet.CYBER, grid.cell_center(Vector2i(6, 10)))
-	tech.add_site(&"bazaar", SMTechNet.BAZAAR, grid.cell_center(Vector2i(12, 22)))
+	_node(&"slag_a", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(4, 20)), 14, false)
+	_node(&"slag_b", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(8, 30)), 14, false)
+	_node(&"slag_c", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(12, 32)), 12, false)
+	_node(&"slag_d", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(2, 28)), 12, false)
+	_node(&"slag_e", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(14, 24)), 12, false)
+	_node(&"slag_f", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(6, 34)), 12, false)
+	_node(&"jade_a", SMCommodityNet.KIND_JADE, SMDomainGrid.at("sop_ruak", Vector2i(4, 6)), 15, false)
+	_node(&"jade_b", SMCommodityNet.KIND_JADE, SMDomainGrid.at("sop_ruak", Vector2i(8, 4)), 15, false)
+	_node(&"jade_c", SMCommodityNet.KIND_JADE, SMDomainGrid.at("sop_ruak", Vector2i(12, 8)), 15, false)
+	_node(&"bullion_a", SMCommodityNet.KIND_BULLION, SMDomainGrid.at("sop_ruak", Vector2i(24, 28)), 20, false)
+	_node(&"bullion_b", SMCommodityNet.KIND_BULLION, SMDomainGrid.at("sop_ruak", Vector2i(30, 24)), 20, false)
+	_node(&"bullion_c", SMCommodityNet.KIND_BULLION, SMDomainGrid.at("sop_ruak", Vector2i(32, 30)), 18, false)
+	tech.add_site(&"cyber_a", SMTechNet.CYBER, grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(10, 26))))
+	tech.add_site(&"cyber_b", SMTechNet.CYBER, grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(28, 32))))
+	tech.add_site(&"cyber_c", SMTechNet.CYBER, grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(6, 10))))
+	tech.add_site(&"bazaar", SMTechNet.BAZAAR, grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(12, 22))))
 
-func _sites_burma() -> void:
-	_node(&"ruby_a", SMCommodityNet.KIND_RUBY, Vector2i(2, 12), 15, false)
-	_node(&"ruby_b", SMCommodityNet.KIND_RUBY, Vector2i(6, 18), 15, false)
-	_node(&"ruby_c", SMCommodityNet.KIND_RUBY, Vector2i(10, 22), 15, false)
-	_node(&"ruby_d", SMCommodityNet.KIND_RUBY, Vector2i(30, 6), 15, false)
-	_node(&"jade_a", SMCommodityNet.KIND_JADE, Vector2i(4, 24), 15, false)
-	_node(&"jade_b", SMCommodityNet.KIND_JADE, Vector2i(34, 16), 15, false)
-	_node(&"rare_a", SMCommodityNet.KIND_RARE, Vector2i(12, 16), 0, false)
-	_node(&"rare_b", SMCommodityNet.KIND_RARE, Vector2i(32, 12), 0, false)
-	tech.add_site(&"bazaar_a", SMTechNet.BAZAAR, grid.cell_center(Vector2i(8, 14)))
-	tech.add_site(&"bazaar_b", SMTechNet.BAZAAR, grid.cell_center(Vector2i(34, 8)))
-	tech.add_site(&"radar_a", SMTechNet.RADAR, grid.cell_center(Vector2i(14, 20)))
-	tech.add_site(&"radar_b", SMTechNet.RADAR, grid.cell_center(Vector2i(36, 14)))
-
-func _sites_atolls() -> void:
-	_node(&"isle_a", SMCommodityNet.KIND_SLAG, Vector2i(8, 20), 12, false)
-	_node(&"isle_b", SMCommodityNet.KIND_SLAG, Vector2i(4, 21), 12, false)
-	_node(&"isle_c", SMCommodityNet.KIND_BULLION, Vector2i(9, 16), 16, false)
-	_node(&"isle_d", SMCommodityNet.KIND_SLAG, Vector2i(27, 15), 12, false)
-	_node(&"isle_e", SMCommodityNet.KIND_BULLION, Vector2i(32, 18), 16, false)
-	_node(&"isle_f", SMCommodityNet.KIND_SLAG, Vector2i(28, 20), 12, false)
-	_node(&"isle_g", SMCommodityNet.KIND_JADE, Vector2i(15, 3), 15, false)
-	_node(&"isle_h", SMCommodityNet.KIND_JADE, Vector2i(19, 6), 15, false)
-	_node(&"deep_a", SMCommodityNet.KIND_BULLION, Vector2i(0, 0), 10, true)
-	_node(&"deep_b", SMCommodityNet.KIND_BULLION, Vector2i(10, 2), 10, true)
-	_node(&"deep_c", SMCommodityNet.KIND_SLAG, Vector2i(22, 10), 10, true)
-	_node(&"deep_d", SMCommodityNet.KIND_SLAG, Vector2i(34, 4), 10, true)
-	_node(&"deep_e", SMCommodityNet.KIND_BULLION, Vector2i(5, 28), 10, true)
-	_node(&"deep_f", SMCommodityNet.KIND_BULLION, Vector2i(18, 30), 10, true)
-	_node(&"deep_g", SMCommodityNet.KIND_SLAG, Vector2i(24, 22), 10, true)
-	_node(&"deep_h", SMCommodityNet.KIND_SLAG, Vector2i(33, 32), 10, true)
-	tech.add_site(&"derrick_a", SMTechNet.DERRICK, grid.cell_center(Vector2i(1, 8)))
-	tech.add_site(&"derrick_b", SMTechNet.DERRICK, grid.cell_center(Vector2i(12, 8)))
-	tech.add_site(&"derrick_c", SMTechNet.DERRICK, grid.cell_center(Vector2i(20, 28)))
-	tech.add_site(&"derrick_d", SMTechNet.DERRICK, grid.cell_center(Vector2i(30, 8)))
-	tech.add_site(&"radar_a", SMTechNet.RADAR, grid.cell_center(Vector2i(6, 18)))
-	tech.add_site(&"radar_b", SMTechNet.RADAR, grid.cell_center(Vector2i(30, 16)))
-
-func _sites_mekong() -> void:
-	_node(&"paddy_a", SMCommodityNet.KIND_SLAG, Vector2i(3, 8), 12, false)
-	_node(&"paddy_b", SMCommodityNet.KIND_SLAG, Vector2i(7, 20), 12, false)
-	_node(&"paddy_c", SMCommodityNet.KIND_JADE, Vector2i(5, 26), 14, false)
-	_node(&"paddy_d", SMCommodityNet.KIND_RUBY, Vector2i(9, 12), 14, false)
-	_node(&"paddy_e", SMCommodityNet.KIND_SLAG, Vector2i(16, 6), 12, false)
-	_node(&"paddy_f", SMCommodityNet.KIND_BULLION, Vector2i(20, 22), 18, false)
-	_node(&"paddy_g", SMCommodityNet.KIND_JADE, Vector2i(22, 28), 14, false)
-	_node(&"paddy_h", SMCommodityNet.KIND_RARE, Vector2i(18, 10), 0, true)
-	_node(&"paddy_i", SMCommodityNet.KIND_SLAG, Vector2i(30, 8), 12, false)
-	_node(&"paddy_j", SMCommodityNet.KIND_RUBY, Vector2i(34, 18), 14, false)
-	_node(&"paddy_k", SMCommodityNet.KIND_BULLION, Vector2i(36, 26), 18, false)
-	_node(&"paddy_l", SMCommodityNet.KIND_JADE, Vector2i(32, 4), 14, false)
-	_node(&"paddy_m", SMCommodityNet.KIND_RARE, Vector2i(38, 22), 0, true)
-	_node(&"paddy_n", SMCommodityNet.KIND_SLAG, Vector2i(16, 30), 12, false)
-	tech.add_site(&"clinic_a", SMTechNet.CLINIC, grid.cell_center(Vector2i(6, 16)))
-	tech.add_site(&"clinic_b", SMTechNet.CLINIC, grid.cell_center(Vector2i(33, 14)))
-	tech.add_site(&"cyber_a", SMTechNet.CYBER, grid.cell_center(Vector2i(19, 16)))
-	tech.add_site(&"cyber_b", SMTechNet.CYBER, grid.cell_center(Vector2i(35, 28)))
-	tech.add_site(&"bridge_a", SMTechNet.BRIDGE, grid.cell_center(Vector2i(12, 14)))
-	tech.add_site(&"bridge_b", SMTechNet.BRIDGE, grid.cell_center(Vector2i(12, 17)))
-	tech.add_site(&"bridge_c", SMTechNet.BRIDGE, grid.cell_center(Vector2i(26, 14)))
-	tech.add_site(&"bridge_d", SMTechNet.BRIDGE, grid.cell_center(Vector2i(26, 17)))
-
-func _sites_chiang() -> void:
-	var kinds: Array[StringName] = [SMCommodityNet.KIND_SLAG, SMCommodityNet.KIND_RARE, SMCommodityNet.KIND_JADE, SMCommodityNet.KIND_RUBY]
-	var cells: Array[Vector2i] = [
-		Vector2i(4, 8), Vector2i(8, 12), Vector2i(12, 18), Vector2i(6, 24), Vector2i(10, 30), Vector2i(14, 34),
-		Vector2i(18, 10), Vector2i(20, 20), Vector2i(16, 36), Vector2i(8, 36), Vector2i(2, 16), Vector2i(22, 6),
-		Vector2i(34, 8), Vector2i(38, 14), Vector2i(42, 20), Vector2i(46, 12), Vector2i(36, 26), Vector2i(40, 32),
-		Vector2i(48, 28), Vector2i(50, 16), Vector2i(44, 6), Vector2i(32, 36), Vector2i(52, 34), Vector2i(30, 4),
-	]
-	for i: int in cells.size():
-		var kind: StringName = kinds[i % kinds.size()]
-		var rate: int = 0 if kind == SMCommodityNet.KIND_RARE else 12
-		_node(StringName("chiang_%d" % i), kind, cells[i], rate, kind == SMCommodityNet.KIND_RARE)
-	tech.add_site(&"cyber_a", SMTechNet.CYBER, grid.cell_center(Vector2i(10, 16)))
-	tech.add_site(&"cyber_b", SMTechNet.CYBER, grid.cell_center(Vector2i(18, 28)))
-	tech.add_site(&"cyber_c", SMTechNet.CYBER, grid.cell_center(Vector2i(40, 10)))
-	tech.add_site(&"cyber_d", SMTechNet.CYBER, grid.cell_center(Vector2i(46, 30)))
-	tech.add_site(&"bazaar_a", SMTechNet.BAZAAR, grid.cell_center(Vector2i(12, 22)))
-	tech.add_site(&"bazaar_b", SMTechNet.BAZAAR, grid.cell_center(Vector2i(42, 24)))
-	tech.add_site(&"garrison_a", SMTechNet.GARRISON, grid.cell_center(Vector2i(12, 4)))
-	tech.add_site(&"garrison_b", SMTechNet.GARRISON, grid.cell_center(Vector2i(24, 16)))
-	tech.add_site(&"garrison_c", SMTechNet.GARRISON, grid.cell_center(Vector2i(38, 36)))
-	tech.add_site(&"garrison_d", SMTechNet.GARRISON, grid.cell_center(Vector2i(52, 10)))
+func _sites_plan(plan: SMMapPlan) -> void:
+	spans.clear()
+	for row: Dictionary in plan.nodes:
+		_node(row["id"] as StringName, SMMapPlan.goods_kind(row["kind"] as StringName), row["cell"] as Vector2i, int(row["rate"]), bool(row["water"]))
+	for row: Dictionary in plan.sites:
+		tech.add_site(row["id"] as StringName, SMMapPlan.site_kind(row["kind"] as StringName), grid.cell_center(row["cell"] as Vector2i))
+		var span: Rect2i = row["span"] as Rect2i
+		if span.size != Vector2i.ZERO:
+			spans[row["id"] as StringName] = span
 
 func _node(id: StringName, kind: StringName, cell: Vector2i, rate: int, water: bool) -> void:
 	goods.add_node(id, kind, grid.cell_center(cell), rate, water)

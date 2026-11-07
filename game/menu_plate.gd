@@ -4,14 +4,18 @@ extends Button
 const Sfx = preload("res://game/menu_sfx.gd")
 
 func _ready() -> void:
-	alignment = HORIZONTAL_ALIGNMENT_LEFT
-	add_theme_font_size_override("font_size", 22)
+	if alignment == HORIZONTAL_ALIGNMENT_CENTER:
+		pass
+	else:
+		alignment = HORIZONTAL_ALIGNMENT_LEFT
+	if not has_theme_font_size_override("font_size"):
+		add_theme_font_size_override("font_size", 22)
 	_colors(false)
 	var empty := StyleBoxEmpty.new()
 	empty.content_margin_left = 2
 	empty.content_margin_right = 8
-	empty.content_margin_top = 4
-	empty.content_margin_bottom = 4
+	empty.content_margin_top = 2
+	empty.content_margin_bottom = 2
 	for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
 		add_theme_stylebox_override(state, empty)
 	focus_mode = Control.FOCUS_ALL

@@ -1,0 +1,55 @@
+{
+ "place": "Sop Ruak and Chiang Saen",
+ "maps": [
+  "sop_ruak"
+ ],
+ "bbox_swne": [
+  20.268,
+  100.08,
+  20.28,
+  100.092
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass.kumi.systems/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 89,
+  "grid_share": 0.63,
+  "street_m": 27794,
+  "spacing_across_u_m": 25.4,
+  "spacing_across_v_m": 35.1,
+  "streets_along_u": 40,
+  "streets_along_v": 23,
+  "main_streets": [
+   {
+    "name": "Rob Wiang Road",
+    "m": 4300,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Sai 1 Road",
+    "m": 2319,
+    "runs": "north-south"
+   },
+   {
+    "name": "Sai 2 Road",
+    "m": 2214,
+    "runs": "north-south"
+   },
+   {
+    "name": "Rim Khong Road",
+    "m": 2032,
+    "runs": "north-south"
+   },
+   {
+    "name": "Nong Mut Road",
+    "m": 1142,
+    "runs": "east-west"
+   },
+   {
+    "name": "Phahon Yothin Road",
+    "m": 1122,
+    "runs": "east-west"
+   }
+  ]
+ }
+}

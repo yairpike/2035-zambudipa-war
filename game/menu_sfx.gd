@@ -22,10 +22,5 @@ static func play(host: Node, kind: String) -> void:
 	_player.play()
 
 static func _bus() -> void:
-	var idx: int = AudioServer.get_bus_index("SFX")
-	if idx < 0:
-		AudioServer.add_bus()
-		idx = AudioServer.bus_count - 1
-		AudioServer.set_bus_name(idx, "SFX")
-		AudioServer.set_bus_send(idx, "Master")
+	var idx: int = Settings.append_bus("SFX", "Master")
 	AudioServer.set_bus_volume_db(idx, Settings.sfx_bus_db())

@@ -64,9 +64,21 @@ static func poll_web() -> bool:
 	return true
 
 static func apply_payload(raw: String) -> void:
-	var parsed: Variant = JSON.parse_string(raw)
+	var text: String = raw.strip_edges()
+	if text == "":
+		return
+	var head: String = text.substr(0, 1)
+	if head != "[" and head != "{" and head != "\"":
+		return
+	var parsed: Variant = JSON.parse_string(text)
 	if parsed is String:
-		parsed = JSON.parse_string(str(parsed))
+		var inner: String = str(parsed).strip_edges()
+		if inner == "":
+			return
+		var inner_head: String = inner.substr(0, 1)
+		if inner_head != "[" and inner_head != "{":
+			return
+		parsed = JSON.parse_string(inner)
 	if not (parsed is Array):
 		return
 	var rows: Array = parsed as Array

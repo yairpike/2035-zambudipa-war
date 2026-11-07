@@ -1,0 +1,60 @@
+{
+  "name": "Burma Road",
+  "cols": 64,
+  "rows": 48,
+  "cell": 4.0,
+  "symmetry": "rot180",
+  "ground": "land",
+  "paint": [
+    {"rect": [0, 0, 64, 2], "domain": "cliff"},
+    {"rect": [0, 0, 2, 48], "domain": "cliff"},
+    {"rect": [2, 29, 6, 1], "domain": "cliff"},
+    {"rect": [12, 29, 12, 1], "domain": "cliff"},
+    {"rect": [22, 30, 2, 6], "domain": "cliff"},
+    {"rect": [22, 40, 2, 6], "domain": "cliff"},
+    {"rect": [12, 12, 8, 6], "domain": "cliff"},
+    {"rect": [24, 12, 16, 24], "domain": "cliff"},
+    {"rect": [24, 18, 16, 12], "domain": "land"}
+  ],
+  "starts": [[11, 37]],
+  "plateaus": [[3, 30, 18, 15]],
+  "roads": [
+    [9, 27, 31, 2],
+    [9, 29, 2, 5],
+    [20, 37, 12, 2]
+  ],
+  "holds": [[29, 21, 6, 6]],
+  "landmark": {"id": "lm_sule", "rect": [29, 21, 6, 6]},
+  "nodes": [
+    {"id": "ruby_main", "kind": "ruby", "cell": [5, 33], "rate": 15},
+    {"id": "ruby_home", "kind": "ruby", "cell": [5, 42], "rate": 15},
+    {"id": "jade", "kind": "jade", "cell": [6, 22], "rate": 15},
+    {"id": "ruby_fwd", "kind": "ruby", "cell": [32, 41], "rate": 15},
+    {"id": "rare", "kind": "rare", "cell": [26, 24], "rate": 0}
+  ],
+  "sites": [
+    {"id": "radar", "kind": "radar", "cell": [16, 6]},
+    {"id": "bazaar", "kind": "bazaar", "cell": [21, 22]}
+  ],
+  "props": [
+    {"id": "karst_tower", "cell": [1, 12], "yaw": 0},
+    {"id": "karst_tower", "cell": [0, 24], "yaw": 70},
+    {"id": "karst_tower", "cell": [26, 33], "yaw": 20},
+    {"id": "karst_tower", "cell": [37, 34], "yaw": 140},
+    {"id": "burmese_pagoda", "cell": [31, 32], "yaw": 0},
+    {"id": "chedi_ruin", "cell": [15, 14], "yaw": 30},
+    {"id": "rock_set", "cell": [24, 17], "yaw": 0},
+    {"id": "rock_set", "cell": [23, 31], "yaw": 90},
+    {"id": "cell_tower", "cell": [18, 4], "yaw": 0}
+  ],
+  "towns": [
+    {"id": "sule_downtown", "place": "yangon_downtown", "rect": [8, 18, 11, 8], "axis": "z", "block": [4, 6], "high": [1],
+     "shops": "peranakan_shophouse", "homes": ["neon_shophouse", "border_guesthouse"]},
+    {"id": "shan_hamlet", "place": "lashio", "rect": [53, 40, 8, 6], "axis": "x", "block": [6, 4],
+     "homes": ["shan_stilt_house", "shan_stilt_house", "khmer_stilt_house"]}
+  ],
+  "orchards": [
+    {"id": "rubber_estate", "tree": "rubber_tree", "rect": [20, 3, 8, 8], "pitch": [1, 2]}
+  ],
+  "bot": {"plan_a": "ruby_fwd_b", "plan_b": "jade_b", "site": "radar_b", "name": "Tran"}
+}

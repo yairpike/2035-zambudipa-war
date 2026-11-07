@@ -13,6 +13,7 @@ var rows: int = 0
 var cell_size: float = 2.0
 var origin: Vector3 = Vector3.ZERO
 var cells: PackedInt32Array = PackedInt32Array()
+var holds: Array[Rect2i] = []
 var _where: Dictionary[int, int] = {}
 
 func _init(p_cols: int = 8, p_rows: int = 8, p_cell: float = 2.0, p_origin: Vector3 = Vector3.ZERO) -> void:
@@ -79,73 +80,103 @@ func move_unit(unit_id: int, to: Vector3, loco: int) -> bool:
 func unit_domain(unit_id: int) -> int:
 	return _where.get(unit_id, -1)
 
+## Indestructible scenery. Ground, boats and amphibious path around it. Air flies over.
+func hold(r: Rect2i) -> void:
+	holds.append(r)
+
+func holding(c: Vector2i) -> bool:
+	for spot: Rect2i in holds:
+		if spot.has_point(c):
+			return true
+	return false
+
+## Extra cells added on every side when the skirmish fields grew.
+static func pad_of(map_id: String) -> Vector2i:
+	if SMMapPlan.exists(map_id):
+		return Vector2i.ZERO
+	if map_id == "phillips":
+		return Vector2i(8, 5)
+	if map_id == "sop_ruak":
+		return Vector2i(7, 7)
+	if map_id == "burma_road":
+		return Vector2i(8, 6)
+	if map_id == "ten_degree_atolls":
+		return Vector2i(7, 7)
+	if map_id == "mekong_delta":
+		return Vector2i(8, 7)
+	if map_id == "chiang_rai":
+		return Vector2i(11, 8)
+	if map_id == "showcase":
+		return Vector2i(0, 0)
+	return Vector2i.ZERO
+
+static func at(map_id: String, c: Vector2i) -> Vector2i:
+	return c + pad_of(map_id)
+
 ## Phillips Channel: west land, east land, a deep channel, two shallow crossings.
 static func phillips_layout() -> SMDomainGrid:
-	var g: SMDomainGrid = SMDomainGrid.new(40, 24, 4.0, Vector3(-80.0, 0.0, -48.0))
-	g.fill_rect(Rect2i(15, 0, 10, 24), Domain.DEEP)
-	g.fill_rect(Rect2i(15, 4, 10, 3), Domain.SHALLOW)
-	g.fill_rect(Rect2i(15, 17, 10, 3), Domain.SHALLOW)
-	g.fill_rect(Rect2i(4, 10, 4, 3), Domain.CLIFF)
-	g.fill_rect(Rect2i(18, 10, 4, 2), Domain.AIR)
+	var p: Vector2i = pad_of("phillips")
+	var g: SMDomainGrid = SMDomainGrid.new(56, 34, 4.0, Vector3(-112.0, 0.0, -68.0))
+	g.fill_rect(Rect2i(15 + p.x, 0, 10, 34), Domain.DEEP)
+	g.fill_rect(Rect2i(15 + p.x, 4 + p.y, 10, 3), Domain.SHALLOW)
+	g.fill_rect(Rect2i(15 + p.x, 17 + p.y, 10, 3), Domain.SHALLOW)
+	g.fill_rect(Rect2i(4 + p.x, 10 + p.y, 4, 3), Domain.CLIFF)
+	g.fill_rect(Rect2i(18 + p.x, 10 + p.y, 4, 2), Domain.AIR)
 	return g
 
 ## Sop Ruak: three land sectors split by a Y of deep water, with a ford on each arm.
 static func sop_ruak_layout() -> SMDomainGrid:
-	var g: SMDomainGrid = SMDomainGrid.new(36, 36, 4.0, Vector3(-72.0, 0.0, -72.0))
-	g.fill_rect(Rect2i(16, 16, 4, 17), Domain.DEEP)
-	for i: int in range(1, 15):
-		var lx: int = 16 - i
-		var ly: int = 16 - i
-		g.set_domain(Vector2i(lx, ly), Domain.DEEP)
-		g.set_domain(Vector2i(lx + 1, ly), Domain.DEEP)
-		g.set_domain(Vector2i(lx, ly + 1), Domain.DEEP)
-		g.set_domain(Vector2i(lx + 1, ly + 1), Domain.DEEP)
-		var rx: int = 19 + i
-		var ry: int = 16 - i
-		g.set_domain(Vector2i(rx, ry), Domain.DEEP)
-		g.set_domain(Vector2i(rx - 1, ry), Domain.DEEP)
-		g.set_domain(Vector2i(rx, ry + 1), Domain.DEEP)
-		g.set_domain(Vector2i(rx - 1, ry + 1), Domain.DEEP)
-	g.fill_rect(Rect2i(16, 24, 4, 2), Domain.LAND)
-	g.fill_rect(Rect2i(9, 9, 4, 4), Domain.LAND)
-	g.fill_rect(Rect2i(23, 9, 4, 4), Domain.LAND)
+	var p: Vector2i = pad_of("sop_ruak")
+	var g: SMDomainGrid = SMDomainGrid.new(50, 50, 4.0, Vector3(-100.0, 0.0, -100.0))
+	g.fill_rect(Rect2i(16 + p.x, 16 + p.y, 4, g.rows - (16 + p.y)), Domain.DEEP)
+	var i: int = 1
+	while i < g.cols:
+		var lx: int = 16 - i + p.x
+		var ly: int = 16 - i + p.y
+		if lx < 0 or ly < 0:
+			break
+		_deep_block(g, lx, ly)
+		var rx: int = 19 + i + p.x
+		var ry: int = 16 - i + p.y
+		if rx >= g.cols or ry < 0:
+			break
+		_deep_block(g, rx - 1, ry)
+		i += 1
+	g.fill_rect(Rect2i(16 + p.x, 24 + p.y, 4, 2), Domain.LAND)
+	g.fill_rect(Rect2i(9 + p.x, 9 + p.y, 4, 4), Domain.LAND)
+	g.fill_rect(Rect2i(23 + p.x, 9 + p.y, 4, 4), Domain.LAND)
 	return g
 
-## Burma Road: highland cliffs with one land road cut through the wall.
+static func _deep_block(g: SMDomainGrid, x: int, y: int) -> void:
+	g.set_domain(Vector2i(x, y), Domain.DEEP)
+	g.set_domain(Vector2i(x + 1, y), Domain.DEEP)
+	g.set_domain(Vector2i(x, y + 1), Domain.DEEP)
+	g.set_domain(Vector2i(x + 1, y + 1), Domain.DEEP)
+
+## Burma Road: two highland plateaus, a cliff massif with a pass split by the Sule landmark, and lanes round both ends.
+## Half-turn symmetric, from res://data/maps/burma_road.json.
 static func burma_road_layout() -> SMDomainGrid:
-	var g: SMDomainGrid = SMDomainGrid.new(40, 28, 4.0, Vector3(-80.0, 0.0, -56.0))
-	g.fill_rect(Rect2i(0, 0, 12, 8), Domain.CLIFF)
-	g.fill_rect(Rect2i(28, 20, 12, 8), Domain.CLIFF)
-	g.fill_rect(Rect2i(16, 0, 8, 28), Domain.CLIFF)
-	g.fill_rect(Rect2i(16, 12, 8, 4), Domain.LAND)
-	return g
+	return SMMapPlan.of("burma_road").grid()
 
-## Ten Degree Atolls: land islands in deep water, joined by shallow shoals.
+## Ten Degree Atolls: home islands, expansion islets and a reef in deep water, linked by three shoal lanes.
+## Half-turn symmetric, from res://data/maps/ten_degree_atolls.json.
 static func ten_degree_atolls_layout() -> SMDomainGrid:
-	var g: SMDomainGrid = SMDomainGrid.new(36, 36, 4.0, Vector3(-72.0, 0.0, -72.0))
-	g.fill_rect(Rect2i(0, 0, 36, 36), Domain.DEEP)
-	g.fill_rect(Rect2i(10, 16, 16, 4), Domain.SHALLOW)
-	g.fill_rect(Rect2i(16, 8, 4, 8), Domain.SHALLOW)
-	g.fill_rect(Rect2i(2, 14, 8, 8), Domain.LAND)
-	g.fill_rect(Rect2i(26, 14, 8, 8), Domain.LAND)
-	g.fill_rect(Rect2i(14, 2, 8, 6), Domain.LAND)
-	return g
+	return SMMapPlan.of("ten_degree_atolls").grid()
 
-## Mekong Delta: two deep canals with a land bridge on each.
+## Mekong Delta: a deep canal in front of each base with a two-span bridge, contested levees between them.
+## Mirrored west to east, from res://data/maps/mekong_delta.json.
 static func mekong_delta_layout() -> SMDomainGrid:
-	var g: SMDomainGrid = SMDomainGrid.new(40, 32, 4.0, Vector3(-80.0, 0.0, -64.0))
-	g.fill_rect(Rect2i(12, 0, 3, 32), Domain.DEEP)
-	g.fill_rect(Rect2i(26, 0, 3, 32), Domain.DEEP)
-	g.fill_rect(Rect2i(12, 14, 3, 4), Domain.LAND)
-	g.fill_rect(Rect2i(26, 14, 3, 4), Domain.LAND)
-	return g
+	return SMMapPlan.of("mekong_delta").grid()
 
-## Siege of Chiang Rai: a wider field, a river, two fords, and a siege wall.
+## Siege of Chiang Rai: two plateaus a side for 2v2, a river with three fords, and the Doi Suthep landmark.
+## Half-turn symmetric, from res://data/maps/chiang_rai.json.
 static func chiang_rai_layout() -> SMDomainGrid:
-	var g: SMDomainGrid = SMDomainGrid.new(56, 40, 4.0, Vector3(-112.0, 0.0, -80.0))
-	g.fill_rect(Rect2i(26, 0, 4, 40), Domain.DEEP)
-	g.fill_rect(Rect2i(26, 8, 4, 4), Domain.LAND)
-	g.fill_rect(Rect2i(26, 28, 4, 4), Domain.LAND)
-	g.fill_rect(Rect2i(6, 6, 8, 3), Domain.CLIFF)
-	g.fill_rect(Rect2i(42, 30, 8, 3), Domain.CLIFF)
+	return SMMapPlan.of("chiang_rai").grid()
+
+## Golden confluence: city on the north bank, jungle on the south, a river between, one landmark plaza.
+static func showcase_layout() -> SMDomainGrid:
+	var g: SMDomainGrid = SMDomainGrid.new(72, 52, 4.0, Vector3(-144.0, 0.0, -104.0))
+	g.fill_rect(Rect2i(0, 22, 72, 6), Domain.DEEP)
+	g.fill_rect(Rect2i(32, 22, 8, 6), Domain.SHALLOW)
+	g.fill_rect(Rect2i(0, 0, 18, 8), Domain.CLIFF)
 	return g

@@ -27,8 +27,10 @@ func _ready() -> void:
 	_prepare_ability()
 	_world()
 	_ui()
-	var rally: Vector3 = grid.cell_center(Vector2i(8, 22))
+	var rally: Vector3 = grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(8, 22)))
 	side.prepare(self, status, grid, rally, roster.economy)
+	if side.yard.style != SMBuildYard.Style.INTERNAL:
+		side.yard.radius = maxf(side.yard.radius, 44.0)
 	_arm_units()
 	var cam: RTSCamera = get_node("Camera") as RTSCamera
 	hud.mount(ui_layer, field, roster, side, "Sop Ruak", rally, Callable(self, "fire_ability"), grid, cam)
@@ -46,7 +48,7 @@ func train_unit() -> String:
 	var done: StringName = roster.train_and_finish(SMFront.train_kind())
 	if done == &"":
 		return ""
-	var at: Vector3 = grid.cell_center(Vector2i(8, 24))
+	var at: Vector3 = grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(8, 24)))
 	var u: RTSUnit = field.spawn(SMPointer.PLAYER, at, done)
 	var label: String = field.name_of(u)
 	_say(label)
@@ -62,7 +64,7 @@ func fire_ability() -> bool:
 func _prepare_ability() -> void:
 	sim.abilities = SMAbilities.new()
 	sim.yard = SMBuildYard.new()
-	sim.yard.center = grid.cell_center(Vector2i(8, 22))
+	sim.yard.center = grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(8, 22)))
 	sim.abilities.add_unit(10, sim.yard.center, SMAbilities.TOGGLE, 2.0, 0.6)
 	sim.abilities.add_unit(11, sim.yard.center + Vector3(2.0, 0.0, 0.0), SMAbilities.SMART, 3.0, 0.6)
 	sim.abilities.add_unit(12, sim.yard.center + Vector3(8.0, 0.0, 0.0), SMAbilities.SMART, 3.0, 0.6)
@@ -79,11 +81,12 @@ func _world() -> void:
 	var sun: DirectionalLight3D = DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-48, 25, 0)
 	add_child(sun)
-	Ground.dress(self, grid, "sop")
+	Ground.dress(self, grid, "sop", null, Rect2i(), SMMapPlan.dressing("sop_ruak"))
 	var cam: RTSCamera = RTSCamera.new()
 	cam.name = "Camera"
-	cam.bounds = Rect2(-72.0, -72.0, 144.0, 144.0)
-	cam.distance = 26.0
+	cam.bounds = Rect2(-100.0, -100.0, 200.0, 200.0)
+	cam.distance = 32.0
+	cam.zoom_max = 90.0
 	cam.edge_pan_px = 20.0
 	cam.focus = Vector3(-36, 0, 16)
 	add_child(cam)
@@ -115,13 +118,13 @@ func _arm_units() -> void:
 	field.bind_tech(sim.tech, Callable(self, "_bridge_down"))
 	field.attach_box(ui_layer)
 	var kinds: Array[StringName] = SMFront.kinds()
-	var cells: Array[Vector2i] = [Vector2i(6, 22), Vector2i(8, 22), Vector2i(10, 22), Vector2i(6, 26), Vector2i(8, 26), Vector2i(10, 26)]
+	var cells: Array[Vector2i] = [SMDomainGrid.at("sop_ruak", Vector2i(6, 22)), SMDomainGrid.at("sop_ruak", Vector2i(8, 22)), SMDomainGrid.at("sop_ruak", Vector2i(10, 22)), SMDomainGrid.at("sop_ruak", Vector2i(6, 26)), SMDomainGrid.at("sop_ruak", Vector2i(8, 26)), SMDomainGrid.at("sop_ruak", Vector2i(10, 26))]
 	for i: int in kinds.size():
 		field.spawn(SMPointer.PLAYER, grid.cell_center(cells[i]), kinds[i])
-	field.spawn_support(grid.cell_center(Vector2i(6, 20)))
-	for cell: Vector2i in [Vector2i(26, 22), Vector2i(28, 22), Vector2i(27, 26)]:
+	field.spawn_support(grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(6, 20))))
+	for cell: Vector2i in [SMDomainGrid.at("sop_ruak", Vector2i(26, 22)), SMDomainGrid.at("sop_ruak", Vector2i(28, 22)), SMDomainGrid.at("sop_ruak", Vector2i(27, 26))]:
 		field.spawn(SMPointer.ENEMY, grid.cell_center(cell), &"raider")
-	raider.attach(field, grid.cell_center(Vector2i(26, 22)))
+	raider.attach(field, grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(26, 22))))
 	raider.bind_plan(sim.goods, sim.tech, &"bullion_a", &"bullion_b", &"cyber_b", "Iskandar")
 	preload("res://game/match_settings.gd").apply_raider(raider)
 

@@ -41,6 +41,7 @@ var tip_name: Label
 var tip_chip: Label
 var radio_label: Label
 var radio_until: int = 0
+var radio_queue: PackedStringArray = PackedStringArray()
 var unit_card: PanelContainer
 var card_cameo: TextureRect
 var match_strip: PanelContainer
@@ -89,6 +90,7 @@ var power_fill: ColorRect
 var power_mark: ColorRect
 var repair_button: Button
 var sell_button: Button
+var sky: SMSight
 
 func mount(layer: CanvasLayer, p_field: SMPointer, p_roster: SMRoster, p_side: SMSide, p_map: String, p_rally: Vector3, ability: Callable, grid: SMDomainGrid, camera: RTSCamera) -> void:
 	field = p_field
@@ -161,6 +163,8 @@ func _finish_mount(layer: CanvasLayer) -> void:
 		field.on_bark = Callable(sfx, "bark")
 	layer_node = layer
 	layer.set_meta("hud", self)
+	if minimap != null and side != null:
+		minimap.yard = side.yard
 	if field != null:
 		field.place_rally(rally)
 	_hide_empty_tabs()
@@ -168,9 +172,14 @@ func _finish_mount(layer: CanvasLayer) -> void:
 	layer_mounted.emit(self, layer)
 	refresh()
 
+## A sight without a grid only names the weather. It keeps the fog it had.
 func use_sight(p_sight: SMSight) -> void:
-	if minimap != null:
-		minimap.sight = p_sight
+	sky = p_sight
+	if minimap == null:
+		return
+	if p_sight != null and p_sight.grid == null and minimap.sight != null:
+		return
+	minimap.sight = p_sight
 
 func use_tech(p_tech: SMTechNet) -> void:
 	tech = p_tech
@@ -201,12 +210,14 @@ func refresh() -> void:
 		_shown_map = map_name
 		map_label.text = map_name
 	if weather_label != null:
-		var sky: String = "Clear"
-		if minimap != null and minimap.sight != null:
-			sky = minimap.sight.weather_name
-		if sky != _shown_weather:
-			_shown_weather = sky
-			weather_label.text = sky
+		var sky_name: String = "Clear"
+		if sky != null:
+			sky_name = sky.weather_name
+		elif minimap != null and minimap.sight != null:
+			sky_name = minimap.sight.weather_name
+		if sky_name != _shown_weather:
+			_shown_weather = sky_name
+			weather_label.text = sky_name
 	if selection_label != null:
 		var line: String = _selection_line()
 		if line != _shown_selection:
@@ -285,19 +296,62 @@ func _paint_income() -> void:
 func show_line(text: String) -> void:
 	if radio_label == null:
 		return
+	if text == "":
+		radio_label.text = ""
+		radio_label.visible = false
+		return
+	if _briefing_shown():
+		if not radio_queue.has(text):
+			radio_queue.append(text)
+		return
+	_display_radio(text)
+
+func _display_radio(text: String) -> void:
+	if radio_label == null:
+		return
 	radio_label.text = text
 	radio_label.visible = text != ""
 	radio_label.modulate.a = 1.0
 	radio_until = Time.get_ticks_msec() + 5000
 	_sync_card()
 
+func _briefing_shown() -> bool:
+	if layer_node == null:
+		return false
+	var brief: CanvasItem = layer_node.find_child("Briefing", true, false) as CanvasItem
+	if brief != null:
+		return brief.visible
+	var host: Node = layer_node.get_parent()
+	if host != null:
+		var piece: Node = host.get_node_or_null("SetPiece")
+		if piece != null and not bool(piece.get("intro_done")):
+			return true
+	return false
+
 func _paint_radio() -> void:
-	if radio_label == null or not radio_label.visible:
+	if radio_label == null:
+		return
+	if _briefing_shown():
+		if radio_label.visible and radio_label.text != "":
+			if not radio_queue.has(radio_label.text):
+				radio_queue.insert(0, radio_label.text)
+		radio_label.visible = false
+		radio_until = 0
+		return
+	if not radio_label.visible:
+		if not radio_queue.is_empty():
+			var next_line: String = radio_queue[0]
+			radio_queue.remove_at(0)
+			_display_radio(next_line)
 		return
 	var left: int = radio_until - Time.get_ticks_msec()
 	if left <= 0:
 		radio_label.visible = false
 		radio_label.modulate.a = 1.0
+		if not radio_queue.is_empty():
+			var next_line: String = radio_queue[0]
+			radio_queue.remove_at(0)
+			_display_radio(next_line)
 		return
 	radio_label.modulate.a = 1.0 if left >= 800 else clampf(float(left) / 800.0, 0.0, 1.0)
 
@@ -783,6 +837,7 @@ func _guide(layer: CanvasLayer) -> void:
 	var help: Button = Button.new()
 	help.name = "HelpButton"
 	help.text = "How to play (H)"
+	help.visible = not use_tiles
 	help.clip_text = true
 	help.custom_minimum_size = Vector2(168, 44)
 	help.z_index = 9
@@ -1379,10 +1434,45 @@ func _paint_card() -> void:
 		var first: RTSUnit = field.selection.units[0]
 		if first != null:
 			id = str(first.unit_type)
+			if id == "raider" or id == "wave" or id == "":
+				var role: String = str(first.get_meta("role", "infantry"))
+				var loco: String = str(first.get_meta("locomotion", "ground"))
+				id = _fallback_cameo(role, loco, _faction_id())
 	var portrait: Texture2D = _cameo_texture(_faction_id(), id)
 	card_cameo.texture = portrait
 	card_cameo.visible = portrait != null
 	_paint_card_stats()
+
+func _fallback_cameo(role: String, loco: String, faction: String) -> String:
+	if faction == "mvd":
+		if role == "armor":
+			return "cyan_ifv"
+		if role == "artillery":
+			return "charcoal_mortar"
+		if role == "boat" or role == "amphibious" or loco == "naval":
+			return "cyan_skiff"
+		if role == "air" or role == "drone" or loco == "air":
+			return "hub_drone"
+		return "clearance_trooper"
+	if faction == "nmrf":
+		if role == "armor":
+			return "mangrove_skiff"
+		if role == "artillery":
+			return "mangrove_tube"
+		if role == "boat" or role == "amphibious" or loco == "naval":
+			return "emerald_gunboat"
+		if role == "air" or role == "drone" or loco == "air":
+			return "jade_skiff"
+		return "river_rifle"
+	if role == "armor":
+		return "amber_tank"
+	if role == "artillery":
+		return "monsoon_tube"
+	if role == "boat" or role == "amphibious" or loco == "naval":
+		return "channel_skiff"
+	if role == "air" or role == "drone" or loco == "air":
+		return "bullion_truck"
+	return "militia"
 
 func _paint_card_stats() -> void:
 	var selected: int = 0
@@ -1622,6 +1712,10 @@ func _leave_phone() -> void:
 	mission_panel = null
 	rotate_banner = null
 	phone = false
+	if use_tiles:
+		var help_btn: CanvasItem = _phone_node("HelpButton")
+		if help_btn != null:
+			help_btn.visible = false
 	if use_tiles and icon_grid != null:
 		icon_grid.columns = 3
 	var supers: CanvasItem = _phone_node("SuperDock")

@@ -1,0 +1,30 @@
+{
+ "place": "Kawthaung",
+ "maps": [
+  "andaman"
+ ],
+ "bbox_swne": [
+  9.978,
+  98.545,
+  9.99,
+  98.557
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 57,
+  "grid_share": 0.29,
+  "street_m": 37309,
+  "spacing_across_u_m": 40.4,
+  "spacing_across_v_m": 31.4,
+  "streets_along_u": 23,
+  "streets_along_v": 30,
+  "main_streets": [
+   {
+    "name": "Bogyoke Road",
+    "m": 1313,
+    "runs": "diagonal"
+   }
+  ]
+ }
+}

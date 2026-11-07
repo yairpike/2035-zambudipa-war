@@ -1,0 +1,77 @@
+{
+ "place": "lashio",
+ "note": "Lashio: market street shophouses, Shan houses behind, a teak monastery block.",
+ "towns": [
+  {
+   "id": "lashio",
+   "place": "lashio",
+   "rect": [
+    28,
+    1,
+    8,
+    21
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    4
+   ],
+   "homes": [
+    "shan_stilt_house",
+    "border_guesthouse"
+   ],
+   "shops": "neon_shophouse",
+   "high": [
+    1,
+    2
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      1
+     ],
+     "id": "teak_kyaung"
+    }
+   ]
+  },
+  {
+   "id": "lashio_row",
+   "place": "lashio",
+   "rect": [
+    0,
+    19,
+    22,
+    4
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    2
+   ],
+   "homes": [
+    "neon_shophouse"
+   ],
+   "shops": "neon_shophouse",
+   "high": [
+    0
+   ]
+  }
+ ],
+ "orchards": [
+  {
+   "id": "tea_rows",
+   "tree": "banana_clump",
+   "rect": [
+    0,
+    1,
+    4,
+    17
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  }
+ ]
+}

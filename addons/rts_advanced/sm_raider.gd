@@ -50,6 +50,7 @@ var sub_id: StringName = &""
 var mix: int = 0
 var wave_i: int = 0
 var raising: StringName = &""
+var plan: SMBasePlan
 var macro_ids: Array[StringName] = []
 var wave_at: Array[float] = [0.0, 150.0, 270.0, 390.0, 510.0, 660.0]
 var wave_n: Array[int] = [1, 2, 2, 3, 4, 18]
@@ -79,7 +80,7 @@ func attach(p_field: SMPointer, center: Vector3, p_seat: int = SMPointer.ENEMY) 
 	yard.team = seat
 	yard.economy = economy
 	yard.center = center
-	yard.radius = 24.0
+	yard.radius = 36.0
 	yard.drain_per_sec = 4
 	yard.tech_order = [&"enemy_yard"]
 	yard.building_time[&"enemy_yard"] = 2.0
@@ -370,14 +371,25 @@ func _raise() -> void:
 	for id: StringName in macro_ids:
 		if wrecked.has(id) or yard.finished.has(id) or not yard.can_build(id):
 			continue
-		var slot: int = macro_ids.find(id)
-		var ang: float = float(slot) * 0.9
-		var pos: Vector3 = yard.center + Vector3(cos(ang) * 6.0, 0.0, sin(ang) * 6.0)
+		var pos: Vector3 = _plot(id)
 		var hp: float = float(yard.structure_max.get(id, 220.0))
 		if yard.begin_scaffold(id, pos, hp):
 			raising = id
 			yard.advance(_step)
 		return
+
+func _plot(id: StringName) -> Vector3:
+	if field == null or field.domain == null:
+		var ang: float = float(macro_ids.find(id)) * 0.9
+		return yard.center + Vector3(cos(ang) * 6.0, 0.0, sin(ang) * 6.0)
+	if plan == null or plan.grid != field.domain:
+		plan = SMBasePlan.new(field.domain, yard.center, yard.radius)
+		plan.plot(&"enemy_yard", "yard")
+		plan.keep_nets(plan_goods, plan_tech)
+	plan.center = yard.center
+	plan.radius = yard.radius
+	var role: String = str(yard.building_role.get(id, ""))
+	return plan.plot(id, role, role == "naval" or bool(yard.water_marked.get(id, false)))
 
 func _train() -> void:
 	if queue == null or field == null:
@@ -422,7 +434,7 @@ func _on_trained(kind: StringName, _rally: Vector3) -> void:
 	if field == null:
 		return
 	var spin: float = float(fielded) * 0.7
-	var at: Vector3 = yard.center + Vector3(cos(spin) * 3.0, 0.0, sin(spin) * 3.0)
+	var at: Vector3 = yard.center + Vector3(cos(spin) * 10.0, 0.0, sin(spin) * 10.0)
 	var u: RTSUnit = field.spawn(seat, at, kind)
 	_paint_unit(u, kind)
 	fielded += 1

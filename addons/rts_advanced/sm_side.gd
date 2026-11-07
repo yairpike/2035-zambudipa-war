@@ -7,6 +7,7 @@ const Power = preload("res://addons/rts_advanced/sm_power.gd")
 signal slab_made(host: Node3D, node_name: String, pos: Vector3, size: Vector3, color: Color)
 signal line_voiced(text: String)
 signal super_launched
+signal defense_fired(building_id: StringName, at: Vector3)
 
 var faction_id: String = "gtfc"
 var yard: SMBuildYard = SMBuildYard.new()
@@ -23,6 +24,14 @@ var defender_air: bool = false
 var occupants: Dictionary = {}
 var gun_units: Dictionary = {}
 var gun_cool: Dictionary = {}
+var plan: SMBasePlan = SMBasePlan.new()
+
+## Footprint-sized plot for `id`, ringed out from `around`. Falls back to `around` when nothing fits.
+func plot_of(id: StringName, around: Vector3) -> Vector3:
+	plan.radius = yard.radius
+	plan.center = around
+	var role: String = str(yard.building_role.get(id, ""))
+	return plan.plot(id, role, role == "naval" or bool(yard.water_marked.get(id, false)))
 
 func prepare(p_host: Node3D, p_status: Label, grid: SMDomainGrid, center: Vector3, purse: RTSEconomy, p_faction: String = "") -> void:
 	host = p_host
@@ -35,6 +44,7 @@ func prepare(p_host: Node3D, p_status: Label, grid: SMDomainGrid, center: Vector
 	yard.center = center
 	yard.radius = float(data.get("yard_radius", 14))
 	yard.drain_per_sec = 5
+	plan = SMBasePlan.new(grid, center, yard.radius)
 	_load_buildings(data)
 	_load_order(data)
 	var style_name: String = str(data.get("build_style", "scaffold"))
@@ -42,8 +52,8 @@ func prepare(p_host: Node3D, p_status: Label, grid: SMDomainGrid, center: Vector
 		yard.style = SMBuildYard.Style.INTERNAL
 		yard.clearance = 1
 		yard.radius = 25.0
-		hub_mesh = _slab("HubShell", SMPointer.building_at(center + Vector3(4.0, 0.0, 0.0)), SMPointer.BUILDING_SIZE, Color.html("#26BFD1"))
-		if hub_mesh != null:
+		hub_mesh = _slab("HubShell", SMPointer.building_at(plot_of(&"command_hub", center)), SMPointer.BUILDING_SIZE, Color.html("#26BFD1"))
+		if hub_mesh != null and not bool(hub_mesh.get_meta("standin_held", false)):
 			hub_mesh.visible = false
 	elif style_name == "mobile":
 		yard.style = SMBuildYard.Style.MOBILE
@@ -122,16 +132,18 @@ func buy_clearance() -> bool:
 func place_hub() -> bool:
 	if faction_id != "mvd":
 		return false
-	var pos: Vector3 = yard.center + Vector3(4.0, 0.0, 0.0)
+	var pos: Vector3 = plot_of(&"command_hub", yard.center)
 	var ok: bool = yard.place_finished(&"command_hub", pos)
 	if ok and hub_mesh != null:
 		hub_mesh.position = SMPointer.building_at(pos)
-		hub_mesh.visible = true
+		hub_mesh.set_meta("hub_placed", true)
+		if not bool(hub_mesh.get_meta("standin_held", false)):
+			hub_mesh.visible = true
 	_say("hub placed" if ok else "hub not ready")
 	return ok
 
 func _order_scaffold(id: StringName) -> String:
-	var pos: Vector3 = yard.center + Vector3(float(yard.finished.size()) * 5.0, 0.0, 0.0)
+	var pos: Vector3 = plot_of(id, yard.center)
 	if not yard.inside(pos):
 		pos = yard.center
 	var hp: float = float(building_hp.get(id, 200.0))
@@ -158,7 +170,7 @@ func _order_internal(id: StringName) -> String:
 	if not yard.ready.has(id):
 		_say("hub not queued")
 		return "hub not queued"
-	var pos: Vector3 = yard.center + Vector3(4.0, 0.0, float(yard.placed.size()) * 4.0)
+	var pos: Vector3 = plot_of(id, yard.center)
 	if not yard.place_finished(id, pos):
 		pos = yard.center
 		if not yard.place_finished(id, pos):
@@ -166,7 +178,9 @@ func _order_internal(id: StringName) -> String:
 			return "hub not ready"
 	if hub_mesh != null and yard.placed.size() == 1:
 		hub_mesh.position = SMPointer.building_at(pos)
-		hub_mesh.visible = true
+		hub_mesh.set_meta("hub_placed", true)
+		if not bool(hub_mesh.get_meta("standin_held", false)):
+			hub_mesh.visible = true
 	else:
 		_slab("Built_%s" % str(id), SMPointer.building_at(pos), SMPointer.BUILDING_SIZE, SMFront.accent())
 	_say("hub placed")
@@ -179,9 +193,8 @@ func _order_mobile(id: StringName) -> String:
 		var raised: bool = upgrade_factory_named(id)
 		return "upgraded" if raised else "wharf not ready"
 	if yard.unpacked:
-		var slot: int = yard.finished.size()
 		if yard.place_annex(id):
-			var at: Vector3 = yard.packer_pos + Vector3(float(slot) * 4.0, 0.0, 2.0)
+			var at: Vector3 = plot_of(id, yard.packer_pos)
 			yard.structure_pos[id] = at
 			_slab("Built_%s" % str(id), SMPointer.building_at(at), SMPointer.BUILDING_SIZE, SMFront.accent())
 			_say("%s built" % building_label(id))
@@ -189,6 +202,8 @@ func _order_mobile(id: StringName) -> String:
 		_say("packer already unpacked")
 		return "packer already unpacked"
 	move_packer()
+	plan.release(&"packer")
+	plot_of(&"packer", yard.packer_pos)
 	var ok: bool = yard.unpack(id)
 	if ok:
 		_slab("Built_%s" % str(id), SMPointer.building_at(yard.packer_pos), SMPointer.BUILDING_SIZE, SMFront.accent())
@@ -276,6 +291,8 @@ func sell_structure(id: StringName) -> int:
 		return 0
 	SMGuns.unload(self, id)
 	var refund: int = yard.sell(id)
+	if refund > 0:
+		plan.release(id)
 	if refund > 0 and host != null:
 		var built: Node = host.get_node_or_null("Built_%s" % str(id))
 		if built != null:

@@ -1,0 +1,45 @@
+{
+ "place": "Mogok",
+ "maps": [
+  "kokang"
+ ],
+ "bbox_swne": [
+  22.914,
+  96.5,
+  22.926,
+  96.512
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 11,
+  "grid_share": 0.32,
+  "street_m": 37360,
+  "spacing_across_u_m": 40.4,
+  "spacing_across_v_m": 36.7,
+  "streets_along_u": 22,
+  "streets_along_v": 35,
+  "main_streets": [
+   {
+    "name": "Main Road",
+    "m": 3697,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Bogyoke Roadd",
+    "m": 523,
+    "runs": "east-west"
+   },
+   {
+    "name": "Anawrahta Road",
+    "m": 265,
+    "runs": "east-west"
+   },
+   {
+    "name": "Bogyke Street",
+    "m": 190,
+    "runs": "north-south"
+   }
+  ]
+ }
+}

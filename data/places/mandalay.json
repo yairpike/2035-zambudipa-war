@@ -1,0 +1,55 @@
+{
+ "place": "Mandalay grid, south of the palace moat",
+ "maps": [
+  "kilometer_watch"
+ ],
+ "bbox_swne": [
+  21.966,
+  96.078,
+  21.978,
+  96.09
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 3,
+  "grid_share": 0.96,
+  "street_m": 48855,
+  "spacing_across_u_m": 28.0,
+  "spacing_across_v_m": 28.6,
+  "streets_along_u": 37,
+  "streets_along_v": 41,
+  "main_streets": [
+   {
+    "name": "78th Street",
+    "m": 3591,
+    "runs": "north-south"
+   },
+   {
+    "name": "35th Street",
+    "m": 1585,
+    "runs": "east-west"
+   },
+   {
+    "name": "81st Street",
+    "m": 1529,
+    "runs": "north-south"
+   },
+   {
+    "name": "77th Street",
+    "m": 1366,
+    "runs": "north-south"
+   },
+   {
+    "name": "80th Street",
+    "m": 1027,
+    "runs": "north-south"
+   },
+   {
+    "name": "82nd Street",
+    "m": 510,
+    "runs": "north-south"
+   }
+  ]
+ }
+}

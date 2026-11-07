@@ -82,6 +82,9 @@ func _fit_view() -> void:
 		_tracked.layout_for(size)
 
 static func pointer_mode(in_match: bool) -> int:
+	## The browser rejects MOUSE_MODE_CONFINED on every frame and spams the console.
+	if OS.has_feature("web"):
+		return Input.MOUSE_MODE_VISIBLE
 	if in_match:
 		return Input.MOUSE_MODE_CONFINED
 	return Input.MOUSE_MODE_VISIBLE

@@ -6,8 +6,12 @@ static func apply_unit(body: MeshInstance3D, id: String, primary: Color = Color.
 	if body == null or id == "":
 		return false
 	if _mount_unit(body, id, primary, accent):
+		if Catalog.RIGGED_YAW.has(id) and not bool(body.get_meta("model_rigged", false)):
+			_queue(body, id, primary, accent, "rigged")
 		return true
 	_queue(body, id, primary, accent, "unit")
+	if Catalog.RIGGED_YAW.has(id):
+		_queue(body, id, primary, accent, "rigged")
 	return false
 
 static func apply_structure(host: MeshInstance3D, id: String, primary: Color = Color.WHITE, accent: Color = Color.WHITE) -> bool:
@@ -21,11 +25,34 @@ static func apply_structure(host: MeshInstance3D, id: String, primary: Color = C
 static func _mount_unit(body: MeshInstance3D, id: String, primary: Color, accent: Color) -> bool:
 	if str(body.get_meta("model", "")) != "":
 		return true
-	var scene: Node3D = _scene(id)
+	var rigged: bool = true
+	var scene: Node3D = _scene(RIGGED + id)
+	if scene == null:
+		rigged = false
+		scene = _scene(id)
 	if scene == null:
 		return false
 	var footprint: AABB = _merged_aabb(body)
-	_mount(body, scene, footprint, false, id)
+	_mount(body, scene, footprint, false, id, _yaw_of(RIGGED + id if rigged else id), Scale.unit_target(id))
+	body.set_meta("model_rigged", rigged)
+	_paint(body, primary, accent, id)
+	return true
+
+## A rigged copy that arrives after the static model swaps in place.
+static func _swap_rigged(body: MeshInstance3D, id: String, primary: Color, accent: Color) -> bool:
+	if bool(body.get_meta("model_rigged", false)):
+		return true
+	var scene: Node3D = _scene(RIGGED + id)
+	if scene == null:
+		return false
+	var old: Node = body.get_node_or_null("Model")
+	var footprint: AABB = _merged_aabb(body)
+	if old != null:
+		body.remove_child(old)
+		old.free()
+	body.set_meta("model", "")
+	_mount(body, scene, footprint, false, id, _yaw_of(RIGGED + id), Scale.unit_target(id))
+	body.set_meta("model_rigged", true)
 	_paint(body, primary, accent, id)
 	return true
 
@@ -38,7 +65,11 @@ static func _mount_structure(host: MeshInstance3D, id: String, primary: Color, a
 	if scene == null:
 		return false
 	var footprint: AABB = host.mesh.get_aabb()
-	_mount(host, scene, footprint, true, id)
+	var plot: Vector2 = host.get_meta("footprint_m", Vector2.ZERO) as Vector2
+	if plot != Vector2.ZERO:
+		footprint = AABB(Vector3(-plot.x * 0.5, footprint.position.y, -plot.y * 0.5), Vector3(plot.x, footprint.size.y, plot.y))
+	_mount(host, scene, footprint, true, id, _yaw_of(id), {}, plot)
+	host.set_meta("model_id", id)
 	_paint(host, primary, accent, id)
 	return true
 
@@ -66,11 +97,12 @@ static func body_wash(primary: Color) -> Color:
 static func warm(owner: Node) -> void:
 	if owner == null or not OS.has_feature("web"):
 		return
+	var host: Node = _request_owner(owner)
 	var listed: String = _index_text()
 	if listed != "":
-		_arm_index(owner, listed)
+		_arm_index(host, listed)
 		return
-	_pull_index(owner)
+	_pull_index(host)
 
 static func model_id_for(node_name: String) -> String:
 	var name: String = node_name.to_lower()
@@ -78,34 +110,58 @@ static func model_id_for(node_name: String) -> String:
 		return name.trim_prefix("built_")
 	return name
 
-static var _docs: Dictionary = {}
-static var _states: Dictionary = {}
+static var _templates: Dictionary = {}
+static var _sources: Dictionary = {}
 
-static func _scene(id: String) -> Node3D:
-	var again: Node3D = _again(id)
+## Keys with this prefix name the rigged copy of a unit in game/models/rigged/. Structures never use it.
+const RIGGED: String = "rigged/"
+const Catalog = preload("res://game/model_catalog.gd")
+const Scale = preload("res://game/model_scale.gd")
+
+static func _scene(key: String) -> Node3D:
+	var again: Node3D = _again(key)
 	if again != null:
 		return again
-	return _load_scene(id)
+	return _load_scene(key)
 
-## One parsed glTF per id. Each unit gets its own mesh so freeing one does not drop a shared material.
+## Exports flatten Tripo files into models/, so a Tripo id counts as Tripo anywhere but the repo's stand-in folder.
+static func _yaw_of(key: String) -> float:
+	var path: String = str(_sources.get(key, ""))
+	var id: String = key.trim_prefix(RIGGED)
+	if not key.begins_with(RIGGED) and _tripo_id(id) and not path.get_base_dir().ends_with("game/models"):
+		path = "/tripo/" + path.get_file()
+	return Catalog.forward_yaw_deg(id, path)
+
+static func source_of(key: String) -> String:
+	return str(_sources.get(key, ""))
+
+## One parsed glTF per id, kept as an off-tree template. Each unit gets a duplicate; _paint then gives it its own meshes.
+## Re-running generate_scene on a kept GLTFState renames nodes and bones (R_Hand_2, ...), which unbinds sockets and clips.
+static func clear_templates() -> void:
+	for key: Variant in _templates.keys():
+		var node: Node = _templates[key] as Node
+		if node != null and is_instance_valid(node):
+			node.free()
+	_templates.clear()
+	_waiting.clear()
+
 static func _again(id: String) -> Node3D:
-	if not _states.has(id):
+	var template: Node3D = _templates.get(id) as Node3D
+	if template == null or not is_instance_valid(template):
 		return null
-	var doc: GLTFDocument = _docs.get(id) as GLTFDocument
-	var state: GLTFState = _states.get(id) as GLTFState
-	if doc == null or state == null:
-		return null
-	var generated: Node = doc.generate_scene(state)
-	return generated as Node3D
+	return template.duplicate() as Node3D
 
-static func _keep(id: String, doc: GLTFDocument, state: GLTFState) -> void:
-	_docs[id] = doc
-	_states[id] = state
+static func _keep(id: String, scene: Node3D) -> void:
+	var old: Node3D = _templates.get(id) as Node3D
+	if old != null and is_instance_valid(old):
+		old.free()
+	_templates[id] = scene.duplicate() as Node3D
 
 static func _load_scene(id: String) -> Node3D:
 	var path: String = _path(id)
 	if path == "":
 		return null
+	_sources[id] = path
 	if path.begins_with("res://") and ResourceLoader.exists(path):
 		var packed: PackedScene = load(path) as PackedScene
 		if packed != null:
@@ -132,26 +188,113 @@ static func _from_buffer(id: String, bytes: PackedByteArray) -> Node3D:
 	var generated: Node = doc.generate_scene(state)
 	var scene: Node3D = generated as Node3D
 	if scene != null:
-		_keep(id, doc, state)
+		_keep(id, scene)
 	return scene
 
 static var _tripo_set: Dictionary = {}
 static var _tripo_ready: bool = false
+## Empty uses the faction opposite the player. A mission can set this before units spawn.
+static var look_faction: String = ""
+
+static func enemy_look(player_faction: String) -> String:
+	if look_faction != "":
+		return look_faction
+	if player_faction == "nmrf":
+		return "mvd"
+	if player_faction == "mvd":
+		return "gtfc"
+	if player_faction == "black_market":
+		return "gtfc"
+	return "nmrf"
+
+## A campaign soldier has no roster id. Pick a finished model for that faction and role.
+static func fallback_unit(role: String, loco: String, faction: String) -> String:
+	var slot: String = "infantry"
+	if role == "air" or role == "drone" or loco == "air":
+		slot = "air"
+	elif role == "boat" or role == "amphibious" or loco == "naval":
+		slot = "boat"
+	elif role == "armor":
+		slot = "armor"
+	elif role == "artillery":
+		slot = "artillery"
+	var side: String = faction
+	if side != "gtfc" and side != "nmrf" and side != "mvd" and side != "black_market":
+		side = "nmrf"
+	if side == "gtfc":
+		if slot == "armor":
+			return "amber_tank"
+		if slot == "artillery":
+			return "monsoon_tube"
+		if slot == "boat":
+			return "channel_skiff"
+		if slot == "air":
+			return "bullion_truck"
+		return "militia"
+	if side == "mvd":
+		if slot == "armor":
+			return "cyan_ifv"
+		if slot == "artillery":
+			return "charcoal_mortar"
+		if slot == "boat":
+			return "cyan_skiff"
+		if slot == "air":
+			return "hub_drone"
+		return "clearance_trooper"
+	if side == "black_market":
+		if slot == "air" or slot == "artillery":
+			return "su30"
+		if slot == "boat":
+			return "ch4"
+		return "orlan10"
+	if slot == "armor":
+		return "mangrove_skiff"
+	if slot == "artillery":
+		return "mangrove_tube"
+	if slot == "boat":
+		return "emerald_gunboat"
+	if slot == "air":
+		return "jade_skiff"
+	return "river_rifle"
+
+static func yard_of(faction: String) -> String:
+	if faction == "mvd":
+		return "command_hub"
+	if faction == "nmrf":
+		return "packer"
+	return "scaffold_yard"
+
+static func structure_id(node_name: String) -> String:
+	var id: String = model_id_for(node_name)
+	if id.begins_with("foebuilt_"):
+		id = id.trim_prefix("foebuilt_")
+	if id == "playeryard":
+		return yard_of(SMFront.current())
+	if id == "enemyyard" or id == "enemybase":
+		return yard_of(enemy_look(SMFront.current()))
+	var specific: String = "%s_%s" % [SMFront.current(), id]
+	if _tripo_id(specific):
+		return specific
+	return id
 
 static func _tripo_id(id: String) -> bool:
 	if not _tripo_ready:
 		_tripo_ready = true
-		_tripo_set["militia"] = true
-		_tripo_set["amber_tank"] = true
-		_tripo_set["barracks"] = true
+		var listed: String = ""
+		if FileAccess.file_exists("res://data/tripo_ids.txt"):
+			listed = FileAccess.get_file_as_string("res://data/tripo_ids.txt")
+		for line: String in listed.split("\n"):
+			var name: String = line.strip_edges()
+			if name != "":
+				_tripo_set[name] = true
 	return bool(_tripo_set.get(id, false))
 
-static func _authored_size(id: String) -> Vector3:
-	if id == "barracks":
-		return Vector3(8.61, 8.45, 7.94)
+static func _authored_size(_id: String) -> Vector3:
 	return Vector3.ZERO
 
 static func _cache_file(id: String) -> String:
+	if id.begins_with(RIGGED):
+		return "user://models/%s.glb" % id
 	if _tripo_id(id):
 		return "user://models/tripo/%s.glb" % id
 	return "user://models/%s.glb" % id
@@ -160,11 +303,14 @@ static func _cached(id: String) -> String:
 	var path: String = _cache_file(id)
 	if FileAccess.file_exists(path):
 		return path
-	if not _tripo_id(id) and FileAccess.file_exists("user://models/%s.gltf" % id):
+	if not id.begins_with(RIGGED) and not _tripo_id(id) and FileAccess.file_exists("user://models/%s.gltf" % id):
 		return "user://models/%s.gltf" % id
 	return ""
 
-static func _path(id: String) -> String:
+static func _path(key: String) -> String:
+	if key.begins_with(RIGGED):
+		return _rigged_path(key.trim_prefix(RIGGED))
+	var id: String = key
 	if id == "" or id.contains("..") or id.contains("/") or id.contains("\\"):
 		return ""
 	var packed_try: PackedStringArray = PackedStringArray()
@@ -180,12 +326,14 @@ static func _path(id: String) -> String:
 	for packed: String in packed_try:
 		if ResourceLoader.exists(packed) or FileAccess.file_exists(packed):
 			return packed
+	var base: String = OS.get_executable_path().get_base_dir()
 	var roots: PackedStringArray = PackedStringArray()
 	if _tripo_id(id):
 		roots.append(ProjectSettings.globalize_path("res://").path_join("game/models/tripo"))
 	roots.append(ProjectSettings.globalize_path("res://").path_join("game/models"))
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/models"))
-	roots.append(OS.get_executable_path().get_base_dir().path_join("models"))
+	roots.append(base.path_join("models"))
+	roots.append(base.get_base_dir().path_join("Resources/models"))
 	for root: String in roots:
 		var found: String = root.path_join("%s.glb" % id)
 		if FileAccess.file_exists(found):
@@ -193,6 +341,22 @@ static func _path(id: String) -> String:
 		var gltf_path: String = root.path_join("%s.gltf" % id)
 		if FileAccess.file_exists(gltf_path):
 			return gltf_path
+	return ""
+
+static func _rigged_path(id: String) -> String:
+	if id == "" or id.contains("..") or id.contains("/") or id.contains("\\") or not Catalog.RIGGED_YAW.has(id):
+		return ""
+	var tries: PackedStringArray = PackedStringArray()
+	tries.append("res://game/models/rigged/%s.glb" % id)
+	tries.append(_cache_file(RIGGED + id))
+	var base: String = OS.get_executable_path().get_base_dir()
+	tries.append(ProjectSettings.globalize_path("res://").path_join("game/models/rigged/%s.glb" % id))
+	tries.append(ProjectSettings.globalize_path("res://").path_join("build/web/models/rigged/%s.glb" % id))
+	tries.append(base.path_join("models/rigged/%s.glb" % id))
+	tries.append(base.get_base_dir().path_join("Resources/models/rigged/%s.glb" % id))
+	for path: String in tries:
+		if FileAccess.file_exists(path):
+			return path
 	return ""
 
 static var _index: PackedStringArray = PackedStringArray()
@@ -206,17 +370,60 @@ static func _queue(body: MeshInstance3D, id: String, primary: Color, accent: Col
 	body.set_meta("model_id", id)
 	body.set_meta("model_primary", primary)
 	body.set_meta("model_accent", accent)
-	body.set_meta("model_kind", kind)
+	var key: String = id
+	if kind == "rigged":
+		body.set_meta("model_rigged_wait", true)
+		key = RIGGED + id
+	else:
+		body.set_meta("model_kind", kind)
+		if not _index_read or _index.has(id):
+			_hold_standin(body)
+		else:
+			_release_standin(body)
 	if not _waiting.has(body):
 		_waiting.append(body)
-	if not body.is_inside_tree() or not _index_read or not _index.has(id):
+	if not body.is_inside_tree() or not _index_read or not _index.has(key):
 		return
-	var host: Node = body.get_tree().current_scene
-	if host == null:
-		host = body
-	_fetch(host, id)
+	var host: Node = _request_owner(body)
+	_fetch(host, key)
 
-static func _redress(id: String) -> void:
+## The procedural mesh stays hidden while a GLB for this id is still on the way.
+static func _hold_standin(body: MeshInstance3D) -> void:
+	if body == null or str(body.get_meta("model", "")) != "":
+		return
+	body.set_meta("standin_held", true)
+	body.visible = false
+
+static func _release_standin(body: MeshInstance3D) -> void:
+	if body == null or not is_instance_valid(body):
+		return
+	if not bool(body.get_meta("standin_held", false)):
+		return
+	body.set_meta("standin_held", false)
+	if str(body.name) == "HubShell" and not bool(body.get_meta("hub_placed", false)):
+		return
+	body.visible = true
+
+static func _release_unlisted() -> void:
+	var still: Array[MeshInstance3D] = []
+	for body: MeshInstance3D in _waiting:
+		if not is_instance_valid(body):
+			continue
+		var id: String = str(body.get_meta("model_id", ""))
+		if str(body.get_meta("model", "")) != "":
+			body.visible = true
+			if bool(body.get_meta("model_rigged_wait", false)):
+				still.append(body)
+			continue
+		if id != "" and not _index.has(id):
+			_release_standin(body)
+			continue
+		still.append(body)
+	_waiting = still
+
+static func _redress(key: String) -> void:
+	var rigged: bool = key.begins_with(RIGGED)
+	var id: String = key.trim_prefix(RIGGED)
 	var still: Array[MeshInstance3D] = []
 	for body: MeshInstance3D in _waiting:
 		if not is_instance_valid(body):
@@ -226,12 +433,15 @@ static func _redress(id: String) -> void:
 			continue
 		var primary: Color = body.get_meta("model_primary", Color.WHITE)
 		var accent: Color = body.get_meta("model_accent", Color.WHITE)
-		var ok: bool = false
-		if str(body.get_meta("model_kind", "unit")) == "structure":
-			ok = _mount_structure(body, id, primary, accent)
-		else:
-			ok = _mount_unit(body, id, primary, accent)
-		if not ok:
+		if rigged and bool(body.get_meta("model_rigged_wait", false)):
+			if _swap_rigged(body, id, primary, accent):
+				body.set_meta("model_rigged_wait", false)
+		elif not rigged and str(body.get_meta("model", "")) == "":
+			if str(body.get_meta("model_kind", "unit")) == "structure":
+				_mount_structure(body, id, primary, accent)
+			else:
+				_mount_unit(body, id, primary, accent)
+		if str(body.get_meta("model", "")) == "" or bool(body.get_meta("model_rigged_wait", false)):
 			still.append(body)
 	_waiting = still
 
@@ -244,16 +454,40 @@ static func _arm_index(owner: Node, text: String) -> void:
 		if name.ends_with(".glb") or name.ends_with(".gltf"):
 			var id: String = name.get_basename()
 			_index.append(id)
+	_prefetch_listed(owner)
+	_release_unlisted()
 	_fetch_waiting(owner)
+
+static func _prefetch_listed(owner: Node) -> void:
+	if owner == null:
+		return
+	for id: String in _index:
+		_fetch(owner, id)
+
+static func _request_owner(owner: Node) -> Node:
+	if owner != null and owner.get_tree() != null and owner.get_tree().root != null:
+		return owner.get_tree().root
+	return owner
 
 static func _pull_index(owner: Node) -> void:
 	if owner == null or _index_read:
 		return
+	var host: Node = _request_owner(owner)
+	if not host.is_inside_tree():
+		_pull_index.call_deferred(owner)
+		return
 	var http := HTTPRequest.new()
 	http.timeout = 20.0
 	http.accept_gzip = false
-	owner.add_child(http)
-	http.request_completed.connect(_got_index.bind(http, owner))
+	http.ready.connect(_start_index.bind(http, host), CONNECT_ONE_SHOT)
+	host.add_child.call_deferred(http)
+
+static func _start_index(http: HTTPRequest, host: Node) -> void:
+	if not is_instance_valid(http) or not http.is_inside_tree():
+		if is_instance_valid(http):
+			http.queue_free()
+		return
+	http.request_completed.connect(_got_index.bind(http, host))
 	var err: Error = http.request(_page() + "models/index.txt")
 	if err != OK:
 		http.queue_free()
@@ -262,6 +496,9 @@ static func _got_index(result: int, code: int, _headers: PackedStringArray, body
 	if is_instance_valid(http):
 		http.queue_free()
 	if result != HTTPRequest.RESULT_SUCCESS or code != 200 or body.is_empty():
+		if not _index_read:
+			_index_read = true
+			_release_unlisted()
 		return
 	_arm_index(owner, body.get_string_from_utf8())
 
@@ -283,8 +520,10 @@ static func _index_text() -> String:
 	if FileAccess.file_exists(packed):
 		return FileAccess.get_file_as_string(packed)
 	var roots: PackedStringArray = PackedStringArray()
+	var base: String = OS.get_executable_path().get_base_dir()
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/models/index.txt"))
-	roots.append(OS.get_executable_path().get_base_dir().path_join("models/index.txt"))
+	roots.append(base.path_join("models/index.txt"))
+	roots.append(base.get_base_dir().path_join("Resources/models/index.txt"))
 	for path: String in roots:
 		if FileAccess.file_exists(path):
 			return FileAccess.get_file_as_string(path)
@@ -296,42 +535,80 @@ static func _fetch_waiting(owner: Node) -> void:
 		if not is_instance_valid(body):
 			continue
 		var id: String = str(body.get_meta("model_id", ""))
-		if id == "" or seen.has(id) or not _index.has(id):
+		if id == "":
 			continue
-		seen[id] = true
-		_fetch(owner, id)
+		var keys: PackedStringArray = PackedStringArray()
+		if str(body.get_meta("model", "")) == "":
+			keys.append(id)
+		if bool(body.get_meta("model_rigged_wait", false)):
+			keys.append(RIGGED + id)
+		for key: String in keys:
+			if seen.has(key) or not _index.has(key):
+				continue
+			seen[key] = true
+			_fetch(owner, key)
 
 static func _fetch(owner: Node, id: String) -> void:
 	if owner == null or _inflight.has(id) or id.contains(".."):
 		return
-	if _cached(id) != "":
+	if _cached(id) != "" or _again(id) != null:
 		_redress(id)
+		return
+	var host: Node = _request_owner(owner)
+	if not host.is_inside_tree():
+		_fetch.call_deferred(owner, id)
 		return
 	_inflight[id] = true
 	var http := HTTPRequest.new()
 	http.timeout = 60.0
 	http.accept_gzip = false
-	owner.add_child(http)
+	http.ready.connect(_start_model.bind(http, id), CONNECT_ONE_SHOT)
+	host.add_child.call_deferred(http)
+
+static func _start_model(http: HTTPRequest, id: String) -> void:
+	if not is_instance_valid(http) or not http.is_inside_tree():
+		_inflight.erase(id)
+		if is_instance_valid(http):
+			http.queue_free()
+		_give_up(id)
+		return
 	http.request_completed.connect(_got_model.bind(http, id))
 	var err: Error = http.request("%smodels/%s.glb" % [_page(), id])
 	if err != OK:
 		_inflight.erase(id)
 		http.queue_free()
+		_give_up(id)
 
 static func _got_model(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, id: String) -> void:
 	if is_instance_valid(http):
 		http.queue_free()
 	_inflight.erase(id)
 	if result != HTTPRequest.RESULT_SUCCESS or code != 200 or body.is_empty():
+		_give_up(id)
 		return
 	var cache_path: String = _cache_file(id)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(cache_path.get_base_dir()))
 	var file := FileAccess.open(cache_path, FileAccess.WRITE)
-	if file == null:
-		return
-	file.store_buffer(body)
-	file.close()
+	if file != null:
+		file.store_buffer(body)
+		file.close()
+	var parsed: Node3D = _from_buffer(id, body)
+	if parsed != null:
+		parsed.free()
 	_redress(id)
+
+static func _give_up(id: String) -> void:
+	var bare: String = id.trim_prefix(RIGGED)
+	var rigged: bool = id.begins_with(RIGGED)
+	for body: MeshInstance3D in _waiting:
+		if not is_instance_valid(body):
+			continue
+		if str(body.get_meta("model_id", "")) != bare:
+			continue
+		if rigged:
+			body.set_meta("model_rigged_wait", false)
+		elif str(body.get_meta("model", "")) == "":
+			_release_standin(body)
 
 static func _from_gltf(id: String, path: String) -> Node3D:
 	var doc: GLTFDocument = GLTFDocument.new()
@@ -341,14 +618,15 @@ static func _from_gltf(id: String, path: String) -> Node3D:
 	var generated: Node = doc.generate_scene(state)
 	var scene: Node3D = generated as Node3D
 	if scene != null:
-		_keep(id, doc, state)
+		_keep(id, scene)
 	return scene
 
 static func _paint(root: Node3D, primary: Color, accent: Color, id: String) -> void:
 	_paint_node(root, primary, accent, _tripo_id(id))
 
 static func _paint_node(node: Node, primary: Color, accent: Color, textured_wash: bool) -> void:
-	if str(node.name) == "Wake" or str(node.name) == "ContactShadow":
+	var n: String = str(node.name)
+	if n == "Wake" or n == "BowSpray" or n == "ContactShadow" or n == "Wheels":
 		return
 	var mesh_node: MeshInstance3D = node as MeshInstance3D
 	if mesh_node != null and mesh_node.mesh != null:
@@ -410,10 +688,21 @@ static func _copy_mat(src: Material) -> StandardMaterial3D:
 	mat.texture_filter = base.texture_filter
 	return mat
 
-static func _mount(body: MeshInstance3D, scene: Node3D, footprint: AABB, fill: bool, id: String) -> void:
+## `yaw_deg` turns the model's authored forward onto -Z inside the Model node, so fitting sees the turned bounds.
+static func _mount(body: MeshInstance3D, scene: Node3D, footprint: AABB, fill: bool, id: String, yaw_deg: float = 0.0, target: Dictionary = {}, plot: Vector2 = Vector2.ZERO) -> void:
+	if absf(yaw_deg) > 0.01:
+		var holder: Node3D = Node3D.new()
+		scene.name = "Facing"
+		scene.rotation.y = deg_to_rad(yaw_deg)
+		holder.add_child(scene)
+		scene = holder
 	scene.name = "Model"
 	body.add_child(scene)
-	_fit(scene, footprint, fill, _authored_size(id))
+	body.set_meta("model_yaw", yaw_deg)
+	if not target.is_empty() or plot != Vector2.ZERO:
+		_fit_chart(scene, footprint, target, plot)
+	else:
+		_fit(scene, footprint, fill, _authored_size(id))
 	_hoist(body, scene, "Turret")
 	_hoist(body, scene, "Rotor")
 	_hoist(body, scene, "Wake")
@@ -430,6 +719,10 @@ static func _mount(body: MeshInstance3D, scene: Node3D, footprint: AABB, fill: b
 	body.mesh = null
 	body.material_override = null
 	body.set_meta("model", scene.name)
+	body.set_meta("hull_parts_ready", false)
+	var keep_hidden: bool = str(body.name) == "HubShell" and not bool(body.get_meta("hub_placed", false)) and body.is_inside_tree()
+	body.visible = not keep_hidden
+	body.set_meta("standin_held", false)
 
 static func _hoist(body: MeshInstance3D, scene: Node3D, node_name: String) -> void:
 	var found: Node3D = scene.find_child(node_name, true, false) as Node3D
@@ -454,15 +747,32 @@ static func _fit(model: Node3D, footprint: AABB, fill: bool, authored: Vector3) 
 		return
 	var sx: float = footprint.size.x / maxf(src_x, 0.001)
 	var sz: float = footprint.size.z / maxf(src_z, 0.001)
-	if fill and authored.x > 0.05:
-		model.scale = Vector3(sx, minf(sx, sz), sz)
-	else:
-		var scale: float = minf(sx, sz)
-		if scale <= 0.0 or is_inf(scale) or is_nan(scale):
-			return
-		model.scale = Vector3.ONE * scale
+	var scale: float = minf(sx, sz)
+	if fill:
+		var span: float = maxf(footprint.size.x, footprint.size.z)
+		var src: float = maxf(src_x, src_z)
+		scale = span / maxf(src, 0.001)
+	if scale <= 0.0 or is_inf(scale) or is_nan(scale):
+		return
+	model.scale = Vector3.ONE * scale
 	var fitted: AABB = _merged_aabb(model)
 	model.position += Vector3(
+		footprint.get_center().x - fitted.get_center().x,
+		footprint.position.y - fitted.position.y,
+		footprint.get_center().z - fitted.get_center().z
+	)
+
+## Chart scale: a unit reaches its class height or length, a building fills its plot. Base on the ground, centred on the plot.
+static func _fit_chart(model: Node3D, footprint: AABB, target: Dictionary, plot: Vector2) -> void:
+	var bounds: AABB = _merged_aabb(model)
+	if bounds.size.length() < 0.001:
+		return
+	var scale: float = Scale.footprint_scale(bounds.size, plot) if plot != Vector2.ZERO else Scale.scale_for(bounds.size, target)
+	if scale <= 0.0 or is_inf(scale) or is_nan(scale):
+		return
+	model.scale = Vector3.ONE * scale
+	var fitted: AABB = Transform3D(Basis.from_scale(model.scale), Vector3.ZERO) * bounds
+	model.position = Vector3(
 		footprint.get_center().x - fitted.get_center().x,
 		footprint.position.y - fitted.position.y,
 		footprint.get_center().z - fitted.get_center().z
@@ -503,7 +813,9 @@ static func _to_root(root: Node3D, mesh_node: Node3D) -> Transform3D:
 static func _under_wake(mesh_node: Node, root: Node) -> bool:
 	var node: Node = mesh_node
 	while node != null and node != root:
-		if str(node.name) == "Wake":
+		var n: String = str(node.name)
+		if n == "Wake" or n == "BowSpray" or n == "ContactShadow" or n == "Wheels":
 			return true
 		node = node.get_parent()
-	return str(root.name) == "Wake"
+	var rn: String = str(root.name)
+	return rn == "Wake" or rn == "BowSpray" or rn == "ContactShadow" or rn == "Wheels"

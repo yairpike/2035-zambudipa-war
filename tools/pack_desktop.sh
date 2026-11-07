@@ -23,6 +23,15 @@ copy_assets() {
     rm -rf "$into/$folder"
     cp -a "$ASSETS/$folder" "$into/$folder"
   done
+  for folder in splash wordmark briefings; do
+    if [ -d "$ASSETS/$folder" ]; then
+      rm -rf "$into/$folder"
+      cp -a "$ASSETS/$folder" "$into/$folder"
+    fi
+  done
+  if [ -f "$ROOT/icon.png" ]; then
+    cp "$ROOT/icon.png" "$into/icon.png"
+  fi
   find "$into" -type d -name '_retired' -prune -exec rm -rf {} +
   find "$into/audio/barks" -maxdepth 1 -type f -name '*.ogg' -delete 2>/dev/null || true
 }
@@ -65,7 +74,18 @@ if [ -z "$app" ] || [ ! -d "$app/Contents/MacOS" ]; then
   echo "pack_desktop: macOS app bundle is missing"
   exit 1
 fi
-copy_assets "$app/Contents/MacOS"
+mkdir -p "$app/Contents/Resources"
+copy_assets "$app/Contents/Resources"
+# The side folders land after Godot signed the bundle, so re-sign ad hoc or the
+# seal no longer matches and Gatekeeper reports the app as damaged.
+RCODESIGN="${RCODESIGN:-rcodesign}"
+if command -v codesign >/dev/null 2>&1; then
+  codesign --force --deep --sign - "$app"
+elif command -v "$RCODESIGN" >/dev/null 2>&1; then
+  "$RCODESIGN" sign "$app" >/dev/null
+else
+  echo "pack_desktop: no codesign or rcodesign; the macOS seal does not cover the side folders"
+fi
 rm -f "$DEST/ASEAN2031-macos-universal.zip"
-(cd "$mac_dir" && zip -qr "$DEST/ASEAN2031-macos-universal.zip" "$(basename "$app")")
+(cd "$mac_dir" && zip -qry "$DEST/ASEAN2031-macos-universal.zip" "$(basename "$app")")
 echo "pack_desktop: wrote zips in $DEST"

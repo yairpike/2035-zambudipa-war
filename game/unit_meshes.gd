@@ -6,13 +6,15 @@ const METAL: Color = Color(0.22, 0.23, 0.26)
 const RUBBER: Color = Color(0.12, 0.12, 0.13)
 const GLASS: Color = Color(0.55, 0.75, 0.85)
 const Models = preload("res://game/model_registry.gd")
+const Motion = preload("res://game/unit_motion.gd")
+const Scale = preload("res://game/model_scale.gd")
 
 static var _ink: StandardMaterial3D
 static var _foam: StandardMaterial3D
 static var _blob: Texture2D
 static var _cache: Dictionary = {}
 
-static func dress_unit(kind: String, role: String, loco: String, accent: Color, primary: Color = Color.WHITE, trim: Color = Color.WHITE) -> MeshInstance3D:
+static func dress_unit(kind: String, role: String, loco: String, accent: Color, primary: Color = Color.WHITE, trim: Color = Color.WHITE, faction: String = "") -> MeshInstance3D:
 	var form: String = unit_form(kind, role, loco)
 	var body: MeshInstance3D = MeshInstance3D.new()
 	body.name = "Body"
@@ -32,7 +34,16 @@ static func dress_unit(kind: String, role: String, loco: String, accent: Color, 
 		wake.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var body_ink: Color = primary if not primary.is_equal_approx(Color.WHITE) or accent.is_equal_approx(Color.WHITE) else accent
 	var trim_ink: Color = trim if not trim.is_equal_approx(Color.WHITE) or accent.is_equal_approx(Color.WHITE) else accent
-	Models.apply_unit(body, kind, body_ink, trim_ink)
+	var model_id: String = kind
+	if kind == "raider" or kind == "wave":
+		var side: String = faction if faction != "" else Models.enemy_look("")
+		model_id = Models.fallback_unit(role, loco, side)
+	body.set_meta("unit_kind", model_id)
+	body.set_meta("unit_role", role)
+	body.set_meta("unit_loco", loco)
+	body.set_meta("trim_ink", trim_ink)
+	Models.apply_unit(body, model_id, body_ink, trim_ink)
+	ensure_hull_parts(body, model_id, form, role, loco, trim_ink)
 	_seat_shadow(body)
 	return body
 
@@ -40,31 +51,164 @@ static func dress_structure(mi: MeshInstance3D, size: Vector3, accent: Color) ->
 	var form: String = structure_form(str(mi.name))
 	if form == "":
 		return false
-	mi.mesh = structure_mesh(form, accent, size.y)
+	var role: String = _catalog_role(Models.model_id_for(str(mi.name)))
+	var plot: Vector2 = Vector2.ZERO if form == "super" else Scale.structure_footprint(str(mi.name), role if role != "" else form)
+	mi.mesh = _to_plot(structure_mesh(form, accent, size.y), plot, -size.y * 0.5)
 	mi.material_override = null
+	mi.set_meta("footprint_m", plot)
 	mi.set_meta("form", form)
 	mi.set_meta("paint", accent)
-	Models.apply_structure(mi, Models.model_id_for(str(mi.name)), SMFront.primary(), SMFront.accent())
+	Models.apply_structure(mi, Models.structure_id(str(mi.name)), SMFront.primary(), SMFront.accent())
 	return true
 
 static func animate(u: RTSUnit, delta: float) -> void:
 	var body: MeshInstance3D = u.get_node_or_null("Body") as MeshInstance3D
 	if body == null:
 		return
-	var turret: MeshInstance3D = body.get_node_or_null("Turret") as MeshInstance3D
-	if turret != null:
-		var yaw: float = 0.0
-		var target: RTSUnit = u.attack_target
-		if target != null and is_instance_valid(target) and target.is_alive():
-			var dir: Vector3 = target.global_position - u.global_position
-			yaw = wrapf(atan2(-dir.x, -dir.z) - u.rotation.y, -PI, PI)
-		turret.rotation.y = yaw
-	var rotor: MeshInstance3D = body.get_node_or_null("Rotor") as MeshInstance3D
-	if rotor != null:
-		rotor.rotate_y(delta * 14.0)
+	Motion.pose(u, delta)
 	var wake: MeshInstance3D = body.get_node_or_null("Wake") as MeshInstance3D
 	if wake != null:
 		wake.visible = u.is_moving()
+	var spray: MeshInstance3D = body.get_node_or_null("BowSpray") as MeshInstance3D
+	if spray != null:
+		spray.visible = u.is_moving()
+
+static func is_vehicle_unit(kind: String, role: String, form: String) -> bool:
+	var cls: String = Scale.unit_class(kind)
+	if cls != "":
+		return cls == "light_vehicle" or cls == "armour" or cls == "heavy_vehicle"
+	return form == "tank" or form == "tube" or form == "truck" or role == "armor" or role == "vehicle" or role == "artillery" or role == "hauler"
+
+static func is_air_unit(kind: String, role: String, loco: String, form: String) -> bool:
+	var cls: String = Scale.unit_class(kind)
+	if cls == "small_drone" or cls == "uav" or cls == "helicopter" or cls == "jet" or cls == "airship":
+		return true
+	if loco == "air":
+		return true
+	if cls != "":
+		return false
+	return form == "heli" or form == "jet" or form == "airship" or role == "air" or role == "drone"
+
+static func is_boat_unit(kind: String, role: String, loco: String, form: String) -> bool:
+	var cls: String = Scale.unit_class(kind)
+	if cls == "skiff" or cls == "warship" or cls == "capital_ship":
+		return true
+	if cls != "":
+		return false
+	return form == "boat" or form == "sub" or role == "boat" or role == "amphibious" or loco == "naval"
+
+static func ensure_hull_parts(body: MeshInstance3D, kind: String, form: String, role: String, loco: String, accent: Color) -> void:
+	if body == null or bool(body.get_meta("hull_parts_ready", false)):
+		return
+	body.set_meta("hull_parts_ready", true)
+	if bool(body.get_meta("model_rigged", false)):
+		return
+	var cls: String = Scale.unit_class(kind)
+	if cls == "infantry" or cls == "hero" or cls == "dog" or cls == "walker" or cls == "mobile_yard":
+		return
+	if cls == "" and (form == "figure" or form == "hero"):
+		return
+	var hull_box: AABB = _hull_bounds(body)
+	var center: Vector3 = hull_box.get_center()
+	if is_vehicle_unit(kind, role, form):
+		_ensure_wheels(body, hull_box, cls == "armour" or cls == "heavy_vehicle" or form == "tank" or form == "tube")
+		_ensure_turret_and_barrel(body, hull_box, form, accent, Vector3(center.x, maxf(hull_box.end.y * 0.86, 0.85), center.z - hull_box.size.z * 0.04))
+		if loco == "amphibious":
+			_ensure_water_foam(body, hull_box, accent)
+	elif is_air_unit(kind, role, loco, form):
+		var rotor: MeshInstance3D = body.get_node_or_null("Rotor") as MeshInstance3D
+		if rotor == null:
+			rotor = _part(body, "Rotor", "rotor", accent, Vector3(center.x, maxf(hull_box.end.y + 0.06, 1.1), center.z))
+		else:
+			rotor.position = Vector3(center.x, maxf(hull_box.end.y * 0.96, 0.9), center.z)
+		rotor.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		var air_turret: Node3D = body.get_node_or_null("Turret") as Node3D
+		if air_turret != null:
+			_ensure_barrel(air_turret, accent)
+	elif is_boat_unit(kind, role, loco, form):
+		_ensure_water_foam(body, hull_box, accent)
+		_ensure_turret_and_barrel(body, hull_box, "tank", accent, Vector3(center.x, maxf(hull_box.end.y * 0.78, 0.65), center.z - hull_box.size.z * 0.16))
+
+static func _hull_bounds(body: MeshInstance3D) -> AABB:
+	var model: Node3D = body.get_node_or_null("Model") as Node3D
+	if model != null:
+		var local: AABB = Models._merged_aabb(model)
+		if local.size.length() > 0.01:
+			return model.transform * local
+	if body.mesh != null:
+		return body.mesh.get_aabb()
+	return AABB(Vector3(-0.8, 0.0, -1.5), Vector3(1.6, 1.2, 3.0))
+
+static func _ensure_wheels(body: MeshInstance3D, hull_box: AABB, tracked: bool) -> void:
+	var existing: Node = body.get_node_or_null("Wheels")
+	if existing != null:
+		body.remove_child(existing)
+		existing.free()
+	var holder: Node3D = Node3D.new()
+	holder.name = "Wheels"
+	var r: float = clampf(hull_box.size.y * 0.17, 0.22, 0.42)
+	var wx: float = maxf(hull_box.size.x * 0.46, 0.55)
+	var cz: float = hull_box.get_center().z
+	var z_span: float = maxf(hull_box.size.z * 0.3, 0.75)
+	var axles: PackedFloat32Array = PackedFloat32Array([-z_span, 0.0, z_span]) if tracked else PackedFloat32Array([-z_span, z_span])
+	var w_mesh: ArrayMesh = wheel_mesh(r)
+	var idx: int = 0
+	for dz: float in axles:
+		for side_sign: float in [-1.0, 1.0]:
+			var w: MeshInstance3D = MeshInstance3D.new()
+			w.name = "Wheel%d" % idx
+			w.mesh = w_mesh
+			w.position = Vector3(side_sign * wx, r, cz + dz)
+			w.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			w.set_meta("rest_y", r)
+			w.set_meta("wheel_r", r)
+			holder.add_child(w)
+			idx += 1
+	body.add_child(holder)
+
+static func _ensure_turret_and_barrel(body: MeshInstance3D, _hull_box: AABB, form: String, accent: Color, fallback_pos: Vector3) -> void:
+	var turret: Node3D = body.get_node_or_null("Turret") as Node3D
+	if turret == null:
+		var top_form: String = "tube_top" if form == "tube" else "tank_top"
+		turret = _part(body, "Turret", top_form, accent, fallback_pos)
+	_ensure_barrel(turret, accent)
+
+static func _ensure_barrel(turret: Node3D, accent: Color) -> void:
+	if turret == null or turret.get_node_or_null("Barrel") != null:
+		return
+	var barrel: MeshInstance3D = MeshInstance3D.new()
+	barrel.name = "Barrel"
+	barrel.mesh = unit_mesh("barrel", accent)
+	barrel.position = Vector3(0.0, 0.18, -0.55)
+	turret.add_child(barrel)
+
+static func _ensure_water_foam(body: MeshInstance3D, hull_box: AABB, accent: Color) -> void:
+	var cx: float = hull_box.get_center().x
+	var wake: MeshInstance3D = body.get_node_or_null("Wake") as MeshInstance3D
+	if wake == null:
+		wake = _part(body, "Wake", "wake", accent, Vector3(cx, 0.05, maxf(hull_box.end.z + 0.25, 1.85)))
+		wake.visible = false
+		wake.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	else:
+		wake.position = Vector3(cx, 0.05, maxf(hull_box.end.z + 0.2, 1.6))
+	var spray: MeshInstance3D = body.get_node_or_null("BowSpray") as MeshInstance3D
+	if spray == null:
+		spray = _part(body, "BowSpray", "bow_spray", accent, Vector3(cx, 0.08, minf(hull_box.position.z - 0.15, -1.4)))
+		spray.visible = false
+		spray.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	else:
+		spray.position = Vector3(cx, 0.08, minf(hull_box.position.z - 0.15, -1.4))
+
+static func wheel_mesh(radius: float) -> ArrayMesh:
+	var key: String = "wheel|%.2f" % radius
+	if _cache.has(key):
+		return _cache[key] as ArrayMesh
+	var st: SurfaceTool = _begin(_opaque())
+	_wheel(st, Vector3.ZERO, radius, maxf(radius * 0.65, 0.16))
+	_box(st, Vector3.ZERO, Vector3(maxf(radius * 0.72, 0.18), radius * 0.45, radius * 1.35), METAL)
+	var mesh: ArrayMesh = _commit(st)
+	_cache[key] = mesh
+	return mesh
 
 static func paint_status(body: MeshInstance3D, mat: Material) -> void:
 	if body == null:
@@ -92,7 +236,7 @@ static func _coat(node: Node, mat: Material) -> void:
 	var mesh_node: MeshInstance3D = node as MeshInstance3D
 	if mesh_node != null:
 		var node_name: String = str(mesh_node.name)
-		if node_name != "Wake" and node_name != "ContactShadow":
+		if node_name != "Wake" and node_name != "BowSpray" and node_name != "ContactShadow":
 			mesh_node.material_overlay = mat
 			if mesh_node.mesh != null and mat != null:
 				var coat: MeshInstance3D = mesh_node.get_node_or_null("IceCoat") as MeshInstance3D
@@ -151,6 +295,8 @@ static func structure_form(node_name: String) -> String:
 		return "yard"
 	if n.begins_with("built_"):
 		return _building_form(n.trim_prefix("built_"))
+	if n.begins_with("foebuilt_"):
+		return _building_form(n.trim_prefix("foebuilt_"))
 	return ""
 
 static func muzzle_pos(form: String) -> Vector3:
@@ -197,6 +343,11 @@ static func unit_mesh(form: String, accent: Color) -> ArrayMesh:
 	elif form == "wake":
 		st = _begin(_foam_ink())
 		_wake(st)
+	elif form == "bow_spray":
+		st = _begin(_foam_ink())
+		_bow_spray(st)
+	elif form == "barrel":
+		_barrel_shape(st, accent)
 	elif form == "heli":
 		_heli(st, accent)
 	elif form == "rotor":
@@ -244,6 +395,24 @@ static func structure_mesh(form: String, accent: Color, height: float) -> ArrayM
 	var mesh: ArrayMesh = _commit(st)
 	_cache[key] = mesh
 	return mesh
+
+## The stand-in silhouette grows to the plot so a base reads at the right size before its model downloads.
+static func _to_plot(mesh: ArrayMesh, plot: Vector2, ground: float) -> ArrayMesh:
+	var box: AABB = mesh.get_aabb()
+	var span: float = maxf(box.size.x, box.size.z)
+	if span < 0.001 or plot == Vector2.ZERO:
+		return mesh
+	var s: float = minf(plot.x, plot.y) * Scale.fill() / span
+	var key: String = "plot|%d|%.2f|%.2f" % [mesh.get_instance_id(), plot.x, plot.y]
+	if _cache.has(key):
+		return _cache[key] as ArrayMesh
+	var xf := Transform3D(Basis.from_scale(Vector3.ONE * s), Vector3(0.0, ground - ground * s, 0.0))
+	var st := SurfaceTool.new()
+	st.append_from(mesh, 0, xf)
+	st.set_material(mesh.surface_get_material(0))
+	var out: ArrayMesh = st.commit()
+	_cache[key] = out
+	return out
 
 static func _building_form(id: String) -> String:
 	if id.contains("mast") or id.contains("flak") or id.contains("prism") or id.contains("multigunner"):
@@ -491,6 +660,15 @@ static func _boat(st: SurfaceTool, accent: Color) -> void:
 static func _wake(st: SurfaceTool) -> void:
 	_box(st, Vector3(0.0, 0.0, 0.35), Vector3(0.35, 0.04, 0.9), Color.WHITE)
 	_box(st, Vector3(0.0, 0.0, 1.15), Vector3(0.9, 0.04, 0.7), Color.WHITE)
+
+static func _bow_spray(st: SurfaceTool) -> void:
+	_box(st, Vector3(0.0, 0.04, -0.2), Vector3(0.42, 0.08, 0.38), Color.WHITE)
+	_box(st, Vector3(-0.38, 0.02, 0.15), Vector3(0.28, 0.06, 0.65), Color.WHITE)
+	_box(st, Vector3(0.38, 0.02, 0.15), Vector3(0.28, 0.06, 0.65), Color.WHITE)
+
+static func _barrel_shape(st: SurfaceTool, accent: Color) -> void:
+	_box(st, Vector3(0.0, 0.0, -0.05), Vector3(0.24, 0.2, 0.28), accent)
+	_box(st, Vector3(0.0, 0.0, -0.58), Vector3(0.12, 0.12, 0.95), METAL)
 
 static func _heli(st: SurfaceTool, accent: Color) -> void:
 	_box(st, Vector3(0.0, 0.82, 0.05), Vector3(0.72, 0.48, 1.7), METAL)

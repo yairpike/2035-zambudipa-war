@@ -9,8 +9,9 @@ var _stung: bool = false
 var _open: bool = false
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	if OS.has_feature("web"):
-		_fetch_list()
+		_fetch_list.call_deferred()
 
 func _input(event: InputEvent) -> void:
 	if _open or not OS.has_feature("web") or not _gesture(event):
@@ -39,6 +40,9 @@ func _process(_delta: float) -> void:
 	Clips.pump()
 	var host: Node = get_parent()
 	if host == null:
+		return
+	if get_tree().paused:
+		Clips.tick(host)
 		return
 	Clips.drive(host)
 	if not _started:
@@ -69,11 +73,21 @@ func _process(_delta: float) -> void:
 	Clips.tick(host)
 
 func _fetch_list() -> void:
+	if not is_inside_tree():
+		_fetch_list.call_deferred()
+		return
 	var http: HTTPRequest = HTTPRequest.new()
 	http.timeout = 30.0
 	http.accept_gzip = false
 	http.name = "ClipList"
-	add_child(http)
+	http.ready.connect(_start_list.bind(http), CONNECT_ONE_SHOT)
+	add_child.call_deferred(http)
+
+func _start_list(http: HTTPRequest) -> void:
+	if not is_instance_valid(http) or not http.is_inside_tree():
+		if is_instance_valid(http):
+			http.queue_free()
+		return
 	http.request_completed.connect(_got_list.bind(http))
 	var err: Error = http.request(Clips.page_base() + "audio/clips.txt")
 	if err != OK:
@@ -90,4 +104,5 @@ func _got_list(result: int, code: int, _headers: PackedStringArray, body: Packed
 		if rel == "" or Clips.is_lazy(rel):
 			continue
 		Clips.remember(rel)
-		Clips.prefetch(self, rel)
+		if not Clips.is_retired(rel):
+			Clips.prefetch(self, rel)

@@ -5,7 +5,7 @@ set -eu
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DEST="$ROOT/build/web"
 # Optional trees. Set AUDIO_SRC, CAMEO_SRC, and MENU_SRC in the environment, or pass
-# --audio DIR, --cameos DIR, and --menu DIR. Without them, folders already
+# --audio DIR, --cameos DIR, --menu DIR, and --briefings DIR. Without them, folders already
 # next to the export are left in place.
 if [ $# -gt 0 ] && [ "${1#-}" = "$1" ]; then
   DEST="$1"
@@ -61,6 +61,14 @@ while [ $# -gt 0 ]; do
       VIDEO_SRC="$2"
       shift 2
       ;;
+    --briefings)
+      if [ $# -lt 2 ]; then
+        echo "finish_web_export: --briefings needs a directory"
+        exit 1
+      fi
+      BRIEFINGS_SRC="$2"
+      shift 2
+      ;;
     --models)
       if [ $# -lt 2 ]; then
         echo "finish_web_export: --models needs a directory"
@@ -77,6 +85,14 @@ while [ $# -gt 0 ]; do
       TRIPO_SRC="$2"
       shift 2
       ;;
+    --key-art)
+      if [ $# -lt 2 ]; then
+        echo "finish_web_export: --key-art needs a directory"
+        exit 1
+      fi
+      KEY_ART_SRC="$2"
+      shift 2
+      ;;
     *)
       echo "finish_web_export: unknown argument $1"
       exit 1
@@ -90,7 +106,9 @@ TERRAIN_SRC="${TERRAIN_SRC:-}"
 UI_SRC="${UI_SRC:-}"
 VIDEO_SRC="${VIDEO_SRC:-}"
 MODEL_SRC="${MODEL_SRC:-}"
+BRIEFINGS_SRC="${BRIEFINGS_SRC:-}"
 TRIPO_SRC="${TRIPO_SRC:-}"
+KEY_ART_SRC="${KEY_ART_SRC:-}"
 # Keep the project worker. Godot's exported worker reloads every open client
 # when it receives "update", which boots a match back to the menu.
 cp "$ROOT/web/sw.js" "$DEST/sw.js"
@@ -160,6 +178,51 @@ if ! grep -q 'serviceWorker.register("sw.js")' "$DEST/index.html"; then
   sed -i 's#</body>#<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js");}</script></body>#' "$DEST/index.html"
 fi
 cp "$ROOT/web/audio_unlock.js" "$DEST/audio_unlock.js"
+if [ -f "$ROOT/web/favicon.ico" ]; then
+  cp "$ROOT/web/favicon.ico" "$DEST/favicon.ico"
+  if [ -f "$DEST/index.html" ] && ! grep -q 'href="favicon.ico"' "$DEST/index.html"; then
+    sed -i 's#</head>#<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48"></head>#' "$DEST/index.html"
+  fi
+fi
+# The page that shipped at 97433c3 uses these exact files: index.icon.png as the tab icon,
+# the apple touch icon, and the three PWA sizes named in the manifest.
+if [ -f "$ROOT/brand/favicon.png" ]; then
+  cp "$ROOT/brand/favicon.png" "$DEST/index.icon.png"
+fi
+if [ -f "$ROOT/brand/apple_touch_icon.png" ]; then
+  cp "$ROOT/brand/apple_touch_icon.png" "$DEST/index.apple-touch-icon.png"
+fi
+if [ -f "$ROOT/brand/pwa_144.png" ]; then
+  cp "$ROOT/brand/pwa_144.png" "$DEST/index.144x144.png"
+fi
+if [ -f "$ROOT/brand/pwa_180.png" ]; then
+  cp "$ROOT/brand/pwa_180.png" "$DEST/index.180x180.png"
+fi
+if [ -f "$ROOT/brand/pwa_512.png" ]; then
+  cp "$ROOT/brand/pwa_512.png" "$DEST/index.512x512.png"
+fi
+if [ -f "$ROOT/brand/boot_splash.png" ]; then
+  cp "$ROOT/brand/boot_splash.png" "$DEST/index.png"
+fi
+if [ -f "$ROOT/brand/boot_splash.webp" ]; then
+  mkdir -p "$DEST/splash"
+  cp "$ROOT/brand/boot_splash.webp" "$DEST/splash/splash-four-fronts.webp"
+  : > "$DEST/splash/.gdignore"
+  if [ -f "$DEST/index.html" ]; then
+    sed -i 's#src="index\.png"#src="splash/splash-four-fronts.webp"#' "$DEST/index.html"
+  fi
+fi
+if [ -f "$ROOT/brand/wordmark-vanguard-1024.png" ]; then
+  mkdir -p "$DEST/wordmark"
+  cp "$ROOT/brand/wordmark-vanguard-1024.png" "$DEST/wordmark/wordmark-vanguard-1024.png"
+  if [ -f "$ROOT/brand/wordmark-vanguard.svg" ]; then
+    cp "$ROOT/brand/wordmark-vanguard.svg" "$DEST/wordmark/wordmark-vanguard.svg"
+  fi
+  : > "$DEST/wordmark/.gdignore"
+fi
+if [ -f "$DEST/index.html" ] && ! grep -q 'href="index.icon.png"' "$DEST/index.html"; then
+  sed -i 's#</head>#<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png"></head>#' "$DEST/index.html"
+fi
 if [ -f "$DEST/index.html" ] && ! grep -q 'audio_unlock.js' "$DEST/index.html"; then
   python3 - "$DEST/index.html" << 'PY'
 import sys
@@ -391,13 +454,15 @@ if [ -n "$MENU_SRC" ]; then
     echo "finish_web_export: menu source is not a directory"
     exit 1
   fi
-  if [ ! -d "$MENU_SRC/cinematic" ]; then
-    echo "finish_web_export: menu source has no cinematic folder"
-    exit 1
+  MENU_DIR="$MENU_SRC"
+  if [ -d "$MENU_SRC/cinematic" ]; then
+    MENU_DIR="$MENU_SRC/cinematic"
+  elif [ -d "$MENU_SRC/backgrounds" ]; then
+    MENU_DIR="$MENU_SRC/backgrounds"
   fi
-  rm -rf "$DEST/ui/menu"
+  rm -rf "$DEST/ui/menu/cinematic"
   mkdir -p "$DEST/ui/menu/cinematic"
-  find "$MENU_SRC/cinematic" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -exec cp {} "$DEST/ui/menu/cinematic/" \;
+  find "$MENU_DIR" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -exec cp {} "$DEST/ui/menu/cinematic/" \;
   find "$DEST/ui/menu/cinematic" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -printf 'cinematic/%f\n' | sort > "$DEST/ui/menu/index.txt"
   : > "$DEST/ui/menu/.gdignore"
   : > "$DEST/ui/menu/cinematic/.gdignore"
@@ -408,14 +473,42 @@ if [ -n "$VIDEO_SRC" ]; then
     exit 1
   fi
   mkdir -p "$DEST/ui/menu/video/bed"
-  find "$VIDEO_SRC" -maxdepth 1 -type f -name '*.ogv' -exec cp {} "$DEST/ui/menu/video/" \;
+  find "$VIDEO_SRC" -maxdepth 1 -type f \( -name '*.ogv' -o -name '*.webm' -o -name '*.mp4' -o -name '*.webp' \) -exec cp {} "$DEST/ui/menu/video/" \;
   if [ -d "$VIDEO_SRC/bed" ]; then
     find "$VIDEO_SRC/bed" -maxdepth 1 -type f -name '*.ogg' -exec cp {} "$DEST/ui/menu/video/bed/" \;
   fi
   : > "$DEST/ui/menu/video/.gdignore"
-  if [ ! -f "$DEST/ui/menu/video/gtfc.ogv" ]; then
-    echo "finish_web_export: video folder is missing gtfc.ogv"
+  if [ ! -f "$DEST/ui/menu/video/main-menu-loop.ogv" ] && [ ! -f "$DEST/ui/menu/video/main-menu-loop.webm" ] && [ ! -f "$DEST/ui/menu/video/gtfc.ogv" ]; then
+    echo "finish_web_export: video folder has no menu loop"
     exit 1
+  fi
+fi
+if [ -n "$KEY_ART_SRC" ]; then
+  if [ ! -d "$KEY_ART_SRC" ]; then
+    echo "finish_web_export: key-art source is not a directory"
+    exit 1
+  fi
+  if [ -d "$KEY_ART_SRC/backgrounds" ]; then
+    mkdir -p "$DEST/ui/menu/cinematic"
+    find "$KEY_ART_SRC/backgrounds" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -exec cp {} "$DEST/ui/menu/cinematic/" \;
+    find "$DEST/ui/menu/cinematic" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -printf 'cinematic/%f\n' | sort > "$DEST/ui/menu/index.txt"
+    : > "$DEST/ui/menu/.gdignore"
+    : > "$DEST/ui/menu/cinematic/.gdignore"
+  fi
+  if [ -d "$KEY_ART_SRC/video" ]; then
+    mkdir -p "$DEST/ui/menu/video"
+    find "$KEY_ART_SRC/video" -maxdepth 1 -type f \( -name '*.ogv' -o -name '*.webm' -o -name '*.mp4' -o -name '*.webp' \) -exec cp {} "$DEST/ui/menu/video/" \;
+    : > "$DEST/ui/menu/video/.gdignore"
+  fi
+  if [ -d "$KEY_ART_SRC/splash" ]; then
+    mkdir -p "$DEST/splash"
+    find "$KEY_ART_SRC/splash" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' \) -exec cp {} "$DEST/splash/" \;
+    : > "$DEST/splash/.gdignore"
+  fi
+  if [ -d "$KEY_ART_SRC/wordmark" ]; then
+    mkdir -p "$DEST/wordmark"
+    find "$KEY_ART_SRC/wordmark" -maxdepth 1 -type f \( -name '*.png' -o -name '*.svg' \) -exec cp {} "$DEST/wordmark/" \;
+    : > "$DEST/wordmark/.gdignore"
   fi
 fi
 if [ -n "$MODEL_SRC" ]; then
@@ -432,11 +525,44 @@ if [ -n "$MODEL_SRC" ]; then
     fi
     find "$TRIPO_SRC" -maxdepth 1 -type f -name '*.glb' -exec cp {} "$DEST/models/" \;
   fi
-  find "$DEST/models" -maxdepth 1 -type f \( -name '*.glb' -o -name '*.gltf' \) -printf '%f\n' | sort > "$DEST/models/index.txt"
+  # Rigged units (idle, walk, run, shoot, die, flinch, ability clips) are listed as rigged/<id>.glb.
+  RIGGED_SRC="${RIGGED_SRC:-$MODEL_SRC/rigged}"
+  if [ ! -d "$RIGGED_SRC" ] && [ -d "$ROOT/game/models/rigged" ]; then
+    RIGGED_SRC="$ROOT/game/models/rigged"
+  fi
+  if [ -d "$RIGGED_SRC" ]; then
+    mkdir -p "$DEST/models/rigged"
+    find "$RIGGED_SRC" -maxdepth 1 -type f -name '*.glb' -exec cp {} "$DEST/models/rigged/" \;
+  fi
+  {
+    find "$DEST/models" -maxdepth 1 -type f \( -name '*.glb' -o -name '*.gltf' \) -printf '%f\n'
+    if [ -d "$DEST/models/rigged" ]; then
+      find "$DEST/models/rigged" -maxdepth 1 -type f -name '*.glb' -printf 'rigged/%f\n'
+    fi
+  } | sort > "$DEST/models/index.txt"
+  if [ -d "$ROOT/game/models/rigged" ] && ! grep -qx "rigged/militia.glb" "$DEST/models/index.txt"; then
+    echo "finish_web_export: rigged models are missing from models/index.txt"
+    exit 1
+  fi
   : > "$DEST/models/.gdignore"
   if [ -f "$MODEL_SRC/CREDITS.md" ]; then
     cp "$MODEL_SRC/CREDITS.md" "$DEST/models/CREDITS.md"
   fi
+fi
+if [ -d "$ROOT/game/models/env" ]; then
+  mkdir -p "$DEST/models/env"
+  find "$ROOT/game/models/env" -maxdepth 1 -type f -name '*.glb' -exec cp {} "$DEST/models/env/" \;
+  find "$DEST/models/env" -maxdepth 1 -type f -name '*.glb' -printf '%f\n' | sort > "$DEST/models/env/index.txt"
+  : > "$DEST/models/env/.gdignore"
+fi
+if [ -n "$BRIEFINGS_SRC" ]; then
+  if [ ! -d "$BRIEFINGS_SRC" ]; then
+    echo "finish_web_export: briefings source is not a directory"
+    exit 1
+  fi
+  mkdir -p "$DEST/briefings"
+  find "$BRIEFINGS_SRC" -maxdepth 1 -type f -name '*.webp' -exec cp {} "$DEST/briefings/" \;
+  : > "$DEST/briefings/.gdignore"
 fi
 if [ -n "$TERRAIN_SRC" ]; then
   if [ ! -d "$TERRAIN_SRC" ]; then
@@ -452,15 +578,11 @@ if [ -n "$UI_SRC" ]; then
     echo "finish_web_export: ui source needs frames and icons"
     exit 1
   fi
-  mkdir -p "$DEST/ui/frames" "$DEST/ui/icons" "$DEST/ui/emblems"
+  mkdir -p "$DEST/ui/frames" "$DEST/ui/icons"
   find "$UI_SRC/frames" -maxdepth 1 -type f -name '*.webp' -exec cp {} "$DEST/ui/frames/" \;
   find "$UI_SRC/icons" -maxdepth 1 -type f -name '*.webp' -exec cp {} "$DEST/ui/icons/" \;
-  if [ -d "$UI_SRC/emblems" ]; then
-    find "$UI_SRC/emblems" -maxdepth 1 -type f -name '*.webp' -exec cp {} "$DEST/ui/emblems/" \;
-  fi
   : > "$DEST/ui/frames/.gdignore"
   : > "$DEST/ui/icons/.gdignore"
-  : > "$DEST/ui/emblems/.gdignore"
 fi
 if ! grep -q "brotli" "$DEST/brotli_host.conf" || ! grep -q "wasm" "$DEST/brotli_host.conf"; then
   echo "finish_web_export: brotli host config is missing"

@@ -10,6 +10,8 @@ var victory: bool = false
 var host: Node
 var panel: Control
 var banner: Label
+var reason: Label
+var reason_plate: PanelContainer
 var back: Button
 var _cool: Dictionary[int, float] = {}
 
@@ -37,8 +39,8 @@ func mount(p_host: Node, layer: CanvasLayer) -> void:
 	banner.anchor_top = 0.5
 	banner.anchor_right = 1.0
 	banner.anchor_bottom = 0.5
-	banner.offset_top = -36.0
-	banner.offset_bottom = 36.0
+	banner.offset_top = -64.0
+	banner.offset_bottom = 8.0
 	banner.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	banner.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	banner.offset_left = 64.0
@@ -46,6 +48,40 @@ func mount(p_host: Node, layer: CanvasLayer) -> void:
 	banner.add_theme_font_size_override("font_size", 48)
 	banner.add_theme_color_override("font_color", Color(1, 1, 1))
 	panel.add_child(banner)
+	reason_plate = PanelContainer.new()
+	reason_plate.name = "MatchReasonPlate"
+	reason_plate.visible = false
+	reason_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	reason_plate.anchor_left = 0.0
+	reason_plate.anchor_top = 0.5
+	reason_plate.anchor_right = 0.0
+	reason_plate.anchor_bottom = 0.5
+	reason_plate.offset_left = 64.0
+	reason_plate.offset_right = 468.0
+	reason_plate.offset_top = 44.0
+	reason_plate.offset_bottom = 88.0
+	var pill := StyleBoxFlat.new()
+	pill.bg_color = Color(0.02, 0.025, 0.035, 0.94)
+	pill.border_color = Color(0.93, 0.78, 0.38, 0.85)
+	pill.set_border_width_all(1)
+	pill.set_corner_radius_all(6)
+	pill.content_margin_left = 14
+	pill.content_margin_right = 14
+	pill.content_margin_top = 6
+	pill.content_margin_bottom = 6
+	reason_plate.add_theme_stylebox_override("panel", pill)
+	panel.add_child(reason_plate)
+	reason = Label.new()
+	reason.name = "MatchReason"
+	reason.visible = false
+	reason.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	reason.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	reason.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	reason.add_theme_font_size_override("font_size", 22)
+	reason.add_theme_color_override("font_color", Color(0.98, 0.96, 0.9))
+	reason.add_theme_color_override("font_outline_color", Color(0.0, 0.0, 0.0, 0.9))
+	reason.add_theme_constant_override("outline_size", 4)
+	reason_plate.add_child(reason)
 	chrome_wanted.emit(self, panel, faction)
 
 func consider(player_units: int, player_buildings: int, enemy_units: int, enemy_buildings: int) -> void:
@@ -118,7 +154,7 @@ func _press(field: SMPointer, units: Array[RTSUnit], yards: Array[SMBuildYard], 
 			if id == &"":
 				continue
 			var pos: Vector3 = yard.position_of(id)
-			var dist: float = Vector2(u.global_position.x, u.global_position.z).distance_to(Vector2(pos.x, pos.z))
+			var dist: float = Vector2(u.global_position.x, u.global_position.z).distance_to(Vector2(pos.x, pos.z)) - yard.reach_of(id)
 			if dist < best_d:
 				best_d = dist
 				best_yard = yard
@@ -155,15 +191,17 @@ func _hide(id: StringName) -> void:
 		node_name = "HubShell"
 	var node: Node = host.get_node_or_null(node_name)
 	if node is Node3D:
+		node.set_meta("destroyed", true)
 		(node as Node3D).visible = false
 	var built: Node = host.get_node_or_null("Built_%s" % str(id))
 	if built is Node3D:
+		built.set_meta("destroyed", true)
 		(built as Node3D).visible = false
 
-func finish(win: bool) -> void:
-	_finish(win)
+func finish(win: bool, note: String = "") -> void:
+	_finish(win, note)
 
-func _finish(win: bool) -> void:
+func _finish(win: bool, note: String = "") -> void:
 	if over:
 		return
 	over = true
@@ -171,9 +209,22 @@ func _finish(win: bool) -> void:
 	if panel != null:
 		panel.visible = true
 		panel.mouse_filter = Control.MOUSE_FILTER_STOP
+		var layer: Node = panel.get_parent()
+		if layer != null:
+			var boot_chip: CanvasItem = layer.find_child("MissionBoot", true, false) as CanvasItem
+			if boot_chip != null:
+				boot_chip.visible = false
 	if banner != null:
 		banner.text = "Victory" if win else "Defeat"
 		banner.add_theme_color_override("font_color", Color(1, 1, 1))
+	if reason != null:
+		reason.text = note
+		reason.visible = note != ""
+	if reason_plate != null:
+		reason_plate.visible = note != ""
+	if back != null:
+		back.offset_top = 104.0 if note != "" else 56.0
+		back.offset_bottom = 156.0 if note != "" else 108.0
 	var status: Label = null
 	if host != null:
 		status = host.find_child("Status", true, false) as Label

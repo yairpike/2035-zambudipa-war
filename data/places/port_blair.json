@@ -1,0 +1,45 @@
+{
+ "place": "Port Blair, Aberdeen Bazaar",
+ "maps": [
+  "ten_degree_atolls"
+ ],
+ "bbox_swne": [
+  11.664,
+  92.724,
+  11.674,
+  92.734
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 83,
+  "grid_share": 0.39,
+  "street_m": 27309,
+  "spacing_across_u_m": 36.8,
+  "spacing_across_v_m": 36.8,
+  "streets_along_u": 23,
+  "streets_along_v": 26,
+  "main_streets": [
+   {
+    "name": "Foreshore Road",
+    "m": 2936,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Mahatma Gandhi marg",
+    "m": 1951,
+    "runs": "north-south"
+   },
+   {
+    "name": "Panipat Road",
+    "m": 1112,
+    "runs": "east-west"
+   },
+   {
+    "name": "MG Road",
+    "m": 1068,
+    "runs": "east-west"
+   }
+  ]
+ }
+}

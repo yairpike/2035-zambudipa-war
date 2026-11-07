@@ -1,0 +1,38 @@
+{
+ "place": "chiang_saen_sop_ruak",
+ "note": "The Lao wedge of the Golden Triangle: a casino-zone grid between the rivers.",
+ "towns": [
+  {
+   "id": "golden_triangle_sez",
+   "place": "chiang_saen_sop_ruak",
+   "rect": [
+    19,
+    3,
+    15,
+    11
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    4
+   ],
+   "homes": [
+    "neon_shophouse",
+    "border_guesthouse"
+   ],
+   "shops": "neon_shophouse",
+   "high": [
+    1
+   ],
+   "civic": [
+    {
+     "block": [
+      1,
+      0
+     ],
+     "id": "border_casino"
+    }
+   ]
+  }
+ ]
+}

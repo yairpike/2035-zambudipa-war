@@ -1,0 +1,55 @@
+{
+ "place": "Yangon downtown (Sule Pagoda)",
+ "maps": [
+  "burma_road"
+ ],
+ "bbox_swne": [
+  16.77,
+  96.148,
+  16.782,
+  96.168
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 2,
+  "grid_share": 0.83,
+  "street_m": 78707,
+  "spacing_across_u_m": 39.0,
+  "spacing_across_v_m": 27.1,
+  "streets_along_u": 62,
+  "streets_along_v": 44,
+  "main_streets": [
+   {
+    "name": "Bogyoke Aung San Road",
+    "m": 4122,
+    "runs": "east-west"
+   },
+   {
+    "name": "Heavy-Duty Vehicle Commercial Bypass Road",
+    "m": 3956,
+    "runs": "east-west"
+   },
+   {
+    "name": "Maha Bandula Road",
+    "m": 3359,
+    "runs": "east-west"
+   },
+   {
+    "name": "Strand Road",
+    "m": 2933,
+    "runs": "east-west"
+   },
+   {
+    "name": "Sule Pagoda Road",
+    "m": 2249,
+    "runs": "north-south"
+   },
+   {
+    "name": "Anawrahta Road",
+    "m": 2202,
+    "runs": "east-west"
+   }
+  ]
+ }
+}

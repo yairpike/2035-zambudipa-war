@@ -2,7 +2,7 @@
 
 The files directly in this folder are stand-ins built from CC0 (public domain) packs. CC0 needs no attribution; these credits are a courtesy and a record of where each file came from.
 
-`models/tripo/militia.glb`, `amber_tank.glb`, and `barracks.glb` are Tripo generations and are used instead of the CC0 stand-ins of the same id. They are not CC0. See the Tripo pilot note for the generation record. The CC0 rows below remain the fallback when a Tripo file is absent.
+Every id in `res://data/tripo_ids.txt` has a Tripo file in `models/tripo/`. Those are used instead of the CC0 stand-in of the same id. They are not CC0. See the Tripo pilot note for the generation record. The CC0 rows below remain the fallback when a Tripo file is absent.
 
 Licence: [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
 
@@ -91,7 +91,7 @@ Rotor blades, the dirigible envelope and fins, and the pocket-sub hull were mode
 | `packer_escort` | Siti The Kraken | Quaternius Toon Shooter Game Kit: `Character_Hazmat.gltf` |
 | `relay_mast` | Mekong Assault Destroyer | Kenney Watercraft Kit: `boat-tow-a.glb`; Quaternius Turret Pack: `Cannon_3.blend` (Turret) |
 | `relay_van` | Colonel Nguyen Phantom | Quaternius Toon Shooter Game Kit: `Character_Soldier.gltf` |
-| `river_drone` | Athena Orbital Designator | Kenney Space Kit: `craft_racer.glb` |
+| `river_drone` | Athena Orbital Designator | Tripo model in `models/tripo/`. The Kenney `craft_racer.glb` stand-in is retired. |
 | `river_rifle` | Patani Corsair Guard | Quaternius Toon Shooter Game Kit: `Character_Enemy.gltf` |
 | `river_tug` | Malacca Recon Drone | Kenney Space Kit: `craft_speederA.glb` |
 | `ruby_lancer` | Salween RPG Trooper | Quaternius Toon Shooter Game Kit: `Character_Soldier.gltf` |

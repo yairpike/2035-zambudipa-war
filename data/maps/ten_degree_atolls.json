@@ -1,0 +1,47 @@
+{
+  "name": "Ten Degree Atolls",
+  "cols": 60,
+  "rows": 48,
+  "cell": 4.0,
+  "symmetry": "rot180",
+  "ground": "deep",
+  "paint": [
+    {"rect": [3, 26, 16, 16], "domain": "land"},
+    {"rect": [6, 8, 10, 8], "domain": "land"},
+    {"rect": [9, 16, 4, 10], "domain": "shallow"},
+    {"rect": [24, 20, 12, 8], "domain": "land"},
+    {"rect": [19, 26, 5, 3], "domain": "shallow"},
+    {"rect": [16, 10, 25, 3], "domain": "shallow"}
+  ],
+  "starts": [[10, 33]],
+  "plateaus": [[5, 28, 12, 12]],
+  "roads": [[17, 32, 2, 3]],
+  "holds": [],
+  "nodes": [
+    {"id": "home_n", "kind": "slag", "cell": [4, 27], "rate": 12},
+    {"id": "home_s", "kind": "slag", "cell": [4, 40], "rate": 12},
+    {"id": "islet_bullion", "kind": "bullion", "cell": [8, 10], "rate": 16},
+    {"id": "islet_jade", "kind": "jade", "cell": [13, 13], "rate": 15},
+    {"id": "reef", "kind": "slag", "cell": [27, 22], "rate": 12},
+    {"id": "deep_s", "kind": "bullion", "cell": [21, 42], "rate": 10, "water": true},
+    {"id": "deep_w", "kind": "slag", "cell": [2, 20], "rate": 10, "water": true},
+    {"id": "deep_n", "kind": "bullion", "cell": [22, 4], "rate": 10, "water": true}
+  ],
+  "sites": [
+    {"id": "radar", "kind": "radar", "cell": [26, 26]},
+    {"id": "derrick_n", "kind": "derrick", "cell": [22, 16]},
+    {"id": "derrick_s", "kind": "derrick", "cell": [8, 45]}
+  ],
+  "props": [
+    {"id": "karst_sea_stack", "cell": [1, 2], "yaw": 0},
+    {"id": "karst_sea_stack", "cell": [29, 5], "yaw": 60},
+    {"id": "karst_sea_stack", "cell": [1, 45], "yaw": 120},
+    {"id": "jetty", "cell": [19, 39], "yaw": 90},
+    {"id": "fish_stakes", "cell": [21, 31], "yaw": 0},
+    {"id": "longtail_boat", "cell": [14, 21], "yaw": 30}
+  ],
+  "towns": [
+    {"id": "nicobar_kampong", "place": "port_blair", "rect": [0, 26, 4, 16], "axis": "z", "block": [2, 4], "homes": ["kampong_ayer_house"]}
+  ],
+  "bot": {"plan_a": "islet_bullion_b", "plan_b": "islet_jade_b", "site": "radar_b", "name": "Bo Mya"}
+}

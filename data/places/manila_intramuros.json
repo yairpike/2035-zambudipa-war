@@ -1,0 +1,55 @@
+{
+ "place": "Manila, Intramuros",
+ "maps": [
+  "archipelago_rising"
+ ],
+ "bbox_swne": [
+  14.586,
+  120.97,
+  14.596,
+  120.98
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 48,
+  "grid_share": 0.59,
+  "street_m": 31641,
+  "spacing_across_u_m": 26.4,
+  "spacing_across_v_m": 25.5,
+  "streets_along_u": 31,
+  "streets_along_v": 32,
+  "main_streets": [
+   {
+    "name": "Padre Burgos Avenue",
+    "m": 1630,
+    "runs": "north-south"
+   },
+   {
+    "name": "Bonifacio Drive",
+    "m": 1471,
+    "runs": "north-south"
+   },
+   {
+    "name": "Muralla Street",
+    "m": 1423,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Binondo-Intramuros Bridge",
+    "m": 944,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Mel Lopez Boulevard",
+    "m": 877,
+    "runs": "north-south"
+   },
+   {
+    "name": "Quezon Boulevard",
+    "m": 835,
+    "runs": "diagonal"
+   }
+  ]
+ }
+}

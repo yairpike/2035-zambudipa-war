@@ -1,0 +1,61 @@
+{
+ "place": "tachileik",
+ "note": "Border market town: shophouse rows on the bridge road, the market block by the river.",
+ "towns": [
+  {
+   "id": "tachileik",
+   "place": "tachileik",
+   "rect": [
+    28,
+    1,
+    8,
+    21
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    4
+   ],
+   "homes": [
+    "border_guesthouse",
+    "neon_shophouse"
+   ],
+   "shops": "neon_shophouse",
+   "high": [
+    1,
+    2
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      3
+     ],
+     "id": "wet_market"
+    }
+   ]
+  },
+  {
+   "id": "tachileik_row",
+   "place": "tachileik",
+   "rect": [
+    0,
+    19,
+    22,
+    4
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    2
+   ],
+   "homes": [
+    "neon_shophouse"
+   ],
+   "shops": "neon_shophouse",
+   "high": [
+    0
+   ]
+  }
+ ]
+}

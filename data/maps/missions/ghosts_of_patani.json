@@ -1,0 +1,77 @@
+{
+ "place": "pattani",
+ "note": "Pattani old town: Chinese shophouse rows, Malay kampung lots and a surau, rubber smallholdings.",
+ "towns": [
+  {
+   "id": "pattani",
+   "place": "pattani",
+   "rect": [
+    28,
+    1,
+    8,
+    21
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    4
+   ],
+   "homes": [
+    "malay_kampung_house",
+    "malay_kampung_house"
+   ],
+   "shops": "peranakan_shophouse",
+   "high": [
+    1,
+    2
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      2
+     ],
+     "id": "kampung_surau"
+    }
+   ]
+  },
+  {
+   "id": "pattani_row",
+   "place": "pattani",
+   "rect": [
+    0,
+    19,
+    22,
+    4
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    2
+   ],
+   "homes": [
+    "peranakan_shophouse"
+   ],
+   "shops": "peranakan_shophouse",
+   "high": [
+    0
+   ]
+  }
+ ],
+ "orchards": [
+  {
+   "id": "rubber_estate",
+   "tree": "rubber_tree",
+   "rect": [
+    0,
+    1,
+    4,
+    17
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  }
+ ]
+}

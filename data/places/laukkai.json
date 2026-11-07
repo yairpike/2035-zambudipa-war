@@ -1,0 +1,30 @@
+{
+ "place": "Laukkai, Kokang",
+ "maps": [
+  "kokang"
+ ],
+ "bbox_swne": [
+  23.684,
+  98.747,
+  23.696,
+  98.759
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 17,
+  "grid_share": 0.24,
+  "street_m": 20948,
+  "spacing_across_u_m": 403.7,
+  "spacing_across_v_m": 63.2,
+  "streets_along_u": 7,
+  "streets_along_v": 20,
+  "main_streets": [
+   {
+    "name": "Old Street",
+    "m": 1025,
+    "runs": "east-west"
+   }
+  ]
+ }
+}

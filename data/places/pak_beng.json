@@ -1,0 +1,24 @@
+{
+ "place": "Pak Beng",
+ "maps": [
+  "fog_over_pakbeng"
+ ],
+ "bbox_swne": [
+  19.89,
+  101.124,
+  19.9,
+  101.136
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 60,
+  "grid_share": 0.25,
+  "street_m": 14079,
+  "spacing_across_u_m": 53.5,
+  "spacing_across_v_m": 489.5,
+  "streets_along_u": 15,
+  "streets_along_v": 5,
+  "main_streets": []
+ }
+}

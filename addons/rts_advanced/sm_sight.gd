@@ -5,6 +5,7 @@ extends RefCounted
 signal match_drawn(host: Node3D, sight: SMSight, cam: RTSCamera)
 
 const UNIT_RADIUS: float = 18.0
+const STRUCTURE_RADIUS: float = 24.0
 const CYCLE: float = 24.0
 const MONSOON_AT: float = 8.0
 const HAZE_AT: float = 16.0
@@ -84,16 +85,48 @@ func note_post(at: Vector3) -> void:
 func commit() -> void:
 	if grid == null:
 		return
-	for y: int in grid.rows:
-		for x: int in grid.cols:
-			if sees(grid.cell_center(Vector2i(x, y))):
-				explored[_index(Vector2i(x, y))] = 1
+	var cols: int = grid.cols
+	var rows: int = grid.rows
+	if cols <= 0 or rows <= 0:
+		return
+	if explored.size() != cols * rows:
+		explored.resize(cols * rows)
+	if river_lit:
+		for y: int in rows:
+			for x: int in cols:
+				if explored[y * cols + x] == 0 and _on_corridor(grid.cell_center(Vector2i(x, y))):
+					explored[y * cols + x] = 1
+	var cs: float = grid.cell_size
+	var ox: float = grid.origin.x
+	var oz: float = grid.origin.z
+	for i: int in mini(seers.size(), radii.size()):
+		var at: Vector3 = seers[i]
+		var r: float = radii[i]
+		var y0: int = maxi(0, ceili((at.z - r - oz) / cs - 0.5))
+		var y1: int = mini(rows - 1, floori((at.z + r - oz) / cs - 0.5))
+		for y: int in range(y0, y1 + 1):
+			var dz: float = oz + (float(y) + 0.5) * cs - at.z
+			var reach: float = r * r - dz * dz
+			if reach < 0.0:
+				continue
+			var half: float = sqrt(reach)
+			var x0: int = maxi(0, ceili((at.x - half - ox) / cs - 0.5))
+			var x1: int = mini(cols - 1, floori((at.x + half - ox) / cs - 0.5))
+			var row_base: int = y * cols
+			for x: int in range(x0, x1 + 1):
+				explored[row_base + x] = 1
 
 func sees(at: Vector3) -> bool:
 	if river_lit and _on_corridor(at):
 		return true
+	var ax: float = at.x
+	var az: float = at.z
 	for i: int in seers.size():
-		if _flat(at, seers[i]) <= radii[i]:
+		var s: Vector3 = seers[i]
+		var dx: float = ax - s.x
+		var dz: float = az - s.z
+		var r: float = radii[i]
+		if dx * dx + dz * dz <= r * r:
 			return true
 	return false
 
@@ -133,17 +166,28 @@ func cell_state(cell: Vector2i) -> int:
 
 func conceal(field: SMPointer, host: Node3D) -> void:
 	if field != null:
+		var hawks: Array[Vector3] = []
+		for spotter: RTSUnit in field.units:
+			if is_instance_valid(spotter) and spotter.is_alive() and spotter.unit_type == &"mekong_uav" and field.teams.are_allies(SMPointer.PLAYER, spotter.team):
+				hawks.append(spotter.global_position)
 		for u: RTSUnit in field.units:
 			if not is_instance_valid(u):
 				continue
 			if field.teams.are_allies(SMPointer.PLAYER, u.team):
 				u.visible = true
 			else:
-				u.visible = sees(u.global_position)
+				var shown: bool = sees(u.global_position)
+				if not shown:
+					for hawk: Vector3 in hawks:
+						if Vector2(hawk.x, hawk.z).distance_to(Vector2(u.global_position.x, u.global_position.z)) <= 22.0:
+							shown = true
+							break
+				u.visible = shown
 	_hide_marker(host, "EnemyYard")
 	_hide_marker(host, "EnemyClaim")
 
-static func update_match(sight: SMSight, field: SMPointer, host: Node3D, tech: SMTechNet, raider: SMRaider) -> void:
+## `own` is the player's build yard. Its living structures see like units, so a spread-out base is not fogged.
+static func update_match(sight: SMSight, field: SMPointer, host: Node3D, tech: SMTechNet, raider: SMRaider, own: SMBuildYard = null) -> void:
 	if sight == null or field == null:
 		return
 	sight.begin()
@@ -152,6 +196,12 @@ static func update_match(sight: SMSight, field: SMPointer, host: Node3D, tech: S
 	for u: RTSUnit in field.units:
 		if is_instance_valid(u) and u.is_alive() and field.teams.are_allies(SMPointer.PLAYER, u.team):
 			sight.add_seer(u.global_position, reach)
+	if own != null:
+		for id: StringName in own.finished:
+			if own.structure_alive(id):
+				sight.add_seer(own.position_of(id), STRUCTURE_RADIUS)
+		if own.scaffold_active:
+			sight.add_seer(own.scaffold_pos, STRUCTURE_RADIUS)
 	if radar_held:
 		sight.river_lit = true
 		for at: Vector3 in tech.vision_points(SMPointer.PLAYER):

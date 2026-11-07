@@ -55,6 +55,61 @@ static func act_title(act: String) -> String:
 		return "Act III"
 	return act
 
+static func act_of(id: String) -> String:
+	for act: String in act_ids():
+		if act_missions(act).has(id):
+			return act
+	return ""
+
+## Act I is played as GTFC, Act II as NMRF, Act III as MVD. Drills stay GTFC.
+static func player_faction(id: String) -> String:
+	var act: String = act_of(id)
+	if act == "act_2":
+		return "nmrf"
+	if act == "act_3":
+		return "mvd"
+	return "gtfc"
+
+## The opposition named in the briefing. A mixed fight still has one default skin;
+## individual spawns can set look on the unit.
+static func enemy_faction(id: String) -> String:
+	if id == "operation_1027":
+		return "black_market"
+	if id == "tonle_sap":
+		return "nmrf"
+	if id == "ghosts_of_patani" or id == "kilometer_watch" or id == "black_haze" or id == "archipelago_rising" or id == "wrath_of_the_garuda":
+		return "gtfc"
+	if id == "fog_over_pakbeng" or id == "keng_tung" or id == "plain_of_jars" or id == "shattered_monsoon":
+		return "gtfc"
+	if id == "kokang" or id == "tachileik" or id == "shwe_kokko" or id == "andaman":
+		return "nmrf"
+	return "nmrf"
+
+static func still_of(id: String) -> String:
+	if id == "kokang":
+		return "briefings/kokang.webp"
+	if id == "ghosts_of_patani":
+		return "briefings/ghosts_of_patani.webp"
+	if id == "fog_over_pakbeng":
+		return "briefings/fog_over_pakbeng.webp"
+	return ""
+
+static func company_of(faction: String) -> Array[StringName]:
+	var kinds: Array[StringName] = []
+	if faction == "nmrf":
+		kinds.append(&"river_rifle")
+		kinds.append(&"sampan")
+		kinds.append(&"mangrove_skiff")
+	elif faction == "mvd":
+		kinds.append(&"clearance_trooper")
+		kinds.append(&"hub_drone")
+		kinds.append(&"cyan_ifv")
+	else:
+		kinds.append(&"militia")
+		kinds.append(&"ruby_lancer")
+		kinds.append(&"amber_tank")
+	return kinds
+
 static func act_missions(act: String) -> PackedStringArray:
 	if act == "act_1":
 		return PackedStringArray(["kokang", "tachileik", "shwe_kokko", "operation_1027", "andaman"])
@@ -366,8 +421,8 @@ func _packer_sail() -> bool:
 	var yard: SMBuildYard = SMBuildYard.new()
 	yard.style = SMBuildYard.Style.MOBILE
 	yard.grid = grid
-	yard.packer_pos = grid.cell_center(Vector2i(4, 8))
-	if not yard.move_packer(grid.cell_center(Vector2i(18, 5))):
+	yard.packer_pos = grid.cell_center(SMDomainGrid.at("phillips", Vector2i(4, 8)))
+	if not yard.move_packer(grid.cell_center(SMDomainGrid.at("phillips", Vector2i(18, 5)))):
 		return false
 	if grid.unit_domain(yard.packer_id) != SMDomainGrid.Domain.SHALLOW:
 		return false

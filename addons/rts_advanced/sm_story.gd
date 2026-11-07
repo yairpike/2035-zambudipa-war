@@ -172,17 +172,19 @@ func bind_mission(p_host: Node3D, id: String, p_field: SMPointer, p_side: SMSide
 		_spawn_duty(SMPointer.ENEMY, Vector3(2.0, 0.0, -6.0), &"raider", "pressure", "Haze raider", 90.0, 7.0, 6.0, false)
 	elif id == "andaman":
 		_cross = true
-		grid.fill_rect(Rect2i(7, 0, 3, grid.rows), SMDomainGrid.Domain.DEEP)
+		var channel_west: Vector2i = grid.cell_at(Vector3(-3.99, 0.0, 0.0))
+		var channel_east: Vector2i = grid.cell_at(Vector3(1.99, 0.0, 0.0))
+		grid.fill_rect(Rect2i(channel_west.x, 0, channel_east.x - channel_west.x + 1, grid.rows), SMDomainGrid.Domain.DEEP)
 		field.use_domain(grid)
 		field.spawn(SMPointer.PLAYER, Vector3(-12.0, 0.0, 0.0), &"channel_skiff")
-		_slab("ChannelWater", Vector3(-1.0, -0.05, 0.0), Vector3(6.0, 0.12, 24.0), Color(0.12, 0.28, 0.42))
+		_slab("ChannelWater", Vector3(-1.0, -0.05, 0.0), Vector3(6.0, 0.12, float(grid.rows) * grid.cell_size), Color(0.12, 0.28, 0.42))
 		_pad(far_shore, Color(0.72, 0.62, 0.32), "FarShore")
 		_tag_raider("clear", "Shore gun", 100.0, 6.0, 8.0, true)
-		_spawn_duty(SMPointer.ENEMY, Vector3(-1.0, 0.0, 2.0), &"channel_skiff", "clear", "Channel boat", 120.0, 6.0, 8.0, true)
-		_spawn_duty(SMPointer.ENEMY, Vector3(1.0, 0.0, -2.0), &"channel_skiff", "clear", "Channel boat", 120.0, 6.0, 8.0, true)
+		_spawn_look(SMPointer.ENEMY, Vector3(-1.0, 0.0, 2.0), &"sampan", "clear", "Channel boat", 120.0, 6.0, 8.0, true, "nmrf")
+		_spawn_look(SMPointer.ENEMY, Vector3(1.0, 0.0, -2.0), &"sampan", "clear", "Channel boat", 120.0, 6.0, 8.0, true, "nmrf")
 	elif id == "archipelago_rising":
 		_packer = true
-		field.spawn(SMPointer.PLAYER, Vector3(-8.0, 0.0, 1.0), &"channel_skiff")
+		field.spawn(SMPointer.PLAYER, Vector3(-8.0, 0.0, 1.0), &"sampan")
 		sail = SMBuildYard.new()
 		sail.style = SMBuildYard.Style.MOBILE
 		sail.grid = SMDomainGrid.new(6, 6, 4.0, shallow_pad - Vector3(8.0, 0.0, 8.0))
@@ -191,8 +193,8 @@ func bind_mission(p_host: Node3D, id: String, p_field: SMPointer, p_side: SMSide
 		sail.packer_id = 7
 		_pad(shallow_pad, Color(0.2, 0.55, 0.62), "ShallowPad")
 		_tag_raider("clear", "Shore boat", 110.0, 6.0, 7.0, true)
-		_spawn_duty(SMPointer.ENEMY, Vector3(6.0, 0.0, 4.0), &"channel_skiff", "clear", "Shore boat", 110.0, 6.0, 7.0, true)
-		_spawn_duty(SMPointer.ENEMY, Vector3(8.0, 0.0, -2.0), &"channel_skiff", "clear", "Shore boat", 110.0, 6.0, 7.0, true)
+		_spawn_look(SMPointer.ENEMY, Vector3(6.0, 0.0, 4.0), &"channel_skiff", "clear", "Shore boat", 110.0, 6.0, 7.0, true, "gtfc")
+		_spawn_look(SMPointer.ENEMY, Vector3(8.0, 0.0, -2.0), &"channel_skiff", "clear", "Shore boat", 110.0, 6.0, 7.0, true, "gtfc")
 	elif id == "ghosts_of_patani":
 		_kill = true
 		ew = SMEwField.new()
@@ -201,16 +203,11 @@ func bind_mission(p_host: Node3D, id: String, p_field: SMPointer, p_side: SMSide
 		var foe: RTSUnit = _first_enemy()
 		ew.center = foe.global_position if foe != null else Vector3(6.0, 0.0, 3.0)
 		field.ew = ew
-		for u: RTSUnit in field.units_of(SMPointer.PLAYER):
-			if str(u.unit_type) == "ruby_lancer":
-				u.set_meta("guidance", "gps")
-			elif str(u.unit_type) == "militia":
-				u.set_meta("guidance", "fiber")
-				u.set_meta("fiber_on", true)
+		_arm_guidance()
 		_paint(foe, "ghost", "Jammer ghost", 90.0, 6.0, 8.0)
 	elif id == "plain_of_jars":
 		_beam = true
-		field.spawn(SMPointer.PLAYER, Vector3(-8.0, 0.0, 3.0), &"monsoon_tube")
+		field.spawn(SMPointer.PLAYER, Vector3(-8.0, 0.0, 3.0), &"siege_tube")
 		_phantom = _first_enemy()
 		_tag_raider("phantom", "Plain phantom", 140.0, 5.0, 8.0, true)
 		_spawn_duty(SMPointer.ENEMY, Vector3(10.0, 0.0, 5.0), &"raider", "battery", "Jar battery", 120.0, 0.0, 9.0, true)
@@ -233,13 +230,13 @@ func bind_mission(p_host: Node3D, id: String, p_field: SMPointer, p_side: SMSide
 		_mount_protocols(layer)
 		_tag_raider("fleet", "Joint picket", 150.0, 6.5, 8.0, true)
 		_move_raider(Vector3(11.0, 0.0, -4.0))
-		_spawn_duty(SMPointer.ENEMY, Vector3(12.0, 0.0, 4.0), &"channel_skiff", "fleet", "NMRF trimaran", 150.0, 6.5, 8.0, true)
-		_spawn_duty(SMPointer.ENEMY, Vector3(14.0, 0.0, 1.0), &"channel_skiff", "fleet", "MVD cutter", 150.0, 6.5, 8.0, true)
-		_spawn_duty(SMPointer.ENEMY, Vector3(13.0, 0.0, -1.0), &"channel_skiff", "fleet", "GTFC gunboat", 150.0, 6.5, 8.0, true)
+		_spawn_look(SMPointer.ENEMY, Vector3(12.0, 0.0, 4.0), &"sampan", "fleet", "NMRF trimaran", 150.0, 6.5, 8.0, true, "nmrf")
+		_spawn_look(SMPointer.ENEMY, Vector3(14.0, 0.0, 1.0), &"cyan_skiff", "fleet", "MVD cutter", 150.0, 6.5, 8.0, true, "mvd")
+		_spawn_look(SMPointer.ENEMY, Vector3(13.0, 0.0, -1.0), &"channel_skiff", "fleet", "GTFC gunboat", 150.0, 6.5, 8.0, true, "gtfc")
 	elif id == "keng_tung":
 		_column = true
 		_mount_protocols(layer)
-		field.spawn(SMPointer.PLAYER, Vector3(-8.0, 0.0, 3.0), &"monsoon_tube")
+		field.spawn(SMPointer.PLAYER, Vector3(-8.0, 0.0, 3.0), &"siege_tube")
 		_tag_raider("column", "GTFC tank", 180.0, 3.5, 10.0, true)
 		_spawn_duty(SMPointer.ENEMY, Vector3(10.0, 0.0, 3.0), &"amber_tank", "column", "GTFC tank", 180.0, 3.5, 10.0, true)
 		_spawn_duty(SMPointer.ENEMY, Vector3(12.0, 0.0, 0.0), &"amber_tank", "column", "GTFC tank", 180.0, 3.5, 10.0, true)
@@ -252,16 +249,16 @@ func bind_mission(p_host: Node3D, id: String, p_field: SMPointer, p_side: SMSide
 		defend.set_meta("objective", true)
 		_tag_raider("trimaran", "NMRF trimaran", 110.0, 6.5, 7.0, false)
 		_move_raider(Vector3(11.0, 0.0, 6.0))
-		_spawn_duty(SMPointer.ENEMY, Vector3(13.0, 0.0, 2.0), &"channel_skiff", "trimaran", "NMRF trimaran", 110.0, 6.5, 7.0, false)
-		_spawn_duty(SMPointer.ENEMY, Vector3(9.0, 0.0, -1.0), &"channel_skiff", "trimaran", "NMRF trimaran", 110.0, 6.5, 7.0, false)
+		_spawn_look(SMPointer.ENEMY, Vector3(13.0, 0.0, 2.0), &"sampan", "trimaran", "NMRF trimaran", 110.0, 6.5, 7.0, false, "nmrf")
+		_spawn_look(SMPointer.ENEMY, Vector3(9.0, 0.0, -1.0), &"sampan", "trimaran", "NMRF trimaran", 110.0, 6.5, 7.0, false, "nmrf")
 		_slab("TonleFerry", Vector3(1.0, 0.8, 5.0), Vector3(2.4, 1.4, 4.2), Color(0.62, 0.48, 0.22))
 	elif id == "shattered_monsoon":
 		_supers = true
 		count_left = COUNT_NEED
 		_mount_protocols(layer)
-		_tag_raider("super", "Ion-Cryo Collider", 360.0, 0.0, 9.0, true)
+		_tag_raider("super", "Psionic Monsoon", 360.0, 0.0, 9.0, true)
 		_move_raider(Vector3(12.0, 0.0, 3.0))
-		_spawn_duty(SMPointer.ENEMY, Vector3(12.0, 0.0, -3.0), &"raider", "super", "Seismic Slag Vacuum", 360.0, 0.0, 9.0, true)
+		_spawn_look(SMPointer.ENEMY, Vector3(12.0, 0.0, -3.0), &"raider", "super", "Seismic Slag Vacuum", 360.0, 0.0, 9.0, true, "gtfc")
 		_slab("IonCollider", Vector3(12.0, 2.2, 3.0), Vector3(1.6, 4.4, 1.6), Color(0.25, 0.55, 0.72))
 		_slab("SlagVacuum", Vector3(12.0, 2.2, -3.0), Vector3(1.6, 4.4, 1.6), Color(0.55, 0.28, 0.22))
 	_thicken()
@@ -359,7 +356,7 @@ func beacon() -> Vector3:
 		return _duty_at("super", "")
 	if _beam:
 		if not _beamed:
-			var tube: RTSUnit = _player_kind("monsoon_tube")
+			var tube: RTSUnit = _beam_unit()
 			if tube != null:
 				return tube.global_position
 		if not _phantom_frozen and _living(_phantom):
@@ -520,7 +517,7 @@ func _occupy(delta: float) -> void:
 		goods.set_night_shift(&"ruby", true)
 	if _ruby and goods != null and roster != null and raid == null:
 		goods.advance(delta, roster.economy)
-	if _packer and sail != null and not sail.unpacked and _near(&"channel_skiff", shallow_pad):
+	if _packer and sail != null and not sail.unpacked and _near("sampan", shallow_pad):
 		var dest: Vector3 = sail.grid.cell_center(Vector2i(2, 1))
 		if sail.move_packer(dest):
 			sail.unpack(&"gun_wharf")
@@ -790,6 +787,42 @@ func _spawn_duty(team: int, at: Vector3, kind: StringName, duty: String, label: 
 		_note(duty)
 	return u
 
+func _spawn_look(team: int, at: Vector3, kind: StringName, duty: String, label: String, hp: float, speed: float, damage: float, count: bool, paint: String) -> RTSUnit:
+	if field != null and paint != "":
+		field.next_look = paint
+	return _spawn_duty(team, at, kind, duty, label, hp, speed, damage, count)
+
+func _beam_unit() -> RTSUnit:
+	var tube: RTSUnit = _player_kind("siege_tube")
+	if tube == null:
+		tube = _player_kind("monsoon_tube")
+	return tube
+
+## GPS drops in the jammer. A fiber link does not. NMRF brings a bomber and a skiff; older GTFC drills keep the lancer and the militia.
+func _arm_guidance() -> void:
+	if field == null:
+		return
+	for u: RTSUnit in field.units_of(SMPointer.PLAYER):
+		if not _living(u):
+			continue
+		var kind: String = str(u.unit_type)
+		if kind == "ruby_lancer" or kind == "plantation_bomber":
+			u.set_meta("guidance", "gps")
+			u.set_meta("fiber_on", false)
+		elif kind == "militia" or kind == "jade_skiff":
+			u.set_meta("guidance", "fiber")
+			u.set_meta("fiber_on", true)
+	if _player_kind("plantation_bomber") == null and _player_kind("ruby_lancer") == null:
+		var gps: RTSUnit = field.spawn(SMPointer.PLAYER, Vector3(-8.0, 0.0, 2.0), &"plantation_bomber")
+		if gps != null:
+			gps.set_meta("guidance", "gps")
+			gps.set_meta("fiber_on", false)
+	if _player_kind("jade_skiff") == null and _player_kind("militia") == null:
+		var fiber: RTSUnit = field.spawn(SMPointer.PLAYER, Vector3(-8.0, 0.0, -1.0), &"jade_skiff")
+		if fiber != null:
+			fiber.set_meta("guidance", "fiber")
+			fiber.set_meta("fiber_on", true)
+
 func _paint(u: RTSUnit, duty: String, label: String, hp: float, speed: float, damage: float) -> void:
 	if u == null:
 		return
@@ -965,8 +998,8 @@ func _thicken() -> void:
 	if field == null or mission_id == "":
 		return
 	if mission_id == "kokang":
-		_spawn_duty(SMPointer.ENEMY, Vector3(6.5, 0.0, 5.0), &"raider", "recon", "Orlan recon", 48.0, 5.0, 4.0, true)
-		_spawn_duty(SMPointer.ENEMY, Vector3(-7.0, 0.0, 6.0), &"raider", "recon", "Pit guard", 48.0, 5.0, 4.0, true)
+		_spawn_look(SMPointer.ENEMY, Vector3(6.5, 0.0, 5.0), &"orlan10", "recon", "Orlan recon", 48.0, 5.0, 4.0, true, "black_market")
+		_spawn_look(SMPointer.ENEMY, Vector3(-7.0, 0.0, 6.0), &"river_rifle", "recon", "Pit guard", 48.0, 5.0, 4.0, true, "nmrf")
 		reinforcements = 2
 	elif mission_id == "tachileik":
 		_caravan = _spawn_duty(SMPointer.PLAYER, Vector3(-4.0, 0.0, -6.0), &"slag_hauler", "caravan", "Jade caravan", 160.0, 4.5, 0.0, false)
@@ -980,16 +1013,16 @@ func _thicken() -> void:
 			tech.add_site(&"compound_b", SMTechNet.CYBER, pad + Vector3(1.2, 0.0, 0.6))
 			server_blocks = 2
 			_pad(pad + Vector3(1.2, 0.0, 0.6), Color(0.2, 0.55, 0.7), "CyberPadB")
-		_spawn_duty(SMPointer.ENEMY, Vector3(2.0, 0.0, 8.0), &"channel_skiff", "clear", "River gunboat", 72.0, 6.0, 4.0, true)
-		_spawn_duty(SMPointer.ENEMY, Vector3(14.0, 0.0, 6.0), &"channel_skiff", "clear", "River gunboat", 72.0, 6.0, 4.0, true)
+		_spawn_look(SMPointer.ENEMY, Vector3(2.0, 0.0, 8.0), &"sampan", "clear", "River gunboat", 72.0, 6.0, 4.0, true, "nmrf")
+		_spawn_look(SMPointer.ENEMY, Vector3(14.0, 0.0, 6.0), &"sampan", "clear", "River gunboat", 72.0, 6.0, 4.0, true, "nmrf")
 		reinforcements = 3
 	elif mission_id == "operation_1027":
 		_spawn_duty(SMPointer.ENEMY, Vector3(2.0, 0.0, 8.0), &"raider", "escort", "Junta escort", 50.0, 6.0, 3.0, false)
 		_spawn_duty(SMPointer.ENEMY, Vector3(2.0, 0.0, -8.0), &"raider", "escort", "Junta escort", 50.0, 6.0, 3.0, false)
 		reinforcements = 2
 	elif mission_id == "andaman":
-		_spawn_duty(SMPointer.ENEMY, Vector3(-2.0, 0.0, 6.0), &"channel_skiff", "clear", "Channel boat", 80.0, 6.0, 4.0, true)
-		_spawn_duty(SMPointer.ENEMY, Vector3(0.0, 0.0, -6.0), &"channel_skiff", "clear", "Channel boat", 80.0, 6.0, 4.0, true)
+		_spawn_look(SMPointer.ENEMY, Vector3(-2.0, 0.0, 6.0), &"sampan", "clear", "Channel boat", 80.0, 6.0, 4.0, true, "nmrf")
+		_spawn_look(SMPointer.ENEMY, Vector3(0.0, 0.0, -6.0), &"sampan", "clear", "Channel boat", 80.0, 6.0, 4.0, true, "nmrf")
 		reinforcements = 2
 	elif mission_id == "ghosts_of_patani":
 		_spawn_duty(SMPointer.ENEMY, Vector3(8.0, 0.0, 1.0), &"raider", "ghost", "Jammer ghost", 64.0, 6.0, 5.0, false)
@@ -1004,12 +1037,12 @@ func _thicken() -> void:
 		_spawn_duty(SMPointer.ENEMY, Vector3(11.0, 0.0, -4.0), &"raider", "pressure", "Haze raider", 50.0, 6.0, 3.0, false)
 		reinforcements = 2
 	elif mission_id == "archipelago_rising":
-		_spawn_duty(SMPointer.ENEMY, Vector3(4.0, 0.0, -6.0), &"channel_skiff", "clear", "Shore boat", 72.0, 6.0, 4.0, true)
-		_spawn_duty(SMPointer.ENEMY, Vector3(12.0, 0.0, 6.0), &"channel_skiff", "clear", "Shore boat", 72.0, 6.0, 4.0, true)
+		_spawn_look(SMPointer.ENEMY, Vector3(4.0, 0.0, -6.0), &"channel_skiff", "clear", "Shore boat", 72.0, 6.0, 4.0, true, "gtfc")
+		_spawn_look(SMPointer.ENEMY, Vector3(12.0, 0.0, 6.0), &"channel_skiff", "clear", "Shore boat", 72.0, 6.0, 4.0, true, "gtfc")
 		reinforcements = 2
 	elif mission_id == "wrath_of_the_garuda":
-		_spawn_duty(SMPointer.ENEMY, Vector3(6.0, 0.0, 8.0), &"channel_skiff", "picket", "Fleet picket", 24.0, 5.0, 0.0, false)
-		_spawn_duty(SMPointer.ENEMY, Vector3(6.0, 0.0, -8.0), &"channel_skiff", "picket", "Fleet picket", 24.0, 5.0, 0.0, false)
+		_spawn_look(SMPointer.ENEMY, Vector3(6.0, 0.0, 8.0), &"channel_skiff", "picket", "Fleet picket", 24.0, 5.0, 0.0, false, "gtfc")
+		_spawn_look(SMPointer.ENEMY, Vector3(6.0, 0.0, -8.0), &"channel_skiff", "picket", "Fleet picket", 24.0, 5.0, 0.0, false, "gtfc")
 		reinforcements = 2
 	elif mission_id == "keng_tung":
 		_spawn_duty(SMPointer.ENEMY, Vector3(6.0, 0.0, 6.0), &"militia", "screen", "Column screen", 40.0, 5.0, 1.0, false)
@@ -1020,8 +1053,8 @@ func _thicken() -> void:
 		_spawn_duty(SMPointer.ENEMY, Vector3(8.0, 0.0, -6.0), &"raider", "screen", "Jar screen", 40.0, 5.0, 2.0, false)
 		reinforcements = 2
 	elif mission_id == "tonle_sap":
-		_spawn_duty(SMPointer.ENEMY, Vector3(15.0, 0.0, 8.0), &"channel_skiff", "trimaran", "NMRF trimaran", 48.0, 6.0, 3.0, false)
-		_spawn_duty(SMPointer.ENEMY, Vector3(15.0, 0.0, -4.0), &"channel_skiff", "trimaran", "NMRF trimaran", 48.0, 6.0, 3.0, false)
+		_spawn_look(SMPointer.ENEMY, Vector3(15.0, 0.0, 8.0), &"sampan", "trimaran", "NMRF trimaran", 48.0, 6.0, 3.0, false, "nmrf")
+		_spawn_look(SMPointer.ENEMY, Vector3(15.0, 0.0, -4.0), &"sampan", "trimaran", "NMRF trimaran", 48.0, 6.0, 3.0, false, "nmrf")
 		reinforcements = 2
 	elif mission_id == "shattered_monsoon":
 		_spawn_duty(SMPointer.ENEMY, Vector3(6.0, 0.0, 6.0), &"raider", "escort", "Citadel garrison", 48.0, 5.0, 0.0, false)

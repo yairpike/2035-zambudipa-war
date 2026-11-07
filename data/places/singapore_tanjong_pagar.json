@@ -1,0 +1,55 @@
+{
+ "place": "Singapore, Tanjong Pagar and Chinatown",
+ "maps": [
+  "phillips_channel"
+ ],
+ "bbox_swne": [
+  1.277,
+  103.839,
+  1.285,
+  103.847
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 30,
+  "grid_share": 0.31,
+  "street_m": 22494,
+  "spacing_across_u_m": 28.9,
+  "spacing_across_v_m": 31.4,
+  "streets_along_u": 20,
+  "streets_along_v": 16,
+  "main_streets": [
+   {
+    "name": "New Bridge Road",
+    "m": 955,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Maxwell Road",
+    "m": 855,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Tanjong Pagar Road",
+    "m": 846,
+    "runs": "north-south"
+   },
+   {
+    "name": "Eu Tong Sen Street",
+    "m": 845,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Cantonment Road",
+    "m": 730,
+    "runs": "north-south"
+   },
+   {
+    "name": "Neil Road",
+    "m": 723,
+    "runs": "east-west"
+   }
+  ]
+ }
+}

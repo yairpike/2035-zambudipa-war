@@ -29,6 +29,8 @@ func _ready() -> void:
 	_audio()
 	_ui()
 	side.prepare(self, status, sim.grid, sim.yard.center, roster.economy)
+	if side.yard.style != SMBuildYard.Style.INTERNAL:
+		side.yard.radius = maxf(side.yard.radius, 44.0)
 	_arm_units()
 	var cam: RTSCamera = get_node("Camera") as RTSCamera
 	hud.mount(ui_layer, field, roster, side, "Phillips Channel", sim.yard.center, Callable(self, "fire_ability"), sim.grid, cam)
@@ -96,15 +98,16 @@ func _world() -> void:
 	var sun: DirectionalLight3D = DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-48, 20, 0)
 	add_child(sun)
-	Ground.dress(self, sim.grid, "phillips")
+	Ground.dress(self, sim.grid, "phillips", null, Rect2i(), SMMapPlan.dressing("phillips_channel"))
 	_slab("PlayerYard", SMPointer.building_at(sim.yard.center), SMPointer.BUILDING_SIZE, SMFront.primary())
-	_slab("EnemyBase", SMPointer.building_at(sim.grid.cell_center(Vector2i(32, 12))), SMPointer.BUILDING_SIZE, Color(0.16, 0.17, 0.18))
+	_slab("EnemyBase", SMPointer.building_at(sim.grid.cell_center(SMDomainGrid.at("phillips", Vector2i(32, 12)))), SMPointer.BUILDING_SIZE, Color(0.16, 0.17, 0.18))
 	sim.paint_sites(self)
 	_capsule("Jammer", sim.ew.center + Vector3(0, 1.2, 0), Color(0.15, 0.75, 0.82))
 	var cam: RTSCamera = RTSCamera.new()
 	cam.name = "Camera"
-	cam.bounds = Rect2(-80.0, -48.0, 160.0, 96.0)
-	cam.distance = 26.0
+	cam.bounds = Rect2(-112.0, -68.0, 224.0, 136.0)
+	cam.distance = 32.0
+	cam.zoom_max = 90.0
 	cam.edge_pan_px = 20.0
 	cam.focus = Vector3(-58, 0, -12)
 	add_child(cam)
@@ -168,13 +171,13 @@ func _arm_units() -> void:
 	field.bind_tech(sim.tech, Callable(self, "_bridge_down"))
 	field.attach_box(ui_layer)
 	var kinds: Array[StringName] = SMFront.kinds()
-	var cells: Array[Vector2i] = [Vector2i(1, 8), Vector2i(3, 8), Vector2i(5, 8), Vector2i(8, 8), Vector2i(10, 8), Vector2i(12, 8)]
+	var cells: Array[Vector2i] = [SMDomainGrid.at("phillips", Vector2i(1, 8)), SMDomainGrid.at("phillips", Vector2i(3, 8)), SMDomainGrid.at("phillips", Vector2i(5, 8)), SMDomainGrid.at("phillips", Vector2i(8, 8)), SMDomainGrid.at("phillips", Vector2i(10, 8)), SMDomainGrid.at("phillips", Vector2i(12, 8))]
 	for i: int in kinds.size():
 		field.spawn(SMPointer.PLAYER, sim.grid.cell_center(cells[i]), kinds[i])
-	field.spawn_support(sim.grid.cell_center(Vector2i(1, 6)))
-	for cell: Vector2i in [Vector2i(30, 12), Vector2i(31, 14), Vector2i(33, 11)]:
+	field.spawn_support(sim.grid.cell_center(SMDomainGrid.at("phillips", Vector2i(1, 6))))
+	for cell: Vector2i in [SMDomainGrid.at("phillips", Vector2i(30, 12)), SMDomainGrid.at("phillips", Vector2i(31, 14)), SMDomainGrid.at("phillips", Vector2i(33, 11))]:
 		field.spawn(SMPointer.ENEMY, sim.grid.cell_center(cell), &"raider")
-	raider.attach(field, sim.grid.cell_center(Vector2i(30, 12)))
+	raider.attach(field, sim.grid.cell_center(SMDomainGrid.at("phillips", Vector2i(30, 12))))
 	raider.bind_plan(sim.goods, sim.tech, &"bullion_east", &"bullion_north", &"cyber", "Bo Mya")
 	preload("res://game/match_settings.gd").apply_raider(raider)
 
@@ -190,7 +193,7 @@ func train_unit() -> String:
 	var done: StringName = roster.train_and_finish(SMFront.train_kind())
 	if done == &"":
 		return ""
-	var at: Vector3 = sim.grid.cell_center(Vector2i(1, 6))
+	var at: Vector3 = sim.grid.cell_center(SMDomainGrid.at("phillips", Vector2i(1, 6)))
 	var u: RTSUnit = field.spawn(SMPointer.PLAYER, at, done)
 	var label: String = field.name_of(u)
 	_say(label)

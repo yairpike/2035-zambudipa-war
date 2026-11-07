@@ -1,0 +1,41 @@
+{
+ "place": "singapore_tanjong_pagar",
+ "note": "Tanjong Pagar on the far shore: shophouse rows, a hawker centre block. Batam is the player's shore.",
+ "towns": [
+  {
+   "id": "tanjong_pagar",
+   "place": "singapore_tanjong_pagar",
+   "rect": [
+    45,
+    1,
+    10,
+    31
+   ],
+   "axis": "x",
+   "block": [
+    8,
+    4
+   ],
+   "homes": [
+    "peranakan_shophouse",
+    "neon_shophouse"
+   ],
+   "shops": "peranakan_shophouse",
+   "high": [
+    0,
+    2,
+    4,
+    6
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      3
+     ],
+     "id": "wet_market"
+    }
+   ]
+  }
+ ]
+}

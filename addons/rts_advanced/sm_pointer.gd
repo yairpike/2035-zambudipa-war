@@ -16,6 +16,8 @@ const NMRF_KINDS: Array[StringName] = [&"river_rifle", &"sampan", &"emerald_gunb
 
 var teams: RTSTeams = RTSTeams.new()
 var faction_id: String = "gtfc"
+## Set before spawn so one enemy can wear a different faction than the mission default.
+var next_look: String = ""
 var primary_color: Color = Color(0.72, 0.12, 0.18)
 var accent_color: Color = Color(0.88, 0.62, 0.12)
 var nav: RTSGridNav
@@ -101,8 +103,12 @@ func _nav_for_loco(grid: SMDomainGrid, loco: int) -> RTSGridNav:
 	var built: RTSGridNav = RTSGridNav.new(grid.cols, grid.rows, grid.cell_size, grid.origin)
 	for y: int in range(grid.rows):
 		for x: int in range(grid.cols):
-			if not grid.can_enter(grid.domain_at_cell(Vector2i(x, y)), loco):
-				built.set_blocked(Vector2i(x, y), true)
+			var cell: Vector2i = Vector2i(x, y)
+			var blocked: bool = not grid.can_enter(grid.domain_at_cell(cell), loco)
+			if not blocked and loco != SMDomainGrid.Loco.AIR and grid.holding(cell):
+				blocked = true
+			if blocked:
+				built.set_blocked(cell, true)
 	return built
 
 func nav_for_unit(u: RTSUnit) -> RTSGridNav:
@@ -148,7 +154,7 @@ func project_point(p: Vector3) -> Vector2:
 		return Vector2(p.x, p.z)
 	return cam.unproject_position(p)
 
-func spawn(team: int, at: Vector3, kind: StringName) -> RTSUnit:
+func spawn(team: int, at: Vector3, kind: StringName, lead: bool = true) -> RTSUnit:
 	var u: RTSUnit = StatusUnit.new() as RTSUnit
 	u.team = team
 	u.unit_type = kind
@@ -158,6 +164,9 @@ func spawn(team: int, at: Vector3, kind: StringName) -> RTSUnit:
 	u.attack_range = 8.0
 	u.attack_interval = 0.8
 	u.position = at
+	if next_look != "":
+		u.set_meta("look", next_look)
+		next_look = ""
 	_apply_catalog(u, kind)
 	var row: Dictionary = _unit_row(kind)
 	var role: String = "infantry" if row.is_empty() else str(row.get("role", ""))
@@ -170,6 +179,10 @@ func spawn(team: int, at: Vector3, kind: StringName) -> RTSUnit:
 	host.add_child(u)
 	u.set_meta("seen_hp", u.hp)
 	units.append(u)
+	if lead:
+		var flight: int = int(_unit_row(kind).get("flight", 1))
+		for n: int in range(1, flight):
+			spawn(team, at + Vector3(1.3 * float(n), 0.0, 0.4 * float(n)), kind, false)
 	return u
 
 func spawn_support(at: Vector3) -> void:
@@ -186,6 +199,15 @@ func _on_shot(unit: RTSUnit, _target: RTSUnit) -> void:
 	if not is_instance_valid(unit):
 		return
 	unit.set_meta("flash_t", 0.14)
+	if str(unit.unit_type) == "mekong_uav":
+		var left: int = int(unit.get_meta("missiles", 2)) - 1
+		unit.set_meta("missiles", left)
+		if left <= 0 and unit.attack_damage > 0.0:
+			unit.set_meta("attack_bank", unit.attack_damage)
+			unit.attack_damage = 0.0
+	var dive: String = str(unit.get_meta("ability", ""))
+	if dive == "Shaped Charge" or dive == "Fibre Dive":
+		unit.take_damage(unit.hp + 1.0)
 	var muzzle: MeshInstance3D = unit.get_node_or_null("Muzzle") as MeshInstance3D
 	if muzzle != null:
 		muzzle.visible = true
@@ -214,6 +236,10 @@ func _apply_catalog(u: RTSUnit, kind: StringName) -> void:
 	u.hp = u.max_hp
 	u.speed = float(unit.get("speed", u.speed))
 	u.attack_damage = float(unit.get("weapon_damage", u.attack_damage))
+	if unit.has("attack_range"):
+		u.attack_range = float(unit.get("attack_range"))
+	if int(unit.get("missiles", 0)) > 0:
+		u.set_meta("missiles", int(unit.get("missiles")))
 	u.set_meta("weapon", str(unit.get("weapon", "")))
 	u.set_meta("secondary", str(unit.get("secondary", "")))
 	u.set_meta("guidance", str(unit.get("guidance", "none")))
@@ -259,8 +285,9 @@ func category_of(kind: StringName) -> String:
 
 func _unit_row(kind: StringName) -> Dictionary:
 	var lists: Array[String] = [faction_id]
-	if faction_id != "black_market":
-		lists.append("black_market")
+	for extra: String in ["black_market", "gtfc", "nmrf", "mvd"]:
+		if not lists.has(extra):
+			lists.append(extra)
 	for faction: String in lists:
 		var units: Array[Dictionary] = SMCatalog.units_of(SMCatalog.faction(faction))
 		for unit: Dictionary in units:
@@ -670,6 +697,7 @@ func cast_f(aim: Vector3) -> String:
 	if smart != null:
 		smart.set_meta("fired_f", int(smart.get_meta("fired_f", 0)) + 1)
 		smart.set_meta("f_ready", F_COOLDOWN)
+		smart.set_meta("f_aim", aim)
 		apply_named_f(smart)
 		var strike: RTSUnit = nearest_enemy(aim, 240.0)
 		if strike != null:
@@ -688,6 +716,24 @@ func cast_f(aim: Vector3) -> String:
 func apply_named_f(u: RTSUnit) -> bool:
 	if not is_instance_valid(u):
 		return false
+	var ability: String = str(u.get_meta("ability", ""))
+	if ability == "Bench Seat":
+		_bench(u)
+	if ability == "Bomblet Carpet":
+		var aim: Vector3 = u.get_meta("f_aim", u.global_position)
+		for other: RTSUnit in units:
+			if not is_instance_valid(other) or not other.is_alive() or not teams.are_enemies(u.team, other.team):
+				continue
+			var flat: float = Vector2(other.global_position.x, other.global_position.z).distance_to(Vector2(aim.x, aim.z))
+			if flat <= 7.0:
+				other.take_damage(u.attack_damage)
+	var diving: bool = ability == "Shaped Charge" or ability == "Fibre Dive"
+	if diving:
+		var foe: RTSUnit = _armor_near(u)
+		if foe == null:
+			foe = nearest_enemy(u.global_position, maxf(u.attack_range, 8.0))
+		if foe != null:
+			foe.take_damage(u.attack_damage * 3.0)
 	Cast.apply(self, u)
 	var stat: String = str(u.get_meta("f_stat", "damage"))
 	if stat == "speed":
@@ -702,6 +748,8 @@ func apply_named_f(u: RTSUnit) -> bool:
 	u.set_meta("f_stat_changed", stat)
 	if str(u.get_meta("f_effect", "")) == "":
 		u.set_meta("f_effect", str(u.get_meta("ability", "")))
+	if str(u.get_meta("ability", "")) == "Shaped Charge" or str(u.get_meta("ability", "")) == "Fibre Dive":
+		u.take_damage(u.hp + 1.0)
 	return true
 
 func apply_status(u: RTSUnit, status: String, duration: float) -> void:
@@ -784,6 +832,111 @@ func _tag_list(unit: Dictionary) -> PackedStringArray:
 			tags.append(str(item))
 	return tags
 
+func _armor_near(u: RTSUnit) -> RTSUnit:
+	var best: RTSUnit = null
+	var best_d: float = 12.0
+	for other: RTSUnit in units:
+		if not is_instance_valid(other) or not other.is_alive() or not teams.are_enemies(u.team, other.team):
+			continue
+		var role: String = str(other.get_meta("role", ""))
+		if role != "armor" and role != "vehicle" and role != "hauler":
+			continue
+		var d: float = u.global_position.distance_to(other.global_position)
+		if d <= best_d:
+			best_d = d
+			best = other
+	return best
+
+func _bench(truck: RTSUnit) -> void:
+	var riding: Array[RTSUnit] = []
+	var raw: Variant = truck.get_meta("passengers", [])
+	if raw is Array:
+		for item: Variant in raw:
+			var who: RTSUnit = instance_from_id(int(item)) as RTSUnit
+			if is_instance_valid(who) and who.is_alive() and bool(who.get_meta("garrisoned", false)):
+				riding.append(who)
+	if not riding.is_empty():
+		for i: int in riding.size():
+			var who: RTSUnit = riding[i]
+			who.visible = true
+			who.set_meta("garrisoned", false)
+			who.global_position = truck.global_position + Vector3(1.6 * float(i + 1), 0.0, 1.2)
+		truck.set_meta("passengers", [])
+		return
+	var taken: Array = []
+	for other: RTSUnit in units:
+		if taken.size() >= 2:
+			break
+		if other == truck or not is_instance_valid(other) or not other.is_alive():
+			continue
+		if other.team != truck.team or str(other.get_meta("role", "")) != "infantry":
+			continue
+		if bool(other.get_meta("garrisoned", false)):
+			continue
+		if other.global_position.distance_to(truck.global_position) > 4.5:
+			continue
+		other.stop()
+		other.selected = false
+		other.visible = false
+		other.set_meta("garrisoned", true)
+		selection.units.erase(other)
+		taken.append(other.get_instance_id())
+	truck.set_meta("passengers", taken)
+
+func _ride_bench(truck: RTSUnit) -> void:
+	var raw: Variant = truck.get_meta("passengers", [])
+	if not raw is Array:
+		return
+	for item: Variant in raw:
+		var who: RTSUnit = instance_from_id(int(item)) as RTSUnit
+		if is_instance_valid(who) and who.is_alive():
+			who.global_position = truck.global_position
+
+func _dump_bench(truck: RTSUnit) -> void:
+	var raw: Variant = truck.get_meta("passengers", [])
+	if not raw is Array:
+		return
+	var i: int = 0
+	for item: Variant in raw:
+		var who: RTSUnit = instance_from_id(int(item)) as RTSUnit
+		if is_instance_valid(who) and who.is_alive():
+			who.visible = true
+			who.set_meta("garrisoned", false)
+			who.global_position = truck.global_position + Vector3(1.4 * float(i + 1), 0.0, 0.0)
+		i += 1
+	truck.set_meta("passengers", [])
+
+func _park_hides() -> void:
+	if side_link == null or side_link.yard == null:
+		return
+	var spots: Array[Vector3] = []
+	for id: StringName in side_link.yard.finished:
+		if str(side_link.yard.building_role.get(id, "")) != "conceal" or not side_link.yard.structure_alive(id):
+			continue
+		spots.append(side_link.yard.position_of(id))
+	var used: Array[int] = []
+	used.resize(spots.size())
+	for u: RTSUnit in units:
+		if not is_instance_valid(u) or not u.is_alive():
+			continue
+		var role: String = str(u.get_meta("role", ""))
+		var vehicle: bool = role == "vehicle" or role == "armor" or role == "hauler"
+		var hidden: bool = false
+		if vehicle and float(u.get_meta("flash_t", 0.0)) <= 0.0 and u.attack_target == null:
+			for i: int in spots.size():
+				if used[i] >= 2:
+					continue
+				if u.global_position.distance_to(spots[i]) <= 8.0:
+					used[i] += 1
+					hidden = true
+					break
+		u.set_meta("concealed", hidden)
+	for shooter: RTSUnit in units:
+		if not is_instance_valid(shooter) or shooter.attack_target == null or not is_instance_valid(shooter.attack_target):
+			continue
+		if bool(shooter.attack_target.get_meta("concealed", false)):
+			shooter.attack_target = null
+
 func _tick_ability(u: RTSUnit, delta: float) -> void:
 	u.set_meta("f_ready", maxf(0.0, float(u.get_meta("f_ready", 0.0)) - delta))
 	var status: String = str(u.get_meta("status", "none"))
@@ -792,6 +945,26 @@ func _tick_ability(u: RTSUnit, delta: float) -> void:
 		u.set_meta("status_t", left)
 		if left <= 0.0:
 			apply_status(u, "none", 0.0)
+	if str(u.get_meta("ability", "")) == "Swarm Cloud" and bool(u.get_meta("toggled", false)):
+		if bool(u.get_meta("frozen", false)):
+			u.set_meta("toggled", false)
+		else:
+			for other: RTSUnit in units:
+				if not is_instance_valid(other) or not other.is_alive() or not teams.are_enemies(u.team, other.team):
+					continue
+				var flat: float = Vector2(u.global_position.x, u.global_position.z).distance_to(Vector2(other.global_position.x, other.global_position.z))
+				if flat > 8.0:
+					continue
+				other.take_damage(3.0 * delta)
+				if other.damage_mult > 0.75:
+					other.damage_mult = 0.75
+	if str(u.unit_type) == "mekong_uav" and int(u.get_meta("missiles", 2)) <= 0 and side_link != null and side_link.yard != null:
+		if u.global_position.distance_to(side_link.yard.center) <= 14.0:
+			u.set_meta("missiles", 2)
+			var bank: float = float(u.get_meta("attack_bank", u.attack_damage))
+			if bank > 0.0:
+				u.attack_damage = bank
+	_ride_bench(u)
 	if not bool(u.get_meta("channeling", false)):
 		return
 	if bool(u.get_meta("frozen", false)):
@@ -810,12 +983,17 @@ func _tick_ability(u: RTSUnit, delta: float) -> void:
 
 func nearest_enemy(from: Vector3, reach: float) -> RTSUnit:
 	var best: RTSUnit = null
-	var best_d: float = reach
+	var best_d2: float = reach * reach
+	var fx: float = from.x
+	var fz: float = from.z
 	for u: RTSUnit in units:
 		if is_instance_valid(u) and u.is_alive() and not bool(u.get_meta("garrisoned", false)) and teams.are_enemies(PLAYER, u.team):
-			var d: float = Vector2(from.x, from.z).distance_to(Vector2(u.global_position.x, u.global_position.z))
-			if d <= best_d:
-				best_d = d
+			var p: Vector3 = u.position
+			var dx: float = fx - p.x
+			var dz: float = fz - p.z
+			var d2: float = dx * dx + dz * dz
+			if d2 <= best_d2:
+				best_d2 = d2
 				best = u
 	return best
 
@@ -870,10 +1048,12 @@ func tick(delta: float) -> void:
 	if group_note_t > 0.0:
 		group_note_t = maxf(0.0, group_note_t - delta)
 	var alive: Array[RTSUnit] = []
+	var hover_unit: RTSUnit = _hovered(units)
 	for u: RTSUnit in units:
 		if not is_instance_valid(u):
 			continue
 		if not u.is_alive():
+			_dump_bench(u)
 			for hunter: RTSUnit in units:
 				if hunter != u and is_instance_valid(hunter) and hunter.attack_target == u and hunter.team != u.team:
 					hunter.set_meta("kills", int(hunter.get_meta("kills", 0)) + 1)
@@ -899,13 +1079,14 @@ func tick(delta: float) -> void:
 			ring.scale = Vector3(girth, 1.0, girth)
 		var reach: MeshInstance3D = u.get_node_or_null("RangeRing") as MeshInstance3D
 		if reach != null:
-			reach.visible = u.selected and u.team == PLAYER
+			reach.visible = (u.selected and u.team == PLAYER) or u == hover_unit
 			var span: float = maxf(u.attack_range, 0.2)
 			reach.scale = Vector3(span, 1.0, span)
 		_paint_vitals(u, delta)
 		alive.append(u)
 	units = alive
-	_paint_names(alive)
+	_park_hides()
+	_paint_names(alive, hover_unit)
 	_paint_path()
 
 func _drop_wreck(at: Vector3) -> void:
@@ -969,18 +1150,22 @@ func _ring_girth(u: RTSUnit) -> float:
 		return 1.55
 	return 0.72
 
-func _paint_names(alive: Array[RTSUnit]) -> void:
+func _hovered(alive: Array[RTSUnit]) -> RTSUnit:
+	if hover_at == Vector2.INF or cam == null:
+		return null
 	var hover_unit: RTSUnit = null
 	var hover_d: float = PICK_PX
-	if hover_at != Vector2.INF and cam != null:
-		for u: RTSUnit in alive:
-			if u.selected:
-				continue
-			var screen: Vector2 = project_point(u.global_position)
-			var d: float = screen.distance_to(hover_at)
-			if d <= hover_d:
-				hover_d = d
-				hover_unit = u
+	for u: RTSUnit in alive:
+		if not is_instance_valid(u) or not u.is_alive() or not u.visible:
+			continue
+		var screen: Vector2 = project_point(u.position)
+		var d: float = screen.distance_to(hover_at)
+		if d <= hover_d:
+			hover_d = d
+			hover_unit = u
+	return hover_unit
+
+func _paint_names(alive: Array[RTSUnit], hover_unit: RTSUnit = null) -> void:
 	var lead: RTSUnit = null
 	var chosen: int = 0
 	for u: RTSUnit in alive:
@@ -1004,7 +1189,7 @@ func _bar_fit(u: RTSUnit) -> float:
 	if vp == null:
 		return 1.0
 	var view: Vector2 = vp.get_visible_rect().size
-	var dist: float = cam.global_position.distance_to(u.global_position)
+	var dist: float = cam.global_position.distance_to(u.position)
 	var cap: float = minf(view.x * 0.16, 120.0)
 	return _screen_span(view, cam.fov, dist, 2.0, cap)
 
@@ -1022,7 +1207,7 @@ func _screen_span(viewport: Vector2, fov_deg: float, dist: float, world_span: fl
 
 func _paint_vitals(u: RTSUnit, delta: float) -> void:
 	var bar: MeshInstance3D = u.get_node_or_null("HealthBar") as MeshInstance3D
-	if bar != null:
+	if bar != null and bar.visible:
 		var ratio: float = clampf(u.hp / maxf(u.max_hp, 1.0), 0.0, 1.0)
 		var fit: float = _bar_fit(u)
 		bar.scale = Vector3(maxf(0.04, ratio), 1.0, 1.0)

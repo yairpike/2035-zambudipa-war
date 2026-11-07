@@ -5,6 +5,7 @@ const Plate = preload("res://game/menu_plate.gd")
 const Backdrop = preload("res://game/menu_backdrop.gd")
 const Lan = preload("res://game/lan_link.gd")
 const Marks = preload("res://game/faction_mark.gd")
+const Glass = preload("res://game/glass.gd")
 const VERSION: String = "v0.9.0"
 
 var selected_map: String = ""
@@ -17,6 +18,7 @@ var faction_submenu: Control
 var backdrop: Control
 var multi_note: Label
 var lan_panel: Control
+var paste_panel: Control
 var map_cards: Array[Button] = []
 var faction_cards: Array[Button] = []
 var tab_buttons: Array[Button] = []
@@ -31,6 +33,7 @@ var _hover_map: String = ""
 var _now_seen: String = ""
 var _now_left: float = 0.0
 var _previews: Dictionary = {}
+static var _training_seen: bool = false
 
 func _ready() -> void:
 	preload("res://game/font_faces.gd").pin()
@@ -43,10 +46,13 @@ func _ready() -> void:
 	rail.name = "MenuRail"
 	rail.color = Color(0.02, 0.024, 0.034, 0.88)
 	rail.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if Glass.live():
+		rail.color = Color(0, 0, 0, 1)
+		rail.material = Glass.material(Color(0.03, 0.035, 0.05, 0.6))
 	add_child(rail)
 	var dim := ColorRect.new()
 	dim.name = "MenuDim"
-	dim.color = Color(0.0, 0.0, 0.0, 0.46)
+	dim.color = Color(0.0, 0.0, 0.0, 0.14 if Glass.live() else 0.46)
 	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	dim.visible = false
 	add_child(dim)
@@ -55,9 +61,8 @@ func _ready() -> void:
 		blur.name = "MenuBlur"
 		blur.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		blur.visible = false
-		var mat := ShaderMaterial.new()
-		mat.shader = load("res://game/shaders/menu_blur.gdshader") as Shader
-		blur.material = mat
+		blur.color = Color(0, 0, 0, 1)
+		blur.material = Glass.material(Color(0.03, 0.04, 0.06, 0.4))
 		add_child(blur)
 		move_child(blur, backdrop.get_index() + 1)
 	var title: Label = Label.new()
@@ -68,6 +73,16 @@ func _ready() -> void:
 	title.add_theme_font_size_override("font_size", 64)
 	title.add_theme_color_override("font_color", Color(1, 1, 1))
 	add_child(title)
+	var wordmark_tex: Texture2D = load("res://brand/wordmark-vanguard-1024.png") as Texture2D
+	if wordmark_tex != null:
+		var wordmark := TextureRect.new()
+		wordmark.name = "TitleWordmark"
+		wordmark.texture = wordmark_tex
+		wordmark.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		wordmark.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		wordmark.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(wordmark)
+		title.self_modulate.a = 0.0
 	var rule: ColorRect = ColorRect.new()
 	rule.name = "TitleRule"
 	rule.color = Color(1, 1, 1, 0.9)
@@ -84,6 +99,9 @@ func _ready() -> void:
 	chip.name = "NowPlayingChip"
 	chip.color = Color(0.02, 0.024, 0.034, 0.88)
 	chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if Glass.live():
+		chip.color = Color(0, 0, 0, 1)
+		chip.material = Glass.material(Color(0.03, 0.035, 0.05, 0.5))
 	chip.visible = false
 	add_child(chip)
 	var now_playing: Label = Label.new()
@@ -134,14 +152,19 @@ func _ready() -> void:
 	multi.text = "MULTIPLAYER"
 	multi.theme_type_variation = "HeaderButton"
 	multi.set_meta("nav", true)
-	multi.add_theme_font_size_override("font_size", 22)
-	if OS.has_feature("web"):
-		multi.text = "Multiplayer (LAN) - desktop app only"
-		multi.add_theme_font_size_override("font_size", 18)
-		multi.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	multi.add_theme_font_size_override("font_size", 32)
 	multi.pressed.connect(_show_tab.bind("multi"))
 	add_child(multi)
 	tab_buttons.append(multi)
+	var roll: Button = Plate.new() as Button
+	roll.name = "CreditsButton"
+	roll.text = "CREDITS"
+	roll.theme_type_variation = "HeaderButton"
+	roll.set_meta("nav", true)
+	roll.add_theme_font_size_override("font_size", 32)
+	roll.pressed.connect(_open_credits)
+	add_child(roll)
+	tab_buttons.append(roll)
 	var quit: Button = Plate.new() as Button
 	quit.name = "QuitButton"
 	quit.text = "QUIT"
@@ -168,13 +191,17 @@ func _ready() -> void:
 	multi_note.add_theme_color_override("font_color", Color(1, 1, 1))
 	add_child(multi_note)
 	_lan_panel()
+	_paste_panel()
 	set_process_unhandled_input(true)
 	SMSave.pull_web()
+	preload("res://game/match_settings.gd").pull_web()
 	preload("res://game/settings_panel.gd").attach(self)
+	preload("res://game/credits_panel.gd").attach(self)
 	preload("res://game/match_settings.gd").apply_scene(self)
 	mark_difficulty()
 	preload("res://game/match_audio.gd").arm(self, "menu")
 	_loading_plate()
+	preload("res://game/model_registry.gd").warm.call_deferred(self)
 	_menu_fade()
 	_detail_card()
 	_offer_training()
@@ -272,6 +299,204 @@ func _lan_panel() -> void:
 	send.pressed.connect(_lan_say)
 	lan_panel.add_child(send)
 
+func _paste_panel() -> void:
+	paste_panel = Control.new()
+	paste_panel.name = "PastePanel"
+	paste_panel.visible = false
+	paste_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(paste_panel)
+	var offer: Button = Button.new()
+	offer.name = "PasteOffer"
+	offer.text = "Copy offer"
+	offer.position = Vector2(0.0, 0.0)
+	offer.custom_minimum_size = Vector2(160.0, 36.0)
+	offer.disabled = true
+	offer.pressed.connect(_paste_offer)
+	paste_panel.add_child(offer)
+	var copy: Button = Button.new()
+	copy.name = "PasteCopy"
+	copy.text = "Copy again"
+	copy.position = Vector2(176.0, 0.0)
+	copy.custom_minimum_size = Vector2(160.0, 36.0)
+	copy.disabled = true
+	copy.pressed.connect(_paste_copy)
+	paste_panel.add_child(copy)
+	var blob: TextEdit = TextEdit.new()
+	blob.name = "PasteBlob"
+	blob.placeholder_text = "Paste the other browser's offer or answer"
+	blob.position = Vector2(0.0, 48.0)
+	blob.size = Vector2(420.0, 96.0)
+	blob.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
+	paste_panel.add_child(blob)
+	var join: Button = Button.new()
+	join.name = "PasteJoin"
+	join.text = "Join offer"
+	join.position = Vector2(0.0, 156.0)
+	join.custom_minimum_size = Vector2(160.0, 36.0)
+	join.pressed.connect(_paste_join)
+	paste_panel.add_child(join)
+	var seal: Button = Button.new()
+	seal.name = "PasteSeal"
+	seal.text = "Seal answer"
+	seal.position = Vector2(176.0, 156.0)
+	seal.custom_minimum_size = Vector2(160.0, 36.0)
+	seal.pressed.connect(_paste_seal)
+	paste_panel.add_child(seal)
+	var status: Label = Label.new()
+	status.name = "PasteStatus"
+	status.text = Lan.lan_note(true)
+	status.position = Vector2(0.0, 204.0)
+	status.size = Vector2(420.0, 64.0)
+	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	paste_panel.add_child(status)
+	var lobby: Label = Label.new()
+	lobby.name = "PasteLobby"
+	lobby.position = Vector2(0.0, 276.0)
+	lobby.size = Vector2(420.0, 36.0)
+	lobby.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	lobby.text = "Pick a faction and a map, then ready up."
+	paste_panel.add_child(lobby)
+	_paste_choice("PasteFaction_gtfc", "GTFC", Vector2(0.0, 316.0), _lan_faction.bind("gtfc"))
+	_paste_choice("PasteFaction_nmrf", "NMRF", Vector2(88.0, 316.0), _lan_faction.bind("nmrf"))
+	_paste_choice("PasteFaction_mvd", "MVD", Vector2(176.0, 316.0), _lan_faction.bind("mvd"))
+	_paste_choice("PasteFaction_black_market", "Market", Vector2(264.0, 316.0), _lan_faction.bind("black_market"))
+	var ready: Button = Button.new()
+	ready.name = "PasteReady"
+	ready.text = "Ready"
+	ready.position = Vector2(0.0, 360.0)
+	ready.custom_minimum_size = Vector2(120.0, 32.0)
+	ready.pressed.connect(_lan_ready)
+	paste_panel.add_child(ready)
+	var count: Label = Label.new()
+	count.name = "PasteCount"
+	count.position = Vector2(136.0, 364.0)
+	count.size = Vector2(280.0, 24.0)
+	count.text = ""
+	paste_panel.add_child(count)
+	var chat: Label = Label.new()
+	chat.name = "PasteChat"
+	chat.position = Vector2(0.0, 400.0)
+	chat.size = Vector2(420.0, 48.0)
+	chat.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	chat.text = ""
+	paste_panel.add_child(chat)
+	var entry: LineEdit = LineEdit.new()
+	entry.name = "PasteChatLine"
+	entry.placeholder_text = "Chat"
+	entry.position = Vector2(0.0, 456.0)
+	entry.size = Vector2(300.0, 32.0)
+	paste_panel.add_child(entry)
+	var send: Button = Button.new()
+	send.name = "PasteChatSend"
+	send.text = "Send"
+	send.position = Vector2(308.0, 456.0)
+	send.custom_minimum_size = Vector2(80.0, 32.0)
+	send.pressed.connect(_paste_say)
+	paste_panel.add_child(send)
+
+func _paste_choice(node_name: String, caption: String, at: Vector2, fn: Callable) -> void:
+	var b: Button = Button.new()
+	b.name = node_name
+	b.text = caption
+	b.position = at
+	b.custom_minimum_size = Vector2(84.0, 32.0)
+	b.clip_text = true
+	b.pressed.connect(fn)
+	paste_panel.add_child(b)
+
+func _paste_blob() -> String:
+	var blob: TextEdit = find_child("PasteBlob", true, false) as TextEdit
+	if blob == null:
+		return ""
+	return blob.text.strip_edges()
+
+func _arm_paste_offer() -> void:
+	if Lan.role != "":
+		_paint_paste()
+		return
+	var err: Error = Lan.paste_host()
+	if err == OK:
+		Lan.faction = SMFront.faction_id
+		if selected_map != "":
+			Lan.map_path = selected_map
+	_paint_paste()
+	_paint_lobby()
+
+func _paste_offer() -> void:
+	if Lan.paste_text() == "":
+		if Lan.role == "" and not Lan.show_controls():
+			_arm_paste_offer()
+		else:
+			_paint_paste()
+		return
+	_paste_copy()
+	_paint_lobby()
+
+func _paste_copy() -> void:
+	var text: String = Lan.paste_text()
+	if text == "":
+		_paint_paste()
+		return
+	DisplayServer.clipboard_set(text)
+	var blob: TextEdit = find_child("PasteBlob", true, false) as TextEdit
+	if blob != null:
+		blob.text = text
+	_paint_paste()
+
+func _paste_join() -> void:
+	var err: Error = Lan.paste_join(_paste_blob())
+	if err == OK:
+		Lan.faction = SMFront.faction_id
+	_paint_paste()
+	_paint_lobby()
+
+func _paste_seal() -> void:
+	Lan.paste_seal(_paste_blob())
+	_paint_paste()
+	_paint_lobby()
+
+func _paste_say() -> void:
+	var entry: LineEdit = find_child("PasteChatLine", true, false) as LineEdit
+	if entry == null or Lan.role == "":
+		return
+	Lan.seat().say(entry.text)
+	entry.text = ""
+	_paint_lobby()
+
+func _paint_paste() -> void:
+	var status: Label = find_child("PasteStatus", true, false) as Label
+	var ready: bool = Lan.paste_text() != ""
+	var offer: Button = find_child("PasteOffer", true, false) as Button
+	var copy: Button = find_child("PasteCopy", true, false) as Button
+	if offer != null:
+		offer.disabled = not ready
+	if copy != null:
+		copy.disabled = not ready
+	if status == null:
+		return
+	var note: String = Lan.paste_note()
+	if note == "":
+		note = Lan.lan_note(true)
+	if ready:
+		var kind: String = "Answer" if Lan.role == "client" else "Offer"
+		note = "%s  %s is ready to copy." % [note, kind]
+	status.text = note
+
+func _paste_poll(delta: float) -> void:
+	_paint_paste()
+	if Lan.role == "":
+		return
+	Lan.pump()
+	var raw: String = Lan.take()
+	while raw != "":
+		_lan_packet(raw)
+		raw = Lan.take()
+	if Lan.seat().tick_lobby(delta) == "start":
+		SMFront.faction_id = Lan.faction
+		_open(Lan.map_path)
+		return
+	_paint_lobby()
+
 func _host_lan() -> void:
 	var err: Error = Lan.open_host()
 	var status: Label = find_child("LanStatus", true, false) as Label
@@ -335,6 +560,7 @@ func _fill_lan() -> void:
 
 func _lan_poll(delta: float) -> void:
 	if not Lan.show_controls():
+		_paste_poll(delta)
 		return
 	if lan_panel != null and lan_panel.visible and Lan.role != "host":
 		Lan.listen()
@@ -405,8 +631,7 @@ func _paint_lobby() -> void:
 	var chat: Label = find_child("LanChat", true, false) as Label
 	var count: Label = find_child("LanCount", true, false) as Label
 	if lobby != null:
-		var guest: String = Lan.seat().guest_faction if Lan.seat().guest_joined else "waiting"
-		lobby.text = "Host %s %s    Guest %s %s" % [Lan.seat().faction, "ready" if Lan.seat().host_ready else "open", guest, "ready" if Lan.seat().guest_ready else "open"]
+		lobby.text = Lan.seat().lobby_line()
 	if chat != null:
 		var lines: String = ""
 		for line: String in Lan.seat().chat_lines:
@@ -416,6 +641,15 @@ func _paint_lobby() -> void:
 		chat.text = lines
 	if count != null:
 		count.text = "Starting in %d." % Lan.seat().count_shown if Lan.seat().counting else ""
+	var paste_lobby: Label = find_child("PasteLobby", true, false) as Label
+	var paste_chat: Label = find_child("PasteChat", true, false) as Label
+	var paste_count: Label = find_child("PasteCount", true, false) as Label
+	if paste_lobby != null and lobby != null:
+		paste_lobby.text = lobby.text
+	if paste_chat != null and chat != null:
+		paste_chat.text = chat.text
+	if paste_count != null and count != null:
+		paste_count.text = count.text
 
 func _skirmish() -> void:
 	_card(skirmish_panel, "CardPhillips", "Phillips Channel", "Water", "res://game/phillips_channel.tscn", Vector2(48, 16))
@@ -424,6 +658,7 @@ func _skirmish() -> void:
 	_card(skirmish_panel, "CardAtolls", "Ten Degree Atolls", "Water", "res://game/ten_degree_atolls.tscn", Vector2(48, 124))
 	_card(skirmish_panel, "CardMekong", "Mekong Delta", "River", "res://game/mekong_delta.tscn", Vector2(348, 124))
 	_card(skirmish_panel, "CardChiang", "Siege of Chiang Rai", "River", "res://game/chiang_rai.tscn", Vector2(648, 124))
+	_card(skirmish_panel, "CardShowcase", "Golden Confluence", "River", "res://game/showcase.tscn", Vector2(48, 232))
 	playing_label = Label.new()
 	playing_label.name = "PlayingAs"
 	playing_label.position = Vector2(48, 236)
@@ -443,6 +678,7 @@ func _skirmish() -> void:
 	grey.name = "GreyboxButton"
 	grey.text = "Sandbox"
 	grey.custom_minimum_size = Vector2(180, 44)
+	grey.add_theme_font_size_override("font_size", 22)
 	grey.tooltip_text = "Practice map."
 	grey.pressed.connect(_open.bind("res://game/greybox.tscn"))
 	skirmish_panel.add_child(grey)
@@ -454,8 +690,8 @@ func _skirmish() -> void:
 	var train: Button = Plate.new() as Button
 	train.name = "BasicTraining"
 	train.text = "Basic training"
-	train.custom_minimum_size = Vector2(200, 44)
-	train.add_theme_font_size_override("font_size", 16)
+	train.custom_minimum_size = Vector2(220, 44)
+	train.add_theme_font_size_override("font_size", 22)
 	train.pressed.connect(_basic_training)
 	skirmish_panel.add_child(train)
 	play_button = Plate.new() as Button
@@ -554,7 +790,7 @@ func _card(panel: Control, node_name: String, map_name: String, terrain: String,
 	var title: Label = Label.new()
 	title.name = "Title"
 	title.text = map_name
-	title.position = Vector2(12, 8)
+	title.position = Vector2(12, 4)
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	title.add_theme_font_size_override("font_size", 18)
 	title.add_theme_color_override("font_color", Color(1, 1, 1))
@@ -578,7 +814,9 @@ func _mission_row(box: VBoxContainer, mission_id: String) -> void:
 	var b: Button = Plate.new() as Button
 	b.name = "Mission_%s" % mission_id
 	b.text = SMCampaign.title_of(mission_id)
-	b.custom_minimum_size = Vector2(720, 44)
+	b.custom_minimum_size = Vector2(720, 52)
+	b.clip_text = true
+	b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	b.pressed.connect(_start_mission.bind(mission_id))
 	box.add_child(b)
@@ -610,15 +848,21 @@ func _mission_row(box: VBoxContainer, mission_id: String) -> void:
 func _process(delta: float) -> void:
 	_tick_now(delta)
 	_lan_poll(delta)
+	preload("res://game/match_settings.gd").poll_web()
 	if not _save_polled and SMSave.poll_web():
 		_save_polled = true
 		for id: String in SMCampaign.ids():
 			var button: Button = find_child("Mission_%s" % id, true, false) as Button
 			_ensure_done(button, id)
+	var settings: Control = find_child("SettingsPanel", true, false) as Control
+	var credits: Control = find_child("CreditsPanel", true, false) as Control
+	var offer: CanvasItem = find_child("TrainingOffer", true, false) as CanvasItem
+	if offer != null and offer.visible:
+		if _training_done() or _menu_tab != "main" or (settings != null and settings.visible) or (credits != null and credits.visible) or (faction_submenu != null and faction_submenu.visible):
+			offer.visible = false
 	_pad_cool = maxf(0.0, _pad_cool - delta)
 	if _pad_cool > 0.0:
 		return
-	var settings: Control = find_child("SettingsPanel", true, false) as Control
 	if settings != null and settings.visible:
 		return
 	var y_axis: float = Input.get_joy_axis(0, JOY_AXIS_LEFT_Y)
@@ -759,6 +1003,8 @@ func _expand_campaign() -> void:
 	_show_tab("main")
 
 func _show_tab(which: String) -> void:
+	if which != "multi" and Lan.role != "":
+		Lan.close()
 	_menu_tab = which
 	_show_menu_chrome()
 	skirmish_panel.visible = which == "skirmish"
@@ -768,6 +1014,11 @@ func _show_tab(which: String) -> void:
 		multi_note.visible = which == "multi"
 	if lan_panel != null:
 		lan_panel.visible = which == "multi" and Lan.show_controls()
+	if paste_panel != null:
+		var show_paste: bool = which == "multi" and not Lan.show_controls()
+		paste_panel.visible = show_paste
+		if show_paste:
+			_arm_paste_offer()
 	if which == "skirmish" or which == "multi":
 		_set_submenu(false)
 	elif which == "campaign" or which == "faction":
@@ -917,6 +1168,16 @@ func _toggle_settings() -> void:
 	else:
 		settings_closed()
 
+func _open_credits() -> void:
+	var panel: Control = find_child("CreditsPanel", true, false) as Control
+	if panel == null:
+		return
+	panel.call("open")
+	_hide_menu_chrome()
+
+func credits_closed() -> void:
+	_show_tab(_menu_tab)
+
 func settings_closed() -> void:
 	var panel: Control = find_child("SettingsPanel", true, false) as Control
 	if panel != null:
@@ -925,7 +1186,7 @@ func settings_closed() -> void:
 
 func _show_menu_chrome() -> void:
 	var names: PackedStringArray = PackedStringArray([
-		"GameTitle", "TitleRule", "VersionMark", "ControlBar", "QuitButton",
+		"GameTitle", "TitleWordmark", "TitleRule", "VersionMark", "ControlBar", "QuitButton",
 	])
 	for node_name: String in names:
 		var node: CanvasItem = find_child(node_name, true, false) as CanvasItem
@@ -972,6 +1233,8 @@ func _go_back() -> void:
 	_show_tab("main")
 
 func _fade() -> void:
+	if not is_inside_tree():
+		return
 	var veil: CanvasItem = find_child("MenuFade", true, false) as CanvasItem
 	if veil == null:
 		return
@@ -991,28 +1254,30 @@ func _hide_menu_chrome() -> void:
 
 func _chrome_names() -> PackedStringArray:
 	return PackedStringArray([
-		"GameTitle", "TitleRule", "VersionMark", "NowPlaying", "ControlBar",
-		"MultiplayerNote", "FactionSubmenu", "LanPanel", "PanelSkirmish",
-		"PanelCampaign", "PanelFaction", "QuitButton", "MenuBack",
+		"GameTitle", "TitleWordmark", "TitleRule", "VersionMark", "NowPlaying", "ControlBar",
+		"MultiplayerNote", "FactionSubmenu", "LanPanel", "PastePanel", "PanelSkirmish",
+		"PanelCampaign", "PanelFaction", "QuitButton", "MenuBack", "TrainingOffer",
 	])
 
 func _play() -> void:
 	if selected_map == "":
 		return
+	Lan.close()
 	_open(selected_map)
 
 func _basic_training() -> void:
+	Lan.close()
 	preload("res://game/match_coach.gd").armed = true
 	if selected_map == "":
 		selected_map = "res://game/phillips_channel.tscn"
 	_play()
 
 func _offer_training() -> void:
-	if FileAccess.file_exists("user://training_offer.cfg"):
+	if _training_done():
 		return
 	var card: PanelContainer = PanelContainer.new()
 	card.name = "TrainingOffer"
-	card.z_index = 6
+	card.z_index = 2
 	card.mouse_filter = Control.MOUSE_FILTER_STOP
 	var style: StyleBoxFlat = StyleBoxFlat.new()
 	style.bg_color = Color(0.05, 0.06, 0.07, 0.94)
@@ -1061,14 +1326,35 @@ func _skip_training() -> void:
 	if offer != null:
 		offer.visible = false
 
-func _mark_training_seen() -> void:
+static func _training_done() -> bool:
+	if _training_seen or FileAccess.file_exists("user://training_offer.cfg"):
+		_training_seen = true
+		return true
+	if OS.has_feature("web"):
+		var saved: Variant = JavaScriptBridge.eval("try{localStorage.getItem('asean2031_training_seen')||''}catch(_){''}", true)
+		if saved is String and str(saved) != "":
+			_training_seen = true
+			return true
+	return false
+
+static func mark_training_seen() -> void:
+	_training_seen = true
+	if OS.has_feature("web"):
+		JavaScriptBridge.eval("try{localStorage.setItem('asean2031_training_seen','1')}catch(_){}", true)
 	var file: FileAccess = FileAccess.open("user://training_offer.cfg", FileAccess.WRITE)
 	if file == null:
 		return
 	file.store_line("seen")
 	file.close()
 
+func _mark_training_seen() -> void:
+	mark_training_seen()
+	var offer: CanvasItem = find_child("TrainingOffer", true, false) as CanvasItem
+	if offer != null:
+		offer.visible = false
+
 func _start_mission(mission_id: String) -> void:
+	Lan.close()
 	if mission_id == "kokang":
 		_open("res://game/mission_kokang.tscn")
 		return
@@ -1076,14 +1362,16 @@ func _start_mission(mission_id: String) -> void:
 	_open("res://game/campaign_mission.tscn")
 
 func _open(path: String) -> void:
+	_mark_training_seen()
+	preload("res://game/model_registry.gd").warm(self)
 	var loading: Control = find_child("LoadingPlate", true, false) as Control
 	if loading != null:
 		loading.visible = true
 		move_child(loading, get_child_count() - 1)
 		var art: Node = loading.get_child(0)
 		if art != null and art.has_method("set_faction"):
-			art.call("set_screen", "faction")
-			art.call("set_faction", SMFront.current())
+			art.call("set_screen", "loading")
+			art.call("set_faction", "")
 		var title: Label = loading.find_child("LoadingTitle", true, false) as Label
 		if title != null:
 			title.text = _mission_title(path)
@@ -1134,6 +1422,8 @@ func _mission_title(path: String) -> String:
 		return "Mekong Delta"
 	if file == "chiang_rai.tscn":
 		return "Siege of Chiang Rai"
+	if file == "showcase.tscn":
+		return "Golden Confluence"
 	if file == "greybox.tscn":
 		return "Greybox"
 	if file == "nmrf_yard.tscn":
@@ -1211,23 +1501,28 @@ func layout_for(size: Vector2) -> void:
 	_layout_menu(size)
 
 func _view_size() -> Vector2:
+	if not is_inside_tree():
+		return Vector2(1280, 720)
 	var view: Vector2 = get_viewport_rect().size
-	if view.x < 32.0 or view.y < 32.0:
+	if view.x < 160.0 or view.y < 160.0:
 		return Vector2(1280, 720)
 	return view
 
 func _layout_menu(size: Vector2) -> void:
-	if size.x < 32.0 or size.y < 32.0:
+	if size.x < 160.0 or size.y < 160.0:
 		size = Vector2(1280, 720)
 	var narrow: bool = size.x < 900.0 or size.y > size.x + 4.0
 	if faction_submenu != null:
 		faction_submenu.position = Vector2.ZERO
 		faction_submenu.size = size
 	var left: float = 24.0 if narrow else 96.0
-	var title_px: int = 36 if narrow else 48
+	var sub_open: bool = _menu_tab == "skirmish" or _menu_tab == "campaign" or _menu_tab == "faction"
+	var title_x: float = (16.0 if narrow else 28.0) if sub_open else left
+	var title_y: float = 36.0 if narrow else (28.0 if sub_open else 96.0)
+	var title_px: int = 36 if narrow else (42 if sub_open else 48)
 	var title: Control = find_child("GameTitle", true, false) as Control
 	if title != null:
-		title.position = Vector2(left, 36.0 if narrow else 96.0)
+		title.position = Vector2(title_x, title_y)
 		title.add_theme_font_size_override("font_size", title_px)
 	var rule: Control = find_child("TitleRule", true, false) as Control
 	if rule != null:
@@ -1236,17 +1531,26 @@ func _layout_menu(size: Vector2) -> void:
 	if version != null:
 		version.add_theme_font_size_override("font_size", 18)
 		version.add_theme_color_override("font_color", Color(1, 1, 1, 0.94))
-		version.position = Vector2(size.x - 110.0, size.y - 36.0)
-	var rail_w: float = size.x * 0.4
+		version.position = Vector2(left, size.y - 36.0)
+	var portrait: bool = size.y > size.x
+	var rail_w: float = size.x * (0.8 if portrait else 0.4)
 	var rail: Control = find_child("MenuRail", true, false) as Control
 	if rail != null:
 		rail.position = Vector2.ZERO
 		rail.size = Vector2(rail_w, size.y)
 	if title != null:
-		title.size = Vector2(maxf(160.0, rail_w - left - 16.0), 64.0)
+		title.size = Vector2(maxf(160.0, (size.x if portrait else rail_w) - left - 16.0), 64.0)
 		var title_label: Label = title as Label
 		if title_label != null:
 			title_label.clip_text = true
+		var wordmark: Control = find_child("TitleWordmark", true, false) as Control
+		if wordmark != null:
+			wordmark.visible = title.visible
+			wordmark.position = title.position
+			var wm_w: float = maxf(200.0, (size.x if portrait else rail_w) - title_x - 16.0)
+			if sub_open:
+				wm_w = minf(wm_w, 340.0)
+			wordmark.size = Vector2(wm_w, 60.0 if sub_open or narrow else 74.0)
 	var settings_open: bool = false
 	var settings_panel: Control = find_child("SettingsPanel", true, false) as Control
 	if settings_panel != null:
@@ -1262,24 +1566,32 @@ func _layout_menu(size: Vector2) -> void:
 				veil_rect.size = size
 	var now: Control = find_child("NowPlaying", true, false) as Control
 	var chip: Control = find_child("NowPlayingChip", true, false) as Control
+	var chip_y: float = 80.0 if portrait else 22.0
 	if now != null:
-		now.position = Vector2(size.x - 348.0, 28.0)
+		now.position = Vector2(size.x - 348.0, chip_y + 6.0)
 		now.size = Vector2(320.0, 28.0)
 	if chip != null:
-		chip.position = Vector2(size.x - 360.0, 22.0)
-		chip.size = Vector2(340.0, 40.0)
-	var plate_w: float = rail_w - (48.0 if narrow else 120.0)
+		chip.position = Vector2(size.x - 360.0, chip_y)
+		chip.size = Vector2(340.0, 34.0 if portrait else 40.0)
+	var plate_w: float = rail_w - (48.0 if narrow else 104.0)
 	var y: float = 120.0 if narrow else 180.0
 	var row_h: float = 48.0
 	y = _seat(find_child("TabCampaign", true, false) as Control, left, y, plate_w, row_h)
 	var faction_end: float = y
+	var camp_open: bool = campaign_panel != null and campaign_panel.visible
 	if faction_submenu != null and faction_submenu.visible:
-		faction_end = _seat_factions(left, y, plate_w, narrow or plate_w < 520.0)
-		y = faction_end
+		if camp_open:
+			var camp_left: float = 16.0 if narrow else 28.0
+			var camp_w: float = maxf(180.0, rail_w - camp_left - 16.0)
+			faction_end = _seat_factions(camp_left, 112.0 if narrow else 124.0, camp_w, narrow)
+		else:
+			faction_end = _seat_factions(left, y, plate_w, narrow or plate_w < 520.0)
+			y = faction_end
 	y = _seat(find_child("TabSkirmish", true, false) as Control, left, y, plate_w, row_h)
-	var multi_h: float = 72.0 if OS.has_feature("web") else row_h
+	var multi_h: float = row_h
 	y = _seat(find_child("TabMultiplayer", true, false) as Control, left, y, plate_w, multi_h)
 	y = _seat(find_child("SettingsButton", true, false) as Control, left, y, plate_w, row_h)
+	y = _seat(find_child("CreditsButton", true, false) as Control, left, y, plate_w, row_h)
 	y = _seat(find_child("QuitButton", true, false) as Control, left, y, plate_w, row_h)
 	_seat(find_child("MenuBack", true, false) as Control, left, size.y - 88.0, 220.0, row_h)
 	var side: Control = find_child("TabFaction", true, false) as Control
@@ -1291,6 +1603,9 @@ func _layout_menu(size: Vector2) -> void:
 	if lan_panel != null:
 		lan_panel.position = multi_note.position + Vector2(0.0, 80.0)
 		lan_panel.size = Vector2(plate_w if narrow else 440.0, 530.0)
+	if paste_panel != null:
+		paste_panel.position = multi_note.position + Vector2(0.0, 80.0)
+		paste_panel.size = Vector2(plate_w if narrow else 440.0, 560.0)
 	var content_y: float = 0.0
 	var content_x: float = 0.0
 	var content_w: float = size.x
@@ -1309,8 +1624,10 @@ func _layout_menu(size: Vector2) -> void:
 		bar.clip_text = true
 	var offer: Control = find_child("TrainingOffer", true, false) as Control
 	if offer != null:
-		var seen: bool = FileAccess.file_exists("user://training_offer.cfg")
-		offer.visible = _menu_tab == "main" and not seen and not narrow
+		var seen: bool = _training_done()
+		var credits_panel: Control = find_child("CreditsPanel", true, false) as Control
+		var credits_open: bool = credits_panel != null and credits_panel.visible
+		offer.visible = _menu_tab == "main" and not seen and not narrow and not settings_open and not credits_open and (faction_submenu == null or not faction_submenu.visible)
 		offer.position = Vector2(minf(640.0, size.x * 0.46), 240.0)
 		offer.size = Vector2(minf(460.0, maxf(280.0, size.x - offer.position.x - 24.0)), 150.0)
 	var card: Control = find_child("MenuDetail", true, false) as Control
@@ -1323,7 +1640,7 @@ func _layout_menu(size: Vector2) -> void:
 	_place_skirmish(content_w, content_h)
 	var camp_top: float = 168.0 if narrow else 176.0
 	if campaign_panel != null and campaign_panel.visible and faction_submenu != null and faction_submenu.visible:
-		camp_top = faction_end + 8.0
+		camp_top = faction_end + 4.0
 	_place_campaign(content_w, content_h, camp_top)
 	_place_factions(content_w)
 
@@ -1336,35 +1653,39 @@ func _seat_factions(x: float, y: float, width: float, narrow: bool) -> float:
 			cursor = _seat(card, x, cursor, width, 52.0)
 			_fit_mark(card)
 		return cursor
-	var gap: float = 18.0
+	var gap: float = 12.0
 	var slot: float = maxf(72.0, (width - gap * float(faction_cards.size() - 1)) / float(faction_cards.size()))
 	for i: int in faction_cards.size():
 		var card: Button = faction_cards[i]
 		card.position = Vector2(x + float(i) * (slot + gap), y)
-		card.size = Vector2(slot, 52.0)
-		card.custom_minimum_size = Vector2(slot, 52.0)
+		card.size = Vector2(slot, 48.0)
+		card.custom_minimum_size = Vector2(slot, 48.0)
 		_fit_mark(card)
-	return y + 60.0
+	return y + 52.0
 
 func _fit_mark(card: Button) -> void:
+	var compact: bool = card.size.x < 220.0
 	var logo: TextureRect = card.find_child("Logo", true, false) as TextureRect
 	if logo != null:
 		logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		logo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		logo.custom_minimum_size = Vector2(40, 40)
-		logo.position = Vector2(6, 6)
-		logo.size = Vector2(40, 40)
+		var side: float = 32.0 if compact else 40.0
+		logo.custom_minimum_size = Vector2(side, side)
+		logo.position = Vector2(6.0, floorf((card.size.y - side) * 0.5))
+		logo.size = Vector2(side, side)
 	var title: Label = card.find_child("Title", true, false) as Label
 	if title != null:
-		title.position = Vector2(84, 14)
-		title.size = Vector2(maxf(80.0, card.size.x - 96.0), 24.0)
+		var tx: float = 44.0 if compact else 84.0
+		title.position = Vector2(tx, floorf((card.size.y - 24.0) * 0.5))
+		title.size = Vector2(maxf(60.0, card.size.x - tx - 8.0), 24.0)
 
 func _quit() -> void:
+	preload("res://game/render_budget.gd").shutdown(get_tree())
 	get_tree().quit()
 
 func _focusables() -> Array[Button]:
 	var rows: Array[Button] = []
-	for node_name: String in ["TabCampaign", "TabSkirmish", "TabMultiplayer", "SettingsButton", "QuitButton"]:
+	for node_name: String in ["TabCampaign", "TabSkirmish", "TabMultiplayer", "SettingsButton", "CreditsButton", "QuitButton"]:
 		var button: Button = find_child(node_name, true, false) as Button
 		if button != null:
 			rows.append(button)
@@ -1373,6 +1694,9 @@ func _focusables() -> Array[Button]:
 func _unhandled_input(event: InputEvent) -> void:
 	var settings: Control = find_child("SettingsPanel", true, false) as Control
 	if settings != null and settings.visible:
+		return
+	var roll: Control = find_child("CreditsPanel", true, false) as Control
+	if roll != null and roll.visible:
 		return
 	var key: InputEventKey = event as InputEventKey
 	if key != null and key.pressed and not key.echo:
@@ -1393,7 +1717,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif key.keycode == KEY_RIGHT or key.keycode == KEY_D:
 			_move_faction(1)
 			get_viewport().set_input_as_handled()
-		elif key.keycode == KEY_ENTER or key.keycode == KEY_KP_ENTER or key.keycode == KEY_SPACE:
+		elif key.keycode == KEY_ENTER or key.keycode == KEY_KP_ENTER:
+			if _launch_detail(true):
+				get_viewport().set_input_as_handled()
+				return
+			_activate_focus()
+			get_viewport().set_input_as_handled()
+		elif key.keycode == KEY_SPACE:
 			_activate_focus()
 			get_viewport().set_input_as_handled()
 		return
@@ -1461,7 +1791,8 @@ func _detail_card() -> void:
 	var card: PanelContainer = PanelContainer.new()
 	card.name = "MenuDetail"
 	card.visible = false
-	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.mouse_filter = Control.MOUSE_FILTER_STOP
+	card.gui_input.connect(_on_detail_gui)
 	card.z_index = 2
 	var style: StyleBoxFlat = StyleBoxFlat.new()
 	style.bg_color = Color(0, 0, 0, 0.7)
@@ -1472,12 +1803,16 @@ func _detail_card() -> void:
 	style.content_margin_top = 16
 	style.content_margin_bottom = 16
 	card.add_theme_stylebox_override("panel", style)
+	if Glass.live():
+		Glass.dress(card, 10, Color(0.04, 0.045, 0.06, 0.55), 20, Color(0.93, 0.78, 0.38, 0.85))
 	add_child(card)
 	var box: VBoxContainer = VBoxContainer.new()
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	box.add_theme_constant_override("separation", 10)
 	card.add_child(box)
 	var title: Label = Label.new()
 	title.name = "DetailTitle"
+	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	title.add_theme_font_size_override("font_size", 28)
 	title.add_theme_color_override("font_color", Color(1, 1, 1, 1))
 	box.add_child(title)
@@ -1490,11 +1825,13 @@ func _detail_card() -> void:
 	box.add_child(preview)
 	var players := Label.new()
 	players.name = "DetailPlayers"
+	players.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	players.add_theme_font_size_override("font_size", 18)
 	players.add_theme_color_override("font_color", Color(1, 1, 1, 1))
 	box.add_child(players)
 	var body: Label = Label.new()
 	body.name = "DetailBody"
+	body.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.max_lines_visible = 8
 	body.add_theme_font_size_override("font_size", 18)
@@ -1502,6 +1839,7 @@ func _detail_card() -> void:
 	box.add_child(body)
 	var tags: Label = Label.new()
 	tags.name = "DetailTags"
+	tags.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tags.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	tags.add_theme_font_size_override("font_size", 18)
 	tags.add_theme_color_override("font_color", Color(1, 1, 1, 1))
@@ -1513,6 +1851,26 @@ func _detail_card() -> void:
 	more.add_theme_font_size_override("font_size", 18)
 	more.pressed.connect(_toggle_detail)
 	box.add_child(more)
+
+func _on_detail_gui(event: InputEvent) -> void:
+	var click: InputEventMouseButton = event as InputEventMouseButton
+	if click == null or not click.pressed or click.button_index != MOUSE_BUTTON_LEFT:
+		return
+	_launch_detail(false)
+
+## Enter, or a click on the briefing card, starts the mission shown in the card.
+func _launch_detail(from_key: bool) -> bool:
+	if campaign_panel == null or not campaign_panel.visible:
+		return false
+	if from_key:
+		var owner: Control = get_viewport().gui_get_focus_owner() as Control
+		if owner != null and (owner is LineEdit or owner.name == "DetailMore"):
+			return false
+	var mission_id: String = _detail_mission if _detail_mission != "" else SMCampaign.selected
+	if mission_id == "":
+		return false
+	_start_mission(mission_id)
+	return true
 
 func _toggle_detail() -> void:
 	var body: Label = find_child("DetailBody", true, false) as Label
@@ -1550,13 +1908,13 @@ func _make_cycle(node_name: String, kind: String) -> void:
 		button.add_child(logo)
 	skirmish_panel.add_child(button)
 
-func _cycle_row(node_name: String, x: float, y: float, width: float) -> void:
+func _cycle_row(node_name: String, x: float, y: float, width: float, height: float = 36.0) -> void:
 	var row: Control = find_child(node_name, true, false) as Control
 	if row == null:
 		return
 	row.position = Vector2(x, y)
-	row.size = Vector2(width, 44)
-	row.custom_minimum_size = Vector2(width, 44)
+	row.size = Vector2(width, height)
+	row.custom_minimum_size = Vector2(width, height)
 
 func _spin_cycle(kind: String) -> void:
 	if kind == "faction":
@@ -1658,7 +2016,12 @@ func _paint_detail() -> void:
 		if players != null:
 			players.visible = false
 		if preview != null:
-			preview.visible = false
+			var rel: String = SMCampaign.still_of(mission_id)
+			if rel == "":
+				preview.texture = null
+				preview.visible = false
+			else:
+				preload("res://game/served_art.gd").bind(preview, rel)
 		return
 	title.text = ""
 	body.text = ""
@@ -1699,6 +2062,8 @@ func _grid_for(path: String) -> SMDomainGrid:
 		return SMDomainGrid.mekong_delta_layout()
 	if file == "chiang_rai.tscn":
 		return SMDomainGrid.chiang_rai_layout()
+	if file == "showcase.tscn":
+		return SMDomainGrid.showcase_layout()
 	return null
 
 func _domain_ink(domain: int) -> Color:
@@ -1720,47 +2085,94 @@ func _selected_card() -> Button:
 
 func _place_skirmish(panel_w: float, panel_h: float) -> void:
 	var names: PackedStringArray = PackedStringArray([
-		"CardPhillips", "CardSopRuak", "CardBurma", "CardAtolls", "CardMekong", "CardChiang",
+		"CardPhillips", "CardSopRuak", "CardBurma", "CardAtolls", "CardMekong", "CardChiang", "CardShowcase",
 	])
+	if panel_w > panel_h and panel_h < 600.0 and panel_w < 900.0:
+		_place_skirmish_short(names, panel_w)
+		return
 	var narrow: bool = panel_w < 900.0
 	var rail_w: float = panel_w if narrow else panel_w * 0.4
 	var list_x: float = 16.0 if narrow else 28.0
 	var list_w: float = maxf(160.0, rail_w - list_x - 16.0)
-	var row_y: float = 120.0 if narrow else 176.0
+	var row_y: float = 112.0 if narrow else 140.0
+	var card_step: float = 34.0
 	for i: int in names.size():
 		var card: Control = find_child(names[i], true, false) as Control
 		if card == null:
 			continue
-		card.position = Vector2(list_x, row_y + float(i) * 40.0)
-		card.size = Vector2(list_w, 36.0)
-		card.custom_minimum_size = Vector2(list_w, 36.0)
-	var after: float = row_y + float(names.size()) * 40.0 + 8.0
+		card.position = Vector2(list_x, row_y + float(i) * card_step)
+		card.size = Vector2(list_w, 32.0)
+		card.custom_minimum_size = Vector2(list_w, 32.0)
+	var after: float = row_y + float(names.size()) * card_step + 6.0
 	var playing: Control = find_child("PlayingAs", true, false) as Control
 	if playing != null:
 		playing.position = Vector2(list_x, after)
-		playing.size = Vector2(list_w, 28.0)
-	_cycle_row("SkirmishFactionCycle", list_x, after + 32.0, list_w)
-	_cycle_row("SkirmishDiffCycle", list_x, after + 80.0, list_w)
-	_cycle_row("SkirmishBotCycle", list_x, after + 128.0, list_w)
+		playing.size = Vector2(list_w, 26.0)
+	_cycle_row("SkirmishFactionCycle", list_x, after + 28.0, list_w, 34.0)
+	_cycle_row("SkirmishDiffCycle", list_x, after + 64.0, list_w, 34.0)
+	_cycle_row("SkirmishBotCycle", list_x, after + 100.0, list_w, 34.0)
 	var foot: float = panel_h - 72.0
 	var foot_x: float = list_x if narrow else rail_w + 16.0
 	var play: Control = find_child("PlayButton", true, false) as Control
 	if play != null:
 		var play_x: float = list_x if narrow else panel_w - 260.0
-		var play_y: float = foot - 60.0 if narrow else foot
+		var play_y: float = after + 236.0 if narrow else foot
 		play.position = Vector2(play_x, play_y)
 		play.size = Vector2(220, 52)
 		play.custom_minimum_size = Vector2(220, 52)
 	var grey: Control = find_child("GreyboxButton", true, false) as Control
 	if grey != null:
-		grey.position = Vector2(foot_x, foot + 6.0)
-		grey.size = Vector2(150.0, 40.0)
+		grey.position = Vector2(foot_x, after + 184.0 if narrow else foot + 6.0)
+		grey.size = Vector2(168.0, 44.0)
+		grey.custom_minimum_size = Vector2(168.0, 44.0)
 	var train: Control = find_child("BasicTraining", true, false) as Control
 	if train != null:
-		var train_x: float = foot_x if narrow else foot_x + 162.0
-		var train_y: float = foot - 42.0 if narrow else foot + 6.0
+		var train_x: float = foot_x + 180.0
+		var train_y: float = after + 184.0 if narrow else foot + 6.0
 		train.position = Vector2(train_x, train_y)
-		train.size = Vector2(180.0, 40.0)
+		train.size = Vector2(228.0, 44.0)
+		train.custom_minimum_size = Vector2(228.0, 44.0)
+	_hide_old_difficulty()
+
+## Landscape phones: maps in a two-wide grid on the left, choices and Play on the right.
+func _place_skirmish_short(names: PackedStringArray, panel_w: float) -> void:
+	var left_x: float = 24.0
+	var half: float = panel_w * 0.5
+	var card_w: float = (half - left_x - 12.0) * 0.5 - 4.0
+	var row_y: float = 88.0
+	for i: int in names.size():
+		var card: Control = find_child(names[i], true, false) as Control
+		if card == null:
+			continue
+		card.position = Vector2(left_x + float(i % 2) * (card_w + 8.0), row_y + floorf(float(i) / 2.0) * 40.0)
+		card.size = Vector2(card_w, 36.0)
+		card.custom_minimum_size = Vector2(card_w, 36.0)
+	var tools_y: float = row_y + ceilf(float(names.size()) / 2.0) * 40.0 + 4.0
+	var grey: Control = find_child("GreyboxButton", true, false) as Control
+	if grey != null:
+		grey.position = Vector2(left_x, tools_y)
+		grey.size = Vector2(card_w, 40.0)
+	var train: Control = find_child("BasicTraining", true, false) as Control
+	if train != null:
+		train.position = Vector2(left_x + card_w + 8.0, tools_y)
+		train.size = Vector2(card_w, 40.0)
+	var right_x: float = half + 12.0
+	var right_w: float = panel_w - right_x - 24.0
+	var playing: Control = find_child("PlayingAs", true, false) as Control
+	if playing != null:
+		playing.position = Vector2(right_x, row_y - 8.0)
+		playing.size = Vector2(right_w, 28.0)
+	_cycle_row("SkirmishFactionCycle", right_x, row_y + 22.0, right_w)
+	_cycle_row("SkirmishDiffCycle", right_x, row_y + 70.0, right_w)
+	_cycle_row("SkirmishBotCycle", right_x, row_y + 118.0, right_w)
+	var play: Control = find_child("PlayButton", true, false) as Control
+	if play != null:
+		play.position = Vector2(right_x, row_y + 172.0)
+		play.size = Vector2(220, 52)
+		play.custom_minimum_size = Vector2(220, 52)
+	_hide_old_difficulty()
+
+func _hide_old_difficulty() -> void:
 	for hidden_name: String in ["SkirmishDiffEasy", "SkirmishDiffNormal", "SkirmishDiffHard", "SkirmishDiffLabel"]:
 		var hidden: CanvasItem = find_child(hidden_name, true, false) as CanvasItem
 		if hidden != null:
@@ -1780,36 +2192,50 @@ func _place_campaign(panel_w: float, panel_h: float, start_y: float) -> void:
 		var act: Control = find_child(acts[i], true, false) as Control
 		if act == null:
 			continue
+		act.add_theme_font_size_override("font_size", 16)
 		act.position = Vector2(left + float(i) * (tab_w + gap), act_y)
-		act.size = Vector2(tab_w, 40)
-		act.custom_minimum_size = Vector2(tab_w, 40)
-	var list_top: float = act_y + 48.0
-	var list_h: float = maxf(80.0, panel_h - list_top - 168.0)
+		act.size = Vector2(tab_w, 38)
+		act.custom_minimum_size = Vector2(tab_w, 38)
+	var list_top: float = act_y + 44.0
+	var diff_y: float = panel_h - 144.0
+	var list_h: float = maxf(80.0, diff_y - list_top - 12.0)
 	for list_name: String in lists:
-		var scroll: Control = find_child(list_name, true, false) as Control
+		var scroll: ScrollContainer = find_child(list_name, true, false) as ScrollContainer
 		if scroll == null:
 			continue
 		scroll.clip_contents = true
 		scroll.position = Vector2(left, list_top)
 		scroll.size = Vector2(list_w, list_h)
+		scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER if list_h >= 240.0 else ScrollContainer.SCROLL_MODE_AUTO
 		if scroll.get_child_count() > 0:
-			var inner: Control = scroll.get_child(0) as Control
+			var inner: VBoxContainer = scroll.get_child(0) as VBoxContainer
 			if inner != null:
-				inner.custom_minimum_size = Vector2(maxf(80.0, list_w - 16.0), 0)
+				inner.custom_minimum_size = Vector2(maxf(80.0, list_w - 8.0), 0)
+				inner.add_theme_constant_override("separation", 4)
 	for mission_id: String in SMCampaign.ids():
-		var row: Control = find_child("Mission_%s" % mission_id, true, false) as Control
+		var row: Button = find_child("Mission_%s" % mission_id, true, false) as Button
 		if row == null:
 			continue
-		row.custom_minimum_size = Vector2(maxf(80.0, list_w - 16.0), 44)
+		row.add_theme_font_size_override("font_size", 16)
+		row.clip_text = true
+		row.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		row.custom_minimum_size = Vector2(maxf(80.0, list_w - 8.0), 42)
+		var done: Control = row.find_child("Done_%s" % mission_id, true, false) as Control
+		if done != null:
+			done.position = Vector2(maxf(120.0, list_w - 84.0), 8.0)
 	var camp_names: PackedStringArray = PackedStringArray(["CampaignDiffEasy", "CampaignDiffNormal", "CampaignDiffHard"])
-	var camp_w: float = (list_w - gap * 2.0) / 3.0
+	var camp_gap: float = 12.0
+	var camp_w: float = (list_w - camp_gap * 2.0) / 3.0
 	for slot: int in camp_names.size():
-		var choice: Control = find_child(camp_names[slot], true, false) as Control
+		var choice: Button = find_child(camp_names[slot], true, false) as Button
 		if choice == null:
 			continue
-		choice.position = Vector2(left + float(slot) * (camp_w + gap), panel_h - 148.0)
-		choice.size = Vector2(camp_w, 40)
-		choice.custom_minimum_size = Vector2(camp_w, 40)
+		choice.clip_text = true
+		choice.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		choice.alignment = HORIZONTAL_ALIGNMENT_CENTER
+		choice.position = Vector2(left + float(slot) * (camp_w + camp_gap), diff_y)
+		choice.size = Vector2(camp_w, 44)
+		choice.custom_minimum_size = Vector2(camp_w, 44)
 	var camp_label: Control = find_child("CampaignDiffLabel", true, false) as Control
 	if camp_label != null:
 		camp_label.visible = false

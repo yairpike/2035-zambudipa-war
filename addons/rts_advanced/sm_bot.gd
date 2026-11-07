@@ -516,7 +516,7 @@ func _nearest(from: Vector3, group: Array[RTSUnit]) -> RTSUnit:
 	var best: RTSUnit = null
 	var best_d: float = 1.0e20
 	for foe: RTSUnit in group:
-		if not is_instance_valid(foe) or not foe.is_alive():
+		if not is_instance_valid(foe) or not foe.is_alive() or bool(foe.get_meta("concealed", false)):
 			continue
 		var d: float = from.distance_to(foe.global_position)
 		if d < best_d:
@@ -567,25 +567,14 @@ func _loco_enum(name: String) -> int:
 func _layout(map_id: String) -> SMDomainGrid:
 	if map_id == "sop_ruak":
 		return SMDomainGrid.sop_ruak_layout()
-	if map_id == "burma_road":
-		return SMDomainGrid.burma_road_layout()
-	if map_id == "ten_degree_atolls":
-		return SMDomainGrid.ten_degree_atolls_layout()
-	if map_id == "mekong_delta":
-		return SMDomainGrid.mekong_delta_layout()
-	if map_id == "chiang_rai":
-		return SMDomainGrid.chiang_rai_layout()
+	if SMMapPlan.exists(map_id):
+		return SMMapPlan.of(map_id).grid()
 	return SMDomainGrid.phillips_layout()
 
 func _homes(map_id: String) -> Array[Vector2i]:
-	if map_id == "burma_road":
-		return [Vector2i(4, 14), Vector2i(32, 14)]
+	if SMMapPlan.exists(map_id):
+		var plan: SMMapPlan = SMMapPlan.of(map_id)
+		return [plan.start(0), plan.start(plan.starts.size() / 2)]
 	if map_id == "sop_ruak":
-		return [Vector2i(4, 8), Vector2i(30, 8)]
-	if map_id == "ten_degree_atolls":
-		return [Vector2i(5, 18), Vector2i(29, 18)]
-	if map_id == "mekong_delta":
-		return [Vector2i(4, 4), Vector2i(34, 4)]
-	if map_id == "chiang_rai":
-		return [Vector2i(8, 20), Vector2i(44, 20)]
-	return [Vector2i(2, 16), Vector2i(32, 16)]
+		return [SMDomainGrid.at("sop_ruak", Vector2i(4, 8)), SMDomainGrid.at("sop_ruak", Vector2i(30, 8))]
+	return [SMDomainGrid.at("phillips", Vector2i(2, 16)), SMDomainGrid.at("phillips", Vector2i(32, 16))]

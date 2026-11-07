@@ -1,0 +1,55 @@
+{
+ "place": "Phnom Penh riverside",
+ "maps": [
+  "tonle_sap"
+ ],
+ "bbox_swne": [
+  11.566,
+  104.922,
+  11.576,
+  104.932
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 73,
+  "grid_share": 0.88,
+  "street_m": 30522,
+  "spacing_across_u_m": 21.2,
+  "spacing_across_v_m": 22.7,
+  "streets_along_u": 51,
+  "streets_along_v": 36,
+  "main_streets": [
+   {
+    "name": "Preah Sisowath Quay (Street 1)",
+    "m": 1933,
+    "runs": "north-south"
+   },
+   {
+    "name": "Pasteur (Street 51)",
+    "m": 1837,
+    "runs": "north-south"
+   },
+   {
+    "name": "Preah Ang Yukanthor (Street 19)",
+    "m": 1813,
+    "runs": "north-south"
+   },
+   {
+    "name": "Preah Norodom Boulevard (Street 41)",
+    "m": 1581,
+    "runs": "north-south"
+   },
+   {
+    "name": "Preah Ang Eng (Street 13)",
+    "m": 1238,
+    "runs": "north-south"
+   },
+   {
+    "name": "Oknha Ing Bun Hoaw (Street 108)",
+    "m": 1196,
+    "runs": "east-west"
+   }
+  ]
+ }
+}

@@ -1,0 +1,61 @@
+{
+ "place": "manila_intramuros",
+ "note": "Manila's Intramuros: the walled Spanish grid, stone houses on every street and a colonial hall.",
+ "towns": [
+  {
+   "id": "intramuros",
+   "place": "manila_intramuros",
+   "rect": [
+    28,
+    1,
+    8,
+    21
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    4
+   ],
+   "homes": [
+    "peranakan_shophouse",
+    "malay_kampung_house"
+   ],
+   "shops": "peranakan_shophouse",
+   "high": [
+    1,
+    2
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      1
+     ],
+     "id": "city_colonial"
+    }
+   ]
+  },
+  {
+   "id": "intramuros_row",
+   "place": "manila_intramuros",
+   "rect": [
+    0,
+    19,
+    22,
+    4
+   ],
+   "axis": "x",
+   "block": [
+    6,
+    2
+   ],
+   "homes": [
+    "peranakan_shophouse"
+   ],
+   "shops": "peranakan_shophouse",
+   "high": [
+    0
+   ]
+  }
+ ]
+}

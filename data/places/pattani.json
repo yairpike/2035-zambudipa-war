@@ -1,0 +1,55 @@
+{
+ "place": "Pattani town",
+ "maps": [
+  "ghosts_of_patani"
+ ],
+ "bbox_swne": [
+  6.862,
+  101.245,
+  6.874,
+  101.257
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 70,
+  "grid_share": 0.38,
+  "street_m": 49954,
+  "spacing_across_u_m": 24.6,
+  "spacing_across_v_m": 25.7,
+  "streets_along_u": 36,
+  "streets_along_v": 34,
+  "main_streets": [
+   {
+    "name": "\u0e16\u0e19\u0e19\u0e1e\u0e34\u0e1e\u0e34\u0e18",
+    "m": 2165,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Pattanipirom Road",
+    "m": 1813,
+    "runs": "north-south"
+   },
+   {
+    "name": "Yarang Road",
+    "m": 1633,
+    "runs": "north-south"
+   },
+   {
+    "name": "Makrood Road",
+    "m": 1437,
+    "runs": "east-west"
+   },
+   {
+    "name": "Nong Chik Rd",
+    "m": 1129,
+    "runs": "east-west"
+   },
+   {
+    "name": "Nong Chik Road",
+    "m": 1129,
+    "runs": "east-west"
+   }
+  ]
+ }
+}

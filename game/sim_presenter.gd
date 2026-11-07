@@ -3,12 +3,15 @@ extends RefCounted
 
 const World = preload("res://game/world_view.gd")
 const Forms = preload("res://game/unit_meshes.gd")
+const Models = preload("res://game/model_registry.gd")
 const FX = preload("res://game/fx_view.gd")
 const SettingsPanel = preload("res://game/settings_panel.gd")
 const Settings = preload("res://game/match_settings.gd")
 const Clips = preload("res://game/match_audio.gd")
 const Cameos = preload("res://game/match_cameos.gd")
 const Faces = preload("res://game/font_faces.gd")
+const Motion = preload("res://game/unit_motion.gd")
+const Watch = preload("res://game/building_watch.gd")
 
 ## Pins the objective to one line under the top bar, clear of the left rail.
 static func seat_status(status: Control) -> void:
@@ -34,7 +37,8 @@ static func follow(host: Node) -> void:
 		return
 	host.set_meta("view_bound", true)
 	Faces.pin()
-	preload("res://game/model_registry.gd").warm(host)
+	Models.look_faction = ""
+	Models.warm(host)
 	var field: SMPointer = host.get("field") as SMPointer
 	if field != null:
 		follow_pointer(field)
@@ -54,6 +58,8 @@ static func follow(host: Node) -> void:
 		side.slab_made.connect(Callable(World, "slab"))
 		side.line_voiced.connect(_on_side_line.bind(host, side))
 		side.super_launched.connect(_announce.bind(host, "superweapon_launched"))
+		if not side.defense_fired.is_connected(_on_defense):
+			side.defense_fired.connect(_on_defense.bind(host))
 		_bind_yard(host, side.yard, false)
 	var raider: SMRaider = host.get("raider") as SMRaider
 	if raider != null and not bool(raider.get_meta("view_bound", false)):
@@ -136,14 +142,31 @@ static func _on_unit(u: RTSUnit, team: int, kind: String, role: String, loco: St
 	if team == SMPointer.PLAYER:
 		primary = field.primary_color
 		trim = field.accent_color
-	var body: MeshInstance3D = Forms.dress_unit(kind, role, loco, tint, primary, trim)
+	var paint: String = field.faction_id
+	if team != SMPointer.PLAYER:
+		paint = Models.enemy_look(field.faction_id)
+	var marked: String = str(u.get_meta("look", ""))
+	if marked != "":
+		paint = marked
+	var body: MeshInstance3D = Forms.dress_unit(kind, role, loco, tint, primary, trim, paint)
 	u.add_child(body)
+	Motion.attach(u, body)
 	World.dress_spawn(u, team, label)
 	field.visual_node = body
 	if not u.fired.is_connected(_on_fired):
 		u.fired.connect(_on_fired.bind(field))
+	if not u.died.is_connected(_on_died):
+		u.died.connect(_on_died.bind(field))
 	if team == SMPointer.PLAYER:
 		Clips.on_spawn(field.host, u)
+
+static func _on_died(unit: RTSUnit, field: SMPointer) -> void:
+	if field == null or field.host == null:
+		return
+	Clips.on_death(field.host, unit)
+
+static func _on_defense(building_id: StringName, at: Vector3, host: Node) -> void:
+	Clips.on_defense(host, str(building_id), at)
 
 static func _on_fired(unit: RTSUnit, target: RTSUnit, field: SMPointer) -> void:
 	if field == null or field.host == null:
@@ -217,6 +240,7 @@ static func _bind_yard(host: Node, yard: SMBuildYard, enemy: bool) -> void:
 	if yard == null or bool(yard.get_meta("view_bound", false)):
 		return
 	yard.set_meta("view_bound", true)
+	Watch.watch(host as Node3D, yard)
 	if enemy:
 		yard.super_ready.connect(_announce.bind(host, "enemy_superweapon_detected"))
 		yard.super_fired.connect(_announce.bind(host, "enemy_superweapon_detected"))
@@ -273,15 +297,22 @@ static func _on_chrome(outcome: SMOutcome, panel: Control, faction: String) -> v
 	back.anchor_right = 0.0
 	back.anchor_bottom = 0.5
 	back.offset_left = 64.0
-	back.offset_top = 48.0
+	back.offset_top = 56.0
 	back.offset_right = 360.0
-	back.offset_bottom = 100.0
+	back.offset_bottom = 108.0
 	back.custom_minimum_size = Vector2(320, 52)
 	back.pressed.connect(_boot.bind(outcome))
 	panel.add_child(back)
 	outcome.back = back
+	var layer: Node = panel.get_parent()
+	if layer != null:
+		var boot_chip: CanvasItem = layer.find_child("MissionBoot", true, false) as CanvasItem
+		if boot_chip != null and panel.visible:
+			boot_chip.visible = false
 
 static func _boot(outcome: SMOutcome) -> void:
+	preload("res://game/boot.gd").mark_training_seen()
+	preload("res://game/lan_link.gd").close()
 	if outcome == null or outcome.host == null:
 		return
 	outcome.host.get_tree().change_scene_to_file("res://game/boot.tscn")

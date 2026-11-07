@@ -1,0 +1,38 @@
+{
+ "place": "laukkai",
+ "note": "Laukkai: casino blocks and shophouse streets east of the yard. Mogok ruby pits sit by the yard.",
+ "towns": [
+  {
+   "id": "laukkai",
+   "place": "laukkai",
+   "rect": [
+    22,
+    1,
+    6,
+    16
+   ],
+   "axis": "z",
+   "block": [
+    4,
+    4
+   ],
+   "homes": [
+    "neon_shophouse",
+    "border_guesthouse"
+   ],
+   "shops": "neon_shophouse",
+   "high": [
+    0
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      1
+     ],
+     "id": "border_casino"
+    }
+   ]
+  }
+ ]
+}

@@ -1,8 +1,7 @@
 extends RefCounted
-## Live LAN session. Desktop hosts are authoritative for a two-player match.
-## The peer is any MultiplayerPeer. ENet is the desktop path.
-## attach_peer() can later take a WebRTCMultiplayerPeer from a signalling server.
-## This build does not include that server.
+## Live session. Desktop hosts are authoritative for a two-player match.
+## ENet is the desktop LAN path. Browsers use paste_host(), paste_join(), and paste_seal().
+## That path is a copied WebRTC offer and answer. There is no account and no relay.
 
 const Seat = preload("res://game/lan_seat.gd")
 
@@ -93,6 +92,21 @@ static func open_client(address: String) -> Error:
 
 static func attach_peer(next: MultiplayerPeer, as_host: bool) -> Error:
 	return seat().attach_peer(next, as_host)
+
+static func paste_host() -> Error:
+	return seat().paste_host()
+
+static func paste_join(blob: String) -> Error:
+	return seat().paste_join(blob)
+
+static func paste_seal(blob: String) -> Error:
+	return seat().paste_seal(blob)
+
+static func paste_text() -> String:
+	return seat().paste_text()
+
+static func paste_note() -> String:
+	return seat().paste_note()
 
 static func close() -> void:
 	seat().close()
