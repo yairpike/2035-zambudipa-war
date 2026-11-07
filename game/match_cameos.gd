@@ -66,7 +66,9 @@ static func _fetch_list(node: Node) -> void:
 	if node == null or not is_instance_valid(node):
 		return
 	if not node.is_inside_tree():
-		_fetch_list.call_deferred(node)
+		var job: Callable = _fetch_list.bind(node)
+		if not node.tree_entered.is_connected(job):
+			node.tree_entered.connect(job, CONNECT_ONE_SHOT)
 		return
 	var http: HTTPRequest = HTTPRequest.new()
 	http.timeout = 30.0

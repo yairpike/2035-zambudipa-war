@@ -74,7 +74,8 @@ func _process(_delta: float) -> void:
 
 func _fetch_list() -> void:
 	if not is_inside_tree():
-		_fetch_list.call_deferred()
+		if not tree_entered.is_connected(_fetch_list):
+			tree_entered.connect(_fetch_list, CONNECT_ONE_SHOT)
 		return
 	var http: HTTPRequest = HTTPRequest.new()
 	http.timeout = 30.0

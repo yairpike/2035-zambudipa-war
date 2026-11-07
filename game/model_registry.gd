@@ -469,12 +469,17 @@ static func _request_owner(owner: Node) -> Node:
 		return owner.get_tree().root
 	return owner
 
+## Re-deferring until the host enters the tree spins inside one message flush and overflows the queue on web.
+static func _when_in_tree(host: Node, job: Callable) -> void:
+	if not host.tree_entered.is_connected(job):
+		host.tree_entered.connect(job, CONNECT_ONE_SHOT)
+
 static func _pull_index(owner: Node) -> void:
 	if owner == null or _index_read:
 		return
 	var host: Node = _request_owner(owner)
 	if not host.is_inside_tree():
-		_pull_index.call_deferred(owner)
+		_when_in_tree(host, _pull_index.bind(owner))
 		return
 	var http := HTTPRequest.new()
 	http.timeout = 20.0
@@ -556,7 +561,7 @@ static func _fetch(owner: Node, id: String) -> void:
 		return
 	var host: Node = _request_owner(owner)
 	if not host.is_inside_tree():
-		_fetch.call_deferred(owner, id)
+		_when_in_tree(host, _fetch.bind(owner, id))
 		return
 	_inflight[id] = true
 	var http := HTTPRequest.new()

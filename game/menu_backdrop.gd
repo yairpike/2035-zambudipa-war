@@ -255,12 +255,17 @@ func _pull(file_name: String, slot: String) -> void:
 	if not OS.has_feature("web") or file_name.contains("..") or file_name.contains("\\"):
 		return
 	if not is_inside_tree():
-		_pull.call_deferred(file_name, slot)
+		_when_in_tree(_pull.bind(file_name, slot))
 		return
 	var http := HTTPRequest.new()
 	http.timeout = 20.0
 	http.ready.connect(_start_pull.bind(http, file_name, slot), CONNECT_ONE_SHOT)
 	add_child.call_deferred(http)
+
+## Re-deferring until the node enters the tree spins inside one message flush and overflows the queue on web.
+func _when_in_tree(job: Callable) -> void:
+	if not tree_entered.is_connected(job):
+		tree_entered.connect(job, CONNECT_ONE_SHOT)
 
 func _start_pull(http: HTTPRequest, file_name: String, slot: String) -> void:
 	if not is_instance_valid(http) or not http.is_inside_tree():
@@ -295,7 +300,7 @@ func _pull_video(stem: String) -> void:
 	if _video_wait.has(stem) or stem.contains(".."):
 		return
 	if not is_inside_tree():
-		_pull_video.call_deferred(stem)
+		_when_in_tree(_pull_video.bind(stem))
 		return
 	_video_wait[stem] = true
 	var http := HTTPRequest.new()
