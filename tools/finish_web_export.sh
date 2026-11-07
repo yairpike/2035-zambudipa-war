@@ -93,6 +93,14 @@ while [ $# -gt 0 ]; do
       KEY_ART_SRC="$2"
       shift 2
       ;;
+    --cname)
+      if [ $# -lt 2 ]; then
+        echo "finish_web_export: --cname needs a domain"
+        exit 1
+      fi
+      CNAME_DOMAIN="$2"
+      shift 2
+      ;;
     *)
       echo "finish_web_export: unknown argument $1"
       exit 1
@@ -109,6 +117,16 @@ MODEL_SRC="${MODEL_SRC:-}"
 BRIEFINGS_SRC="${BRIEFINGS_SRC:-}"
 TRIPO_SRC="${TRIPO_SRC:-}"
 KEY_ART_SRC="${KEY_ART_SRC:-}"
+CNAME_DOMAIN="${CNAME_DOMAIN:-}"
+# GitHub Pages redirects the github.io URL to this domain as soon as the CNAME file
+# is published, so pass --cname only after the domain's DNS points at GitHub Pages.
+if [ -n "$CNAME_DOMAIN" ]; then
+  if ! printf '%s' "$CNAME_DOMAIN" | grep -Eq '^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$'; then
+    echo "finish_web_export: --cname needs a bare host name such as play.example.com"
+    exit 1
+  fi
+  printf '%s\n' "$CNAME_DOMAIN" > "$DEST/CNAME"
+fi
 # Keep the project worker. Godot's exported worker reloads every open client
 # when it receives "update", which boots a match back to the menu.
 cp "$ROOT/web/sw.js" "$DEST/sw.js"
