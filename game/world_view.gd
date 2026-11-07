@@ -15,7 +15,7 @@ static func sync(host: Node3D, sight: SMSight, cam: RTSCamera) -> void:
 static func quiet_crowd(host: Node3D) -> void:
 	if host == null:
 		return
-	var low: bool = Settings.low()
+	var low: bool = Settings.lean()
 	var field: SMPointer = host.get("field") as SMPointer
 	if field == null:
 		return

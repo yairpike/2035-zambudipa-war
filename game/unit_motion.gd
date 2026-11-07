@@ -678,6 +678,7 @@ static func on_died(unit: RTSUnit) -> void:
 	var stage: Node3D = unit.get_parent() as Node3D
 	if body == null or stage == null:
 		return
+	preload("res://game/view_budget.gd").park(body, false)
 	var rig: DeathFx = DeathFx.new()
 	rig.name = "Dying_%d" % unit.get_instance_id()
 	stage.add_child(rig)

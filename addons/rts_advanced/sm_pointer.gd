@@ -269,8 +269,18 @@ func _accent_kind(kind: StringName) -> bool:
 static func building_at(at: Vector3) -> Vector3:
 	return at + Vector3(0.0, BUILDING_SIZE.y * 0.5, 0.0)
 
+## Faction catalogs are parsed from disk on every _unit_row call, and this runs per unit per frame.
+static var _categories: Dictionary = {}
+
 func category_of(kind: StringName) -> String:
-	var unit: Dictionary = _unit_row(kind)
+	var key: String = "%s|%s" % [faction_id, kind]
+	if _categories.has(key):
+		return str(_categories[key])
+	var found: String = _category_from(_unit_row(kind))
+	_categories[key] = found
+	return found
+
+func _category_from(unit: Dictionary) -> String:
 	if unit.is_empty():
 		return "infantry"
 	var role: String = str(unit.get("role", ""))

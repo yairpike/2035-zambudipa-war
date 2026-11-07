@@ -9,6 +9,8 @@ const Art = preload("res://game/served_art.gd")
 const Env = preload("res://game/env_dress.gd")
 const RAIN_CAP: int = 24
 const TREE_REACH: float = 80.0
+## A prop layer is recut once the camera focus drifts this far from where it was last cut.
+const CULL_STEP: float = 6.0
 const CANOPY_MIN: float = 5.0
 
 const GRASS: Color = Color(0.3, 0.46, 0.22)
@@ -848,7 +850,7 @@ static func cull_props(host: Node3D, cam: RTSCamera) -> void:
 			if mname.begins_with("Town_") or mname.begins_with("Orchard_"):
 				_cull_named(host, mname, focus, low)
 	if cam != null and not low:
-		fade_occluders(host, cam)
+		fade_occluders(host, cam, Settings.lean())
 
 ## 0 is solid. 1 hides a tall prop whose crown crosses the segment from the camera to the ground.
 ## A camera sitting above the crown leaves the prop alone. Short props stay put.
@@ -878,11 +880,12 @@ static func view_fade(origin: Vector3, height: float, radius: float, eye: Vector
 	var climb: float = clampf((top + 0.35 - ray_y) / 3.0, 0.0, 1.0)
 	return radial * radial * climb
 
-static func fade_occluders(host: Node3D, cam: RTSCamera) -> void:
+## `flat` restores every prop once and then leaves the buffers alone, for lean budgets.
+static func fade_occluders(host: Node3D, cam: RTSCamera, flat: bool = false) -> void:
 	if host == null or cam == null:
 		return
-	var eye: Vector3 = cam.global_position
-	var aim: Vector3 = cam.focus
+	var aim: Vector3 = Vector3.ZERO if flat else cam.focus
+	var eye: Vector3 = Vector3(0.0, 10000.0, 0.0) if flat else cam.global_position
 	for node_name: String in ["JungleTrees", "Palms", "Houses", "Stilts"]:
 		_fade_multi(host.get_node_or_null(node_name) as MultiMeshInstance3D, eye, aim)
 	for child: Node in host.get_children():
@@ -916,6 +919,12 @@ static func _fade_multi(node: MultiMeshInstance3D, eye: Vector3, aim: Vector3) -
 	if node == null or node.multimesh == null or node.multimesh.mesh == null:
 		return
 	var mm: MultiMesh = node.multimesh
+	# Every instance write re-uploads the whole buffer, which WebGL pays for each frame.
+	# A still camera writes nothing; a moving one rewrites only the props whose fade changed.
+	var view: PackedVector3Array = PackedVector3Array([eye, aim])
+	if node.has_meta("fade_view") and node.get_meta("fade_view") == view:
+		return
+	node.set_meta("fade_view", view)
 	var shown: Array = node.get_meta("shown", [])
 	if shown.is_empty():
 		shown = node.get_meta("all_spots", [])
@@ -923,6 +932,10 @@ static func _fade_multi(node: MultiMeshInstance3D, eye: Vector3, aim: Vector3) -
 		return
 	var aabb: AABB = mm.mesh.get_aabb()
 	var count: int = mini(mm.instance_count, shown.size())
+	var before: PackedFloat32Array = node.get_meta("canopy_fade", PackedFloat32Array()) as PackedFloat32Array
+	if before.size() != count:
+		before = PackedFloat32Array()
+		before.resize(count)
 	var fades: PackedFloat32Array = PackedFloat32Array()
 	fades.resize(count)
 	for i: int in count:
@@ -933,6 +946,9 @@ static func _fade_multi(node: MultiMeshInstance3D, eye: Vector3, aim: Vector3) -
 		var radius: float = maxf(aabb.size.x * sc.x, aabb.size.z * sc.z) * 0.5
 		var fade: float = view_fade(Vector3(base.origin.x, base_y, base.origin.z), height, radius, eye, aim)
 		fades[i] = fade
+		if absf(fade - before[i]) < 0.01:
+			fades[i] = before[i]
+			continue
 		var keep: float = 1.0 - fade
 		if keep < 0.04:
 			keep = 0.001
@@ -942,6 +958,10 @@ static func _fade_multi(node: MultiMeshInstance3D, eye: Vector3, aim: Vector3) -
 	node.set_meta("canopy_fade", fades)
 
 static func _fade_placed(node: Node3D, eye: Vector3, aim: Vector3) -> void:
+	var view: PackedVector3Array = PackedVector3Array([eye, aim, node.global_position])
+	if node.has_meta("fade_view") and node.get_meta("fade_view") == view:
+		return
+	node.set_meta("fade_view", view)
 	var bounds: Vector3 = _canopy_bounds(node)
 	var fade: float = view_fade(Vector3(node.global_position.x, bounds.z, node.global_position.z), bounds.y, bounds.x, eye, aim)
 	if fade >= 0.95:
@@ -1011,6 +1031,12 @@ static func _cull_named(host: Node3D, node_name: String, focus: Vector3, hide: b
 		node.visible = false
 		return
 	node.visible = true
+	var spot: Vector2 = Vector2(focus.x, focus.z)
+	if node.has_meta("cull_focus") and (node.get_meta("cull_focus") as Vector2).distance_to(spot) <= CULL_STEP:
+		return
+	node.set_meta("cull_focus", spot)
+	node.remove_meta("fade_view")
+	node.remove_meta("canopy_fade")
 	var all: Array = node.get_meta("all_spots", [])
 	if all.is_empty():
 		for i: int in node.multimesh.instance_count:

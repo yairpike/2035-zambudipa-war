@@ -49,7 +49,7 @@ static func puff_material(additive: bool) -> StandardMaterial3D:
 static func _emitter(node_name: String, amount: int, life: float, additive: bool, size: float) -> CPUParticles3D:
 	var p: CPUParticles3D = CPUParticles3D.new()
 	p.name = node_name
-	p.amount = amount
+	p.amount = preload("res://game/match_settings.gd").particles(amount)
 	p.lifetime = life
 	p.local_coords = false
 	var quad: QuadMesh = QuadMesh.new()

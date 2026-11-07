@@ -1,6 +1,7 @@
 extends Node
 ## Frame profiler for one match. Idle unless asked.
 ## Desktop: godot --path . -- --perf burma_road [--crowd 60] [--warm 8] [--time 20] [--gfx medium] [--models 12] [--out report.json]
+##   [--web 1] runs the web unit budget natively; [--strain N] pins the web frame-budget step; [--breakdown 1] adds scene counts.
 ## Web: index.html?perf=burma_road&crowd=60&warm=8&time=20&gfx=medium
 ## `campaign:<mission id>` opens that campaign mission. Prints one `PERF {json}` line; the web page also sets window.__perf.
 
@@ -28,6 +29,11 @@ func _ready() -> void:
 	var gfx: String = str(_args.get("gfx", ""))
 	if gfx != "":
 		Settings.set_graphics(gfx)
+	if _args.has("web"):
+		preload("res://game/view_budget.gd").force = int(_args["web"])
+	if _args.has("strain"):
+		preload("res://game/render_budget.gd").governs = 0
+		Settings.strain = int(_args["strain"])
 	_phase = "boot"
 	call_deferred("_open")
 
@@ -111,6 +117,7 @@ func _process(_delta: float) -> void:
 	_add("primitives", Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME))
 	_add("objects", Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME))
 	_add("process_ms", Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0)
+	_add("physics_ms", Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0)
 	_samples += 1
 	if _clock >= float(_args.get("time", "20")):
 		_finish()
@@ -132,6 +139,7 @@ func _finish() -> void:
 		"platform": "web" if OS.has_feature("web") else OS.get_name().to_lower(),
 		"adapter": RenderingServer.get_video_adapter_name(),
 		"graphics": Settings.effective(),
+		"strain": Settings.strain,
 		"crowd": int(_args.get("crowd", "0")),
 		"scene_load_ms": snappedf(_load_ms, 0.1),
 		"fps": snappedf(1000.0 * float(n) / maxf(total, 0.001), 0.1),
@@ -150,6 +158,8 @@ func _finish() -> void:
 		report["model_parse"] = _bench_models(int(_args["models"]))
 	if _args.has("breakdown"):
 		report["triangles_by_group"] = _breakdown(get_tree().current_scene)
+		report["instances_by_group"] = _instances(get_tree().current_scene)
+		report["busy_nodes"] = _busy(get_tree().root)
 	var line: String = JSON.stringify(report)
 	print("PERF " + line)
 	if _args.has("out"):
@@ -190,6 +200,55 @@ func _breakdown(scene: Node) -> Dictionary:
 	for key: String in tris.keys():
 		if int(tris[key]) >= 5000:
 			out[key] = tris[key]
+	return out
+
+## Nodes and visible geometry instances per top-level group, as "nodes/instances".
+func _instances(scene: Node) -> Dictionary:
+	var out: Dictionary = {}
+	if scene == null:
+		return out
+	var nodes: Dictionary = {}
+	var geos: Dictionary = {}
+	for child: Node in scene.get_children():
+		var group: String = String(child.name).get_slice("_", 0).rstrip("0123456789@")
+		if child is RTSUnit:
+			group = "units"
+		var all: Array[Node] = child.find_children("*", "", true, false)
+		nodes[group] = int(nodes.get(group, 0)) + all.size() + 1
+		var shown: int = 0
+		for node: Node in all:
+			var geo: GeometryInstance3D = node as GeometryInstance3D
+			if geo != null and geo.is_visible_in_tree():
+				shown += 1
+		geos[group] = int(geos.get(group, 0)) + shown
+	for key: String in nodes.keys():
+		if int(geos[key]) > 0:
+			out[key] = "%d/%d" % [nodes[key], geos[key]]
+	var parts: Dictionary = {}
+	for child: Node in scene.get_children():
+		if child is RTSUnit:
+			for node: Node in child.find_children("*", "GeometryInstance3D", true, false):
+				if (node as GeometryInstance3D).is_visible_in_tree():
+					var tag: String = String(node.name).rstrip("0123456789@")
+					parts[tag] = int(parts.get(tag, 0)) + 1
+	out["unit_parts"] = parts
+	return out
+
+## Per-frame workers by class: processing nodes, animation players, skeletons, particles.
+func _busy(root: Node) -> Dictionary:
+	var out: Dictionary = {}
+	for node: Node in root.find_children("*", "", true, false):
+		var cls: String = node.get_class()
+		var scripted: Script = node.get_script() as Script
+		var tag: String = ""
+		if node.is_processing() or node.is_physics_processing():
+			tag = "process:" + (scripted.resource_path.get_file() if scripted != null else cls)
+		elif node is AnimationMixer or node is Skeleton3D or node is SkeletonModifier3D or node is GPUParticles3D or node is CPUParticles3D:
+			tag = cls + (":" + scripted.resource_path.get_file() if scripted != null else "")
+		if tag != "":
+			out[tag] = int(out.get(tag, 0)) + 1
+		if bool(node.get_meta("parked", false)):
+			out["parked_units"] = int(out.get("parked_units", 0)) + 1
 	return out
 
 static var _tri_cache: Dictionary = {}

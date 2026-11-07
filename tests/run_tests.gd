@@ -116,6 +116,7 @@ func _run() -> void:
 	await H.section("test_street_towns", test_street_towns)
 	await H.section("test_game_language", test_game_language)
 	await H.section("test_render_budget", test_render_budget)
+	await H.section("test_web_budget", test_web_budget)
 	preload("res://game/render_budget.gd").shutdown(self)
 	quit(H.finish())
 
@@ -6738,3 +6739,91 @@ func test_render_budget() -> void:
 	var icons_ok: bool = FileAccess.file_exists("res://icon.png") and FileAccess.file_exists("res://brand/icon.ico") and FileAccess.file_exists("res://brand/icon.icns") and presets_cfg.contains("res://brand/icon.ico") and presets_cfg.contains("res://brand/icon.icns")
 	check(bgs_ok and splash_ok and icons_ok, "Four Fronts splash, Vanguard wordmark, six menu backgrounds, and Chevron app icons resolve without build/web")
 	Settings.set_graphics("high")
+
+func test_web_budget() -> void:
+	var host: Node3D = Node3D.new()
+	root.add_child(host)
+	var field: SMPointer = SMPointer.new()
+	field.bind(host, null)
+	field.faction_id = "gtfc"
+	var first: String = field.category_of(&"amber_tank")
+	var row_category: String = field.call("_category_from", field.call("_unit_row", &"amber_tank"))
+	check(first == "vehicle" and field.category_of(&"amber_tank") == first and row_category == first and field.category_of(&"militia") == "infantry", "unit categories are cached per faction and match the catalog")
+	var ViewBudget: GDScript = load("res://game/view_budget.gd") as GDScript
+	var cam: Camera3D = Camera3D.new()
+	host.add_child(cam)
+	cam.make_current()
+	cam.look_at_from_position(Vector3(0.0, 20.0, 20.0), Vector3.ZERO)
+	check(bool(ViewBudget.call("on_screen", cam, Vector3.ZERO)) and not bool(ViewBudget.call("on_screen", cam, Vector3(0.0, 0.0, 60.0))), "frustum test keeps the focus and drops what is behind the camera")
+	ViewBudget.set("force", 1)
+	var u: RTSUnit = RTSUnit.new()
+	var body: MeshInstance3D = MeshInstance3D.new()
+	body.name = "Body"
+	u.add_child(body)
+	var player: AnimationPlayer = AnimationPlayer.new()
+	body.add_child(player)
+	body.set_meta("anim_player", player)
+	var wheel: MeshInstance3D = MeshInstance3D.new()
+	wheel.name = "Wheel0"
+	body.add_child(wheel)
+	host.add_child(u)
+	u.position = Vector3(0.0, 0.0, 60.0)
+	var away: float = float(ViewBudget.call("motion_step", u, body, 0.1))
+	var parked: bool = away < 0.0 and not player.active and bool(body.get_meta("parked"))
+	u.position = Vector3.ZERO
+	var back: float = float(ViewBudget.call("motion_step", u, body, 0.1))
+	check(parked and is_equal_approx(back, 0.2) and player.active and wheel.visibility_range_end > 0.0, "an off-camera unit parks its animation, then replays the skipped time when back in view")
+	ViewBudget.set("force", 0)
+	check(is_equal_approx(float(ViewBudget.call("motion_step", u, body, 0.05)), 0.05), "native budgets pose every unit every frame")
+	ViewBudget.set("force", -1)
+	var Budget: GDScript = load("res://game/render_budget.gd") as GDScript
+	var gov: Node = Budget.new() as Node
+	Settings.strain = 0
+	var steps: Array[int] = []
+	for i: int in 260:
+		steps.append(int(gov.call("feed", 0.04)))
+	var strained: int = Settings.strain
+	var lean: bool = Settings.lean() and Settings.particles(48) < 48
+	for i: int in 1200:
+		gov.call("feed", 0.01)
+	check(steps[30] == 0 and strained >= 2 and lean and Settings.strain < strained, "40 ms frames step the web budget down, smooth frames give it back")
+	Settings.strain = 0
+	check(not Settings.lean() and Settings.particles(48) == 48, "native and unstrained budgets keep full crowds and particles")
+	gov.free()
+	var box: BoxMesh = BoxMesh.new()
+	box.size = Vector3(6.0, 12.0, 6.0)
+	var mm: MultiMesh = MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.use_colors = true
+	mm.mesh = box
+	mm.instance_count = 1
+	var spot: Transform3D = Transform3D(Basis.IDENTITY, Vector3(30.0, 6.0, 0.0))
+	mm.set_instance_transform(0, spot)
+	var trees: MultiMeshInstance3D = MultiMeshInstance3D.new()
+	trees.name = "JungleTrees"
+	trees.multimesh = mm
+	var spots: Array[Transform3D] = [spot]
+	trees.set_meta("all_spots", spots)
+	host.add_child(trees)
+	var rts: RTSCamera = RTSCamera.new()
+	host.add_child(rts)
+	rts.focus_on(Vector3.ZERO)
+	Ground._cull_named(host, "JungleTrees", Vector3.ZERO, false)
+	Ground.fade_occluders(host, rts)
+	var marker: PackedFloat32Array = PackedFloat32Array([0.5])
+	trees.set_meta("canopy_fade", marker)
+	Ground.fade_occluders(host, rts)
+	Ground._cull_named(host, "JungleTrees", Vector3(1.0, 0.0, 1.0), false)
+	var kept: bool = trees.get_meta("canopy_fade", PackedFloat32Array()) == marker
+	Ground._cull_named(host, "JungleTrees", Vector3(40.0, 0.0, 0.0), false)
+	check(kept and not trees.has_meta("canopy_fade"), "a still camera rewrites no prop instances")
+	var backdrop: Control = preload("res://game/menu_backdrop.gd").new()
+	var hits: Array[int] = [0]
+	var job: Callable = func() -> void: hits[0] += 1
+	backdrop.call("_when_in_tree", job)
+	backdrop.call("_when_in_tree", job)
+	var waits: int = backdrop.tree_entered.get_connections().size()
+	host.add_child(backdrop)
+	check(waits == 1 and hits[0] == 1 and backdrop.tree_entered.get_connections().is_empty(), "an orphaned menu backdrop waits for the tree once instead of re-deferring every flush")
+	backdrop.queue_free()
+	host.free()

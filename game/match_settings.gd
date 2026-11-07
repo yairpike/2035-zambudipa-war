@@ -158,6 +158,22 @@ static func low() -> bool:
 static func high() -> bool:
 	return effective() == "high"
 
+## Web frame-budget steps, 0 to STRAIN_MAX. RenderBudget raises it while web Medium frames run long. Never saved.
+const STRAIN_MAX: int = 3
+static var strain: int = 0
+
+## Low, or web Medium after two budget steps: contact shadows, always-on health bars, and canopy fades go.
+static func lean() -> bool:
+	return low() or strain >= 2
+
+## Particle count for an emitter authored at `amount`.
+static func particles(amount: int) -> int:
+	if low() or strain >= STRAIN_MAX:
+		return maxi(2, amount / 3)
+	if lean():
+		return maxi(2, amount / 2)
+	return amount
+
 static func idb_script() -> String:
 	return IDB_JS
 
@@ -351,7 +367,7 @@ static func render_scale() -> float:
 	if q == "low":
 		return 0.7
 	if q == "medium" and OS.has_feature("web"):
-		return 0.85
+		return 0.85 - 0.1 * float(clampi(strain, 0, STRAIN_MAX))
 	return 1.0
 
 ## One sun casts shadows. High uses two splits, Medium one orthogonal map. Low and web Medium cast none.
