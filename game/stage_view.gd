@@ -111,7 +111,7 @@ func _chrome() -> void:
 	_banner = PanelContainer.new()
 	_banner.name = "StageBanner"
 	_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_banner.position = Vector2(maxf(12.0, view.x * 0.5 - 300.0), 64.0)
+	_banner.position = Vector2(maxf(12.0, view.x * 0.5 - 300.0), view.y * 0.41)
 	_banner.custom_minimum_size = Vector2(600.0, 0.0)
 	var plate: StyleBoxFlat = StyleBoxFlat.new()
 	plate.bg_color = Color(0.05, 0.06, 0.08, 0.86)
@@ -151,8 +151,8 @@ func _chrome() -> void:
 	var tracker: PanelContainer = PanelContainer.new()
 	tracker.name = "StageTracker"
 	tracker.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	tracker.position = Vector2(view.x - 352.0, 64.0)
-	tracker.custom_minimum_size = Vector2(336.0, 0.0)
+	tracker.position = Vector2(12.0, 150.0)
+	tracker.custom_minimum_size = Vector2(300.0, 0.0)
 	var tplate: StyleBoxFlat = StyleBoxFlat.new()
 	tplate.bg_color = Color(0.05, 0.06, 0.08, 0.72)
 	tplate.content_margin_left = 10.0
@@ -173,14 +173,14 @@ func _chrome() -> void:
 		var row: Label = Label.new()
 		row.name = "StageRow%d" % (n + 1)
 		row.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		row.custom_minimum_size = Vector2(316.0, 0.0)
+		row.custom_minimum_size = Vector2(280.0, 0.0)
 		row.add_theme_font_size_override("font_size", 13)
 		list.add_child(row)
 		_rows.append(row)
 	_bonus_row = Label.new()
 	_bonus_row.name = "StageBonusRow"
 	_bonus_row.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_bonus_row.custom_minimum_size = Vector2(316.0, 0.0)
+	_bonus_row.custom_minimum_size = Vector2(280.0, 0.0)
 	_bonus_row.add_theme_font_size_override("font_size", 13)
 	list.add_child(_bonus_row)
 	layer.add_child(tracker)
