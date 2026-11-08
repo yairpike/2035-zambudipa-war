@@ -89,6 +89,7 @@ func _run() -> void:
 	await H.section("test_sm_story", test_sm_story)
 	await H.section("test_set_piece", test_set_piece)
 	await H.section("test_signature_rules", test_signature_rules)
+	await H.section("test_campaign_stages", test_campaign_stages)
 	await H.section("test_sm_play", test_sm_play)
 	await H.section("test_sm_web", test_sm_web)
 	await H.section("test_sm_boot", test_sm_boot)
@@ -3310,8 +3311,7 @@ func test_set_piece() -> void:
 		var field: SMPointer = scene.get("field") as SMPointer
 		check(not bool(piece.get("bonus_done")) and not story.done, "%s leaves the bonus optional" % id)
 		if bool(piece.get("has_bonus")):
-			var walker: RTSUnit = field.units_of(0)[0]
-			walker.global_position = piece.get("bonus_at") as Vector3
+			_claim_bonus(scene)
 			piece.call("drive", 0.2)
 		var before: float = cam.distance
 		story.done = true
@@ -3444,6 +3444,7 @@ func test_signature_rules() -> void:
 	check(is_equal_approx(shwe_story.hack_left, 20.0) and not shwe_story.done and not shwe_story.lost, "shwe kokko resets the hack when the block is abandoned")
 	_park(shwe_field, "", shwe_story.pad)
 	shwe_story.tick(shwe_story.hack_left)
+	_clear_stages(shwe_story)
 	check(shwe_story.done and not shwe_story.lost and shwe_story.hack_left <= 0.0, "shwe kokko wins when the hack is held through")
 	shwe.free()
 	await process_frame
@@ -3465,6 +3466,7 @@ func test_signature_rules() -> void:
 	landed_boat.global_position = landed_story.far_shore
 	var shore_hp: float = landed_boat.hp
 	landed_story.tick(1.0)
+	_clear_stages(landed_story)
 	check(is_equal_approx(landed_boat.hp, shore_hp) and landed_story.done and not landed_story.lost, "andaman wins when a ship reaches the far shore off the mines")
 	landed.free()
 	await process_frame
@@ -3507,6 +3509,7 @@ func test_signature_rules() -> void:
 	var crossed_story: SMStory = crossed.get("story") as SMStory
 	var crossed_field: SMPointer = crossed.get("field") as SMPointer
 	crossed_story.tick(crossed_story.hold_left)
+	_clear_stages(crossed_story)
 	var ferry_won: RTSUnit = _duty_units(crossed_field, "ferry")[0]
 	check(crossed_story.done and not crossed_story.lost and crossed_story.ferry_across and ferry_won.is_alive(), "tonle sap wins when the ferry survives the crossing")
 	crossed.free()
@@ -3523,10 +3526,224 @@ func test_signature_rules() -> void:
 	var count_before: float = dropped_story.count_left
 	_kill_duty(dropped_field, "super")
 	dropped_story.tick(0.2)
+	_clear_stages(dropped_story)
 	check(dropped_story.done and not dropped_story.lost and dropped_story.count_left > 10.0 and dropped_story.count_left <= count_before, "shattered monsoon wins when both weapons fall before zero")
 	dropped.free()
 	await process_frame
 	SMCampaign.selected = "tachileik"
+
+func _stage_scene(id: String) -> Node:
+	SMCampaign.selected = id
+	SMFront.faction_id = "gtfc"
+	var path: String = "res://game/campaign_mission.tscn"
+	if id == "kokang":
+		path = "res://game/mission_kokang.tscn"
+	elif id == "sop_ruak":
+		path = "res://game/sop_ruak.tscn"
+	elif id == "phillips":
+		path = "res://game/phillips_channel.tscn"
+	var scene: Node = (load(path) as PackedScene).instantiate()
+	root.add_child(scene)
+	return scene
+
+func _stage_arc(scene: Node) -> SMStages:
+	var story: SMStory = scene.get("story") as SMStory
+	if story != null:
+		return story.stages
+	return scene.get("stages") as SMStages
+
+func test_campaign_stages() -> void:
+	var ids: PackedStringArray = SMStages.ids()
+	check(ids.size() == 17 and ids.has("kokang") and ids.has("sop_ruak") and ids.has("phillips"), "seventeen missions carry a stage arc (%d)" % ids.size())
+	var bonus_kinds: Dictionary = {}
+	var rewards: Dictionary = {}
+	var modes: Dictionary = {}
+	for id: String in ids:
+		var scene: Node = _stage_scene(id)
+		await process_frame
+		var arc: SMStages = _stage_arc(scene)
+		var field: SMPointer = scene.get("field") as SMPointer
+		var view: Node = scene.get_node_or_null("StageView")
+		if arc == null or field == null or view == null:
+			check(false, "%s binds a stage arc and its view" % id)
+			scene.free()
+			await process_frame
+			continue
+		var plan: Dictionary = arc.plan
+		var bonus: Dictionary = plan["bonus"] as Dictionary
+		bonus_kinds[str(bonus["kind"])] = true
+		rewards[str(bonus["reward"])] = true
+		modes[str(plan["allies"])] = true
+		var tracker: Control = scene.find_child("StageTracker", true, false) as Control
+		var bonus_row: Label = scene.find_child("StageBonusRow", true, false) as Label
+		var row_one: Label = scene.find_child("StageRow1", true, false) as Label
+		check(arc.stage == SMStages.FOOTHOLD and str(plan["goal"]) != "" and (plan["calls"] as Array).size() == 2 and tracker != null and row_one != null and row_one.text.begins_with("Stage 1 now:") and bonus_row != null and bonus_row.text.begins_with("Bonus:"), "%s opens on stage 1 with its goal and bonus on the tracker" % id)
+		_stage_bonus(scene, arc, field, id)
+		for duty: String in arc.targets():
+			_kill_duty(field, duty)
+		arc.tick(0.1, true)
+		view.call("drive", 0.1)
+		var counters: Array[RTSUnit] = _duty_units(field, "counter")
+		var routed: bool = counters.size() == 3
+		for u: RTSUnit in counters:
+			routed = routed and not u.path.is_empty() and bool(u.get_meta("road", false))
+		var paved_ok: bool = _route_paved(arc, counters)
+		var mode: String = str(plan["allies"])
+		var arrived: int = 0
+		for u: RTSUnit in arc.allies:
+			if is_instance_valid(u) and str(u.get_meta("arrived_by", "")) == mode:
+				arrived += 1
+		check(arc.stage == SMStages.ESCALATION and routed and paved_ok and arc.history.has("stage:2") and arc.history.has("allies:%s" % mode), "%s escalates: a counter-attack drives in along the streets" % id)
+		var prop: String = "DropHeli" if mode == "heli" else ("LandingCraft" if mode == "landing" else "")
+		var prop_ok: bool = prop == "" or int(view.call("props_named", prop)) >= 1
+		check(arrived == 3 and prop_ok, "%s allies arrive by %s" % [id, mode])
+		var banner: Control = scene.find_child("StageBanner", true, false) as Control
+		var line: Label = scene.find_child("StageLine", true, false) as Label
+		var pinged: bool = not field.pings.is_empty() and field.has_meta("alert_at")
+		var cam: RTSCamera = scene.get_node_or_null("Camera") as RTSCamera
+		var focus_before: Vector3 = cam.focus if cam != null else Vector3.ZERO
+		view.call("drive", 0.1)
+		var cam_free: bool = cam == null or cam.focus.distance_to(focus_before) < 0.01
+		check(banner != null and banner.visible and line != null and line.text != "" and pinged and cam_free, "%s calls the escalation on the banner and the minimap without moving the camera" % id)
+		_kill_duty(field, "counter")
+		arc.tick(0.1, true)
+		view.call("drive", 0.1)
+		var boss_plan: Dictionary = plan["boss"] as Dictionary
+		var ambushers: int = 0
+		for u: RTSUnit in _duty_units(field, "counter"):
+			if bool(u.get_meta("ambush", false)):
+				ambushers += 1
+		var climax_ok: bool = arc.stage == SMStages.CLIMAX and ambushers == 2 and arc.history.has("stage:3")
+		if boss_plan.is_empty():
+			climax_ok = climax_ok and arc.hold_left > 0.0 and _duty_units(field, "boss").is_empty()
+		else:
+			var boss: Array[RTSUnit] = _duty_units(field, "boss")
+			climax_ok = climax_ok and boss.size() == 1 and SMArms.slot_of(boss[0]) == SMArms.SECONDARY
+			if bool(boss_plan.get("fixed", false)):
+				climax_ok = climax_ok and scene.get_node_or_null("BossCompound") != null
+		check(climax_ok, "%s climaxes with %s and a street ambush" % [id, "a timed hold" if boss_plan.is_empty() else "the boss"])
+		var swaps_before: int = arc.foe_swaps
+		_kill_duty(field, "counter")
+		arc.tick(SMStages.SWAP_EVERY + 0.1, true)
+		var swapped: bool = arc.foe_swaps > swaps_before or boss_plan.is_empty()
+		if boss_plan.is_empty():
+			swapped = arc.history.has("wave:1") or arc.hold_left > 0.0
+		check(swapped and not arc.cleared(), "%s keeps the climax open while the boss or the hold stands" % id)
+		var rounds: int = 0
+		while not arc.cleared() and rounds < 8:
+			_kill_duty(field, "counter")
+			_kill_duty(field, "boss")
+			arc.tick(maxf(arc.hold_left, 0.0) + 0.1, true)
+			rounds += 1
+		check(arc.cleared() and arc.goal_line() == "All stages clear", "%s clears all three stages" % id)
+		scene.free()
+		await process_frame
+	check(bonus_kinds.has("capture") and bonus_kinds.has("rescue") and bonus_kinds.has("intercept") and bonus_kinds.has("jammer"), "the bonuses capture, rescue, intercept, and jam")
+	check(rewards.has("funds") and rewards.has("reinforce") and rewards.has("veteran") and rewards.has("strike"), "the rewards are funds, reinforcements, veterancy, and an air-strike reset")
+	check(modes.has("heli") and modes.has("landing") and modes.has("column"), "allies come by helicopter, landing craft, and armoured column")
+	var lost_convoy: Node = _stage_scene("tachileik")
+	await process_frame
+	var convoy_arc: SMStages = _stage_arc(lost_convoy)
+	var convoy_field: SMPointer = lost_convoy.get("field") as SMPointer
+	convoy_arc.tick(0.1, true)
+	var rolling: bool = convoy_arc.convoy_rolling
+	for u: RTSUnit in _duty_units(convoy_field, "convoy"):
+		rolling = rolling and not u.path.is_empty()
+		u.global_position = Vector3(28.0, 0.0, 30.0)
+	convoy_arc.tick(0.1, true)
+	check(rolling and convoy_arc.bonus_state == "failed" and convoy_arc.reward_paid == "", "the smuggler convoy rolls with the escalation and the bonus fails when it gets away")
+	lost_convoy.free()
+	await process_frame
+	var lost_squad: Node = _stage_scene("andaman")
+	await process_frame
+	var squad_arc: SMStages = _stage_arc(lost_squad)
+	_kill_duty(lost_squad.get("field") as SMPointer, "pinned")
+	squad_arc.tick(0.1, false)
+	check(squad_arc.bonus_state == "failed", "the rescue fails when the pinned squad dies")
+	lost_squad.free()
+	await process_frame
+	var sprayed: Node = _stage_scene("keng_tung")
+	await process_frame
+	var spray_story: SMStory = sprayed.get("story") as SMStory
+	spray_story.bonus_failed = true
+	spray_story.tick(0.1)
+	check(spray_story.stages.bonus_state == "failed", "keng tung's sprayer landing fails the stage bonus")
+	sprayed.free()
+	await process_frame
+	var gated: Node = _stage_scene("shwe_kokko")
+	await process_frame
+	var gate_story: SMStory = gated.get("story") as SMStory
+	var gate_field: SMPointer = gated.get("field") as SMPointer
+	_kill_duty(gate_field, "clear")
+	_park(gate_field, "", gate_story.pad)
+	gate_story.tick(gate_story.hack_left)
+	var held_open: bool = not gate_story.done and gate_story.stages.stage == SMStages.ESCALATION and gate_story.progress().begins_with("Stage 2/3")
+	var marked: bool = gate_story.beacon().distance_to(_duty_units(gate_field, "counter")[0].global_position) < 0.1
+	_clear_stages(gate_story)
+	check(held_open and marked and gate_story.done, "the core objective alone does not win: the climax must fall")
+	gated.free()
+	await process_frame
+	SMCampaign.selected = "tachileik"
+	SMFront.faction_id = "gtfc"
+
+func _route_paved(arc: SMStages, units: Array[RTSUnit]) -> bool:
+	if arc.dress == null or arc.grid == null or units.is_empty():
+		return true
+	var path: PackedVector3Array = units[0].path
+	if path.size() < 2 or not arc.dress.paved.has(arc.grid.cell_at(path[0])):
+		return false
+	var on_street: int = 0
+	for p: Vector3 in path:
+		if arc.dress.paved.has(arc.grid.cell_at(p)):
+			on_street += 1
+	return on_street >= 2
+
+func _stage_bonus(scene: Node, arc: SMStages, field: SMPointer, id: String) -> void:
+	var kind: String = arc.bonus_kind()
+	var reward: String = str((arc.plan["bonus"] as Dictionary)["reward"])
+	if id == "keng_tung":
+		var piece: Node = scene.get_node_or_null("SetPiece")
+		if piece != null:
+			piece.call("drive", 13.0)
+	arc.tick(0.05, false)
+	var credits: int = arc.economy.credits(SMPointer.PLAYER) if arc.economy != null else 0
+	var probe: RTSUnit = _marcher(field, "")
+	var probe_hp: float = probe.max_hp if probe != null else 0.0
+	var allies_before: int = arc.allies.size()
+	if arc.protocols != null:
+		for key: StringName in arc.protocols.cool_left.keys():
+			arc.protocols.cool_left[key] = 9.0
+	var duty: String = arc.bonus_duty()
+	if duty != "":
+		_kill_duty(field, duty)
+	else:
+		var spot: Vector3 = arc.bonus_at()
+		var pinned: Array[RTSUnit] = _duty_units(field, "pinned")
+		if not pinned.is_empty():
+			spot = pinned[0].global_position
+		if probe != null:
+			probe.global_position = spot + Vector3(0.6, 0.0, 0.0)
+	arc.tick(0.05, false)
+	var paid: bool = arc.bonus_state == "done" and arc.reward_paid == reward
+	if reward == "funds":
+		paid = paid and arc.economy != null and arc.economy.credits(SMPointer.PLAYER) == credits + SMStages.FUNDS
+	elif reward == "reinforce":
+		paid = paid and arc.allies.size() == allies_before + 3
+	elif reward == "veteran":
+		paid = paid and probe != null and int(probe.get_meta("veteran", 0)) == 1 and probe.max_hp > probe_hp * 1.2
+	elif reward == "strike":
+		var reset: bool = true
+		if arc.protocols != null:
+			for key: StringName in arc.protocols.cool_left.keys():
+				reset = reset and float(arc.protocols.cool_left[key]) <= 0.0
+		paid = paid and reset
+	if kind == "rescue":
+		paid = paid and _duty_units(field, "pinned").is_empty()
+	var bonus_row: Label = scene.find_child("StageBonusRow", true, false) as Label
+	var view: Node = scene.get_node_or_null("StageView")
+	if view != null:
+		view.call("drive", 0.05)
+	check(paid and bonus_row != null and bonus_row.text.begins_with("Bonus done:") and arc.history.has("bonus:done:%s" % reward), "%s bonus (%s) pays %s" % [id, kind, reward])
 
 func _signature_scene(id: String) -> Node:
 	SMCampaign.selected = id
@@ -3952,6 +4169,7 @@ func _meet_story(scene: Node, id: String) -> void:
 		story.tick(2.0)
 		_park(field, "", Vector3(-6.0, 0.0, 4.0))
 		story.tick(4.0)
+		_clear_stages(story)
 		return
 	if id == "shwe_kokko":
 		_kill_duty(field, "clear")
@@ -4011,6 +4229,41 @@ func _meet_story(scene: Node, id: String) -> void:
 		_press_proto(scene, "cryoshot")
 		_kill_duty(field, "super")
 		story.tick(0.1)
+	_clear_stages(story)
+
+## Plays out the mission arc once its own objective is met: kills each stage's targets and runs out a hold.
+func _clear_stages(story: SMStory) -> void:
+	var rounds: int = 0
+	while story != null and story.stages != null and not story.done and not story.lost and rounds < 8:
+		for duty: String in story.stages.targets():
+			_kill_duty(story.field, duty)
+		var step: float = 0.1
+		if story.stages.stage == SMStages.CLIMAX:
+			step = story.stages.hold_left + 0.1
+		story.tick(step)
+		rounds += 1
+
+## Completes the mission's bonus the way its kind asks: reach the site, reach the pinned squad, or kill the
+## jammer or the convoy.
+func _claim_bonus(scene: Node) -> void:
+	var story: SMStory = scene.get("story") as SMStory
+	var field: SMPointer = scene.get("field") as SMPointer
+	if story == null or story.stages == null:
+		return
+	var arc: SMStages = story.stages
+	story.tick(0.05)
+	var duty: String = arc.bonus_duty()
+	if duty != "":
+		_kill_duty(field, duty)
+	else:
+		var spot: Vector3 = arc.bonus_at()
+		var pinned: Array[RTSUnit] = _duty_units(field, "pinned")
+		if not pinned.is_empty():
+			spot = pinned[0].global_position
+		var walker: RTSUnit = _marcher(field, "")
+		if walker != null:
+			walker.global_position = spot + Vector3(0.6, 0.0, 0.0)
+	story.tick(0.05)
 
 func _park(field: SMPointer, kind: String, at: Vector3) -> void:
 	for u: RTSUnit in field.units_of(0):
@@ -4190,6 +4443,21 @@ func _order_crossing(field: SMPointer) -> void:
 		RTSOrders.attack(one, target, nav, field.teams)
 
 func _script_orders(scene: Node, id: String) -> void:
+	_script_core(scene, id)
+	_fight_stages(scene)
+
+## After the mission's own objective: break the counter-attack, then the boss or the hold, as a player would.
+func _fight_stages(scene: Node) -> void:
+	var story: SMStory = scene.get("story") as SMStory
+	var field: SMPointer = scene.get("field") as SMPointer
+	var rounds: int = 0
+	while story != null and story.stages != null and not story.done and not story.lost and rounds < 8:
+		_favor_script(field)
+		_fight_enemies(scene, field, 160)
+		_sim_until_done(scene, 24, 0.5)
+		rounds += 1
+
+func _script_core(scene: Node, id: String) -> void:
 	var field: SMPointer = scene.get("field") as SMPointer
 	var story: SMStory = scene.get("story") as SMStory
 	if id != "plain_of_jars":

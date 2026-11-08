@@ -4,6 +4,7 @@ const Power = preload("res://addons/rts_advanced/sm_power.gd")
 const Fx = preload("res://game/fx_view.gd")
 const Forms = preload("res://game/unit_meshes.gd")
 const Ground = preload("res://game/ground_view.gd")
+const StageView = preload("res://game/stage_view.gd")
 ## Phillips Channel. Two land masses, a deep channel, shallow crossings.
 ## The far shore builds, expands, and attacks.
 
@@ -19,6 +20,7 @@ var status: Label
 var explore_bus: AudioStreamPlayer
 var combat_bus: AudioStreamPlayer
 var ui_layer: CanvasLayer
+var stages: SMStages = SMStages.new()
 
 func _ready() -> void:
 	preload("res://game/sim_presenter.gd").follow(self)
@@ -41,6 +43,9 @@ func _ready() -> void:
 	hud.use_tech(sim.tech)
 	SMSight.update_match(sight, field, self, sim.tech, raider)
 	preload("res://game/match_settings.gd").apply_scene(self)
+	var front: Vector3 = sim.grid.cell_center(SMDomainGrid.at("phillips", Vector2i(7, 8)))
+	stages.bind("phillips", field, roster.economy, front, sim.grid, SMFront.current(), SMStages.rival_of(SMFront.current(), "nmrf", "gtfc"))
+	StageView.attach(self, stages)
 	_late_crowd()
 
 func scripted_playthrough() -> bool:
@@ -285,6 +290,11 @@ func _process(delta: float) -> void:
 	SMSight.update_match(sight, field, self, sim.tech, raider)
 	Fx.drive(self, field, sim.goods, sim.ew)
 	hud.refresh()
+	if not outcome.over:
+		stages.skirmish_tick(delta, sim.goods, sim.tech)
+	var view: Node = get_node_or_null("StageView")
+	if view != null:
+		view.call("drive", delta)
 	var players: Array[SMBuildYard] = [side.yard, sim.yard]
 	var foes: Array[SMBuildYard] = [raider.yard]
 	outcome.tick(field, players, foes, delta)

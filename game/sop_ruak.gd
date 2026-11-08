@@ -3,6 +3,7 @@ extends Node3D
 const Power = preload("res://addons/rts_advanced/sm_power.gd")
 const Fx = preload("res://game/fx_view.gd")
 const Ground = preload("res://game/ground_view.gd")
+const StageView = preload("res://game/stage_view.gd")
 ## Sop Ruak. Three land sectors split by a Y-shaped river.
 ## GTFC versus one enemy across a Y-shaped river. Same pointer controls as Phillips Channel.
 
@@ -17,6 +18,7 @@ var outcome: SMOutcome = SMOutcome.new()
 var sight: SMSight = SMSight.new()
 var status: Label
 var ui_layer: CanvasLayer
+var stages: SMStages = SMStages.new()
 
 func _ready() -> void:
 	preload("res://game/sim_presenter.gd").follow(self)
@@ -41,6 +43,9 @@ func _ready() -> void:
 	hud.use_tech(sim.tech)
 	SMSight.update_match(sight, field, self, sim.tech, raider)
 	preload("res://game/match_settings.gd").apply_scene(self)
+	var front: Vector3 = grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(9, 24)))
+	stages.bind("sop_ruak", field, roster.economy, front, grid, SMFront.current(), SMStages.rival_of(SMFront.current(), "mvd", "nmrf"))
+	StageView.attach(self, stages)
 
 func train_unit() -> String:
 	if not Power.online(side.yard):
@@ -175,6 +180,11 @@ func _process(delta: float) -> void:
 	SMSight.update_match(sight, field, self, sim.tech, raider)
 	Fx.drive(self, field, sim.goods, sim.ew)
 	hud.refresh()
+	if not outcome.over:
+		stages.skirmish_tick(delta, sim.goods, sim.tech)
+	var view: Node = get_node_or_null("StageView")
+	if view != null:
+		view.call("drive", delta)
 	var players: Array[SMBuildYard] = [side.yard, sim.yard]
 	var foes: Array[SMBuildYard] = [raider.yard]
 	outcome.tick(field, players, foes, delta)

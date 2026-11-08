@@ -3022,3 +3022,354 @@ msgstr "离其他建筑太近"
 
 msgid "too far for the yard to drive"
 msgstr "超出基地车行驶范围"
+
+msgid "A second column is coming down the valley road. Our armour is moving up."
+msgstr "第二支纵队正沿山谷公路南下。我方装甲部队正在推进。"
+
+msgid "A supply convoy is moving on the streets."
+msgstr "一支补给车队正在街道上行进。"
+
+msgid "All stages clear"
+msgstr "所有阶段完成"
+
+msgid "Ambush! Enemy troops in the side streets."
+msgstr "伏击！敌军藏在小巷里。"
+
+msgid "An armoured column is rolling in on the road."
+msgstr "一支装甲纵队正沿公路驶来。"
+
+msgid "An armoured push is coming down the river road. Our column is moving up."
+msgstr "敌方装甲部队正沿河边公路推进。我方纵队正在前出。"
+
+msgid "Bo Mya is counter-attacking across the channel. Landing craft are bringing marines."
+msgstr "波妙正跨过海峡反击。登陆艇正运来海军陆战队。"
+
+msgid "Bo Mya's compound"
+msgstr "波妙的大院"
+
+msgid "Boats are landing raiders under the haze. Our landing craft are coming in."
+msgstr "敌船正借黑霾运送突袭队登陆。我方登陆艇正在驶来。"
+
+msgid "Bonus complete. Air-strike cooldowns are reset."
+msgstr "额外目标完成。空袭冷却已重置。"
+
+msgid "Bonus complete. Bonus funds: +600 credits."
+msgstr "额外目标完成。奖励资金：+600 资金。"
+
+msgid "Bonus complete. Reinforcements are on the way."
+msgstr "额外目标完成。援军正在赶来。"
+
+msgid "Bonus complete. Your troops earn a veterancy crate."
+msgstr "额外目标完成。你的部队获得老兵补给箱。"
+
+msgid "Bonus done: %s"
+msgstr "额外目标完成：%s"
+
+msgid "Bonus failed: %s"
+msgstr "额外目标失败：%s"
+
+msgid "Bonus objective"
+msgstr "额外目标"
+
+msgid "Bonus: %s"
+msgstr "额外目标：%s"
+
+msgid "Break the citadel guard"
+msgstr "击破要塞守卫"
+
+msgid "Break the counter-attack (%d)"
+msgstr "击退反击（%d）"
+
+msgid "Capture the bazaar"
+msgstr "占领集市"
+
+msgid "Capture the hydro radar"
+msgstr "占领水文雷达"
+
+msgid "Capture the relay mast"
+msgstr "占领中继天线"
+
+msgid "Casino command post"
+msgstr "赌场指挥所"
+
+msgid "Citadel armour is counter-attacking along the ring road. Our column is coming in."
+msgstr "要塞装甲部队正沿环路反击。我方纵队正在赶来。"
+
+msgid "Citadel guard"
+msgstr "要塞守卫"
+
+msgid "Claim a site in the Golden Triangle"
+msgstr "在金三角夺取一处据点"
+
+msgid "Claim a site on the channel"
+msgstr "在海峡沿岸夺取一处据点"
+
+msgid "Clear the caravan ambush"
+msgstr "清除商队伏兵"
+
+msgid "Clear the compound garrison"
+msgstr "清除大院守军"
+
+msgid "Clear the radar garrison"
+msgstr "清除雷达守军"
+
+msgid "Clear the shore guns"
+msgstr "清除岸防炮"
+
+msgid "Clear the street ambush (%d)"
+msgstr "清除街头伏兵（%d）"
+
+msgid "Climax"
+msgstr "决战"
+
+msgid "Command"
+msgstr "指挥部"
+
+msgid "Command spire"
+msgstr "指挥尖塔"
+
+msgid "Counter-attack"
+msgstr "反击部队"
+
+msgid "Customs house boss"
+msgstr "海关楼头目"
+
+msgid "Destroy %s"
+msgstr "摧毁%s"
+
+msgid "Destroy the battery radar jammer"
+msgstr "摧毁炮兵雷达干扰器"
+
+msgid "Destroy the citadel power grid"
+msgstr "摧毁要塞电网"
+
+msgid "Destroy the relay jammer"
+msgstr "摧毁中继干扰器"
+
+msgid "Drop the EW towers"
+msgstr "摧毁 EW 塔"
+
+msgid "Enemy commanders are switching weapon modes."
+msgstr "敌方指挥官正在切换武器模式。"
+
+msgid "Escalation"
+msgstr "升级"
+
+msgid "Fire the beam at the phantom"
+msgstr "用光束射击幻影"
+
+msgid "Floating fortress"
+msgstr "浮动要塞"
+
+msgid "Foothold"
+msgstr "立足"
+
+msgid "Free the captive runners"
+msgstr "解救被困的跑腿"
+
+msgid "Freeze the tank column"
+msgstr "冻结坦克纵队"
+
+msgid "Get the ferry across"
+msgstr "让渡船过河"
+
+msgid "Guards from the next block are pushing in. Choppers are dropping a team on your flank."
+msgstr "隔壁街区的守卫正在压上来。直升机正在你的侧翼投放一个小队。"
+
+msgid "Gunboats are counter-attacking the reef. Landing craft bring our crews."
+msgstr "炮艇正在反击礁石阵地。登陆艇运来我方人员。"
+
+msgid "Harbour fort"
+msgstr "港口要塞"
+
+msgid "Haze flagship"
+msgstr "黑霾旗舰"
+
+msgid "Helicopters are dropping reinforcements."
+msgstr "直升机正在投放援军。"
+
+msgid "His command compound is exposed. Destroy it."
+msgstr "他的指挥大院已暴露。摧毁它。"
+
+msgid "His command compound is open. Destroy it."
+msgstr "他的指挥大院已无防备。摧毁它。"
+
+msgid "Hold the line: %d seconds (%d attackers)"
+msgstr "守住防线：%d 秒（%d 名进攻者）"
+
+msgid "Hunt the jammer ghost"
+msgstr "猎杀干扰幽灵"
+
+msgid "Intercept the defoliant sprayer"
+msgstr "拦截落叶剂喷洒机"
+
+msgid "Iskandar is sending a column down the river road. Our armour is coming in from the west."
+msgstr "伊斯坎达正派一支纵队沿河边公路而来。我方装甲部队正从西面赶来。"
+
+msgid "Iskandar's compound"
+msgstr "伊斯坎达的大院"
+
+msgid "Island battery"
+msgstr "岛屿炮台"
+
+msgid "Joint flagship"
+msgstr "联合旗舰"
+
+msgid "Junta armour is counter-attacking along the highway. Allied helicopters are inbound."
+msgstr "军政府装甲部队正沿公路反击。友军直升机正在赶来。"
+
+msgid "Junta trucks are rolling down the market street. Hold the yard. Gunships are inbound."
+msgstr "军政府卡车正沿市场街驶来。守住基地。武装直升机正在赶来。"
+
+msgid "Landing craft are coming ashore."
+msgstr "登陆艇正在靠岸。"
+
+msgid "Market hall safe house"
+msgstr "市场大厅安全屋"
+
+msgid "More ghosts are slipping through the rubber groves. Air cavalry is dropping in to help."
+msgstr "更多幽灵正穿过橡胶林潜入。空中骑兵正投放下来支援。"
+
+msgid "Mortar teams are moving through the jar fields. Gunships are dropping support."
+msgstr "迫击炮小组正穿过石缸田。武装直升机正在投放支援。"
+
+msgid "Objectives"
+msgstr "目标"
+
+msgid "Patrol boats are closing on the channel. Landing craft are bringing marines in."
+msgstr "巡逻艇正逼近水道。登陆艇正运来海军陆战队。"
+
+msgid "Pinned squad"
+msgstr "被困小队"
+
+msgid "Plateau command post"
+msgstr "高原指挥所"
+
+msgid "Raiders are crossing the Mekong in the fog. Helicopters drop a team on the bank."
+msgstr "突袭队正借雾渡过湄公河。直升机在岸边投放一个小队。"
+
+msgid "Raise the scaffold yard in Laukkai"
+msgstr "在老街建起脚手架基地"
+
+msgid "Regional command bunker"
+msgstr "地区指挥地堡"
+
+msgid "Rescue the allied marines"
+msgstr "营救友军海军陆战队"
+
+msgid "Rescue the downed pilots"
+msgstr "营救被击落的飞行员"
+
+msgid "Rescue the fishing crew"
+msgstr "营救渔船船员"
+
+msgid "Rescue the stranded boat crew"
+msgstr "营救被困的船员"
+
+msgid "Rescue the village scouts"
+msgstr "营救村庄侦察兵"
+
+msgid "Secure the field clinic"
+msgstr "控制野战诊所"
+
+msgid "Seize the fuel depot"
+msgstr "夺取燃料库"
+
+msgid "Seize the jade cache on the side street"
+msgstr "夺取小巷里的翡翠藏点"
+
+msgid "Sink the joint picket"
+msgstr "击沉联合警戒舰"
+
+msgid "Sink the shore boats"
+msgstr "击沉岸边船只"
+
+msgid "Smugglers want the rubies back. A counter-raid is coming up the border road. Our armour is on the way."
+msgstr "走私者想夺回红宝石。一支反突袭部队正沿边境公路而来。我方装甲部队正在赶来。"
+
+msgid "Space: jump to the event"
+msgstr "Space：跳到事件位置"
+
+msgid "Stage %d done: %s"
+msgstr "阶段 %d 完成：%s"
+
+msgid "Stage %d now: %s"
+msgstr "阶段 %d 进行中：%s"
+
+msgid "Stage %d/3: %s"
+msgstr "阶段 %d/3：%s"
+
+msgid "Stage %d: %s"
+msgstr "阶段 %d：%s"
+
+msgid "Stop the haze convoy"
+msgstr "拦下黑霾车队"
+
+msgid "Stop the smuggler convoy before it crosses the bridge"
+msgstr "在走私车队过桥前拦下它"
+
+msgid "Street ambush"
+msgstr "街头伏兵"
+
+msgid "Supply convoy"
+msgstr "补给车队"
+
+msgid "Syndicate tower"
+msgstr "集团大楼"
+
+msgid "Tea station command"
+msgstr "茶站指挥部"
+
+msgid "The bonus slipped away."
+msgstr "额外目标已错失。"
+
+msgid "The citadel command spire is open. Bring it down."
+msgstr "要塞指挥尖塔已无防备。把它打下来。"
+
+msgid "The flagship is coming about. Sink it."
+msgstr "旗舰正在掉头。击沉它。"
+
+msgid "The fleet is turning to fight. Landing craft carry our marines."
+msgstr "舰队正掉头迎战。登陆艇运来我方海军陆战队。"
+
+msgid "The harbour fort is the last gun line. Silence it."
+msgstr "港口要塞是最后一道炮线。让它闭嘴。"
+
+msgid "The haze flagship is in range. Sink it."
+msgstr "黑霾旗舰已进入射程。击沉它。"
+
+msgid "The plateau command post is exposed. Destroy it."
+msgstr "高原指挥所已暴露。摧毁它。"
+
+msgid "The regional command bunker is exposed. Finish it."
+msgstr "地区指挥地堡已暴露。解决它。"
+
+msgid "The ring boss is holed up in the river customs house. End it."
+msgstr "团伙头目躲在河边海关楼里。结束他。"
+
+msgid "The syndicate director is in the server tower. Bring it down."
+msgstr "集团总管在服务器大楼里。把它打下来。"
+
+msgid "Their command post sits in the old casino. Take it down."
+msgstr "他们的指挥所设在旧赌场里。摧毁它。"
+
+msgid "Their floating fortress has moved in. Sink it."
+msgstr "他们的浮动要塞已经开进来。击沉它。"
+
+msgid "Their forward command is dug in at the tea station. Take it."
+msgstr "他们的前线指挥部固守在茶站。拿下它。"
+
+msgid "Their island battery covers the strait. Destroy it."
+msgstr "他们的岛屿炮台控制着海峡。摧毁它。"
+
+msgid "Their last wave hits the radar now. Hold for thirty seconds."
+msgstr "他们的最后一波正冲向雷达。坚守三十秒。"
+
+msgid "Their safe house is in the old market hall. Clear it."
+msgstr "他们的安全屋在旧市场大厅里。清除它。"
+
+msgid "They are throwing everything at the radar. Hold for thirty seconds."
+msgstr "他们正倾尽全力攻打雷达。坚守三十秒。"
+
+msgid "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
+msgstr "三体船正围着渡船打转。登陆艇正运来援军。"

@@ -8,6 +8,7 @@ const Weather = preload("res://addons/rts_advanced/sm_weather.gd")
 const PLAYER: int = 0
 const ENEMY: int = 1
 const PICK_PX: float = 28.0
+const PING_TIME: float = 6.0
 const ATTACK_M: float = 2.2
 const BUILDING_SIZE: Vector3 = Vector3(2.2, 4.6, 2.2)
 const GTFC_KINDS: Array[StringName] = [&"militia", &"slag_hauler", &"ruby_lancer", &"amber_tank", &"monsoon_tube", &"channel_skiff"]
@@ -28,6 +29,8 @@ var nav_air: RTSGridNav
 var domain: SMDomainGrid
 var selection: RTSSelection = RTSSelection.new()
 var units: Array[RTSUnit] = []
+## Minimap callouts: {"at", "color", "left"}. The newest one is where Space jumps.
+var pings: Array[Dictionary] = []
 var box: RTSSelectionBox
 var cam: RTSCamera
 var host: Node3D
@@ -778,6 +781,23 @@ func place_beacon(at: Vector3) -> void:
 	beacon_at = at
 	beacon_moved.emit(host, at)
 
+## Rings a spot on the minimap for a few seconds and makes it the Space jump target. The camera stays put.
+func ping(at: Vector3, color: Color = Color(0.98, 0.82, 0.28)) -> void:
+	if at == Vector3.INF:
+		return
+	pings.append({"at": at, "color": color, "left": PING_TIME})
+	if pings.size() > 8:
+		pings.remove_at(0)
+	set_meta("alert_at", at)
+
+func age_pings(delta: float) -> void:
+	for i: int in range(pings.size() - 1, -1, -1):
+		var left: float = float(pings[i]["left"]) - delta
+		if left <= 0.0:
+			pings.remove_at(i)
+		else:
+			pings[i]["left"] = left
+
 func place_rally(at: Vector3) -> void:
 	rally_moved.emit(host, at)
 
@@ -1287,6 +1307,7 @@ func handle_motion(motion: InputEventMouseMotion) -> void:
 
 func tick(delta: float) -> void:
 	_fade_marks(delta)
+	age_pings(delta)
 	if side_link != null:
 		side_link.bays.field = self
 		side_link.bays.tick(delta)

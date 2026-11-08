@@ -3022,3 +3022,354 @@ msgstr "ใกล้​อาคาร​อื่น​เกิน​ไป"
 
 msgid "too far for the yard to drive"
 msgstr "ไกล​เกิน​กว่า​ที่​ฐาน​จะ​ขับ​ไป​ถึง"
+
+msgid "A second column is coming down the valley road. Our armour is moving up."
+msgstr "ขบวน​ที่​สอง​กำลัง​ลง​มา​ตาม​ถนน​หุบเขา ยานเกราะ​ของ​เรา​กำลัง​รุก​ขึ้น​ไป"
+
+msgid "A supply convoy is moving on the streets."
+msgstr "ขบวน​เสบียง​กำลัง​เคลื่อน​ไป​บน​ถนน"
+
+msgid "All stages clear"
+msgstr "ผ่าน​ทุก​ขั้น​แล้ว"
+
+msgid "Ambush! Enemy troops in the side streets."
+msgstr "ซุ่ม​โจมตี! ทหาร​ศัตรู​อยู่​ใน​ซอย"
+
+msgid "An armoured column is rolling in on the road."
+msgstr "ขบวน​ยานเกราะ​กำลัง​เคลื่อน​เข้า​มา​ตาม​ถนน"
+
+msgid "An armoured push is coming down the river road. Our column is moving up."
+msgstr "ยานเกราะ​ศัตรู​กำลัง​บุก​มา​ตาม​ถนน​ริม​แม่น้ำ ขบวน​ของ​เรา​กำลัง​รุก​ขึ้น​ไป"
+
+msgid "Bo Mya is counter-attacking across the channel. Landing craft are bringing marines."
+msgstr "โบ​มยะ​กำลัง​ตีโต้​ข้าม​ช่องแคบ เรือ​ยกพล​กำลัง​นำ​นาวิกโยธิน​มา"
+
+msgid "Bo Mya's compound"
+msgstr "ฐาน​ของ​โบ​มยะ"
+
+msgid "Boats are landing raiders under the haze. Our landing craft are coming in."
+msgstr "เรือ​ศัตรู​กำลัง​ส่ง​หน่วย​จู่โจม​ขึ้น​ฝั่ง​ใต้​หมอก​ควัน เรือ​ยกพล​ของ​เรา​กำลัง​เข้า​มา"
+
+msgid "Bonus complete. Air-strike cooldowns are reset."
+msgstr "โบนัส​สำเร็จ คูลดาวน์​โจมตี​ทาง​อากาศ​ถูก​รีเซ็ต"
+
+msgid "Bonus complete. Bonus funds: +600 credits."
+msgstr "โบนัส​สำเร็จ เงิน​โบนัส: +600 เครดิต"
+
+msgid "Bonus complete. Reinforcements are on the way."
+msgstr "โบนัส​สำเร็จ กำลัง​เสริม​กำลัง​มา"
+
+msgid "Bonus complete. Your troops earn a veterancy crate."
+msgstr "โบนัส​สำเร็จ ทหาร​ของ​คุณ​ได้​รับ​ลัง​ทหาร​ผ่าน​ศึก"
+
+msgid "Bonus done: %s"
+msgstr "โบนัส​สำเร็จ: %s"
+
+msgid "Bonus failed: %s"
+msgstr "โบนัส​ล้มเหลว: %s"
+
+msgid "Bonus objective"
+msgstr "ภารกิจ​โบนัส"
+
+msgid "Bonus: %s"
+msgstr "โบนัส: %s"
+
+msgid "Break the citadel guard"
+msgstr "ตี​แนว​ทหาร​รักษา​ป้อม​ให้​แตก"
+
+msgid "Break the counter-attack (%d)"
+msgstr "ตี​การ​ตีโต้​ให้​แตก (%d)"
+
+msgid "Capture the bazaar"
+msgstr "ยึด​ตลาด"
+
+msgid "Capture the hydro radar"
+msgstr "ยึด​เรดาร์​อุทก"
+
+msgid "Capture the relay mast"
+msgstr "ยึด​เสา​ถ่ายทอด​สัญญาณ"
+
+msgid "Casino command post"
+msgstr "กอง​บัญชาการ​คาสิโน"
+
+msgid "Citadel armour is counter-attacking along the ring road. Our column is coming in."
+msgstr "ยานเกราะ​ของ​ป้อม​กำลัง​ตีโต้​ตาม​ถนน​วงแหวน ขบวน​ของ​เรา​กำลัง​เข้า​มา"
+
+msgid "Citadel guard"
+msgstr "ทหาร​รักษา​ป้อม"
+
+msgid "Claim a site in the Golden Triangle"
+msgstr "ยึด​จุด​หนึ่ง​ใน​สามเหลี่ยม​ทองคำ"
+
+msgid "Claim a site on the channel"
+msgstr "ยึด​จุด​หนึ่ง​ริม​ช่องแคบ"
+
+msgid "Clear the caravan ambush"
+msgstr "เคลียร์​ซุ่ม​โจมตี​คาราวาน"
+
+msgid "Clear the compound garrison"
+msgstr "เคลียร์​ทหาร​รักษา​ฐาน"
+
+msgid "Clear the radar garrison"
+msgstr "เคลียร์​ทหาร​รักษา​เรดาร์"
+
+msgid "Clear the shore guns"
+msgstr "เคลียร์​ปืน​ชายฝั่ง"
+
+msgid "Clear the street ambush (%d)"
+msgstr "เคลียร์​ซุ่ม​โจมตี​ใน​ถนน (%d)"
+
+msgid "Climax"
+msgstr "ศึก​ชี้ขาด"
+
+msgid "Command"
+msgstr "กอง​บัญชาการ"
+
+msgid "Command spire"
+msgstr "ยอด​หอ​บัญชาการ"
+
+msgid "Counter-attack"
+msgstr "หน่วย​ตีโต้"
+
+msgid "Customs house boss"
+msgstr "หัวหน้า​ที่​ด่าน​ศุลกากร"
+
+msgid "Destroy %s"
+msgstr "ทำลาย %s"
+
+msgid "Destroy the battery radar jammer"
+msgstr "ทำลาย​เครื่อง​รบกวน​เรดาร์​ปืน​ใหญ่"
+
+msgid "Destroy the citadel power grid"
+msgstr "ทำลาย​โครงข่าย​ไฟฟ้า​ของ​ป้อม"
+
+msgid "Destroy the relay jammer"
+msgstr "ทำลาย​เครื่อง​รบกวน​สัญญาณ​ถ่ายทอด"
+
+msgid "Drop the EW towers"
+msgstr "โค่น​หอ EW"
+
+msgid "Enemy commanders are switching weapon modes."
+msgstr "ผู้บัญชาการ​ศัตรู​กำลัง​สลับ​โหมด​อาวุธ"
+
+msgid "Escalation"
+msgstr "ยกระดับ"
+
+msgid "Fire the beam at the phantom"
+msgstr "ยิง​ลำแสง​ใส่​แฟนทอม"
+
+msgid "Floating fortress"
+msgstr "ป้อม​ลอยน้ำ"
+
+msgid "Foothold"
+msgstr "ตั้ง​หลัก"
+
+msgid "Free the captive runners"
+msgstr "ปลดปล่อย​คน​เดิน​เอกสาร​ที่​ถูก​จับ"
+
+msgid "Freeze the tank column"
+msgstr "แช่แข็ง​ขบวน​รถถัง"
+
+msgid "Get the ferry across"
+msgstr "พา​เรือ​ข้ามฟาก​ข้าม​ไป"
+
+msgid "Guards from the next block are pushing in. Choppers are dropping a team on your flank."
+msgstr "ทหาร​รักษา​การณ์​จาก​ตึก​ข้างๆ​กำลัง​บุก​เข้า​มา ฮ.​กำลัง​ส่ง​ทีม​ลง​ที่​ปีก​ของ​คุณ"
+
+msgid "Gunboats are counter-attacking the reef. Landing craft bring our crews."
+msgstr "เรือ​ปืน​กำลัง​ตีโต้​ที่​แนว​ปะการัง เรือ​ยกพล​นำ​ลูกเรือ​ของ​เรา​มา"
+
+msgid "Harbour fort"
+msgstr "ป้อม​ท่าเรือ"
+
+msgid "Haze flagship"
+msgstr "เรือ​ธง​หมอก​ควัน"
+
+msgid "Helicopters are dropping reinforcements."
+msgstr "ฮ.​กำลัง​ส่ง​กำลัง​เสริม​ลง​มา"
+
+msgid "His command compound is exposed. Destroy it."
+msgstr "ฐาน​บัญชาการ​ของ​เขา​เปิด​โล่ง​แล้ว ทำลาย​มัน"
+
+msgid "His command compound is open. Destroy it."
+msgstr "ฐาน​บัญชาการ​ของ​เขา​ไร้​การ​ป้องกัน ทำลาย​มัน"
+
+msgid "Hold the line: %d seconds (%d attackers)"
+msgstr "รักษา​แนว: %d วินาที (%d ผู้​บุก)"
+
+msgid "Hunt the jammer ghost"
+msgstr "ล่า​ผี​รบกวน​สัญญาณ"
+
+msgid "Intercept the defoliant sprayer"
+msgstr "สกัด​เครื่อง​พ่น​สาร​ทำลาย​ใบไม้"
+
+msgid "Iskandar is sending a column down the river road. Our armour is coming in from the west."
+msgstr "อิสกันดาร์​กำลัง​ส่ง​ขบวน​มา​ตาม​ถนน​ริม​แม่น้ำ ยานเกราะ​ของ​เรา​กำลัง​มา​จาก​ทิศ​ตะวันตก"
+
+msgid "Iskandar's compound"
+msgstr "ฐาน​ของ​อิสกันดาร์"
+
+msgid "Island battery"
+msgstr "ป้อม​ปืน​บน​เกาะ"
+
+msgid "Joint flagship"
+msgstr "เรือ​ธง​ร่วม"
+
+msgid "Junta armour is counter-attacking along the highway. Allied helicopters are inbound."
+msgstr "ยานเกราะ​ของ​รัฐบาล​ทหาร​กำลัง​ตีโต้​ตาม​ทาง​หลวง ฮ.​พันธมิตร​กำลัง​มา"
+
+msgid "Junta trucks are rolling down the market street. Hold the yard. Gunships are inbound."
+msgstr "รถบรรทุก​ของ​รัฐบาล​ทหาร​กำลัง​วิ่ง​มา​ตาม​ถนน​ตลาด รักษา​ฐาน​ไว้ ฮ.​ติด​อาวุธ​กำลัง​มา"
+
+msgid "Landing craft are coming ashore."
+msgstr "เรือ​ยกพล​กำลัง​เข้า​ฝั่ง"
+
+msgid "Market hall safe house"
+msgstr "บ้าน​ลับ​ใน​ห้อง​โถง​ตลาด"
+
+msgid "More ghosts are slipping through the rubber groves. Air cavalry is dropping in to help."
+msgstr "ผี​อีก​หลาย​ตัว​กำลัง​แทรก​ผ่าน​สวน​ยาง ทหาร​ม้า​อากาศ​กำลัง​ลง​มา​ช่วย"
+
+msgid "Mortar teams are moving through the jar fields. Gunships are dropping support."
+msgstr "ทีม​ปืน​ครก​กำลัง​เคลื่อน​ผ่าน​ทุ่ง​ไห ฮ.​ติด​อาวุธ​กำลัง​ส่ง​การ​สนับสนุน​ลง​มา"
+
+msgid "Objectives"
+msgstr "ภารกิจ"
+
+msgid "Patrol boats are closing on the channel. Landing craft are bringing marines in."
+msgstr "เรือ​ลาดตระเวน​กำลัง​ประชิด​ช่องแคบ เรือ​ยกพล​กำลัง​นำ​นาวิกโยธิน​เข้า​มา"
+
+msgid "Pinned squad"
+msgstr "หมู่​ที่​ถูก​ตรึง"
+
+msgid "Plateau command post"
+msgstr "กอง​บัญชาการ​บน​ที่ราบสูง"
+
+msgid "Raiders are crossing the Mekong in the fog. Helicopters drop a team on the bank."
+msgstr "หน่วย​จู่โจม​กำลัง​ข้าม​แม่น้ำโขง​ใน​หมอก ฮ.​ส่ง​ทีม​ลง​ที่​ริม​ตลิ่ง"
+
+msgid "Raise the scaffold yard in Laukkai"
+msgstr "สร้าง​ลาน​นั่งร้าน​ใน​เล่าก์ก่าย"
+
+msgid "Regional command bunker"
+msgstr "บังเกอร์​บัญชาการ​ภูมิภาค"
+
+msgid "Rescue the allied marines"
+msgstr "ช่วย​นาวิกโยธิน​พันธมิตร"
+
+msgid "Rescue the downed pilots"
+msgstr "ช่วย​นักบิน​ที่​ถูก​ยิง​ตก"
+
+msgid "Rescue the fishing crew"
+msgstr "ช่วย​ลูกเรือ​ประมง"
+
+msgid "Rescue the stranded boat crew"
+msgstr "ช่วย​ลูกเรือ​ที่​ติด​ค้าง"
+
+msgid "Rescue the village scouts"
+msgstr "ช่วย​หน่วย​สอดแนม​หมู่บ้าน"
+
+msgid "Secure the field clinic"
+msgstr "ยึด​คลินิก​สนาม"
+
+msgid "Seize the fuel depot"
+msgstr "ยึด​คลัง​เชื้อเพลิง"
+
+msgid "Seize the jade cache on the side street"
+msgstr "ยึด​คลัง​หยก​ใน​ซอย​ข้าง"
+
+msgid "Sink the joint picket"
+msgstr "จม​เรือ​ระวัง​ภัย​ร่วม"
+
+msgid "Sink the shore boats"
+msgstr "จม​เรือ​ริม​ฝั่ง"
+
+msgid "Smugglers want the rubies back. A counter-raid is coming up the border road. Our armour is on the way."
+msgstr "พวก​ลักลอบ​ต้องการ​ทับทิม​คืน หน่วย​ตีโต้​กำลัง​ขึ้น​มา​ตาม​ถนน​ชายแดน ยานเกราะ​ของ​เรา​กำลัง​มา"
+
+msgid "Space: jump to the event"
+msgstr "Space: ข้าม​ไป​ที่​เหตุการณ์"
+
+msgid "Stage %d done: %s"
+msgstr "ขั้น %d สำเร็จ: %s"
+
+msgid "Stage %d now: %s"
+msgstr "ขั้น %d ตอนนี้: %s"
+
+msgid "Stage %d/3: %s"
+msgstr "ขั้น %d/3: %s"
+
+msgid "Stage %d: %s"
+msgstr "ขั้น %d: %s"
+
+msgid "Stop the haze convoy"
+msgstr "หยุด​ขบวน​หมอก​ควัน"
+
+msgid "Stop the smuggler convoy before it crosses the bridge"
+msgstr "หยุด​ขบวน​ลักลอบ​ก่อน​ข้าม​สะพาน"
+
+msgid "Street ambush"
+msgstr "ซุ่ม​โจมตี​ใน​ถนน"
+
+msgid "Supply convoy"
+msgstr "ขบวน​เสบียง"
+
+msgid "Syndicate tower"
+msgstr "ตึก​ของ​แก๊ง"
+
+msgid "Tea station command"
+msgstr "กอง​บัญชาการ​สถานี​ชา"
+
+msgid "The bonus slipped away."
+msgstr "โบนัส​หลุด​มือ​ไป​แล้ว"
+
+msgid "The citadel command spire is open. Bring it down."
+msgstr "ยอด​หอ​บัญชาการ​ของ​ป้อม​ไร้​การ​ป้องกัน โค่น​มัน​ลง"
+
+msgid "The flagship is coming about. Sink it."
+msgstr "เรือ​ธง​กำลัง​หัน​ลำ จม​มัน"
+
+msgid "The fleet is turning to fight. Landing craft carry our marines."
+msgstr "กองเรือ​หัน​มา​สู้ เรือ​ยกพล​นำ​นาวิกโยธิน​ของ​เรา​มา"
+
+msgid "The harbour fort is the last gun line. Silence it."
+msgstr "ป้อม​ท่าเรือ​คือ​แนว​ปืน​สุดท้าย ทำให้​มัน​เงียบ"
+
+msgid "The haze flagship is in range. Sink it."
+msgstr "เรือ​ธง​หมอก​ควัน​อยู่​ใน​ระยะ​ยิง จม​มัน"
+
+msgid "The plateau command post is exposed. Destroy it."
+msgstr "กอง​บัญชาการ​บน​ที่ราบสูง​เปิด​โล่ง​แล้ว ทำลาย​มัน"
+
+msgid "The regional command bunker is exposed. Finish it."
+msgstr "บังเกอร์​บัญชาการ​ภูมิภาค​เปิด​โล่ง​แล้ว จัดการ​มัน"
+
+msgid "The ring boss is holed up in the river customs house. End it."
+msgstr "หัวหน้า​แก๊ง​หลบ​อยู่​ใน​ด่าน​ศุลกากร​ริม​แม่น้ำ ปิด​ฉาก​มัน"
+
+msgid "The syndicate director is in the server tower. Bring it down."
+msgstr "ผู้อำนวยการ​แก๊ง​อยู่​ใน​ตึก​เซิร์ฟเวอร์ โค่น​มัน​ลง"
+
+msgid "Their command post sits in the old casino. Take it down."
+msgstr "กอง​บัญชาการ​ของ​พวก​มัน​อยู่​ใน​คาสิโน​เก่า โค่น​มัน​ลง"
+
+msgid "Their floating fortress has moved in. Sink it."
+msgstr "ป้อม​ลอยน้ำ​ของ​พวก​มัน​เข้า​มา​แล้ว จม​มัน"
+
+msgid "Their forward command is dug in at the tea station. Take it."
+msgstr "กอง​บัญชาการ​แนว​หน้า​ของ​พวก​มัน​ตั้ง​มั่น​ที่​สถานี​ชา ยึด​มัน"
+
+msgid "Their island battery covers the strait. Destroy it."
+msgstr "ป้อม​ปืน​บน​เกาะ​ของ​พวก​มัน​คุม​ช่องแคบ ทำลาย​มัน"
+
+msgid "Their last wave hits the radar now. Hold for thirty seconds."
+msgstr "ระลอก​สุดท้าย​ของ​พวก​มัน​กำลัง​ถล่ม​เรดาร์ ยืน​หยัด​สามสิบ​วินาที"
+
+msgid "Their safe house is in the old market hall. Clear it."
+msgstr "บ้าน​ลับ​ของ​พวก​มัน​อยู่​ใน​ห้อง​โถง​ตลาด​เก่า เคลียร์​มัน"
+
+msgid "They are throwing everything at the radar. Hold for thirty seconds."
+msgstr "พวก​มัน​ทุ่ม​ทุก​อย่าง​ใส่​เรดาร์ ยืน​หยัด​สามสิบ​วินาที"
+
+msgid "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
+msgstr "เรือ​สาม​ลำตัว​กำลัง​วน​รอบ​เรือ​ข้ามฟาก เรือ​ยกพล​กำลัง​นำ​กำลัง​เสริม​มา"

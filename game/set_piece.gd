@@ -10,6 +10,7 @@ extends Node
 
 const Clips = preload("res://game/match_audio.gd")
 const Cameos = preload("res://game/match_cameos.gd")
+const StageView = preload("res://game/stage_view.gd")
 
 var mission_id: String = ""
 var stage: int = 0
@@ -74,7 +75,13 @@ func open(host: Node3D, id: String) -> void:
 	mission_id = id
 	_cast()
 	_arm_plan()
+	var arc: SMStages = _stages()
+	if arc != null:
+		has_bonus = true
+		bonus_at = arc.bonus_at()
 	_chrome()
+	if arc != null:
+		StageView.attach(host, arc, speaker_name)
 	if beat_ids.has("bridge"):
 		_span()
 	_say(_line("open"), "", "open")
@@ -87,6 +94,9 @@ func drive(delta: float) -> void:
 	_retry_voice()
 	if not _armed:
 		_arm_camera()
+	var view: Node = _host.get_node_or_null("StageView")
+	if view != null:
+		view.call("drive", delta)
 	var story: SMStory = _host.get("story") as SMStory
 	if story != null and (story.done or story.lost):
 		_outro(delta)
@@ -563,7 +573,7 @@ func _chrome() -> void:
 	_bonus.name = "SetBonus"
 	_bonus.position = Vector2(96.0, 80.0)
 	_bonus.size = Vector2(600.0, 24.0)
-	_bonus.text = "Bonus: reach the side cache" if has_bonus else ""
+	_bonus.text = _stages().bonus_line() if _stages() != null else ("Bonus: reach the side cache" if has_bonus else "")
 	_bonus.visible = has_bonus
 	_bonus.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_bonus.add_theme_font_size_override("font_size", 16)
@@ -711,7 +721,19 @@ func _wagon() -> RTSUnit:
 		return null
 	return story.wagon()
 
+func _stages() -> SMStages:
+	if _host == null:
+		return null
+	var story: SMStory = _host.get("story") as SMStory
+	return story.stages if story != null else null
+
 func _bonus_check() -> void:
+	var arc: SMStages = _stages()
+	if arc != null:
+		bonus_done = arc.bonus_state == "done"
+		if _bonus != null:
+			_bonus.text = arc.bonus_line()
+		return
 	if not has_bonus or bonus_done:
 		return
 	var story: SMStory = _host.get("story") as SMStory

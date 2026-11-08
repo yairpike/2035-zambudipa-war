@@ -3811,3 +3811,471 @@ msgstr "too close to another building"
 #: addons/rts_advanced/sm_side.gd:221
 msgid "too far for the yard to drive"
 msgstr "too far for the yard to drive"
+
+#: addons/rts_advanced/sm_stages.gd:120
+msgid "A second column is coming down the valley road. Our armour is moving up."
+msgstr "A second column is coming down the valley road. Our armour is moving up."
+
+#: addons/rts_advanced/sm_stages.gd:475
+msgid "A supply convoy is moving on the streets."
+msgstr "A supply convoy is moving on the streets."
+
+#: addons/rts_advanced/sm_stages.gd:265
+msgid "All stages clear"
+msgstr "All stages clear"
+
+#: addons/rts_advanced/sm_stages.gd:374
+msgid "Ambush! Enemy troops in the side streets."
+msgstr "Ambush! Enemy troops in the side streets."
+
+#: addons/rts_advanced/sm_stages.gd:399
+msgid "An armoured column is rolling in on the road."
+msgstr "An armoured column is rolling in on the road."
+
+#: addons/rts_advanced/sm_stages.gd:100
+msgid "An armoured push is coming down the river road. Our column is moving up."
+msgstr "An armoured push is coming down the river road. Our column is moving up."
+
+#: addons/rts_advanced/sm_stages.gd:142
+msgid "Bo Mya is counter-attacking across the channel. Landing craft are bringing marines."
+msgstr "Bo Mya is counter-attacking across the channel. Landing craft are bringing marines."
+
+#: addons/rts_advanced/sm_stages.gd:143
+msgid "Bo Mya's compound"
+msgstr "Bo Mya's compound"
+
+#: addons/rts_advanced/sm_stages.gd:104
+msgid "Boats are landing raiders under the haze. Our landing craft are coming in."
+msgstr "Boats are landing raiders under the haze. Our landing craft are coming in."
+
+#: addons/rts_advanced/sm_stages.gd:548
+msgid "Bonus complete. Air-strike cooldowns are reset."
+msgstr "Bonus complete. Air-strike cooldowns are reset."
+
+#: addons/rts_advanced/sm_stages.gd:522
+msgid "Bonus complete. Bonus funds: +600 credits."
+msgstr "Bonus complete. Bonus funds: +600 credits."
+
+#: addons/rts_advanced/sm_stages.gd:531
+msgid "Bonus complete. Reinforcements are on the way."
+msgstr "Bonus complete. Reinforcements are on the way."
+
+#: addons/rts_advanced/sm_stages.gd:540
+msgid "Bonus complete. Your troops earn a veterancy crate."
+msgstr "Bonus complete. Your troops earn a veterancy crate."
+
+#: addons/rts_advanced/sm_stages.gd:277
+msgid "Bonus done: %s"
+msgstr "Bonus done: %s"
+
+#: addons/rts_advanced/sm_stages.gd:279
+msgid "Bonus failed: %s"
+msgstr "Bonus failed: %s"
+
+#: game/stage_view.gd:101
+msgid "Bonus objective"
+msgstr "Bonus objective"
+
+#: addons/rts_advanced/sm_stages.gd:280
+msgid "Bonus: %s"
+msgstr "Bonus: %s"
+
+#: addons/rts_advanced/sm_stages.gd:132
+msgid "Break the citadel guard"
+msgstr "Break the citadel guard"
+
+#: addons/rts_advanced/sm_stages.gd:257
+msgid "Break the counter-attack (%d)"
+msgstr "Break the counter-attack (%d)"
+
+#: addons/rts_advanced/sm_stages.gd:140
+msgid "Capture the bazaar"
+msgstr "Capture the bazaar"
+
+#: addons/rts_advanced/sm_stages.gd:104
+msgid "Capture the hydro radar"
+msgstr "Capture the hydro radar"
+
+#: addons/rts_advanced/sm_stages.gd:102
+msgid "Capture the relay mast"
+msgstr "Capture the relay mast"
+
+#: addons/rts_advanced/sm_stages.gd:77
+msgid "Casino command post"
+msgstr "Casino command post"
+
+#: addons/rts_advanced/sm_stages.gd:132
+msgid "Citadel armour is counter-attacking along the ring road. Our column is coming in."
+msgstr "Citadel armour is counter-attacking along the ring road. Our column is coming in."
+
+#: addons/rts_advanced/sm_stages.gd:183
+msgid "Citadel guard"
+msgstr "Citadel guard"
+
+#: addons/rts_advanced/sm_stages.gd:138
+msgid "Claim a site in the Golden Triangle"
+msgstr "Claim a site in the Golden Triangle"
+
+#: addons/rts_advanced/sm_stages.gd:142
+msgid "Claim a site on the channel"
+msgstr "Claim a site on the channel"
+
+#: addons/rts_advanced/sm_stages.gd:80
+msgid "Clear the caravan ambush"
+msgstr "Clear the caravan ambush"
+
+#: addons/rts_advanced/sm_stages.gd:84
+msgid "Clear the compound garrison"
+msgstr "Clear the compound garrison"
+
+#: addons/rts_advanced/sm_stages.gd:100
+msgid "Clear the radar garrison"
+msgstr "Clear the radar garrison"
+
+#: addons/rts_advanced/sm_stages.gd:92
+msgid "Clear the shore guns"
+msgstr "Clear the shore guns"
+
+#: addons/rts_advanced/sm_stages.gd:264
+msgid "Clear the street ambush (%d)"
+msgstr "Clear the street ambush (%d)"
+
+#: addons/rts_advanced/sm_stages.gd:165
+msgid "Climax"
+msgstr "Climax"
+
+#: game/stage_view.gd:11
+msgid "Command"
+msgstr "Command"
+
+#: addons/rts_advanced/sm_stages.gd:133
+msgid "Command spire"
+msgstr "Command spire"
+
+#: addons/rts_advanced/sm_stages.gd:316
+msgid "Counter-attack"
+msgstr "Counter-attack"
+
+#: addons/rts_advanced/sm_stages.gd:81
+msgid "Customs house boss"
+msgstr "Customs house boss"
+
+#: addons/rts_advanced/sm_stages.gd:262
+msgid "Destroy %s"
+msgstr "Destroy %s"
+
+#: addons/rts_advanced/sm_stages.gd:126
+msgid "Destroy the battery radar jammer"
+msgstr "Destroy the battery radar jammer"
+
+#: addons/rts_advanced/sm_stages.gd:134
+msgid "Destroy the citadel power grid"
+msgstr "Destroy the citadel power grid"
+
+#: addons/rts_advanced/sm_stages.gd:90
+msgid "Destroy the relay jammer"
+msgstr "Destroy the relay jammer"
+
+#: addons/rts_advanced/sm_stages.gd:88
+msgid "Drop the EW towers"
+msgstr "Drop the EW towers"
+
+#: addons/rts_advanced/sm_stages.gd:419
+msgid "Enemy commanders are switching weapon modes."
+msgstr "Enemy commanders are switching weapon modes."
+
+#: addons/rts_advanced/sm_stages.gd:164
+msgid "Escalation"
+msgstr "Escalation"
+
+#: addons/rts_advanced/sm_stages.gd:124
+msgid "Fire the beam at the phantom"
+msgstr "Fire the beam at the phantom"
+
+#: addons/rts_advanced/sm_stages.gd:129
+msgid "Floating fortress"
+msgstr "Floating fortress"
+
+#: addons/rts_advanced/sm_stages.gd:162
+msgid "Foothold"
+msgstr "Foothold"
+
+#: addons/rts_advanced/sm_stages.gd:86
+msgid "Free the captive runners"
+msgstr "Free the captive runners"
+
+#: addons/rts_advanced/sm_stages.gd:120
+msgid "Freeze the tank column"
+msgstr "Freeze the tank column"
+
+#: addons/rts_advanced/sm_stages.gd:128
+msgid "Get the ferry across"
+msgstr "Get the ferry across"
+
+#: addons/rts_advanced/sm_stages.gd:84
+msgid "Guards from the next block are pushing in. Choppers are dropping a team on your flank."
+msgstr "Guards from the next block are pushing in. Choppers are dropping a team on your flank."
+
+#: addons/rts_advanced/sm_stages.gd:108
+msgid "Gunboats are counter-attacking the reef. Landing craft bring our crews."
+msgstr "Gunboats are counter-attacking the reef. Landing craft bring our crews."
+
+#: addons/rts_advanced/sm_stages.gd:93
+msgid "Harbour fort"
+msgstr "Harbour fort"
+
+#: addons/rts_advanced/sm_stages.gd:105
+msgid "Haze flagship"
+msgstr "Haze flagship"
+
+#: addons/rts_advanced/sm_stages.gd:395
+msgid "Helicopters are dropping reinforcements."
+msgstr "Helicopters are dropping reinforcements."
+
+#: addons/rts_advanced/sm_stages.gd:142
+msgid "His command compound is exposed. Destroy it."
+msgstr "His command compound is exposed. Destroy it."
+
+#: addons/rts_advanced/sm_stages.gd:138
+msgid "His command compound is open. Destroy it."
+msgstr "His command compound is open. Destroy it."
+
+#: addons/rts_advanced/sm_stages.gd:260
+msgid "Hold the line: %d seconds (%d attackers)"
+msgstr "Hold the line: %d seconds (%d attackers)"
+
+#: addons/rts_advanced/sm_stages.gd:96
+msgid "Hunt the jammer ghost"
+msgstr "Hunt the jammer ghost"
+
+#: addons/rts_advanced/sm_stages.gd:122
+msgid "Intercept the defoliant sprayer"
+msgstr "Intercept the defoliant sprayer"
+
+#: addons/rts_advanced/sm_stages.gd:138
+msgid "Iskandar is sending a column down the river road. Our armour is coming in from the west."
+msgstr "Iskandar is sending a column down the river road. Our armour is coming in from the west."
+
+#: addons/rts_advanced/sm_stages.gd:139
+msgid "Iskandar's compound"
+msgstr "Iskandar's compound"
+
+#: addons/rts_advanced/sm_stages.gd:109
+msgid "Island battery"
+msgstr "Island battery"
+
+#: addons/rts_advanced/sm_stages.gd:113
+msgid "Joint flagship"
+msgstr "Joint flagship"
+
+#: addons/rts_advanced/sm_stages.gd:88
+msgid "Junta armour is counter-attacking along the highway. Allied helicopters are inbound."
+msgstr "Junta armour is counter-attacking along the highway. Allied helicopters are inbound."
+
+#: addons/rts_advanced/sm_stages.gd:76
+msgid "Junta trucks are rolling down the market street. Hold the yard. Gunships are inbound."
+msgstr "Junta trucks are rolling down the market street. Hold the yard. Gunships are inbound."
+
+#: addons/rts_advanced/sm_stages.gd:397
+msgid "Landing craft are coming ashore."
+msgstr "Landing craft are coming ashore."
+
+#: addons/rts_advanced/sm_stages.gd:97
+msgid "Market hall safe house"
+msgstr "Market hall safe house"
+
+#: addons/rts_advanced/sm_stages.gd:96
+msgid "More ghosts are slipping through the rubber groves. Air cavalry is dropping in to help."
+msgstr "More ghosts are slipping through the rubber groves. Air cavalry is dropping in to help."
+
+#: addons/rts_advanced/sm_stages.gd:124
+msgid "Mortar teams are moving through the jar fields. Gunships are dropping support."
+msgstr "Mortar teams are moving through the jar fields. Gunships are dropping support."
+
+#: game/stage_view.gd:168
+msgid "Objectives"
+msgstr "Objectives"
+
+#: addons/rts_advanced/sm_stages.gd:92
+msgid "Patrol boats are closing on the channel. Landing craft are bringing marines in."
+msgstr "Patrol boats are closing on the channel. Landing craft are bringing marines in."
+
+#: addons/rts_advanced/sm_stages.gd:453
+msgid "Pinned squad"
+msgstr "Pinned squad"
+
+#: addons/rts_advanced/sm_stages.gd:125
+msgid "Plateau command post"
+msgstr "Plateau command post"
+
+#: addons/rts_advanced/sm_stages.gd:116
+msgid "Raiders are crossing the Mekong in the fog. Helicopters drop a team on the bank."
+msgstr "Raiders are crossing the Mekong in the fog. Helicopters drop a team on the bank."
+
+#: addons/rts_advanced/sm_stages.gd:76
+msgid "Raise the scaffold yard in Laukkai"
+msgstr "Raise the scaffold yard in Laukkai"
+
+#: addons/rts_advanced/sm_stages.gd:89
+msgid "Regional command bunker"
+msgstr "Regional command bunker"
+
+#: addons/rts_advanced/sm_stages.gd:144
+msgid "Rescue the allied marines"
+msgstr "Rescue the allied marines"
+
+#: addons/rts_advanced/sm_stages.gd:114
+msgid "Rescue the downed pilots"
+msgstr "Rescue the downed pilots"
+
+#: addons/rts_advanced/sm_stages.gd:130
+msgid "Rescue the fishing crew"
+msgstr "Rescue the fishing crew"
+
+#: addons/rts_advanced/sm_stages.gd:94
+msgid "Rescue the stranded boat crew"
+msgstr "Rescue the stranded boat crew"
+
+#: addons/rts_advanced/sm_stages.gd:98
+msgid "Rescue the village scouts"
+msgstr "Rescue the village scouts"
+
+#: addons/rts_advanced/sm_stages.gd:118
+msgid "Secure the field clinic"
+msgstr "Secure the field clinic"
+
+#: addons/rts_advanced/sm_stages.gd:110
+msgid "Seize the fuel depot"
+msgstr "Seize the fuel depot"
+
+#: addons/rts_advanced/sm_stages.gd:78
+msgid "Seize the jade cache on the side street"
+msgstr "Seize the jade cache on the side street"
+
+#: addons/rts_advanced/sm_stages.gd:112
+msgid "Sink the joint picket"
+msgstr "Sink the joint picket"
+
+#: addons/rts_advanced/sm_stages.gd:108
+msgid "Sink the shore boats"
+msgstr "Sink the shore boats"
+
+#: addons/rts_advanced/sm_stages.gd:80
+msgid "Smugglers want the rubies back. A counter-raid is coming up the border road. Our armour is on the way."
+msgstr "Smugglers want the rubies back. A counter-raid is coming up the border road. Our armour is on the way."
+
+#: game/stage_view.gd:139
+msgid "Space: jump to the event"
+msgstr "Space: jump to the event"
+
+#: game/stage_view.gd:196
+msgid "Stage %d done: %s"
+msgstr "Stage %d done: %s"
+
+#: game/stage_view.gd:199
+msgid "Stage %d now: %s"
+msgstr "Stage %d now: %s"
+
+#: addons/rts_advanced/sm_stages.gd:270
+msgid "Stage %d/3: %s"
+msgstr "Stage %d/3: %s"
+
+#: game/stage_view.gd:202
+msgid "Stage %d: %s"
+msgstr "Stage %d: %s"
+
+#: addons/rts_advanced/sm_stages.gd:106
+msgid "Stop the haze convoy"
+msgstr "Stop the haze convoy"
+
+#: addons/rts_advanced/sm_stages.gd:82
+msgid "Stop the smuggler convoy before it crosses the bridge"
+msgstr "Stop the smuggler convoy before it crosses the bridge"
+
+#: addons/rts_advanced/sm_stages.gd:370
+msgid "Street ambush"
+msgstr "Street ambush"
+
+#: addons/rts_advanced/sm_stages.gd:461
+msgid "Supply convoy"
+msgstr "Supply convoy"
+
+#: addons/rts_advanced/sm_stages.gd:85
+msgid "Syndicate tower"
+msgstr "Syndicate tower"
+
+#: addons/rts_advanced/sm_stages.gd:121
+msgid "Tea station command"
+msgstr "Tea station command"
+
+#: addons/rts_advanced/sm_stages.gd:302
+msgid "The bonus slipped away."
+msgstr "The bonus slipped away."
+
+#: addons/rts_advanced/sm_stages.gd:132
+msgid "The citadel command spire is open. Bring it down."
+msgstr "The citadel command spire is open. Bring it down."
+
+#: addons/rts_advanced/sm_stages.gd:112
+msgid "The flagship is coming about. Sink it."
+msgstr "The flagship is coming about. Sink it."
+
+#: addons/rts_advanced/sm_stages.gd:112
+msgid "The fleet is turning to fight. Landing craft carry our marines."
+msgstr "The fleet is turning to fight. Landing craft carry our marines."
+
+#: addons/rts_advanced/sm_stages.gd:92
+msgid "The harbour fort is the last gun line. Silence it."
+msgstr "The harbour fort is the last gun line. Silence it."
+
+#: addons/rts_advanced/sm_stages.gd:104
+msgid "The haze flagship is in range. Sink it."
+msgstr "The haze flagship is in range. Sink it."
+
+#: addons/rts_advanced/sm_stages.gd:124
+msgid "The plateau command post is exposed. Destroy it."
+msgstr "The plateau command post is exposed. Destroy it."
+
+#: addons/rts_advanced/sm_stages.gd:88
+msgid "The regional command bunker is exposed. Finish it."
+msgstr "The regional command bunker is exposed. Finish it."
+
+#: addons/rts_advanced/sm_stages.gd:80
+msgid "The ring boss is holed up in the river customs house. End it."
+msgstr "The ring boss is holed up in the river customs house. End it."
+
+#: addons/rts_advanced/sm_stages.gd:84
+msgid "The syndicate director is in the server tower. Bring it down."
+msgstr "The syndicate director is in the server tower. Bring it down."
+
+#: addons/rts_advanced/sm_stages.gd:76
+msgid "Their command post sits in the old casino. Take it down."
+msgstr "Their command post sits in the old casino. Take it down."
+
+#: addons/rts_advanced/sm_stages.gd:128
+msgid "Their floating fortress has moved in. Sink it."
+msgstr "Their floating fortress has moved in. Sink it."
+
+#: addons/rts_advanced/sm_stages.gd:120
+msgid "Their forward command is dug in at the tea station. Take it."
+msgstr "Their forward command is dug in at the tea station. Take it."
+
+#: addons/rts_advanced/sm_stages.gd:108
+msgid "Their island battery covers the strait. Destroy it."
+msgstr "Their island battery covers the strait. Destroy it."
+
+#: addons/rts_advanced/sm_stages.gd:116
+msgid "Their last wave hits the radar now. Hold for thirty seconds."
+msgstr "Their last wave hits the radar now. Hold for thirty seconds."
+
+#: addons/rts_advanced/sm_stages.gd:96
+msgid "Their safe house is in the old market hall. Clear it."
+msgstr "Their safe house is in the old market hall. Clear it."
+
+#: addons/rts_advanced/sm_stages.gd:100
+msgid "They are throwing everything at the radar. Hold for thirty seconds."
+msgstr "They are throwing everything at the radar. Hold for thirty seconds."
+
+#: addons/rts_advanced/sm_stages.gd:128
+msgid "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
+msgstr "Trimarans are circling the ferry. Landing craft are bringing reinforcements."

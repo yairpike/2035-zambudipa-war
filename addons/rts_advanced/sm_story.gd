@@ -70,6 +70,9 @@ var _cryo_used: bool = false
 var _trio_used: bool = false
 var _alive: Dictionary[String, int] = {}
 var _caravan: RTSUnit
+var _picket: RTSUnit
+## The mission's Red Alert 3 style arc: foothold, escalation, climax and the bonus. The mission is won only when it is clear.
+var stages: SMStages
 
 static func ending_of(id: String) -> String:
 	if id == "kokang":
@@ -228,6 +231,7 @@ func bind_mission(p_host: Node3D, id: String, p_field: SMPointer, p_side: SMSide
 	elif id == "wrath_of_the_garuda":
 		_fleet = true
 		_mount_protocols(layer)
+		_picket = _first_enemy()
 		_tag_raider("fleet", "Joint picket", 150.0, 6.5, 8.0, true)
 		_move_raider(Vector3(11.0, 0.0, -4.0))
 		_spawn_look(SMPointer.ENEMY, Vector3(12.0, 0.0, 4.0), &"sampan", "fleet", "NMRF trimaran", 150.0, 6.5, 8.0, true, "nmrf")
@@ -262,6 +266,7 @@ func bind_mission(p_host: Node3D, id: String, p_field: SMPointer, p_side: SMSide
 		_slab("IonCollider", Vector3(12.0, 2.2, 3.0), Vector3(1.6, 4.4, 1.6), Color(0.25, 0.55, 0.72))
 		_slab("SlagVacuum", Vector3(12.0, 2.2, -3.0), Vector3(1.6, 4.4, 1.6), Color(0.55, 0.28, 0.22))
 	_thicken()
+	_bind_stages(grid, Vector3(-6.0, 0.0, -2.0), roster.economy if roster != null else null)
 
 func bind_raid(p_host: Node3D, p_raid: SMMission, p_field: SMPointer, p_side: SMSide) -> void:
 	host = p_host
@@ -273,8 +278,63 @@ func bind_raid(p_host: Node3D, p_raid: SMMission, p_field: SMPointer, p_side: SM
 	goods = p_raid.goods
 	_ruby = true
 	_thicken()
+	var raid_grid: SMDomainGrid = host.get("grid") as SMDomainGrid if host != null else null
+	var raid_rally: Vector3 = side.yard.center if side != null else Vector3.ZERO
+	var raid_roster: SMRoster = host.get("roster") as SMRoster if host != null else null
+	_bind_stages(raid_grid, raid_rally, raid_roster.economy if raid_roster != null else p_raid.economy)
+
+func _bind_stages(grid: SMDomainGrid, rally: Vector3, economy: RTSEconomy) -> void:
+	stages = SMStages.new()
+	stages.foe_hp = foe_hp
+	stages.foe_dmg = foe_dmg
+	stages.protocols = protocols
+	if not stages.bind(mission_id, field, economy, rally, grid, SMCampaign.player_faction(mission_id), SMCampaign.enemy_faction(mission_id)):
+		stages = null
+
+## The stage-1 test for each mission: the opening objective the escalation waits on.
+func foothold_met() -> bool:
+	if raid != null:
+		return side != null and side.yard.finished.has(&"scaffold_yard")
+	if _towers:
+		return _cleared("tower")
+	if _fleet:
+		return not _living(_picket)
+	if _column:
+		return _column_frozen >= 1
+	if _supers:
+		return true
+	if _beam:
+		return _beamed
+	if _kill:
+		return not _living_duty("ghost")
+	if _cross or _packer or _cyber or _ruby:
+		return _cleared("clear")
+	if _haze:
+		return tech != null and tech.reveals_water(SMPointer.PLAYER)
+	if _radar:
+		return _cleared("clear")
+	if _hold and mission_id == "tonle_sap":
+		return ferry_across
+	return true
+
+func _stage_tick(delta: float) -> void:
+	if stages == null:
+		return
+	stages.protocols = protocols
+	if bonus_failed:
+		stages.fail_bonus()
+	stages.tick(delta, foothold_met())
+
+func _stages_clear() -> bool:
+	return stages == null or not stages.active() or stages.cleared()
 
 func progress() -> String:
+	var core: String = _core_progress()
+	if stages != null and stages.active():
+		return "%s\n%s" % [stages.progress_line(), core]
+	return core
+
+func _core_progress() -> String:
 	if raid != null:
 		return _raid_line()
 	if _towers:
@@ -344,6 +404,10 @@ func progress() -> String:
 func beacon() -> Vector3:
 	if done or lost or field == null:
 		return Vector3.INF
+	if stages != null:
+		var stage_at: Vector3 = stages.beacon()
+		if stage_at != Vector3.INF:
+			return stage_at
 	if raid != null:
 		return _raid_beacon()
 	if _towers:
@@ -459,7 +523,8 @@ func tick(delta: float) -> bool:
 	_spray_tick()
 	_ferry_tick(delta)
 	_count_tick(delta)
-	if not _ready():
+	_stage_tick(delta)
+	if not (_ready() and _stages_clear()):
 		if not _company_alive():
 			lost = true
 			loss = "the company is wiped"
@@ -477,7 +542,7 @@ func tick(delta: float) -> bool:
 	return true
 
 func _tick_raid(delta: float) -> bool:
-	if raid.won:
+	if raid.won and _stages_clear():
 		done = true
 		return false
 	_occupy(delta)
@@ -489,11 +554,12 @@ func _tick_raid(delta: float) -> bool:
 	if side != null and side.yard.finished.has(&"scaffold_yard") and not raid.yard.finished.has(&"scaffold_yard"):
 		raid.yard.finished.append(&"scaffold_yard")
 		raid.yard.drained = maxi(raid.yard.drained, 1)
+	_stage_tick(delta)
 	if not _company_alive():
 		lost = true
 		loss = "the company is wiped"
 		return false
-	if _living_duty("recon"):
+	if _living_duty("recon") or not _stages_clear():
 		return false
 	if not raid.try_win():
 		return false

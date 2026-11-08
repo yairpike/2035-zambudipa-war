@@ -3022,3 +3022,354 @@ msgstr "အခြား​အဆောက်အအုံ​နှင့် န�
 
 msgid "too far for the yard to drive"
 msgstr "စခန်း​ယာဉ် မောင်း​သွား​ရန် ဝေး​လွန်း​သည်"
+
+msgid "A second column is coming down the valley road. Our armour is moving up."
+msgstr "ဒုတိယ​တပ်တန်း​သည်​ချိုင့်ဝှမ်း​လမ်း​အတိုင်း​ဆင်း​လာ​နေ​သည်။ ကျွန်ုပ်တို့​၏​သံချပ်ကာ​တပ်​ချီ​တက်​နေ​သည်။"
+
+msgid "A supply convoy is moving on the streets."
+msgstr "ထောက်ပံ့ရေး​ယာဉ်တန်း​လမ်း​များ​ပေါ်​တွင်​ရွေ့​နေ​သည်။"
+
+msgid "All stages clear"
+msgstr "အဆင့်​အားလုံး​ပြီး​ပြီ"
+
+msgid "Ambush! Enemy troops in the side streets."
+msgstr "ချုံခို​တိုက်ခိုက်​မှု! ရန်သူ​တပ်​များ​လမ်းကြား​ထဲ​တွင်​ရှိ​သည်။"
+
+msgid "An armoured column is rolling in on the road."
+msgstr "သံချပ်ကာ​တပ်တန်း​လမ်း​အတိုင်း​ဝင်​လာ​နေ​သည်။"
+
+msgid "An armoured push is coming down the river road. Our column is moving up."
+msgstr "ရန်သူ​သံချပ်ကာ​တပ်​မြစ်​ကမ်း​လမ်း​အတိုင်း​ထိုး​လာ​နေ​သည်။ ကျွန်ုပ်တို့​၏​တပ်တန်း​ချီ​တက်​နေ​သည်။"
+
+msgid "Bo Mya is counter-attacking across the channel. Landing craft are bringing marines."
+msgstr "ဘိုမြ​သည်​ရေလက်ကြား​ကို​ဖြတ်​၍​ပြန်​တိုက်​နေ​သည်။ ကမ်းတက်​သင်္ဘော​များ​ရေတပ်​သူရဲ​များ​ကို​ခေါ်​လာ​နေ​သည်။"
+
+msgid "Bo Mya's compound"
+msgstr "ဘိုမြ​၏​ဝင်း"
+
+msgid "Boats are landing raiders under the haze. Our landing craft are coming in."
+msgstr "ရန်သူ​လှေ​များ​မြူခိုး​အောက်​တွင်​စီးနင်း​တပ်​များ​ကို​ကမ်း​တင်​နေ​သည်။ ကျွန်ုပ်တို့​၏​ကမ်းတက်​သင်္ဘော​များ​ဝင်​လာ​နေ​သည်။"
+
+msgid "Bonus complete. Air-strike cooldowns are reset."
+msgstr "ဆုကြေး​ပြီး​ပြီ။ လေကြောင်း​တိုက်ခိုက်​မှု​စောင့်ချိန်​များ​ကို​ပြန်​စ​ပြီ။"
+
+msgid "Bonus complete. Bonus funds: +600 credits."
+msgstr "ဆုကြေး​ပြီး​ပြီ။ ဆုကြေး​ငွေ: +600 ခရက်ဒစ်။"
+
+msgid "Bonus complete. Reinforcements are on the way."
+msgstr "ဆုကြေး​ပြီး​ပြီ။ အင်အား​ဖြည့်​တပ်​လာ​နေ​ပြီ။"
+
+msgid "Bonus complete. Your troops earn a veterancy crate."
+msgstr "ဆုကြေး​ပြီး​ပြီ။ သင့်​တပ်​များ​ဝါရင့်​သေတ္တာ​ရ​ပြီ။"
+
+msgid "Bonus done: %s"
+msgstr "ဆုကြေး​ပြီး: %s"
+
+msgid "Bonus failed: %s"
+msgstr "ဆုကြေး​မအောင်မြင်: %s"
+
+msgid "Bonus objective"
+msgstr "ဆုကြေး​ရည်မှန်းချက်"
+
+msgid "Bonus: %s"
+msgstr "ဆုကြေး: %s"
+
+msgid "Break the citadel guard"
+msgstr "ခံတပ်​အစောင့်​တပ်​ကို​ချိုး​ပါ"
+
+msgid "Break the counter-attack (%d)"
+msgstr "ပြန်​တိုက်​မှု​ကို​ချိုး​ပါ (%d)"
+
+msgid "Capture the bazaar"
+msgstr "ဈေး​ကို​သိမ်း​ပါ"
+
+msgid "Capture the hydro radar"
+msgstr "ရေ​ရေဒါ​ကို​သိမ်း​ပါ"
+
+msgid "Capture the relay mast"
+msgstr "ထပ်ဆင့်​လွှင့်​တိုင်​ကို​သိမ်း​ပါ"
+
+msgid "Casino command post"
+msgstr "ကာစီနို​ကွပ်ကဲ​ရေး​စခန်း"
+
+msgid "Citadel armour is counter-attacking along the ring road. Our column is coming in."
+msgstr "ခံတပ်​သံချပ်ကာ​တပ်​ပတ်​လမ်း​အတိုင်း​ပြန်​တိုက်​နေ​သည်။ ကျွန်ုပ်တို့​၏​တပ်တန်း​ဝင်​လာ​နေ​သည်။"
+
+msgid "Citadel guard"
+msgstr "ခံတပ်​အစောင့်"
+
+msgid "Claim a site in the Golden Triangle"
+msgstr "ရွှေ​တြိဂံ​တွင်​နေရာ​တစ်​ခု​သိမ်း​ပါ"
+
+msgid "Claim a site on the channel"
+msgstr "ရေလက်ကြား​ကမ်း​တွင်​နေရာ​တစ်​ခု​သိမ်း​ပါ"
+
+msgid "Clear the caravan ambush"
+msgstr "ကုန်တင်​တန်း​ချုံခို​တပ်​ကို​ရှင်း​ပါ"
+
+msgid "Clear the compound garrison"
+msgstr "ဝင်း​အစောင့်​တပ်​ကို​ရှင်း​ပါ"
+
+msgid "Clear the radar garrison"
+msgstr "ရေဒါ​အစောင့်​တပ်​ကို​ရှင်း​ပါ"
+
+msgid "Clear the shore guns"
+msgstr "ကမ်းခြေ​သေနတ်​များ​ကို​ရှင်း​ပါ"
+
+msgid "Clear the street ambush (%d)"
+msgstr "လမ်း​ချုံခို​တပ်​ကို​ရှင်း​ပါ (%d)"
+
+msgid "Climax"
+msgstr "အပြတ်​တိုက်ပွဲ"
+
+msgid "Command"
+msgstr "ကွပ်ကဲ​ရေး"
+
+msgid "Command spire"
+msgstr "ကွပ်ကဲ​ရေး​မျှော်စင်"
+
+msgid "Counter-attack"
+msgstr "ပြန်​တိုက်​တပ်"
+
+msgid "Customs house boss"
+msgstr "အကောက်ခွန်​ရုံး​ခေါင်းဆောင်"
+
+msgid "Destroy %s"
+msgstr "ဖျက်ဆီး​ပါ: %s"
+
+msgid "Destroy the battery radar jammer"
+msgstr "အမြောက်​ရေဒါ​နှောင့်ယှက်​စက်​ကို​ဖျက်ဆီး​ပါ"
+
+msgid "Destroy the citadel power grid"
+msgstr "ခံတပ်​လျှပ်စစ်​ကွန်ရက်​ကို​ဖျက်ဆီး​ပါ"
+
+msgid "Destroy the relay jammer"
+msgstr "ထပ်ဆင့်​နှောင့်ယှက်​စက်​ကို​ဖျက်ဆီး​ပါ"
+
+msgid "Drop the EW towers"
+msgstr "EW မျှော်စင်​များ​ကို​ဖြို​ပါ"
+
+msgid "Enemy commanders are switching weapon modes."
+msgstr "ရန်သူ​တပ်မှူး​များ​လက်နက်​မုဒ်​ပြောင်း​နေ​သည်။"
+
+msgid "Escalation"
+msgstr "တိုက်ပွဲ​မြင့်"
+
+msgid "Fire the beam at the phantom"
+msgstr "ဖန်တွမ်​ကို​အလင်းတန်း​ပစ်​ပါ"
+
+msgid "Floating fortress"
+msgstr "ရေပေါ်​ခံတပ်"
+
+msgid "Foothold"
+msgstr "ခြေကုပ်"
+
+msgid "Free the captive runners"
+msgstr "ဖမ်းဆီး​ခံ​ရ​သော​စာ​ပို့​သူ​များ​ကို​လွတ်​ပေး​ပါ"
+
+msgid "Freeze the tank column"
+msgstr "တင့်ကား​တပ်တန်း​ကို​အေးခဲ​စေ​ပါ"
+
+msgid "Get the ferry across"
+msgstr "ကူးတို့​ကို​ဖြတ်​ကူး​စေ​ပါ"
+
+msgid "Guards from the next block are pushing in. Choppers are dropping a team on your flank."
+msgstr "ဘေး​ရပ်ကွက်​မှ​အစောင့်​များ​တိုး​ဝင်​လာ​နေ​သည်။ ရဟတ်ယာဉ်​များ​သင့်​ဘေး​တွင်​အဖွဲ့​တစ်​ဖွဲ့​ချ​ပေး​နေ​သည်။"
+
+msgid "Gunboats are counter-attacking the reef. Landing craft bring our crews."
+msgstr "သေနတ်​လှေ​များ​သန္တာ​ကျောက်တန်း​ကို​ပြန်​တိုက်​နေ​သည်။ ကမ်းတက်​သင်္ဘော​များ​ကျွန်ုပ်တို့​၏​အဖွဲ့​များ​ကို​ခေါ်​လာ​သည်။"
+
+msgid "Harbour fort"
+msgstr "ဆိပ်ကမ်း​ခံတပ်"
+
+msgid "Haze flagship"
+msgstr "မြူခိုး​အလံ​သင်္ဘော"
+
+msgid "Helicopters are dropping reinforcements."
+msgstr "ရဟတ်ယာဉ်​များ​အင်အား​ဖြည့်​တပ်​ချ​ပေး​နေ​သည်။"
+
+msgid "His command compound is exposed. Destroy it."
+msgstr "သူ့​ကွပ်ကဲ​ရေး​ဝင်း​ပေါ်​နေ​ပြီ။ ဖျက်ဆီး​ပါ။"
+
+msgid "His command compound is open. Destroy it."
+msgstr "သူ့​ကွပ်ကဲ​ရေး​ဝင်း​ကာကွယ်​မှု​မဲ့​ပြီ။ ဖျက်ဆီး​ပါ။"
+
+msgid "Hold the line: %d seconds (%d attackers)"
+msgstr "စည်း​ကို​ထိန်း​ပါ: %d စက္ကန့် (တိုက်​သူ %d)"
+
+msgid "Hunt the jammer ghost"
+msgstr "နှောင့်ယှက်​သရဲ​ကို​လိုက်​ရှာ​ပါ"
+
+msgid "Intercept the defoliant sprayer"
+msgstr "အရွက်​ကြွေ​ဆေး​ဖျန်း​စက်​ကို​ကြား​ဖြတ်​ပါ"
+
+msgid "Iskandar is sending a column down the river road. Our armour is coming in from the west."
+msgstr "အစ္စကန္ဒါ​သည်​မြစ်​ကမ်း​လမ်း​အတိုင်း​တပ်တန်း​တစ်​ခု​ပို့​နေ​သည်။ ကျွန်ုပ်တို့​၏​သံချပ်ကာ​တပ်​အနောက်​ဘက်​မှ​ဝင်​လာ​နေ​သည်။"
+
+msgid "Iskandar's compound"
+msgstr "အစ္စကန္ဒါ​၏​ဝင်း"
+
+msgid "Island battery"
+msgstr "ကျွန်း​အမြောက်​စခန်း"
+
+msgid "Joint flagship"
+msgstr "ပူးတွဲ​အလံ​သင်္ဘော"
+
+msgid "Junta armour is counter-attacking along the highway. Allied helicopters are inbound."
+msgstr "စစ်ကောင်စီ​သံချပ်ကာ​တပ်​အဝေးပြေး​လမ်း​အတိုင်း​ပြန်​တိုက်​နေ​သည်။ မဟာမိတ်​ရဟတ်ယာဉ်​များ​လာ​နေ​သည်။"
+
+msgid "Junta trucks are rolling down the market street. Hold the yard. Gunships are inbound."
+msgstr "စစ်ကောင်စီ​ထရပ်ကား​များ​ဈေး​လမ်း​အတိုင်း​ဆင်း​လာ​နေ​သည်။ စခန်း​ကို​ထိန်း​ပါ။ တိုက်ခိုက်​ရေး​ရဟတ်ယာဉ်​များ​လာ​နေ​သည်။"
+
+msgid "Landing craft are coming ashore."
+msgstr "ကမ်းတက်​သင်္ဘော​များ​ကမ်း​ကပ်​နေ​သည်။"
+
+msgid "Market hall safe house"
+msgstr "ဈေး​ခန်းမ​လုံခြုံ​ရေး​အိမ်"
+
+msgid "More ghosts are slipping through the rubber groves. Air cavalry is dropping in to help."
+msgstr "သရဲ​များ​ထပ်​၍​ရော်ဘာ​ခြံ​ကို​ဖြတ်​ဝင်​လာ​နေ​သည်။ လေ​ကြောင်း​မြင်းတပ်​ကူညီ​ရန်​ဆင်း​လာ​နေ​သည်။"
+
+msgid "Mortar teams are moving through the jar fields. Gunships are dropping support."
+msgstr "စိန်ပြောင်း​အဖွဲ့​များ​ကျောက်အိုး​ကွင်း​ကို​ဖြတ်​သွား​နေ​သည်။ တိုက်ခိုက်​ရေး​ရဟတ်ယာဉ်​များ​အကူ​တပ်​ချ​ပေး​နေ​သည်။"
+
+msgid "Objectives"
+msgstr "ရည်မှန်းချက်​များ"
+
+msgid "Patrol boats are closing on the channel. Landing craft are bringing marines in."
+msgstr "ကင်း​လှေ​များ​ရေလက်ကြား​ကို​နီး​ကပ်​လာ​နေ​သည်။ ကမ်းတက်​သင်္ဘော​များ​ရေတပ်​သူရဲ​များ​ကို​ခေါ်​လာ​နေ​သည်။"
+
+msgid "Pinned squad"
+msgstr "ပိတ်မိ​နေ​သော​တပ်စု"
+
+msgid "Plateau command post"
+msgstr "ကုန်းပြင်မြင့်​ကွပ်ကဲ​ရေး​စခန်း"
+
+msgid "Raiders are crossing the Mekong in the fog. Helicopters drop a team on the bank."
+msgstr "စီးနင်း​တပ်​များ​မြူ​ထဲ​တွင်​မဲခေါင်​မြစ်​ကို​ဖြတ်​ကူး​နေ​သည်။ ရဟတ်ယာဉ်​များ​ကမ်း​ပေါ်​တွင်​အဖွဲ့​တစ်​ဖွဲ့​ချ​ပေး​သည်။"
+
+msgid "Raise the scaffold yard in Laukkai"
+msgstr "လောက်ကိုင်​တွင်​ငြမ်း​ကွင်း​ကို​ဆောက်​ပါ"
+
+msgid "Regional command bunker"
+msgstr "ဒေသ​ကွပ်ကဲ​ရေး​မြေအောက်​ခံကတုတ်"
+
+msgid "Rescue the allied marines"
+msgstr "မဟာမိတ်​ရေတပ်​သူရဲ​များ​ကို​ကယ်​ပါ"
+
+msgid "Rescue the downed pilots"
+msgstr "ပစ်​ချ​ခံ​ရ​သော​လေယာဉ်မှူး​များ​ကို​ကယ်​ပါ"
+
+msgid "Rescue the fishing crew"
+msgstr "ငါးဖမ်း​သင်္ဘော​သား​များ​ကို​ကယ်​ပါ"
+
+msgid "Rescue the stranded boat crew"
+msgstr "ပိတ်မိ​နေ​သော​လှေ​သား​များ​ကို​ကယ်​ပါ"
+
+msgid "Rescue the village scouts"
+msgstr "ရွာ​ကင်းထောက်​များ​ကို​ကယ်​ပါ"
+
+msgid "Secure the field clinic"
+msgstr "ကွင်း​ဆေးခန်း​ကို​ထိန်း​ပါ"
+
+msgid "Seize the fuel depot"
+msgstr "လောင်စာ​ဂိုဒေါင်​ကို​သိမ်း​ပါ"
+
+msgid "Seize the jade cache on the side street"
+msgstr "လမ်းကြား​ရှိ​ကျောက်စိမ်း​သိုလှောင်​ရာ​ကို​သိမ်း​ပါ"
+
+msgid "Sink the joint picket"
+msgstr "ပူးတွဲ​ကင်း​သင်္ဘော​ကို​နစ်​စေ​ပါ"
+
+msgid "Sink the shore boats"
+msgstr "ကမ်းခြေ​လှေ​များ​ကို​နစ်​စေ​ပါ"
+
+msgid "Smugglers want the rubies back. A counter-raid is coming up the border road. Our armour is on the way."
+msgstr "မှောင်ခို​သမား​များ​ပတ္တမြား​ကို​ပြန်​လို​ချင်​သည်။ ပြန်​စီးနင်း​တပ်​နယ်စပ်​လမ်း​အတိုင်း​တက်​လာ​နေ​သည်။ ကျွန်ုပ်တို့​၏​သံချပ်ကာ​တပ်​လာ​နေ​သည်။"
+
+msgid "Space: jump to the event"
+msgstr "Space: ဖြစ်ရပ်​ဆီ​သို့​ခုန်​ပါ"
+
+msgid "Stage %d done: %s"
+msgstr "အဆင့် %d ပြီး: %s"
+
+msgid "Stage %d now: %s"
+msgstr "အဆင့် %d ယခု: %s"
+
+msgid "Stage %d/3: %s"
+msgstr "အဆင့် %d/3: %s"
+
+msgid "Stage %d: %s"
+msgstr "အဆင့် %d: %s"
+
+msgid "Stop the haze convoy"
+msgstr "မြူခိုး​ယာဉ်တန်း​ကို​ရပ်​ပါ"
+
+msgid "Stop the smuggler convoy before it crosses the bridge"
+msgstr "မှောင်ခို​ယာဉ်တန်း​တံတား​မ​ဖြတ်​မီ​ရပ်​ပါ"
+
+msgid "Street ambush"
+msgstr "လမ်း​ချုံခို​တပ်"
+
+msgid "Supply convoy"
+msgstr "ထောက်ပံ့ရေး​ယာဉ်တန်း"
+
+msgid "Syndicate tower"
+msgstr "ဂိုဏ်း​မျှော်စင်​အဆောက်အအုံ"
+
+msgid "Tea station command"
+msgstr "လက်ဖက်​စခန်း​ကွပ်ကဲ​ရေး"
+
+msgid "The bonus slipped away."
+msgstr "ဆုကြေး​လွတ်​သွား​ပြီ။"
+
+msgid "The citadel command spire is open. Bring it down."
+msgstr "ခံတပ်​ကွပ်ကဲ​ရေး​မျှော်စင်​ကာကွယ်​မှု​မဲ့​ပြီ။ ဖြို​ချ​ပါ။"
+
+msgid "The flagship is coming about. Sink it."
+msgstr "အလံ​သင်္ဘော​လှည့်​လာ​နေ​သည်။ နစ်​စေ​ပါ။"
+
+msgid "The fleet is turning to fight. Landing craft carry our marines."
+msgstr "ရေတပ်​အုပ်စု​တိုက်​ရန်​လှည့်​လာ​သည်။ ကမ်းတက်​သင်္ဘော​များ​ကျွန်ုပ်တို့​၏​ရေတပ်​သူရဲ​များ​ကို​သယ်​လာ​သည်။"
+
+msgid "The harbour fort is the last gun line. Silence it."
+msgstr "ဆိပ်ကမ်း​ခံတပ်​သည်​နောက်ဆုံး​သေနတ်​စည်း​ဖြစ်​သည်။ ငြိမ်​သွား​စေ​ပါ။"
+
+msgid "The haze flagship is in range. Sink it."
+msgstr "မြူခိုး​အလံ​သင်္ဘော​ပစ်​ကွင်း​ထဲ​ရောက်​ပြီ။ နစ်​စေ​ပါ။"
+
+msgid "The plateau command post is exposed. Destroy it."
+msgstr "ကုန်းပြင်မြင့်​ကွပ်ကဲ​ရေး​စခန်း​ပေါ်​နေ​ပြီ။ ဖျက်ဆီး​ပါ။"
+
+msgid "The regional command bunker is exposed. Finish it."
+msgstr "ဒေသ​ကွပ်ကဲ​ရေး​ခံကတုတ်​ပေါ်​နေ​ပြီ။ အပြီး​ချေမှုန်း​ပါ။"
+
+msgid "The ring boss is holed up in the river customs house. End it."
+msgstr "ဂိုဏ်း​ခေါင်းဆောင်​မြစ်​ကမ်း​အကောက်ခွန်​ရုံး​ထဲ​ပုန်း​နေ​သည်။ အဆုံး​သတ်​ပါ။"
+
+msgid "The syndicate director is in the server tower. Bring it down."
+msgstr "ဂိုဏ်း​ညွှန်ကြား​ရေးမှူး​ဆာဗာ​မျှော်စင်​ထဲ​တွင်​ရှိ​သည်။ ဖြို​ချ​ပါ။"
+
+msgid "Their command post sits in the old casino. Take it down."
+msgstr "သူတို့​၏​ကွပ်ကဲ​ရေး​စခန်း​ကာစီနို​ဟောင်း​ထဲ​တွင်​ရှိ​သည်။ ဖြို​ချ​ပါ။"
+
+msgid "Their floating fortress has moved in. Sink it."
+msgstr "သူတို့​၏​ရေပေါ်​ခံတပ်​ဝင်​လာ​ပြီ။ နစ်​စေ​ပါ။"
+
+msgid "Their forward command is dug in at the tea station. Take it."
+msgstr "သူတို့​၏​ရှေ့တန်း​ကွပ်ကဲ​ရေး​လက်ဖက်​စခန်း​တွင်​ခိုင်ခိုင်​ခံ​နေ​သည်။ သိမ်း​ပါ။"
+
+msgid "Their island battery covers the strait. Destroy it."
+msgstr "သူတို့​၏​ကျွန်း​အမြောက်​စခန်း​ရေလက်ကြား​ကို​ထိန်း​ထား​သည်။ ဖျက်ဆီး​ပါ။"
+
+msgid "Their last wave hits the radar now. Hold for thirty seconds."
+msgstr "သူတို့​၏​နောက်ဆုံး​လှိုင်း​ရေဒါ​ကို​တိုက်​နေ​ပြီ။ စက္ကန့်​သုံးဆယ်​ခံ​ပါ။"
+
+msgid "Their safe house is in the old market hall. Clear it."
+msgstr "သူတို့​၏​လုံခြုံ​ရေး​အိမ်​ဈေး​ခန်းမ​ဟောင်း​ထဲ​တွင်​ရှိ​သည်။ ရှင်း​ပါ။"
+
+msgid "They are throwing everything at the radar. Hold for thirty seconds."
+msgstr "သူတို့​ရေဒါ​ကို​အင်အား​ကုန်​ပစ်​နေ​သည်။ စက္ကန့်​သုံးဆယ်​ခံ​ပါ။"
+
+msgid "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
+msgstr "သုံး​ကိုယ်​လှေ​များ​ကူးတို့​ကို​ဝိုင်း​ပတ်​နေ​သည်။ ကမ်းတက်​သင်္ဘော​များ​အင်အား​ဖြည့်​တပ်​ခေါ်​လာ​နေ​သည်။"
