@@ -89,7 +89,7 @@ func _ready() -> void:
 	title.name = "SettingsTitle"
 	title.text = "SETTINGS"
 	title.theme_type_variation = "Header"
-	title.add_theme_font_size_override("font_size", 40)
+	title.add_theme_font_size_override("font_size", 32)
 	title.add_theme_color_override("font_color", Color(1, 1, 1))
 	add_child(title)
 	_section("SectionGraphics", "GRAPHICS")
@@ -120,7 +120,7 @@ func _ready() -> void:
 	add_child(sfx_readout)
 	add_child(pan_readout)
 	master_value = _caption("MasterValue", "100")
-	music_value = _caption("MusicValue", "55")
+	music_value = _caption("MusicValue", "50")
 	sfx_value = _caption("SfxValue", "100")
 	pan_value = _caption("PanValue", "1.0")
 	add_child(master_value)
@@ -303,9 +303,10 @@ func _layout(view: Vector2) -> void:
 	var nav_w: float = rail_w - 40.0 if narrow else 150.0
 	var title: Control = get_node_or_null("SettingsTitle")
 	if title != null:
-		title.position = Vector2(left, 24.0)
-		title.add_theme_font_size_override("font_size", 36 if not narrow else 28)
-	var tab_y: float = 8.0 if embedded else 84.0
+		title.position = Vector2(left, 18.0)
+		title.size = Vector2(maxf(200.0, rail_w - 40.0), 42.0)
+		title.add_theme_font_size_override("font_size", 28 if not narrow else 24)
+	var tab_y: float = 8.0 if embedded else 92.0
 	var tabs: PackedStringArray = PackedStringArray([
 		"SettingsTabVideo", "SettingsTabAudio", "SettingsTabControls", "SettingsTabGameplay", "SettingsTabHud", "SettingsTabLanguage",
 	])

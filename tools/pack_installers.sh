@@ -28,10 +28,10 @@ case "${4:-}" in
 esac
 git -C "$ROOT" cat-file -e "$REF^{commit}" 2>/dev/null || git -C "$ROOT" fetch -q origin gh-pages
 REF="$(git -C "$ROOT" rev-parse "$REF^{commit}")"
-PAGES_URL="${PAGES_URL:-https://yairpike.github.io/asean-2031/}"
-RAW_URL="${RAW_URL:-https://raw.githubusercontent.com/yairpike/asean-2031/$REF/}"
+PAGES_URL="${PAGES_URL:-https://yairpike.github.io/2035-zambudipa-war/}"
+RAW_URL="${RAW_URL:-https://raw.githubusercontent.com/yairpike/2035-zambudipa-war/$REF/}"
 SOURCE_REF="${SOURCE_REF:-$(git -C "$ROOT" merge-base HEAD origin/cursor/web-playtest)}"
-SOURCE_URL="${SOURCE_URL:-https://raw.githubusercontent.com/yairpike/asean-2031/$SOURCE_REF/}"
+SOURCE_URL="${SOURCE_URL:-https://raw.githubusercontent.com/yairpike/2035-zambudipa-war/$SOURCE_REF/}"
 RCODESIGN="${RCODESIGN:-rcodesign}"
 EXPORT="$ROOT/build/desktop"
 STAGE="$(mktemp -d)"

@@ -5128,7 +5128,7 @@ func test_sm_bark() -> void:
 	Settings.apply_scene(null)
 	var music_now: int = AudioServer.get_bus_index("Music")
 	var music_db: float = AudioServer.get_bus_volume_db(music_now)
-	check(music_now > 0 and music_db <= -4.0 and music_db >= -6.0 and is_equal_approx(music_db, Settings.music_bus_db()), "music defaults about 5 dB under full")
+	check(music_now > 0 and is_equal_approx(Settings.music, 0.5) and music_db <= -5.5 and music_db >= -6.5 and is_equal_approx(music_db, Settings.music_bus_db()), "music defaults to 50% (about 6 dB under full)")
 	Settings.set_master(1.0)
 	Settings.set_sfx(1.0)
 	Settings.apply_scene(null)
@@ -7863,7 +7863,7 @@ func test_asset_pack() -> void:
 		back.close()
 	else:
 		DirAccess.remove_absolute(done_file)
-	check(str(pack.call("url_for", "https://yairpike.github.io/asean-2031/", "ui/menu/a b.webp")) == "https://yairpike.github.io/asean-2031/ui/menu/a%20b.webp", "asset URLs encode each path segment")
+	check(str(pack.call("url_for", "https://yairpike.github.io/2035-zambudipa-war/", "ui/menu/a b.webp")) == "https://yairpike.github.io/2035-zambudipa-war/ui/menu/a%20b.webp", "asset URLs encode each path segment")
 	var bad: String = dir.path_join("bad.json")
 	out = FileAccess.open(bad, FileAccess.WRITE)
 	out.store_string("{\"files\": []}")

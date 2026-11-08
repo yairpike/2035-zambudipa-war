@@ -11,8 +11,8 @@ const Glass = preload("res://game/glass.gd")
 const MapArt = preload("res://game/hud_minimap_art.gd")
 const Rank = preload("res://game/hud_rank.gd")
 const ICONS: String = "res://ui/hud/icons/%s.webp"
-const SIDE_W: float = 260.0
-const TOP_H: float = 30.0
+const SIDE_W: float = 276.0
+const TOP_H: float = 34.0
 
 var _goals_open: bool = false
 var _skin: String = "gtfc"
@@ -30,6 +30,7 @@ func _bind(hud: SMHud, grid: SMDomainGrid, camera: RTSCamera) -> void:
 	_skin = Look.id_for(self, _mark_id(hud))
 	_selection_row()
 	var top: HBoxContainer = _top_bar()
+	top.offset_left = 70.0
 	_faction_mark(top, hud)
 	var now_playing: Label = Label.new()
 	now_playing.name = "NowPlaying"
@@ -40,7 +41,7 @@ func _bind(hud: SMHud, grid: SMDomainGrid, camera: RTSCamera) -> void:
 	now_playing.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
 	_anchor(now_playing, 0.0, 0.0, 0.0, 0.0, 12.0, 36.0, 480.0, 54.0)
 	add_child(now_playing)
-	hud.faction_label = _label(top, "HudFaction", 16)
+	hud.faction_label = _label(top, "HudFaction", 14)
 	_pin_bar_label(hud.faction_label)
 	hud.faction_label.add_theme_color_override("font_color", Look.color(_skin, "trim_hi"))
 	var purse: PanelContainer = PanelContainer.new()
@@ -57,21 +58,21 @@ func _bind(hud: SMHud, grid: SMDomainGrid, camera: RTSCamera) -> void:
 	purse_row.add_theme_constant_override("separation", 8)
 	purse_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	purse.add_child(purse_row)
-	hud.credits_label = _label(purse_row, "HudCredits", 18)
+	hud.credits_label = _label(purse_row, "HudCredits", 15)
 	_pin_bar_label(hud.credits_label)
 	hud.credits_label.add_theme_color_override("font_color", Look.color(_skin, "glow").lightened(0.2))
 	hud.credits_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))
 	hud.credits_label.add_theme_constant_override("outline_size", 3)
-	hud.income_label = _label(purse_row, "HudIncome", 15)
+	hud.income_label = _label(purse_row, "HudIncome", 13)
 	_pin_bar_label(hud.income_label)
 	hud.income_label.add_theme_color_override("font_color", Color(0.55, 0.92, 0.5))
 	hud.income_label.visible = false
-	hud.map_label = _label(top, "HudMap", 16)
+	hud.map_label = _label(top, "HudMap", 14)
 	hud.map_label.size_flags_stretch_ratio = 2.2
 	hud.map_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hud.map_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	hud.map_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.88))
-	hud.weather_label = _label(top, "HudWeather", 15)
+	hud.weather_label = _label(top, "HudWeather", 13)
 	_pin_bar_label(hud.weather_label)
 	hud.weather_label.add_theme_color_override("font_color", Color(0.8, 0.9, 1.0, 0.85))
 	var menu: Button = Button.new()
@@ -383,38 +384,44 @@ func _dress_tile(button: Button) -> void:
 	button.set_meta("skinned", true)
 	Look.dress_cameo(button, _skin)
 	var chip: StyleBoxFlat = StyleBoxFlat.new()
-	chip.bg_color = Color(0, 0, 0, 0.72)
-	chip.set_corner_radius_all(2)
-	chip.content_margin_left = 2
-	chip.content_margin_right = 2
+	chip.bg_color = Color(0, 0, 0, 0.78)
+	chip.set_corner_radius_all(3)
+	chip.content_margin_left = 3
+	chip.content_margin_right = 3
 	var strip: StyleBoxFlat = StyleBoxFlat.new()
-	strip.bg_color = Color(0, 0, 0, 0.66)
+	strip.bg_color = Color(0, 0, 0, 0.76)
+	var hud: SMHud = get_meta("hud", null) as SMHud
+	var is_phone: bool = hud != null and hud.phone
+	var tile_w: float = 72.0 if is_phone else 122.0
+	var tile_h: float = 72.0 if is_phone else 86.0
 	var key_line: Label = button.get_node_or_null("CameoKey") as Label
 	if key_line != null:
 		key_line.add_theme_stylebox_override("normal", chip)
 		key_line.add_theme_color_override("font_color", Look.color(_skin, "trim_hi"))
 		key_line.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		key_line.position = Vector2(3, 3)
-		key_line.size = Vector2(15, 14)
+		key_line.size = Vector2(18, 16)
 		key_line.visible = key_line.text != ""
 	var cost_line: Label = button.get_node_or_null("CameoCost") as Label
 	if cost_line != null:
 		cost_line.add_theme_stylebox_override("normal", chip)
-		cost_line.position = Vector2(34, 3)
-		cost_line.size = Vector2(35, 14)
+		cost_line.position = Vector2(tile_w - 49.0, 3)
+		cost_line.size = Vector2(46, 16)
 		cost_line.visible = cost_line.text != ""
 	var name_line: Label = button.get_node_or_null("CameoName") as Label
 	if name_line != null:
 		name_line.add_theme_stylebox_override("normal", strip)
-		name_line.add_theme_font_size_override("font_size", 10)
+		name_line.add_theme_font_size_override("font_size", 9 if is_phone else 10)
 		name_line.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		name_line.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		name_line.clip_text = true
 		name_line.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-		name_line.position = Vector2(2, 56)
-		name_line.size = Vector2(68, 14)
+		name_line.position = Vector2(2, tile_h - 20.0)
+		name_line.size = Vector2(tile_w - 4.0, 18)
 	var badge: Label = button.get_node_or_null("QueueBadge") as Label
 	if badge != null:
-		badge.position = Vector2(48, 38)
-		badge.size = Vector2(20, 16)
+		badge.position = Vector2(tile_w - 26.0, tile_h - 38.0)
+		badge.size = Vector2(22, 16)
 		badge.add_theme_stylebox_override("normal", chip)
 		badge.add_theme_color_override("font_color", Look.color(_skin, "glow"))
 	if button.get_node_or_null("CameoReady") == null:
@@ -425,8 +432,8 @@ func _dress_tile(button: Button) -> void:
 		flag.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		flag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		flag.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		flag.position = Vector2(2, 24)
-		flag.size = Vector2(68, 22)
+		flag.position = Vector2(2, (tile_h - 22.0) * 0.5)
+		flag.size = Vector2(tile_w - 4.0, 22)
 		var glow: StyleBoxFlat = StyleBoxFlat.new()
 		glow.bg_color = Look.color(_skin, "accent").darkened(0.2)
 		glow.border_color = Look.color(_skin, "glow")
@@ -716,11 +723,11 @@ func _column() -> ScrollContainer:
 	_tab_button(tabs, "TabNaval", "Naval", "tab_naval")
 	var grid: GridContainer = GridContainer.new()
 	grid.name = "PhoneIconGrid"
-	grid.columns = 3
+	grid.columns = 2
 	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	grid.custom_minimum_size = Vector2(0, 640)
-	grid.add_theme_constant_override("h_separation", 4)
-	grid.add_theme_constant_override("v_separation", 4)
+	grid.add_theme_constant_override("h_separation", 6)
+	grid.add_theme_constant_override("v_separation", 6)
 	wrap.add_child(grid)
 	var sidebar: VBoxContainer = VBoxContainer.new()
 	sidebar.name = "Sidebar"
@@ -775,7 +782,7 @@ func _unit_card() -> void:
 	body.add_child(well)
 	var portrait: TextureRect = TextureRect.new()
 	portrait.name = "CardCameo"
-	portrait.custom_minimum_size = Vector2(96, 96)
+	portrait.custom_minimum_size = Vector2(96, 80)
 	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	portrait.visible = false
@@ -783,24 +790,24 @@ func _unit_card() -> void:
 	var lines: VBoxContainer = VBoxContainer.new()
 	lines.name = "CardStack"
 	lines.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	lines.add_theme_constant_override("separation", 4)
+	lines.add_theme_constant_override("separation", 2)
 	body.add_child(lines)
 	var text_block: Control = Control.new()
 	text_block.name = "CardText"
-	text_block.custom_minimum_size = Vector2(0, 38)
+	text_block.custom_minimum_size = Vector2(0, 42)
 	text_block.clip_contents = true
 	text_block.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	lines.add_child(text_block)
-	var selected: Label = _card_label(text_block, "HudSelection", 15)
+	var selected: Label = _card_label(text_block, "HudSelection", 11)
 	selected.autowrap_mode = TextServer.AUTOWRAP_OFF
 	selected.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	selected.position = Vector2(0, 0)
-	selected.size = Vector2(380, 18)
+	selected.size = Vector2(380, 16)
 	selected.self_modulate = Color(1, 1, 1, 0)
-	var who: Label = _card_label(text_block, "CardName", 15)
+	var who: Label = _card_label(text_block, "CardName", 11)
 	who.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	who.add_theme_color_override("font_color", Look.color(_skin, "ink"))
-	var group: Label = _card_label(text_block, "CardGroup", 12)
+	var group: Label = _card_label(text_block, "CardGroup", 10)
 	group.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var chip: StyleBoxFlat = StyleBoxFlat.new()
 	chip.bg_color = Look.color(_skin, "accent").darkened(0.3)
@@ -821,16 +828,16 @@ func _unit_card() -> void:
 	fill.anchor_bottom = 1.0
 	fill.offset_right = 120.0
 	track.add_child(fill)
-	var hp: Label = _card_label(text_block, "CardHp", 12)
+	var hp: Label = _card_label(text_block, "CardHp", 10)
 	hp.add_theme_color_override("font_color", Color(1, 1, 1, 0.82))
 	var rank: Control = Control.new()
 	rank.name = "CardRank"
 	rank.set_script(Rank)
 	rank.size = Vector2(16, 18)
 	text_block.add_child(rank)
-	var veteran: Label = _card_label(text_block, "HudVeteran", 12)
+	var veteran: Label = _card_label(text_block, "HudVeteran", 10)
 	veteran.add_theme_color_override("font_color", Look.color(_skin, "trim_hi"))
-	var ability: Label = _card_label(text_block, "CardAbility", 12)
+	var ability: Label = _card_label(text_block, "CardAbility", 10)
 	ability.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	ability.add_theme_color_override("font_color", Look.color(_skin, "glow").lightened(0.25))
 	var built: Label = _card_label(text_block, "HudBuild", 13)
@@ -842,7 +849,7 @@ func _unit_card() -> void:
 	breakdown.visible = false
 	var commands: VBoxContainer = VBoxContainer.new()
 	commands.name = "CommandRow"
-	commands.custom_minimum_size = Vector2(0, 56)
+	commands.custom_minimum_size = Vector2(0, 44)
 	commands.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	commands.add_theme_constant_override("separation", 0)
 	lines.add_child(commands)
@@ -899,7 +906,7 @@ func _paint_card(hud: SMHud) -> void:
 	var x: float = (track.size.x + 6.0) if track != null else 146.0
 	if hp != null:
 		hp.visible = solo
-		hp.position = Vector2(x, 21)
+		hp.position = Vector2(x, 23)
 		hp.size = Vector2(64, 16)
 		if solo:
 			hp.text = "%d/%d" % [int(round(first.hp)), int(round(first.max_hp))]
@@ -907,19 +914,19 @@ func _paint_card(hud: SMHud) -> void:
 	var kills: int = int(first.get_meta("kills", 0)) if first != null else 0
 	if rank != null:
 		rank.visible = solo
-		rank.position = Vector2(x, 19)
+		rank.position = Vector2(x, 21)
 		rank.size = Vector2(16, 18)
 		rank.call("show_rank", 3 if kills >= 5 else (1 if kills >= 2 else 0), Look.color(_skin, "trim_hi"))
 	x += 18.0
 	if veteran != null:
-		veteran.position = Vector2(x, 21)
+		veteran.position = Vector2(x, 23)
 		veteran.size = Vector2(62, 16)
 		if multi:
 			veteran.visible = false
 	x += 64.0
 	if ability != null:
 		ability.visible = solo
-		ability.position = Vector2(x, 21)
+		ability.position = Vector2(x, 23)
 		ability.size = Vector2(maxf(30.0, w - x), 16)
 		if solo:
 			ability.text = "F  %s" % _ability_of(hud, first)
@@ -1002,10 +1009,10 @@ func _mode_button(row: HBoxContainer, node_name: String, text: String, icon_name
 	button.text = text
 	button.tooltip_text = text
 	button.clip_text = true
-	button.custom_minimum_size = Vector2(0, 32)
+	button.custom_minimum_size = Vector2(0, 36)
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	button.add_theme_font_size_override("font_size", 13)
-	button.add_theme_constant_override("icon_max_width", 20)
+	button.add_theme_font_size_override("font_size", 14)
+	button.add_theme_constant_override("icon_max_width", 22)
 	Look.dress_button(button, _skin)
 	button.icon = _icon(icon_name)
 	row.add_child(button)
@@ -1016,10 +1023,10 @@ func _tab_button(grid: GridContainer, node_name: String, text: String, icon_name
 	button.text = ""
 	button.clip_text = false
 	button.tooltip_text = text
-	button.custom_minimum_size = Vector2(54, 38)
+	button.custom_minimum_size = Vector2(58, 42)
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	button.add_theme_constant_override("icon_max_width", 28)
+	button.add_theme_constant_override("icon_max_width", 30)
 	Look.dress_button(button, _skin)
 	button.icon = _icon(icon_name)
 	if button.icon == null:
@@ -1069,7 +1076,8 @@ func _label(parent: Node, node_name: String, size: int) -> Label:
 
 func _card_label(parent: Node, node_name: String, size: int) -> Label:
 	var label: Label = _label(parent, node_name, size)
-	label.custom_minimum_size = Vector2(0, 16)
+	label.custom_minimum_size = Vector2(0, 14)
+	label.clip_text = true
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return label
 
@@ -1188,7 +1196,7 @@ func _seat_desktop() -> void:
 				chrome.visible = true
 	var portrait: Control = find_child("CardCameo", true, false) as Control
 	if portrait != null:
-		portrait.custom_minimum_size = Vector2(96, 96)
+		portrait.custom_minimum_size = Vector2(96, 80)
 	_fit_commands(false)
 	var view: Vector2 = _view_rect()
 	var side: float = 224.0 if view.y >= 600.0 or view.y < 240.0 else clampf(view.y - 278.0, 112.0, 224.0)
@@ -1221,8 +1229,8 @@ func _fit_commands(narrow: bool) -> void:
 		else:
 			button.size_flags_horizontal = int(button.get_meta("wide_flags"))
 			button.remove_meta("wide_flags")
-			button.custom_minimum_size = Vector2(56, 56)
-			button.add_theme_font_size_override("font_size", 12)
+			button.custom_minimum_size = Vector2(56, 44)
+			button.add_theme_font_size_override("font_size", 13)
 
 func _view_rect() -> Vector2:
 	if size.x >= 64.0 and size.y >= 64.0:
@@ -1239,18 +1247,21 @@ func _seat_context() -> void:
 	if card == null:
 		return
 	var view: Vector2 = _view_rect()
-	var width: float = 540.0
+	var width: float = 520.0
 	var sidebar: float = view.x - SIDE_W - 8.0
-	var x: float = (sidebar - width) * 0.5
-	if x < 80.0:
-		x = 80.0
-		width = maxf(280.0, sidebar - 80.0)
-	_anchor(card, 0.0, 1.0, 0.0, 1.0, x, -128.0, x + width, -8.0)
+	var x: float = 80.0
+	var hud: SMHud = get_meta("hud", null) as SMHud
+	var orders_vis: bool = hud != null and hud.orders_strip != null and hud.orders_strip.visible
+	if not orders_vis or sidebar - 80.0 < width + 412.0:
+		x = maxf(80.0, (sidebar - width) * 0.5)
+	if x + width > sidebar:
+		width = maxf(280.0, sidebar - x)
+	_anchor(card, 0.0, 1.0, 0.0, 1.0, x, -104.0, x + width, -6.0)
 	var slots: Control = get_node_or_null("SelectionSlots") as Control
 	if slots == null:
 		return
-	var slot_x: float = maxf(x + 8.0 + 102.0 + 8.0, 360.0)
-	_anchor(slots, 0.0, 1.0, 0.0, 1.0, slot_x, -124.0, minf(slot_x + 392.0, x + width - 10.0), -82.0)
+	var slot_x: float = maxf(x + 112.0, 360.0 if not orders_vis else x + 112.0)
+	_anchor(slots, 0.0, 1.0, 0.0, 1.0, slot_x, -100.0, minf(slot_x + 392.0, x + width - 10.0), -62.0)
 
 func _seat_message() -> void:
 	var lane: Control = get_node_or_null("MessageLane") as Control
@@ -1362,8 +1373,8 @@ func _seat_objective() -> void:
 			mark.add_theme_font_override("font", face)
 		layer.add_child(mark)
 	var height: float = 120.0 if _goals_open else 28.0
-	_anchor(shade, 0.0, 0.0, 0.0, 0.0, 72.0, 36.0, 384.0, 36.0 + height)
-	_anchor(mark, 0.0, 0.0, 0.0, 0.0, 78.0, 38.0, 98.0, 62.0)
+	_anchor(shade, 0.0, 0.0, 0.0, 0.0, 72.0, 40.0, 384.0, 40.0 + height)
+	_anchor(mark, 0.0, 0.0, 0.0, 0.0, 78.0, 42.0, 98.0, 66.0)
 	status.z_index = 7
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART if _goals_open else TextServer.AUTOWRAP_OFF
 	status.clip_text = true
@@ -1372,7 +1383,7 @@ func _seat_objective() -> void:
 	status.custom_minimum_size = Vector2(0, 22)
 	status.add_theme_font_size_override("font_size", 15)
 	status.add_theme_color_override("font_color", Color(1, 1, 1, 0.92))
-	_anchor(status, 0.0, 0.0, 0.0, 0.0, 100.0, 38.0, 376.0, 36.0 + height)
+	_anchor(status, 0.0, 0.0, 0.0, 0.0, 100.0, 42.0, 376.0, 40.0 + height)
 
 func _seat_flyout() -> void:
 	var layer: Node = get_parent()
@@ -1404,7 +1415,7 @@ func _seat_strip() -> void:
 	var right: float = minf(700.0, sidebar - 8.0)
 	if right - 448.0 < 96.0:
 		return
-	_anchor(strip, 0.0, 0.0, 0.0, 0.0, 448.0, 36.0, right, 64.0)
+	_anchor(strip, 0.0, 0.0, 0.0, 0.0, 448.0, 40.0, right, 68.0)
 
 ## Menu chip on the left rail, under the superweapon dial, clear of the unit panel.
 func _seat_boot() -> void:
@@ -1438,8 +1449,8 @@ func _seat_now_playing() -> void:
 		line.visible = false
 		return
 	line.visible = true
-	var right: float = view.x - SIDE_W - 12.0
-	_anchor(line, 0.0, 0.0, 0.0, 0.0, right - 240.0, view.y - 156.0, right, view.y - 138.0)
+	var right: float = view.x - SIDE_W - 52.0
+	_anchor(line, 0.0, 0.0, 0.0, 0.0, right - 240.0, view.y - 128.0, right, view.y - 110.0)
 	(line as Label).horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 
 func _anchor(node: Control, left: float, top: float, right: float, bottom: float, ol: float, ot: float, orr: float, ob: float) -> void:

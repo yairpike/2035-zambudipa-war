@@ -144,7 +144,7 @@ func _ready() -> void:
 	gear.text = "SETTINGS"
 	gear.theme_type_variation = "HeaderButton"
 	gear.set_meta("nav", true)
-	gear.add_theme_font_size_override("font_size", 32)
+	gear.add_theme_font_size_override("font_size", 20)
 	gear.pressed.connect(_toggle_settings)
 	add_child(gear)
 	tab_buttons.append(gear)
@@ -153,7 +153,7 @@ func _ready() -> void:
 	multi.text = "MULTIPLAYER"
 	multi.theme_type_variation = "HeaderButton"
 	multi.set_meta("nav", true)
-	multi.add_theme_font_size_override("font_size", 32)
+	multi.add_theme_font_size_override("font_size", 20)
 	multi.pressed.connect(_show_tab.bind("multi"))
 	add_child(multi)
 	tab_buttons.append(multi)
@@ -162,7 +162,7 @@ func _ready() -> void:
 	dl.text = "DOWNLOAD GAME"
 	dl.theme_type_variation = "HeaderButton"
 	dl.set_meta("nav", true)
-	dl.add_theme_font_size_override("font_size", 32)
+	dl.add_theme_font_size_override("font_size", 20)
 	dl.pressed.connect(_open_downloads)
 	add_child(dl)
 	tab_buttons.append(dl)
@@ -171,7 +171,7 @@ func _ready() -> void:
 	roll.text = "CREDITS"
 	roll.theme_type_variation = "HeaderButton"
 	roll.set_meta("nav", true)
-	roll.add_theme_font_size_override("font_size", 32)
+	roll.add_theme_font_size_override("font_size", 20)
 	roll.pressed.connect(_open_credits)
 	add_child(roll)
 	tab_buttons.append(roll)
@@ -179,7 +179,7 @@ func _ready() -> void:
 	quit.name = "QuitButton"
 	quit.text = "QUIT"
 	quit.set_meta("nav", true)
-	quit.add_theme_font_size_override("font_size", 32)
+	quit.add_theme_font_size_override("font_size", 20)
 	quit.pressed.connect(_quit)
 	if OS.has_feature("web"):
 		quit.visible = false
@@ -189,7 +189,7 @@ func _ready() -> void:
 	back.text = "BACK"
 	back.visible = false
 	back.set_meta("nav", true)
-	back.add_theme_font_size_override("font_size", 32)
+	back.add_theme_font_size_override("font_size", 18)
 	back.pressed.connect(_go_back)
 	add_child(back)
 	multi_note = Label.new()
@@ -197,7 +197,9 @@ func _ready() -> void:
 	multi_note.visible = false
 	multi_note.text = Lan.lan_note(not Lan.show_controls())
 	multi_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	multi_note.add_theme_font_size_override("font_size", 18)
+	multi_note.clip_text = true
+	multi_note.max_lines_visible = 3
+	multi_note.add_theme_font_size_override("font_size", 16)
 	multi_note.add_theme_color_override("font_color", Color(1, 1, 1))
 	add_child(multi_note)
 	_lan_panel()
@@ -257,71 +259,77 @@ func _lan_panel() -> void:
 	var status: Label = Label.new()
 	status.name = "LanStatus"
 	status.text = "Pick host or join."
-	status.position = Vector2(0.0, 96.0)
-	status.size = Vector2(420.0, 48.0)
+	status.position = Vector2(0.0, 92.0)
+	status.size = Vector2(420.0, 32.0)
+	status.clip_text = true
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	lan_panel.add_child(status)
 	var found: ItemList = ItemList.new()
 	found.name = "LanFound"
-	found.position = Vector2(0.0, 148.0)
-	found.size = Vector2(420.0, 96.0)
+	found.position = Vector2(0.0, 128.0)
+	found.size = Vector2(420.0, 64.0)
 	found.item_selected.connect(_pick_lan)
 	lan_panel.add_child(found)
 	var lobby: Label = Label.new()
 	lobby.name = "LanLobby"
-	lobby.position = Vector2(0.0, 250.0)
-	lobby.size = Vector2(440.0, 36.0)
+	lobby.position = Vector2(0.0, 198.0)
+	lobby.size = Vector2(440.0, 28.0)
+	lobby.clip_text = true
 	lobby.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	lobby.text = "Pick a faction and a map, then ready up."
 	lan_panel.add_child(lobby)
-	_lan_choice("LanFaction_gtfc", "GTFC", Vector2(0.0, 290.0), _lan_faction.bind("gtfc"))
-	_lan_choice("LanFaction_nmrf", "NMRF", Vector2(88.0, 290.0), _lan_faction.bind("nmrf"))
-	_lan_choice("LanFaction_mvd", "MVD", Vector2(176.0, 290.0), _lan_faction.bind("mvd"))
-	_lan_choice("LanFaction_black_market", "Market", Vector2(264.0, 290.0), _lan_faction.bind("black_market"))
-	_lan_choice("LanMap_phillips_channel", "Phillips", Vector2(0.0, 330.0), _lan_map_pick.bind("res://game/phillips_channel.tscn"))
-	_lan_choice("LanMap_sop_ruak", "Sop Ruak", Vector2(88.0, 330.0), _lan_map_pick.bind("res://game/sop_ruak.tscn"))
-	_lan_choice("LanMap_burma_road", "Burma", Vector2(176.0, 330.0), _lan_map_pick.bind("res://game/burma_road.tscn"))
-	_lan_choice("LanMap_ten_degree_atolls", "Atolls", Vector2(264.0, 330.0), _lan_map_pick.bind("res://game/ten_degree_atolls.tscn"))
-	_lan_choice("LanMap_mekong_delta", "Mekong", Vector2(0.0, 368.0), _lan_map_pick.bind("res://game/mekong_delta.tscn"))
-	_lan_choice("LanMap_chiang_rai", "Chiang Rai", Vector2(88.0, 368.0), _lan_map_pick.bind("res://game/chiang_rai.tscn"))
+	_lan_choice("LanFaction_gtfc", "GTFC", Vector2(0.0, 232.0), _lan_faction.bind("gtfc"))
+	_lan_choice("LanFaction_nmrf", "NMRF", Vector2(88.0, 232.0), _lan_faction.bind("nmrf"))
+	_lan_choice("LanFaction_mvd", "MVD", Vector2(176.0, 232.0), _lan_faction.bind("mvd"))
+	_lan_choice("LanFaction_black_market", "Market", Vector2(264.0, 232.0), _lan_faction.bind("black_market"))
+	_lan_choice("LanMap_phillips_channel", "Phillips", Vector2(0.0, 280.0), _lan_map_pick.bind("res://game/phillips_channel.tscn"))
+	_lan_choice("LanMap_sop_ruak", "Sop Ruak", Vector2(88.0, 280.0), _lan_map_pick.bind("res://game/sop_ruak.tscn"))
+	_lan_choice("LanMap_burma_road", "Burma", Vector2(176.0, 280.0), _lan_map_pick.bind("res://game/burma_road.tscn"))
+	_lan_choice("LanMap_ten_degree_atolls", "Atolls", Vector2(264.0, 280.0), _lan_map_pick.bind("res://game/ten_degree_atolls.tscn"))
+	_lan_choice("LanMap_mekong_delta", "Mekong", Vector2(0.0, 328.0), _lan_map_pick.bind("res://game/mekong_delta.tscn"))
+	_lan_choice("LanMap_chiang_rai", "Chiang Rai", Vector2(88.0, 328.0), _lan_map_pick.bind("res://game/chiang_rai.tscn"))
 	var ready: Button = Button.new()
 	ready.name = "LanReady"
 	ready.text = "Ready"
-	ready.position = Vector2(264.0, 368.0)
+	ready.position = Vector2(264.0, 328.0)
 	ready.custom_minimum_size = Vector2(120.0, 32.0)
 	ready.pressed.connect(_lan_ready)
 	lan_panel.add_child(ready)
 	var count: Label = Label.new()
 	count.name = "LanCount"
-	count.position = Vector2(0.0, 408.0)
-	count.size = Vector2(420.0, 24.0)
+	count.position = Vector2(0.0, 376.0)
+	count.size = Vector2(420.0, 20.0)
+	count.clip_text = true
+	count.add_theme_font_size_override("font_size", 11)
 	count.text = ""
 	lan_panel.add_child(count)
 	var chat: Label = Label.new()
 	chat.name = "LanChat"
-	chat.position = Vector2(0.0, 432.0)
-	chat.size = Vector2(420.0, 48.0)
+	chat.position = Vector2(0.0, 414.0)
+	chat.size = Vector2(420.0, 30.0)
+	chat.clip_text = true
+	chat.add_theme_font_size_override("font_size", 11)
 	chat.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	chat.text = ""
 	lan_panel.add_child(chat)
 	var entry: LineEdit = LineEdit.new()
 	entry.name = "LanChatLine"
 	entry.placeholder_text = "Chat"
-	entry.position = Vector2(0.0, 484.0)
-	entry.size = Vector2(300.0, 32.0)
+	entry.position = Vector2(0.0, 452.0)
+	entry.size = Vector2(280.0, 32.0)
 	lan_panel.add_child(entry)
 	var send: Button = Button.new()
 	send.name = "LanChatSend"
 	send.text = "Send"
-	send.position = Vector2(308.0, 484.0)
-	send.custom_minimum_size = Vector2(80.0, 32.0)
+	send.position = Vector2(288.0, 452.0)
+	send.custom_minimum_size = Vector2(76.0, 32.0)
 	send.pressed.connect(_lan_say)
 	lan_panel.add_child(send)
 	var dl: Button = Button.new()
 	dl.name = "LanDownloadDesktop"
 	dl.text = "DOWNLOAD DESKTOP"
-	dl.position = Vector2(0.0, 524.0)
-	dl.custom_minimum_size = Vector2(240.0, 36.0)
+	dl.position = Vector2(0.0, 500.0)
+	dl.custom_minimum_size = Vector2(240.0, 34.0)
 	dl.pressed.connect(_open_downloads)
 	lan_panel.add_child(dl)
 
@@ -371,59 +379,63 @@ func _paste_panel() -> void:
 	var status: Label = Label.new()
 	status.name = "PasteStatus"
 	status.text = Lan.lan_note(true)
-	status.position = Vector2(0.0, 204.0)
-	status.size = Vector2(420.0, 64.0)
+	status.position = Vector2(0.0, 198.0)
+	status.size = Vector2(420.0, 52.0)
+	status.clip_text = true
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	paste_panel.add_child(status)
 	var lobby: Label = Label.new()
 	lobby.name = "PasteLobby"
-	lobby.position = Vector2(0.0, 276.0)
-	lobby.size = Vector2(420.0, 36.0)
+	lobby.position = Vector2(0.0, 256.0)
+	lobby.size = Vector2(420.0, 28.0)
+	lobby.clip_text = true
 	lobby.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	lobby.text = "Pick a faction and a map, then ready up."
 	paste_panel.add_child(lobby)
-	_paste_choice("PasteFaction_gtfc", "GTFC", Vector2(0.0, 316.0), _lan_faction.bind("gtfc"))
-	_paste_choice("PasteFaction_nmrf", "NMRF", Vector2(88.0, 316.0), _lan_faction.bind("nmrf"))
-	_paste_choice("PasteFaction_mvd", "MVD", Vector2(176.0, 316.0), _lan_faction.bind("mvd"))
-	_paste_choice("PasteFaction_black_market", "Market", Vector2(264.0, 316.0), _lan_faction.bind("black_market"))
+	_paste_choice("PasteFaction_gtfc", "GTFC", Vector2(0.0, 290.0), _lan_faction.bind("gtfc"))
+	_paste_choice("PasteFaction_nmrf", "NMRF", Vector2(88.0, 290.0), _lan_faction.bind("nmrf"))
+	_paste_choice("PasteFaction_mvd", "MVD", Vector2(176.0, 290.0), _lan_faction.bind("mvd"))
+	_paste_choice("PasteFaction_black_market", "Market", Vector2(264.0, 290.0), _lan_faction.bind("black_market"))
 	var ready: Button = Button.new()
 	ready.name = "PasteReady"
 	ready.text = "Ready"
-	ready.position = Vector2(0.0, 360.0)
+	ready.position = Vector2(0.0, 332.0)
 	ready.custom_minimum_size = Vector2(120.0, 32.0)
 	ready.pressed.connect(_lan_ready)
 	paste_panel.add_child(ready)
 	var count: Label = Label.new()
 	count.name = "PasteCount"
-	count.position = Vector2(136.0, 364.0)
+	count.position = Vector2(136.0, 336.0)
 	count.size = Vector2(280.0, 24.0)
+	count.clip_text = true
 	count.text = ""
 	paste_panel.add_child(count)
 	var chat: Label = Label.new()
 	chat.name = "PasteChat"
-	chat.position = Vector2(0.0, 400.0)
-	chat.size = Vector2(420.0, 48.0)
+	chat.position = Vector2(0.0, 372.0)
+	chat.size = Vector2(420.0, 44.0)
+	chat.clip_text = true
 	chat.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	chat.text = ""
 	paste_panel.add_child(chat)
 	var entry: LineEdit = LineEdit.new()
 	entry.name = "PasteChatLine"
 	entry.placeholder_text = "Chat"
-	entry.position = Vector2(0.0, 456.0)
+	entry.position = Vector2(0.0, 424.0)
 	entry.size = Vector2(300.0, 32.0)
 	paste_panel.add_child(entry)
 	var send: Button = Button.new()
 	send.name = "PasteChatSend"
 	send.text = "Send"
-	send.position = Vector2(308.0, 456.0)
+	send.position = Vector2(308.0, 424.0)
 	send.custom_minimum_size = Vector2(80.0, 32.0)
 	send.pressed.connect(_paste_say)
 	paste_panel.add_child(send)
 	var dl: Button = Button.new()
 	dl.name = "PasteDownloadDesktop"
 	dl.text = "DOWNLOAD DESKTOP"
-	dl.position = Vector2(0.0, 496.0)
-	dl.custom_minimum_size = Vector2(240.0, 36.0)
+	dl.position = Vector2(0.0, 468.0)
+	dl.custom_minimum_size = Vector2(240.0, 34.0)
 	dl.pressed.connect(_open_downloads)
 	paste_panel.add_child(dl)
 
@@ -432,8 +444,20 @@ func _paste_choice(node_name: String, caption: String, at: Vector2, fn: Callable
 	b.name = node_name
 	b.text = caption
 	b.position = at
+	b.size = Vector2(84.0, 32.0)
 	b.custom_minimum_size = Vector2(84.0, 32.0)
 	b.clip_text = true
+	var box: StyleBoxFlat = StyleBoxFlat.new()
+	box.bg_color = Color(0.11, 0.12, 0.15, 0.9)
+	box.border_color = Color(0.32, 0.34, 0.38, 0.9)
+	box.set_border_width_all(1)
+	box.set_corner_radius_all(4)
+	box.content_margin_left = 4
+	box.content_margin_right = 4
+	box.content_margin_top = 2
+	box.content_margin_bottom = 2
+	for state_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
+		b.add_theme_stylebox_override(state_name, box)
 	b.pressed.connect(fn)
 	paste_panel.add_child(b)
 
@@ -622,8 +646,20 @@ func _lan_choice(node_name: String, caption: String, at: Vector2, fn: Callable) 
 	b.name = node_name
 	b.text = caption
 	b.position = at
+	b.size = Vector2(84.0, 32.0)
 	b.custom_minimum_size = Vector2(84.0, 32.0)
 	b.clip_text = true
+	var box: StyleBoxFlat = StyleBoxFlat.new()
+	box.bg_color = Color(0.11, 0.12, 0.15, 0.9)
+	box.border_color = Color(0.32, 0.34, 0.38, 0.9)
+	box.set_border_width_all(1)
+	box.set_corner_radius_all(4)
+	box.content_margin_left = 4
+	box.content_margin_right = 4
+	box.content_margin_top = 2
+	box.content_margin_bottom = 2
+	for state_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
+		b.add_theme_stylebox_override(state_name, box)
 	b.pressed.connect(fn)
 	lan_panel.add_child(b)
 
@@ -695,7 +731,8 @@ func _skirmish() -> void:
 	playing_label = Label.new()
 	playing_label.name = "PlayingAs"
 	playing_label.position = Vector2(48, 236)
-	playing_label.add_theme_font_size_override("font_size", 18)
+	playing_label.clip_text = true
+	playing_label.add_theme_font_size_override("font_size", 13)
 	playing_label.add_theme_color_override("font_color", Color(1, 1, 1))
 	skirmish_panel.add_child(playing_label)
 	var hint: Label = Label.new()
@@ -809,7 +846,7 @@ func _tab(caption: String, node_name: String, which: String, _x: float) -> void:
 	else:
 		b.pressed.connect(_show_tab.bind(which))
 	b.set_meta("nav", true)
-	b.add_theme_font_size_override("font_size", 32)
+	b.add_theme_font_size_override("font_size", 20)
 	add_child(b)
 	tab_buttons.append(b)
 
@@ -818,14 +855,16 @@ func _card(panel: Control, node_name: String, map_name: String, terrain: String,
 	b.name = node_name
 	b.text = ""
 	b.position = pos
-	b.custom_minimum_size = Vector2(280, 72)
-	b.size = Vector2(280, 72)
+	b.custom_minimum_size = Vector2(280, 32)
+	b.size = Vector2(280, 32)
 	var title: Label = Label.new()
 	title.name = "Title"
 	title.text = map_name
-	title.position = Vector2(12, 4)
+	title.position = Vector2(12, 2)
+	title.size = Vector2(256, 28)
+	title.clip_text = true
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	title.add_theme_font_size_override("font_size", 18)
+	title.add_theme_font_size_override("font_size", 13)
 	title.add_theme_color_override("font_color", Color(1, 1, 1))
 	b.add_child(title)
 	var line: Label = Label.new()
@@ -1639,19 +1678,22 @@ func _layout_menu(size: Vector2) -> void:
 	y = _seat(find_child("DownloadsButton", true, false) as Control, left, y, plate_w, row_h, nav_gap)
 	y = _seat(find_child("CreditsButton", true, false) as Control, left, y, plate_w, row_h, nav_gap)
 	y = _seat(find_child("QuitButton", true, false) as Control, left, y, plate_w, row_h, nav_gap)
-	_seat(find_child("MenuBack", true, false) as Control, left, size.y - 88.0, 220.0, row_h, nav_gap)
+	_seat(find_child("MenuBack", true, false) as Control, left, size.y - 96.0, 220.0, 40.0, nav_gap)
 	var side: Control = find_child("TabFaction", true, false) as Control
 	if side != null:
 		side.position = Vector2(-400, -400)
 	if multi_note != null:
-		multi_note.position = Vector2(left + 8.0 if narrow else 460.0, y if narrow else 180.0)
-		multi_note.size = Vector2(plate_w if narrow else 420.0, 72)
+		var multi_x: float = left + 8.0 if narrow else maxf(460.0, rail_w + 24.0)
+		var multi_w: float = plate_w if narrow else maxf(440.0, size.x - multi_x - 36.0)
+		multi_note.position = Vector2(multi_x, y if narrow else 112.0)
+		multi_note.size = Vector2(multi_w, 52.0)
+		multi_note.custom_minimum_size = Vector2(multi_w, 52.0)
 	if lan_panel != null:
-		lan_panel.position = multi_note.position + Vector2(0.0, 80.0)
-		lan_panel.size = Vector2(plate_w if narrow else 440.0, 530.0)
+		lan_panel.position = multi_note.position + Vector2(0.0, 56.0)
+		lan_panel.size = Vector2(plate_w if narrow else 460.0, 540.0)
 	if paste_panel != null:
-		paste_panel.position = multi_note.position + Vector2(0.0, 80.0)
-		paste_panel.size = Vector2(plate_w if narrow else 440.0, 560.0)
+		paste_panel.position = multi_note.position + Vector2(0.0, 56.0)
+		paste_panel.size = Vector2(plate_w if narrow else 460.0, 540.0)
 	var content_y: float = 0.0
 	var content_x: float = 0.0
 	var content_w: float = size.x
@@ -1936,22 +1978,23 @@ func _make_cycle(node_name: String, kind: String) -> void:
 	var button: Button = Button.new()
 	button.name = node_name
 	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-	button.add_theme_font_size_override("font_size", 18)
+	button.clip_text = true
+	button.add_theme_font_size_override("font_size", 14)
 	button.add_theme_color_override("font_color", Color(1, 1, 1, 1))
 	button.add_theme_color_override("font_hover_color", Color(1, 1, 1, 1))
 	button.pressed.connect(_spin_cycle.bind(kind))
 	var empty := StyleBoxEmpty.new()
 	empty.content_margin_left = 80 if kind == "faction" else 8
-	empty.content_margin_top = 8
-	empty.content_margin_bottom = 8
+	empty.content_margin_top = 2
+	empty.content_margin_bottom = 2
 	for state_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		button.add_theme_stylebox_override(state_name, empty)
 	if kind == "faction":
 		var logo := TextureRect.new()
 		logo.name = "FactionLogo"
-		logo.position = Vector2(6, 6)
-		logo.size = Vector2(32, 32)
-		logo.custom_minimum_size = Vector2(32, 32)
+		logo.position = Vector2(6, 2)
+		logo.size = Vector2(28, 28)
+		logo.custom_minimum_size = Vector2(28, 28)
 		logo.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		logo.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		logo.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -2154,32 +2197,36 @@ func _place_skirmish(panel_w: float, panel_h: float) -> void:
 		card.position = Vector2(list_x, row_y + float(i) * card_step)
 		card.size = Vector2(list_w, 32.0)
 		card.custom_minimum_size = Vector2(list_w, 32.0)
-	var after: float = row_y + float(names.size()) * card_step + 6.0
+		var card_title: Control = card.get_node_or_null("Title") as Control
+		if card_title != null:
+			card_title.position = Vector2(12.0, 2.0)
+			card_title.size = Vector2(maxf(80.0, list_w - 24.0), 28.0)
+	var after: float = row_y + float(names.size()) * card_step + 8.0
 	var playing: Control = find_child("PlayingAs", true, false) as Control
 	if playing != null:
 		playing.position = Vector2(list_x, after)
-		playing.size = Vector2(list_w, 26.0)
-	_cycle_row("SkirmishFactionCycle", list_x, after + 28.0, list_w, 34.0)
-	_cycle_row("SkirmishDiffCycle", list_x, after + 64.0, list_w, 34.0)
-	_cycle_row("SkirmishBotCycle", list_x, after + 100.0, list_w, 34.0)
-	var foot: float = panel_h - 72.0
+		playing.size = Vector2(list_w, 28.0)
+	_cycle_row("SkirmishFactionCycle", list_x, after + 30.0, list_w, 34.0)
+	_cycle_row("SkirmishDiffCycle", list_x, after + 66.0, list_w, 34.0)
+	_cycle_row("SkirmishBotCycle", list_x, after + 102.0, list_w, 34.0)
+	var foot: float = panel_h - 92.0
 	var foot_x: float = list_x if narrow else rail_w + 16.0
 	var play: Control = find_child("PlayButton", true, false) as Control
 	if play != null:
 		var play_x: float = list_x if narrow else panel_w - 260.0
 		var play_y: float = after + 236.0 if narrow else foot
 		play.position = Vector2(play_x, play_y)
-		play.size = Vector2(220, 52)
-		play.custom_minimum_size = Vector2(220, 52)
+		play.size = Vector2(220, 48)
+		play.custom_minimum_size = Vector2(220, 48)
 	var grey: Control = find_child("GreyboxButton", true, false) as Control
 	if grey != null:
-		grey.position = Vector2(foot_x, after + 184.0 if narrow else foot + 6.0)
+		grey.position = Vector2(foot_x, after + 184.0 if narrow else foot + 2.0)
 		grey.size = Vector2(168.0, 44.0)
 		grey.custom_minimum_size = Vector2(168.0, 44.0)
 	var train: Control = find_child("BasicTraining", true, false) as Control
 	if train != null:
 		var train_x: float = foot_x + 180.0
-		var train_y: float = after + 184.0 if narrow else foot + 6.0
+		var train_y: float = after + 184.0 if narrow else foot + 2.0
 		train.position = Vector2(train_x, train_y)
 		train.size = Vector2(228.0, 44.0)
 		train.custom_minimum_size = Vector2(228.0, 44.0)

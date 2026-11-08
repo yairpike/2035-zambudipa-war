@@ -2,13 +2,13 @@
 
 ## Direct Download Links
 
-- **macOS (Apple Silicon and Intel):** [ASEAN-2031-macOS.dmg (80.0 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-macOS.dmg)
-- **Windows (64-bit):** [ASEAN-2031-Windows.exe (46.7 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Windows.exe)
-- **Linux (x86_64):** [ASEAN-2031-Linux-x86_64.AppImage (46.2 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Linux-x86_64.AppImage)
-- **Android (ARM64):** [ASEAN-2031-Android.apk (65.2 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Android.apk)
-- **iOS sideload (AltStore / SideStore / Sideloadly):** [ASEAN-2031-iOS.ipa (39.8 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-iOS.ipa)
+- **macOS (Apple Silicon and Intel):** [ASEAN-2031-macOS.dmg (80.0 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-macOS.dmg)
+- **Windows (64-bit):** [ASEAN-2031-Windows.exe (46.7 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Windows.exe)
+- **Linux (x86_64):** [ASEAN-2031-Linux-x86_64.AppImage (46.2 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Linux-x86_64.AppImage)
+- **Android (ARM64):** [ASEAN-2031-Android.apk (65.2 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Android.apk)
+- **iOS sideload (AltStore / SideStore / Sideloadly):** [ASEAN-2031-iOS.ipa (39.8 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-iOS.ipa)
 
-*(You can also click **DOWNLOAD GAME** on the main menu of the [web version](https://yairpike.github.io/asean-2031/).)*
+*(You can also click **DOWNLOAD GAME** on the main menu of the [web version](https://yairpike.github.io/2035-zambudipa-war/).)*
 
 ---
 
@@ -16,11 +16,11 @@ Download the one file for your device, then open it. The file names still start 
 
 | System | File | Size |
 | --- | --- | --- |
-| macOS (Apple Silicon and Intel) | [`ASEAN-2031-macOS.dmg`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-macOS.dmg) | 80.0 MiB |
-| Windows (64-bit) | [`ASEAN-2031-Windows.exe`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Windows.exe) | 46.7 MiB |
-| Linux (x86_64) | [`ASEAN-2031-Linux-x86_64.AppImage`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Linux-x86_64.AppImage) | 46.2 MiB |
-| Android 7.0 or later (ARM64, also x86_64) | [`ASEAN-2031-Android.apk`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Android.apk) | 65.2 MiB |
-| iPhone and iPad, iOS 16 or later (sideload) | [`ASEAN-2031-iOS.ipa`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-iOS.ipa) | 39.8 MiB |
+| macOS (Apple Silicon and Intel) | [`ASEAN-2031-macOS.dmg`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-macOS.dmg) | 80.0 MiB |
+| Windows (64-bit) | [`ASEAN-2031-Windows.exe`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Windows.exe) | 46.7 MiB |
+| Linux (x86_64) | [`ASEAN-2031-Linux-x86_64.AppImage`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Linux-x86_64.AppImage) | 46.2 MiB |
+| Android 7.0 or later (ARM64, also x86_64) | [`ASEAN-2031-Android.apk`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Android.apk) | 65.2 MiB |
+| iPhone and iPad, iOS 16 or later (sideload) | [`ASEAN-2031-iOS.ipa`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-iOS.ipa) | 39.8 MiB |
 
 The first time the game opens, it downloads its music, voices, 3D models, and cinematics (250 MiB on a computer, 258 MiB on a phone or tablet) with a progress bar. On a computer the game then restarts by itself. On a phone or tablet, close the game and open it again when the download says it is complete. This happens only once. Press Play now to start right away with simple models and no sound while the download finishes in the background. Use Wi-Fi on a phone.
 
@@ -74,8 +74,8 @@ With a free Apple ID the app stops opening after 7 days; refresh it in AltStore 
 
 ## Other ways to play
 
-- In the browser, nothing to install: https://yairpike.github.io/asean-2031/ (the browser version cannot host or join LAN games).
-- Offline installers with everything inside and no first-launch download will be on https://github.com/yairpike/asean-2031/releases once they are published there.
+- In the browser, nothing to install: https://yairpike.github.io/2035-zambudipa-war/ (the browser version cannot host or join LAN games).
+- Offline installers with everything inside and no first-launch download will be on https://github.com/yairpike/2035-zambudipa-war/releases once they are published there.
 
 ## LAN
 

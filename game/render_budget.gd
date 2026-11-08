@@ -36,6 +36,7 @@ static func window_scale_for(phys: Vector2i, dpi: float, user_mult: float) -> fl
 		factor = maxf(dpi, user_mult)
 	elif float(phys.y) > 720.0:
 		factor = maxf((float(phys.y) / 960.0) * user_mult, user_mult)
+	if phys.x >= phys.y and phys.y > 0:
 		factor = minf(factor, float(phys.y) / 720.0)
 	return clampf(factor, 1.0, 4.0)
 
