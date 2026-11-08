@@ -1,30 +1,48 @@
 {
  "place": "pak_beng",
  "note": "Pak Beng: one street of stilt houses stepping along the Mekong bank, a sim at the top.",
+ "open": [
+  [
+   5,
+   2,
+   18,
+   18
+  ],
+  [
+   13,
+   7,
+   12,
+   10
+  ]
+ ],
  "towns": [
   {
    "id": "pak_beng",
    "place": "pak_beng",
    "rect": [
-    28,
+    0,
     1,
-    8,
-    21
+    36,
+    22
    ],
    "axis": "x",
    "block": [
-    6,
+    4,
     4
    ],
    "homes": [
     "mekong_stilt_house",
     "khmer_stilt_house"
    ],
+   "high": [
+    1,
+    2
+   ],
    "civic": [
     {
      "block": [
-      0,
-      0
+      6,
+      1
      ],
      "id": "lao_sim"
     }
@@ -36,10 +54,52 @@
    "id": "teak_plantation",
    "tree": "teak_tree",
    "rect": [
-    0,
     1,
+    2,
     4,
-    17
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "teak_plantation",
+   "tree": "teak_tree",
+   "rect": [
+    1,
+    7,
+    4,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "teak_plantation",
+   "tree": "teak_tree",
+   "rect": [
+    1,
+    12,
+    4,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "teak_plantation",
+   "tree": "teak_tree",
+   "rect": [
+    1,
+    17,
+    4,
+    4
    ],
    "pitch": [
     1,

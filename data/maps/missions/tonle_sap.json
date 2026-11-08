@@ -1,19 +1,33 @@
 {
  "place": "phnom_penh_riverside",
  "note": "Phnom Penh riverside: French-era shophouse rows on Sisowath Quay, Psar Chas market, sugar palms.",
+ "open": [
+  [
+   5,
+   2,
+   18,
+   18
+  ],
+  [
+   13,
+   7,
+   12,
+   10
+  ]
+ ],
  "towns": [
   {
    "id": "riverside",
    "place": "phnom_penh_riverside",
    "rect": [
-    28,
+    0,
     1,
-    8,
-    21
+    36,
+    22
    ],
    "axis": "x",
    "block": [
-    6,
+    4,
     4
    ],
    "homes": [
@@ -28,33 +42,11 @@
    "civic": [
     {
      "block": [
-      0,
-      2
+      6,
+      1
      ],
      "id": "wet_market"
     }
-   ]
-  },
-  {
-   "id": "riverside_row",
-   "place": "phnom_penh_riverside",
-   "rect": [
-    0,
-    19,
-    22,
-    4
-   ],
-   "axis": "x",
-   "block": [
-    6,
-    2
-   ],
-   "homes": [
-    "peranakan_shophouse"
-   ],
-   "shops": "peranakan_shophouse",
-   "high": [
-    0
    ]
   }
  ],
@@ -63,10 +55,52 @@
    "id": "sugar_palms",
    "tree": "sugar_palm",
    "rect": [
-    0,
     1,
+    2,
     4,
-    17
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "sugar_palms",
+   "tree": "sugar_palm",
+   "rect": [
+    1,
+    7,
+    4,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "sugar_palms",
+   "tree": "sugar_palm",
+   "rect": [
+    1,
+    12,
+    4,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "sugar_palms",
+   "tree": "sugar_palm",
+   "rect": [
+    1,
+    17,
+    4,
+    4
    ],
    "pitch": [
     1,

@@ -35,6 +35,7 @@ func _ready() -> void:
 	mission.setup()
 	briefing_text = mission.briefing
 	grid = SMDomainGrid.new(28, 18, 4.0, Vector3(-56.0, 0.0, -36.0))
+	SMMapPlan.dressing("kokang").hold_lots(grid)
 	_world()
 	_ui()
 	SMFront.faction_id = "gtfc"
@@ -71,7 +72,7 @@ func _world() -> void:
 	moon.light_color = Color(0.7, 0.75, 0.9)
 	add_child(moon)
 	Ground.dress(self, grid, "kokang", null, BASE_CLEAR, SMMapPlan.dressing("kokang"))
-	_feature("Scaffold", "scaffold_yard", Vector3(2.0, 0.0, 0.0), Vector3(6.0, 4.5, 6.0), Color(0.72, 0.12, 0.18), "scaffold")
+	_scaffold()
 	_feature("RubyNode", "rock_set", Vector3(6.0, 0.0, 2.0), Vector3(2.4, 1.4, 2.4), Color(0.78, 0.1, 0.22), "ruby")
 	_feature("RareNode", "rock_set", Vector3(-6.0, 0.0, 4.0), Vector3(2.4, 1.4, 2.4), Color(0.42, 0.62, 0.3), "rare")
 	var cam: RTSCamera = RTSCamera.new()
@@ -134,7 +135,7 @@ func _ui() -> void:
 func _arm_units() -> void:
 	var cam: RTSCamera = get_node("Camera") as RTSCamera
 	field.bind_faction(self, cam, "gtfc")
-	field.use_open(28, 18, 2.0, Vector3(-28.0, 0.0, -18.0))
+	field.use_domain(grid)
 	field.attach_box(ui_layer)
 	var kinds: Array[StringName] = SMPointer.GTFC_KINDS
 	for i: int in kinds.size():
@@ -179,7 +180,12 @@ func _say(text: String) -> void:
 		status.text = text
 	(load("res://game/match_audio.gd") as GDScript).call("announce_line", self, "gtfc", text)
 
-func _feature(node_name: String, model_id: String, at: Vector3, footprint: Vector3, tint: Color, kind: String) -> void:
+## The objective scaffold sits on the street-front cell nearest the old raid spot and faces that street.
+func _scaffold() -> void:
+	var seat: Dictionary = SMMapPlan.dressing("kokang").frontage_near(grid.cell_at(Vector3(2.0, 0.0, 0.0)))
+	_feature("Scaffold", "scaffold_yard", grid.cell_center(seat["cell"] as Vector2i), Vector3(6.0, 4.5, 6.0), Color(0.72, 0.12, 0.18), "scaffold", float(seat["yaw"]))
+
+func _feature(node_name: String, model_id: String, at: Vector3, footprint: Vector3, tint: Color, kind: String, yaw: float = 180.0) -> void:
 	var existing: Node = get_node_or_null(node_name)
 	if existing != null:
 		remove_child(existing)
@@ -194,6 +200,7 @@ func _feature(node_name: String, model_id: String, at: Vector3, footprint: Vecto
 		var fit: float = minf(sx, minf(sy, sz))
 		root.scale = Vector3.ONE * fit
 		root.position = Vector3(at.x, -bounds.position.y * fit, at.z)
+		root.rotation_degrees.y = SMMapPlan.turn_for(model_id, yaw)
 		if kind == "rare":
 			root.rotation.y = 2.1
 		elif kind == "ruby":
@@ -208,6 +215,7 @@ func _feature(node_name: String, model_id: String, at: Vector3, footprint: Vecto
 	var built: Node3D = Node3D.new()
 	built.name = node_name
 	built.position = at
+	built.rotation_degrees.y = SMMapPlan.turn_for(model_id, yaw)
 	add_child(built)
 	if kind == "scaffold":
 		_scaffold_mesh(built, tint)
@@ -410,7 +418,7 @@ func _process(delta: float) -> void:
 		status.text = story.progress()
 	var scaf: Node3D = get_node_or_null("Scaffold") as Node3D
 	if scaf != null and bool(scaf.get_meta("standin_held", false)) and Models._again("scaffold_yard") != null:
-		_feature("Scaffold", "scaffold_yard", Vector3(2.0, 0.0, 0.0), Vector3(6.0, 4.5, 6.0), Color(0.72, 0.12, 0.18), "scaffold")
+		_scaffold()
 	hud.refresh()
 
 func _outro(won: bool) -> void:

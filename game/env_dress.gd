@@ -71,78 +71,29 @@ static func house_id(profile: String) -> String:
 		return ""
 	return "shan_stilt_house"
 
-## One indestructible landmark per skirmish, plus a dressed showcase.
+## The landmark and loose scenery from the map plan, or from the dressing of a map with no plan.
 static func stamp(host: Node3D, grid: SMDomainGrid, profile: String) -> void:
 	if host == null or grid == null:
-		return
-	if profile == "showcase":
-		_showcase(host, grid)
 		return
 	var plan_id: String = str(host.get_meta("map_plan", ""))
 	if plan_id != "":
 		_stamp_plan(host, grid, SMMapPlan.of(plan_id), _neon(profile))
 		return
-	if profile == "atolls":
-		_place(host, grid, "karst_sea_stack", Vector2i(4, 6), false, false)
-		_place(host, grid, "jetty", Vector2i(16, 24), false, false)
-	var mark: String = _mark_of(profile)
-	var cell: Vector2i = _mark_cell(profile)
-	if mark != "" and cell.x >= 0:
-		_place(host, grid, mark, cell, true, _neon(profile))
-
-static func _mark_of(profile: String) -> String:
-	if profile == "phillips":
-		return "lm_intramuros"
-	if profile == "sop":
-		return "lm_tha_phae"
-	if profile == "burma":
-		return "lm_sule"
-	if profile == "mekong":
-		return "lm_turtle_tower"
-	if profile == "chiang":
-		return "lm_doi_suthep"
-	return ""
-
-static func _mark_cell(profile: String) -> Vector2i:
-	if profile == "phillips":
-		return Vector2i(50, 28)
-	if profile == "sop":
-		return Vector2i(6, 42)
-	if profile == "burma":
-		return Vector2i(6, 32)
-	if profile == "mekong":
-		return Vector2i(8, 38)
-	if profile == "chiang":
-		return Vector2i(8, 46)
-	return Vector2i(-1, -1)
-
-static func _showcase(host: Node3D, grid: SMDomainGrid) -> void:
-	var neon: bool = not Settings.low()
-	_place(host, grid, "lm_shwedagon", Vector2i(10, 8), true, neon)
-	_place(host, grid, "city_hdb", Vector2i(24, 8), false, neon)
-	_place(host, grid, "city_highrise", Vector2i(34, 6), false, neon)
-	_place(host, grid, "peranakan_shophouse", Vector2i(44, 10), false, neon)
-	_place(host, grid, "city_flyover", Vector2i(54, 12), false, neon)
-	_place(host, grid, "wet_market", Vector2i(62, 10), false, neon)
-	_place(host, grid, "concrete_bridge", Vector2i(34, 24), false, neon)
-	_place(host, grid, "longtail_boat", Vector2i(18, 24), false, false)
-	_place(host, grid, "jungle_waterfall", Vector2i(8, 40), false, false)
-	_place(host, grid, "karst_tower", Vector2i(64, 42), false, false)
-	_place(host, grid, "banyan_tree", Vector2i(22, 40), false, false)
-	_place(host, grid, "bamboo_clump", Vector2i(40, 42), false, false)
-	_place(host, grid, "lao_sim", Vector2i(50, 40), false, neon)
+	var dress_id: String = str(host.get_meta("map_dressing", ""))
+	if dress_id != "":
+		_stamp_plan(host, grid, SMMapPlan.dressing(dress_id), _neon(profile))
 
 ## The plan already holds the landmark rect, so nothing is held here. Props are decoration and never block.
+## The landmark turns its calibrated facade to the street in front of its lot.
 static func _stamp_plan(host: Node3D, grid: SMDomainGrid, plan: SMMapPlan, neon: bool) -> void:
 	if plan == null:
 		return
-	var mark: String = str(plan.landmark.get("id", ""))
-	if mark != "":
-		var rect: Rect2i = plan.landmark.get("rect", Rect2i()) as Rect2i
-		var twin: Rect2i = plan.landmark.get("twin", rect) as Rect2i
-		_put(host, grid, mark, "Landmark_%s" % mark, plan.rect_center(rect), 0.0, neon)
-		if twin != rect:
-			_put(host, grid, mark, "Landmark_%s_b" % mark, plan.rect_center(twin), 180.0, neon)
+	for lot: Dictionary in plan.lots:
+		if str(lot["kind"]) != "landmark":
+			continue
+		var mark: String = str(lot["id"])
+		var node_name: String = "Landmark_%s" % mark if int(lot["side"]) == 0 else "Landmark_%s_b" % mark
+		_put(host, grid, mark, node_name, plan.rect_center(lot["rect"] as Rect2i), SMMapPlan.turn_for(mark, float(lot["yaw"])), neon)
 	for i: int in plan.props.size():
 		var row: Dictionary = plan.props[i]
 		var id: String = str(row["id"])
@@ -166,37 +117,6 @@ static func _put(host: Node3D, grid: SMDomainGrid, id: String, node_name: String
 
 static func _neon(profile: String) -> bool:
 	return profile == "sop" or profile == "chiang" or profile == "phillips" or profile == "mekong" or profile == "showcase"
-
-static func _place(host: Node3D, grid: SMDomainGrid, id: String, cell: Vector2i, landmark: bool, neon: bool) -> void:
-	if host.get_node_or_null("Landmark_%s" % id) != null or host.get_node_or_null("Scenery_%s" % id) != null:
-		return
-	if not grid.in_bounds(cell):
-		return
-	var domain: int = grid.domain_at_cell(cell)
-	var wet_ok: bool = id == "concrete_bridge" or id == "truss_bridge" or id == "longtail_boat" or id == "karst_sea_stack" or id == "jetty"
-	if domain != SMDomainGrid.Domain.LAND and not wet_ok:
-		return
-	var root: Node3D = _load(id)
-	if root == null:
-		return
-	var authored: AABB = _bounds(root)
-	var fit: float = fit_of(id, authored)
-	root.name = "Landmark_%s" % id if landmark else "Scenery_%s" % id
-	root.scale = Vector3.ONE * fit
-	root.position = grid.cell_center(cell)
-	_glow(root, neon and not Settings.low())
-	host.add_child(root)
-	if not landmark:
-		return
-	var span: float = maxf(authored.size.x, authored.size.z) * fit
-	var half: int = maxi(1, int(ceil(span / grid.cell_size * 0.5)))
-	var rect := Rect2i(cell.x - half, cell.y - half, half * 2 + 1, half * 2 + 1)
-	var clipped: Rect2i = rect.intersection(Rect2i(0, 0, grid.cols, grid.rows))
-	for y: int in range(clipped.position.y, clipped.position.y + clipped.size.y):
-		for x: int in range(clipped.position.x, clipped.position.x + clipped.size.x):
-			var spot := Vector2i(x, y)
-			if grid.domain_at_cell(spot) == SMDomainGrid.Domain.LAND:
-				grid.hold(Rect2i(x, y, 1, 1))
 
 ## Scenery scale from the chart class in data/model_scale.json. Unlisted props keep their authored size.
 static func fit_of(id: String, authored: AABB) -> float:
@@ -322,30 +242,11 @@ static func _start_web_request(http: HTTPRequest, id: String) -> void:
 static func wanted(profile: String, plan: SMMapPlan = null) -> PackedStringArray:
 	var ids: PackedStringArray = PackedStringArray()
 	if plan != null:
-		var mark: String = str(plan.landmark.get("id", ""))
-		if mark != "":
-			ids.append(mark)
 		for row: Dictionary in plan.props + plan.lots + plan.groves:
 			if not ids.has(str(row["id"])):
 				ids.append(str(row["id"]))
 	ids.append(tree_id(profile))
 	ids.append(palm_id(profile))
-	var house: String = house_id(profile)
-	if house != "":
-		ids.append(house)
-	ids.append("mekong_stilt_house" if profile == "mekong" or profile == "atolls" else "shan_stilt_house")
-	var mark: String = _mark_of(profile)
-	if mark != "":
-		ids.append(mark)
-	if profile == "atolls":
-		ids.append("karst_sea_stack")
-		ids.append("jetty")
-	if profile == "showcase":
-		ids.append_array(PackedStringArray([
-			"lm_shwedagon", "city_hdb", "city_highrise", "peranakan_shophouse", "city_flyover",
-			"wet_market", "concrete_bridge", "longtail_boat", "jungle_waterfall", "karst_tower",
-			"banyan_tree", "bamboo_clump", "lao_sim",
-		]))
 	return ids
 
 static func _got_web(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, id: String) -> void:

@@ -1,20 +1,34 @@
 {
  "place": "naypyidaw",
  "note": "Naypyidaw: oversized blocks on empty boulevards, ministry slabs.",
+ "open": [
+  [
+   5,
+   2,
+   18,
+   18
+  ],
+  [
+   13,
+   7,
+   12,
+   10
+  ]
+ ],
  "towns": [
   {
    "id": "naypyidaw",
    "place": "naypyidaw",
    "rect": [
-    28,
+    0,
     1,
-    8,
-    21
+    36,
+    22
    ],
    "axis": "x",
    "block": [
     6,
-    4
+    6
    ],
    "homes": [
     "border_guesthouse",
@@ -22,46 +36,23 @@
    ],
    "shops": "neon_shophouse",
    "high": [
-    1,
-    2
+    1
    ],
    "civic": [
     {
      "block": [
-      0,
+      4,
       0
      ],
      "id": "city_hdb"
     },
     {
      "block": [
-      0,
+      4,
       2
      ],
      "id": "city_hdb"
     }
-   ]
-  },
-  {
-   "id": "naypyidaw_row",
-   "place": "naypyidaw",
-   "rect": [
-    0,
-    19,
-    22,
-    4
-   ],
-   "axis": "x",
-   "block": [
-    6,
-    2
-   ],
-   "homes": [
-    "neon_shophouse"
-   ],
-   "shops": "neon_shophouse",
-   "high": [
-    0
    ]
   }
  ]

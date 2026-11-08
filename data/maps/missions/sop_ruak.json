@@ -1,38 +1,288 @@
 {
- "place": "chiang_saen_sop_ruak",
- "note": "The Lao wedge of the Golden Triangle: a casino-zone grid between the rivers.",
- "towns": [
-  {
-   "id": "golden_triangle_sez",
-   "place": "chiang_saen_sop_ruak",
-   "rect": [
-    19,
-    3,
-    15,
-    11
-   ],
-   "axis": "x",
-   "block": [
-    6,
-    4
-   ],
-   "homes": [
-    "neon_shophouse",
-    "border_guesthouse"
-   ],
-   "shops": "neon_shophouse",
-   "high": [
-    1
-   ],
-   "civic": [
-    {
-     "block": [
-      1,
-      0
-     ],
-     "id": "border_casino"
-    }
-   ]
-  }
- ]
+	"place": "chiang_saen_sop_ruak",
+	"note": "The Golden Triangle: the casino zone grid on the north bank, Chiang Saen's grid on the Thai bank and Ton Pheung's on the Lao bank, the Tha Phae gate by the Thai road.",
+	"layout": "sop_ruak",
+	"open": [
+		[
+			6,
+			20,
+			14,
+			14
+		],
+		[
+			30,
+			26,
+			10,
+			10
+		]
+	],
+	"towns": [
+		{
+			"id": "golden_triangle_sez",
+			"place": "golden_triangle_sez",
+			"rect": [
+				17,
+				1,
+				22,
+				13
+			],
+			"axis": "x",
+			"block": [
+				4,
+				4
+			],
+			"homes": [
+				"neon_shophouse",
+				"border_guesthouse"
+			],
+			"shops": "neon_shophouse",
+			"high": [
+				1
+			],
+			"civic": [
+				{
+					"block": [
+						2,
+						0
+					],
+					"id": "border_casino"
+				},
+				{
+					"block": [
+						1,
+						1
+					],
+					"id": "casino_tower"
+				}
+			]
+		},
+		{
+			"id": "chiang_saen",
+			"place": "chiang_saen_sop_ruak",
+			"rect": [
+				0,
+				16,
+				23,
+				34
+			],
+			"axis": "z",
+			"block": [
+				4,
+				4
+			],
+			"homes": [
+				"shan_stilt_house",
+				"border_guesthouse"
+			],
+			"shops": "neon_shophouse",
+			"high": [
+				2
+			],
+			"civic": [
+				{
+					"block": [
+						3,
+						5
+					],
+					"id": "lanna_wat"
+				}
+			]
+		},
+		{
+			"id": "ton_pheung",
+			"place": "golden_triangle_sez",
+			"rect": [
+				27,
+				16,
+				23,
+				34
+			],
+			"axis": "z",
+			"block": [
+				4,
+				4
+			],
+			"homes": [
+				"neon_shophouse",
+				"border_guesthouse"
+			],
+			"shops": "neon_shophouse",
+			"high": [
+				1,
+				3
+			],
+			"civic": [
+				{
+					"block": [
+						3,
+						5
+					],
+					"id": "border_casino"
+				}
+			]
+		}
+	],
+	"landmark": {
+		"id": "lm_tha_phae",
+		"rect": [
+			4,
+			40,
+			5,
+			5
+		]
+	},
+	"nodes": [
+		{
+			"id": "slag_a",
+			"kind": "slag",
+			"cell": [
+				11,
+				27
+			],
+			"rate": 14
+		},
+		{
+			"id": "slag_b",
+			"kind": "slag",
+			"cell": [
+				15,
+				37
+			],
+			"rate": 14
+		},
+		{
+			"id": "slag_c",
+			"kind": "slag",
+			"cell": [
+				19,
+				39
+			],
+			"rate": 12
+		},
+		{
+			"id": "slag_d",
+			"kind": "slag",
+			"cell": [
+				9,
+				35
+			],
+			"rate": 12
+		},
+		{
+			"id": "slag_e",
+			"kind": "slag",
+			"cell": [
+				21,
+				31
+			],
+			"rate": 12
+		},
+		{
+			"id": "slag_f",
+			"kind": "slag",
+			"cell": [
+				13,
+				41
+			],
+			"rate": 12
+		},
+		{
+			"id": "jade_a",
+			"kind": "jade",
+			"cell": [
+				11,
+				13
+			],
+			"rate": 15
+		},
+		{
+			"id": "jade_b",
+			"kind": "jade",
+			"cell": [
+				15,
+				11
+			],
+			"rate": 15
+		},
+		{
+			"id": "jade_c",
+			"kind": "jade",
+			"cell": [
+				19,
+				15
+			],
+			"rate": 15
+		},
+		{
+			"id": "bullion_a",
+			"kind": "bullion",
+			"cell": [
+				31,
+				35
+			],
+			"rate": 20
+		},
+		{
+			"id": "bullion_b",
+			"kind": "bullion",
+			"cell": [
+				37,
+				31
+			],
+			"rate": 20
+		},
+		{
+			"id": "bullion_c",
+			"kind": "bullion",
+			"cell": [
+				39,
+				37
+			],
+			"rate": 18
+		}
+	],
+	"sites": [
+		{
+			"id": "cyber_a",
+			"kind": "cyber",
+			"cell": [
+				17,
+				33
+			]
+		},
+		{
+			"id": "cyber_b",
+			"kind": "cyber",
+			"cell": [
+				35,
+				39
+			]
+		},
+		{
+			"id": "cyber_c",
+			"kind": "cyber",
+			"cell": [
+				13,
+				17
+			]
+		},
+		{
+			"id": "bazaar",
+			"kind": "bazaar",
+			"cell": [
+				19,
+				29
+			]
+		}
+	],
+	"grid": {
+		"pitch": [
+			20,
+			15
+		],
+		"at": [
+			7,
+			1
+		]
+	}
 }

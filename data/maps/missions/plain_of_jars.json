@@ -1,19 +1,33 @@
 {
  "place": "phonsavan",
  "note": "Phonsavan: a highway strip town, stilt houses on a loose grid, a sim and paddies.",
+ "open": [
+  [
+   5,
+   2,
+   18,
+   18
+  ],
+  [
+   13,
+   7,
+   12,
+   10
+  ]
+ ],
  "towns": [
   {
    "id": "phonsavan",
    "place": "phonsavan",
    "rect": [
-    28,
+    0,
     1,
-    8,
-    21
+    36,
+    22
    ],
    "axis": "x",
    "block": [
-    6,
+    4,
     4
    ],
    "homes": [
@@ -22,13 +36,14 @@
    ],
    "shops": "neon_shophouse",
    "high": [
-    1
+    1,
+    2
    ],
    "civic": [
     {
      "block": [
-      0,
-      3
+      6,
+      1
      ],
      "id": "lao_sim"
     }
