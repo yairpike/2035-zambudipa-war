@@ -7855,6 +7855,23 @@ func test_asset_pack() -> void:
 	var clips: GDScript = preload("res://game/match_audio.gd")
 	var roots: PackedStringArray = clips.call("_roots") as PackedStringArray
 	check(roots.has(root.path_join("audio")), "sidecar loaders also search the downloaded asset folder")
+	var boot: Node = (load("res://game/boot.tscn") as PackedScene).instantiate()
+	self.root.add_child(boot)
+	await process_frame
+	var dl_btn: Button = boot.find_child("DownloadsButton", true, false) as Button
+	if dl_btn != null:
+		dl_btn.pressed.emit()
+	var dl_panel: Control = boot.find_child("DownloadsPanel", true, false) as Control
+	var mac_btn: Button = boot.find_child("DownloadMacOS", true, false) as Button
+	var win_btn: Button = boot.find_child("DownloadWindows", true, false) as Button
+	var lin_btn: Button = boot.find_child("DownloadLinux", true, false) as Button
+	if mac_btn != null:
+		mac_btn.pressed.emit()
+	var dl_script: GDScript = preload("res://game/downloads_panel.gd")
+	var sw_text: String = FileAccess.get_file_as_string("res://web/sw.js")
+	check(dl_panel != null and dl_panel.visible and mac_btn != null and win_btn != null and lin_btn != null and str(dl_script.last_requested).ends_with("downloads/ASEAN-2031-macOS.dmg") and sw_text.contains("/downloads/"), "the main menu opens the desktop downloads panel for macOS, Windows, and Linux and sw.js skips caching installers")
+	boot.free()
+	await process_frame
 	for name: String in ["hello.txt", "later.txt", "bad.json"]:
 		DirAccess.remove_absolute(dir.path_join(name))
 	DirAccess.remove_absolute(dir)

@@ -101,6 +101,14 @@ while [ $# -gt 0 ]; do
       CNAME_DOMAIN="$2"
       shift 2
       ;;
+    --downloads)
+      if [ $# -lt 2 ]; then
+        echo "finish_web_export: --downloads needs a directory"
+        exit 1
+      fi
+      DOWNLOADS_SRC="$2"
+      shift 2
+      ;;
     *)
       echo "finish_web_export: unknown argument $1"
       exit 1
@@ -118,6 +126,7 @@ BRIEFINGS_SRC="${BRIEFINGS_SRC:-}"
 TRIPO_SRC="${TRIPO_SRC:-}"
 KEY_ART_SRC="${KEY_ART_SRC:-}"
 CNAME_DOMAIN="${CNAME_DOMAIN:-}"
+DOWNLOADS_SRC="${DOWNLOADS_SRC:-}"
 # GitHub Pages redirects the github.io URL to this domain as soon as the CNAME file
 # is published, so pass --cname only after the domain's DNS points at GitHub Pages.
 if [ -n "$CNAME_DOMAIN" ]; then
@@ -601,6 +610,19 @@ if [ -n "$UI_SRC" ]; then
   find "$UI_SRC/icons" -maxdepth 1 -type f -name '*.webp' -exec cp {} "$DEST/ui/icons/" \;
   : > "$DEST/ui/frames/.gdignore"
   : > "$DEST/ui/icons/.gdignore"
+fi
+if [ -n "$DOWNLOADS_SRC" ]; then
+  if [ ! -d "$DOWNLOADS_SRC" ]; then
+    echo "finish_web_export: downloads source is not a directory"
+    exit 1
+  fi
+  mkdir -p "$DEST/downloads"
+  for installer in ASEAN-2031-macOS.dmg ASEAN-2031-Windows.exe ASEAN-2031-Linux-x86_64.AppImage README.md; do
+    if [ -f "$DOWNLOADS_SRC/$installer" ]; then
+      cp "$DOWNLOADS_SRC/$installer" "$DEST/downloads/$installer"
+    fi
+  done
+  : > "$DEST/downloads/.gdignore"
 fi
 if ! grep -q "brotli" "$DEST/brotli_host.conf" || ! grep -q "wasm" "$DEST/brotli_host.conf"; then
   echo "finish_web_export: brotli host config is missing"

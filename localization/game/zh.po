@@ -3400,3 +3400,18 @@ msgstr "立即开始"
 
 msgid "Start with placeholder models and no sound. The download continues in the background."
 msgstr "使用简易模型开始游戏，没有音效。下载将在后台继续。"
+
+msgid "DOWNLOAD DESKTOP"
+msgstr "下载游戏"
+
+msgid "First launch downloads game assets automatically."
+msgstr "首次启动时下载游戏资源。"
+
+msgid "macOS (Apple Silicon & Intel) — .dmg (76 MB)"
+msgstr "macOS (Apple Silicon & Intel) — .dmg (76 MB)"
+
+msgid "Windows (64-bit) — .exe (43 MB)"
+msgstr "Windows (64-bit) — .exe (43 MB)"
+
+msgid "Linux (x86_64) — .AppImage (44 MB)"
+msgstr "Linux (x86_64) — .AppImage (44 MB)"

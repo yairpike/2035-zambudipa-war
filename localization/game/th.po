@@ -3400,3 +3400,18 @@ msgstr "เล่น​เลย"
 
 msgid "Start with placeholder models and no sound. The download continues in the background."
 msgstr "เริ่ม​ด้วย​โมเดล​ชั่วคราว​และ​ไม่มี​เสียง การ​ดาวน์โหลด​จะ​ดำเนิน​ต่อ​เบื้องหลัง"
+
+msgid "DOWNLOAD DESKTOP"
+msgstr "ดาวน์โหลดเกม"
+
+msgid "First launch downloads game assets automatically."
+msgstr "เฉพาะ​การ​เปิด​ครั้ง​แรก กำลัง​ดาวน์โหลด​ไฟล์​เกม"
+
+msgid "macOS (Apple Silicon & Intel) — .dmg (76 MB)"
+msgstr "macOS (Apple Silicon & Intel) — .dmg (76 MB)"
+
+msgid "Windows (64-bit) — .exe (43 MB)"
+msgstr "Windows (64-bit) — .exe (43 MB)"
+
+msgid "Linux (x86_64) — .AppImage (44 MB)"
+msgstr "Linux (x86_64) — .AppImage (44 MB)"

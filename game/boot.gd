@@ -157,6 +157,15 @@ func _ready() -> void:
 	multi.pressed.connect(_show_tab.bind("multi"))
 	add_child(multi)
 	tab_buttons.append(multi)
+	var dl: Button = Plate.new() as Button
+	dl.name = "DownloadsButton"
+	dl.text = "DOWNLOAD DESKTOP"
+	dl.theme_type_variation = "HeaderButton"
+	dl.set_meta("nav", true)
+	dl.add_theme_font_size_override("font_size", 32)
+	dl.pressed.connect(_open_downloads)
+	add_child(dl)
+	tab_buttons.append(dl)
 	var roll: Button = Plate.new() as Button
 	roll.name = "CreditsButton"
 	roll.text = "CREDITS"
@@ -198,6 +207,7 @@ func _ready() -> void:
 	preload("res://game/match_settings.gd").pull_web()
 	preload("res://game/settings_panel.gd").attach(self)
 	preload("res://game/credits_panel.gd").attach(self)
+	preload("res://game/downloads_panel.gd").attach(self)
 	preload("res://game/match_settings.gd").apply_scene(self)
 	mark_difficulty()
 	preload("res://game/match_audio.gd").arm(self, "menu")
@@ -307,6 +317,13 @@ func _lan_panel() -> void:
 	send.custom_minimum_size = Vector2(80.0, 32.0)
 	send.pressed.connect(_lan_say)
 	lan_panel.add_child(send)
+	var dl: Button = Button.new()
+	dl.name = "LanDownloadDesktop"
+	dl.text = "DOWNLOAD DESKTOP"
+	dl.position = Vector2(0.0, 524.0)
+	dl.custom_minimum_size = Vector2(240.0, 36.0)
+	dl.pressed.connect(_open_downloads)
+	lan_panel.add_child(dl)
 
 func _paste_panel() -> void:
 	paste_panel = Control.new()
@@ -402,6 +419,13 @@ func _paste_panel() -> void:
 	send.custom_minimum_size = Vector2(80.0, 32.0)
 	send.pressed.connect(_paste_say)
 	paste_panel.add_child(send)
+	var dl: Button = Button.new()
+	dl.name = "PasteDownloadDesktop"
+	dl.text = "DOWNLOAD DESKTOP"
+	dl.position = Vector2(0.0, 496.0)
+	dl.custom_minimum_size = Vector2(240.0, 36.0)
+	dl.pressed.connect(_open_downloads)
+	paste_panel.add_child(dl)
 
 func _paste_choice(node_name: String, caption: String, at: Vector2, fn: Callable) -> void:
 	var b: Button = Button.new()
@@ -865,9 +889,10 @@ func _process(delta: float) -> void:
 			_ensure_done(button, id)
 	var settings: Control = find_child("SettingsPanel", true, false) as Control
 	var credits: Control = find_child("CreditsPanel", true, false) as Control
+	var downloads: Control = find_child("DownloadsPanel", true, false) as Control
 	var offer: CanvasItem = find_child("TrainingOffer", true, false) as CanvasItem
 	if offer != null and offer.visible:
-		if _training_done() or _menu_tab != "main" or (settings != null and settings.visible) or (credits != null and credits.visible) or (faction_submenu != null and faction_submenu.visible):
+		if _training_done() or _menu_tab != "main" or (settings != null and settings.visible) or (credits != null and credits.visible) or (downloads != null and downloads.visible) or (faction_submenu != null and faction_submenu.visible):
 			offer.visible = false
 	_pad_cool = maxf(0.0, _pad_cool - delta)
 	if _pad_cool > 0.0:
@@ -1185,6 +1210,16 @@ func _open_credits() -> void:
 	_hide_menu_chrome()
 
 func credits_closed() -> void:
+	_show_tab(_menu_tab)
+
+func _open_downloads() -> void:
+	var panel: Control = find_child("DownloadsPanel", true, false) as Control
+	if panel == null:
+		return
+	panel.call("open")
+	_hide_menu_chrome()
+
+func downloads_closed() -> void:
 	_show_tab(_menu_tab)
 
 func settings_closed() -> void:
@@ -1600,6 +1635,7 @@ func _layout_menu(size: Vector2) -> void:
 	var multi_h: float = row_h
 	y = _seat(find_child("TabMultiplayer", true, false) as Control, left, y, plate_w, multi_h)
 	y = _seat(find_child("SettingsButton", true, false) as Control, left, y, plate_w, row_h)
+	y = _seat(find_child("DownloadsButton", true, false) as Control, left, y, plate_w, row_h)
 	y = _seat(find_child("CreditsButton", true, false) as Control, left, y, plate_w, row_h)
 	y = _seat(find_child("QuitButton", true, false) as Control, left, y, plate_w, row_h)
 	_seat(find_child("MenuBack", true, false) as Control, left, size.y - 88.0, 220.0, row_h)
@@ -1636,7 +1672,9 @@ func _layout_menu(size: Vector2) -> void:
 		var seen: bool = _training_done()
 		var credits_panel: Control = find_child("CreditsPanel", true, false) as Control
 		var credits_open: bool = credits_panel != null and credits_panel.visible
-		offer.visible = _menu_tab == "main" and not seen and not narrow and not settings_open and not credits_open and (faction_submenu == null or not faction_submenu.visible)
+		var downloads_panel: Control = find_child("DownloadsPanel", true, false) as Control
+		var downloads_open: bool = downloads_panel != null and downloads_panel.visible
+		offer.visible = _menu_tab == "main" and not seen and not narrow and not settings_open and not credits_open and not downloads_open and (faction_submenu == null or not faction_submenu.visible)
 		offer.position = Vector2(minf(640.0, size.x * 0.46), 240.0)
 		offer.size = Vector2(minf(460.0, maxf(280.0, size.x - offer.position.x - 24.0)), 150.0)
 	var card: Control = find_child("MenuDetail", true, false) as Control
@@ -1694,7 +1732,7 @@ func _quit() -> void:
 
 func _focusables() -> Array[Button]:
 	var rows: Array[Button] = []
-	for node_name: String in ["TabCampaign", "TabSkirmish", "TabMultiplayer", "SettingsButton", "CreditsButton", "QuitButton"]:
+	for node_name: String in ["TabCampaign", "TabSkirmish", "TabMultiplayer", "SettingsButton", "DownloadsButton", "CreditsButton", "QuitButton"]:
 		var button: Button = find_child(node_name, true, false) as Button
 		if button != null:
 			rows.append(button)
@@ -1706,6 +1744,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	var roll: Control = find_child("CreditsPanel", true, false) as Control
 	if roll != null and roll.visible:
+		return
+	var dl_panel: Control = find_child("DownloadsPanel", true, false) as Control
+	if dl_panel != null and dl_panel.visible:
 		return
 	var key: InputEventKey = event as InputEventKey
 	if key != null and key.pressed and not key.echo:
