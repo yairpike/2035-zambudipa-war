@@ -7,3 +7,6 @@ cinematic/mvd.webp
 cinematic/neutral_embers.webp
 cinematic/neutral_rain.webp
 cinematic/nmrf.webp
+cinematic/splash.webp
+cinematic/wordmark.png
+cinematic/wordmark.webp
