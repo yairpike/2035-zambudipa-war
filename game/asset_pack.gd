@@ -52,7 +52,7 @@ static func mark_complete(manifest: Dictionary) -> void:
 static func safe(rel: String) -> bool:
 	return rel != "" and not rel.contains("..") and not rel.begins_with("/") and not rel.contains("\\") and not rel.contains(":")
 
-## Entries [path, size, sha1] not yet in user://assets at their listed size.
+## Entries [path, size, sha1] or [path, size, sha1, url] not yet in user://assets at their listed size.
 static func pending(manifest: Dictionary) -> Array:
 	var out: Array = []
 	for item: Variant in manifest.get("files", []) as Array:
@@ -97,3 +97,12 @@ static func url_for(base: String, rel: String) -> String:
 	for piece: String in rel.split("/"):
 		parts.append(piece.uri_encode())
 	return base.trim_suffix("/") + "/" + "/".join(parts)
+
+## A fourth entry field names the one URL that serves that file. Otherwise every listed base.
+static func sources(manifest: Dictionary, entry: Array) -> Array:
+	if entry.size() > 3 and str(entry[3]).begins_with("https://"):
+		return [str(entry[3])]
+	var out: Array = []
+	for base: Variant in manifest.get("urls", []) as Array:
+		out.append(url_for(str(base), str(entry[0])))
+	return out

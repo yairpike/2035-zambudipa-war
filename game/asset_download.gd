@@ -1,12 +1,16 @@
 extends CanvasLayer
 ## First-launch download of the sidecar files a small installer leaves out, with a progress bar.
-## Each file lands as .part and only takes its real name once size and blob SHA-1 match, so an
-## interrupted run resumes where it stopped. When every file is in, the game restarts so every
-## loader starts from the full set. Play now hides the screen and finishes the download quietly.
+## Worker threads keep one HTTPS connection each alive across files, so thousands of small files
+## cost no handshake apiece and do not wait on the frame rate. Each file lands as .part and only
+## takes its real name once size and blob SHA-1 match, so an interrupted run resumes where it
+## stopped. When every file is in, the game restarts so every loader starts from the full set.
+## Play now hides the screen and lets the download finish quietly.
 
 const Pack = preload("res://game/asset_pack.gd")
 const LANES: int = 6
 const ROUNDS: int = 3
+const STALL_MS: int = 30000
+const HEADERS: PackedStringArray = ["User-Agent: ASEAN2031", "Accept: */*"]
 
 signal finished(ok: bool)
 
@@ -16,12 +20,15 @@ var total_bytes: int = 0
 var done_bytes: int = 0
 var failed: Array = []
 var _queue: Array = []
-var _jobs: Dictionary = {}
-var _lanes: Array[HTTPRequest] = []
+var _moving: PackedInt64Array = PackedInt64Array()
+var _threads: Array[Thread] = []
+var _live: int = 0
+var _stop: bool = false
+var _mutex: Mutex = Mutex.new()
 var _rate: float = 0.0
 var _rate_bytes: int = 0
 var _rate_clock: float = 0.0
-var _over: bool = false
+var _over: bool = true
 var bar: ProgressBar
 var status: Label
 var play: Button
@@ -47,66 +54,137 @@ func _ready() -> void:
 	_build()
 	start()
 
+func _exit_tree() -> void:
+	_halt()
+
 func start() -> void:
+	if not _threads.is_empty():
+		return
 	_over = false
+	_stop = false
 	failed.clear()
 	_queue = Pack.pending(manifest)
 	total_bytes = Pack.bytes_of(manifest.get("files", []) as Array)
 	done_bytes = total_bytes - Pack.bytes_of(_queue)
+	_rate_bytes = done_bytes
 	if retry != null:
 		retry.visible = false
-	_say("")
-	while _lanes.size() < LANES:
-		var lane: HTTPRequest = HTTPRequest.new()
-		lane.use_threads = true
-		lane.timeout = 120.0
-		lane.request_completed.connect(_landed.bind(lane))
-		add_child(lane)
-		_lanes.append(lane)
-	for lane: HTTPRequest in _lanes:
-		if not _jobs.has(lane):
-			_next(lane)
+	_moving.resize(LANES)
+	_moving.fill(0)
+	_live = LANES
+	for lane: int in LANES:
+		var worker: Thread = Thread.new()
+		_threads.append(worker)
+		worker.start(_work.bind(lane))
 
-func _next(lane: HTTPRequest) -> void:
-	if _queue.is_empty():
-		if _jobs.is_empty():
-			_finish()
-		return
-	_send(lane, _queue.pop_front() as Array, 0, 0)
+func _halt() -> void:
+	_stop = true
+	for worker: Thread in _threads:
+		worker.wait_to_finish()
+	_threads.clear()
 
-func _send(lane: HTTPRequest, entry: Array, source: int, pass_no: int) -> void:
-	var rel: String = str(entry[0])
-	var final: String = Pack.root().path_join(rel)
-	DirAccess.make_dir_recursive_absolute(final.get_base_dir())
-	lane.download_file = final + ".part"
-	_jobs[lane] = [entry, source, pass_no]
-	var urls: Array = manifest.get("urls", []) as Array
-	if lane.request(Pack.url_for(str(urls[source]), rel)) != OK:
-		_landed(HTTPRequest.RESULT_CANT_CONNECT, 0, PackedStringArray(), PackedByteArray(), lane)
+func _take() -> Array:
+	_mutex.lock()
+	var entry: Array = [] if _queue.is_empty() or _stop else _queue.pop_front() as Array
+	_mutex.unlock()
+	return entry
 
-func _landed(result: int, code: int, _headers: PackedStringArray, _body: PackedByteArray, lane: HTTPRequest) -> void:
-	if not _jobs.has(lane):
-		return
-	var job: Array = _jobs[lane] as Array
-	_jobs.erase(lane)
-	var entry: Array = job[0] as Array
+func _work(lane: int) -> void:
+	var client: HTTPClient = HTTPClient.new()
+	var host: Array[String] = [""]
+	while true:
+		var entry: Array = _take()
+		if entry.is_empty():
+			break
+		var ok: bool = false
+		var sources: Array = Pack.sources(manifest, entry)
+		for pass_no: int in ROUNDS:
+			for url: Variant in sources:
+				if _stop:
+					break
+				if fetch(client, host, str(url), entry, _progress.bind(lane)):
+					ok = true
+					break
+			if ok or _stop:
+				break
+			OS.delay_msec(600 * (pass_no + 1))
+		_mutex.lock()
+		_moving[lane] = 0
+		if ok:
+			done_bytes += int(entry[1])
+		elif not _stop:
+			failed.append(entry)
+		_mutex.unlock()
+	client.close()
+	_mutex.lock()
+	_live -= 1
+	_mutex.unlock()
+
+func _progress(bytes: int, lane: int) -> void:
+	_mutex.lock()
+	_moving[lane] = bytes
+	_mutex.unlock()
+
+## Downloads one manifest entry over `client`, reusing its connection when `host[0]` matches.
+## `report` receives the bytes read so far. Blocking; runs on a worker thread.
+static func fetch(client: HTTPClient, host: Array[String], url: String, entry: Array, report: Callable) -> bool:
+	if not url.begins_with("https://"):
+		return false
+	var rest: String = url.trim_prefix("https://")
+	var server: String = rest.get_slice("/", 0)
+	var path: String = rest.substr(server.length())
+	if client.get_status() != HTTPClient.STATUS_CONNECTED or host[0] != server:
+		client.close()
+		host[0] = ""
+		if client.connect_to_host(server, 443, TLSOptions.client()) != OK:
+			return false
+		if not _wait(client, [HTTPClient.STATUS_CONNECTING, HTTPClient.STATUS_RESOLVING], HTTPClient.STATUS_CONNECTED):
+			client.close()
+			return false
+		host[0] = server
+	if client.request(HTTPClient.METHOD_GET, path, HEADERS) != OK:
+		client.close()
+		return false
+	if not _wait(client, [HTTPClient.STATUS_REQUESTING], -1) or not client.has_response():
+		client.close()
+		return false
 	var final: String = Pack.root().path_join(str(entry[0]))
 	var part: String = final + ".part"
-	if result == HTTPRequest.RESULT_SUCCESS and code == 200 and accept(part, final, entry):
-		done_bytes += int(entry[1])
-		_next(lane)
-		return
-	DirAccess.remove_absolute(part)
-	var source: int = int(job[1]) + 1
-	var pass_no: int = int(job[2])
-	if source >= (manifest.get("urls", []) as Array).size():
-		source = 0
-		pass_no += 1
-	if pass_no < ROUNDS:
-		_send(lane, entry, source, pass_no)
-		return
-	failed.append(entry)
-	_next(lane)
+	DirAccess.make_dir_recursive_absolute(final.get_base_dir())
+	var out: FileAccess = FileAccess.open(part, FileAccess.WRITE)
+	if out == null:
+		client.close()
+		return false
+	var code: int = client.get_response_code()
+	var got: int = 0
+	var quiet: int = Time.get_ticks_msec()
+	while client.get_status() == HTTPClient.STATUS_BODY:
+		client.poll()
+		var chunk: PackedByteArray = client.read_response_body_chunk()
+		if chunk.is_empty():
+			if Time.get_ticks_msec() - quiet > STALL_MS:
+				client.close()
+				break
+			OS.delay_usec(500)
+			continue
+		quiet = Time.get_ticks_msec()
+		out.store_buffer(chunk)
+		got += chunk.size()
+		report.call(got)
+	out.close()
+	if code != 200:
+		DirAccess.remove_absolute(part)
+		return false
+	return accept(part, final, entry)
+
+static func _wait(client: HTTPClient, waiting: Array, want: int) -> bool:
+	var began: int = Time.get_ticks_msec()
+	while waiting.has(client.get_status()):
+		if Time.get_ticks_msec() - began > STALL_MS:
+			return false
+		client.poll()
+		OS.delay_usec(500)
+	return want < 0 or client.get_status() == want
 
 ## Moves a verified .part into place. A wrong size or hash leaves nothing behind.
 static func accept(part: String, final: String, entry: Array) -> bool:
@@ -118,9 +196,8 @@ static func accept(part: String, final: String, entry: Array) -> bool:
 	return DirAccess.rename_absolute(part, final) == OK
 
 func _finish() -> void:
-	if _over:
-		return
 	_over = true
+	_halt()
 	if not failed.is_empty():
 		finished.emit(false)
 		if not restart:
@@ -141,12 +218,20 @@ func _finish() -> void:
 	get_tree().quit()
 
 func _process(delta: float) -> void:
-	if bar == null or total_bytes <= 0:
+	if _over or total_bytes <= 0:
 		return
-	var moving: int = 0
-	for lane: HTTPRequest in _jobs.keys():
-		moving += maxi(0, lane.get_downloaded_bytes())
-	var now: int = mini(total_bytes, done_bytes + moving)
+	_mutex.lock()
+	var now: int = done_bytes
+	for bytes: int in _moving:
+		now += bytes
+	var live: int = _live
+	_mutex.unlock()
+	if live == 0:
+		_finish()
+		return
+	now = mini(total_bytes, now)
+	if bar == null:
+		return
 	bar.value = 100.0 * float(now) / float(total_bytes)
 	_rate_clock += delta
 	if _rate_clock >= 1.0:
@@ -154,11 +239,10 @@ func _process(delta: float) -> void:
 		_rate = step if _rate <= 0.0 else lerpf(_rate, step, 0.4)
 		_rate_bytes = now
 		_rate_clock = 0.0
-	if not _over:
-		var line: String = tr("%d of %d MB") % [now >> 20, total_bytes >> 20]
-		if _rate > 0.0:
-			line += "  ·  " + tr("%.1f MB/s") % (_rate / 1048576.0)
-		status.text = line
+	var line: String = tr("%d of %d MB") % [now >> 20, total_bytes >> 20]
+	if _rate > 0.0:
+		line += "  ·  " + tr("%.1f MB/s") % (_rate / 1048576.0)
+	status.text = line
 
 func _say(line: String) -> void:
 	if status != null and line != "":
