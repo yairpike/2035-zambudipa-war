@@ -62,8 +62,7 @@ classify() {
     audio/*.ogg) echo fetch ;;
     models/*.txt | models/*.json) echo ship ;;
     models/*) echo fetch ;;
-    ui/menu/index.txt) echo ship ;;
-    ui/menu/*) echo fetch ;;
+    ui/menu/cinematic/* | ui/menu/video/*) echo fetch ;;
     *) echo ship ;;
   esac
 }
@@ -150,7 +149,7 @@ appname="$(basename "$app")"
 img="$STAGE/mac.img"
 megs=$(( $(du -sm "$app" | cut -f1) * 115 / 100 + 16 ))
 truncate -s "${megs}M" "$img"
-mkfs.hfsplus -v "ASEAN 2031" "$img" >/dev/null
+mkfs.hfsplus -v "2035 - Zambudipa War" "$img" >/dev/null
 mkdir -p "$STAGE/dmgroot"
 mv "$app" "$STAGE/dmgroot/"
 (cd "$STAGE/dmgroot" && hfsplus "$img" addall . / >/dev/null)
@@ -174,16 +173,16 @@ cp -a "$side/." "$win/"
 cat > "$STAGE/installer.nsi" <<NSI
 Unicode true
 !include "MUI2.nsh"
-Name "ASEAN 2031"
+Name "2035 - Zambudipa War"
 OutFile "$DEST/ASEAN-2031-Windows$SUFFIX.exe"
-InstallDir "\$LOCALAPPDATA\\Programs\\ASEAN 2031"
+InstallDir "\$LOCALAPPDATA\\Programs\\2035 - Zambudipa War"
 RequestExecutionLevel user
 SetCompressor /SOLID lzma
-BrandingText "ASEAN 2031"
+BrandingText "2035 - Zambudipa War"
 !define MUI_ICON "$ROOT/brand/icon.ico"
 !define MUI_UNICON "$ROOT/brand/icon.ico"
 !define MUI_FINISHPAGE_RUN "\$INSTDIR\\ASEAN2031.exe"
-!define MUI_FINISHPAGE_RUN_TEXT "Play ASEAN 2031"
+!define MUI_FINISHPAGE_RUN_TEXT "Play 2035 - Zambudipa War"
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -191,20 +190,25 @@ BrandingText "ASEAN 2031"
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_LANGUAGE "English"
 Section
+  ; Replaces an install made before the game was renamed from ASEAN 2031.
+  Delete "\$SMPROGRAMS\\ASEAN 2031.lnk"
+  Delete "\$DESKTOP\\ASEAN 2031.lnk"
+  StrCmp "\$INSTDIR" "\$LOCALAPPDATA\\Programs\\ASEAN 2031" +2
+  RMDir /r "\$LOCALAPPDATA\\Programs\\ASEAN 2031"
   SetOutPath "\$INSTDIR"
   File /r "$win/*"
   WriteUninstaller "\$INSTDIR\\Uninstall.exe"
-  CreateShortcut "\$SMPROGRAMS\\ASEAN 2031.lnk" "\$INSTDIR\\ASEAN2031.exe"
-  CreateShortcut "\$DESKTOP\\ASEAN 2031.lnk" "\$INSTDIR\\ASEAN2031.exe"
-  WriteRegStr HKCU "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\ASEAN2031" "DisplayName" "ASEAN 2031"
+  CreateShortcut "\$SMPROGRAMS\\2035 - Zambudipa War.lnk" "\$INSTDIR\\ASEAN2031.exe"
+  CreateShortcut "\$DESKTOP\\2035 - Zambudipa War.lnk" "\$INSTDIR\\ASEAN2031.exe"
+  WriteRegStr HKCU "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\ASEAN2031" "DisplayName" "2035 - Zambudipa War"
   WriteRegStr HKCU "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\ASEAN2031" "DisplayIcon" "\$INSTDIR\\ASEAN2031.exe"
   WriteRegStr HKCU "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\ASEAN2031" "UninstallString" '"\$INSTDIR\\Uninstall.exe"'
   WriteRegDWORD HKCU "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\ASEAN2031" "NoModify" 1
   WriteRegDWORD HKCU "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\ASEAN2031" "NoRepair" 1
 SectionEnd
 Section "Uninstall"
-  Delete "\$SMPROGRAMS\\ASEAN 2031.lnk"
-  Delete "\$DESKTOP\\ASEAN 2031.lnk"
+  Delete "\$SMPROGRAMS\\2035 - Zambudipa War.lnk"
+  Delete "\$DESKTOP\\2035 - Zambudipa War.lnk"
   RMDir /r "\$INSTDIR"
   DeleteRegKey HKCU "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\ASEAN2031"
 SectionEnd
@@ -231,7 +235,7 @@ chmod +x "$appdir/AppRun"
 cat > "$appdir/asean2031.desktop" <<'DESK'
 [Desktop Entry]
 Type=Application
-Name=ASEAN 2031
+Name=2035 - Zambudipa War
 Comment=Real-time strategy across Southeast Asia
 Exec=ASEAN2031.x86_64
 Icon=asean2031
