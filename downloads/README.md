@@ -2,9 +2,9 @@
 
 ## Direct Download Links
 
-- **macOS (Apple Silicon and Intel):** [ASEAN-2031-macOS.dmg (79 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-macOS.dmg)
-- **Windows (64-bit):** [ASEAN-2031-Windows.exe (46 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Windows.exe)
-- **Linux (x86_64):** [ASEAN-2031-Linux-x86_64.AppImage (45 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Linux-x86_64.AppImage)
+- **macOS (Apple Silicon and Intel):** [ASEAN-2031-macOS.dmg (80 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-macOS.dmg)
+- **Windows (64-bit):** [ASEAN-2031-Windows.exe (47 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Windows.exe)
+- **Linux (x86_64):** [ASEAN-2031-Linux-x86_64.AppImage (46 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Linux-x86_64.AppImage)
 
 *(You can also click **DOWNLOAD DESKTOP** directly on the main menu of the [web version](https://yairpike.github.io/asean-2031/).)*
 
@@ -14,9 +14,9 @@ Download the one file for your computer, then open it. The file names still star
 
 | System | File | Size |
 | --- | --- | --- |
-| macOS (Apple Silicon and Intel) | [`ASEAN-2031-macOS.dmg`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-macOS.dmg) | 79 MiB |
-| Windows | [`ASEAN-2031-Windows.exe`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Windows.exe) | 46 MiB |
-| Linux (x86_64) | [`ASEAN-2031-Linux-x86_64.AppImage`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Linux-x86_64.AppImage) | 45 MiB |
+| macOS (Apple Silicon and Intel) | [`ASEAN-2031-macOS.dmg`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-macOS.dmg) | 80 MiB |
+| Windows | [`ASEAN-2031-Windows.exe`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Windows.exe) | 47 MiB |
+| Linux (x86_64) | [`ASEAN-2031-Linux-x86_64.AppImage`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Linux-x86_64.AppImage) | 46 MiB |
 
 The first time the game opens, it downloads its music, voices, 3D models, and cinematics (250 MiB) with a progress bar, then restarts by itself. This happens only once, and again only if you played a version from before the rename. Press Play now to start right away with simple models and no sound while the download finishes in the background.
 
@@ -56,8 +56,8 @@ The match uses port 7777. The discovery beacon uses port 7778. Allow both throug
 
 ## Checksums
 
-Built from commit `9b2d1745372d9766bb35536149d4b73710fe2d85` (`9b2d174` on `cursor/web-playtest`). SHA-256:
+Built from commit `c4bf954eda59462edfeda6cf644852ef1012e847` (`c4bf954` on `cursor/web-playtest`), with the Warheed title font and the brushed-steel Vanguard wordmark and splash. SHA-256:
 
-- `ASEAN-2031-macOS.dmg`: `d4e6694db630f1a793c9e4573f1a06b09340b80e274125daa826b408da30d29f`
-- `ASEAN-2031-Windows.exe`: `6ef87af1985beb37e6cc9df74352ede2e2a8168e06b34180164d3714546b0b68`
-- `ASEAN-2031-Linux-x86_64.AppImage`: `bff609196b907f49df1e041588727383a5feef0d0ae3f8ad3d71732e5e8d970d`
+- `ASEAN-2031-macOS.dmg`: `1aa01e682effa419a930bc3912e32634c425b16c123a52df56fde15e1eab51ac`
+- `ASEAN-2031-Windows.exe`: `28c957a0e638b08b7aea72ce5d3ab9439b5180696431b3efa4b088b7e0b64705`
+- `ASEAN-2031-Linux-x86_64.AppImage`: `0c0d638d9a96e9b3545cb8cb866f3382a36e9be8ffd877bd12a9a86508398fe4`
