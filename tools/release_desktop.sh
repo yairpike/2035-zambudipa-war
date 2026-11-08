@@ -15,7 +15,7 @@ rm -rf "$OUT"
 bash "$ROOT/tools/pack_installers.sh" "$ASSETS" "$OUT" "$REF"
 bash "$ROOT/tools/pack_installers.sh" "$ASSETS" "$OUT" "$REF" --full
 (cd "$OUT" && sha256sum ASEAN-2031-* > SHA256SUMS.txt)
-gh release create "$TAG" --repo yairpike/asean-2031 --target "$(git -C "$ROOT" rev-parse HEAD)" \
+gh release create "$TAG" --repo yairpike/2035-zambudipa-war --target "$(git -C "$ROOT" rev-parse HEAD)" \
   --title "2035 - Zambudipa War $TAG" \
   --notes "macOS: open the .dmg and drag 2035 - Zambudipa War to Applications. Windows: run the .exe installer. Linux: make the .AppImage executable and run it. The -Offline files carry every asset; the others download audio, models, and menu art on first launch." \
   "$OUT"/ASEAN-2031-* "$OUT/SHA256SUMS.txt"

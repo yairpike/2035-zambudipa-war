@@ -32,7 +32,7 @@ func _ready() -> void:
 	var title: Label = Label.new()
 	title.name = "CreditsTitle"
 	title.text = "CREDITS"
-	title.add_theme_font_size_override("font_size", 34)
+	title.add_theme_font_size_override("font_size", 28)
 	title.add_theme_color_override("font_color", Color(1, 1, 1, 0.96))
 	card.add_child(title)
 	var scroll: ScrollContainer = ScrollContainer.new()
@@ -96,12 +96,12 @@ func _seat() -> void:
 	card.size = Vector2(w, h)
 	var title: Control = card.get_node_or_null("CreditsTitle") as Control
 	if title != null:
-		title.position = Vector2(28, 18)
-		title.size = Vector2(w - 56.0, 40)
+		title.position = Vector2(28, 16)
+		title.size = Vector2(w - 56.0, 44)
 	var scroll: ScrollContainer = card.get_node_or_null("CreditsScroll") as ScrollContainer
 	if scroll != null:
-		scroll.position = Vector2(28, 64)
-		scroll.size = Vector2(w - 56.0, maxf(120.0, h - 132.0))
+		scroll.position = Vector2(28, 78)
+		scroll.size = Vector2(w - 56.0, maxf(120.0, h - 142.0))
 		scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER if h >= 540.0 else ScrollContainer.SCROLL_MODE_AUTO
 	var list: Control = card.find_child("CreditsList", true, false) as Control
 	if list != null:

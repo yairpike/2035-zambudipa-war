@@ -12,8 +12,9 @@ static var _web_done: bool = false
 static var graphics: String = "high"
 static var master: float = 1.0
 static var sfx: float = 1.0
-## 0.55 is about 5 dB under full scale, inside the 4–6 dB quieter default.
-static var music: float = 0.55
+## 0.50 (50%) default music volume, about 6 dB under full scale.
+static var music: float = 0.50
+static var _music_custom: bool = false
 static var pan: float = 1.0
 static var edge: bool = true
 static var difficulty: String = "normal"
@@ -144,7 +145,11 @@ static func _apply_payload_dict(raw: String) -> bool:
 	if row.has("sfx"):
 		sfx = clampf(float(row.get("sfx", 1.0)), 0.0, 1.0)
 	if row.has("music"):
-		music = clampf(float(row.get("music", 0.55)), 0.0, 1.0)
+		_music_custom = bool(row.get("music_custom", false))
+		var m: float = clampf(float(row.get("music", 0.50)), 0.0, 1.0)
+		if not _music_custom and (is_equal_approx(m, 0.55) or is_equal_approx(m, 0.7) or is_equal_approx(m, 0.8) or is_equal_approx(m, 1.0)):
+			m = 0.50
+		music = m
 	if row.has("pan"):
 		pan = clampf(float(row.get("pan", 1.0)), 0.4, 2.2)
 	if row.has("edge"):
@@ -226,6 +231,7 @@ static func set_sfx(v: float) -> void:
 static func set_music(v: float) -> void:
 	ensure()
 	music = clampf(v, 0.0, 1.0)
+	_music_custom = true
 	_write()
 
 static func set_pan(v: float) -> void:
@@ -243,7 +249,8 @@ static func restore() -> void:
 	graphics = default_graphics()
 	master = 1.0
 	sfx = 1.0
-	music = 0.55
+	music = 0.50
+	_music_custom = false
 	pan = 1.0
 	edge = true
 	difficulty = "normal"
@@ -429,7 +436,11 @@ static func _read() -> void:
 	graphics = _quality(str(cfg.get_value("game", "graphics", default_graphics())))
 	master = clampf(float(cfg.get_value("game", "master", 1.0)), 0.0, 1.0)
 	sfx = clampf(float(cfg.get_value("game", "sfx", 1.0)), 0.0, 1.0)
-	music = clampf(float(cfg.get_value("game", "music", 0.55)), 0.0, 1.0)
+	_music_custom = bool(cfg.get_value("game", "music_custom", false))
+	var stored_music: float = clampf(float(cfg.get_value("game", "music", 0.50)), 0.0, 1.0)
+	if not _music_custom and (is_equal_approx(stored_music, 0.55) or is_equal_approx(stored_music, 0.7) or is_equal_approx(stored_music, 0.8) or is_equal_approx(stored_music, 1.0)):
+		stored_music = 0.50
+	music = stored_music
 	pan = clampf(float(cfg.get_value("game", "pan", 1.0)), 0.4, 2.2)
 	edge = bool(cfg.get_value("game", "edge", true))
 	var stored_diff: String = str(cfg.get_value("game", "difficulty", "normal"))
@@ -450,6 +461,7 @@ static func _write() -> void:
 	cfg.set_value("game", "master", master)
 	cfg.set_value("game", "sfx", sfx)
 	cfg.set_value("game", "music", music)
+	cfg.set_value("game", "music_custom", _music_custom)
 	cfg.set_value("game", "pan", pan)
 	cfg.set_value("game", "edge", edge)
 	cfg.set_value("game", "difficulty", difficulty)
@@ -467,6 +479,7 @@ static func _mirror() -> void:
 		"master": master,
 		"sfx": sfx,
 		"music": music,
+		"music_custom": _music_custom,
 		"pan": pan,
 		"edge": edge,
 		"difficulty": difficulty,

@@ -54,7 +54,7 @@ func _build_pause(layer: CanvasLayer) -> void:
 	var title: Label = Label.new()
 	title.name = "PauseTitle"
 	title.text = "PAUSED"
-	title.add_theme_font_size_override("font_size", 34)
+	title.add_theme_font_size_override("font_size", 20)
 	title.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.add_child(title)
@@ -70,7 +70,7 @@ func _build_pause(layer: CanvasLayer) -> void:
 	var caption: Label = Label.new()
 	caption.name = "PauseNowCaption"
 	caption.text = "NOW PLAYING"
-	caption.add_theme_font_size_override("font_size", 12)
+	caption.add_theme_font_size_override("font_size", 10)
 	caption.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
 	caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.add_child(caption)
@@ -78,7 +78,7 @@ func _build_pause(layer: CanvasLayer) -> void:
 	track.name = "PauseTrack"
 	track.clip_text = true
 	track.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	track.add_theme_font_size_override("font_size", 15)
+	track.add_theme_font_size_override("font_size", 11)
 	track.add_theme_color_override("font_color", Color(1, 1, 1, 0.92))
 	track.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.add_child(track)
@@ -217,10 +217,11 @@ func _seat_pause() -> void:
 	var y: float = 14.0 if tight else 20.0
 	var title: Label = card.get_node_or_null("PauseTitle") as Label
 	if title != null:
-		title.add_theme_font_size_override("font_size", 26 if tight else 34)
+		title.add_theme_font_size_override("font_size", 18 if tight else 20)
+		title.clip_text = true
 		title.position = Vector2(x, y)
-		title.size = Vector2(nav - 24.0, 44)
-	y += 40.0 if tight else 56.0
+		title.size = Vector2(nav - 24.0, 32)
+	y += 44.0 if tight else 52.0
 	var row_h: float = 38.0 if tight else 44.0
 	for node_name: String in ["PauseResume", "PauseRestart", "PauseControls", "PauseQuit"]:
 		var row: Control = card.get_node_or_null(node_name) as Control
@@ -233,16 +234,17 @@ func _seat_pause() -> void:
 	var caption: Control = card.get_node_or_null("PauseNowCaption") as Control
 	var track: Control = card.get_node_or_null("PauseTrack") as Control
 	var skip: Control = card.get_node_or_null("PauseSkip") as Control
-	var foot: float = h - (78.0 if tight else 96.0)
+	var foot: float = h - (96.0 if tight else 112.0)
 	foot = maxf(foot, y + 4.0)
 	if caption != null:
+		(caption as Label).clip_text = true
 		caption.position = Vector2(x, foot)
-		caption.size = Vector2(nav - 36.0, 16)
+		caption.size = Vector2(nav - 36.0, 18)
 	if track != null:
-		track.position = Vector2(x, foot + 16.0)
+		track.position = Vector2(x, foot + 24.0)
 		track.size = Vector2(nav - 36.0, 22)
 	if skip != null:
-		skip.position = Vector2(x, foot + 42.0)
+		skip.position = Vector2(x, foot + 52.0)
 		skip.size = Vector2(minf(nav - 36.0, 132.0), 30)
 	var rule: Control = card.get_node_or_null("PauseRule") as Control
 	if rule != null:

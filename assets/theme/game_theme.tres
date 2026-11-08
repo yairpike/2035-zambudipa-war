@@ -11,4 +11,4 @@ Label/fonts/font = ExtResource("2_cu4xe")
 Header/base_type = &"Label"
 Header/fonts/font = ExtResource("1_k528p")
 HeaderButton/base_type = &"Button"
-HeaderButton/fonts/font = ExtResource("1_k528p")
+HeaderButton/fonts/font = ExtResource("2_cu4xe")

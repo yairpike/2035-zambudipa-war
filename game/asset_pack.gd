@@ -104,10 +104,29 @@ static func url_for(base: String, rel: String) -> String:
 	return base.trim_suffix("/") + "/" + "/".join(parts)
 
 ## A fourth entry field names the one URL that serves that file. Otherwise every listed base.
+## Maps legacy yairpike/asean-2031 URLs in existing manifests onto yairpike/2035-zambudipa-war first, keeping the old URL as fallback.
 static func sources(manifest: Dictionary, entry: Array) -> Array:
 	if entry.size() > 3 and str(entry[3]).begins_with("https://"):
-		return [str(entry[3])]
+		var direct: String = str(entry[3])
+		var out_direct: Array = []
+		if direct.contains("/yairpike/asean-2031/"):
+			out_direct.append(direct.replace("/yairpike/asean-2031/", "/yairpike/2035-zambudipa-war/"))
+		if direct.contains("yairpike.github.io/asean-2031/"):
+			out_direct.append(direct.replace("yairpike.github.io/asean-2031/", "yairpike.github.io/2035-zambudipa-war/"))
+		out_direct.append(direct)
+		return out_direct
 	var out: Array = []
 	for base: Variant in manifest.get("urls", []) as Array:
-		out.append(url_for(str(base), str(entry[0])))
+		var b: String = str(base)
+		if b.contains("yairpike.github.io/asean-2031/"):
+			var mapped_pages: String = url_for(b.replace("yairpike.github.io/asean-2031/", "yairpike.github.io/2035-zambudipa-war/"), str(entry[0]))
+			if not out.has(mapped_pages):
+				out.append(mapped_pages)
+		if b.contains("/yairpike/asean-2031/"):
+			var mapped_raw: String = url_for(b.replace("/yairpike/asean-2031/", "/yairpike/2035-zambudipa-war/"), str(entry[0]))
+			if not out.has(mapped_raw):
+				out.append(mapped_raw)
+		var orig: String = url_for(b, str(entry[0]))
+		if not out.has(orig):
+			out.append(orig)
 	return out

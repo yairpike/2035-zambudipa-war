@@ -2,7 +2,8 @@ extends Control
 ## Installer downloads modal on the main menu: one-click .dmg, .exe, .AppImage, .apk, and .ipa links. Esc or Back closes it.
 
 const Glass = preload("res://game/glass.gd")
-const PUBLIC_BASE: String = "https://yairpike.github.io/asean-2031/"
+const PUBLIC_BASE: String = "https://yairpike.github.io/2035-zambudipa-war/"
+const FALLBACK_BASE: String = "https://yairpike.github.io/asean-2031/"
 
 ## mib is the size of the file in downloads/, which the installers themselves contain,
 ## so it is set after a build and checked against the rebuilt files.
@@ -108,7 +109,7 @@ func _ready() -> void:
 	title.name = "DownloadsTitle"
 	title.text = "DOWNLOAD GAME"
 	title.theme_type_variation = "Header"
-	title.add_theme_font_size_override("font_size", 32)
+	title.add_theme_font_size_override("font_size", 28)
 	title.add_theme_color_override("font_color", Color(1, 1, 1, 0.96))
 	card.add_child(title)
 	var note: Label = Label.new()
@@ -167,24 +168,24 @@ func _seat() -> void:
 	if card == null:
 		return
 	var w: float = minf(680.0, view.x - 32.0)
-	var h: float = minf(520.0, view.y - 32.0)
+	var h: float = minf(540.0, view.y - 32.0)
 	card.position = ((view - Vector2(w, h)) * 0.5).floor()
 	card.size = Vector2(w, h)
 	var title: Control = card.get_node_or_null("DownloadsTitle") as Control
 	if title != null:
-		title.position = Vector2(28, 20)
-		title.size = Vector2(w - 56.0, 40)
+		title.position = Vector2(28, 16)
+		title.size = Vector2(w - 56.0, 44)
 	var note: Control = card.get_node_or_null("DownloadsNote") as Control
 	if note != null:
-		note.position = Vector2(28, 66)
-		note.size = Vector2(w - 56.0, 44)
+		note.position = Vector2(28, 82)
+		note.size = Vector2(w - 56.0, 36)
 	var list: Control = card.get_node_or_null("DownloadsList") as Control
 	if list != null:
-		list.position = Vector2(28, 118)
-		list.size = Vector2(w - 56.0, maxf(280.0, h - 190.0))
+		list.position = Vector2(28, 126)
+		list.size = Vector2(w - 56.0, maxf(280.0, h - 196.0))
 	var back: Control = card.get_node_or_null("DownloadsBack") as Control
 	if back != null:
-		back.position = Vector2(28, h - 58.0)
+		back.position = Vector2(28, h - 56.0)
 		back.size = Vector2(120, 44)
 
 func _unhandled_input(event: InputEvent) -> void:

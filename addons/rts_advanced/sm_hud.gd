@@ -257,25 +257,30 @@ func _orders_strip(layer: CanvasLayer) -> void:
 	orders_strip.visible = false
 	orders_strip.z_index = 9
 	var plate: StyleBoxFlat = StyleBoxFlat.new()
-	plate.bg_color = Color(0.05, 0.06, 0.07, 0.9)
-	plate.border_color = Color(0.95, 0.82, 0.35, 0.55)
+	plate.bg_color = Color(0.05, 0.06, 0.07, 0.94)
+	plate.border_color = Color(0.95, 0.82, 0.35, 0.65)
 	plate.set_border_width_all(1)
-	plate.set_corner_radius_all(4)
-	plate.content_margin_left = 4
-	plate.content_margin_right = 4
-	plate.content_margin_top = 3
-	plate.content_margin_bottom = 3
+	plate.set_corner_radius_all(6)
+	plate.content_margin_left = 6
+	plate.content_margin_right = 6
+	plate.content_margin_top = 4
+	plate.content_margin_bottom = 4
 	orders_strip.add_theme_stylebox_override("panel", plate)
 	layer.add_child(orders_strip)
+	var col: VBoxContainer = VBoxContainer.new()
+	col.name = "OrdersCol"
+	col.add_theme_constant_override("separation", 4)
+	orders_strip.add_child(col)
+	var w_row: HBoxContainer = HBoxContainer.new()
+	w_row.name = "WeaponsRow"
+	w_row.add_theme_constant_override("separation", 6)
+	col.add_child(w_row)
+	_strip_button(w_row, "WeaponPrimary", "Primary", "", _pick_weapon.bind(SMArms.PRIMARY), 224)
+	_strip_button(w_row, "WeaponSecondary", "Secondary", "F", _pick_weapon.bind(SMArms.SECONDARY), 224)
 	var row: HBoxContainer = HBoxContainer.new()
 	row.name = "OrdersRow"
 	row.add_theme_constant_override("separation", 4)
-	orders_strip.add_child(row)
-	_strip_button(row, "WeaponPrimary", "Primary", "", _pick_weapon.bind(SMArms.PRIMARY), 150)
-	_strip_button(row, "WeaponSecondary", "Secondary", "F", _pick_weapon.bind(SMArms.SECONDARY), 150)
-	var gap: Control = Control.new()
-	gap.custom_minimum_size = Vector2(6, 0)
-	row.add_child(gap)
+	col.add_child(row)
 	_strip_button(row, "StanceAggressive", "Aggressive", "", _set_stance.bind("aggressive"), 0)
 	_strip_button(row, "StanceGuard", "Guard", "", _set_stance.bind("guard"), 0)
 	_strip_button(row, "StanceGround", "Hold Ground", "", _set_stance.bind("hold_ground"), 0)
@@ -284,7 +289,7 @@ func _orders_strip(layer: CanvasLayer) -> void:
 	var hint: Label = Label.new()
 	hint.name = "RallyHint"
 	hint.text = "Right-click the map to pin this building's rally point"
-	hint.add_theme_font_size_override("font_size", 12)
+	hint.add_theme_font_size_override("font_size", 13)
 	hint.add_theme_color_override("font_color", Color(0.95, 0.9, 0.7))
 	hint.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	row.add_child(hint)
@@ -294,11 +299,11 @@ func _strip_button(row: HBoxContainer, node_name: String, caption: String, chip:
 	b.name = node_name
 	b.text = caption
 	b.focus_mode = Control.FOCUS_NONE
-	b.custom_minimum_size = Vector2(maxi(width, 56), 44)
+	b.custom_minimum_size = Vector2(maxi(width, 64), 40)
 	if width > 0:
 		b.clip_text = true
 		b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	b.add_theme_font_size_override("font_size", 12)
+	b.add_theme_font_size_override("font_size", 11 if width > 0 else 12)
 	b.pressed.connect(_press_cue.bind(fn, "ui"))
 	row.add_child(b)
 	if chip == "":
@@ -307,9 +312,9 @@ func _strip_button(row: HBoxContainer, node_name: String, caption: String, chip:
 	mark.name = "KeyChip"
 	mark.text = chip
 	mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	mark.position = Vector2(3, 1)
+	mark.position = Vector2(4, 2)
 	mark.add_theme_font_size_override("font_size", 10)
-	mark.add_theme_color_override("font_color", Color(0.95, 0.82, 0.35))
+	mark.add_theme_color_override("font_color", Color(0.98, 0.86, 0.35))
 	b.add_child(mark)
 
 func _pick_weapon(slot: String) -> void:
@@ -345,13 +350,22 @@ func _paint_orders() -> void:
 	if not show:
 		_shown_orders = ""
 		return
-	var row: Node = orders_strip.get_node("OrdersRow")
+	var row: Node = orders_strip.find_child("OrdersRow", true, false)
+	var w_row: CanvasItem = orders_strip.find_child("WeaponsRow", true, false) as CanvasItem
 	var unit_mode: bool = lead != null
+	if w_row != null:
+		w_row.visible = unit_mode
 	for node_name: String in ["WeaponPrimary", "WeaponSecondary", "StanceAggressive", "StanceGuard", "StanceGround", "StanceHold"]:
-		(row.get_node(node_name) as CanvasItem).visible = unit_mode
+		var item: CanvasItem = orders_strip.find_child(node_name, true, false) as CanvasItem
+		if item != null:
+			item.visible = unit_mode
 	var yard_picked: bool = building != &"" and side != null and building == side.yard_id() and side.can_redeploy()
-	(row.get_node("RedeployButton") as CanvasItem).visible = yard_picked
-	(row.get_node("RallyHint") as CanvasItem).visible = building != &"" and side != null and side.is_producer(building)
+	var redeploy_btn: CanvasItem = orders_strip.find_child("RedeployButton", true, false) as CanvasItem
+	if redeploy_btn != null:
+		redeploy_btn.visible = yard_picked
+	var rally_hint: CanvasItem = orders_strip.find_child("RallyHint", true, false) as CanvasItem
+	if rally_hint != null:
+		rally_hint.visible = building != &"" and side != null and side.is_producer(building)
 	if unit_mode:
 		var live: String = SMArms.slot_of(lead)
 		var stance: String = field.stance_of_selection()
@@ -359,29 +373,66 @@ func _paint_orders() -> void:
 		if key != _shown_orders:
 			_shown_orders = key
 			for slot: String in [SMArms.PRIMARY, SMArms.SECONDARY]:
-				var b: Button = row.get_node("WeaponPrimary" if slot == SMArms.PRIMARY else "WeaponSecondary") as Button
+				var b: Button = orders_strip.find_child("WeaponPrimary" if slot == SMArms.PRIMARY else "WeaponSecondary", true, false) as Button
 				var p: Dictionary = SMArms.profile(lead, slot)
-				b.text = "%s %s" % ["I" if slot == SMArms.PRIMARY else "II", str(p.get("name", slot.capitalize()))]
+				var role_tag: String = _weapon_role_tag(p)
+				var slot_num: String = "[1]" if slot == SMArms.PRIMARY else "[2]"
+				var suffix: String = " [F]" if slot == SMArms.SECONDARY else ""
+				b.text = "%s %s (%s)%s" % [slot_num, str(p.get("name", slot.capitalize())), role_tag, suffix]
 				b.tooltip_text = "%s weapon: %s\nClick to switch%s." % [slot.capitalize(), SMArms.describe(p), " (or press F)" if slot == SMArms.SECONDARY else ""]
-				b.modulate = Color(1.0, 0.86, 0.38) if slot == live else Color(0.62, 0.66, 0.7)
-				b.set_meta("active", slot == live)
+				var active: bool = slot == live
+				b.modulate = Color(1.0, 0.94, 0.55) if active else Color(0.75, 0.8, 0.86)
+				b.set_meta("active", active)
+				var w_box: StyleBoxFlat = StyleBoxFlat.new()
+				w_box.bg_color = Color(0.24, 0.19, 0.08, 0.95) if active else Color(0.08, 0.1, 0.13, 0.9)
+				w_box.border_color = Color(0.98, 0.82, 0.32, 1.0) if active else Color(0.32, 0.36, 0.42, 0.85)
+				w_box.set_border_width_all(2 if active else 1)
+				w_box.set_corner_radius_all(4)
+				w_box.content_margin_left = 16 if slot == SMArms.SECONDARY else 8
+				w_box.content_margin_right = 8
+				w_box.content_margin_top = 4
+				w_box.content_margin_bottom = 4
+				for st: String in ["normal", "hover", "pressed", "focus"]:
+					b.add_theme_stylebox_override(st, w_box)
 			for pair: Array in [["StanceAggressive", "aggressive"], ["StanceGuard", "guard"], ["StanceGround", "hold_ground"], ["StanceHold", "hold"]]:
-				var stance_button: Button = row.get_node(str(pair[0])) as Button
-				stance_button.modulate = Color(0.55, 0.95, 0.6) if str(pair[1]) == stance else Color(0.62, 0.66, 0.7)
+				var stance_button: Button = orders_strip.find_child(str(pair[0]), true, false) as Button
+				if stance_button != null:
+					stance_button.modulate = Color(0.55, 0.95, 0.6) if str(pair[1]) == stance else Color(0.68, 0.72, 0.78)
 	_seat_orders()
 
+func _weapon_role_tag(p: Dictionary) -> String:
+	var t: PackedStringArray = SMArms.targets(p)
+	var mode: String = str(p.get("mode", "")).to_lower()
+	if t.has("air") and not t.has("ground"):
+		return "AA"
+	if t.has("air") and t.has("ground"):
+		return "AA/Ground"
+	if mode.contains("emp") or mode.contains("jam") or mode.contains("slow") or mode.contains("cryo"):
+		return "EMP/Support"
+	if mode.contains("splash") or mode.contains("siege") or mode.contains("burn") or mode.contains("slag"):
+		return "Siege/AoE"
+	if float(p.get("damage", 0.0)) >= 28.0:
+		return "Anti-Armor"
+	return "Anti-Infantry"
+
 func _seat_orders() -> void:
-	var width: float = orders_strip.get_combined_minimum_size().x
+	var min_sz: Vector2 = orders_strip.get_combined_minimum_size()
+	var width: float = maxf(min_sz.x, 396.0)
+	var height: float = maxf(min_sz.y, 92.0)
 	var view: Vector2 = Vector2(1280, 720)
 	if orders_strip.is_inside_tree():
 		view = orders_strip.get_viewport_rect().size
-	var at: Vector2 = Vector2(8.0, view.y - 104.0)
-	if unit_card != null and unit_card.is_inside_tree():
+	var sidebar_left: float = view.x - 282.0
+	var at: Vector2 = Vector2(8.0, view.y - height - 6.0)
+	if unit_card != null and unit_card.is_inside_tree() and unit_card.visible:
 		var card: Rect2 = unit_card.get_global_rect()
-		at = Vector2(card.position.x, card.position.y - 52.0)
-	at.x = clampf(at.x, 4.0, maxf(4.0, view.x - width - 4.0))
+		if card.end.x + 8.0 + width <= sidebar_left:
+			at = Vector2(card.end.x + 8.0, view.y - height - 6.0)
+		else:
+			at = Vector2(card.position.x, card.position.y - height - 6.0)
+	at.x = clampf(at.x, 4.0, maxf(4.0, sidebar_left - width - 4.0))
 	orders_strip.position = at
-	orders_strip.size = Vector2(width, 50.0)
+	orders_strip.size = Vector2(width, height)
 
 ## Rotate-left, north and rotate-right buttons tucked into the minimap's top corner.
 func _mount_compass(layer: CanvasLayer) -> void:
@@ -656,10 +707,10 @@ func _fill_commands(box: VBoxContainer) -> void:
 func _command_cell(host: Container, node_name: String, caption: String, chip: String, fn: Callable, tip: String) -> void:
 	var cue: String = "ability_cast" if node_name == "AbilityButton" else "ui"
 	var button: Button = _button(host, node_name, caption, fn, tip, cue)
-	button.custom_minimum_size = Vector2(56, 56)
+	button.custom_minimum_size = Vector2(56, 44)
 	button.alignment = HORIZONTAL_ALIGNMENT_CENTER
 	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	button.add_theme_font_size_override("font_size", 12)
+	button.add_theme_font_size_override("font_size", 13)
 	if chip == "":
 		return
 	var mark: Label = Label.new()
@@ -1524,11 +1575,11 @@ func _paint_button(b: Button) -> void:
 	if portrait != null and in_grid:
 		b.icon = portrait
 		b.expand_icon = true
-		b.add_theme_constant_override("icon_max_width", 64 if phone else 72)
+		b.add_theme_constant_override("icon_max_width", 64 if phone else 88)
 		b.add_theme_constant_override("h_separation", 4)
 		b.alignment = HORIZONTAL_ALIGNMENT_CENTER
 		b.text = ""
-		b.custom_minimum_size = Vector2(72, 72)
+		b.custom_minimum_size = Vector2(72, 72) if phone else Vector2(122, 86)
 		_cameo_corners(b, caption)
 		b.autowrap_mode = TextServer.AUTOWRAP_OFF
 		_tint_roster_button(b)
@@ -1563,14 +1614,16 @@ func _paint_button(b: Button) -> void:
 	_tint_roster_button(b)
 
 func _cameo_corners(b: Button, caption: String) -> void:
-	var name_line: Label = _corner_label(b, "CameoName", Vector2(2, 54), Vector2(72, 16), 13)
+	var tile_w: float = 72.0 if phone else 122.0
+	var tile_h: float = 72.0 if phone else 86.0
+	var name_line: Label = _corner_label(b, "CameoName", Vector2(2, tile_h - 20.0), Vector2(tile_w - 4.0, 18), 9 if phone else 10)
 	name_line.text = caption
 	name_line.clip_text = true
 	var cost: int = int(b.get_meta("cost", -1))
-	var cost_line: Label = _corner_label(b, "CameoCost", Vector2(34, 1), Vector2(36, 15), 12)
-	cost_line.text = str(cost) if cost >= 0 else ""
+	var cost_line: Label = _corner_label(b, "CameoCost", Vector2(tile_w - 48.0, 2), Vector2(45, 16), 9 if phone else 10)
+	cost_line.text = ("$%d" % cost) if cost >= 0 else ""
 	cost_line.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	var key_line: Label = _corner_label(b, "CameoKey", Vector2(2, 1), Vector2(18, 15), 12)
+	var key_line: Label = _corner_label(b, "CameoKey", Vector2(3, 2), Vector2(20, 16), 9 if phone else 10)
 	key_line.text = _grid_key(b)
 
 func _corner_label(b: Button, node_name: String, at: Vector2, box: Vector2, px: int) -> Label:
@@ -1924,7 +1977,7 @@ func _leave_phone() -> void:
 		if help_btn != null:
 			help_btn.visible = false
 	if use_tiles and icon_grid != null:
-		icon_grid.columns = 3
+		icon_grid.columns = 2
 	var supers: CanvasItem = _phone_node("SuperDock")
 	if supers != null:
 		supers.visible = true
