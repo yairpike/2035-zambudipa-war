@@ -3460,3 +3460,57 @@ msgstr "ดาวน์โหลดเกม"
 
 msgid "Download complete. Close the game and open it again to load everything."
 msgstr "ดาวน์โหลด​เสร็จ​แล้ว ปิด​เกม​แล้ว​เปิด​ใหม่​เพื่อ​โหลด​ทั้งหมด"
+
+msgid "CANNOT DEPLOY HERE — %s"
+msgstr "ไม่สามารถวางที่นี่ได้ — %s"
+
+msgid "CANNOT DEPLOY HERE — BLOCKED BY ROAD"
+msgstr "ไม่สามารถวางที่นี่ได้ — ถนนขวางอยู่"
+
+msgid "CANNOT DEPLOY HERE — WATER (LAND STRUCTURE)"
+msgstr "ไม่สามารถวางที่นี่ได้ — ผืนน้ำ (อาคารบนบก)"
+
+msgid "CANNOT DEPLOY HERE — NEEDS DEEP WATER & OPEN CHANNEL"
+msgstr "ไม่สามารถวางที่นี่ได้ — ต้องการน้ำลึกและร่องน้ำโล่ง"
+
+msgid "CANNOT DEPLOY HERE — TOO STEEP / OBSTRUCTED"
+msgstr "ไม่สามารถวางที่นี่ได้ — ชันเกินไป / มีสิ่งกีดขวาง"
+
+msgid "CANNOT DEPLOY HERE — OCCUPIED BY UNIT/BUILDING"
+msgstr "ไม่สามารถวางที่นี่ได้ — มีหน่วย/อาคารอยู่"
+
+msgid "CANNOT DEPLOY HERE — MUST BUILD NEAR AN ALLIED STRUCTURE"
+msgstr "ไม่สามารถวางที่นี่ได้ — ต้องสร้างใกล้อาคารฝ่ายเรา"
+
+msgid "Green: open   Red: blocked   Blue: water"
+msgstr "เขียว: ว่าง   แดง: ติดขัด   ฟ้า: น้ำ"
+
+msgid "Tactical transmission"
+msgstr "การสื่อสารทางยุทธวิธี"
+
+msgid "[Tab / click] Ping objective"
+msgstr "[Tab / คลิก] ชี้เป้าหมาย"
+
+msgid "[F] Switch weapon mode (primary / secondary)"
+msgstr "[F] สลับโหมดอาวุธ (หลัก / รอง)"
+
+msgid "Objective"
+msgstr "เป้าหมาย"
+
+msgid "Street patrol"
+msgstr "หน่วยลาดตระเวนถนน"
+
+msgid "Assault wave"
+msgstr "คลื่นจู่โจม"
+
+msgid "Enemy assault wave on the streets. Hold the base."
+msgstr "คลื่นจู่โจมของศัตรูอยู่บนถนน รักษาฐานไว้"
+
+msgid "blocked by a road"
+msgstr "ถนนขวางอยู่"
+
+msgid "too steep"
+msgstr "ชันเกินไป"
+
+msgid "an enemy unit is in the way"
+msgstr "มีหน่วยศัตรูขวางอยู่"

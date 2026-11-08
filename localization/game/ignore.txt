@@ -23,3 +23,6 @@ bonus:done:%s
 counter:%d
 swap:%d
 wave:%d
+patrol:%d
+raid:%d
+EVA

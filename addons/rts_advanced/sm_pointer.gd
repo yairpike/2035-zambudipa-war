@@ -70,6 +70,8 @@ signal ally_lost
 signal rallies_shown(host: Node3D, rows: Array[Dictionary])
 ## Active weapon slot of `u` changed (primary or secondary); the view restyles its turret and muzzle.
 signal weapon_shown(u: RTSUnit, slot: String, tint: Color)
+## The player swapped weapon slots on the selection (F or a HUD slot): `slot` is the lead unit's new slot.
+signal weapons_swapped(slot: String, count: int)
 const BEAM_TIME: float = 1.5
 const REVERSE_SPEED: float = 0.7
 const STANCES: PackedStringArray = ["aggressive", "guard", "hold_ground", "hold"]
@@ -693,6 +695,7 @@ func toggle_weapons() -> int:
 		if lead != null:
 			group_note = "%s: %s" % [SMArms.slot_of(lead).capitalize(), str(lead.get_meta("weapon_name", ""))]
 			group_note_t = 1.6
+		weapons_swapped.emit(SMArms.slot_of(lead) if lead != null and SMArms.armed(lead) else SMArms.PRIMARY, n)
 	return n
 
 ## Sets one weapon slot on every selected unit that has it.
@@ -702,6 +705,8 @@ func use_weapon(slot: String) -> int:
 		if is_instance_valid(u) and u.is_alive() and SMArms.armed(u) and SMArms.slot_of(u) != slot and SMArms.equip(u, slot):
 			u.set_meta("burst_t", 0.0)
 			n += 1
+	if n > 0:
+		weapons_swapped.emit(slot, n)
 	return n
 
 func _placing() -> bool:

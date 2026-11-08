@@ -32,6 +32,7 @@ func _ready() -> void:
 	_ui()
 	var rally: Vector3 = grid.cell_center(_yard_cell())
 	side.prepare(self, status, grid, rally, roster.economy)
+	side.keep_streets_of(map_id)
 	if side.yard.style != SMBuildYard.Style.INTERNAL:
 		side.yard.radius = maxf(side.yard.radius, 48.0)
 	side.plan.keep_nets(sim.goods, sim.tech)

@@ -123,6 +123,10 @@ func _run() -> void:
 	await H.section("test_ra3_factory", test_ra3_factory)
 	await H.section("test_ra3_weapons", test_ra3_weapons)
 	await H.section("test_asset_pack", test_asset_pack)
+	await H.section("test_eva_voice", test_eva_voice)
+	await H.section("test_placement_feedback", test_placement_feedback)
+	await H.section("test_objective_guidance", test_objective_guidance)
+	await H.section("test_campaign_pressure", test_campaign_pressure)
 	preload("res://game/render_budget.gd").shutdown(self)
 	quit(H.finish())
 
@@ -7903,3 +7907,255 @@ func test_asset_pack() -> void:
 	for name: String in ["hello.txt", "later.txt", "bad.json"]:
 		DirAccess.remove_absolute(dir.path_join(name))
 	DirAccess.remove_absolute(dir)
+
+const EVA_MISSIONS: PackedStringArray = ["kokang", "tachileik", "shwe_kokko", "operation_1027", "andaman", "ghosts_of_patani", "kilometer_watch", "black_haze", "archipelago_rising", "wrath_of_the_garuda", "fog_over_pakbeng", "keng_tung", "plain_of_jars", "tonle_sap", "shattered_monsoon", "sop_ruak", "phillips"]
+
+func test_eva_voice() -> void:
+	var bank: GDScript = load("res://game/voice_bank.gd") as GDScript
+	var sounds: GDScript = load("res://game/sound_bank.gd") as GDScript
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://assets/voices/eva/manifest.json"))
+	var manifest: Dictionary = parsed as Dictionary if parsed is Dictionary else {}
+	var keys: Array = (manifest.get("keys", {}) as Dictionary).keys()
+	var every: bool = keys.size() >= 50
+	for key: Variant in keys:
+		for language: String in ["en", "my", "zh", "th", "ms"]:
+			every = every and ResourceLoader.exists("res://assets/voices/eva/%s/%s.ogg" % [language, str(key)])
+	check(every, "the EVA pack ships every callout in English, Burmese, Chinese, Thai and Malay")
+	var needed: bool = true
+	for key: String in ["cannot_deploy", "naval_on_water", "build_near_allied", "blocked_road_terrain", "building", "construction_complete", "unit_ready", "training", "insufficient_funds", "base_under_attack", "ally_under_attack", "structure_garrisoned", "secondary_weapon", "primary_weapon", "objective_received", "new_objective", "primary_complete", "bonus_reinforcements", "counter_attack", "stage_two", "stage_three", "reinforcements_arrived", "mission_accomplished", "mission_failed"]:
+		needed = needed and keys.has(key) and bool(bank.call("has", key))
+	check(needed, "deployment, base, weapon, objective, stage and outcome callouts all exist")
+	var openers: bool = true
+	for id: String in EVA_MISSIONS:
+		openers = openers and bool(bank.call("has", "mission_" + id))
+	check(openers, "all 17 campaign missions speak their own opening objective")
+	Settings.set_voice("burmese")
+	var mine: String = str(bank.call("path_for", "cannot_deploy"))
+	Settings.set_voice("english")
+	check(mine == "res://assets/voices/eva/my/cannot_deploy.ogg" and str(bank.call("path_for", "cannot_deploy")) == "res://assets/voices/eva/en/cannot_deploy.ogg" and str(bank.call("path_for", "cannot_deploy_here")) == "res://assets/voices/eva/en/cannot_deploy.ogg", "the chosen voice language picks its own clip and the announcer alias maps onto it")
+	check(str(bank.call("reason_key", "naval structures go on water")) == "naval_on_water" and str(bank.call("reason_key", "outside the build radius")) == "build_near_allied" and str(bank.call("reason_key", "blocked by a road")) == "blocked_road_terrain" and str(bank.call("reason_key", "too steep")) == "blocked_road_terrain" and str(bank.call("reason_key", "the ground is taken")) == "cannot_deploy", "each placement refusal maps onto its own EVA line")
+	var host: Node3D = Node3D.new()
+	root.add_child(host)
+	bank.call("forget")
+	var first: bool = bool(bank.call("say", host, "cannot_deploy"))
+	var again: bool = bool(bank.call("say", host, "cannot_deploy"))
+	var eva: Node = host.get_node_or_null("EvaVoice")
+	var alert: AudioStreamPlayer = eva.get_node_or_null("EvaAlert") as AudioStreamPlayer if eva != null else null
+	check(first and not again and alert != null and str(alert.get_meta("key", "")) == "cannot_deploy" and alert.stream != null, "a refusal callout plays at once and then cools down instead of spamming")
+	bank.call("say", host, "objective_received")
+	bank.call("say", host, "stage_two")
+	var spoken: PackedStringArray = eva.get("spoken") as PackedStringArray
+	var queued: PackedStringArray = eva.get("queue") as PackedStringArray
+	check(spoken.has("objective_received") and queued.has("stage_two") and not spoken.has("stage_two"), "narration lines queue behind each other")
+	var talk: AudioStreamPlayer = AudioStreamPlayer.new()
+	talk.name = "Dialogue"
+	host.add_child(talk)
+	check(bool(bank.call("open_mission", host, "tachileik")) and (bank.get("heard") as PackedStringArray).has("mission_tachileik") and not bool(bank.call("say", host, "no_such_line")), "a mission opener is spoken by key and an unknown key stays silent")
+	var cues: bool = true
+	for kind: String in ["weapon_click", "error_buzz", "objective_chime", "ping"]:
+		var wav: AudioStreamWAV = sounds.call("stream", kind) as AudioStreamWAV
+		cues = cues and wav != null and wav.data.size() > 400 and wav.get_length() < 1.5
+	check(cues and bool(sounds.call("play", host, "error_buzz")) and (sounds.get("played") as PackedStringArray).has("error_buzz"), "the weapon click, error buzz, chime and ping are short generated cues")
+	host.free()
+	await process_frame
+
+func test_placement_feedback() -> void:
+	var feedback: GDScript = load("res://game/placement_feedback.gd") as GDScript
+	var bank: GDScript = load("res://game/voice_bank.gd") as GDScript
+	var grid: SMDomainGrid = SMDomainGrid.new(24, 24, 4.0, Vector3(-48.0, 0.0, -48.0))
+	var plan: SMBasePlan = SMBasePlan.new()
+	plan.grid = grid
+	plan.center = Vector3.ZERO
+	plan.radius = 40.0
+	plan.streets = {Vector2i(12, 12): true}
+	grid.set_domain(Vector2i(8, 8), SMDomainGrid.Domain.CLIFF)
+	grid.set_domain(Vector2i(15, 15), SMDomainGrid.Domain.DEEP)
+	check(plan.fit_reason(Rect2i(11, 11, 2, 2), false) == "blocked by a road" and plan.fit_reason(Rect2i(7, 7, 2, 2), false) == "too steep" and plan.fit_reason(Rect2i(15, 15, 1, 1), false) == "needs dry ground" and plan.fit_reason(Rect2i(4, 14, 2, 2), false) == "", "land buildings refuse road, steep and water cells and fit on open ground")
+	check(plan.cell_state(Vector2i(12, 12), false) == "road" and plan.cell_state(Vector2i(8, 8), false) == "steep" and plan.cell_state(Vector2i(15, 15), false) == "water" and plan.cell_state(Vector2i(15, 15), true) == "ok" and plan.cell_state(Vector2i(4, 4), true) == "land" and plan.cell_state(Vector2i(4, 4), false) == "ok" and plan.cell_state(Vector2i(-1, 3), false) == "off", "each aura cell knows whether it is open, road, steep, water or dry land for a naval yard")
+	var green: Color = feedback.call("ink_of", "ok") as Color
+	var red: Color = feedback.call("ink_of", "road") as Color
+	var blue: Color = feedback.call("ink_of", "water") as Color
+	var naval_land: Color = feedback.call("ink_of", "land") as Color
+	check(green.g > green.r and red.r > red.g and blue.b > blue.r and naval_land.r > naval_land.g, "the aura paints open cells emerald, blocked cells crimson and water cyan")
+	check(str(feedback.call("pill_text", "blocked by a road")) == "CANNOT DEPLOY HERE — BLOCKED BY ROAD" and str(feedback.call("pill_text", "needs dry ground")) == "CANNOT DEPLOY HERE — WATER (LAND STRUCTURE)" and str(feedback.call("pill_text", "naval structures go on water")) == "CANNOT DEPLOY HERE — NEEDS DEEP WATER & OPEN CHANNEL" and str(feedback.call("pill_text", "too steep")) == "CANNOT DEPLOY HERE — TOO STEEP / OBSTRUCTED" and str(feedback.call("pill_text", "an enemy unit is in the way")) == "CANNOT DEPLOY HERE — OCCUPIED BY UNIT/BUILDING" and str(feedback.call("pill_text", "outside the build radius")) == "CANNOT DEPLOY HERE — MUST BUILD NEAR AN ALLIED STRUCTURE", "every refusal reads as a CANNOT DEPLOY HERE pill with its cause")
+	bank.call("forget")
+	var scene: Node = await _ra3_scene("gtfc", "res://game/phillips_channel.tscn")
+	var side: SMSide = scene.get("side") as SMSide
+	var field: SMPointer = scene.get("field") as SMPointer
+	var placing: SMPlacement = side.placement
+	(scene.find_child("Build_scaffold_yard", true, false) as Button).pressed.emit()
+	for id: String in ["salween_hydro", "slag_refinery"]:
+		side.order_building(StringName(id))
+	var view: Node = scene.get_node_or_null("PlacementFeedback")
+	check(view != null and side.plan.streets.size() > 0, "a mission wires placement feedback and knows its streets")
+	(scene.find_child("Build_barracks", true, false) as Button).pressed.emit()
+	var fit: Array = _ra3_fit(side, &"barracks", side.yard.center + Vector3(SMBasePlan.cell_m() * 3.0, 0.0, 0.0), 10)
+	if fit.is_empty() or view == null:
+		check(false, "phillips has a barracks plot for the aura")
+		await _ra3_done(scene)
+		return
+	placing.face(float(fit[1]))
+	placing.hover(fit[0] as Vector3)
+	var cells: Array[Dictionary] = []
+	cells.assign(view.call("aura") as Array)
+	var foot_ok: bool = true
+	var foot: int = 0
+	for row: Dictionary in cells:
+		if bool(row["foot"]):
+			foot += 1
+			foot_ok = foot_ok and str(row["state"]) == "ok"
+	var tiles: MultiMeshInstance3D = scene.get_node_or_null("PlacementAura") as MultiMeshInstance3D
+	var pill: Control = scene.find_child("PlacementPill", true, false) as Control
+	check(foot > 0 and foot_ok and cells.size() > foot + 8 and tiles != null and tiles.multimesh.instance_count == cells.size(), "a valid ghost shows a green footprint inside a wider grid aura")
+	check(pill == null or not pill.visible, "no blocked pill while the spot is open")
+	var wet: Vector3 = Vector3.INF
+	var grid2: SMDomainGrid = side.plan.grid
+	var c0: Vector2i = grid2.cell_at(side.yard.center)
+	for r: int in range(0, 30):
+		for y: int in range(c0.y - r, c0.y + r + 1):
+			for x: int in range(c0.x - r, c0.x + r + 1):
+				var probe: Vector3 = grid2.cell_center(Vector2i(x, y))
+				if wet == Vector3.INF and side.placement_reason(&"barracks", probe, 0.0) == "needs dry ground":
+					wet = probe
+	placing.face(0.0)
+	if wet != Vector3.INF:
+		placing.hover(wet)
+	pill = scene.find_child("PlacementPill", true, false) as Control
+	var line: Label = scene.find_child("PlacementPillLine", true, false) as Label
+	check(wet != Vector3.INF and pill != null and pill.visible and line != null and line.text == "CANNOT DEPLOY HERE — WATER (LAND STRUCTURE)", "a land building over water shows the WATER pill")
+	var wet_cells: int = 0
+	cells.assign(view.call("aura") as Array)
+	for row: Dictionary in cells:
+		if str(row["state"]) == "water":
+			wet_cells += 1
+	check(wet_cells > 0, "the aura marks the water cells")
+	var before: int = int(view.get("refusals"))
+	var why: String = placing.confirm()
+	check(why == "needs dry ground" and int(view.get("refusals")) == before + 1 and float(view.get("flash_left")) > 0.0 and (bank.get("heard") as PackedStringArray).has("blocked_road_terrain") and placing.active, "an invalid click buzzes, flashes the blocked cells and speaks the EVA line")
+	var road: Vector3 = Vector3.INF
+	for c: Variant in side.plan.streets.keys():
+		var at: Vector3 = grid2.cell_center(c as Vector2i)
+		if road == Vector3.INF and side.placement_reason(&"barracks", at, 0.0) == "blocked by a road":
+			road = at
+	if road != Vector3.INF:
+		placing.hover(road)
+	check(road != Vector3.INF and line.text == "CANNOT DEPLOY HERE — BLOCKED BY ROAD", "a street under the ghost shows the ROAD pill")
+	var foe: RTSUnit = field.spawn(SMPointer.ENEMY, fit[0] as Vector3, &"militia", false)
+	if foe != null:
+		foe.global_position = fit[0] as Vector3
+	check(foe != null and side.placement_reason(&"barracks", fit[0] as Vector3, float(fit[1])) == "an enemy unit is in the way", "an enemy standing on the plot blocks it")
+	if foe != null:
+		foe.free()
+	placing.cancel()
+	side.order_building(&"barracks")
+	side.order_building(&"war_factory")
+	(scene.find_child("Build_naval_yard", true, false) as Button).pressed.emit()
+	var sea: Array = _ra3_fit(side, &"naval_yard", side.yard.center, 30)
+	if not sea.is_empty():
+		placing.face(float(sea[1]))
+		placing.hover(sea[0] as Vector3)
+	var naval_ok: bool = not sea.is_empty()
+	var dry_red: int = 0
+	cells.assign(view.call("aura") as Array)
+	for row: Dictionary in cells:
+		if bool(row["foot"]):
+			naval_ok = naval_ok and str(row["state"]) == "ok"
+		elif str(row["state"]) == "land":
+			dry_red += 1
+	check(naval_ok and dry_red > 0, "a naval yard reads open water as green and the shore as red")
+	await _ra3_done(scene)
+
+func test_objective_guidance() -> void:
+	var bank: GDScript = load("res://game/voice_bank.gd") as GDScript
+	var sounds: GDScript = load("res://game/sound_bank.gd") as GDScript
+	bank.call("forget")
+	var scene: Node = await _ra3_scene("gtfc", "res://game/phillips_channel.tscn")
+	var view: Node = scene.get_node_or_null("StageView")
+	var field: SMPointer = scene.get("field") as SMPointer
+	var cam: RTSCamera = scene.get_node_or_null("Camera") as RTSCamera
+	check(view != null and (view.get("voiced") as PackedStringArray).has("mission_phillips"), "the mission opens with its spoken objective")
+	var directive: Label = scene.find_child("StageDirective", true, false) as Label
+	var net: Label = scene.find_child("StageNet", true, false) as Label
+	var face: Control = scene.find_child("StageFace", true, false) as Control
+	check(directive != null and directive.text.begins_with("Stage 1/3: ") and net != null and face != null, "a tactical transmission banner carries a portrait and a one-line directive")
+	view.call("drive", 0.1)
+	var beacon: Node3D = scene.get_node_or_null("ObjectiveBeacon") as Node3D
+	check(beacon != null and beacon.visible and beacon.get_node_or_null("Arrow") != null and beacon.get_node_or_null("Ring") != null and field.beacon_at != Vector3.INF, "a 3D beacon and the minimap ring mark the objective")
+	var arrow_y: float = (beacon.get_node("Arrow") as Node3D).position.y if beacon != null else 0.0
+	view.call("drive", 0.4)
+	check(beacon != null and not is_equal_approx((beacon.get_node("Arrow") as Node3D).position.y, arrow_y), "the beacon arrow bobs")
+	var ping: Button = scene.find_child("StagePingButton", true, false) as Button
+	var home: Vector3 = cam.focus
+	var target: Vector3 = view.call("objective_at") as Vector3
+	if ping != null:
+		ping.pressed.emit()
+	var flat: Vector3 = Vector3(cam.focus.x - target.x, 0.0, cam.focus.z - target.z)
+	check(ping != null and int(view.get("pings")) == 1 and flat.length() < 1.0 and not field.pings.is_empty() and (bank.get("heard") as PackedStringArray).has("new_objective") and (sounds.get("played") as PackedStringArray).has("ping"), "the ping button swings the camera over the objective and repeats the reminder")
+	view.call("drive", float(view.get("PAN_HOLD")) + 0.2)
+	check(cam.focus.distance_to(home) < 1.0, "the camera hands the view back after the ping")
+	_ra3_key(KEY_TAB)
+	check(int(view.get("pings")) == 2, "Tab pings the objective")
+	_ra3_key(KEY_TAB, true)
+	check(int(view.get("pings")) == 2, "Shift+Tab leaves the objective alone for build tabs")
+	var tip: Label = scene.find_child("StageWeaponTip", true, false) as Label
+	check(tip != null and tip.visible, "early missions show the [F] weapon mode tip")
+	var gun: RTSUnit = null
+	for u: RTSUnit in field.units_of(SMPointer.PLAYER):
+		if gun == null and SMArms.armed(u):
+			gun = u
+	if gun == null:
+		gun = field.spawn(SMPointer.PLAYER, cam.focus, &"amber_tank")
+	field.selection.clear()
+	field.selection.units.append(gun)
+	var swapped: int = field.toggle_weapons()
+	view.call("drive", 2.2)
+	check(swapped >= 1 and not tip.visible and (sounds.get("played") as PackedStringArray).has("weapon_click") and (bank.get("heard") as PackedStringArray).has("secondary_weapon"), "F clicks, speaks the weapon mode and retires the tip")
+	view.call("_call_out", {"kind": "stage", "stage": SMStages.ESCALATION})
+	view.call("_call_out", {"kind": "allies", "stage": SMStages.ESCALATION})
+	var said: PackedStringArray = view.get("voiced") as PackedStringArray
+	check(said.has("stage_two") and said.has("counter_attack") and said.has("reinforcements_arrived"), "stage two and allied arrivals have their own callouts")
+	await _ra3_done(scene)
+
+func test_campaign_pressure() -> void:
+	var tiers: bool = true
+	for id: String in EVA_MISSIONS:
+		var p: Dictionary = SMStages.pressure_of(id)
+		tiers = tiers and int(p["patrol"]) >= 2 and float(p["wave_every"]) > 0.0 and int(p["wave_size"]) >= 2
+	var early: Dictionary = SMStages.pressure_of("tachileik")
+	var late: Dictionary = SMStages.pressure_of("shattered_monsoon")
+	check(tiers and float(late["wave_every"]) < float(early["wave_every"]) and int(late["patrol"]) > int(early["patrol"]), "every mission has patrols and timed assault waves, harder later in the campaign")
+	var scene: Node = await _ra3_scene("gtfc", "res://game/phillips_channel.tscn")
+	var stages: SMStages = scene.get("stages") as SMStages
+	var field: SMPointer = scene.get("field") as SMPointer
+	var patrols: Array[RTSUnit] = []
+	for u: RTSUnit in field.units_of(SMPointer.ENEMY):
+		if str(u.get_meta("duty", "")) == "patrol":
+			patrols.append(u)
+	check(patrols.size() >= 2 and stages.history.has("patrol:%d" % patrols.size()) and not patrols[0].path.is_empty(), "street patrols walk the map from the start")
+	var raid: float = float(stages.pressure["first_wave"]) + 1.0
+	stages.call("_raid_tick", raid)
+	var raiders: int = 0
+	var routed: bool = true
+	for u: RTSUnit in field.units_of(SMPointer.ENEMY):
+		if str(u.get_meta("duty", "")) == "raider":
+			raiders += 1
+			routed = routed and not u.path.is_empty()
+	var wave_event: bool = false
+	for e: Dictionary in stages.drain():
+		wave_event = wave_event or str(e.get("kind", "")) == "wave"
+	check(stages.waves == 1 and raiders == int(stages.pressure["wave_size"]) and routed and wave_event and stages.history.has("raid:1"), "an assault wave marches down the streets at the base and is announced")
+	var tank: RTSUnit = null
+	for kind: StringName in [&"amber_tank", &"cyan_ifv", &"militia", &"emerald_gunboat"]:
+		var u: RTSUnit = field.spawn(SMPointer.ENEMY, Vector3(300.0, 0.0, 300.0), kind, false) if tank == null else null
+		if u != null and SMArms.armed(u) and absf(float(SMArms.profile(u, SMArms.PRIMARY).get("range", 0.0)) - float(SMArms.profile(u, SMArms.SECONDARY).get("range", 0.0))) > 1.5:
+			tank = u
+	var reach_ok: bool = false
+	if tank != null:
+		var short: String = SMArms.PRIMARY if float(SMArms.profile(tank, SMArms.PRIMARY).get("range", 0.0)) < float(SMArms.profile(tank, SMArms.SECONDARY).get("range", 0.0)) else SMArms.SECONDARY
+		SMArms.equip(tank, short)
+		var near: float = float(SMArms.profile(tank, short).get("range", 0.0))
+		var far: float = float(SMArms.profile(tank, SMArms.other(short)).get("range", 0.0))
+		var cat: String = "vehicle" if SMArms.can_hit(SMArms.profile(tank, SMArms.other(short)), "vehicle") else "boat"
+		reach_ok = SMArms.tactical_pick(tank, cat, (near + far) * 0.5) and SMArms.slot_of(tank) == SMArms.other(short)
+	check(reach_ok, "enemy units switch to the weapon mode that reaches their target")
+	await _ra3_done(scene)

@@ -1,11 +1,20 @@
 extends Node
-## Shows an SMStages arc on screen: the commander transmission banner, the objectives tracker, minimap pings
-## (Space jumps to the newest), and the arrival props (helicopter drop, landing craft, boss compound, bonus site).
-## It never moves the camera or takes input; the player keeps control through every beat.
+## Shows an SMStages arc on screen: the tactical transmission banner (speaker portrait, the stage directive and the
+## commander's line), the objectives tracker with its PING OBJECTIVE button, minimap pings (Space jumps to the
+## newest), the world objective beacon, the EVA callout for every beat, and the arrival props (helicopter drop,
+## landing craft, boss compound, bonus site).
+## Beats never move the camera; only the player's own ping (Tab or the button) pans it, briefly, and gives it back.
 
+const VoiceBank = preload("res://game/voice_bank.gd")
+const SoundBank = preload("res://game/sound_bank.gd")
+const Beacon = preload("res://game/objective_beacon.gd")
 const BANNER_TIME: float = 6.5
 const HELI_TIME: float = 5.0
 const CRAFT_TIME: float = 4.5
+const PAN_HOLD: float = 2.4
+const TIP_TIME: float = 30.0
+## Missions that open with the [F] weapon-mode tip: the first five of the campaign and the two skirmish arcs.
+const TIP_MISSIONS: PackedStringArray = ["kokang", "tachileik", "shwe_kokko", "operation_1027", "andaman", "sop_ruak", "phillips"]
 
 var stages: SMStages
 var speaker: String = "Command"
@@ -20,6 +29,18 @@ var _banner_t: float = 0.0
 var _rows: Array[Label] = []
 var _bonus_row: Label
 var _props: Array[Dictionary] = []
+var _banner_face: TextureRect
+var _banner_directive: Label
+var _tip: Label
+var _tip_left: float = 0.0
+var _clock: float = 0.0
+var _pan_left: float = 0.0
+var _pan_home: Vector3 = Vector3.INF
+var _pan_to: Vector3 = Vector3.INF
+var pings: int = 0
+## Minimap beacon this view placed; a story's own beacon is left alone.
+var _mark: Vector3 = Vector3.INF
+var voiced: PackedStringArray = PackedStringArray()
 
 static func attach(host: Node3D, arc: SMStages, who: String = "Command") -> Node:
 	if host == null or arc == null:
@@ -39,11 +60,17 @@ func open(host: Node3D, arc: SMStages, who: String) -> void:
 	stages = arc
 	speaker = who
 	_chrome()
+	if TIP_MISSIONS.has(stages.mission_id):
+		_tip_left = TIP_TIME
+	var field: SMPointer = _host.get("field") as SMPointer
+	if field != null and not field.weapons_swapped.is_connected(_on_swapped):
+		field.weapons_swapped.connect(_on_swapped)
 	drive(0.0)
 
 func drive(delta: float) -> void:
 	if stages == null or _host == null:
 		return
+	_clock += maxf(delta, 0.0)
 	for e: Dictionary in stages.drain():
 		_show(e)
 	if _banner_t > 0.0:
@@ -51,7 +78,83 @@ func drive(delta: float) -> void:
 		if _banner_t <= 0.0 and _banner != null:
 			_banner.visible = false
 	_animate(delta)
+	_pan_tick(delta)
+	_guide()
+	if _tip_left > 0.0:
+		_tip_left = maxf(0.0, _tip_left - delta)
 	_refresh()
+
+## Where the player should look now: a living stage target, else the mission's own marker.
+func objective_at() -> Vector3:
+	var at: Vector3 = stages.beacon() if stages != null else Vector3.INF
+	if at != Vector3.INF:
+		return at
+	var field: SMPointer = _host.get("field") as SMPointer if _host != null else null
+	if field != null and field.beacon_at != Vector3.INF and field.beacon_at != _mark:
+		return field.beacon_at
+	if stages != null and stages.stage == SMStages.FOOTHOLD and stages.bonus_state == "open":
+		return stages.bonus_at()
+	return Vector3.INF
+
+## Tab or the tracker button: rings the objective on the minimap, swings the camera over it for a moment, then
+## hands the view back, and the EVA repeats the objective call.
+func ping_objective() -> bool:
+	var at: Vector3 = objective_at()
+	if at == Vector3.INF or _host == null:
+		return false
+	pings += 1
+	var field: SMPointer = _host.get("field") as SMPointer
+	if field != null:
+		field.ping(at, Color(1.0, 0.82, 0.25))
+	var cam: RTSCamera = _host.get_node_or_null("Camera") as RTSCamera
+	if cam != null:
+		if _pan_left <= 0.0:
+			_pan_home = cam.focus
+		_pan_to = Vector3(at.x, cam.focus.y, at.z)
+		cam.focus = _pan_to
+		cam.apply()
+		_pan_left = PAN_HOLD
+	SoundBank.play(_host, "ping")
+	_voice("new_objective")
+	_say(stages.goal_line(), "ping")
+	return true
+
+func _pan_tick(delta: float) -> void:
+	if _pan_left <= 0.0:
+		return
+	_pan_left = maxf(0.0, _pan_left - delta)
+	var cam: RTSCamera = _host.get_node_or_null("Camera") as RTSCamera
+	if cam == null:
+		return
+	if cam.focus.distance_to(_pan_to) > 0.5:
+		_pan_left = 0.0
+		return
+	if _pan_left <= 0.0 and _pan_home != Vector3.INF:
+		cam.focus = _pan_home
+		cam.apply()
+
+func _guide() -> void:
+	var at: Vector3 = objective_at()
+	var targets: Array[RTSUnit] = []
+	var field: SMPointer = _host.get("field") as SMPointer
+	if field != null:
+		var duties: PackedStringArray = stages.targets()
+		for u: RTSUnit in field.units_of(SMPointer.ENEMY):
+			if is_instance_valid(u) and u.is_alive() and duties.has(str(u.get_meta("duty", ""))):
+				targets.append(u)
+		var mark: Vector3 = at
+		var ours: bool = _host.get("story") == null or field.beacon_at == Vector3.INF or field.beacon_at == _mark
+		if ours and field.beacon_at != mark:
+			field.place_beacon(mark)
+			_mark = mark
+	Beacon.place(_host, at, targets, _clock)
+
+func _on_swapped(_slot: String, _count: int) -> void:
+	_tip_left = minf(_tip_left, 2.0)
+
+func _voice(key: String) -> void:
+	if VoiceBank.say(_host, key):
+		voiced.append(key)
 
 func props_named(prefix: String) -> int:
 	var n: int = 0
@@ -69,7 +172,8 @@ func _show(e: Dictionary) -> void:
 		field.ping(at, _ping_color(kind))
 	var text: String = str(e.get("text", ""))
 	if text != "":
-		_say(text, kind)
+		_say(text, kind, int(e.get("stage", stages.stage)))
+	_call_out(e)
 	if kind == "allies":
 		var mode: String = str(e.get("mode", ""))
 		var to: Vector3 = e.get("to", at) as Vector3
@@ -83,23 +187,69 @@ func _show(e: Dictionary) -> void:
 	elif kind == "bonus_site":
 		_site(at, str(e.get("bonus", "")))
 
+## The EVA line(s) for one beat. Narration queues, so a stage change reads as one briefing.
+func _call_out(e: Dictionary) -> void:
+	var kind: String = str(e.get("kind", ""))
+	var on_stage: int = int(e.get("stage", 0))
+	if kind == "stage" and on_stage == SMStages.FOOTHOLD:
+		if VoiceBank.open_mission(_host, stages.mission_id):
+			voiced.append("mission_" + stages.mission_id)
+	elif kind == "stage" and on_stage == SMStages.ESCALATION:
+		SoundBank.play(_host, "objective_chime")
+		_voice("primary_complete")
+		_voice("stage_two")
+		_voice("counter_attack")
+	elif kind == "stage" and on_stage == SMStages.CLIMAX:
+		SoundBank.play(_host, "objective_chime")
+		_voice("primary_complete")
+		_voice("counter_attack")
+	elif kind == "boss":
+		SoundBank.play(_host, "objective_chime")
+		_voice("primary_complete")
+		_voice("stage_three")
+	elif kind == "allies":
+		_voice("reinforcements_arrived")
+	elif kind == "wave":
+		_voice("wave_incoming")
+	elif kind == "bonus":
+		if not e.has("reward"):
+			_voice("bonus_lost")
+		elif str(e.get("reward", "")) == "reinforce":
+			_voice("bonus_reinforcements")
+		else:
+			_voice("bonus_achieved")
+
 func _ping_color(kind: String) -> Color:
 	if kind == "allies":
 		return Color(0.35, 0.85, 0.45)
 	if kind == "bonus":
 		return Color(0.95, 0.85, 0.3)
-	if kind == "boss" or kind == "ambush" or kind == "swap":
+	if kind == "boss" or kind == "ambush" or kind == "swap" or kind == "wave":
 		return Color(0.95, 0.3, 0.25)
 	return Color(0.98, 0.7, 0.25)
 
-func _say(text: String, kind: String) -> void:
+func _say(text: String, kind: String, on_stage: int = 0) -> void:
 	banner_text = text
 	_banner_t = BANNER_TIME
 	if _banner == null:
 		return
 	_banner.visible = true
 	_banner_speaker.text = speaker if kind != "bonus" else "Bonus objective"
+	var directive: String = "Stage %d/3: %s" % [on_stage if on_stage > 0 else maxi(1, stages.stage), stages.goal_line()]
+	_banner_directive.text = directive
+	_banner_directive.visible = kind == "stage" or kind == "boss" or kind == "ping" or kind == "wave"
 	_banner_line.text = text
+	_banner_line.visible = text != "" and text != stages.goal_line()
+	_sync_face()
+
+## The set piece's speaker portrait when the mission has one, else the command-net emblem.
+func _sync_face() -> void:
+	if _banner_face == null:
+		return
+	var layer: CanvasLayer = _host.get("ui_layer") as CanvasLayer
+	var face: TextureRect = layer.find_child("SetPortrait", true, false) as TextureRect if layer != null else null
+	_banner_face.texture = face.texture if face != null and face.texture != null else null
+	_banner_face.get_parent().get_node("StageFaceMark").visible = _banner_face.texture == null
 
 func _chrome() -> void:
 	var layer: CanvasLayer = _host.get("ui_layer") as CanvasLayer
@@ -111,8 +261,8 @@ func _chrome() -> void:
 	_banner = PanelContainer.new()
 	_banner.name = "StageBanner"
 	_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_banner.position = Vector2(maxf(12.0, view.x * 0.5 - 300.0), view.y * 0.41)
-	_banner.custom_minimum_size = Vector2(600.0, 0.0)
+	_banner.position = Vector2(view.x * 0.35, view.y * 0.41)
+	_banner.custom_minimum_size = Vector2(minf(560.0, view.x * 0.36), 0.0)
 	var plate: StyleBoxFlat = StyleBoxFlat.new()
 	plate.bg_color = Color(0.05, 0.06, 0.08, 0.86)
 	plate.border_color = Color(0.95, 0.72, 0.25, 0.9)
@@ -122,9 +272,44 @@ func _chrome() -> void:
 	plate.content_margin_top = 8.0
 	plate.content_margin_bottom = 8.0
 	_banner.add_theme_stylebox_override("panel", plate)
+	var strip: HBoxContainer = HBoxContainer.new()
+	strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	strip.add_theme_constant_override("separation", 12)
+	_banner.add_child(strip)
+	var frame: Panel = Panel.new()
+	frame.name = "StageFace"
+	frame.custom_minimum_size = Vector2(68.0, 68.0)
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var fplate: StyleBoxFlat = StyleBoxFlat.new()
+	fplate.bg_color = Color(0.1, 0.12, 0.1, 0.95)
+	fplate.border_color = Color(0.95, 0.72, 0.25, 0.9)
+	fplate.set_border_width_all(2)
+	frame.add_theme_stylebox_override("panel", fplate)
+	strip.add_child(frame)
+	var mark: Label = Label.new()
+	mark.name = "StageFaceMark"
+	mark.text = "EVA"
+	mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	mark.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	mark.set_anchors_preset(Control.PRESET_FULL_RECT)
+	mark.add_theme_font_size_override("font_size", 20)
+	mark.add_theme_color_override("font_color", Color(0.98, 0.78, 0.3))
+	frame.add_child(mark)
+	_banner_face = TextureRect.new()
+	_banner_face.name = "StageFacePortrait"
+	_banner_face.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_banner_face.offset_left = 2.0
+	_banner_face.offset_top = 2.0
+	_banner_face.offset_right = -2.0
+	_banner_face.offset_bottom = -2.0
+	_banner_face.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_banner_face.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	_banner_face.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	frame.add_child(_banner_face)
 	var col: VBoxContainer = VBoxContainer.new()
 	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_banner.add_child(col)
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	strip.add_child(col)
 	var head: HBoxContainer = HBoxContainer.new()
 	head.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	col.add_child(head)
@@ -132,20 +317,39 @@ func _chrome() -> void:
 	_banner_speaker.name = "StageSpeaker"
 	_banner_speaker.add_theme_font_size_override("font_size", 17)
 	_banner_speaker.add_theme_color_override("font_color", Color(0.98, 0.78, 0.3))
-	_banner_speaker.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head.add_child(_banner_speaker)
+	var net: Label = Label.new()
+	net.name = "StageNet"
+	net.text = "Tactical transmission"
+	net.uppercase = true
+	net.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	net.clip_text = true
+	net.add_theme_font_size_override("font_size", 13)
+	net.add_theme_color_override("font_color", Color(0.6, 0.9, 0.7, 0.85))
+	head.add_child(net)
 	var hint: Label = Label.new()
 	hint.name = "StageJumpHint"
 	hint.text = "Space: jump to the event"
 	hint.add_theme_font_size_override("font_size", 14)
 	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.65))
-	head.add_child(hint)
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_banner_directive = Label.new()
+	_banner_directive.name = "StageDirective"
+	_banner_directive.uppercase = true
+	_banner_directive.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_banner_directive.custom_minimum_size = Vector2(320.0, 0.0)
+	_banner_directive.add_theme_font_size_override("font_size", 18)
+	_banner_directive.add_theme_color_override("font_color", Color(1.0, 0.92, 0.6))
+	_banner_directive.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))
+	_banner_directive.add_theme_constant_override("outline_size", 3)
+	col.add_child(_banner_directive)
 	_banner_line = Label.new()
 	_banner_line.name = "StageLine"
 	_banner_line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_banner_line.custom_minimum_size = Vector2(572.0, 0.0)
+	_banner_line.custom_minimum_size = Vector2(320.0, 0.0)
 	_banner_line.add_theme_font_size_override("font_size", 18)
 	col.add_child(_banner_line)
+	col.add_child(hint)
 	_banner.visible = false
 	layer.add_child(_banner)
 	var tracker: PanelContainer = PanelContainer.new()
@@ -183,6 +387,24 @@ func _chrome() -> void:
 	_bonus_row.custom_minimum_size = Vector2(300.0, 0.0)
 	_bonus_row.add_theme_font_size_override("font_size", 15)
 	list.add_child(_bonus_row)
+	var ping: Button = Button.new()
+	ping.name = "StagePingButton"
+	ping.text = "[Tab / click] Ping objective"
+	ping.focus_mode = Control.FOCUS_NONE
+	ping.mouse_filter = Control.MOUSE_FILTER_STOP
+	ping.add_theme_font_size_override("font_size", 14)
+	ping.add_theme_color_override("font_color", Color(1.0, 0.86, 0.4))
+	ping.pressed.connect(ping_objective)
+	list.add_child(ping)
+	_tip = Label.new()
+	_tip.name = "StageWeaponTip"
+	_tip.text = "[F] Switch weapon mode (primary / secondary)"
+	_tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_tip.custom_minimum_size = Vector2(300.0, 0.0)
+	_tip.add_theme_font_size_override("font_size", 15)
+	_tip.add_theme_color_override("font_color", Color(0.55, 0.95, 1.0))
+	_tip.visible = false
+	list.add_child(_tip)
 	layer.add_child(tracker)
 
 func _refresh() -> void:
@@ -213,6 +435,9 @@ func _refresh() -> void:
 		else:
 			row.text = "Stage %d: %s" % [stage, title]
 			row.add_theme_color_override("font_color", Color(1, 1, 1, 0.4))
+	if _tip != null:
+		_tip.visible = _tip_left > 0.0
+		_tip.modulate.a = 0.75 + 0.25 * sin(_clock * 5.0) if _tip_left > 0.0 else 1.0
 	_bonus_row.text = stages.bonus_line()
 	var ink: Color = Color(0.95, 0.85, 0.3)
 	if stages.bonus_state == "done":

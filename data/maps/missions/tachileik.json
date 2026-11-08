@@ -49,5 +49,12 @@
     }
    ]
   }
- ]
+ ],
+ "pressure": {
+  "patrol": 2,
+  "first_wave": 50,
+  "wave_every": 70,
+  "wave_size": 2,
+  "wave_cap": 6
+ }
 }

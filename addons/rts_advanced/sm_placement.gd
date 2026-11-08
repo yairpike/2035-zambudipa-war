@@ -6,6 +6,8 @@ extends RefCounted
 
 signal changed
 signal finished(id: StringName, result: String)
+## A click tried to place the ghost where it cannot stand; `reason` is the rule it broke.
+signal refused(reason: String)
 
 const DRAG_MIN: float = 1.6
 const DONE: PackedStringArray = ["built", "placed", "unpacked", "redeployed"]
@@ -113,6 +115,7 @@ func confirm() -> String:
 	if reason != "":
 		last_result = reason
 		side._say(reason)
+		refused.emit(reason)
 		changed.emit()
 		return reason
 	var out: String = side.redeploy_yard(anchor, yaw) if redeploy else side.place_building(id, anchor, yaw)
