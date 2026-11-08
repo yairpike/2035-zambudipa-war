@@ -629,7 +629,7 @@ if [ -n "$DOWNLOADS_SRC" ]; then
     exit 1
   fi
   mkdir -p "$DEST/downloads"
-  for installer in ASEAN-2031-macOS.dmg ASEAN-2031-Windows.exe ASEAN-2031-Linux-x86_64.AppImage README.md; do
+  for installer in ASEAN-2031-macOS.dmg ASEAN-2031-Windows.exe ASEAN-2031-Linux-x86_64.AppImage ASEAN-2031-Android.apk ASEAN-2031-iOS.ipa README.md; do
     if [ -f "$DOWNLOADS_SRC/$installer" ]; then
       cp "$DOWNLOADS_SRC/$installer" "$DEST/downloads/$installer"
     fi
