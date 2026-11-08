@@ -43,6 +43,7 @@ func _ready() -> void:
 	roster.setup("gtfc")
 	var rally: Vector3 = Vector3(-6.0, 0.0, -4.0)
 	side.prepare(self, status, grid, rally, roster.economy, "gtfc")
+	side.keep_streets_of("kokang")
 	side.yard.radius = maxf(side.yard.radius, 36.0)
 	_arm_units()
 	var cam: RTSCamera = get_node("Camera") as RTSCamera

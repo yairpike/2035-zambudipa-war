@@ -209,8 +209,12 @@ func _draw() -> void:
 			_dot(u.global_position, friendly.lightened(0.25) if u.selected else friendly)
 		if field.beacon_at != Vector3.INF:
 			var beacon_p: Vector2 = _world_to_local(field.beacon_at)
-			var pulse: float = 4.0 + 1.5 * sin(float(Time.get_ticks_msec()) * 0.006)
-			draw_arc(beacon_p, pulse, 0.0, TAU, 16, Color(0.98, 0.82, 0.28), 1.5, true)
+			var gold: Color = Color(0.98, 0.82, 0.28)
+			var grow: float = fmod(float(Time.get_ticks_msec()) * 0.0011, 1.0)
+			draw_arc(beacon_p, 5.0 + 11.0 * grow, 0.0, TAU, 24, Color(gold.r, gold.g, gold.b, 1.0 - grow), 2.0, true)
+			draw_arc(beacon_p, 5.0, 0.0, TAU, 16, Color(0, 0, 0, 0.6), 3.5, true)
+			draw_arc(beacon_p, 5.0, 0.0, TAU, 16, gold, 2.0, true)
+			draw_circle(beacon_p, 2.0, gold)
 		for ping: Dictionary in field.pings:
 			var ping_p: Vector2 = _world_to_local(ping["at"] as Vector3)
 			var age: float = SMPointer.PING_TIME - float(ping["left"])

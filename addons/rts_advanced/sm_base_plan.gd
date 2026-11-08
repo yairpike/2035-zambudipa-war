@@ -17,6 +17,8 @@ var radius: float = 48.0
 var plots: Dictionary[StringName, Rect2i] = {}
 var yaws: Dictionary[StringName, float] = {}
 var keep: Array[Vector2i] = []
+## Paved street cells (SMMapPlan.paved). Land buildings never sit on a street.
+var streets: Dictionary = {}
 
 static func chart() -> Dictionary:
 	if _chart.is_empty() and FileAccess.file_exists(CHART):
@@ -234,12 +236,43 @@ func fit_reason(rect: Rect2i, wet: bool, ignore: StringName = &"") -> String:
 			var c := Vector2i(x, y)
 			if grid.holding(c):
 				return "the ground is taken"
+			if not wet and streets.has(c):
+				return "blocked by a road"
 			var domain: int = grid.domain_at_cell(c)
+			if domain == SMDomainGrid.Domain.CLIFF:
+				return "too steep"
 			if wet and not is_water(domain):
 				return "naval structures go on water"
 			if not wet and domain != SMDomainGrid.Domain.LAND:
 				return "needs dry ground"
 	return ""
+
+## What one cell under a placement aura is: "ok", "water" (a land building cannot stand there), "land" (a naval one
+## cannot), "road", "steep", "taken" (scenery or another building's plot and gap), "far" (outside the build radius)
+## or "off" (outside the map).
+func cell_state(c: Vector2i, wet: bool, ignore: StringName = &"") -> String:
+	if grid == null or not grid.in_bounds(c):
+		return "off"
+	if grid.holding(c):
+		return "taken"
+	for key: StringName in plots:
+		if key != ignore and plots[key].grow(1).has_point(c):
+			return "taken"
+	var domain: int = grid.domain_at_cell(c)
+	if domain == SMDomainGrid.Domain.CLIFF:
+		return "steep"
+	if wet:
+		if not is_water(domain):
+			return "land"
+	else:
+		if streets.has(c):
+			return "road"
+		if domain != SMDomainGrid.Domain.LAND:
+			return "water"
+	var mid: Vector3 = grid.cell_center(c)
+	if Vector2(mid.x - center.x, mid.z - center.z).length() > radius + (NAVAL_REACH if wet else 0.0) + grid.cell_size:
+		return "far"
+	return "ok"
 
 func _fits(rect: Rect2i, wet: bool) -> bool:
 	return fit_reason(rect, wet) == ""

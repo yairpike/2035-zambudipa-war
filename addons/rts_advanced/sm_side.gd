@@ -130,7 +130,24 @@ func placement_reason(id: StringName, pos: Vector3, yaw: float) -> String:
 		return _redeploy_reason(id, pos, yaw)
 	plan.radius = yard.radius
 	plan.center = placement_center(id)
-	return plan.check_at(id, role_of(id), pos, yaw, floats(id))
+	var why: String = plan.check_at(id, role_of(id), pos, yaw, floats(id))
+	if why == "" and _enemy_on(plan.rect_at(snap_spot(id, pos, yaw), footprint_at(id, yaw))):
+		return "an enemy unit is in the way"
+	return why
+
+## Streets from the map's plan, or from the mission dressing when the map has no skirmish plan.
+func keep_streets_of(map_id: String) -> void:
+	var source: SMMapPlan = SMMapPlan.of(map_id) if SMMapPlan.exists(map_id) else SMMapPlan.dressing(map_id)
+	plan.streets = source.paved if source != null else {}
+
+func _enemy_on(rect: Rect2i) -> bool:
+	var field: SMPointer = host.get("field") as SMPointer if host != null else null
+	if field == null or plan.grid == null:
+		return false
+	for u: RTSUnit in field.units:
+		if is_instance_valid(u) and u.is_alive() and u.team != SMPointer.PLAYER and rect.has_point(plan.grid.cell_at(u.global_position)):
+			return true
+	return false
 
 ## Grid-aligned centre `id` would take at `pos` facing `yaw`.
 func snap_spot(id: StringName, pos: Vector3, yaw: float) -> Vector3:

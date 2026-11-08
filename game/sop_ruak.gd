@@ -31,6 +31,7 @@ func _ready() -> void:
 	_ui()
 	var rally: Vector3 = grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(8, 22)))
 	side.prepare(self, status, grid, rally, roster.economy)
+	side.keep_streets_of("sop_ruak")
 	if side.yard.style != SMBuildYard.Style.INTERNAL:
 		side.yard.radius = maxf(side.yard.radius, 44.0)
 	_arm_units()

@@ -3460,3 +3460,57 @@ msgstr "MUAT TURUN PERMAINAN"
 
 msgid "Download complete. Close the game and open it again to load everything."
 msgstr "Muat turun selesai. Tutup permainan dan buka semula untuk memuatkan semuanya."
+
+msgid "CANNOT DEPLOY HERE — %s"
+msgstr "TIDAK BOLEH DITEMPATKAN DI SINI — %s"
+
+msgid "CANNOT DEPLOY HERE — BLOCKED BY ROAD"
+msgstr "TIDAK BOLEH DITEMPATKAN DI SINI — DISEKAT JALAN RAYA"
+
+msgid "CANNOT DEPLOY HERE — WATER (LAND STRUCTURE)"
+msgstr "TIDAK BOLEH DITEMPATKAN DI SINI — AIR (STRUKTUR DARAT)"
+
+msgid "CANNOT DEPLOY HERE — NEEDS DEEP WATER & OPEN CHANNEL"
+msgstr "TIDAK BOLEH DITEMPATKAN DI SINI — PERLU AIR DALAM & TERUSAN TERBUKA"
+
+msgid "CANNOT DEPLOY HERE — TOO STEEP / OBSTRUCTED"
+msgstr "TIDAK BOLEH DITEMPATKAN DI SINI — TERLALU CURAM / TERHALANG"
+
+msgid "CANNOT DEPLOY HERE — OCCUPIED BY UNIT/BUILDING"
+msgstr "TIDAK BOLEH DITEMPATKAN DI SINI — DIDUDUKI UNIT/BANGUNAN"
+
+msgid "CANNOT DEPLOY HERE — MUST BUILD NEAR AN ALLIED STRUCTURE"
+msgstr "TIDAK BOLEH DITEMPATKAN DI SINI — MESTI DIBINA BERHAMPIRAN STRUKTUR SEKUTU"
+
+msgid "Green: open   Red: blocked   Blue: water"
+msgstr "Hijau: terbuka   Merah: terhalang   Biru: air"
+
+msgid "Tactical transmission"
+msgstr "Transmisi taktikal"
+
+msgid "[Tab / click] Ping objective"
+msgstr "[Tab / klik] Tanda objektif"
+
+msgid "[F] Switch weapon mode (primary / secondary)"
+msgstr "[F] Tukar mod senjata (utama / sekunder)"
+
+msgid "Objective"
+msgstr "Objektif"
+
+msgid "Street patrol"
+msgstr "Rondaan jalan"
+
+msgid "Assault wave"
+msgstr "Gelombang serangan"
+
+msgid "Enemy assault wave on the streets. Hold the base."
+msgstr "Gelombang serangan musuh di jalanan. Pertahankan pangkalan."
+
+msgid "blocked by a road"
+msgstr "disekat jalan raya"
+
+msgid "too steep"
+msgstr "terlalu curam"
+
+msgid "an enemy unit is in the way"
+msgstr "unit musuh menghalang"

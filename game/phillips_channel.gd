@@ -31,6 +31,7 @@ func _ready() -> void:
 	_audio()
 	_ui()
 	side.prepare(self, status, sim.grid, sim.yard.center, roster.economy)
+	side.keep_streets_of("phillips")
 	if side.yard.style != SMBuildYard.Style.INTERNAL:
 		side.yard.radius = maxf(side.yard.radius, 44.0)
 	_arm_units()

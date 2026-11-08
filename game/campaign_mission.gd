@@ -37,6 +37,7 @@ func _ready() -> void:
 	roster.setup(faction)
 	var rally: Vector3 = Vector3(-6.0, 0.0, -2.0)
 	side.prepare(self, status, grid, rally, roster.economy, faction)
+	side.keep_streets_of(mission_id)
 	if side.yard.style != SMBuildYard.Style.INTERNAL:
 		side.yard.radius = maxf(side.yard.radius, 40.0)
 	_arm_units()

@@ -92,6 +92,9 @@ func _command_key(event: InputEvent) -> bool:
 	if key.keycode == KEY_TAB or key.keycode == KEY_SPACE:
 		if _line_focused() or _pause_open():
 			return false
+		if key.keycode == KEY_TAB and not key.shift_pressed and _ping_objective():
+			get_viewport().set_input_as_handled()
+			return true
 		if key.keycode == KEY_TAB and _cycle_tab():
 			get_viewport().set_input_as_handled()
 			return true
@@ -205,6 +208,14 @@ func _line_focused() -> bool:
 func _pause_open() -> bool:
 	var pause: CanvasItem = get_tree().root.find_child("PauseMenu", true, false) as CanvasItem
 	return pause != null and pause.visible
+
+## Tab in a staged mission pans to the current objective (StageView); Shift+Tab still cycles the build tabs.
+func _ping_objective() -> bool:
+	var scene: Node = get_tree().current_scene
+	var view: Node = scene.get_node_or_null("StageView") if scene != null else null
+	if view == null or not view.has_method("ping_objective"):
+		return false
+	return bool(view.call("ping_objective"))
 
 func _cycle_tab() -> bool:
 	var board: SMHud = _hud()

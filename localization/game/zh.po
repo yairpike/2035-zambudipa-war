@@ -3460,3 +3460,57 @@ msgstr "下载游戏"
 
 msgid "Download complete. Close the game and open it again to load everything."
 msgstr "下载完成。请关闭游戏后重新打开。"
+
+msgid "CANNOT DEPLOY HERE — %s"
+msgstr "无法在此部署 — %s"
+
+msgid "CANNOT DEPLOY HERE — BLOCKED BY ROAD"
+msgstr "无法在此部署 — 被道路阻挡"
+
+msgid "CANNOT DEPLOY HERE — WATER (LAND STRUCTURE)"
+msgstr "无法在此部署 — 水面（陆地建筑）"
+
+msgid "CANNOT DEPLOY HERE — NEEDS DEEP WATER & OPEN CHANNEL"
+msgstr "无法在此部署 — 需要深水和开阔航道"
+
+msgid "CANNOT DEPLOY HERE — TOO STEEP / OBSTRUCTED"
+msgstr "无法在此部署 — 太陡 / 有障碍"
+
+msgid "CANNOT DEPLOY HERE — OCCUPIED BY UNIT/BUILDING"
+msgstr "无法在此部署 — 已被单位/建筑占用"
+
+msgid "CANNOT DEPLOY HERE — MUST BUILD NEAR AN ALLIED STRUCTURE"
+msgstr "无法在此部署 — 必须建在友方建筑附近"
+
+msgid "Green: open   Red: blocked   Blue: water"
+msgstr "绿：可用   红：受阻   蓝：水面"
+
+msgid "Tactical transmission"
+msgstr "战术通讯"
+
+msgid "[Tab / click] Ping objective"
+msgstr "[Tab / 点击] 标记目标"
+
+msgid "[F] Switch weapon mode (primary / secondary)"
+msgstr "[F] 切换武器模式（主 / 副）"
+
+msgid "Objective"
+msgstr "目标"
+
+msgid "Street patrol"
+msgstr "街道巡逻"
+
+msgid "Assault wave"
+msgstr "突击波次"
+
+msgid "Enemy assault wave on the streets. Hold the base."
+msgstr "敌军突击波次正沿街推进。守住基地。"
+
+msgid "blocked by a road"
+msgstr "被道路阻挡"
+
+msgid "too steep"
+msgstr "太陡"
+
+msgid "an enemy unit is in the way"
+msgstr "有敌方单位挡路"

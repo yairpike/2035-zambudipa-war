@@ -20,6 +20,8 @@ const VET_HP: float = 1.25
 const VET_DMG: float = 1.2
 const HOLD_WAVE: float = 10.0
 const EVENT_CAP: int = 48
+## Pressure defaults; data/maps/missions/<id>.json "pressure" overrides them per mission.
+const PRESSURE: Dictionary = {"patrol": 2, "first_wave": 60.0, "wave_every": 75.0, "wave_size": 2, "wave_cap": 6}
 
 const FOES: Dictionary = {
 	"gtfc": {"line": [&"militia", &"amber_tank", &"militia"], "boss": &"amber_tank", "guns": &"ruby_mortar", "boat": &"channel_skiff", "convoy": &"slag_hauler"},
@@ -59,6 +61,10 @@ var _wave_t: float = 0.0
 var _hold_spawned: int = 0
 var _convoy_seen: bool = false
 var _held_at_start: int = -1
+var pressure: Dictionary = {}
+var waves: int = 0
+var tactic_swaps: int = 0
+var _raid_t: float = 0.0
 
 static func ids() -> PackedStringArray:
 	var out: PackedStringArray = SMCampaign.ids()
@@ -184,6 +190,8 @@ func bind(id: String, p_field: SMPointer, p_economy: RTSEconomy, p_rally: Vector
 		if g != null:
 			g.set_meta("stage_unit", true)
 	_lay_bonus()
+	pressure = pressure_of(id)
+	_patrol()
 	_mark("stage:1")
 	_emit("stage", str(plan["goal"]), rally, FOOTHOLD)
 	return true
@@ -220,14 +228,15 @@ func tick(delta: float, foothold: bool) -> void:
 	if stage <= 0 or field == null:
 		return
 	_bonus_tick()
+	_patrol_tick()
+	_raid_tick(delta)
 	if stage == FOOTHOLD and foothold and not _any("guard"):
 		_escalate()
 	elif stage == ESCALATION and not _any("counter"):
 		_climax()
 	elif stage == CLIMAX:
 		_climax_tick(delta)
-	if stage >= ESCALATION:
-		_swap_tick(delta)
+	_swap_tick(delta)
 
 func cleared() -> bool:
 	return stage == CLIMAX and hold_left <= 0.0 and not _any("counter") and not _any("boss")
@@ -406,13 +415,16 @@ func _swap_tick(delta: float) -> void:
 	_swap_t = 0.0
 	var before: int = foe_swaps
 	for u: RTSUnit in field.units_of(SMPointer.ENEMY):
-		if not _living(u) or not SMArms.armed(u) or not u.has_meta("stage_unit"):
+		if not _living(u) or not SMArms.armed(u):
 			continue
 		var prey: RTSUnit = u.attack_target
-		if _living(prey) and SMArms.auto_pick(u, field.category_of(prey.unit_type)):
-			foe_swaps += 1
-			continue
-		if _commanded(u) and SMArms.toggle(u) != "":
+		if _living(prey):
+			var gap: float = _flat(u.global_position).distance_to(_flat(prey.global_position))
+			if SMArms.tactical_pick(u, field.category_of(prey.unit_type), gap):
+				foe_swaps += 1
+				tactic_swaps += 1
+				continue
+		if stage >= ESCALATION and u.has_meta("stage_unit") and _commanded(u) and SMArms.toggle(u) != "":
 			foe_swaps += 1
 	if foe_swaps > before and not history.has("swap:%d" % stage):
 		_mark("swap:%d" % stage)
@@ -431,6 +443,80 @@ func _swap_at() -> Vector3:
 		return b.global_position
 	var c: RTSUnit = _first("counter")
 	return c.global_position if c != null else rally
+
+## The mission's pressure block merged over PRESSURE.
+static func pressure_of(id: String) -> Dictionary:
+	var out: Dictionary = PRESSURE.duplicate()
+	var file: String = "phillips_channel" if id == "phillips" else id
+	var path: String = "res://data/maps/missions/%s.json" % file
+	if not FileAccess.file_exists(path):
+		return out
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	if parsed is Dictionary and (parsed as Dictionary).get("pressure", null) is Dictionary:
+		var block: Dictionary = (parsed as Dictionary)["pressure"]
+		for key: Variant in block.keys():
+			if out.has(key):
+				out[key] = block[key]
+	return out
+
+## Street patrols: a fire team walks back and forth along the streets between the enemy approach and the
+## player's base, and stops to fight whatever it meets.
+func _patrol() -> void:
+	var n: int = int(pressure.get("patrol", 0))
+	if n <= 0:
+		return
+	var from: Vector3 = _point(plan["counter_from"])
+	var route: PackedVector3Array = street_route(from, rally)
+	var a: Vector3 = from.lerp(rally, 0.3)
+	var b: Vector3 = from.lerp(rally, 0.65)
+	if route.size() >= 3:
+		a = route[route.size() / 3]
+		b = route[mini(route.size() - 2, (route.size() * 2) / 3)]
+	for i: int in n:
+		var u: RTSUnit = _spawn_foe(a + Vector3(1.4 * float(i), 0.0, 0.0), _kind("line", i), "patrol", "Street patrol", 90.0, 0.0, 7.0)
+		if u == null:
+			continue
+		u.set_meta("patrol_a", a)
+		u.set_meta("patrol_b", b)
+		u.set_meta("patrol_leg", 1)
+		u.set_path(route_for(u, u.global_position, b))
+	_mark("patrol:%d" % n)
+
+func _patrol_tick() -> void:
+	for u: RTSUnit in _all("patrol"):
+		if _living(u.attack_target):
+			if not u.path.is_empty():
+				u.set_path(PackedVector3Array())
+			continue
+		if not u.path.is_empty():
+			continue
+		var leg: int = 1 - int(u.get_meta("patrol_leg", 0))
+		u.set_meta("patrol_leg", leg)
+		var to: Vector3 = u.get_meta("patrol_b" if leg == 1 else "patrol_a", rally) as Vector3
+		u.set_path(route_for(u, u.global_position, to))
+
+## Assault waves march down the streets at the player's base on a timer until every stage is clear.
+func _raid_tick(delta: float) -> void:
+	var every: float = float(pressure.get("wave_every", 0.0))
+	if every <= 0.0 or cleared():
+		return
+	_raid_t += delta
+	var due: float = float(pressure.get("first_wave", every)) if waves == 0 else every
+	if _raid_t < due:
+		return
+	_raid_t = 0.0
+	if _count("raider") >= int(pressure.get("wave_cap", 6)):
+		return
+	waves += 1
+	var from: Vector3 = _point(plan["counter_from"])
+	var size: int = int(pressure.get("wave_size", 2))
+	for i: int in size:
+		var u: RTSUnit = _spawn_foe(from + Vector3(0.0, 0.0, 1.6 * float(i)), _kind("line", waves + i), "raider", "Assault wave", 100.0, 0.0, 8.0)
+		if u != null:
+			u.set_meta("road", true)
+			u.set_path(route_for(u, u.global_position, rally))
+	_mark("raid:%d" % waves)
+	_emit("wave", "Enemy assault wave on the streets. Hold the base.", from, stage)
 
 func _lay_bonus() -> void:
 	var b: Dictionary = plan.get("bonus", {}) as Dictionary
