@@ -4279,3 +4279,39 @@ msgstr "They are throwing everything at the radar. Hold for thirty seconds."
 #: addons/rts_advanced/sm_stages.gd:128
 msgid "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
 msgstr "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
+
+#: game/asset_download.gd
+msgid "Downloading game assets"
+msgstr "Downloading game assets"
+
+#: game/asset_download.gd
+msgid "First launch only. The game restarts when the download finishes."
+msgstr "First launch only. The game restarts when the download finishes."
+
+#: game/asset_download.gd
+msgid "%d of %d MB"
+msgstr "%d of %d MB"
+
+#: game/asset_download.gd
+msgid "%.1f MB/s"
+msgstr "%.1f MB/s"
+
+#: game/asset_download.gd
+msgid "Some files could not be downloaded. Check your connection and retry."
+msgstr "Some files could not be downloaded. Check your connection and retry."
+
+#: game/asset_download.gd
+msgid "Download complete. Restarting…"
+msgstr "Download complete. Restarting…"
+
+#: game/asset_download.gd
+msgid "Retry"
+msgstr "Retry"
+
+#: game/asset_download.gd
+msgid "Play now"
+msgstr "Play now"
+
+#: game/asset_download.gd
+msgid "Start with placeholder models and no sound. The download continues in the background."
+msgstr "Start with placeholder models and no sound. The download continues in the background."

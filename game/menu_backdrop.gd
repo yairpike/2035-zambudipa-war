@@ -5,6 +5,7 @@ extends Control
 ## Headless runs never open a video. A missing file keeps the still.
 ## Quiet beds in ui/menu/video/bed/ are not played.
 
+const AssetPack = preload("res://game/asset_pack.gd")
 const HOLD: float = 12.0
 const FADE: float = 0.65
 
@@ -204,6 +205,7 @@ func _video_file(stem: String) -> String:
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/ui/menu/video"))
 	roots.append(base.path_join("ui/menu/video"))
 	roots.append(base.get_base_dir().path_join("Resources/ui/menu/video"))
+	roots.append(AssetPack.root().path_join("ui/menu/video"))
 	for root: String in roots:
 		var path: String = root.path_join(name)
 		if FileAccess.file_exists(path):
@@ -401,6 +403,7 @@ static func _read(file_name: String) -> PackedByteArray:
 		roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/ui/menu"))
 		roots.append(base.path_join("ui/menu"))
 		roots.append(base.get_base_dir().path_join("Resources/ui/menu"))
+		roots.append(AssetPack.root().path_join("ui/menu"))
 		for root: String in roots:
 			var path: String = root.path_join(file_name)
 			if FileAccess.file_exists(path):

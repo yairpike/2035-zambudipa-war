@@ -3373,3 +3373,30 @@ msgstr "Mereka menghentam radar dengan segala-galanya. Bertahan tiga puluh saat.
 
 msgid "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
 msgstr "Trimaran sedang mengelilingi feri. Kapal pendarat membawa bala bantuan."
+
+msgid "Downloading game assets"
+msgstr "Memuat turun aset permainan"
+
+msgid "First launch only. The game restarts when the download finishes."
+msgstr "Pelancaran pertama sahaja. Permainan dimulakan semula apabila muat turun selesai."
+
+msgid "%d of %d MB"
+msgstr "%d daripada %d MB"
+
+msgid "%.1f MB/s"
+msgstr "%.1f MB/s"
+
+msgid "Some files could not be downloaded. Check your connection and retry."
+msgstr "Sesetengah fail tidak dapat dimuat turun. Semak sambungan anda dan cuba lagi."
+
+msgid "Download complete. Restarting…"
+msgstr "Muat turun selesai. Memulakan semula…"
+
+msgid "Retry"
+msgstr "Cuba lagi"
+
+msgid "Play now"
+msgstr "Main sekarang"
+
+msgid "Start with placeholder models and no sound. The download continues in the background."
+msgstr "Mula dengan model sementara tanpa bunyi. Muat turun diteruskan di latar belakang."
