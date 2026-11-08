@@ -261,8 +261,8 @@ func _chrome() -> void:
 	_banner = PanelContainer.new()
 	_banner.name = "StageBanner"
 	_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_banner.position = Vector2(maxf(12.0, view.x * 0.5 - 300.0), view.y * 0.41)
-	_banner.custom_minimum_size = Vector2(600.0, 0.0)
+	_banner.position = Vector2(view.x * 0.35, view.y * 0.41)
+	_banner.custom_minimum_size = Vector2(minf(560.0, view.x * 0.36), 0.0)
 	var plate: StyleBoxFlat = StyleBoxFlat.new()
 	plate.bg_color = Color(0.05, 0.06, 0.08, 0.86)
 	plate.border_color = Color(0.95, 0.72, 0.25, 0.9)
@@ -288,11 +288,11 @@ func _chrome() -> void:
 	strip.add_child(frame)
 	var mark: Label = Label.new()
 	mark.name = "StageFaceMark"
-	mark.text = "◆"
+	mark.text = "EVA"
 	mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	mark.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	mark.set_anchors_preset(Control.PRESET_FULL_RECT)
-	mark.add_theme_font_size_override("font_size", 34)
+	mark.add_theme_font_size_override("font_size", 20)
 	mark.add_theme_color_override("font_color", Color(0.98, 0.78, 0.3))
 	frame.add_child(mark)
 	_banner_face = TextureRect.new()
@@ -323,6 +323,7 @@ func _chrome() -> void:
 	net.text = "Tactical transmission"
 	net.uppercase = true
 	net.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	net.clip_text = true
 	net.add_theme_font_size_override("font_size", 13)
 	net.add_theme_color_override("font_color", Color(0.6, 0.9, 0.7, 0.85))
 	head.add_child(net)
@@ -331,13 +332,13 @@ func _chrome() -> void:
 	hint.text = "Space: jump to the event"
 	hint.add_theme_font_size_override("font_size", 14)
 	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.65))
-	head.add_child(hint)
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_banner_directive = Label.new()
 	_banner_directive.name = "StageDirective"
 	_banner_directive.uppercase = true
 	_banner_directive.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_banner_directive.custom_minimum_size = Vector2(492.0, 0.0)
-	_banner_directive.add_theme_font_size_override("font_size", 20)
+	_banner_directive.custom_minimum_size = Vector2(320.0, 0.0)
+	_banner_directive.add_theme_font_size_override("font_size", 18)
 	_banner_directive.add_theme_color_override("font_color", Color(1.0, 0.92, 0.6))
 	_banner_directive.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))
 	_banner_directive.add_theme_constant_override("outline_size", 3)
@@ -345,9 +346,10 @@ func _chrome() -> void:
 	_banner_line = Label.new()
 	_banner_line.name = "StageLine"
 	_banner_line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_banner_line.custom_minimum_size = Vector2(492.0, 0.0)
+	_banner_line.custom_minimum_size = Vector2(320.0, 0.0)
 	_banner_line.add_theme_font_size_override("font_size", 18)
 	col.add_child(_banner_line)
+	col.add_child(hint)
 	_banner.visible = false
 	layer.add_child(_banner)
 	var tracker: PanelContainer = PanelContainer.new()

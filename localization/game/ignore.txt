@@ -25,3 +25,4 @@ swap:%d
 wave:%d
 patrol:%d
 raid:%d
+EVA
