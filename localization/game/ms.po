@@ -3407,14 +3407,14 @@ msgstr "MUAT TURUN DESKTOP"
 msgid "First launch downloads game assets automatically."
 msgstr "Pelancaran pertama memuat turun aset permainan."
 
-msgid "macOS (Apple Silicon & Intel) — .dmg (76 MB)"
-msgstr "macOS (Apple Silicon & Intel) — .dmg (76 MB)"
+msgid "macOS (Apple Silicon & Intel) — .dmg (79 MB)"
+msgstr "macOS (Apple Silicon & Intel) — .dmg (79 MB)"
 
-msgid "Windows (64-bit) — .exe (43 MB)"
-msgstr "Windows (64-bit) — .exe (43 MB)"
+msgid "Windows (64-bit) — .exe (46 MB)"
+msgstr "Windows (64-bit) — .exe (46 MB)"
 
-msgid "Linux (x86_64) — .AppImage (44 MB)"
-msgstr "Linux (x86_64) — .AppImage (44 MB)"
+msgid "Linux (x86_64) — .AppImage (45 MB)"
+msgstr "Linux (x86_64) — .AppImage (45 MB)"
 
 msgid "UI scale"
 msgstr "Skala UI"

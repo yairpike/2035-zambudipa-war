@@ -4325,16 +4325,16 @@ msgid "First launch downloads game assets automatically."
 msgstr "First launch downloads game assets automatically."
 
 #: game/downloads_panel.gd
-msgid "macOS (Apple Silicon & Intel) — .dmg (76 MB)"
-msgstr "macOS (Apple Silicon & Intel) — .dmg (76 MB)"
+msgid "macOS (Apple Silicon & Intel) — .dmg (79 MB)"
+msgstr "macOS (Apple Silicon & Intel) — .dmg (79 MB)"
 
 #: game/downloads_panel.gd
-msgid "Windows (64-bit) — .exe (43 MB)"
-msgstr "Windows (64-bit) — .exe (43 MB)"
+msgid "Windows (64-bit) — .exe (46 MB)"
+msgstr "Windows (64-bit) — .exe (46 MB)"
 
 #: game/downloads_panel.gd
-msgid "Linux (x86_64) — .AppImage (44 MB)"
-msgstr "Linux (x86_64) — .AppImage (44 MB)"
+msgid "Linux (x86_64) — .AppImage (45 MB)"
+msgstr "Linux (x86_64) — .AppImage (45 MB)"
 
 #: game/settings_panel.gd
 msgid "UI scale"

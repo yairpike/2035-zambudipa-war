@@ -8,19 +8,19 @@ const ITEMS: Array[Dictionary] = [
 	{
 		"id": "macos",
 		"node": "DownloadMacOS",
-		"label": "macOS (Apple Silicon & Intel) — .dmg (76 MB)",
+		"label": "macOS (Apple Silicon & Intel) — .dmg (79 MB)",
 		"file": "ASEAN-2031-macOS.dmg",
 	},
 	{
 		"id": "windows",
 		"node": "DownloadWindows",
-		"label": "Windows (64-bit) — .exe (43 MB)",
+		"label": "Windows (64-bit) — .exe (46 MB)",
 		"file": "ASEAN-2031-Windows.exe",
 	},
 	{
 		"id": "linux",
 		"node": "DownloadLinux",
-		"label": "Linux (x86_64) — .AppImage (44 MB)",
+		"label": "Linux (x86_64) — .AppImage (45 MB)",
 		"file": "ASEAN-2031-Linux-x86_64.AppImage",
 	},
 ]
