@@ -1,0 +1,1576 @@
+{
+ "kind": "eva",
+ "path_pattern": "assets/voices/eva/<lang>/<key>.ogg",
+ "source": "Microsoft Edge neural text-to-speech via edge-tts, radio-net processed with ffmpeg (tools/eva/make_eva.py)",
+ "voices": {
+  "en": "en-SG-LunaNeural",
+  "my": "my-MM-NilarNeural",
+  "zh": "zh-CN-XiaoxiaoNeural",
+  "th": "th-TH-NiwatNeural",
+  "ms": "ms-MY-YasminNeural"
+ },
+ "keys": {
+  "cannot_deploy": "Cannot deploy here.",
+  "naval_on_water": "Naval structure must be placed on water.",
+  "build_near_allied": "Must build near an allied structure.",
+  "blocked_road_terrain": "Blocked by road or terrain.",
+  "building": "Building.",
+  "construction_complete": "Construction complete.",
+  "unit_ready": "Unit ready.",
+  "training": "Training.",
+  "insufficient_funds": "Insufficient resources.",
+  "base_under_attack": "Base under attack!",
+  "ally_under_attack": "Ally under attack!",
+  "structure_garrisoned": "Structure garrisoned.",
+  "secondary_weapon": "Secondary weapon engaged.",
+  "primary_weapon": "Primary weapon engaged.",
+  "objective_received": "Mission objective received.",
+  "new_objective": "New objective received. Check your tactical map.",
+  "primary_complete": "Primary objective complete.",
+  "bonus_reinforcements": "Bonus objective achieved. Reinforcements inbound.",
+  "bonus_achieved": "Bonus objective achieved.",
+  "bonus_lost": "Bonus objective lost.",
+  "counter_attack": "Warning: enemy counter-attack detected.",
+  "stage_two": "Stage two: escalation underway.",
+  "stage_three": "Stage three: enemy command target located.",
+  "reinforcements_arrived": "Allied reinforcements have arrived.",
+  "wave_incoming": "Warning: enemy assault wave approaching.",
+  "mission_accomplished": "Mission accomplished.",
+  "mission_failed": "Mission failed.",
+  "unit_lost": "Unit lost.",
+  "low_power": "Low power.",
+  "building_captured": "Building captured.",
+  "superweapon_ready": "Superweapon ready.",
+  "superweapon_launched": "Superweapon launched.",
+  "enemy_superweapon_detected": "Warning: enemy superweapon detected.",
+  "mission_kokang": "Mission objective received. Raise the scaffold yard in Laukkai.",
+  "mission_tachileik": "Mission objective received. Clear the caravan ambush.",
+  "mission_shwe_kokko": "Mission objective received. Clear the compound garrison.",
+  "mission_operation_1027": "Mission objective received. Drop the EW towers.",
+  "mission_andaman": "Mission objective received. Clear the shore guns.",
+  "mission_ghosts_of_patani": "Mission objective received. Hunt the jammer ghost.",
+  "mission_kilometer_watch": "Mission objective received. Clear the radar garrison.",
+  "mission_black_haze": "Mission objective received. Capture the hydro radar.",
+  "mission_archipelago_rising": "Mission objective received. Sink the shore boats.",
+  "mission_wrath_of_the_garuda": "Mission objective received. Sink the joint picket.",
+  "mission_fog_over_pakbeng": "Mission objective received. Capture the hydro radar.",
+  "mission_keng_tung": "Mission objective received. Freeze the tank column.",
+  "mission_plain_of_jars": "Mission objective received. Fire the beam at the phantom.",
+  "mission_tonle_sap": "Mission objective received. Get the ferry across.",
+  "mission_shattered_monsoon": "Mission objective received. Break the citadel guard.",
+  "mission_sop_ruak": "Mission objective received. Claim a site in the Golden Triangle.",
+  "mission_phillips": "Mission objective received. Claim a site on the channel."
+ },
+ "clips": {
+  "en": {
+   "cannot_deploy": {
+    "file": "en/cannot_deploy.ogg",
+    "text": "Cannot deploy here.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.36
+   },
+   "naval_on_water": {
+    "file": "en/naval_on_water.ogg",
+    "text": "Naval structure must be placed on water.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 3.31
+   },
+   "build_near_allied": {
+    "file": "en/build_near_allied.ogg",
+    "text": "Must build near an allied structure.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 3.18
+   },
+   "blocked_road_terrain": {
+    "file": "en/blocked_road_terrain.ogg",
+    "text": "Blocked by road or terrain.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.58
+   },
+   "building": {
+    "file": "en/building.ogg",
+    "text": "Building.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 1.95
+   },
+   "construction_complete": {
+    "file": "en/construction_complete.ogg",
+    "text": "Construction complete.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.53
+   },
+   "unit_ready": {
+    "file": "en/unit_ready.ogg",
+    "text": "Unit ready.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.1
+   },
+   "training": {
+    "file": "en/training.ogg",
+    "text": "Training.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 1.95
+   },
+   "insufficient_funds": {
+    "file": "en/insufficient_funds.ogg",
+    "text": "Insufficient resources.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.82
+   },
+   "base_under_attack": {
+    "file": "en/base_under_attack.ogg",
+    "text": "Base under attack!",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.26
+   },
+   "ally_under_attack": {
+    "file": "en/ally_under_attack.ogg",
+    "text": "Ally under attack!",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.29
+   },
+   "structure_garrisoned": {
+    "file": "en/structure_garrisoned.ogg",
+    "text": "Structure garrisoned.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.46
+   },
+   "secondary_weapon": {
+    "file": "en/secondary_weapon.ogg",
+    "text": "Secondary weapon engaged.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.86
+   },
+   "primary_weapon": {
+    "file": "en/primary_weapon.ogg",
+    "text": "Primary weapon engaged.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.6
+   },
+   "objective_received": {
+    "file": "en/objective_received.ogg",
+    "text": "Mission objective received.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.77
+   },
+   "new_objective": {
+    "file": "en/new_objective.ogg",
+    "text": "New objective received. Check your tactical map.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 4.88
+   },
+   "primary_complete": {
+    "file": "en/primary_complete.ogg",
+    "text": "Primary objective complete.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.89
+   },
+   "bonus_reinforcements": {
+    "file": "en/bonus_reinforcements.ogg",
+    "text": "Bonus objective achieved. Reinforcements inbound.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.28
+   },
+   "bonus_achieved": {
+    "file": "en/bonus_achieved.ogg",
+    "text": "Bonus objective achieved.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.7
+   },
+   "bonus_lost": {
+    "file": "en/bonus_lost.ogg",
+    "text": "Bonus objective lost.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.74
+   },
+   "counter_attack": {
+    "file": "en/counter_attack.ogg",
+    "text": "Warning: enemy counter-attack detected.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 3.71
+   },
+   "stage_two": {
+    "file": "en/stage_two.ogg",
+    "text": "Stage two: escalation underway.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 3.57
+   },
+   "stage_three": {
+    "file": "en/stage_three.ogg",
+    "text": "Stage three: enemy command target located.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 4.28
+   },
+   "reinforcements_arrived": {
+    "file": "en/reinforcements_arrived.ogg",
+    "text": "Allied reinforcements have arrived.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 3.08
+   },
+   "wave_incoming": {
+    "file": "en/wave_incoming.ogg",
+    "text": "Warning: enemy assault wave approaching.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 3.71
+   },
+   "mission_accomplished": {
+    "file": "en/mission_accomplished.ogg",
+    "text": "Mission accomplished.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.34
+   },
+   "mission_failed": {
+    "file": "en/mission_failed.ogg",
+    "text": "Mission failed.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.14
+   },
+   "unit_lost": {
+    "file": "en/unit_lost.ogg",
+    "text": "Unit lost.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.05
+   },
+   "low_power": {
+    "file": "en/low_power.ogg",
+    "text": "Low power.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 1.98
+   },
+   "building_captured": {
+    "file": "en/building_captured.ogg",
+    "text": "Building captured.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.19
+   },
+   "superweapon_ready": {
+    "file": "en/superweapon_ready.ogg",
+    "text": "Superweapon ready.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.38
+   },
+   "superweapon_launched": {
+    "file": "en/superweapon_launched.ogg",
+    "text": "Superweapon launched.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 2.38
+   },
+   "enemy_superweapon_detected": {
+    "file": "en/enemy_superweapon_detected.ogg",
+    "text": "Warning: enemy superweapon detected.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 3.67
+   },
+   "mission_kokang": {
+    "file": "en/mission_kokang.ogg",
+    "text": "Mission objective received. Raise the scaffold yard in Laukkai.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.58
+   },
+   "mission_tachileik": {
+    "file": "en/mission_tachileik.ogg",
+    "text": "Mission objective received. Clear the caravan ambush.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.48
+   },
+   "mission_shwe_kokko": {
+    "file": "en/mission_shwe_kokko.ogg",
+    "text": "Mission objective received. Clear the compound garrison.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.38
+   },
+   "mission_operation_1027": {
+    "file": "en/mission_operation_1027.ogg",
+    "text": "Mission objective received. Drop the EW towers.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.48
+   },
+   "mission_andaman": {
+    "file": "en/mission_andaman.ogg",
+    "text": "Mission objective received. Clear the shore guns.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.18
+   },
+   "mission_ghosts_of_patani": {
+    "file": "en/mission_ghosts_of_patani.ogg",
+    "text": "Mission objective received. Hunt the jammer ghost.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 4.98
+   },
+   "mission_kilometer_watch": {
+    "file": "en/mission_kilometer_watch.ogg",
+    "text": "Mission objective received. Clear the radar garrison.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.38
+   },
+   "mission_black_haze": {
+    "file": "en/mission_black_haze.ogg",
+    "text": "Mission objective received. Capture the hydro radar.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.28
+   },
+   "mission_archipelago_rising": {
+    "file": "en/mission_archipelago_rising.ogg",
+    "text": "Mission objective received. Sink the shore boats.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.08
+   },
+   "mission_wrath_of_the_garuda": {
+    "file": "en/mission_wrath_of_the_garuda.ogg",
+    "text": "Mission objective received. Sink the joint picket.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 4.98
+   },
+   "mission_fog_over_pakbeng": {
+    "file": "en/mission_fog_over_pakbeng.ogg",
+    "text": "Mission objective received. Capture the hydro radar.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.28
+   },
+   "mission_keng_tung": {
+    "file": "en/mission_keng_tung.ogg",
+    "text": "Mission objective received. Freeze the tank column.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.08
+   },
+   "mission_plain_of_jars": {
+    "file": "en/mission_plain_of_jars.ogg",
+    "text": "Mission objective received. Fire the beam at the phantom.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.38
+   },
+   "mission_tonle_sap": {
+    "file": "en/mission_tonle_sap.ogg",
+    "text": "Mission objective received. Get the ferry across.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.18
+   },
+   "mission_shattered_monsoon": {
+    "file": "en/mission_shattered_monsoon.ogg",
+    "text": "Mission objective received. Break the citadel guard.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 4.98
+   },
+   "mission_sop_ruak": {
+    "file": "en/mission_sop_ruak.ogg",
+    "text": "Mission objective received. Claim a site in the Golden Triangle.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.78
+   },
+   "mission_phillips": {
+    "file": "en/mission_phillips.ogg",
+    "text": "Mission objective received. Claim a site on the channel.",
+    "voice": "en-SG-LunaNeural",
+    "seconds": 5.18
+   }
+  },
+  "my": {
+   "cannot_deploy": {
+    "file": "my/cannot_deploy.ogg",
+    "text": "ဒီနေရာမှာ မချထားနိုင်ပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.79
+   },
+   "naval_on_water": {
+    "file": "my/naval_on_water.ogg",
+    "text": "ရေတပ်အဆောက်အအုံကို ရေပြင်ပေါ်မှာသာ ထားရပါမယ်။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.38
+   },
+   "build_near_allied": {
+    "file": "my/build_near_allied.ogg",
+    "text": "မဟာမိတ်အဆောက်အအုံအနီးမှာသာ ဆောက်ရပါမယ်။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 3.74
+   },
+   "blocked_road_terrain": {
+    "file": "my/blocked_road_terrain.ogg",
+    "text": "လမ်း သို့မဟုတ် မြေပြင်ကြောင့် ပိတ်နေပါတယ်။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 3.4
+   },
+   "building": {
+    "file": "my/building.ogg",
+    "text": "တည်ဆောက်နေသည်။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 1.88
+   },
+   "construction_complete": {
+    "file": "my/construction_complete.ogg",
+    "text": "တည်ဆောက်မှု ပြီးဆုံးပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.53
+   },
+   "unit_ready": {
+    "file": "my/unit_ready.ogg",
+    "text": "တပ်ဖွဲ့ အသင့်ဖြစ်ပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.43
+   },
+   "training": {
+    "file": "my/training.ogg",
+    "text": "လေ့ကျင့်နေသည်။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 1.88
+   },
+   "insufficient_funds": {
+    "file": "my/insufficient_funds.ogg",
+    "text": "အရင်းအမြစ် မလုံလောက်ပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.41
+   },
+   "base_under_attack": {
+    "file": "my/base_under_attack.ogg",
+    "text": "စခန်း တိုက်ခိုက်ခံနေရသည်!",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.67
+   },
+   "ally_under_attack": {
+    "file": "my/ally_under_attack.ogg",
+    "text": "မဟာမိတ်တပ် တိုက်ခိုက်ခံနေရသည်!",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.94
+   },
+   "structure_garrisoned": {
+    "file": "my/structure_garrisoned.ogg",
+    "text": "အဆောက်အအုံထဲ တပ်နေရာယူပြီးပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 3.31
+   },
+   "secondary_weapon": {
+    "file": "my/secondary_weapon.ogg",
+    "text": "ဒုတိယ လက်နက် အသုံးပြုနေပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.91
+   },
+   "primary_weapon": {
+    "file": "my/primary_weapon.ogg",
+    "text": "ပထမ လက်နက် အသုံးပြုနေပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.98
+   },
+   "objective_received": {
+    "file": "my/objective_received.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.74
+   },
+   "new_objective": {
+    "file": "my/new_objective.ogg",
+    "text": "ရည်မှန်းချက်အသစ် ရရှိပါပြီ။ စစ်ဆင်ရေးမြေပုံကို စစ်ဆေးပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.78
+   },
+   "primary_complete": {
+    "file": "my/primary_complete.ogg",
+    "text": "အဓိက ရည်မှန်းချက် ပြီးမြောက်ပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.98
+   },
+   "bonus_reinforcements": {
+    "file": "my/bonus_reinforcements.ogg",
+    "text": "ဆုလာဘ် ရည်မှန်းချက် အောင်မြင်ပါပြီ။ အကူအညီတပ် လာနေပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.58
+   },
+   "bonus_achieved": {
+    "file": "my/bonus_achieved.ogg",
+    "text": "ဆုလာဘ် ရည်မှန်းချက် အောင်မြင်ပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 3.01
+   },
+   "bonus_lost": {
+    "file": "my/bonus_lost.ogg",
+    "text": "ဆုလာဘ် ရည်မှန်းချက် လွတ်သွားပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.96
+   },
+   "counter_attack": {
+    "file": "my/counter_attack.ogg",
+    "text": "သတိပေးချက်။ ရန်သူ့ တန်ပြန်တိုက်ခိုက်မှု တွေ့ရှိရသည်။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.28
+   },
+   "stage_two": {
+    "file": "my/stage_two.ogg",
+    "text": "အဆင့် နှစ်။ တိုက်ပွဲ ပြင်းထန်လာနေပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.98
+   },
+   "stage_three": {
+    "file": "my/stage_three.ogg",
+    "text": "အဆင့် သုံး။ ရန်သူ့ ကွပ်ကဲရေး ပစ်မှတ်ကို တွေ့ရှိပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.08
+   },
+   "reinforcements_arrived": {
+    "file": "my/reinforcements_arrived.ogg",
+    "text": "မဟာမိတ် အကူအညီတပ် ရောက်ရှိလာပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 3.31
+   },
+   "wave_incoming": {
+    "file": "my/wave_incoming.ogg",
+    "text": "သတိပေးချက်။ ရန်သူ့ တိုက်ခိုက်ရေးလှိုင်း ချဉ်းကပ်လာနေသည်။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.18
+   },
+   "mission_accomplished": {
+    "file": "my/mission_accomplished.ogg",
+    "text": "တာဝန် ပြီးမြောက်ပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.24
+   },
+   "mission_failed": {
+    "file": "my/mission_failed.ogg",
+    "text": "တာဝန် မအောင်မြင်ပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.14
+   },
+   "unit_lost": {
+    "file": "my/unit_lost.ogg",
+    "text": "တပ်ဖွဲ့ ဆုံးရှုံးသွားပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.41
+   },
+   "low_power": {
+    "file": "my/low_power.ogg",
+    "text": "ဓာတ်အား နည်းနေသည်။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.17
+   },
+   "building_captured": {
+    "file": "my/building_captured.ogg",
+    "text": "အဆောက်အအုံ သိမ်းပိုက်ပြီးပါပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.74
+   },
+   "superweapon_ready": {
+    "file": "my/superweapon_ready.ogg",
+    "text": "စူပါလက်နက် အသင့်ဖြစ်ပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.67
+   },
+   "superweapon_launched": {
+    "file": "my/superweapon_launched.ogg",
+    "text": "စူပါလက်နက် ပစ်လွှတ်ပြီ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 2.5
+   },
+   "enemy_superweapon_detected": {
+    "file": "my/enemy_superweapon_detected.ogg",
+    "text": "သတိပေးချက်။ ရန်သူ့ စူပါလက်နက် တွေ့ရှိရသည်။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 3.88
+   },
+   "mission_kokang": {
+    "file": "my/mission_kokang.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ လောက်ကိုင်တွင်ငြမ်းကွင်းကိုဆောက်ပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.68
+   },
+   "mission_tachileik": {
+    "file": "my/mission_tachileik.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ကုန်တင်တန်းချုံခိုတပ်ကိုရှင်းပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.88
+   },
+   "mission_shwe_kokko": {
+    "file": "my/mission_shwe_kokko.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ဝင်းအစောင့်တပ်ကိုရှင်းပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.38
+   },
+   "mission_operation_1027": {
+    "file": "my/mission_operation_1027.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ EW မျှော်စင်များကိုဖြိုပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.48
+   },
+   "mission_andaman": {
+    "file": "my/mission_andaman.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ကမ်းခြေသေနတ်များကိုရှင်းပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.58
+   },
+   "mission_ghosts_of_patani": {
+    "file": "my/mission_ghosts_of_patani.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ နှောင့်ယှက်သရဲကိုလိုက်ရှာပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.48
+   },
+   "mission_kilometer_watch": {
+    "file": "my/mission_kilometer_watch.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ရေဒါအစောင့်တပ်ကိုရှင်းပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.48
+   },
+   "mission_black_haze": {
+    "file": "my/mission_black_haze.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ရေရေဒါကိုသိမ်းပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.08
+   },
+   "mission_archipelago_rising": {
+    "file": "my/mission_archipelago_rising.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ကမ်းခြေလှေများကိုနစ်စေပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.48
+   },
+   "mission_wrath_of_the_garuda": {
+    "file": "my/mission_wrath_of_the_garuda.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ပူးတွဲကင်းသင်္ဘောကိုနစ်စေပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.78
+   },
+   "mission_fog_over_pakbeng": {
+    "file": "my/mission_fog_over_pakbeng.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ရေရေဒါကိုသိမ်းပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.08
+   },
+   "mission_keng_tung": {
+    "file": "my/mission_keng_tung.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ တင့်ကားတပ်တန်းကိုအေးခဲစေပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.88
+   },
+   "mission_plain_of_jars": {
+    "file": "my/mission_plain_of_jars.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ဖန်တွမ်ကိုအလင်းတန်းပစ်ပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.48
+   },
+   "mission_tonle_sap": {
+    "file": "my/mission_tonle_sap.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ကူးတို့ကိုဖြတ်ကူးစေပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.28
+   },
+   "mission_shattered_monsoon": {
+    "file": "my/mission_shattered_monsoon.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ခံတပ်အစောင့်တပ်ကိုချိုးပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.28
+   },
+   "mission_sop_ruak": {
+    "file": "my/mission_sop_ruak.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ရွှေတြိဂံတွင်နေရာတစ်ခုသိမ်းပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.78
+   },
+   "mission_phillips": {
+    "file": "my/mission_phillips.ogg",
+    "text": "တာဝန် ရည်မှန်းချက် ရရှိပါပြီ။ ရေလက်ကြားကမ်းတွင်နေရာတစ်ခုသိမ်းပါ။",
+    "voice": "my-MM-NilarNeural",
+    "seconds": 4.98
+   }
+  },
+  "zh": {
+   "cannot_deploy": {
+    "file": "zh/cannot_deploy.ogg",
+    "text": "此处无法部署。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.0
+   },
+   "naval_on_water": {
+    "file": "zh/naval_on_water.ogg",
+    "text": "海军建筑必须建在水上。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.89
+   },
+   "build_near_allied": {
+    "file": "zh/build_near_allied.ogg",
+    "text": "必须在友军建筑附近建造。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.79
+   },
+   "blocked_road_terrain": {
+    "file": "zh/blocked_road_terrain.ogg",
+    "text": "被道路或地形阻挡。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.46
+   },
+   "building": {
+    "file": "zh/building.ogg",
+    "text": "正在建造。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "construction_complete": {
+    "file": "zh/construction_complete.ogg",
+    "text": "建造完成。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "unit_ready": {
+    "file": "zh/unit_ready.ogg",
+    "text": "部队就绪。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "training": {
+    "file": "zh/training.ogg",
+    "text": "正在训练。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.66
+   },
+   "insufficient_funds": {
+    "file": "zh/insufficient_funds.ogg",
+    "text": "资源不足。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "base_under_attack": {
+    "file": "zh/base_under_attack.ogg",
+    "text": "基地遭到攻击！",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.98
+   },
+   "ally_under_attack": {
+    "file": "zh/ally_under_attack.ogg",
+    "text": "友军遭到攻击！",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "structure_garrisoned": {
+    "file": "zh/structure_garrisoned.ogg",
+    "text": "建筑已驻军。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "secondary_weapon": {
+    "file": "zh/secondary_weapon.ogg",
+    "text": "副武器已启用。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.98
+   },
+   "primary_weapon": {
+    "file": "zh/primary_weapon.ogg",
+    "text": "主武器已启用。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.93
+   },
+   "objective_received": {
+    "file": "zh/objective_received.ogg",
+    "text": "已收到任务目标。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.02
+   },
+   "new_objective": {
+    "file": "zh/new_objective.ogg",
+    "text": "收到新目标。请查看战术地图。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.91
+   },
+   "primary_complete": {
+    "file": "zh/primary_complete.ogg",
+    "text": "主要目标已完成。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.07
+   },
+   "bonus_reinforcements": {
+    "file": "zh/bonus_reinforcements.ogg",
+    "text": "奖励目标达成。增援正在赶来。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.81
+   },
+   "bonus_achieved": {
+    "file": "zh/bonus_achieved.ogg",
+    "text": "奖励目标达成。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.0
+   },
+   "bonus_lost": {
+    "file": "zh/bonus_lost.ogg",
+    "text": "奖励目标失败。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "counter_attack": {
+    "file": "zh/counter_attack.ogg",
+    "text": "警告：侦测到敌军反击。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.89
+   },
+   "stage_two": {
+    "file": "zh/stage_two.ogg",
+    "text": "第二阶段：战事升级。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.65
+   },
+   "stage_three": {
+    "file": "zh/stage_three.ogg",
+    "text": "第三阶段：已定位敌军指挥目标。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.55
+   },
+   "reinforcements_arrived": {
+    "file": "zh/reinforcements_arrived.ogg",
+    "text": "友军增援已抵达。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.19
+   },
+   "wave_incoming": {
+    "file": "zh/wave_incoming.ogg",
+    "text": "警告：敌军突击波次正在逼近。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.52
+   },
+   "mission_accomplished": {
+    "file": "zh/mission_accomplished.ogg",
+    "text": "任务完成。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "mission_failed": {
+    "file": "zh/mission_failed.ogg",
+    "text": "任务失败。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "unit_lost": {
+    "file": "zh/unit_lost.ogg",
+    "text": "部队阵亡。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "low_power": {
+    "file": "zh/low_power.ogg",
+    "text": "电力不足。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "building_captured": {
+    "file": "zh/building_captured.ogg",
+    "text": "建筑已占领。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 1.95
+   },
+   "superweapon_ready": {
+    "file": "zh/superweapon_ready.ogg",
+    "text": "超级武器就绪。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.12
+   },
+   "superweapon_launched": {
+    "file": "zh/superweapon_launched.ogg",
+    "text": "超级武器已发射。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 2.12
+   },
+   "enemy_superweapon_detected": {
+    "file": "zh/enemy_superweapon_detected.ogg",
+    "text": "警告：侦测到敌方超级武器。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.28
+   },
+   "mission_kokang": {
+    "file": "zh/mission_kokang.ogg",
+    "text": "已收到任务目标。 在老街建起脚手架基地。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 4.68
+   },
+   "mission_tachileik": {
+    "file": "zh/mission_tachileik.ogg",
+    "text": "已收到任务目标。 清除商队伏兵。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.91
+   },
+   "mission_shwe_kokko": {
+    "file": "zh/mission_shwe_kokko.ogg",
+    "text": "已收到任务目标。 清除大院守军。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.91
+   },
+   "mission_operation_1027": {
+    "file": "zh/mission_operation_1027.ogg",
+    "text": "已收到任务目标。 摧毁 EW 塔。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.91
+   },
+   "mission_andaman": {
+    "file": "zh/mission_andaman.ogg",
+    "text": "已收到任务目标。 清除岸防炮。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.68
+   },
+   "mission_ghosts_of_patani": {
+    "file": "zh/mission_ghosts_of_patani.ogg",
+    "text": "已收到任务目标。 猎杀干扰幽灵。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.91
+   },
+   "mission_kilometer_watch": {
+    "file": "zh/mission_kilometer_watch.ogg",
+    "text": "已收到任务目标。 清除雷达守军。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.93
+   },
+   "mission_black_haze": {
+    "file": "zh/mission_black_haze.ogg",
+    "text": "已收到任务目标。 占领水文雷达。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.81
+   },
+   "mission_archipelago_rising": {
+    "file": "zh/mission_archipelago_rising.ogg",
+    "text": "已收到任务目标。 击沉岸边船只。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.91
+   },
+   "mission_wrath_of_the_garuda": {
+    "file": "zh/mission_wrath_of_the_garuda.ogg",
+    "text": "已收到任务目标。 击沉联合警戒舰。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 4.18
+   },
+   "mission_fog_over_pakbeng": {
+    "file": "zh/mission_fog_over_pakbeng.ogg",
+    "text": "已收到任务目标。 占领水文雷达。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.81
+   },
+   "mission_keng_tung": {
+    "file": "zh/mission_keng_tung.ogg",
+    "text": "已收到任务目标。 冻结坦克纵队。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.93
+   },
+   "mission_plain_of_jars": {
+    "file": "zh/mission_plain_of_jars.ogg",
+    "text": "已收到任务目标。 用光束射击幻影。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 4.08
+   },
+   "mission_tonle_sap": {
+    "file": "zh/mission_tonle_sap.ogg",
+    "text": "已收到任务目标。 让渡船过河。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.74
+   },
+   "mission_shattered_monsoon": {
+    "file": "zh/mission_shattered_monsoon.ogg",
+    "text": "已收到任务目标。 击破要塞守卫。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 3.91
+   },
+   "mission_sop_ruak": {
+    "file": "zh/mission_sop_ruak.ogg",
+    "text": "已收到任务目标。 在金三角夺取一处据点。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 4.68
+   },
+   "mission_phillips": {
+    "file": "zh/mission_phillips.ogg",
+    "text": "已收到任务目标。 在海峡沿岸夺取一处据点。",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "seconds": 4.88
+   }
+  },
+  "th": {
+   "cannot_deploy": {
+    "file": "th/cannot_deploy.ogg",
+    "text": "ไม่สามารถวางกำลังที่นี่ได้",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.62
+   },
+   "naval_on_water": {
+    "file": "th/naval_on_water.ogg",
+    "text": "สิ่งก่อสร้างทางเรือต้องวางบนน้ำ",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.91
+   },
+   "build_near_allied": {
+    "file": "th/build_near_allied.ogg",
+    "text": "ต้องสร้างใกล้สิ่งก่อสร้างฝ่ายเดียวกัน",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.98
+   },
+   "blocked_road_terrain": {
+    "file": "th/blocked_road_terrain.ogg",
+    "text": "ถูกถนนหรือภูมิประเทศขวางไว้",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.72
+   },
+   "building": {
+    "file": "th/building.ogg",
+    "text": "กำลังก่อสร้าง",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 1.95
+   },
+   "construction_complete": {
+    "file": "th/construction_complete.ogg",
+    "text": "ก่อสร้างเสร็จสิ้น",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 1.95
+   },
+   "unit_ready": {
+    "file": "th/unit_ready.ogg",
+    "text": "หน่วยพร้อมแล้ว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 1.95
+   },
+   "training": {
+    "file": "th/training.ogg",
+    "text": "กำลังฝึก",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 1.95
+   },
+   "insufficient_funds": {
+    "file": "th/insufficient_funds.ogg",
+    "text": "ทรัพยากรไม่เพียงพอ",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.43
+   },
+   "base_under_attack": {
+    "file": "th/base_under_attack.ogg",
+    "text": "ฐานกำลังถูกโจมตี!",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.29
+   },
+   "ally_under_attack": {
+    "file": "th/ally_under_attack.ogg",
+    "text": "พันธมิตรกำลังถูกโจมตี!",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.43
+   },
+   "structure_garrisoned": {
+    "file": "th/structure_garrisoned.ogg",
+    "text": "เข้าประจำการในอาคารแล้ว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.46
+   },
+   "secondary_weapon": {
+    "file": "th/secondary_weapon.ogg",
+    "text": "ใช้อาวุธรองแล้ว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.17
+   },
+   "primary_weapon": {
+    "file": "th/primary_weapon.ogg",
+    "text": "ใช้อาวุธหลักแล้ว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.07
+   },
+   "objective_received": {
+    "file": "th/objective_received.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.5
+   },
+   "new_objective": {
+    "file": "th/new_objective.ogg",
+    "text": "ได้รับเป้าหมายใหม่ ตรวจสอบแผนที่ยุทธวิธี",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.52
+   },
+   "primary_complete": {
+    "file": "th/primary_complete.ogg",
+    "text": "เป้าหมายหลักสำเร็จแล้ว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.24
+   },
+   "bonus_reinforcements": {
+    "file": "th/bonus_reinforcements.ogg",
+    "text": "ทำเป้าหมายโบนัสสำเร็จ กำลังเสริมกำลังมา",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.31
+   },
+   "bonus_achieved": {
+    "file": "th/bonus_achieved.ogg",
+    "text": "ทำเป้าหมายโบนัสสำเร็จ",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.17
+   },
+   "bonus_lost": {
+    "file": "th/bonus_lost.ogg",
+    "text": "เป้าหมายโบนัสล้มเหลว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.22
+   },
+   "counter_attack": {
+    "file": "th/counter_attack.ogg",
+    "text": "คำเตือน ตรวจพบการตีโต้ของศัตรู",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.98
+   },
+   "stage_two": {
+    "file": "th/stage_two.ogg",
+    "text": "ขั้นที่สอง การสู้รบทวีความรุนแรง",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.03
+   },
+   "stage_three": {
+    "file": "th/stage_three.ogg",
+    "text": "ขั้นที่สาม พบเป้าหมายกองบัญชาการศัตรูแล้ว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.45
+   },
+   "reinforcements_arrived": {
+    "file": "th/reinforcements_arrived.ogg",
+    "text": "กำลังเสริมฝ่ายพันธมิตรมาถึงแล้ว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.82
+   },
+   "wave_incoming": {
+    "file": "th/wave_incoming.ogg",
+    "text": "คำเตือน คลื่นจู่โจมของศัตรูกำลังเข้าใกล้",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.33
+   },
+   "mission_accomplished": {
+    "file": "th/mission_accomplished.ogg",
+    "text": "ภารกิจสำเร็จ",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 1.76
+   },
+   "mission_failed": {
+    "file": "th/mission_failed.ogg",
+    "text": "ภารกิจล้มเหลว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.0
+   },
+   "unit_lost": {
+    "file": "th/unit_lost.ogg",
+    "text": "สูญเสียหน่วย",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 1.95
+   },
+   "low_power": {
+    "file": "th/low_power.ogg",
+    "text": "พลังงานต่ำ",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 1.74
+   },
+   "building_captured": {
+    "file": "th/building_captured.ogg",
+    "text": "ยึดอาคารได้แล้ว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.07
+   },
+   "superweapon_ready": {
+    "file": "th/superweapon_ready.ogg",
+    "text": "อาวุธพิเศษพร้อมแล้ว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.34
+   },
+   "superweapon_launched": {
+    "file": "th/superweapon_launched.ogg",
+    "text": "ยิงอาวุธพิเศษแล้ว",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 2.22
+   },
+   "enemy_superweapon_detected": {
+    "file": "th/enemy_superweapon_detected.ogg",
+    "text": "คำเตือน ตรวจพบอาวุธพิเศษของศัตรู",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.14
+   },
+   "mission_kokang": {
+    "file": "th/mission_kokang.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว สร้างลานนั่งร้านในเล่าก์ก่าย",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.86
+   },
+   "mission_tachileik": {
+    "file": "th/mission_tachileik.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว เคลียร์ซุ่มโจมตีคาราวาน",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.81
+   },
+   "mission_shwe_kokko": {
+    "file": "th/mission_shwe_kokko.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว เคลียร์ทหารรักษาฐาน",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.64
+   },
+   "mission_operation_1027": {
+    "file": "th/mission_operation_1027.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว โค่นหอ EW",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.11
+   },
+   "mission_andaman": {
+    "file": "th/mission_andaman.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว เคลียร์ปืนชายฝั่ง",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.33
+   },
+   "mission_ghosts_of_patani": {
+    "file": "th/mission_ghosts_of_patani.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว ล่าผีรบกวนสัญญาณ",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.71
+   },
+   "mission_kilometer_watch": {
+    "file": "th/mission_kilometer_watch.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว เคลียร์ทหารรักษาเรดาร์",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.59
+   },
+   "mission_black_haze": {
+    "file": "th/mission_black_haze.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว ยึดเรดาร์อุทก",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.18
+   },
+   "mission_archipelago_rising": {
+    "file": "th/mission_archipelago_rising.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว จมเรือริมฝั่ง",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.35
+   },
+   "mission_wrath_of_the_garuda": {
+    "file": "th/mission_wrath_of_the_garuda.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว จมเรือระวังภัยร่วม",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.64
+   },
+   "mission_fog_over_pakbeng": {
+    "file": "th/mission_fog_over_pakbeng.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว ยึดเรดาร์อุทก",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.18
+   },
+   "mission_keng_tung": {
+    "file": "th/mission_keng_tung.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว แช่แข็งขบวนรถถัง",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.76
+   },
+   "mission_plain_of_jars": {
+    "file": "th/mission_plain_of_jars.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว ยิงลำแสงใส่แฟนทอม",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.76
+   },
+   "mission_tonle_sap": {
+    "file": "th/mission_tonle_sap.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว พาเรือข้ามฟากข้ามไป",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.83
+   },
+   "mission_shattered_monsoon": {
+    "file": "th/mission_shattered_monsoon.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว ตีแนวทหารรักษาป้อมให้แตก",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.91
+   },
+   "mission_sop_ruak": {
+    "file": "th/mission_sop_ruak.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว ยึดจุดหนึ่งในสามเหลี่ยมทองคำ",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 4.08
+   },
+   "mission_phillips": {
+    "file": "th/mission_phillips.ogg",
+    "text": "ได้รับเป้าหมายภารกิจแล้ว ยึดจุดหนึ่งริมช่องแคบ",
+    "voice": "th-TH-NiwatNeural",
+    "seconds": 3.74
+   }
+  },
+  "ms": {
+   "cannot_deploy": {
+    "file": "ms/cannot_deploy.ogg",
+    "text": "Tidak boleh dikerahkan di sini.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 3.01
+   },
+   "naval_on_water": {
+    "file": "ms/naval_on_water.ogg",
+    "text": "Struktur tentera laut mesti diletakkan di atas air.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 4.38
+   },
+   "build_near_allied": {
+    "file": "ms/build_near_allied.ogg",
+    "text": "Mesti membina berhampiran struktur sekutu.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 3.78
+   },
+   "blocked_road_terrain": {
+    "file": "ms/blocked_road_terrain.ogg",
+    "text": "Dihalang oleh jalan atau rupa bumi.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 3.4
+   },
+   "building": {
+    "file": "ms/building.ogg",
+    "text": "Sedang membina.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.29
+   },
+   "construction_complete": {
+    "file": "ms/construction_complete.ogg",
+    "text": "Pembinaan selesai.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.6
+   },
+   "unit_ready": {
+    "file": "ms/unit_ready.ogg",
+    "text": "Unit sedia.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.24
+   },
+   "training": {
+    "file": "ms/training.ogg",
+    "text": "Sedang melatih.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.22
+   },
+   "insufficient_funds": {
+    "file": "ms/insufficient_funds.ogg",
+    "text": "Sumber tidak mencukupi.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.7
+   },
+   "base_under_attack": {
+    "file": "ms/base_under_attack.ogg",
+    "text": "Pangkalan diserang!",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.41
+   },
+   "ally_under_attack": {
+    "file": "ms/ally_under_attack.ogg",
+    "text": "Sekutu diserang!",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.43
+   },
+   "structure_garrisoned": {
+    "file": "ms/structure_garrisoned.ogg",
+    "text": "Struktur telah dikawal.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.72
+   },
+   "secondary_weapon": {
+    "file": "ms/secondary_weapon.ogg",
+    "text": "Senjata sekunder diaktifkan.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 3.23
+   },
+   "primary_weapon": {
+    "file": "ms/primary_weapon.ogg",
+    "text": "Senjata utama diaktifkan.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 3.18
+   },
+   "objective_received": {
+    "file": "ms/objective_received.ogg",
+    "text": "Objektif misi diterima.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.82
+   },
+   "new_objective": {
+    "file": "ms/new_objective.ogg",
+    "text": "Objektif baharu diterima. Semak peta taktikal anda.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.68
+   },
+   "primary_complete": {
+    "file": "ms/primary_complete.ogg",
+    "text": "Objektif utama selesai.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.91
+   },
+   "bonus_reinforcements": {
+    "file": "ms/bonus_reinforcements.ogg",
+    "text": "Objektif bonus dicapai. Bala bantuan dalam perjalanan.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.68
+   },
+   "bonus_achieved": {
+    "file": "ms/bonus_achieved.ogg",
+    "text": "Objektif bonus dicapai.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.86
+   },
+   "bonus_lost": {
+    "file": "ms/bonus_lost.ogg",
+    "text": "Objektif bonus gagal.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.67
+   },
+   "counter_attack": {
+    "file": "ms/counter_attack.ogg",
+    "text": "Amaran: serangan balas musuh dikesan.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 4.18
+   },
+   "stage_two": {
+    "file": "ms/stage_two.ogg",
+    "text": "Peringkat dua: pertempuran semakin memuncak.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 4.18
+   },
+   "stage_three": {
+    "file": "ms/stage_three.ogg",
+    "text": "Peringkat tiga: sasaran pemerintahan musuh dikesan.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 4.68
+   },
+   "reinforcements_arrived": {
+    "file": "ms/reinforcements_arrived.ogg",
+    "text": "Bala bantuan sekutu telah tiba.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 3.16
+   },
+   "wave_incoming": {
+    "file": "ms/wave_incoming.ogg",
+    "text": "Amaran: gelombang serangan musuh menghampiri.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 4.28
+   },
+   "mission_accomplished": {
+    "file": "ms/mission_accomplished.ogg",
+    "text": "Misi berjaya.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.36
+   },
+   "mission_failed": {
+    "file": "ms/mission_failed.ogg",
+    "text": "Misi gagal.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.26
+   },
+   "unit_lost": {
+    "file": "ms/unit_lost.ogg",
+    "text": "Unit hilang.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.17
+   },
+   "low_power": {
+    "file": "ms/low_power.ogg",
+    "text": "Kuasa rendah.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.31
+   },
+   "building_captured": {
+    "file": "ms/building_captured.ogg",
+    "text": "Bangunan ditawan.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.43
+   },
+   "superweapon_ready": {
+    "file": "ms/superweapon_ready.ogg",
+    "text": "Senjata super sedia.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 2.79
+   },
+   "superweapon_launched": {
+    "file": "ms/superweapon_launched.ogg",
+    "text": "Senjata super dilancarkan.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 3.16
+   },
+   "enemy_superweapon_detected": {
+    "file": "ms/enemy_superweapon_detected.ogg",
+    "text": "Amaran: senjata super musuh dikesan.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 4.28
+   },
+   "mission_kokang": {
+    "file": "ms/mission_kokang.ogg",
+    "text": "Objektif misi diterima. Dirikan limbungan perancah di Laukkai.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 6.18
+   },
+   "mission_tachileik": {
+    "file": "ms/mission_tachileik.ogg",
+    "text": "Objektif misi diterima. Bersihkan serang hendap kafilah.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.88
+   },
+   "mission_shwe_kokko": {
+    "file": "ms/mission_shwe_kokko.ogg",
+    "text": "Objektif misi diterima. Bersihkan garison kompaun.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.68
+   },
+   "mission_operation_1027": {
+    "file": "ms/mission_operation_1027.ogg",
+    "text": "Objektif misi diterima. Tumbangkan menara EW.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.58
+   },
+   "mission_andaman": {
+    "file": "ms/mission_andaman.ogg",
+    "text": "Objektif misi diterima. Bersihkan meriam pantai.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.48
+   },
+   "mission_ghosts_of_patani": {
+    "file": "ms/mission_ghosts_of_patani.ogg",
+    "text": "Objektif misi diterima. Buru hantu pengacau.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.38
+   },
+   "mission_kilometer_watch": {
+    "file": "ms/mission_kilometer_watch.ogg",
+    "text": "Objektif misi diterima. Bersihkan garison radar.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.68
+   },
+   "mission_black_haze": {
+    "file": "ms/mission_black_haze.ogg",
+    "text": "Objektif misi diterima. Tawan radar hidro.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.18
+   },
+   "mission_archipelago_rising": {
+    "file": "ms/mission_archipelago_rising.ogg",
+    "text": "Objektif misi diterima. Tenggelamkan bot pantai.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.38
+   },
+   "mission_wrath_of_the_garuda": {
+    "file": "ms/mission_wrath_of_the_garuda.ogg",
+    "text": "Objektif misi diterima. Tenggelamkan kapal peronda gabungan.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 6.08
+   },
+   "mission_fog_over_pakbeng": {
+    "file": "ms/mission_fog_over_pakbeng.ogg",
+    "text": "Objektif misi diterima. Tawan radar hidro.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.18
+   },
+   "mission_keng_tung": {
+    "file": "ms/mission_keng_tung.ogg",
+    "text": "Objektif misi diterima. Bekukan kolum kereta kebal.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.58
+   },
+   "mission_plain_of_jars": {
+    "file": "ms/mission_plain_of_jars.ogg",
+    "text": "Objektif misi diterima. Tembak pancaran ke arah hantu.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.68
+   },
+   "mission_tonle_sap": {
+    "file": "ms/mission_tonle_sap.ogg",
+    "text": "Objektif misi diterima. Bawa feri menyeberang.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.48
+   },
+   "mission_shattered_monsoon": {
+    "file": "ms/mission_shattered_monsoon.ogg",
+    "text": "Objektif misi diterima. Patahkan pengawal kubu.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.38
+   },
+   "mission_sop_ruak": {
+    "file": "ms/mission_sop_ruak.ogg",
+    "text": "Objektif misi diterima. Rampas satu tapak di Segi Tiga Emas.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 6.28
+   },
+   "mission_phillips": {
+    "file": "ms/mission_phillips.ogg",
+    "text": "Objektif misi diterima. Rampas satu tapak di tepi selat.",
+    "voice": "ms-MY-YasminNeural",
+    "seconds": 5.88
+   }
+  }
+ }
+}

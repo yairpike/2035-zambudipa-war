@@ -40,7 +40,7 @@ static func paint(host: Node3D, plan: SMPlacement) -> void:
 		why.outline_modulate = Color(0, 0, 0, 0.9)
 		why.no_depth_test = true
 		ghost.add_child(why)
-	why.text = plan.reason if not ok else "Click to place  ·  drag to face  ·  R turns"
+	why.text = "" if not ok else "Click to place  ·  drag to face  ·  R turns"
 	why.modulate = Color(1.0, 0.55, 0.45) if not ok else Color(0.85, 1.0, 0.9)
 	why.position = plan.spot + Vector3(0.0, SMPointer.BUILDING_SIZE.y + 3.2, 0.0)
 

@@ -128,6 +128,53 @@ static func auto_pick(u: RTSUnit, category: String) -> bool:
 		return false
 	return equip(u, spare)
 
+## Combat choice for AI units: keeps a slot that can hit, then prefers the one that reaches a target out of the
+## live slot's range, then the heavier shot against armour or boats and the faster killer against infantry and
+## aircraft. True when it swapped.
+static func tactical_pick(u: RTSUnit, category: String, dist: float) -> bool:
+	if not armed(u):
+		return false
+	if auto_pick(u, category):
+		return true
+	var live: String = slot_of(u)
+	var spare: String = other(live)
+	var now: Dictionary = profile(u, live)
+	var alt: Dictionary = profile(u, spare)
+	if not can_hit(alt, category):
+		return false
+	var reach_now: float = float(now.get("range", 0.0))
+	var reach_alt: float = float(alt.get("range", 0.0))
+	if dist > reach_now + 0.5 and reach_alt > reach_now and dist <= reach_alt + 0.5:
+		return equip(u, spare)
+	if dist > reach_alt + 0.5:
+		return false
+	var armour: bool = category == "vehicle" or category == "boat"
+	if armour and float(alt.get("damage", 0.0)) > float(now.get("damage", 0.0)) * 1.2:
+		return equip(u, spare)
+	if not armour and _dps(alt) > _dps(now) * 1.15:
+		return equip(u, spare)
+	return false
+
+static func _dps(p: Dictionary) -> float:
+	var gap: float = maxf(0.05, float(p.get("interval", 1.0)))
+	return float(p.get("damage", 0.0)) / gap
+
+## Unit class read off the catalog metas SMPointer stamps on spawn, for callers without a pointer.
+static func category_guess(u: RTSUnit) -> String:
+	if not is_instance_valid(u):
+		return "infantry"
+	var role: String = str(u.get_meta("role", ""))
+	var loco: String = str(u.get_meta("locomotion", ""))
+	var tags: Variant = u.get_meta("tags", PackedStringArray())
+	var tagged: Callable = func(t: String) -> bool: return (tags is PackedStringArray and (tags as PackedStringArray).has(t)) or (tags is Array and (tags as Array).has(t))
+	if role == "infantry" or tagged.call("infantry"):
+		return "infantry"
+	if role == "air" or role == "drone" or loco == "air" or tagged.call("air"):
+		return "aircraft"
+	if loco == "naval" or role == "boat" or role == "naval":
+		return "boat"
+	return "vehicle"
+
 ## One line for a slot: "Coaxial MG  dmg 10  rng 8  ground".
 static func describe(p: Dictionary) -> String:
 	if p.is_empty():

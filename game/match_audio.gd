@@ -64,6 +64,7 @@ static var _take_n: Dictionary = {}
 
 const Settings = preload("res://game/match_settings.gd")
 const AssetPack = preload("res://game/asset_pack.gd")
+const VoiceBank = preload("res://game/voice_bank.gd")
 
 static func arm(host: Node, mode: String) -> void:
 	if host == null or host.get_node_or_null("MatchAudio") != null:
@@ -403,8 +404,12 @@ static func _clear_dialogue_marks() -> void:
 		_dialogue_ok.erase(rel)
 		_blocked.erase(rel)
 
+## The EVA set (res://assets/voices/eva/) speaks every key it has; served announcer takes cover the rest.
 static func announce_key(host: Node, faction: String, key: String) -> void:
 	if host == null or key == "":
+		return
+	if VoiceBank.has(key):
+		VoiceBank.say(host, key)
 		return
 	var id: String = faction
 	## Black Market has no announcer/<lang>/black_market/ files. GTFC lines stand in.

@@ -3460,3 +3460,57 @@ msgstr "ဂိမ်းဒေါင်းလုဒ်"
 
 msgid "Download complete. Close the game and open it again to load everything."
 msgstr "ဒေါင်းလုဒ် ပြီးပါပြီ။ ဂိမ်းကို ပိတ်ပြီး ပြန်ဖွင့်ပါ။"
+
+msgid "CANNOT DEPLOY HERE — %s"
+msgstr "ဤနေရာတွင် မချထားနိုင်ပါ — %s"
+
+msgid "CANNOT DEPLOY HERE — BLOCKED BY ROAD"
+msgstr "ဤနေရာတွင် မချထားနိုင်ပါ — လမ်းပိတ်နေသည်"
+
+msgid "CANNOT DEPLOY HERE — WATER (LAND STRUCTURE)"
+msgstr "ဤနေရာတွင် မချထားနိုင်ပါ — ရေပြင် (ကုန်းအဆောက်အဦ)"
+
+msgid "CANNOT DEPLOY HERE — NEEDS DEEP WATER & OPEN CHANNEL"
+msgstr "ဤနေရာတွင် မချထားနိုင်ပါ — ရေနက်နှင့် ပွင့်သောရေလမ်း လိုအပ်သည်"
+
+msgid "CANNOT DEPLOY HERE — TOO STEEP / OBSTRUCTED"
+msgstr "ဤနေရာတွင် မချထားနိုင်ပါ — မတ်စောက်လွန်း / ပိတ်ဆို့နေသည်"
+
+msgid "CANNOT DEPLOY HERE — OCCUPIED BY UNIT/BUILDING"
+msgstr "ဤနေရာတွင် မချထားနိုင်ပါ — တပ်ဖွဲ့/အဆောက်အဦ ရှိနေသည်"
+
+msgid "CANNOT DEPLOY HERE — MUST BUILD NEAR AN ALLIED STRUCTURE"
+msgstr "ဤနေရာတွင် မချထားနိုင်ပါ — မဟာမိတ်အဆောက်အဦအနီး ဆောက်ရမည်"
+
+msgid "Green: open   Red: blocked   Blue: water"
+msgstr "အစိမ်း: လွတ်   အနီ: ပိတ်   အပြာ: ရေ"
+
+msgid "Tactical transmission"
+msgstr "တပ်ဆိုင်ရာ ဆက်သွယ်ချက်"
+
+msgid "[Tab / click] Ping objective"
+msgstr "[Tab / နှိပ်] ပစ်မှတ်ကို ပြပါ"
+
+msgid "[F] Switch weapon mode (primary / secondary)"
+msgstr "[F] လက်နက်မုဒ် ပြောင်းရန် (အဓိက / ဒုတိယ)"
+
+msgid "Objective"
+msgstr "ပစ်မှတ်"
+
+msgid "Street patrol"
+msgstr "လမ်းကင်းလှည့်"
+
+msgid "Assault wave"
+msgstr "တိုက်ခိုက်ရေးလှိုင်း"
+
+msgid "Enemy assault wave on the streets. Hold the base."
+msgstr "ရန်သူ့တိုက်ခိုက်ရေးလှိုင်း လမ်းပေါ်ရောက်နေသည်။ စခန်းကို ထိန်းထားပါ။"
+
+msgid "blocked by a road"
+msgstr "လမ်းပိတ်နေသည်"
+
+msgid "too steep"
+msgstr "မတ်စောက်လွန်းသည်"
+
+msgid "an enemy unit is in the way"
+msgstr "ရန်သူတပ်ဖွဲ့ ပိတ်နေသည်"

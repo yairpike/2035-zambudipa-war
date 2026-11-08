@@ -16,6 +16,11 @@ const Rallies = preload("res://game/rally_view.gd")
 const WeaponMode = preload("res://game/weapon_mode_view.gd")
 const Motion = preload("res://game/unit_motion.gd")
 const Watch = preload("res://game/building_watch.gd")
+const VoiceBank = preload("res://game/voice_bank.gd")
+const SoundBank = preload("res://game/sound_bank.gd")
+const PlacementFeedback = preload("res://game/placement_feedback.gd")
+## Out-of-view player losses below this hp share stay quiet; the EVA calls out real fights only.
+const ALLY_HIT_SHARE: float = 0.03
 
 ## Pins the objective to one line under the top bar, clear of the left rail.
 static func seat_status(status: Control) -> void:
@@ -66,8 +71,13 @@ static func follow(host: Node) -> void:
 			side.defense_fired.connect(_on_defense.bind(host))
 		_bind_yard(host, side.yard, false)
 		side.placement.changed.connect(_on_placement.bind(host, side))
+		PlacementFeedback.attach(host as Node3D, side)
 		side.bays.door_moved.connect(_on_door.bind(host, side))
 		side.bays.door_cue.connect(_on_door_cue.bind(host))
+	var roster: SMRoster = host.get("roster") as SMRoster
+	if roster != null and roster.queue != null and not bool(roster.get_meta("view_bound", false)):
+		roster.set_meta("view_bound", true)
+		roster.queue.queue_changed.connect(_on_queue.bind(host, roster))
 	var raider: SMRaider = host.get("raider") as SMRaider
 	if raider != null and not bool(raider.get_meta("view_bound", false)):
 		raider.set_meta("view_bound", true)
@@ -136,6 +146,32 @@ static func follow_pointer(field: SMPointer) -> void:
 	field.damage_shown.connect(_on_damage.bind(field))
 	field.rallies_shown.connect(Callable(Rallies, "show"))
 	field.weapon_shown.connect(Callable(WeaponMode, "show"))
+	field.weapons_swapped.connect(_on_swapped.bind(field))
+
+## The F swap: a bolt click and the EVA naming the slot that is now live.
+static func _on_swapped(slot: String, _count: int, field: SMPointer) -> void:
+	if field == null or field.host == null:
+		return
+	SoundBank.play(field.host, "weapon_click", -2.0)
+	VoiceBank.say(field.host, "secondary_weapon" if slot == SMArms.SECONDARY else "primary_weapon")
+
+static func _on_queue(host: Node, roster: SMRoster) -> void:
+	var n: int = roster.queue.items.size()
+	if n > int(roster.get_meta("queued_seen", 0)):
+		VoiceBank.say(host, "training")
+	roster.set_meta("queued_seen", n)
+
+## A player unit hit outside the camera view: "Ally under attack!" (the voice bank spaces it out).
+static func _ally_struck(unit: RTSUnit, amount: float, field: SMPointer) -> void:
+	if unit == null or not is_instance_valid(unit) or unit.team != SMPointer.PLAYER or unit.max_hp <= 0.0:
+		return
+	if amount < unit.max_hp * ALLY_HIT_SHARE:
+		return
+	var host: Node3D = field.host
+	var cam: Camera3D = host.get_viewport().get_camera_3d() if host != null and host.is_inside_tree() else null
+	if cam != null and cam.is_position_in_frustum(unit.global_position):
+		return
+	VoiceBank.say(host, "ally_under_attack")
 
 static func _on_placement(host: Node, side: SMSide) -> void:
 	Ghost.paint(host as Node3D, side.placement)
@@ -201,6 +237,7 @@ static func _on_damage(unit: RTSUnit, amount: float, field: SMPointer) -> void:
 	if field == null or field.host == null:
 		return
 	Clips.on_hit(field.host, unit, amount)
+	_ally_struck(unit, amount, field)
 
 static func play_selected_ability(host: Node) -> void:
 	if host == null:
@@ -285,6 +322,8 @@ static func _on_hud_line(text: String, key: String, host: Node, hud: SMHud) -> v
 
 static func _on_side_line(text: String, host: Node, side: SMSide) -> void:
 	Clips.on_line(host, text)
+	if text.begins_with("garrison "):
+		VoiceBank.say(host, "structure_garrisoned")
 	var faction: String = side.faction_id if side != null else _faction_of(host)
 	Clips.announce_line(host, faction, text)
 

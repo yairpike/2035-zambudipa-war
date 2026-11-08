@@ -33,6 +33,11 @@ var _react_hold: float = 0.0
 var rocket_mult: float = 1.0
 var last_note: String = ""
 var _navs: Dictionary[String, RTSGridNav] = {}
+## Primary/secondary swaps the bot ordered in combat (SMArms.tactical_pick).
+var weapon_swaps: int = 0
+var _arms_t: float = 0.0
+
+const ARMS_EVERY: float = 3.0
 
 func _init(p: StringName = &"bo_mya") -> void:
 	personality = p
@@ -67,6 +72,7 @@ func direct(units: Array[RTSUnit], foes: Array[RTSUnit], grid: SMDomainGrid, nav
 		home_point = home
 		home_set = true
 	_pull_home(units, grid, nav_for, home)
+	_weapon_tactics(units, delta)
 	var ready: Array[RTSUnit] = _fighting(units)
 	var live: Array[RTSUnit] = _alive(foes)
 	if ready.is_empty() or live.is_empty() or teams == null:
@@ -87,6 +93,22 @@ func direct(units: Array[RTSUnit], foes: Array[RTSUnit], grid: SMDomainGrid, nav
 			return
 		_react_hold = 0.4 * (react_scale - 1.0)
 	_press_wave(ready, live, grid, nav_for, teams)
+
+## Every few seconds each fighting unit picks the weapon slot that suits its current target.
+func _weapon_tactics(units: Array[RTSUnit], delta: float) -> void:
+	_arms_t += delta
+	if _arms_t < ARMS_EVERY:
+		return
+	_arms_t = 0.0
+	for u: RTSUnit in units:
+		if not is_instance_valid(u) or not u.is_alive() or not SMArms.armed(u):
+			continue
+		var prey: RTSUnit = u.attack_target
+		if prey == null or not is_instance_valid(prey) or not prey.is_alive():
+			continue
+		var gap: float = Vector2(u.global_position.x - prey.global_position.x, u.global_position.z - prey.global_position.z).length()
+		if SMArms.tactical_pick(u, SMArms.category_guess(prey), gap):
+			weapon_swaps += 1
 
 func restore_node(goods: SMCommodityNet, id: StringName, team: int) -> bool:
 	if goods == null or not goods.has_collector(id):

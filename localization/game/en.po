@@ -4395,3 +4395,57 @@ msgstr "DOWNLOAD GAME"
 #: game/asset_download.gd
 msgid "Download complete. Close the game and open it again to load everything."
 msgstr "Download complete. Close the game and open it again to load everything."
+
+msgid "CANNOT DEPLOY HERE — %s"
+msgstr "CANNOT DEPLOY HERE — %s"
+
+msgid "CANNOT DEPLOY HERE — BLOCKED BY ROAD"
+msgstr "CANNOT DEPLOY HERE — BLOCKED BY ROAD"
+
+msgid "CANNOT DEPLOY HERE — WATER (LAND STRUCTURE)"
+msgstr "CANNOT DEPLOY HERE — WATER (LAND STRUCTURE)"
+
+msgid "CANNOT DEPLOY HERE — NEEDS DEEP WATER & OPEN CHANNEL"
+msgstr "CANNOT DEPLOY HERE — NEEDS DEEP WATER & OPEN CHANNEL"
+
+msgid "CANNOT DEPLOY HERE — TOO STEEP / OBSTRUCTED"
+msgstr "CANNOT DEPLOY HERE — TOO STEEP / OBSTRUCTED"
+
+msgid "CANNOT DEPLOY HERE — OCCUPIED BY UNIT/BUILDING"
+msgstr "CANNOT DEPLOY HERE — OCCUPIED BY UNIT/BUILDING"
+
+msgid "CANNOT DEPLOY HERE — MUST BUILD NEAR AN ALLIED STRUCTURE"
+msgstr "CANNOT DEPLOY HERE — MUST BUILD NEAR AN ALLIED STRUCTURE"
+
+msgid "Green: open   Red: blocked   Blue: water"
+msgstr "Green: open   Red: blocked   Blue: water"
+
+msgid "Tactical transmission"
+msgstr "Tactical transmission"
+
+msgid "[Tab / click] Ping objective"
+msgstr "[Tab / click] Ping objective"
+
+msgid "[F] Switch weapon mode (primary / secondary)"
+msgstr "[F] Switch weapon mode (primary / secondary)"
+
+msgid "Objective"
+msgstr "Objective"
+
+msgid "Street patrol"
+msgstr "Street patrol"
+
+msgid "Assault wave"
+msgstr "Assault wave"
+
+msgid "Enemy assault wave on the streets. Hold the base."
+msgstr "Enemy assault wave on the streets. Hold the base."
+
+msgid "blocked by a road"
+msgstr "blocked by a road"
+
+msgid "too steep"
+msgstr "too steep"
+
+msgid "an enemy unit is in the way"
+msgstr "an enemy unit is in the way"
