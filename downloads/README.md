@@ -2,27 +2,23 @@
 
 ## Direct Download Links
 
-- **macOS (Apple Silicon and Intel):** [ASEAN-2031-macOS.dmg (80.0 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-macOS.dmg)
-- **Windows (64-bit):** [ASEAN-2031-Windows.exe (46.7 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Windows.exe)
-- **Linux (x86_64):** [ASEAN-2031-Linux-x86_64.AppImage (46.2 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Linux-x86_64.AppImage)
-- **Android (ARM64):** [ASEAN-2031-Android.apk (65.2 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Android.apk)
-- **iOS sideload (AltStore / SideStore / Sideloadly):** [ASEAN-2031-iOS.ipa (39.8 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-iOS.ipa)
+- **macOS (Apple Silicon and Intel):** [ASEAN-2031-macOS.dmg (79 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-macOS.dmg)
+- **Windows (64-bit):** [ASEAN-2031-Windows.exe (46 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Windows.exe)
+- **Linux (x86_64):** [ASEAN-2031-Linux-x86_64.AppImage (45 MiB)](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Linux-x86_64.AppImage)
 
-*(You can also click **DOWNLOAD GAME** on the main menu of the [web version](https://yairpike.github.io/asean-2031/).)*
+*(You can also click **DOWNLOAD DESKTOP** directly on the main menu of the [web version](https://yairpike.github.io/asean-2031/).)*
 
 ---
 
-Download the one file for your device, then open it. The file names still start with `ASEAN-2031` so existing links keep working; the game inside is 2035 - Zambudipa War.
+Download the one file for your computer, then open it. The file names still start with `ASEAN-2031` so existing links keep working; the game inside is 2035 - Zambudipa War.
 
 | System | File | Size |
 | --- | --- | --- |
-| macOS (Apple Silicon and Intel) | [`ASEAN-2031-macOS.dmg`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-macOS.dmg) | 80.0 MiB |
-| Windows (64-bit) | [`ASEAN-2031-Windows.exe`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Windows.exe) | 46.7 MiB |
-| Linux (x86_64) | [`ASEAN-2031-Linux-x86_64.AppImage`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Linux-x86_64.AppImage) | 46.2 MiB |
-| Android 7.0 or later (ARM64, also x86_64) | [`ASEAN-2031-Android.apk`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Android.apk) | 65.2 MiB |
-| iPhone and iPad, iOS 16 or later (sideload) | [`ASEAN-2031-iOS.ipa`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-iOS.ipa) | 39.8 MiB |
+| macOS (Apple Silicon and Intel) | [`ASEAN-2031-macOS.dmg`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-macOS.dmg) | 79 MiB |
+| Windows | [`ASEAN-2031-Windows.exe`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Windows.exe) | 46 MiB |
+| Linux (x86_64) | [`ASEAN-2031-Linux-x86_64.AppImage`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Linux-x86_64.AppImage) | 45 MiB |
 
-The first time the game opens, it downloads its music, voices, 3D models, and cinematics (250 MiB on a computer, 258 MiB on a phone or tablet) with a progress bar. On a computer the game then restarts by itself. On a phone or tablet, close the game and open it again when the download says it is complete. This happens only once. Press Play now to start right away with simple models and no sound while the download finishes in the background. Use Wi-Fi on a phone.
+The first time the game opens, it downloads its music, voices, 3D models, and cinematics (250 MiB) with a progress bar, then restarts by itself. This happens only once, and again only if you played a version from before the rename. Press Play now to start right away with simple models and no sound while the download finishes in the background.
 
 ## macOS
 
@@ -47,31 +43,6 @@ The game is added to the Start menu and the desktop. An older ASEAN 2031 install
 1. Right-click `ASEAN-2031-Linux-x86_64.AppImage`, open Properties, and turn on "Allow executing file as program".
 2. Double-click it.
 
-## Android
-
-1. On the phone or tablet, open the download link and download `ASEAN-2031-Android.apk`.
-2. Tap the downloaded file. If Android asks, allow your browser or Files app to install unknown apps, then go back.
-3. Tap Install. If Play Protect warns that it does not recognise the app, tap More details, then Install anyway.
-4. Open 2035 - Zambudipa War from the home screen.
-
-Tap to select and give orders, drag to box-select, and pinch to zoom. Later versions install over this one and keep your progress.
-
-## iPhone and iPad (sideload)
-
-Apple only allows apps outside the App Store through a sideloading tool, which signs the game with your own Apple ID. This build is new and has not yet been tried on an iPhone or iPad, so please report it if it closes right after opening.
-
-**AltStore or SideStore:** download `ASEAN-2031-iOS.ipa` on the device, open AltStore or SideStore, go to My Apps, press +, and pick the file.
-
-**Sideloadly (from a Mac or Windows PC):** connect the device with a cable, drag `ASEAN-2031-iOS.ipa` into Sideloadly, enter your Apple ID, and press Start.
-
-Then:
-
-1. On iOS 16 or later, turn on Settings, Privacy & Security, Developer Mode, and restart when asked.
-2. If iOS says "Untrusted Developer", go to Settings, General, VPN & Device Management, choose your Apple ID, and press Trust.
-3. Open 2035 - Zambudipa War from the home screen.
-
-With a free Apple ID the app stops opening after 7 days; refresh it in AltStore or SideStore, or install it again with Sideloadly.
-
 ## Other ways to play
 
 - In the browser, nothing to install: https://yairpike.github.io/asean-2031/ (the browser version cannot host or join LAN games).
@@ -79,18 +50,14 @@ With a free Apple ID the app stops opening after 7 days; refresh it in AltStore 
 
 ## LAN
 
-Both players use the installed game (computer, Android, or iPhone/iPad) on the same network. Open Multiplayer. One player presses Host LAN. The other types the host address and presses Join LAN, or picks the host when it appears. Each player picks a faction, then presses Ready. On iPhone and iPad, allow Local Network access when asked, and type the host address if the host does not appear.
+Both players use the desktop game on the same network. Open Multiplayer. One player presses Host LAN. The other types the host address and presses Join LAN, or picks the host when it appears. Each player picks a faction, then presses Ready.
 
 The match uses port 7777. The discovery beacon uses port 7778. Allow both through the firewall.
 
 ## Checksums
 
-Built from commit `6a64f4d25301f12b2a31c8c95dbae9903429a20b` (`6a64f4d` on `cursor/mobile-installers-570e`, now on `cursor/web-playtest` and `main`). The first-launch download comes from GitHub Pages at `d93183b`. SHA-256:
+Built from commit `9b2d1745372d9766bb35536149d4b73710fe2d85` (`9b2d174` on `cursor/web-playtest`). SHA-256:
 
-- `ASEAN-2031-macOS.dmg`: `233e7eeb86b7d13df2b79752bb8a849bc227b34925f9df87ebe8580c290ab116`
-- `ASEAN-2031-Windows.exe`: `6f0f50e1c5c8bde8eaedcac91bac7dd77267abd1cf2e012054f9caeecb24e803`
-- `ASEAN-2031-Linux-x86_64.AppImage`: `13ef523620fb00a8fae790e7052cbca19bdeb9a2782d726373f522cb7ec06159`
-- `ASEAN-2031-Android.apk`: `25f2992b565ef682421b82eba987c1375e848a10eea4d8e82b60567f95730f4e`
-- `ASEAN-2031-iOS.ipa`: `4be082557beb58031c1707e85d698705fff8c3dffb23a63a468d884c9951e49d`
-
-The Android signing certificate SHA-256 is `68a73898d947a4b7fc9068608c37e42b820607c69adef901494ecc775c94122b`.
+- `ASEAN-2031-macOS.dmg`: `d4e6694db630f1a793c9e4573f1a06b09340b80e274125daa826b408da30d29f`
+- `ASEAN-2031-Windows.exe`: `6ef87af1985beb37e6cc9df74352ede2e2a8168e06b34180164d3714546b0b68`
+- `ASEAN-2031-Linux-x86_64.AppImage`: `bff609196b907f49df1e041588727383a5feef0d0ae3f8ad3d71732e5e8d970d`
