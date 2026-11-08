@@ -119,6 +119,10 @@ func _start_raise() -> void:
 	FX.dust(stage, rest.origin + Vector3(0, box.position.y + 0.1, 0), maxf(box.size.x, box.size.z) * 0.6, 20)
 
 func _apply_rise(k: float) -> void:
+	var now: Transform3D = target.transform
+	rest.basis = now.basis
+	rest.origin.x = now.origin.x
+	rest.origin.z = now.origin.z
 	var h: float = box.size.y
 	var eased: float = 1.0 - pow(1.0 - clampf(k, 0.0, 1.0), 3.0)
 	var xf: Transform3D = rest

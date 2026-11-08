@@ -278,10 +278,6 @@ msgstr "attack move"
 msgid "Attack-move"
 msgstr "Attack-move"
 
-#: addons/rts_advanced/sm_hud.gd:484
-msgid "Attack-move ahead of the lead unit."
-msgstr "Attack-move ahead of the lead unit."
-
 #: game/settings_panel.gd:94
 msgid "AUDIO"
 msgstr "AUDIO"
@@ -1318,10 +1314,6 @@ msgstr "GTFC tank"
 msgid "Guard"
 msgstr "Guard"
 
-#: addons/rts_advanced/sm_hud.gd:486
-msgid "Guard. Fire at enemies in range."
-msgstr "Guard. Fire at enemies in range."
-
 #: addons/rts_advanced/sm_hud.gd:1832
 msgid "Guide"
 msgstr "Guide"
@@ -1410,10 +1402,6 @@ msgstr "Highland Saboteur"
 msgid "Highlight a row to read what it changes."
 msgstr "Highlight a row to read what it changes."
 
-#: addons/rts_advanced/sm_hud.gd:487
-msgid "Hold"
-msgstr "Hold"
-
 #: addons/rts_advanced/sm_story.gd:315
 msgid "hold the blocks %ds"
 msgstr "hold the blocks %ds"
@@ -1425,10 +1413,6 @@ msgstr "Hold the radar through the haze. %d seconds left."
 #: game/set_piece.gd:319
 msgid "Hold the radar. The haze is the clock."
 msgstr "Hold the radar. The haze is the clock."
-
-#: addons/rts_advanced/sm_hud.gd:487
-msgid "Hold. Do not acquire targets."
-msgstr "Hold. Do not acquire targets."
 
 #: game/boot.gd:1893
 msgid "Holder"
@@ -1705,40 +1689,6 @@ msgstr "Leech beam on."
 #: game/faction_yard.gd:219
 msgid "Left click selects. Right click moves. F ability."
 msgstr "Left click selects. Right click moves. F ability."
-
-#: addons/rts_advanced/sm_guide.gd:9
-msgid ""
-"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
-"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
-"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
-"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
-"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
-"Click the minimap to jump the camera there.\n"
-"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
-"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
-"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
-"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
-"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
-"P opens protocols. H opens this guide.\n"
-"The status line reads Objective complete when you win, and Objective failed if your company dies."
-msgstr ""
-"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
-"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
-"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
-"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
-"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
-"Click the minimap to jump the camera there.\n"
-"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
-"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
-"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
-"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
-"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
-"P opens protocols. H opens this guide.\n"
-"The status line reads Objective complete when you win, and Objective failed if your company dies."
-
-#: addons/rts_advanced/sm_guide.gd:6
-msgid "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
-msgstr "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
 
 #: addons/rts_advanced/sm_pointer.gd:373
 msgid "Line"
@@ -3647,3 +3597,217 @@ msgstr "yard up"
 #: addons/rts_advanced/sm_hud.gd:1211
 msgid "Z    Formation"
 msgstr "Z    Formation"
+
+#: addons/rts_advanced/sm_hud.gd:365
+msgid " (or press F)"
+msgstr " (or press F)"
+
+#: addons/rts_advanced/sm_arms.gd:135
+msgid "%s  dmg %d  rng %d  %s"
+msgstr "%s  dmg %d  rng %d  %s"
+
+#: addons/rts_advanced/sm_side.gd:202
+msgid "%s redeployed"
+msgstr "%s redeployed"
+
+#: addons/rts_advanced/sm_hud.gd:365
+msgid ""
+"%s weapon: %s\n"
+"Click to switch%s."
+msgstr ""
+"%s weapon: %s\n"
+"Click to switch%s."
+
+#: addons/rts_advanced/sm_hud.gd:279
+msgid "Aggressive"
+msgstr "Aggressive"
+
+#: addons/rts_advanced/sm_hud.gd:649
+msgid "Attack-move. Press A, then right-click a spot."
+msgstr "Attack-move. Press A, then right-click a spot."
+
+#: addons/rts_advanced/sm_touch.gd:131
+msgid "Attack-move: right-click a spot"
+msgstr "Attack-move: right-click a spot"
+
+#: addons/rts_advanced/sm_base_plan.gd:231
+msgid "blocks a resource site"
+msgstr "blocks a resource site"
+
+#: game/placement_view.gd:43
+msgid "Click to place  ·  drag to face  ·  R turns"
+msgstr "Click to place  ·  drag to face  ·  R turns"
+
+#: addons/rts_advanced/sm_hud.gd:282
+msgid "Hold Fire"
+msgstr "Hold Fire"
+
+#: addons/rts_advanced/sm_hud.gd:281
+msgid "Hold Ground"
+msgstr "Hold Ground"
+
+#: addons/rts_advanced/sm_hud.gd:364
+msgid "II"
+msgstr "II"
+
+#: addons/rts_advanced/sm_guide.gd:9
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press A, then right-click, to attack-move. Press D, then right-click, and vehicles back up with their front armour toward the enemy. S or X halts. The orders strip sets the stance: Aggressive, Guard, Hold Ground or Hold Fire. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or W, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag. Select a barracks, factory, naval yard or airfield and right-click the map to pin its own rally point: new units roll out of its bay door and head there. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there. Q and E, the compass beside the minimap, Alt-drag or the middle mouse turn the camera all the way round. Home faces north again.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit. Every combat unit has two weapons: click a weapon slot on the unit card to switch, and a toggle unit's F switches with it.\n"
+"The column on the right trains units and raises buildings. A building click shows a ghost: click to place, drag to face its exit, R or the wheel turns it, right-click or Esc cancels. Naval structures only go on water. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press A, then right-click, to attack-move. Press D, then right-click, and vehicles back up with their front armour toward the enemy. S or X halts. The orders strip sets the stance: Aggressive, Guard, Hold Ground or Hold Fire. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or W, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag. Select a barracks, factory, naval yard or airfield and right-click the map to pin its own rally point: new units roll out of its bay door and head there. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there. Q and E, the compass beside the minimap, Alt-drag or the middle mouse turn the camera all the way round. Home faces north again.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit. Every combat unit has two weapons: click a weapon slot on the unit card to switch, and a toggle unit's F switches with it.\n"
+"The column on the right trains units and raises buildings. A building click shows a ghost: click to place, drag to face its exit, R or the wheel turns it, right-click or Esc cancels. Naval structures only go on water. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+
+#: addons/rts_advanced/sm_guide.gd:6
+msgid "Left-click select. Shift-click adds. Double-click or W selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. A attack-move, D reverse, S or X halt. Q/E or the compass turn the camera, Home faces north. Select a factory and right-click to pin its rally point. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr "Left-click select. Shift-click adds. Double-click or W selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. A attack-move, D reverse, S or X halt. Q/E or the compass turn the camera, Home faces north. Select a factory and right-click to pin its rally point. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+
+#: addons/rts_advanced/sm_base_plan.gd:239
+msgid "naval structures go on water"
+msgstr "naval structures go on water"
+
+#: addons/rts_advanced/sm_base_plan.gd:241
+msgid "needs dry ground"
+msgstr "needs dry ground"
+
+#: addons/rts_advanced/sm_side.gd:128
+msgid "no ground under the cursor"
+msgstr "no ground under the cursor"
+
+#: addons/rts_advanced/sm_side.gd:364
+msgid "no open water in reach"
+msgstr "no open water in reach"
+
+#: addons/rts_advanced/sm_placement.gd:159
+msgid "no side"
+msgstr "no side"
+
+#: addons/rts_advanced/sm_base_plan.gd:221
+msgid "off the map"
+msgstr "off the map"
+
+#: addons/rts_advanced/sm_touch.gd:137
+msgid "Only vehicles and boats reverse"
+msgstr "Only vehicles and boats reverse"
+
+#: addons/rts_advanced/sm_hud.gd:691
+msgid "only vehicles and boats reverse"
+msgstr "only vehicles and boats reverse"
+
+#: addons/rts_advanced/sm_base_plan.gd:224
+msgid "outside the build radius"
+msgstr "outside the build radius"
+
+#: addons/rts_advanced/sm_hud.gd:283
+msgid "Pack & Redeploy"
+msgstr "Pack & Redeploy"
+
+#: addons/rts_advanced/sm_side.gd:188
+msgid "packer redeployed"
+msgstr "packer redeployed"
+
+#: addons/rts_advanced/sm_hud.gd:831
+msgid "place %s: click a spot, drag to face the exit, R turns"
+msgstr "place %s: click a spot, drag to face the exit, R turns"
+
+#: addons/rts_advanced/sm_hud.gd:713
+msgid "placement cancelled"
+msgstr "placement cancelled"
+
+#: addons/rts_advanced/sm_hud.gd:274
+msgid "Primary"
+msgstr "Primary"
+
+#: addons/rts_advanced/sm_pointer.gd:738
+msgid "Rally point set"
+msgstr "Rally point set"
+
+#: addons/rts_advanced/sm_hud.gd:707
+msgid "redeploy: click to place, drag to face, R turns"
+msgstr "redeploy: click to place, drag to face, R turns"
+
+#: addons/rts_advanced/sm_compass.gd:18
+msgid "Reset to north (Home)"
+msgstr "Reset to north (Home)"
+
+#: addons/rts_advanced/sm_hud.gd:651
+msgid "Reverse"
+msgstr "Reverse"
+
+#: addons/rts_advanced/sm_hud.gd:651
+msgid "Reverse move. Press D, then right-click: vehicles back up with their front armor toward the enemy."
+msgstr "Reverse move. Press D, then right-click: vehicles back up with their front armor toward the enemy."
+
+#: addons/rts_advanced/sm_touch.gd:142
+msgid "Reverse: right-click where to back up"
+msgstr "Reverse: right-click where to back up"
+
+#: addons/rts_advanced/sm_hud.gd:696
+msgid "reverse: right-click where to back up"
+msgstr "reverse: right-click where to back up"
+
+#: addons/rts_advanced/sm_hud.gd:286
+msgid "Right-click the map to pin this building's rally point"
+msgstr "Right-click the map to pin this building's rally point"
+
+#: addons/rts_advanced/sm_compass.gd:13
+msgid "Rotate the camera left (Q)"
+msgstr "Rotate the camera left (Q)"
+
+#: addons/rts_advanced/sm_compass.gd:21
+msgid "Rotate the camera right (E)"
+msgstr "Rotate the camera right (E)"
+
+#: addons/rts_advanced/sm_hud.gd:275
+msgid "Secondary"
+msgstr "Secondary"
+
+#: addons/rts_advanced/sm_hud.gd:650
+msgid "Stop (S or X)."
+msgstr "Stop (S or X)."
+
+#: addons/rts_advanced/sm_base_plan.gd:156
+msgid "the bay must face open water"
+msgstr "the bay must face open water"
+
+#: addons/rts_advanced/sm_base_plan.gd:156
+msgid "the exit is blocked"
+msgstr "the exit is blocked"
+
+#: addons/rts_advanced/sm_base_plan.gd:236
+msgid "the ground is taken"
+msgstr "the ground is taken"
+
+#: addons/rts_advanced/sm_hud.gd:702
+msgid "the yard cannot pack up"
+msgstr "the yard cannot pack up"
+
+#: addons/rts_advanced/sm_base_plan.gd:228
+msgid "too close to another building"
+msgstr "too close to another building"
+
+#: addons/rts_advanced/sm_side.gd:221
+msgid "too far for the yard to drive"
+msgstr "too far for the yard to drive"

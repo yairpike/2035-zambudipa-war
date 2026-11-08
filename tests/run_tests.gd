@@ -117,6 +117,10 @@ func _run() -> void:
 	await H.section("test_game_language", test_game_language)
 	await H.section("test_render_budget", test_render_budget)
 	await H.section("test_web_budget", test_web_budget)
+	await H.section("test_ra3_placement", test_ra3_placement)
+	await H.section("test_ra3_camera", test_ra3_camera)
+	await H.section("test_ra3_factory", test_ra3_factory)
+	await H.section("test_ra3_weapons", test_ra3_weapons)
 	preload("res://game/render_budget.gd").shutdown(self)
 	quit(H.finish())
 
@@ -2281,10 +2285,13 @@ func test_sm_hud() -> void:
 	var turbine: Button = burma.find_child("Build_tidal_turbine", true, false) as Button
 	var air: Button = burma.find_child("Build_airfield", true, false) as Button
 	var naval: Button = burma.find_child("Build_naval_yard", true, false) as Button
-	turbine.pressed.emit()
-	air.pressed.emit()
-	naval.pressed.emit()
-	check(nmrf_side.yard.finished.has(&"tidal_turbine") and nmrf_side.yard.finished.has(&"airfield") and nmrf_side.yard.finished.has(&"naval_yard"), "later buildings annex beside the unpacked core")
+	for annex: Button in [turbine, air, naval]:
+		annex.pressed.emit()
+		check(nmrf_side.placement.active, "%s opens the placement ghost instead of dropping the building" % annex.name)
+		annex.pressed.emit()
+	check(nmrf_side.yard.finished.has(&"tidal_turbine") and nmrf_side.yard.finished.has(&"airfield"), "later buildings annex beside the unpacked core")
+	check(not nmrf_side.yard.finished.has(&"naval_yard") and nmrf_side.placement.active and nmrf_side.placement.reason != "", "burma road has no water, so the naval yard ghost refuses to land on dry ground")
+	nmrf_side.placement.cancel()
 	burma.free()
 	SMFront.faction_id = "mvd"
 	var atoll: Node = (load("res://game/ten_degree_atolls.tscn") as PackedScene).instantiate()
@@ -7024,3 +7031,508 @@ func test_web_budget() -> void:
 	check(waits == 1 and hits[0] == 1 and backdrop.tree_entered.get_connections().is_empty(), "an orphaned menu backdrop waits for the tree once instead of re-deferring every flush")
 	backdrop.queue_free()
 	host.free()
+
+func _ra3_scene(faction: String, path: String) -> Node:
+	SMFront.faction_id = faction
+	var scene: Node = (load(path) as PackedScene).instantiate()
+	root.add_child(scene)
+	current_scene = scene
+	await process_frame
+	return scene
+
+func _ra3_done(scene: Node) -> void:
+	current_scene = null
+	scene.free()
+	await process_frame
+
+func _ra3_key(code: Key, shift: bool = false) -> void:
+	var touch: Node = root.get_node_or_null("SMTouch")
+	var key: InputEventKey = InputEventKey.new()
+	key.pressed = true
+	key.keycode = code
+	key.physical_keycode = code
+	key.shift_pressed = shift
+	if touch != null:
+		touch._unhandled_input(key)
+
+func _ra3_click(field: SMPointer, cam: RTSCamera, at: Vector3, pressed: bool) -> bool:
+	var mb: InputEventMouseButton = InputEventMouseButton.new()
+	mb.button_index = MOUSE_BUTTON_LEFT
+	mb.pressed = pressed
+	mb.position = cam.unproject_position(at)
+	return field.handle_button(mb)
+
+func _ra3_hover(field: SMPointer, cam: RTSCamera, at: Vector3) -> void:
+	var motion: InputEventMouseMotion = InputEventMouseMotion.new()
+	motion.position = cam.unproject_position(at)
+	field.handle_motion(motion)
+
+## A cell centre where `id` fits facing some quarter, searched outward from `from`. Returns [pos, yaw] or [].
+func _ra3_fit(side: SMSide, id: StringName, from: Vector3, reach: int) -> Array:
+	var grid: SMDomainGrid = side.plan.grid
+	var c0: Vector2i = grid.cell_at(from)
+	for r: int in range(0, reach):
+		for y: int in range(c0.y - r, c0.y + r + 1):
+			for x: int in range(c0.x - r, c0.x + r + 1):
+				if maxi(absi(x - c0.x), absi(y - c0.y)) != r:
+					continue
+				var at: Vector3 = grid.cell_center(Vector2i(x, y))
+				for q: int in 4:
+					if side.placement_reason(id, at, float(q) * 90.0) == "":
+						return [at, float(q) * 90.0]
+	return []
+
+func _ra3_all_cells(grid: SMDomainGrid, rect: Rect2i, water: bool) -> bool:
+	for y: int in range(rect.position.y, rect.end.y):
+		for x: int in range(rect.position.x, rect.end.x):
+			var d: int = grid.domain_at_cell(Vector2i(x, y))
+			if SMBasePlan.is_water(d) != water:
+				return false
+	return true
+
+func test_ra3_placement() -> void:
+	var scene: Node = await _ra3_scene("gtfc", "res://game/phillips_channel.tscn")
+	var side: SMSide = scene.get("side") as SMSide
+	var field: SMPointer = scene.get("field") as SMPointer
+	var cam: RTSCamera = scene.get_node_or_null("Camera") as RTSCamera
+	var placing: SMPlacement = side.placement
+	check(not side.needs_spot(&"scaffold_yard"), "the first construction yard deploys where it stands")
+	(scene.find_child("Build_scaffold_yard", true, false) as Button).pressed.emit()
+	check(side.yard.finished.has(&"scaffold_yard") and not placing.active, "a yard click deploys it without a ghost")
+	for id: String in ["salween_hydro", "slag_refinery"]:
+		side.order_building(StringName(id))
+	var barracks: Button = scene.find_child("Build_barracks", true, false) as Button
+	barracks.pressed.emit()
+	var ghost: Node3D = scene.get_node_or_null("PlacementGhost") as Node3D
+	check(placing.active and placing.id == &"barracks" and not side.yard.finished.has(&"barracks"), "a building click opens a placement ghost instead of dropping the building")
+	var tiles: MultiMeshInstance3D = ghost.get_node_or_null("GhostCells") as MultiMeshInstance3D if ghost != null else null
+	check(ghost != null and ghost.get_node_or_null("GhostBody") != null and ghost.get_node_or_null("GhostArrow") != null and tiles != null and tiles.multimesh.instance_count == placing.cells().size() and placing.exit_cells().size() >= 2, "the ghost shows the building, its footprint grid, its exit cells and a front arrow")
+	_ra3_hover(field, cam, side.yard.center + Vector3(SMBasePlan.cell_m() * 4.0, 0.0, SMBasePlan.cell_m() * 2.0))
+	check(placing.cursor.distance_to(side.yard.center + Vector3(SMBasePlan.cell_m() * 4.0, 0.0, SMBasePlan.cell_m() * 2.0)) < 0.6, "the ghost follows the cursor across the ground")
+	var y0: float = placing.yaw
+	_ra3_key(KEY_R)
+	var y1: float = placing.yaw
+	check(is_equal_approx(fposmod(y0 - y1, 360.0), 90.0), "R turns the ghost a quarter")
+	var wheel: InputEventMouseButton = InputEventMouseButton.new()
+	wheel.button_index = MOUSE_BUTTON_WHEEL_UP
+	wheel.pressed = true
+	check(field.handle_button(wheel) and is_equal_approx(fposmod(y1 - placing.yaw, 360.0), 90.0), "the mouse wheel turns the ghost while placing")
+	var arrow: Node3D = ghost.get_node_or_null("GhostArrow") as Node3D
+	var arrow_dir: Vector3 = arrow.global_basis.z if arrow != null else Vector3.ZERO
+	check(arrow != null and arrow_dir.dot(placing.front()) > 0.95, "the exit arrow points out of the front bay")
+	var fit: Array = _ra3_fit(side, &"barracks", side.yard.center + Vector3(SMBasePlan.cell_m() * 3.0, 0.0, 0.0), 10)
+	check(not fit.is_empty(), "phillips has a barracks plot in reach")
+	if not fit.is_empty():
+		var at: Vector3 = fit[0]
+		var east: Vector3 = at + Vector3(6.0, 0.0, 0.0)
+		var north: Vector3 = at + Vector3(0.0, 0.0, -6.0)
+		_ra3_hover(field, cam, at)
+		check(_ra3_click(field, cam, at, true) and placing.pressed, "pressing on a cell anchors the ghost there")
+		_ra3_hover(field, cam, east)
+		check(placing.dragged and is_equal_approx(placing.yaw, 90.0) and placing.front().x > 0.99, "dragging east faces the exit east")
+		_ra3_hover(field, cam, north)
+		var want: float = placing.yaw
+		check(is_equal_approx(want, 180.0) and placing.front().z < -0.99, "dragging north turns the exit north")
+		var ok_north: bool = side.placement_reason(&"barracks", at, 180.0) == ""
+		var aim: Vector3 = north if ok_north else at + SMBasePlan.front_dir(float(fit[1])) * 6.0
+		_ra3_click(field, cam, aim, false)
+		var faced: float = 180.0 if ok_north else float(fit[1])
+		var built: MeshInstance3D = scene.get_node_or_null("Built_barracks") as MeshInstance3D
+		check(side.yard.finished.has(&"barracks") and not placing.active and is_equal_approx(side.front_of(&"barracks"), faced), "releasing the drag places the barracks facing the drag")
+		check(built != null and side.yard.position_of(&"barracks").distance_to(side.snap_spot(&"barracks", at, faced)) < 0.6 and is_equal_approx(fposmod(built.rotation_degrees.y, 360.0), SMMapPlan.turn_for("barracks", faced)) and scene.get_node_or_null("PlacementGhost") == null, "the barracks stands on the chosen cell, its facade turned to the exit, and the ghost clears")
+	side.order_building(&"war_factory")
+	var naval: Button = scene.find_child("Build_naval_yard", true, false) as Button
+	naval.pressed.emit()
+	check(placing.active and placing.id == &"naval_yard" and SMBasePlan.must_float("naval", false), "a naval yard click opens the ghost")
+	var grid: SMDomainGrid = side.plan.grid
+	var dry: Vector3 = Vector3.INF
+	var c0: Vector2i = grid.cell_at(side.yard.center)
+	for y: int in range(c0.y - 8, c0.y + 9):
+		for x: int in range(c0.x - 8, c0.x + 9):
+			var probe: Vector3 = grid.cell_center(Vector2i(x, y))
+			if dry == Vector3.INF and _ra3_all_cells(grid, side.plan.rect_at(probe, side.footprint_at(&"naval_yard", 0.0)), false) and side.placement_reason(&"barracks", probe, 0.0) != "too close to another building" and side.placement_reason(&"naval_yard", probe, 0.0) == "naval structures go on water":
+				dry = probe
+	check(dry != Vector3.INF, "a naval yard refuses dry land")
+	placing.hover(dry)
+	check(placing.confirm() == "naval structures go on water" and placing.active and not side.yard.finished.has(&"naval_yard"), "confirming on land keeps the ghost up and builds nothing")
+	var wet: Array = _ra3_fit(side, &"naval_yard", side.yard.center, 30)
+	check(not wet.is_empty(), "a naval yard finds open water inside the extended naval reach")
+	if not wet.is_empty():
+		var sea: Vector3 = wet[0]
+		placing.hover(sea)
+		placing.face(float(wet[1]))
+		naval.pressed.emit()
+		var rect: Rect2i = side.plan.plots.get(&"naval_yard", Rect2i()) as Rect2i
+		check(side.yard.finished.has(&"naval_yard") and _ra3_all_cells(grid, rect, true), "the naval yard stands on water cells only")
+		var exits: Array[Vector2i] = side.plan.exit_cells(rect, side.front_of(&"naval_yard"), true)
+		var all_wet: bool = not exits.is_empty()
+		for c: Vector2i in exits:
+			all_wet = all_wet and SMBasePlan.is_water(grid.domain_at_cell(c)) and not field.nav_naval.is_blocked(c)
+		check(all_wet, "its exit bay opens onto navigable water")
+		var boat: RTSUnit = field.produce(SMPointer.PLAYER, &"emerald_gunboat", side.yard.center)
+		var boat_cell: Vector2i = field.nav_naval.cell_at(boat.global_position)
+		check(boat != null and side.bays.rolling(boat) and not field.nav_naval.is_blocked(boat_cell), "a boat spawns inside the naval bay on water")
+		for i: int in 10:
+			side.bays.tick(0.2)
+		var out_at: Vector3 = boat.global_position
+		check(not side.bays.rolling(boat) and not field.nav_naval.is_blocked(field.nav_naval.cell_at(out_at)), "the boat rolls out onto open water")
+		var goal: Vector3 = field.water_spot(out_at + SMBasePlan.front_dir(side.front_of(&"naval_yard")) * 10.0)
+		boat.set_path(field.nav_naval.find_path(boat.global_position, goal))
+		for i: int in 20:
+			field.tick(0.1)
+		check(boat.global_position.distance_to(out_at) > 1.0 and not field.nav_naval.is_blocked(field.nav_naval.cell_at(boat.global_position)), "the boat sails away on water")
+	var land_spawn: Vector3 = side.yard.center
+	var snapped: RTSUnit = field.spawn(SMPointer.PLAYER, land_spawn, &"emerald_gunboat")
+	check(not field.nav_naval.is_blocked(field.nav_naval.cell_at(snapped.global_position)), "a boat spawned on land snaps to the nearest navigable water")
+	var helper: SMBasePlan = SMBasePlan.new()
+	helper.grid = grid
+	helper.center = side.yard.center
+	helper.radius = side.yard.radius
+	var auto: Vector3 = helper.plot(&"naval_yard", "naval", true)
+	var auto_rect: Rect2i = helper.plots.get(&"naval_yard", Rect2i()) as Rect2i
+	check(auto != Vector3.INF and _ra3_all_cells(grid, auto_rect, true) and helper.exit_open(auto_rect, helper.yaw_of(&"naval_yard"), true), "the AI plot helper puts a naval yard on water with an open water exit")
+	var landlocked: SMDomainGrid = SMDomainGrid.new(24, 24, 4.0, Vector3(-48.0, 0.0, -48.0))
+	var dry_plan: SMBasePlan = SMBasePlan.new()
+	dry_plan.grid = landlocked
+	dry_plan.center = Vector3.ZERO
+	dry_plan.radius = 30.0
+	check(dry_plan.plot(&"naval_yard", "naval", true) == Vector3.INF, "with no water in reach the helper refuses a naval yard instead of dropping it on land")
+	await _ra3_done(scene)
+	var hub_scene: Node = await _ra3_scene("mvd", "res://game/ten_degree_atolls.tscn")
+	var mvd: SMSide = hub_scene.get("side") as SMSide
+	(hub_scene.find_child("Build_command_hub", true, false) as Button).pressed.emit()
+	check(mvd.yard.finished.has(&"command_hub") and not mvd.placement.active, "the MVD hub deploys in place")
+	var redeploy: Button = hub_scene.find_child("RedeployButton", true, false) as Button
+	var hud: SMHud = hub_scene.get("hud") as SMHud
+	check(redeploy != null and mvd.can_redeploy(), "the command hub can pack up and redeploy")
+	hud.start_redeploy()
+	check(mvd.placement.active and mvd.placement.redeploy and hub_scene.get_node_or_null("PlacementGhost") != null, "pack and redeploy opens the same ghost")
+	var hop: Array = []
+	var start_at: Vector3 = mvd.yard.center
+	for r: int in range(2, 9):
+		for q: int in 4:
+			var cand: Vector3 = start_at + SMBasePlan.front_dir(float(q) * 90.0) * SMBasePlan.cell_m() * float(r)
+			if hop.is_empty() and mvd.placement_reason(&"command_hub", cand, 90.0) == "":
+				hop = [cand]
+	check(not hop.is_empty(), "the hub finds a redeploy spot")
+	if not hop.is_empty():
+		mvd.placement.hover(hop[0])
+		mvd.placement.face(90.0)
+		check(mvd.placement.confirm() == "redeployed" and mvd.yard.center.distance_to(mvd.snap_spot(&"command_hub", hop[0], 90.0)) < 0.6 and is_equal_approx(mvd.front_of(&"command_hub"), 90.0), "the hub redeploys to the chosen spot and facing")
+	await _ra3_done(hub_scene)
+	var nmrf_scene: Node = await _ra3_scene("nmrf", "res://game/burma_road.tscn")
+	var nmrf: SMSide = nmrf_scene.get("side") as SMSide
+	(nmrf_scene.find_child("MovePacker", true, false) as Button).pressed.emit()
+	check(nmrf.can_redeploy() and nmrf.yard.style == SMBuildYard.Style.MOBILE, "the packed NMRF core can redeploy")
+	(nmrf_scene.get("hud") as SMHud).start_redeploy()
+	var core_hop: Array = _ra3_fit(nmrf, &"packer", nmrf.yard.packer_pos + Vector3(SMBasePlan.cell_m() * 3.0, 0.0, 0.0), 8)
+	if not core_hop.is_empty():
+		nmrf.placement.hover(core_hop[0])
+		nmrf.placement.face(float(core_hop[1]))
+	check(nmrf.placement.active and nmrf.placement.redeploy and not core_hop.is_empty() and nmrf.placement.confirm() == "redeployed", "the NMRF core redeploys through the ghost")
+	(nmrf_scene.find_child("Build_gun_wharf", true, false) as Button).pressed.emit()
+	var annex: Button = nmrf_scene.find_child("Build_tidal_turbine", true, false) as Button
+	annex.pressed.emit()
+	check(nmrf.placement.active and nmrf.placement.id == &"tidal_turbine", "NMRF annexes go through the ghost")
+	nmrf.placement.cancel()
+	check(not nmrf.placement.active and not nmrf.yard.finished.has(&"tidal_turbine") and nmrf_scene.get_node_or_null("PlacementGhost") == null, "cancelling the ghost builds nothing and clears it")
+	await _ra3_done(nmrf_scene)
+	SMFront.faction_id = "gtfc"
+	await process_frame
+
+func test_ra3_camera() -> void:
+	var scene: Node = await _ra3_scene("gtfc", "res://game/phillips_channel.tscn")
+	var cam: RTSCamera = scene.get_node_or_null("Camera") as RTSCamera
+	var rig: SMCamRig = SMCamRig.of(cam)
+	check(cam != null and rig != null and SMCamRig.of(cam) == rig, "the camera keeps one orbit rig")
+	cam.focus_on(Vector3(cam.bounds.get_center().x, 0.0, cam.bounds.get_center().y))
+	var y0: float = cam.yaw_degrees
+	_ra3_key(KEY_E)
+	check(is_equal_approx(rig.target_yaw, y0 + 45.0) and is_equal_approx(cam.yaw_degrees, y0), "E sets an eased turn instead of jumping")
+	rig.step(0.05)
+	var mid: float = cam.yaw_degrees
+	check(mid > y0 + 1.0 and mid < y0 + 44.0, "the turn eases over several frames")
+	for i: int in 60:
+		rig.step(0.05)
+	check(rig.settled() and is_equal_approx(cam.yaw_degrees, y0 + 45.0), "the turn settles on the target")
+	_ra3_key(KEY_Q)
+	rig.snap()
+	_ra3_key(KEY_BRACKETRIGHT)
+	rig.snap()
+	_ra3_key(KEY_BRACKETLEFT)
+	rig.snap()
+	check(is_equal_approx(cam.yaw_degrees, y0), "Q and [ turn back the other way")
+	var picked_ok: bool = true
+	var pan_ok: bool = true
+	var seen: Dictionary = {}
+	var vp: Vector2 = scene.get_viewport().get_visible_rect().size
+	for i: int in 8:
+		rig.turn(SMCamRig.TURN_STEP)
+		rig.snap()
+		seen[int(roundf(rig.heading())) % 360] = true
+		var center: Vector3 = cam.ground_at(vp * 0.5)
+		picked_ok = picked_ok and center != Vector3.INF and Vector2(center.x - cam.focus.x, center.z - cam.focus.z).length() < 1.0
+		var before: Vector3 = cam.focus
+		rig.pan_keys(Vector2(0.0, 1.0), 0.05)
+		var moved: Vector3 = cam.focus - before
+		var fwd: Vector3 = -cam.global_basis.z
+		fwd.y = 0.0
+		pan_ok = pan_ok and moved.length() > 0.01 and moved.normalized().dot(fwd.normalized()) > 0.98
+		cam.focus_on(before)
+	check(seen.size() == 8 and is_equal_approx(fposmod(cam.yaw_degrees - y0, 360.0), 0.0), "eight 45-degree turns go all the way round")
+	check(picked_ok, "ground picking under the screen centre hits the focus at every heading")
+	check(pan_ok, "forward pan follows the camera's view at every heading")
+	rig.turn(135.0)
+	rig.snap()
+	var before_right: Vector3 = cam.focus
+	rig.pan_keys(Vector2(1.0, 0.0), 0.05)
+	var right_move: Vector3 = cam.focus - before_right
+	var right: Vector3 = cam.global_basis.x
+	check(right_move.normalized().dot(Vector3(right.x, 0.0, right.z).normalized()) > 0.98, "right pan follows the camera's right at 135 degrees")
+	var keys: Node = root.get_node_or_null("SMTouch")
+	check(keys != null and keys.call("key_pan", false) == Vector2.ZERO and float(keys.call("turn_dir", KEY_Q)) < 0.0 and float(keys.call("turn_dir", KEY_E)) > 0.0, "Q turns left and E turns right")
+	_ra3_key(KEY_HOME)
+	rig.snap()
+	check(is_equal_approx(fposmod(cam.yaw_degrees, 360.0), 0.0) and is_equal_approx(rig.heading(), 0.0), "Home resets the camera to north")
+	var touch: Node = root.get_node_or_null("SMTouch")
+	var alt_drag: InputEventMouseMotion = InputEventMouseMotion.new()
+	alt_drag.alt_pressed = true
+	alt_drag.button_mask = MOUSE_BUTTON_MASK_LEFT
+	alt_drag.relative = Vector2(80.0, -20.0)
+	var yaw_before: float = cam.yaw_degrees
+	var pitch_before: float = cam.pitch_near
+	touch._unhandled_input(alt_drag)
+	check(is_equal_approx(cam.yaw_degrees - yaw_before, 20.0) and cam.pitch_near > pitch_before, "Alt and left drag orbits the yaw and tilts the pitch")
+	var middle: InputEventMouseMotion = InputEventMouseMotion.new()
+	middle.button_mask = MOUSE_BUTTON_MASK_MIDDLE
+	middle.relative = Vector2(-120.0, 0.0)
+	var yaw_mid: float = cam.yaw_degrees
+	scene._unhandled_input(middle)
+	check(is_equal_approx(cam.yaw_degrees - yaw_mid, -30.0), "middle-mouse drag orbits the yaw")
+	rig.step(0.1)
+	check(is_equal_approx(cam.yaw_degrees, yaw_mid - 30.0), "the eased rig follows a mouse orbit instead of fighting it")
+	var spin_from: float = cam.yaw_degrees
+	for i: int in 30:
+		rig.drag(Vector2(48.0, 0.0))
+	check(is_equal_approx(cam.yaw_degrees - spin_from, 360.0), "a long drag spins the full 360 degrees")
+	var compass: Control = scene.find_child("CameraCompass", true, false) as Control
+	var left: Button = scene.find_child("CompassLeft", true, false) as Button
+	var right_b: Button = scene.find_child("CompassRight", true, false) as Button
+	var north: BaseButton = scene.find_child("CompassNorth", true, false) as BaseButton
+	check(compass != null and compass.visible and left != null and right_b != null and north != null and left.custom_minimum_size.y >= 40.0, "the HUD compass has rotate left, north and rotate right")
+	var t0: float = rig.target_yaw
+	right_b.pressed.emit()
+	check(is_equal_approx(rig.target_yaw - t0, SMCamRig.TURN_STEP), "the compass rotate-right button turns the camera")
+	left.pressed.emit()
+	left.pressed.emit()
+	check(is_equal_approx(rig.target_yaw - t0, -SMCamRig.TURN_STEP), "the compass rotate-left button turns it back")
+	north.pressed.emit()
+	rig.snap()
+	check(is_equal_approx(fposmod(cam.yaw_degrees, 360.0), 0.0), "clicking the compass dial resets north")
+	await _ra3_done(scene)
+
+func test_ra3_factory() -> void:
+	var scene: Node = await _ra3_scene("gtfc", "res://game/phillips_channel.tscn")
+	var side: SMSide = scene.get("side") as SMSide
+	var field: SMPointer = scene.get("field") as SMPointer
+	(scene.find_child("Build_scaffold_yard", true, false) as Button).pressed.emit()
+	for id: String in ["salween_hydro", "slag_refinery", "barracks", "war_factory"]:
+		side.order_building(StringName(id))
+	check(side.is_producer(&"barracks") and side.is_producer(&"war_factory") and side.producer_for("infantry") == &"barracks" and side.producer_for("vehicle") == &"war_factory", "barracks train infantry and the war factory builds vehicles")
+	var cues: Array[String] = []
+	side.bays.door_cue.connect(func(_b: StringName, kind: String) -> void: cues.append(kind))
+	var picked: StringName = field.pick_building(side.yard.position_of(&"barracks"))
+	var rally: Vector3 = side.exit_point(&"barracks") + SMBasePlan.front_dir(side.front_of(&"barracks")) * 14.0
+	check(picked == &"barracks" and field.selected_buildings.has(&"barracks"), "clicking the barracks selects it")
+	var right: InputEventMouseButton = InputEventMouseButton.new()
+	right.button_index = MOUSE_BUTTON_RIGHT
+	right.pressed = true
+	var cam: RTSCamera = scene.get_node_or_null("Camera") as RTSCamera
+	right.position = cam.unproject_position(rally)
+	field.handle_button(right)
+	var pinned: Vector3 = side.rally_for(&"barracks", Vector3.INF)
+	check(pinned != Vector3.INF and Vector2(pinned.x - rally.x, pinned.z - rally.z).length() < 0.8, "right-clicking with the barracks selected pins its rally point")
+	var flag: Node3D = scene.find_child("RallyFlag_barracks", true, false) as Node3D
+	var line: MultiMeshInstance3D = scene.find_child("RallyLine_barracks", true, false) as MultiMeshInstance3D
+	check(flag != null and Vector2(flag.position.x - pinned.x, flag.position.z - pinned.z).length() < 0.1 and line != null and int(line.get_meta("dashes", 0)) >= 4, "the rally shows a faction flag and a dashed line from the front exit")
+	var before_n: int = field.count_team(SMPointer.PLAYER)
+	(scene.find_child("Train_militia", true, false) as Button).pressed.emit()
+	check(field.count_team(SMPointer.PLAYER) == before_n + 1, "training adds the unit")
+	var trooper: RTSUnit = field.units[field.units.size() - 1]
+	var front: Vector3 = SMBasePlan.front_dir(side.front_of(&"barracks"))
+	var facing: Vector3 = -trooper.global_basis.z
+	var center: Vector3 = side.yard.position_of(&"barracks")
+	var inside: Vector3 = trooper.global_position - center
+	check(side.bays.rolling(trooper) and side.bays.phase_of(trooper) == "opening" and inside.dot(front) < side.half_depth(&"barracks") and Vector2(inside.x, inside.z).length() < side.half_depth(&"barracks") + 0.5, "the new unit waits inside the recessed bay, not beside the building")
+	check(facing.dot(front) > 0.95, "it faces out of the building's front")
+	check(cues.has("open") and is_equal_approx(side.bays.door_open(&"barracks"), 0.0), "the door starts to open with a mechanical cue")
+	side.bays.tick(0.2)
+	var bay: Node3D = scene.find_child("BayDoor", true, false) as Node3D
+	var panel: Node3D = bay.get_node_or_null("DoorPanel") as Node3D if bay != null else null
+	var half_open: float = side.bays.door_open(&"barracks")
+	check(half_open > 0.2 and half_open < 0.8 and bay != null and panel != null and panel.scale.y < 0.9, "the bay door rolls up on the barracks facade")
+	var built: Node3D = scene.get_node_or_null("Built_barracks") as Node3D
+	check(built != null and bay != null and bay.get_parent() == built and (bay.global_position - built.global_position).normalized().dot(front) > 0.9, "the door sits on the building's front")
+	check(trooper.global_position.distance_to(Vector3(side.bay_point(&"barracks").x, trooper.global_position.y, side.bay_point(&"barracks").z)) < 1.2, "the unit holds in the bay while the door opens")
+	side.bays.tick(0.3)
+	check(side.bays.phase_of(trooper) == "rolling" and is_equal_approx(side.bays.door_open(&"barracks"), 1.0), "the door is open and the unit rolls out")
+	var start_roll: Vector3 = trooper.global_position
+	side.bays.tick(0.35)
+	var mid_roll: Vector3 = trooper.global_position
+	check((mid_roll - start_roll).dot(front) > 0.3 and side.bays.rolling(trooper) and trooper.path.is_empty(), "it drives out through the doorway on its own")
+	side.bays.tick(0.4)
+	var exit: Vector3 = side.exit_point(&"barracks")
+	check(not side.bays.rolling(trooper) and side.bays.phase_of(trooper) == "closing" and Vector2(trooper.global_position.x - exit.x, trooper.global_position.z - exit.z).length() < 1.2, "it stops on the exit pad")
+	var path_end: Vector3 = trooper.path[trooper.path.size() - 1] if not trooper.path.is_empty() else Vector3.INF
+	var reachable: Vector3 = field.open_spot(trooper, pinned)
+	check(path_end != Vector3.INF and Vector2(path_end.x - reachable.x, path_end.z - reachable.z).length() < 2.5, "then it heads for the pinned rally point (or the open ground nearest it)")
+	side.bays.tick(0.5)
+	check(is_equal_approx(side.bays.door_open(&"barracks"), 0.0) and cues.has("close") and side.bays.phase_of(trooper) == "", "the door closes behind it")
+	var gap_before: float = trooper.global_position.distance_to(reachable)
+	for i: int in 15:
+		field.tick(0.1)
+	check(trooper.global_position.distance_to(reachable) < gap_before - 1.0, "the unit walks toward the rally point")
+	var first: RTSUnit = field.produce(SMPointer.PLAYER, &"amber_tank", center)
+	var second: RTSUnit = field.produce(SMPointer.PLAYER, &"amber_tank", center)
+	check(side.bays.phase_of(first) == "opening" and side.bays.phase_of(second) == "waiting", "the war factory rolls out one vehicle at a time")
+	var tank_front: Vector3 = SMBasePlan.front_dir(side.front_of(&"war_factory"))
+	check((-first.global_basis.z).dot(tank_front) > 0.95, "the tank waits in the factory bay facing out")
+	for i: int in 8:
+		side.bays.tick(0.2)
+	check(not side.bays.rolling(first) and side.bays.phase_of(second) != "waiting", "the second vehicle follows once the first is out")
+	for i: int in 12:
+		side.bays.tick(0.2)
+	check(not side.bays.rolling(second) and side.bays.runs.is_empty(), "both vehicles leave the bay")
+	field.clear_buildings()
+	check(scene.find_child("RallyFlag_barracks", true, false) == null, "the rally flag hides once the barracks is deselected")
+	await _ra3_done(scene)
+
+func _ra3_armed_rows(faction: String) -> Array:
+	var out: Array = [0, 0]
+	for row: Dictionary in SMCatalog.units_of(SMCatalog.faction(faction)):
+		out[1] = int(out[1]) + 1
+		if str(row.get("role", "")) == "core":
+			out[1] = int(out[1]) - 1
+			continue
+		var both: Dictionary = SMArms.profiles(row)
+		if both.is_empty():
+			continue
+		var p: Dictionary = both[SMArms.PRIMARY]
+		var s: Dictionary = both[SMArms.SECONDARY]
+		if str(p.get("name", "")) != "" and str(s.get("name", "")) != "" and str(p.get("name")) != str(s.get("name")) and float(p.get("range", 0.0)) > 0.0 and float(s.get("range", 0.0)) > 0.0 and not SMArms.targets(p).is_empty() and not SMArms.targets(s).is_empty():
+			out[0] = int(out[0]) + 1
+	return out
+
+func test_ra3_weapons() -> void:
+	for faction: String in ["gtfc", "nmrf", "mvd", "black_market"]:
+		var counts: Array = _ra3_armed_rows(faction)
+		check(int(counts[1]) > 0 and int(counts[0]) == int(counts[1]), "every %s combat unit has a distinct primary and secondary weapon" % faction)
+	var scene: Node = await _ra3_scene("gtfc", "res://game/phillips_channel.tscn")
+	var field: SMPointer = scene.get("field") as SMPointer
+	var hud: SMHud = scene.get("hud") as SMHud
+	var base: Vector3 = Vector3(0.0, 0.0, 0.0)
+	for f: RTSUnit in field.units_of(SMPointer.ENEMY):
+		f.global_position = Vector3(400.0, 0.0, 400.0)
+	var tanks: Dictionary = {"gtfc": &"amber_tank", "nmrf": &"mangrove_skiff", "mvd": &"cyan_ifv"}
+	for faction: String in tanks.keys():
+		var kind: StringName = tanks[faction]
+		var spot: Vector3 = field.open_spot(field.spawn(SMPointer.PLAYER, base, &"militia"), base)
+		var tank: RTSUnit = field.spawn(SMPointer.PLAYER, spot + Vector3(2.0, 0.0, 0.0), kind)
+		var dmg0: float = tank.attack_damage
+		var rng0: float = tank.attack_range
+		var sec: Dictionary = SMArms.profile(tank, SMArms.SECONDARY)
+		var pri: Dictionary = SMArms.profile(tank, SMArms.PRIMARY)
+		field.selection.clear()
+		field.selection.units.append(tank)
+		check(SMArms.armed(tank) and SMArms.slot_of(tank) == SMArms.PRIMARY and str(tank.get_meta("weapon_name", "")) == str(pri.get("name", "")), "%s %s starts on its primary weapon" % [faction, kind])
+		check(field.toggle_weapons() == 1 and SMArms.slot_of(tank) == SMArms.SECONDARY and str(tank.get_meta("weapon_name", "")) == str(sec.get("name", "")), "%s %s switches to its secondary weapon" % [faction, kind])
+		var want_dmg: float = dmg0 * float(sec.get("damage", 1.0)) / maxf(float(pri.get("damage", 1.0)), 0.001)
+		var want_rng: float = rng0 * float(sec.get("range", 1.0)) / maxf(float(pri.get("range", 1.0)), 0.001)
+		check(is_equal_approx(tank.attack_damage, want_dmg) and is_equal_approx(tank.attack_range, want_rng), "%s secondary swaps the damage and range profile" % faction)
+		field.tick(0.01)
+		var chevron: Label3D = tank.get_node_or_null("WeaponChevron") as Label3D
+		check(chevron != null and chevron.text == "II" and chevron.modulate.is_equal_approx(Color.html(str(sec.get("tint", "#FFD15A")))), "%s shows the secondary mode chevron in its muzzle colour" % faction)
+		field.toggle_weapons()
+		check(SMArms.slot_of(tank) == SMArms.PRIMARY and is_equal_approx(tank.attack_damage, dmg0) and is_equal_approx(tank.attack_range, rng0), "%s switching back restores the primary exactly" % faction)
+		var from: Vector3 = tank.global_position
+		var heading: Vector3 = -tank.global_basis.z
+		var back_to: Vector3 = field.open_spot(tank, from - heading * 10.0)
+		check(field.reverse_move_at(back_to) == 1 and bool(tank.get_meta("reverse", false)), "%s %s takes a reverse move order" % [faction, kind])
+		var moved_ok: bool = true
+		for i: int in 10:
+			var was: Vector3 = tank.global_position
+			field.tick(0.1)
+			var step: Vector3 = tank.global_position - was
+			step.y = 0.0
+			if step.length() > 0.01:
+				moved_ok = moved_ok and (-tank.global_basis.z).dot(step.normalized()) < -0.7
+		check(moved_ok and tank.global_position.distance_to(from) > 0.5, "%s backs up with its front armour still facing forward" % faction)
+		field.selection.clear()
+		tank.global_position = Vector3(-400.0, 0.0, -400.0)
+		tank.path = PackedVector3Array()
+	var infantry: RTSUnit = field.spawn(SMPointer.PLAYER, base, &"militia")
+	field.selection.clear()
+	field.selection.units.append(infantry)
+	check(field.reverse_move_at(base + Vector3(0.0, 0.0, 6.0)) == 0 and not field.selection_can_reverse(), "infantry do not reverse")
+	var tank2: RTSUnit = field.spawn(SMPointer.PLAYER, field.open_spot(infantry, base + Vector3(3.0, 0.0, 0.0)), &"amber_tank")
+	field.selection.clear()
+	field.selection.units.append(tank2)
+	_ra3_key(KEY_D)
+	check(field.reverse_armed and not field.attack_armed, "D arms a reverse move for vehicles")
+	_ra3_key(KEY_A)
+	check(field.attack_armed and not field.reverse_armed, "A arms an attack-move instead")
+	field.attack_armed = false
+	var f_cast: String = field.cast_f(tank2.global_position)
+	check(f_cast == "toggle" and SMArms.slot_of(tank2) == SMArms.SECONDARY, "F toggles the group mode and its secondary weapon")
+	field.cast_f(tank2.global_position)
+	check(SMArms.slot_of(tank2) == SMArms.PRIMARY, "F again returns to the primary weapon")
+	hud.refresh()
+	var w1: Button = scene.find_child("WeaponPrimary", true, false) as Button
+	var w2: Button = scene.find_child("WeaponSecondary", true, false) as Button
+	check(w1 != null and w2 != null and w1.is_visible_in_tree() and w2.is_visible_in_tree() and w1.text.contains(str(SMArms.profile(tank2, SMArms.PRIMARY).get("name", ""))) and w2.text.contains(str(SMArms.profile(tank2, SMArms.SECONDARY).get("name", ""))), "the unit card shows both weapon slots")
+	check(bool(w1.get_meta("active", false)) and not bool(w2.get_meta("active", false)) and w2.tooltip_text.contains("rng") and w2.tooltip_text.contains("dmg"), "the live slot is highlighted and each slot has a range and damage tooltip")
+	var badge: Label = w2.get_node_or_null("KeyChip") as Label
+	check(badge != null and badge.text == "F", "the secondary slot carries the F hotkey badge")
+	w2.pressed.emit()
+	hud.refresh()
+	check(SMArms.slot_of(tank2) == SMArms.SECONDARY and bool(w2.get_meta("active", false)), "clicking the secondary slot switches to it")
+	w1.pressed.emit()
+	check(SMArms.slot_of(tank2) == SMArms.PRIMARY, "clicking the primary slot switches back")
+	var air_kind: StringName = &""
+	var gun_kind: StringName = &""
+	for faction: String in ["gtfc", "nmrf", "mvd"]:
+		for row: Dictionary in SMCatalog.units_of(SMCatalog.faction(faction)):
+			var both: Dictionary = SMArms.profiles(row)
+			if both.is_empty():
+				continue
+			if gun_kind == &"" and not SMArms.can_hit(both[SMArms.PRIMARY], "aircraft") and SMArms.can_hit(both[SMArms.SECONDARY], "aircraft"):
+				gun_kind = StringName(str(row["id"]))
+			if air_kind == &"" and str(row.get("locomotion", "")) == "air":
+				air_kind = StringName(str(row["id"]))
+	check(gun_kind != &"" and air_kind != &"", "some units carry a secondary that reaches aircraft")
+	if gun_kind != &"" and air_kind != &"":
+		var gunner: RTSUnit = field.spawn(SMPointer.PLAYER, field.open_spot(infantry, base + Vector3(-3.0, 0.0, 0.0)), gun_kind)
+		var flier: RTSUnit = field.spawn(SMPointer.ENEMY, base + Vector3(-3.0, 0.0, 4.0), air_kind)
+		gunner.attack_target = flier
+		field.tick(0.01)
+		check(SMArms.slot_of(gunner) == SMArms.SECONDARY, "a unit switches to the weapon that can hit an aircraft target")
+	for name: String in ["StanceAggressive", "StanceGuard", "StanceGround", "StanceHold"]:
+		check(scene.find_child(name, true, false) is Button, "the orders strip has %s" % name)
+	field.selection.clear()
+	field.selection.units.append(tank2)
+	(scene.find_child("StanceGround", true, false) as Button).pressed.emit()
+	check(str(tank2.get_meta("stance", "")) == "hold_ground" and field.stance_of_selection() == "hold_ground", "Hold Ground sets the stance")
+	var foe: RTSUnit = field.spawn(SMPointer.ENEMY, tank2.global_position + Vector3(tank2.attack_range + 6.0, 0.0, 0.0), &"militia")
+	var hold_at: Vector3 = tank2.global_position
+	tank2.attack_target = foe
+	for i: int in 10:
+		field.tick(0.1)
+	check(Vector2(tank2.global_position.x - hold_at.x, tank2.global_position.z - hold_at.z).length() < 0.3, "Hold Ground fires from where it stands and never chases")
+	foe.global_position = tank2.global_position + Vector3(2.0, 0.0, 0.0)
+	tank2.attack_target = null
+	(scene.find_child("StanceHold", true, false) as Button).pressed.emit()
+	field._return_fire(tank2)
+	check(tank2.attack_target == null and str(tank2.get_meta("stance", "")) == "hold", "Hold Fire never acquires a target")
+	(scene.find_child("StanceAggressive", true, false) as Button).pressed.emit()
+	check(str(tank2.get_meta("stance", "")) == "aggressive", "Aggressive restores the default stance")
+	await _ra3_done(scene)

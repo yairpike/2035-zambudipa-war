@@ -212,9 +212,6 @@ msgstr "gerak serang"
 msgid "Attack-move"
 msgstr "Gerak serang"
 
-msgid "Attack-move ahead of the lead unit."
-msgstr "Gerak serang mendahului unit utama."
-
 msgid "AUDIO"
 msgstr "AUDIO"
 
@@ -992,9 +989,6 @@ msgstr "Kereta kebal GTFC"
 msgid "Guard"
 msgstr "Kawal"
 
-msgid "Guard. Fire at enemies in range."
-msgstr "Kawal. Tembak musuh dalam jarak."
-
 msgid "Guide"
 msgstr "Panduan"
 
@@ -1061,9 +1055,6 @@ msgstr "Pensabotaj Tanah Tinggi"
 msgid "Highlight a row to read what it changes."
 msgstr "Serlahkan baris untuk membaca apa yang diubahnya."
 
-msgid "Hold"
-msgstr "Tahan"
-
 msgid "hold the blocks %ds"
 msgstr "pertahankan blok %ds"
 
@@ -1072,9 +1063,6 @@ msgstr "Pertahankan radar sepanjang jerebu. %d saat lagi."
 
 msgid "Hold the radar. The haze is the clock."
 msgstr "Pertahankan radar. Jerebu ialah jamnya."
-
-msgid "Hold. Do not acquire targets."
-msgstr "Tahan. Jangan cari sasaran."
 
 msgid "Holder"
 msgstr "Pemegang"
@@ -1282,38 +1270,6 @@ msgstr "Alur lintah aktif."
 
 msgid "Left click selects. Right click moves. F ability."
 msgstr "Klik kiri untuk memilih. Klik kanan untuk bergerak. F untuk kebolehan."
-
-msgid ""
-"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
-"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
-"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
-"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
-"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
-"Click the minimap to jump the camera there.\n"
-"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
-"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
-"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
-"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
-"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
-"P opens protocols. H opens this guide.\n"
-"The status line reads Objective complete when you win, and Objective failed if your company dies."
-msgstr ""
-"Klik kiri pada unit, atau seret kotak mengelilingi kompeni anda. Gelang jingga menunjukkan jarak senjata unit yang dipilih, dan gelang yang sama muncul apabila penuding berada di atas unit.\n"
-"Klik kanan tanah lapang untuk bergerak. Klik kanan musuh untuk menyerang. Satu gelang menandakan tempat itu, kemudian pudar.\n"
-"Tekan Q untuk serang-gerak ke arah kursor. Tekan X untuk berhenti. Ctrl dan 1 hingga 9 menyimpan kumpulan. Tekan nombor itu untuk memanggilnya semula, dan tekan sekali lagi untuk memusatkan kamera.\n"
-"Shift-klik menambah unit. Ctrl-klik menogol unit. Dwiklik, atau E, memilih setiap unit jenis itu. Z membariskan kompeni untuk gerakan seterusnya. Shift-klik kanan di tanah lapang menambah satu langkah lagi. R memacak bendera himpunan, dan unit baharu muncul di sebelahnya. Bar atas menunjukkan kredit yang diperoleh sesaat.\n"
-"Satu berlian berada pada langkah seterusnya unit pendahulu. Denyut nipis menandakan objektif semasa, dan peta mini membingkai tempat itu. Serangan yang kena memaparkan nombor terapung.\n"
-"Klik peta mini untuk melompatkan kamera ke situ.\n"
-"Tekan F, atau Kebolehan, untuk menggunakan kuasa unit yang dipilih. Lontaran pintar hanya menembak unit sedia yang paling hampir.\n"
-"Lajur di sebelah kanan melatih unit dan mendirikan bangunan. Berjalan ke atas pad berwarna untuk menuntutnya.\n"
-"Bot menyeberangi air dalam. Kereta kebal dan infantri kekal di darat, dan menggunakan arung cetek apabila ada yang terbuka.\n"
-"Lumpur monsun memperlahankan kereta kebal dan infantri. Jerebu Selat memendekkan penglihatan kecuali anda memiliki radar hidro. Di Mekong, klik kanan jambatan untuk meruntuhkannya dan membuka terusan. Bazar senjata yang ditawan menjual CH-4, Su-30, Orlan-10, dan Skuad FLH7, serta mencuri wang musuh.\n"
-"Kuasa rendah menghentikan pengeluaran baharu sehingga loji menampung penggunaan, dan melumpuhkan pertahanan. Batal membuang bangunan yang sedang dibina. Radar hidro menerangi koridor sungai. Klik kanan Kubu Kecil Sanga atau Multipenembak dengan infantri untuk mengisinya, kemudian klik bangunan siap itu untuk mengeluarkan mereka. Klik kedua pada Defender-VX yang siap menukar senapang darat dan udaranya.\n"
-"P membuka protokol. H membuka panduan ini.\n"
-"Baris status menunjukkan Objektif selesai apabila anda menang, dan Objektif gagal jika kompeni anda musnah."
-
-msgid "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
-msgstr "Klik kiri untuk pilih. Shift-klik menambah. Dwiklik atau E memilih jenis itu. Klik kanan tanah untuk bergerak, musuh untuk menyerang. Shift-klik kanan menambah titik laluan. Z membariskan kompeni. Q serang-gerak. X berhenti. R memindahkan bendera himpunan. Ctrl+1-9 menyimpan kumpulan, nombornya memanggil semula. Gelang menandakan arahan. Klik peta mini untuk melompat. F kebolehan. H panduan. P membuka protokol."
 
 msgid "Line"
 msgstr "Barisan"
@@ -2745,3 +2701,324 @@ msgstr "laman berdiri"
 
 msgid "Z    Formation"
 msgstr "Z    Formasi"
+
+msgid " (or press F)"
+msgstr ""
+
+msgid "%s  dmg %d  rng %d  %s"
+msgstr ""
+
+msgid "%s redeployed"
+msgstr ""
+
+msgid ""
+"%s weapon: %s\n"
+"Click to switch%s."
+msgstr ""
+
+msgid "Aggressive"
+msgstr ""
+
+msgid "Attack-move. Press A, then right-click a spot."
+msgstr ""
+
+msgid "Attack-move: right-click a spot"
+msgstr ""
+
+msgid "blocks a resource site"
+msgstr ""
+
+msgid "Click to place  ·  drag to face  ·  R turns"
+msgstr ""
+
+msgid "Hold Fire"
+msgstr ""
+
+msgid "Hold Ground"
+msgstr ""
+
+msgid "II"
+msgstr ""
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press A, then right-click, to attack-move. Press D, then right-click, and vehicles back up with their front armour toward the enemy. S or X halts. The orders strip sets the stance: Aggressive, Guard, Hold Ground or Hold Fire. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or W, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag. Select a barracks, factory, naval yard or airfield and right-click the map to pin its own rally point: new units roll out of its bay door and head there. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there. Q and E, the compass beside the minimap, Alt-drag or the middle mouse turn the camera all the way round. Home faces north again.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit. Every combat unit has two weapons: click a weapon slot on the unit card to switch, and a toggle unit's F switches with it.\n"
+"The column on the right trains units and raises buildings. A building click shows a ghost: click to place, drag to face its exit, R or the wheel turns it, right-click or Esc cancels. Naval structures only go on water. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+
+msgid "Left-click select. Shift-click adds. Double-click or W selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. A attack-move, D reverse, S or X halt. Q/E or the compass turn the camera, Home faces north. Select a factory and right-click to pin its rally point. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr ""
+
+msgid "naval structures go on water"
+msgstr ""
+
+msgid "needs dry ground"
+msgstr ""
+
+msgid "no ground under the cursor"
+msgstr ""
+
+msgid "no open water in reach"
+msgstr ""
+
+msgid "no side"
+msgstr ""
+
+msgid "off the map"
+msgstr ""
+
+msgid "Only vehicles and boats reverse"
+msgstr ""
+
+msgid "only vehicles and boats reverse"
+msgstr ""
+
+msgid "outside the build radius"
+msgstr ""
+
+msgid "Pack & Redeploy"
+msgstr ""
+
+msgid "packer redeployed"
+msgstr ""
+
+msgid "place %s: click a spot, drag to face the exit, R turns"
+msgstr ""
+
+msgid "placement cancelled"
+msgstr ""
+
+msgid "Primary"
+msgstr ""
+
+msgid "Rally point set"
+msgstr ""
+
+msgid "redeploy: click to place, drag to face, R turns"
+msgstr ""
+
+msgid "Reset to north (Home)"
+msgstr ""
+
+msgid "Reverse"
+msgstr ""
+
+msgid "Reverse move. Press D, then right-click: vehicles back up with their front armor toward the enemy."
+msgstr ""
+
+msgid "Reverse: right-click where to back up"
+msgstr ""
+
+msgid "reverse: right-click where to back up"
+msgstr ""
+
+msgid "Right-click the map to pin this building's rally point"
+msgstr ""
+
+msgid "Rotate the camera left (Q)"
+msgstr ""
+
+msgid "Rotate the camera right (E)"
+msgstr ""
+
+msgid "Secondary"
+msgstr ""
+
+msgid "Stop (S or X)."
+msgstr ""
+
+msgid "the bay must face open water"
+msgstr ""
+
+msgid "the exit is blocked"
+msgstr ""
+
+msgid "the ground is taken"
+msgstr ""
+
+msgid "the yard cannot pack up"
+msgstr ""
+
+msgid "too close to another building"
+msgstr ""
+
+msgid "too far for the yard to drive"
+msgstr ""
+
+msgid " (or press F)"
+msgstr " (atau tekan F)"
+
+msgid "%s  dmg %d  rng %d  %s"
+msgstr "%s  rosak %d  jarak %d  %s"
+
+msgid "%s redeployed"
+msgstr "%s dikerah semula"
+
+msgid ""
+"%s weapon: %s\n"
+"Click to switch%s."
+msgstr ""
+"Senjata %s: %s\n"
+"Klik untuk menukar%s."
+
+msgid "Aggressive"
+msgstr "Agresif"
+
+msgid "Attack-move. Press A, then right-click a spot."
+msgstr "Serang-gerak. Tekan A, kemudian klik kanan satu tempat."
+
+msgid "Attack-move: right-click a spot"
+msgstr "Serang-gerak: klik kanan satu tempat"
+
+msgid "blocks a resource site"
+msgstr "menghalang tapak sumber"
+
+msgid "Click to place  ·  drag to face  ·  R turns"
+msgstr "Klik untuk letak  ·  seret untuk arah  ·  R pusing"
+
+msgid "Hold Fire"
+msgstr "Jangan Tembak"
+
+msgid "Hold Ground"
+msgstr "Pertahan Kedudukan"
+
+msgid "II"
+msgstr "II"
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press A, then right-click, to attack-move. Press D, then right-click, and vehicles back up with their front armour toward the enemy. S or X halts. The orders strip sets the stance: Aggressive, Guard, Hold Ground or Hold Fire. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or W, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag. Select a barracks, factory, naval yard or airfield and right-click the map to pin its own rally point: new units roll out of its bay door and head there. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there. Q and E, the compass beside the minimap, Alt-drag or the middle mouse turn the camera all the way round. Home faces north again.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit. Every combat unit has two weapons: click a weapon slot on the unit card to switch, and a toggle unit's F switches with it.\n"
+"The column on the right trains units and raises buildings. A building click shows a ghost: click to place, drag to face its exit, R or the wheel turns it, right-click or Esc cancels. Naval structures only go on water. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+"Klik kiri pada unit, atau seret kotak mengelilingi kompeni anda. Gelang jingga menunjukkan jarak senjata unit yang dipilih, dan gelang yang sama muncul apabila penuding berada di atas unit.\n"
+"Klik kanan tanah lapang untuk bergerak. Klik kanan musuh untuk menyerang. Satu gelang menandakan tempat itu, kemudian pudar.\n"
+"Tekan A, kemudian klik kanan, untuk serang-gerak. Tekan D, kemudian klik kanan, dan kenderaan berundur dengan perisai hadapan menghadap musuh. S atau X berhenti. Jalur arahan menetapkan pendirian: Agresif, Kawal, Pertahan Kedudukan atau Jangan Tembak. Ctrl dan 1 hingga 9 menyimpan kumpulan. Tekan nombor itu untuk memanggilnya semula, dan tekan sekali lagi untuk memusatkan kamera.\n"
+"Shift-klik menambah unit. Ctrl-klik menogol unit. Dwiklik, atau W, memilih setiap unit jenis itu. Z membariskan kompeni untuk gerakan seterusnya. Shift-klik kanan di tanah lapang menambah satu langkah lagi. R memacak bendera himpunan. Pilih berek, kilang, limbungan atau lapangan terbang dan klik kanan peta untuk memacak titik himpunannya sendiri: unit baharu keluar melalui pintu teluknya dan menuju ke situ. Bar atas menunjukkan kredit yang diperoleh sesaat.\n"
+"Satu berlian berada pada langkah seterusnya unit pendahulu. Denyut nipis menandakan objektif semasa, dan peta mini membingkai tempat itu. Serangan yang kena memaparkan nombor terapung.\n"
+"Klik peta mini untuk melompatkan kamera ke situ. Q dan E, kompas di sebelah peta mini, seret dengan Alt atau tetikus tengah memusingkan kamera sepenuh pusingan. Home menghala semula ke utara.\n"
+"Tekan F, atau Kebolehan, untuk menggunakan kuasa unit yang dipilih. Lontaran pintar hanya menembak unit sedia yang paling hampir. Setiap unit tempur mempunyai dua senjata: klik slot senjata pada kad unit untuk menukar, dan F unit togol turut menukarnya.\n"
+"Lajur di sebelah kanan melatih unit dan mendirikan bangunan. Klik bangunan menunjukkan bayang: klik untuk letak, seret untuk menghalakan pintu keluar, R atau roda memusingkannya, klik kanan atau Esc membatalkan. Struktur tentera laut hanya di atas air. Berjalan ke atas pad berwarna untuk menuntutnya.\n"
+"Bot menyeberangi air dalam. Kereta kebal dan infantri kekal di darat, dan menggunakan arung cetek apabila ada yang terbuka.\n"
+"Lumpur monsun memperlahankan kereta kebal dan infantri. Jerebu Selat memendekkan penglihatan kecuali anda memiliki radar hidro. Di Mekong, klik kanan jambatan untuk meruntuhkannya dan membuka terusan. Bazar senjata yang ditawan menjual CH-4, Su-30, Orlan-10, dan Skuad FLH7, serta mencuri wang musuh.\n"
+"Kuasa rendah menghentikan pengeluaran baharu sehingga loji menampung penggunaan, dan melumpuhkan pertahanan. Batal membuang bangunan yang sedang dibina. Radar hidro menerangi koridor sungai. Klik kanan Kubu Kecil Sanga atau Multipenembak dengan infantri untuk mengisinya, kemudian klik bangunan siap itu untuk mengeluarkan mereka. Klik kedua pada Defender-VX yang siap menukar senapang darat dan udaranya.\n"
+"P membuka protokol. H membuka panduan ini.\n"
+"Baris status menunjukkan Objektif selesai apabila anda menang, dan Objektif gagal jika kompeni anda musnah."
+
+msgid "Left-click select. Shift-click adds. Double-click or W selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. A attack-move, D reverse, S or X halt. Q/E or the compass turn the camera, Home faces north. Select a factory and right-click to pin its rally point. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr "Klik kiri untuk pilih. Shift-klik menambah. Dwiklik atau W memilih jenis itu. Klik kanan tanah untuk bergerak, musuh untuk menyerang. Shift-klik kanan menambah titik laluan. Z membariskan kompeni. A serang-gerak, D undur, S atau X berhenti. Q/E atau kompas memusingkan kamera, Home menghala ke utara. Pilih kilang dan klik kanan untuk memacak titik himpunannya. Ctrl+1-9 menyimpan kumpulan, nombornya memanggil semula. Gelang menandakan arahan. Klik peta mini untuk melompat. F kebolehan. H panduan. P membuka protokol."
+
+msgid "naval structures go on water"
+msgstr "struktur tentera laut mesti di atas air"
+
+msgid "needs dry ground"
+msgstr "perlukan tanah kering"
+
+msgid "no ground under the cursor"
+msgstr "tiada tanah di bawah kursor"
+
+msgid "no open water in reach"
+msgstr "tiada air terbuka dalam jangkauan"
+
+msgid "no side"
+msgstr "tiada pihak"
+
+msgid "off the map"
+msgstr "di luar peta"
+
+msgid "Only vehicles and boats reverse"
+msgstr "Hanya kenderaan dan bot boleh berundur"
+
+msgid "only vehicles and boats reverse"
+msgstr "hanya kenderaan dan bot boleh berundur"
+
+msgid "outside the build radius"
+msgstr "di luar radius binaan"
+
+msgid "Pack & Redeploy"
+msgstr "Kemas & Kerah Semula"
+
+msgid "packer redeployed"
+msgstr "pangkalan dikerah semula"
+
+msgid "place %s: click a spot, drag to face the exit, R turns"
+msgstr "letak %s: klik satu tempat, seret untuk arah pintu keluar, R pusing"
+
+msgid "placement cancelled"
+msgstr "peletakan dibatalkan"
+
+msgid "Primary"
+msgstr "Utama"
+
+msgid "Rally point set"
+msgstr "Titik himpunan ditetapkan"
+
+msgid "redeploy: click to place, drag to face, R turns"
+msgstr "kerah semula: klik untuk letak, seret untuk arah, R pusing"
+
+msgid "Reset to north (Home)"
+msgstr "Set semula ke utara (Home)"
+
+msgid "Reverse"
+msgstr "Undur"
+
+msgid "Reverse move. Press D, then right-click: vehicles back up with their front armor toward the enemy."
+msgstr "Gerak undur. Tekan D, kemudian klik kanan: kenderaan berundur dengan perisai hadapan menghadap musuh."
+
+msgid "Reverse: right-click where to back up"
+msgstr "Undur: klik kanan tempat untuk berundur"
+
+msgid "reverse: right-click where to back up"
+msgstr "undur: klik kanan tempat untuk berundur"
+
+msgid "Right-click the map to pin this building's rally point"
+msgstr "Klik kanan peta untuk memacak titik himpunan bangunan ini"
+
+msgid "Rotate the camera left (Q)"
+msgstr "Pusing kamera ke kiri (Q)"
+
+msgid "Rotate the camera right (E)"
+msgstr "Pusing kamera ke kanan (E)"
+
+msgid "Secondary"
+msgstr "Sekunder"
+
+msgid "Stop (S or X)."
+msgstr "Berhenti (S atau X)."
+
+msgid "the bay must face open water"
+msgstr "pintu teluk mesti menghadap air terbuka"
+
+msgid "the exit is blocked"
+msgstr "pintu keluar terhalang"
+
+msgid "the ground is taken"
+msgstr "tanah sudah diambil"
+
+msgid "the yard cannot pack up"
+msgstr "pangkalan tidak boleh dikemas"
+
+msgid "too close to another building"
+msgstr "terlalu dekat dengan bangunan lain"
+
+msgid "too far for the yard to drive"
+msgstr "terlalu jauh untuk pangkalan dipandu"

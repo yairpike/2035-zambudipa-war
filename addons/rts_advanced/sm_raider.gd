@@ -372,6 +372,8 @@ func _raise() -> void:
 		if wrecked.has(id) or yard.finished.has(id) or not yard.can_build(id):
 			continue
 		var pos: Vector3 = _plot(id)
+		if pos == Vector3.INF:
+			continue
 		var hp: float = float(yard.structure_max.get(id, 220.0))
 		if yard.begin_scaffold(id, pos, hp):
 			raising = id
@@ -389,7 +391,8 @@ func _plot(id: StringName) -> Vector3:
 	plan.center = yard.center
 	plan.radius = yard.radius
 	var role: String = str(yard.building_role.get(id, ""))
-	return plan.plot(id, role, role == "naval" or bool(yard.water_marked.get(id, false)))
+	var marked: bool = bool(yard.water_marked.get(id, false))
+	return plan.plot(id, role, SMBasePlan.must_float(role, marked), marked)
 
 func _train() -> void:
 	if queue == null or field == null:

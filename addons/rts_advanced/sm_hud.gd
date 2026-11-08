@@ -91,11 +91,16 @@ var power_mark: ColorRect
 var repair_button: Button
 var sell_button: Button
 var sky: SMSight
+var orders_strip: PanelContainer
+var compass: SMCompass
+var camera_ref: RTSCamera
+var _shown_orders: String = ""
 
 func mount(layer: CanvasLayer, p_field: SMPointer, p_roster: SMRoster, p_side: SMSide, p_map: String, p_rally: Vector3, ability: Callable, grid: SMDomainGrid, camera: RTSCamera) -> void:
 	field = p_field
 	roster = p_roster
 	side = p_side
+	camera_ref = camera
 	map_name = p_map
 	rally = p_rally
 	on_ability = ability
@@ -163,6 +168,10 @@ func _finish_mount(layer: CanvasLayer) -> void:
 		field.on_bark = Callable(sfx, "bark")
 	layer_node = layer
 	layer.set_meta("hud", self)
+	_orders_strip(layer)
+	_mount_compass(layer)
+	if side != null and not side.placement.finished.is_connected(_placed):
+		side.placement.finished.connect(_placed)
 	if minimap != null and side != null:
 		minimap.yard = side.yard
 	if field != null:
@@ -228,6 +237,7 @@ func refresh() -> void:
 	_paint_tip()
 	_paint_radio()
 	_sync_card()
+	_paint_orders()
 	_paint_mission_fold()
 	if minimap != null:
 		var now: int = Time.get_ticks_msec()
@@ -237,6 +247,161 @@ func refresh() -> void:
 			minimap.queue_redraw()
 	if paint_extra.is_valid():
 		paint_extra.call(self)
+
+## Weapon slots, stances and building orders, in a strip above the unit card.
+func _orders_strip(layer: CanvasLayer) -> void:
+	if layer.find_child("OrdersStrip", true, false) != null:
+		return
+	orders_strip = PanelContainer.new()
+	orders_strip.name = "OrdersStrip"
+	orders_strip.visible = false
+	orders_strip.z_index = 9
+	var plate: StyleBoxFlat = StyleBoxFlat.new()
+	plate.bg_color = Color(0.05, 0.06, 0.07, 0.9)
+	plate.border_color = Color(0.95, 0.82, 0.35, 0.55)
+	plate.set_border_width_all(1)
+	plate.set_corner_radius_all(4)
+	plate.content_margin_left = 4
+	plate.content_margin_right = 4
+	plate.content_margin_top = 3
+	plate.content_margin_bottom = 3
+	orders_strip.add_theme_stylebox_override("panel", plate)
+	layer.add_child(orders_strip)
+	var row: HBoxContainer = HBoxContainer.new()
+	row.name = "OrdersRow"
+	row.add_theme_constant_override("separation", 4)
+	orders_strip.add_child(row)
+	_strip_button(row, "WeaponPrimary", "Primary", "", _pick_weapon.bind(SMArms.PRIMARY), 150)
+	_strip_button(row, "WeaponSecondary", "Secondary", "F", _pick_weapon.bind(SMArms.SECONDARY), 150)
+	var gap: Control = Control.new()
+	gap.custom_minimum_size = Vector2(6, 0)
+	row.add_child(gap)
+	_strip_button(row, "StanceAggressive", "Aggressive", "", _set_stance.bind("aggressive"), 0)
+	_strip_button(row, "StanceGuard", "Guard", "", _set_stance.bind("guard"), 0)
+	_strip_button(row, "StanceGround", "Hold Ground", "", _set_stance.bind("hold_ground"), 0)
+	_strip_button(row, "StanceHold", "Hold Fire", "", _set_stance.bind("hold"), 0)
+	_strip_button(row, "RedeployButton", "Pack & Redeploy", "", start_redeploy, 0)
+	var hint: Label = Label.new()
+	hint.name = "RallyHint"
+	hint.text = "Right-click the map to pin this building's rally point"
+	hint.add_theme_font_size_override("font_size", 12)
+	hint.add_theme_color_override("font_color", Color(0.95, 0.9, 0.7))
+	hint.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	row.add_child(hint)
+
+func _strip_button(row: HBoxContainer, node_name: String, caption: String, chip: String, fn: Callable, width: int) -> void:
+	var b: Button = Button.new()
+	b.name = node_name
+	b.text = caption
+	b.focus_mode = Control.FOCUS_NONE
+	b.custom_minimum_size = Vector2(maxi(width, 56), 44)
+	if width > 0:
+		b.clip_text = true
+		b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	b.add_theme_font_size_override("font_size", 12)
+	b.pressed.connect(_press_cue.bind(fn, "ui"))
+	row.add_child(b)
+	if chip == "":
+		return
+	var mark: Label = Label.new()
+	mark.name = "KeyChip"
+	mark.text = chip
+	mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	mark.position = Vector2(3, 1)
+	mark.add_theme_font_size_override("font_size", 10)
+	mark.add_theme_color_override("font_color", Color(0.95, 0.82, 0.35))
+	b.add_child(mark)
+
+func _pick_weapon(slot: String) -> void:
+	if field == null:
+		return
+	var lead: RTSUnit = _armed_lead()
+	if lead != null and SMArms.slot_of(lead) == slot:
+		field.toggle_weapons()
+	else:
+		field.use_weapon(slot)
+	if lead != null:
+		_note("%s: %s" % [slot.capitalize(), str(lead.get_meta("weapon_name", ""))])
+	refresh()
+
+func _armed_lead() -> RTSUnit:
+	if field == null:
+		return null
+	for u: RTSUnit in field.selection.units:
+		if is_instance_valid(u) and u.is_alive() and SMArms.armed(u):
+			return u
+	return null
+
+func _paint_orders() -> void:
+	_seat_compass()
+	if orders_strip == null:
+		return
+	var lead: RTSUnit = _armed_lead()
+	var building: StringName = &""
+	if field != null and lead == null and not field.selected_buildings.is_empty():
+		building = field.selected_buildings[0]
+	var show: bool = lead != null or building != &""
+	orders_strip.visible = show
+	if not show:
+		_shown_orders = ""
+		return
+	var row: Node = orders_strip.get_node("OrdersRow")
+	var unit_mode: bool = lead != null
+	for node_name: String in ["WeaponPrimary", "WeaponSecondary", "StanceAggressive", "StanceGuard", "StanceGround", "StanceHold"]:
+		(row.get_node(node_name) as CanvasItem).visible = unit_mode
+	var yard_picked: bool = building != &"" and side != null and building == side.yard_id() and side.can_redeploy()
+	(row.get_node("RedeployButton") as CanvasItem).visible = yard_picked
+	(row.get_node("RallyHint") as CanvasItem).visible = building != &"" and side != null and side.is_producer(building)
+	if unit_mode:
+		var live: String = SMArms.slot_of(lead)
+		var stance: String = field.stance_of_selection()
+		var key: String = "%d|%s|%s|%s" % [lead.get_instance_id(), live, stance, str(lead.get_meta("weapon_name", ""))]
+		if key != _shown_orders:
+			_shown_orders = key
+			for slot: String in [SMArms.PRIMARY, SMArms.SECONDARY]:
+				var b: Button = row.get_node("WeaponPrimary" if slot == SMArms.PRIMARY else "WeaponSecondary") as Button
+				var p: Dictionary = SMArms.profile(lead, slot)
+				b.text = "%s %s" % ["I" if slot == SMArms.PRIMARY else "II", str(p.get("name", slot.capitalize()))]
+				b.tooltip_text = "%s weapon: %s\nClick to switch%s." % [slot.capitalize(), SMArms.describe(p), " (or press F)" if slot == SMArms.SECONDARY else ""]
+				b.modulate = Color(1.0, 0.86, 0.38) if slot == live else Color(0.62, 0.66, 0.7)
+				b.set_meta("active", slot == live)
+			for pair: Array in [["StanceAggressive", "aggressive"], ["StanceGuard", "guard"], ["StanceGround", "hold_ground"], ["StanceHold", "hold"]]:
+				var stance_button: Button = row.get_node(str(pair[0])) as Button
+				stance_button.modulate = Color(0.55, 0.95, 0.6) if str(pair[1]) == stance else Color(0.62, 0.66, 0.7)
+	_seat_orders()
+
+func _seat_orders() -> void:
+	var width: float = orders_strip.get_combined_minimum_size().x
+	var view: Vector2 = Vector2(1280, 720)
+	if orders_strip.is_inside_tree():
+		view = orders_strip.get_viewport_rect().size
+	var at: Vector2 = Vector2(8.0, view.y - 104.0)
+	if unit_card != null and unit_card.is_inside_tree():
+		var card: Rect2 = unit_card.get_global_rect()
+		at = Vector2(card.position.x, card.position.y - 52.0)
+	at.x = clampf(at.x, 4.0, maxf(4.0, view.x - width - 4.0))
+	orders_strip.position = at
+	orders_strip.size = Vector2(width, 50.0)
+
+## Rotate-left, north and rotate-right buttons tucked into the minimap's top corner.
+func _mount_compass(layer: CanvasLayer) -> void:
+	if minimap == null or camera_ref == null or layer.find_child("CameraCompass", true, false) != null:
+		return
+	compass = SMCompass.new()
+	compass.setup(camera_ref)
+	var holder: Control = minimap.get_parent() as Control
+	if holder == null:
+		layer.add_child(compass)
+		compass.position = Vector2(8, 152)
+		return
+	holder.add_child(compass)
+	compass.z_index = 4
+	_seat_compass()
+
+func _seat_compass() -> void:
+	if compass == null or minimap == null or compass.get_parent() != minimap.get_parent():
+		return
+	compass.position = Vector2(minimap.position.x + minimap.size.x - compass.get_combined_minimum_size().x - 4.0, minimap.position.y + 4.0)
 
 func _power_pair() -> Vector2i:
 	return Power.tally(side.yard if side != null else null)
@@ -481,10 +646,9 @@ func _fill_commands(box: VBoxContainer) -> void:
 		row.add_theme_constant_override("separation", 4)
 		command_row.add_child(row)
 		cells = row
-	_command_cell(cells, "AttackMove", "A-Move", "Q", _attack_move, "Attack-move ahead of the lead unit.")
-	_command_cell(cells, "StopButton", "Stop", "X", _halt, "Stop.")
-	_command_cell(cells, "StanceGuard", "Guard", "", _set_stance.bind("guard"), "Guard. Fire at enemies in range.")
-	_command_cell(cells, "StanceHold", "Hold", "", _set_stance.bind("hold"), "Hold. Do not acquire targets.")
+	_command_cell(cells, "AttackMove", "A-Move", "A", _attack_move, "Attack-move. Press A, then right-click a spot.")
+	_command_cell(cells, "StopButton", "Stop", "S", _halt, "Stop (S or X).")
+	_command_cell(cells, "ReverseButton", "Reverse", "D", _reverse, "Reverse move. Press D, then right-click: vehicles back up with their front armor toward the enemy.")
 	_command_cell(cells, "FormationButton", "Form", "Z", _formation, "Formation. Switch between a line and a box.")
 	_command_cell(cells, "AbilityButton", "Ability (F)", "F", _ability, SMGuide.ability_tip())
 
@@ -518,6 +682,39 @@ func _set_stance(mode: String) -> void:
 	if field != null:
 		field.set_stance(mode)
 	_note(mode)
+	refresh()
+
+func _reverse() -> void:
+	if field == null or field.selection.count() == 0:
+		return
+	if not field.selection_can_reverse():
+		_note("only vehicles and boats reverse")
+		refresh()
+		return
+	field.reverse_armed = true
+	field.attack_armed = false
+	_note("reverse: right-click where to back up")
+	refresh()
+
+## Pack the construction yard and pick a new spot and facing for it.
+func start_redeploy() -> bool:
+	if side == null or not side.can_redeploy():
+		_note("the yard cannot pack up")
+		refresh()
+		return false
+	field.clear_buildings()
+	side.placement.begin(side, side.yard_id(), true)
+	_note("redeploy: click to place, drag to face, R turns")
+	refresh()
+	return true
+
+func _placed(id: StringName, result: String) -> void:
+	if result == "cancelled":
+		_note("placement cancelled")
+	elif result == "built":
+		_note("%s built" % side.building_label(id))
+	else:
+		_note(result)
 	refresh()
 
 func _attack_move() -> void:
@@ -625,6 +822,15 @@ func _order(id: StringName) -> void:
 		_note("sold %d" % refund if refund > 0 else "cannot sell")
 		refresh()
 		return
+	if side.needs_spot(id):
+		if side.placement.active and side.placement.id == id:
+			side.placement.confirm()
+			refresh()
+			return
+		side.placement.begin(side, id)
+		_note("place %s: click a spot, drag to face the exit, R turns" % side.building_label(id))
+		refresh()
+		return
 	var note: String = side.order_building(id)
 	if note == "built":
 		note = "%s built" % side.building_label(id)
@@ -681,7 +887,7 @@ func _import(id: StringName) -> void:
 		refresh()
 		return
 	var at: Vector3 = rally + Vector3(6.0 + float(field.count_team(SMPointer.PLAYER) % 4) * 2.0, 0.0, 2.0)
-	var u: RTSUnit = field.spawn(SMPointer.PLAYER, at, id)
+	var u: RTSUnit = field.produce(SMPointer.PLAYER, id, at)
 	_note(field.name_of(u))
 	refresh()
 
@@ -715,7 +921,7 @@ func _train(id: StringName) -> void:
 		refresh()
 		return
 	var at: Vector3 = rally + Vector3(6.0 + float(field.count_team(SMPointer.PLAYER) % 4) * 2.0, 0.0, 2.0)
-	var u: RTSUnit = field.spawn(SMPointer.PLAYER, at, done)
+	var u: RTSUnit = field.produce(SMPointer.PLAYER, done, at)
 	_note(field.name_of(u))
 	line_voiced.emit("", "unit_ready")
 	refresh()

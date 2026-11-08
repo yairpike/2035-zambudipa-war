@@ -634,12 +634,23 @@ static func on_fired(unit: RTSUnit, _target: RTSUnit) -> void:
 	if stage == null:
 		return
 	if player_of(body) != null:
-		FX.flash(stage, _muzzle(body, null), 0.45)
+		_tint_flash(FX.flash(stage, _muzzle(body, null), 0.45), unit)
 		return
 	var turret: Node3D = body.get_node_or_null("Turret") as Node3D
 	var barrel: Node3D = turret.get_node_or_null("Barrel") as Node3D if turret != null else null
 	var muzzle: Vector3 = _muzzle(body, barrel)
-	FX.flash(stage, muzzle, 1.2 if barrel != null else 0.6)
+	_tint_flash(FX.flash(stage, muzzle, 1.2 if barrel != null else 0.6), unit)
+
+## Muzzle flash takes the colour of the live weapon slot (SMArms "muzzle_tint").
+static func _tint_flash(flash: MeshInstance3D, unit: RTSUnit) -> void:
+	if flash == null or not unit.has_meta("muzzle_tint"):
+		return
+	var quad: QuadMesh = flash.mesh as QuadMesh
+	var mat: StandardMaterial3D = quad.material as StandardMaterial3D if quad != null else null
+	if mat == null:
+		return
+	var ink: Color = Color.html(str(unit.get_meta("muzzle_tint")))
+	mat.albedo_color = Color(ink.r, ink.g, ink.b, mat.albedo_color.a)
 
 static func _muzzle(body: MeshInstance3D, barrel: Node3D) -> Vector3:
 	if barrel != null:
