@@ -143,7 +143,11 @@
         "infantry"
       ],
       "ability": "Ballistic Riot Shield",
-      "f_stat": "incoming"
+      "f_stat": "incoming",
+      "weapons": {
+        "primary": {"name": "Carbine", "kind": "carbine", "damage": 8, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flashbang Volley", "mode": "Suppress", "kind": "flashbang", "damage": 9.6, "range": 6, "interval": 1.2, "targets": ["ground"], "tint": "#F4F1C1"}
+      }
     },
     {
       "id": "hub_drone",
@@ -163,7 +167,11 @@
         "drone"
       ],
       "ability": "S.H.R.I.N.K. Ray",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Stinger Darts", "kind": "stinger", "damage": 8, "range": 8, "interval": 0.8, "targets": ["ground", "air"], "tint": "#FFD15A"},
+        "secondary": {"name": "Shrink Ray", "mode": "Ray", "kind": "beam", "damage": 4, "range": 10, "interval": 1.2, "targets": ["ground", "air"], "tint": "#C890FF"}
+      }
     },
     {
       "id": "charcoal_apc",
@@ -183,7 +191,11 @@
         "armor"
       ],
       "ability": "Eject and Repair",
-      "f_stat": "hp"
+      "f_stat": "hp",
+      "weapons": {
+        "primary": {"name": "Autocannon", "kind": "autocannon", "damage": 12, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flak Burst", "mode": "Anti-air", "kind": "flak", "damage": 10.8, "range": 11, "interval": 0.6, "targets": ["air"], "tint": "#9FE7FF"}
+      }
     },
     {
       "id": "cyan_ifv",
@@ -203,7 +215,11 @@
         "armor"
       ],
       "ability": "Target Painter",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "AP Cannon", "kind": "cannon", "damage": 16, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Coaxial MG", "mode": "Anti-infantry", "kind": "mg", "damage": 7.2, "range": 8, "interval": 0.35, "targets": ["ground"], "tint": "#FFF2A8"}
+      }
     },
     {
       "id": "relay_van",
@@ -224,7 +240,11 @@
         "hero"
       ],
       "ability": "Chrono-Phase Recall",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Relay Zapper", "kind": "mast", "damage": 4, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "EMP Burst", "mode": "EMP", "kind": "emp", "damage": 4, "range": 9, "interval": 2.0, "targets": ["ground", "naval", "air"], "tint": "#7FE9FF"}
+      }
     },
     {
       "id": "river_drone",
@@ -244,7 +264,11 @@
         "drone"
       ],
       "ability": "Aegis Dome",
-      "f_stat": "incoming"
+      "f_stat": "incoming",
+      "weapons": {
+        "primary": {"name": "Dart Pod", "kind": "dart", "damage": 9, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Shock Dart", "mode": "Shock", "kind": "shock", "damage": 12.6, "range": 7, "interval": 1.4, "targets": ["ground", "naval"], "tint": "#7FE9FF"}
+      }
     },
     {
       "id": "cyan_sentry",
@@ -264,7 +288,11 @@
         "infantry"
       ],
       "ability": "Pheromone Bark",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Carbine", "kind": "carbine", "damage": 9, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flashbang Volley", "mode": "Suppress", "kind": "flashbang", "damage": 10.8, "range": 6, "interval": 1.2, "targets": ["ground"], "tint": "#F4F1C1"}
+      }
     },
     {
       "id": "charcoal_mortar",
@@ -284,7 +312,11 @@
         "artillery"
       ],
       "ability": "Banyan Hologram",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Mortar", "kind": "mortar", "damage": 16, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Incendiary Shell", "mode": "Incendiary", "kind": "mortar", "damage": 12.8, "range": 10, "interval": 1.6, "targets": ["ground"], "tint": "#FF5A1F"}
+      }
     },
     {
       "id": "hub_lifter",
@@ -304,7 +336,11 @@
         "vehicle"
       ],
       "ability": "Field Medical Tent",
-      "f_stat": "hp"
+      "f_stat": "hp",
+      "weapons": {
+        "primary": {"name": "Hook Gun", "kind": "hook", "damage": 6, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Tow Winch", "mode": "Disable", "kind": "hook", "damage": 3, "range": 5, "interval": 1.6, "targets": ["ground"], "tint": "#D9D9D9"}
+      }
     },
     {
       "id": "clearance_engineer",
@@ -324,7 +360,11 @@
         "infantry"
       ],
       "ability": "Laser Target Lock",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Arc Welder", "kind": "welder", "damage": 8, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Arc Overload", "mode": "Shock", "kind": "shock", "damage": 12.8, "range": 5, "interval": 1.8, "targets": ["ground"], "tint": "#7FE9FF"}
+      }
     },
     {
       "id": "cyan_gunship",
@@ -345,7 +385,11 @@
         "jet"
       ],
       "ability": "Afterburner Return",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "AP Cannon", "kind": "cannon", "damage": 16, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Air-to-Air Missiles", "mode": "Anti-air", "kind": "missile", "damage": 17.6, "range": 10, "interval": 1.1, "targets": ["air"], "tint": "#7FD6FF"}
+      }
     },
     {
       "id": "siege_tube",
@@ -366,7 +410,11 @@
         "jet"
       ],
       "ability": "Emergency Evasive Return",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Rocket Tube", "kind": "tube", "damage": 16, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Siege Barrage", "mode": "Deployed", "kind": "tube", "damage": 24, "range": 16, "interval": 2.4, "targets": ["ground", "naval"], "tint": "#FF7A2E"}
+      }
     },
     {
       "id": "relay_mast",
@@ -386,7 +434,11 @@
         "naval"
       ],
       "ability": "Black-Hole Armor",
-      "f_stat": "incoming"
+      "f_stat": "incoming",
+      "weapons": {
+        "primary": {"name": "Relay Zapper", "kind": "mast", "damage": 4, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "EMP Burst", "mode": "EMP", "kind": "emp", "damage": 4, "range": 9, "interval": 2.0, "targets": ["ground", "naval", "air"], "tint": "#7FE9FF"}
+      }
     },
     {
       "id": "charcoal_bike",
@@ -406,7 +458,11 @@
         "infantry"
       ],
       "ability": "Cash Bribe",
-      "f_stat": "hp"
+      "f_stat": "hp",
+      "weapons": {
+        "primary": {"name": "SMG", "kind": "smg", "damage": 7, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Close Spray", "mode": "Rapid", "kind": "smg", "damage": 9.8, "range": 5, "interval": 0.45, "targets": ["ground"], "tint": "#FFE08A"}
+      }
     },
     {
       "id": "cyan_skiff",
@@ -426,7 +482,11 @@
         "naval"
       ],
       "ability": "Scrambler",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Bow Gun", "kind": "bow_gun", "damage": 9, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flak Burst", "mode": "Anti-air", "kind": "flak", "damage": 7.2, "range": 9, "interval": 0.6, "targets": ["air"], "tint": "#9FE7FF"}
+      }
     },
     {
       "id": "hub_hauler",
@@ -446,7 +506,11 @@
         "naval"
       ],
       "ability": "Blackout EMP",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Cab Gun", "kind": "cab_gun", "damage": 6, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flare AA", "mode": "Anti-air", "kind": "flare", "damage": 3.6, "range": 9, "interval": 0.9, "targets": ["air"], "tint": "#FFD27F"}
+      }
     },
     {
       "id": "mekong_uav",
@@ -466,7 +530,11 @@
       "locomotion": "air",
       "tags": ["drone", "air"],
       "ability": "Hawk Missiles",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Hawk Missiles", "kind": "missile", "damage": 18, "range": 16, "interval": 0.8, "targets": ["ground", "naval", "air"], "tint": "#FFD15A"},
+        "secondary": {"name": "Ground Barrage", "mode": "Barrage", "kind": "rocket", "damage": 23.4, "range": 16, "interval": 1.6, "targets": ["ground", "naval"], "tint": "#FF7A2E"}
+      }
     },
     {
       "id": "swarm_hive",
@@ -485,7 +553,11 @@
       "locomotion": "ground",
       "tags": ["vehicle"],
       "ability": "Swarm Cloud",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Swarm Pods", "kind": "swarm", "damage": 4, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Swarm Cloud", "mode": "Cloud", "kind": "swarm", "damage": 6, "range": 6, "interval": 1.0, "targets": ["ground"], "tint": "#B6FF6E"}
+      }
     },
     {
       "id": "spool_fpv",
@@ -504,7 +576,11 @@
       "locomotion": "air",
       "tags": ["drone", "air"],
       "ability": "Fibre Dive",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Shaped Charge", "kind": "shaped_charge", "damage": 30, "range": 7, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Recon Hover", "mode": "Spotter", "kind": "spotter", "damage": 7.5, "range": 11, "interval": 1.0, "targets": ["ground", "naval"], "tint": "#C8FFC8"}
+      }
     }
   ],
   "balance": "pass1"

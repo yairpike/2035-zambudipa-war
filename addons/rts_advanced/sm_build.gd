@@ -170,6 +170,14 @@ func sell(id: StringName) -> int:
 func inside(pos: Vector3) -> bool:
 	return Vector2(pos.x, pos.z).distance_to(Vector2(center.x, center.z)) <= radius
 
+## Floating structures may stand out to SMBasePlan.NAVAL_REACH past the yard radius.
+func inside_for(id: StringName, pos: Vector3) -> bool:
+	if pos == Vector3.INF:
+		return false
+	if SMBasePlan.must_float(str(building_role.get(id, "")), bool(water_marked.get(id, false))):
+		return Vector2(pos.x, pos.z).distance_to(Vector2(center.x, center.z)) <= radius + SMBasePlan.NAVAL_REACH
+	return inside(pos)
+
 func can_build(id: StringName) -> bool:
 	if finished.has(id) or scaffold_id == id or queue.has(id) or ready.has(id) or placed.has(id):
 		return false
@@ -185,7 +193,7 @@ func can_build(id: StringName) -> bool:
 	return true
 
 func begin_scaffold(id: StringName, pos: Vector3, hp: float) -> bool:
-	if style != Style.SCAFFOLD or scaffold_active or not can_build(id) or not inside(pos):
+	if style != Style.SCAFFOLD or scaffold_active or not can_build(id) or not inside_for(id, pos):
 		return false
 	scaffold_id = id
 	scaffold_pos = pos
@@ -252,7 +260,7 @@ func abort_scaffold() -> int:
 	return refund
 
 func place_finished(id: StringName, pos: Vector3) -> bool:
-	if style != Style.INTERNAL or not ready.has(id) or not inside(pos):
+	if style != Style.INTERNAL or not ready.has(id) or not inside_for(id, pos):
 		return false
 	ready.erase(id)
 	placed.append(id)

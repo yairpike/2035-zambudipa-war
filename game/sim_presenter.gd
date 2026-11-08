@@ -10,6 +10,10 @@ const Settings = preload("res://game/match_settings.gd")
 const Clips = preload("res://game/match_audio.gd")
 const Cameos = preload("res://game/match_cameos.gd")
 const Faces = preload("res://game/font_faces.gd")
+const Ghost = preload("res://game/placement_view.gd")
+const BayDoors = preload("res://game/bay_door_view.gd")
+const Rallies = preload("res://game/rally_view.gd")
+const WeaponMode = preload("res://game/weapon_mode_view.gd")
 const Motion = preload("res://game/unit_motion.gd")
 const Watch = preload("res://game/building_watch.gd")
 
@@ -61,6 +65,9 @@ static func follow(host: Node) -> void:
 		if not side.defense_fired.is_connected(_on_defense):
 			side.defense_fired.connect(_on_defense.bind(host))
 		_bind_yard(host, side.yard, false)
+		side.placement.changed.connect(_on_placement.bind(host, side))
+		side.bays.door_moved.connect(_on_door.bind(host, side))
+		side.bays.door_cue.connect(_on_door_cue.bind(host))
 	var raider: SMRaider = host.get("raider") as SMRaider
 	if raider != null and not bool(raider.get_meta("view_bound", false)):
 		raider.set_meta("view_bound", true)
@@ -127,6 +134,19 @@ static func follow_pointer(field: SMPointer) -> void:
 	field.path_moved.connect(Callable(World, "path_mark"))
 	field.damage_shown.connect(Callable(World, "damage_pop"))
 	field.damage_shown.connect(_on_damage.bind(field))
+	field.rallies_shown.connect(Callable(Rallies, "show"))
+	field.weapon_shown.connect(Callable(WeaponMode, "show"))
+
+static func _on_placement(host: Node, side: SMSide) -> void:
+	Ghost.paint(host as Node3D, side.placement)
+
+static func _on_door(building_id: StringName, open: float, host: Node, side: SMSide) -> void:
+	BayDoors.move(host as Node3D, side, building_id, open)
+
+static func _on_door_cue(_building_id: StringName, kind: String, host: Node) -> void:
+	var hud: SMHud = host.get("hud") as SMHud if host != null else null
+	if hud != null and hud.sfx != null:
+		hud.sfx.play("door_" + kind)
 
 static func _follow_match(sim: SMMatch) -> void:
 	if bool(sim.get_meta("view_bound", false)):

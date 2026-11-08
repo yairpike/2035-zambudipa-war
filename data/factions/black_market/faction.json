@@ -36,7 +36,11 @@
         "air"
       ],
       "ability": "Satellite Laser Designation",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Autocannon", "kind": "autocannon", "damage": 14, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flak Burst", "mode": "Anti-air", "kind": "flak", "damage": 12.6, "range": 11, "interval": 0.6, "targets": ["air"], "tint": "#9FE7FF"}
+      }
     },
     {
       "id": "su30",
@@ -57,7 +61,11 @@
         "jet"
       ],
       "ability": "Stand-Off Glide Barrage",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "AP Cannon", "kind": "cannon", "damage": 26, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Air-to-Air Missiles", "mode": "Anti-air", "kind": "missile", "damage": 28.6, "range": 10, "interval": 1.1, "targets": ["air"], "tint": "#7FD6FF"}
+      }
     },
     {
       "id": "orlan10",
@@ -77,7 +85,11 @@
         "air"
       ],
       "ability": "Artillery Telemetry Link",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Spotter Gun", "kind": "camera", "damage": 4, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Telemetry Link", "mode": "Spotter", "kind": "spotter", "damage": 2, "range": 14, "interval": 1.2, "targets": ["ground", "naval"], "tint": "#C8FFC8"}
+      }
     },
     {
       "id": "flh7",
@@ -97,7 +109,11 @@
         "air"
       ],
       "ability": "Frequency Hop",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Assault Rifle", "kind": "rifle", "damage": 9, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Rifle Grenade", "mode": "Grenade", "kind": "grenade", "damage": 14.4, "range": 7, "interval": 1.6, "targets": ["ground"], "tint": "#FFB347"}
+      }
     },
     {
       "id": "kite_loiterer",
@@ -116,7 +132,11 @@
       "locomotion": "air",
       "tags": ["air"],
       "ability": "Rail Strike",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Loiter Warhead", "kind": "warhead", "damage": 42, "range": 10, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Rail Strike", "mode": "Strike", "kind": "rail", "damage": 58.8, "range": 16, "interval": 2.6, "targets": ["ground", "naval"], "tint": "#FFFFFF"}
+      }
     }
   ],
   "buildings": [],

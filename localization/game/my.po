@@ -212,9 +212,6 @@ msgstr "တိုက်ခိုက်​ရွေ့လျား"
 msgid "Attack-move"
 msgstr "တိုက်ခိုက်​ရွေ့လျား"
 
-msgid "Attack-move ahead of the lead unit."
-msgstr "ရှေ့ဆောင်​ယူနစ်​၏​ရှေ့​သို့​တိုက်ခိုက်​ရွေ့လျား​ပါ။"
-
 msgid "AUDIO"
 msgstr "အသံ"
 
@@ -992,9 +989,6 @@ msgstr "GTFC တင့်ကား"
 msgid "Guard"
 msgstr "စောင့်ကြပ်"
 
-msgid "Guard. Fire at enemies in range."
-msgstr "စောင့်ကြပ်။ ပစ်ကွင်း​အတွင်း​ရန်သူ​များ​ကို​ပစ်​ပါ။"
-
 msgid "Guide"
 msgstr "လမ်းညွှန်"
 
@@ -1061,9 +1055,6 @@ msgstr "ကုန်းမြင့်​ဖျက်လိုဖျက်ဆီ
 msgid "Highlight a row to read what it changes."
 msgstr "ပြောင်းလဲ​သည့်​အရာ​ကို​ဖတ်​ရန်​အတန်း​တစ်​ခု​ကို​ရွေး​ပါ။"
 
-msgid "Hold"
-msgstr "ကိုင်​ထား"
-
 msgid "hold the blocks %ds"
 msgstr "အစု​များ​ကို​ထိန်း %ds"
 
@@ -1072,9 +1063,6 @@ msgstr "မြူခိုး​တစ်လျှောက်​ရေဒါ​
 
 msgid "Hold the radar. The haze is the clock."
 msgstr "ရေဒါ​ကို​ထိန်း​ပါ။ မြူခိုး​သည်​နာရီ​ဖြစ်​သည်။"
-
-msgid "Hold. Do not acquire targets."
-msgstr "ကိုင်​ထား။ ပစ်မှတ်​မ​ရှာ​နှင့်။"
 
 msgid "Holder"
 msgstr "ကိုင်ဆောင်​သူ"
@@ -1282,38 +1270,6 @@ msgstr "သွေးစုပ်​ရောင်ခြည်​ဖွင့်
 
 msgid "Left click selects. Right click moves. F ability."
 msgstr "ဘယ်​ကလစ်​က​ရွေး​သည်။ ညာ​ကလစ်​က​ရွေ့​သည်။ F စွမ်းရည်။"
-
-msgid ""
-"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
-"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
-"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
-"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
-"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
-"Click the minimap to jump the camera there.\n"
-"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
-"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
-"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
-"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
-"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
-"P opens protocols. H opens this guide.\n"
-"The status line reads Objective complete when you win, and Objective failed if your company dies."
-msgstr ""
-"ယူနစ်​တစ်ခု​ကို​ဘယ်​ကလစ်​နှိပ်ပါ၊ သို့မဟုတ်​သင့်​တပ်ခွဲ​ပတ်လည်​ဘောင်​ဆွဲပါ။ လိမ္မော်ရောင်​ကွင်း​က​ရွေးထားသော​ယူနစ်​၏​လက်နက်​အကွာအဝေး​ကို​ပြ​ပြီး၊ ညွှန်ပြ​မြား​ယူနစ်​ပေါ်​ရပ်နေစဉ်​လည်း​ထို​ကွင်း​ပေါ်လာ​သည်။\n"
-"ရွှေ့​ရန်​ဗလာ​မြေပြင်​ကို​ညာ​ကလစ်​နှိပ်ပါ။ တိုက်ခိုက်​ရန်​ရန်သူ​ကို​ညာ​ကလစ်​နှိပ်ပါ။ ထို​နေရာ​ကို​ကွင်း​တစ်ခု​မှတ်သား​ပြီး​မှိန်​ပျောက်​သွား​သည်။\n"
-"ကာဆာ​ဘက်​သို့ တိုက်ရင်း​ရွှေ့​ရန် Q ကို​နှိပ်ပါ။ ရပ်​ရန် X ကို​နှိပ်ပါ။ Ctrl နှင့် 1 မှ 9 အထိ​နှိပ်​လျှင်​အုပ်စု​သိမ်း​သည်။ ပြန်​ခေါ်​ရန်​နံပါတ်​ကို​နှိပ်ပါ၊ ကင်မရာ​ကို​အလယ်​ထား​ရန်​ထပ်​နှိပ်ပါ။\n"
-"Shift-ကလစ်​က​ယူနစ်​ထည့်​သည်။ Ctrl-ကလစ်​က​ဖွင့်​ပိတ်​လုပ်​သည်။ နှစ်ချက်​ကလစ်​သို့မဟုတ် E က​ထို​အမျိုးအစား​ယူနစ်​အားလုံး​ကို​ရွေး​သည်။ Z က​နောက်​ရွှေ့​မှု​အတွက်​တပ်ခွဲ​ကို​တန်းစီ​သည်။ ဗလာ​မြေပြင်​ပေါ် Shift-ညာ​ကလစ်​က​နောက်ထပ်​အဆင့်​ထည့်​သည်။ R က​စုရပ်​အလံ​စိုက်​ပြီး​ယူနစ်​သစ်​များ​၎င်း​ဘေး​တွင်​ပေါ်လာ​သည်။ အပေါ်​ဘား​က​တစ်​စက္ကန့်​လျှင်​ရ​သော​ခရက်ဒစ်​ကို​ပြ​သည်။\n"
-"ဦးဆောင်​ယူနစ်​၏​နောက်​အဆင့်​ပေါ်​တွင်​စိန်​ပုံ​ရှိ​သည်။ ပါးလွှာ​သော​လှိုင်း​က​လက်ရှိ​ရည်မှန်းချက်​ကို​မှတ်သား​ပြီး​မြေပုံ​ငယ်​က​ထို​နေရာ​ကို​ဘောင်​ခတ်​သည်။ ထိမှန်​မှု​တိုင်း​တွင် ပေါ်​နေ​သော​ဂဏန်း​ပြ​သည်။\n"
-"ကင်မရာ​ကို​ထို​နေရာ​သို့ ခုန်​ရန်​မြေပုံ​ငယ်​ကို​ကလစ်​နှိပ်ပါ။\n"
-"ရွေးထားသော​ယူနစ်​၏​စွမ်းရည်​ကို​သုံး​ရန် F သို့မဟုတ်​စွမ်းရည်​ကို​နှိပ်ပါ။ စမတ်​ပစ်​က​အနီးဆုံး​အသင့်​ယူနစ်​ကိုသာ​ပစ်​စေ​သည်။\n"
-"ညာဘက်​ကော်လံ​က​ယူနစ်​လေ့ကျင့်​ပြီး​အဆောက်အအုံ​ဆောက်​သည်။ အရောင်​ပြား​ကို​သိမ်း​ရန် ၎င်း​ပေါ်​လမ်းလျှောက်​သွားပါ။\n"
-"လှေ​များ​သည်​ရေနက်​ကို​ဖြတ်​သည်။ တင့်ကား​နှင့်​ခြေလျင်​တပ်​သည် ကုန်းပေါ်​တွင်​သာ​နေ​ပြီး ရေတိမ်​ဖြတ်ကူး​ရာ​ဖွင့်​ထား​လျှင်​သုံး​သည်။\n"
-"မုတ်သုံ​ရွှံ့​က​တင့်ကား​နှင့်​ခြေလျင်​ကို​နှေး​စေ​သည်။ ရေလက်ကြား​မြူ​သည် ရေအား​ရေဒါ​သင့်​လက်​မ​ရှိ​လျှင် မြင်ကွင်း​ကို​တို​စေ​သည်။ မဲခေါင်​တွင် တံတား​ကို​ဖြို​ပြီး​တူးမြောင်း​ဖွင့်​ရန်​ညာ​ကလစ်​နှိပ်ပါ။ သိမ်းယူ​ထား​သော​လက်နက်​ဈေး​က CH-4, Su-30, Orlan-10 နှင့် FLH7 အဖွဲ့​ကို​ရောင်း​ပြီး ရန်သူ​ငွေအိတ်​မှ​ခိုး​ယူ​သည်။\n"
-"စွမ်းအင်​နည်း​လျှင် စက်ရုံ​က​သုံးစွဲ​မှု​ကို​ဖုံး​နိုင်​သည်​အထိ ထုတ်လုပ်​မှု​သစ်​ရပ်​ပြီး ကာကွယ်ရေး​များ​ကို​ငြိမ်​စေ​သည်။ ပယ်ဖျက်​က​ဆောက်​နေ​သော​အဆောက်အအုံ​ကို​ဖယ်​သည်။ ရေအား​ရေဒါ​က​မြစ်​လမ်းကြောင်း​ကို​လင်း​စေ​သည်။ ခံတပ်​ဝင်​ရန် ခြေလျင်​ဖြင့် ချေး​ခံကျင်း​သို့မဟုတ်​ဘက်စုံ​သေနတ်​ကို​ညာ​ကလစ်​နှိပ်ပါ၊ ထုတ်​ရန် ပြီးဆုံး​သော​အဆောက်အအုံ​ကို​ကလစ်​နှိပ်ပါ။ ပြီးဆုံး​သော​ကာကွယ်သူ-VX ကို​ဒုတိယ​အကြိမ်​ကလစ်​လျှင် မြေပြင်​နှင့်​လေ​ပစ်​သေနတ်​ကို​လဲ​သည်။\n"
-"P က​ပရိုတိုကော​များ​ကို​ဖွင့်​သည်။ H က​ဤ​လမ်းညွှန်​ကို​ဖွင့်​သည်။\n"
-"အနိုင်ရ​လျှင် အခြေအနေ​စာကြောင်း​တွင် ရည်မှန်းချက်​ပြီးမြောက်​ဟု​ပြ​ပြီး တပ်ခွဲ​ကျဆုံး​လျှင် ရည်မှန်းချက်​မအောင်မြင်​ဟု​ပြ​သည်။"
-
-msgid "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
-msgstr "ဘယ်​ကလစ်​ရွေး။ Shift-ကလစ်​ထည့်။ နှစ်ချက်​ကလစ်​သို့မဟုတ် E ဖြင့်​အမျိုးအစား​ရွေး။ ရွှေ့​ရန်​မြေပြင်၊ တိုက်​ရန်​ရန်သူ​ကို​ညာ​ကလစ်။ Shift-ညာ​ကလစ်​က​လမ်းမှတ်​ထည့်။ Z တပ်ခွဲ​တန်းစီ။ Q တိုက်ရင်း​ရွှေ့။ X ရပ်။ R စုရပ်​အလံ​ရွှေ့။ Ctrl+1-9 အုပ်စု​သိမ်း၊ နံပါတ်​က​ပြန်​ခေါ်။ ကွင်း​က​အမိန့်​ကို​မှတ်။ ခုန်​ရန်​မြေပုံ​ငယ်​ကလစ်။ F စွမ်းရည်။ H လမ်းညွှန်။ P ပရိုတိုကော​ဖွင့်။"
 
 msgid "Line"
 msgstr "တန်း"
@@ -2745,3 +2701,324 @@ msgstr "ဝင်း​ပြီး"
 
 msgid "Z    Formation"
 msgstr "Z    တပ်​ဖွဲ့​ပုံ"
+
+msgid " (or press F)"
+msgstr ""
+
+msgid "%s  dmg %d  rng %d  %s"
+msgstr ""
+
+msgid "%s redeployed"
+msgstr ""
+
+msgid ""
+"%s weapon: %s\n"
+"Click to switch%s."
+msgstr ""
+
+msgid "Aggressive"
+msgstr ""
+
+msgid "Attack-move. Press A, then right-click a spot."
+msgstr ""
+
+msgid "Attack-move: right-click a spot"
+msgstr ""
+
+msgid "blocks a resource site"
+msgstr ""
+
+msgid "Click to place  ·  drag to face  ·  R turns"
+msgstr ""
+
+msgid "Hold Fire"
+msgstr ""
+
+msgid "Hold Ground"
+msgstr ""
+
+msgid "II"
+msgstr ""
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press A, then right-click, to attack-move. Press D, then right-click, and vehicles back up with their front armour toward the enemy. S or X halts. The orders strip sets the stance: Aggressive, Guard, Hold Ground or Hold Fire. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or W, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag. Select a barracks, factory, naval yard or airfield and right-click the map to pin its own rally point: new units roll out of its bay door and head there. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there. Q and E, the compass beside the minimap, Alt-drag or the middle mouse turn the camera all the way round. Home faces north again.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit. Every combat unit has two weapons: click a weapon slot on the unit card to switch, and a toggle unit's F switches with it.\n"
+"The column on the right trains units and raises buildings. A building click shows a ghost: click to place, drag to face its exit, R or the wheel turns it, right-click or Esc cancels. Naval structures only go on water. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+
+msgid "Left-click select. Shift-click adds. Double-click or W selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. A attack-move, D reverse, S or X halt. Q/E or the compass turn the camera, Home faces north. Select a factory and right-click to pin its rally point. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr ""
+
+msgid "naval structures go on water"
+msgstr ""
+
+msgid "needs dry ground"
+msgstr ""
+
+msgid "no ground under the cursor"
+msgstr ""
+
+msgid "no open water in reach"
+msgstr ""
+
+msgid "no side"
+msgstr ""
+
+msgid "off the map"
+msgstr ""
+
+msgid "Only vehicles and boats reverse"
+msgstr ""
+
+msgid "only vehicles and boats reverse"
+msgstr ""
+
+msgid "outside the build radius"
+msgstr ""
+
+msgid "Pack & Redeploy"
+msgstr ""
+
+msgid "packer redeployed"
+msgstr ""
+
+msgid "place %s: click a spot, drag to face the exit, R turns"
+msgstr ""
+
+msgid "placement cancelled"
+msgstr ""
+
+msgid "Primary"
+msgstr ""
+
+msgid "Rally point set"
+msgstr ""
+
+msgid "redeploy: click to place, drag to face, R turns"
+msgstr ""
+
+msgid "Reset to north (Home)"
+msgstr ""
+
+msgid "Reverse"
+msgstr ""
+
+msgid "Reverse move. Press D, then right-click: vehicles back up with their front armor toward the enemy."
+msgstr ""
+
+msgid "Reverse: right-click where to back up"
+msgstr ""
+
+msgid "reverse: right-click where to back up"
+msgstr ""
+
+msgid "Right-click the map to pin this building's rally point"
+msgstr ""
+
+msgid "Rotate the camera left (Q)"
+msgstr ""
+
+msgid "Rotate the camera right (E)"
+msgstr ""
+
+msgid "Secondary"
+msgstr ""
+
+msgid "Stop (S or X)."
+msgstr ""
+
+msgid "the bay must face open water"
+msgstr ""
+
+msgid "the exit is blocked"
+msgstr ""
+
+msgid "the ground is taken"
+msgstr ""
+
+msgid "the yard cannot pack up"
+msgstr ""
+
+msgid "too close to another building"
+msgstr ""
+
+msgid "too far for the yard to drive"
+msgstr ""
+
+msgid " (or press F)"
+msgstr " (သို့မဟုတ် F​နှိပ်ပါ)"
+
+msgid "%s  dmg %d  rng %d  %s"
+msgstr "%s  ထိခိုက်​မှု %d  အကွာ​အဝေး %d  %s"
+
+msgid "%s redeployed"
+msgstr "%s ကို ပြန်​တပ်ဆင်​ပြီး"
+
+msgid ""
+"%s weapon: %s\n"
+"Click to switch%s."
+msgstr ""
+"%s လက်နက်: %s\n"
+"ပြောင်း​ရန် ကလစ်​နှိပ်ပါ%s။"
+
+msgid "Aggressive"
+msgstr "ထိုးစစ်"
+
+msgid "Attack-move. Press A, then right-click a spot."
+msgstr "တိုက်ရင်း​ရွှေ့။ A ကို​နှိပ်​ပြီး နေရာ​တစ်ခု​ကို ညာ​ကလစ်​နှိပ်ပါ။"
+
+msgid "Attack-move: right-click a spot"
+msgstr "တိုက်ရင်း​ရွှေ့: နေရာ​တစ်ခု​ကို ညာ​ကလစ်​နှိပ်ပါ"
+
+msgid "blocks a resource site"
+msgstr "သယံဇာတ​နေရာ​ကို ပိတ်​ဆို့​နေ​သည်"
+
+msgid "Click to place  ·  drag to face  ·  R turns"
+msgstr "ချ​ရန် ကလစ်  ·  မျက်နှာ​မူ​ရန် ဆွဲ  ·  R လှည့်"
+
+msgid "Hold Fire"
+msgstr "မပစ်​နှင့်"
+
+msgid "Hold Ground"
+msgstr "နေရာ​ကိုင်​ထား"
+
+msgid "II"
+msgstr "II"
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press A, then right-click, to attack-move. Press D, then right-click, and vehicles back up with their front armour toward the enemy. S or X halts. The orders strip sets the stance: Aggressive, Guard, Hold Ground or Hold Fire. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or W, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag. Select a barracks, factory, naval yard or airfield and right-click the map to pin its own rally point: new units roll out of its bay door and head there. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there. Q and E, the compass beside the minimap, Alt-drag or the middle mouse turn the camera all the way round. Home faces north again.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit. Every combat unit has two weapons: click a weapon slot on the unit card to switch, and a toggle unit's F switches with it.\n"
+"The column on the right trains units and raises buildings. A building click shows a ghost: click to place, drag to face its exit, R or the wheel turns it, right-click or Esc cancels. Naval structures only go on water. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+"ယူနစ်​တစ်ခု​ကို​ဘယ်​ကလစ်​နှိပ်ပါ၊ သို့မဟုတ်​သင့်​တပ်ခွဲ​ပတ်လည်​ဘောင်​ဆွဲပါ။ လိမ္မော်ရောင်​ကွင်း​က​ရွေးထားသော​ယူနစ်​၏​လက်နက်​အကွာအဝေး​ကို​ပြ​ပြီး၊ ညွှန်ပြ​မြား​ယူနစ်​ပေါ်​ရပ်နေစဉ်​လည်း​ထို​ကွင်း​ပေါ်လာ​သည်။\n"
+"ရွှေ့​ရန်​ဗလာ​မြေပြင်​ကို​ညာ​ကလစ်​နှိပ်ပါ။ တိုက်ခိုက်​ရန်​ရန်သူ​ကို​ညာ​ကလစ်​နှိပ်ပါ။ ထို​နေရာ​ကို​ကွင်း​တစ်ခု​မှတ်သား​ပြီး​မှိန်​ပျောက်​သွား​သည်။\n"
+"တိုက်ရင်း​ရွှေ့​ရန် A ကို​နှိပ်​ပြီး ညာ​ကလစ်​နှိပ်ပါ။ D ကို​နှိပ်​ပြီး ညာ​ကလစ်​လျှင် ယာဉ်​များ​သည် ရှေ့​သံချပ်​ကာ​ကို ရန်သူ​ဘက်​ထား​လျက် နောက်​ဆုတ်​သည်။ S သို့မဟုတ် X က ရပ်​သည်။ အမိန့်​ဘား​က ပုံစံ​သတ်မှတ်​သည်: ထိုးစစ်၊ စောင့်​ကြပ်၊ နေရာ​ကိုင်​ထား သို့မဟုတ် မပစ်​နှင့်။ Ctrl နှင့် 1 မှ 9 အထိ​နှိပ်​လျှင်​အုပ်စု​သိမ်း​သည်။ ပြန်​ခေါ်​ရန်​နံပါတ်​ကို​နှိပ်ပါ၊ ကင်မရာ​ကို​အလယ်​ထား​ရန်​ထပ်​နှိပ်ပါ။\n"
+"Shift-ကလစ်​က​ယူနစ်​ထည့်​သည်။ Ctrl-ကလစ်​က​ဖွင့်​ပိတ်​လုပ်​သည်။ နှစ်ချက်​ကလစ်​သို့မဟုတ် W က​ထို​အမျိုးအစား​ယူနစ်​အားလုံး​ကို​ရွေး​သည်။ Z က​နောက်​ရွှေ့​မှု​အတွက်​တပ်ခွဲ​ကို​တန်းစီ​သည်။ ဗလာ​မြေပြင်​ပေါ် Shift-ညာ​ကလစ်​က​နောက်ထပ်​အဆင့်​ထည့်​သည်။ R က​စုရပ်​အလံ​စိုက်​သည်။ စစ်တန်း​လျား၊ စက်ရုံ၊ ရေတပ်​ကျင်း သို့မဟုတ် လေယာဉ်​ကွင်း​ကို​ရွေး​ပြီး မြေပုံ​ကို​ညာ​ကလစ်​လျှင် ၎င်း​၏​ကိုယ်ပိုင်​စုရပ်​ကို​သတ်မှတ်​သည်: ယူနစ်​သစ်​များ တံခါး​မှ​ထွက်​ပြီး ထို​နေရာ​သို့​သွား​သည်။ အပေါ်​ဘား​က​တစ်​စက္ကန့်​လျှင်​ရ​သော​ခရက်ဒစ်​ကို​ပြ​သည်။\n"
+"ဦးဆောင်​ယူနစ်​၏​နောက်​အဆင့်​ပေါ်​တွင်​စိန်​ပုံ​ရှိ​သည်။ ပါးလွှာ​သော​လှိုင်း​က​လက်ရှိ​ရည်မှန်းချက်​ကို​မှတ်သား​ပြီး​မြေပုံ​ငယ်​က​ထို​နေရာ​ကို​ဘောင်​ခတ်​သည်။ ထိမှန်​မှု​တိုင်း​တွင် ပေါ်​နေ​သော​ဂဏန်း​ပြ​သည်။\n"
+"ကင်မရာ​ကို​ထို​နေရာ​သို့ ခုန်​ရန်​မြေပုံ​ငယ်​ကို​ကလစ်​နှိပ်ပါ။ Q နှင့် E၊ မြေပုံ​ငယ်​ဘေး​ရှိ သံလိုက်​အိမ်မြှောင်၊ Alt-ဆွဲ သို့မဟုတ် မောက်စ်​အလယ်​ခလုတ်​က ကင်မရာ​ကို​တစ်​ပတ်​လုံး​လှည့်​သည်။ Home က မြောက်​ဘက်​ပြန်​မျက်နှာ​မူ​သည်။\n"
+"ရွေးထားသော​ယူနစ်​၏​စွမ်းရည်​ကို​သုံး​ရန် F သို့မဟုတ်​စွမ်းရည်​ကို​နှိပ်ပါ။ စမတ်​ပစ်​က​အနီးဆုံး​အသင့်​ယူနစ်​ကိုသာ​ပစ်​စေ​သည်။ တိုက်ခိုက်​ရေး​ယူနစ်​တိုင်း​တွင် လက်နက်​နှစ်​မျိုး​ရှိ​သည်: ပြောင်း​ရန် ယူနစ်​ကတ်​ပေါ်​ရှိ​လက်နက်​အကွက်​ကို​ကလစ်​နှိပ်ပါ၊ မုဒ်​ပြောင်း​ယူနစ်​၏ F လည်း​အတူ​ပြောင်း​သည်။\n"
+"ညာဘက်​ကော်လံ​က​ယူနစ်​လေ့ကျင့်​ပြီး​အဆောက်အအုံ​ဆောက်​သည်။ အဆောက်အအုံ​ကို​ကလစ်​လျှင် ပုံရိပ်​အရိပ်​ပြ​သည်: ချ​ရန်​ကလစ်၊ ထွက်​ပေါက်​မျက်နှာ​မူ​ရန်​ဆွဲ၊ R သို့မဟုတ် ဘီး​က​လှည့်၊ ညာ​ကလစ် သို့မဟုတ် Esc က​ပယ်ဖျက်​သည်။ ရေတပ်​အဆောက်အအုံ​များ​ကို ရေ​ပေါ်​တွင်​သာ​ဆောက်​ရ​သည်။ အရောင်​ပြား​ကို​သိမ်း​ရန် ၎င်း​ပေါ်​လမ်းလျှောက်​သွားပါ။\n"
+"လှေ​များ​သည်​ရေနက်​ကို​ဖြတ်​သည်။ တင့်ကား​နှင့်​ခြေလျင်​တပ်​သည် ကုန်းပေါ်​တွင်​သာ​နေ​ပြီး ရေတိမ်​ဖြတ်ကူး​ရာ​ဖွင့်​ထား​လျှင်​သုံး​သည်။\n"
+"မုတ်သုံ​ရွှံ့​က​တင့်ကား​နှင့်​ခြေလျင်​ကို​နှေး​စေ​သည်။ ရေလက်ကြား​မြူ​သည် ရေအား​ရေဒါ​သင့်​လက်​မ​ရှိ​လျှင် မြင်ကွင်း​ကို​တို​စေ​သည်။ မဲခေါင်​တွင် တံတား​ကို​ဖြို​ပြီး​တူးမြောင်း​ဖွင့်​ရန်​ညာ​ကလစ်​နှိပ်ပါ။ သိမ်းယူ​ထား​သော​လက်နက်​ဈေး​က CH-4, Su-30, Orlan-10 နှင့် FLH7 အဖွဲ့​ကို​ရောင်း​ပြီး ရန်သူ​ငွေအိတ်​မှ​ခိုး​ယူ​သည်။\n"
+"စွမ်းအင်​နည်း​လျှင် စက်ရုံ​က​သုံးစွဲ​မှု​ကို​ဖုံး​နိုင်​သည်​အထိ ထုတ်လုပ်​မှု​သစ်​ရပ်​ပြီး ကာကွယ်ရေး​များ​ကို​ငြိမ်​စေ​သည်။ ပယ်ဖျက်​က​ဆောက်​နေ​သော​အဆောက်အအုံ​ကို​ဖယ်​သည်။ ရေအား​ရေဒါ​က​မြစ်​လမ်းကြောင်း​ကို​လင်း​စေ​သည်။ ခံတပ်​ဝင်​ရန် ခြေလျင်​ဖြင့် ချေး​ခံကျင်း​သို့မဟုတ်​ဘက်စုံ​သေနတ်​ကို​ညာ​ကလစ်​နှိပ်ပါ၊ ထုတ်​ရန် ပြီးဆုံး​သော​အဆောက်အအုံ​ကို​ကလစ်​နှိပ်ပါ။ ပြီးဆုံး​သော​ကာကွယ်သူ-VX ကို​ဒုတိယ​အကြိမ်​ကလစ်​လျှင် မြေပြင်​နှင့်​လေ​ပစ်​သေနတ်​ကို​လဲ​သည်။\n"
+"P က​ပရိုတိုကော​များ​ကို​ဖွင့်​သည်။ H က​ဤ​လမ်းညွှန်​ကို​ဖွင့်​သည်။\n"
+"အနိုင်ရ​လျှင် အခြေအနေ​စာကြောင်း​တွင် ရည်မှန်းချက်​ပြီးမြောက်​ဟု​ပြ​ပြီး တပ်ခွဲ​ကျဆုံး​လျှင် ရည်မှန်းချက်​မအောင်မြင်​ဟု​ပြ​သည်။"
+
+msgid "Left-click select. Shift-click adds. Double-click or W selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. A attack-move, D reverse, S or X halt. Q/E or the compass turn the camera, Home faces north. Select a factory and right-click to pin its rally point. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr "ဘယ်​ကလစ်​ရွေး။ Shift-ကလစ်​ထည့်။ နှစ်ချက်​ကလစ်​သို့မဟုတ် W ဖြင့်​အမျိုးအစား​ရွေး။ ရွှေ့​ရန်​မြေပြင်၊ တိုက်​ရန်​ရန်သူ​ကို​ညာ​ကလစ်။ Shift-ညာ​ကလစ်​က​လမ်းမှတ်​ထည့်။ Z တပ်ခွဲ​တန်းစီ။ A တိုက်ရင်း​ရွှေ့၊ D နောက်​ဆုတ်၊ S သို့မဟုတ် X ရပ်။ Q/E သို့မဟုတ် သံလိုက်​အိမ်မြှောင်​က ကင်မရာ​လှည့်၊ Home က မြောက်​ဘက်​ပြန်​မျက်နှာ​မူ။ စက်ရုံ​ရွေး​ပြီး ညာ​ကလစ်​ဖြင့် စုရပ်​သတ်မှတ်။ Ctrl+1-9 အုပ်စု​သိမ်း၊ နံပါတ်​က​ပြန်​ခေါ်။ ကွင်း​က​အမိန့်​ကို​မှတ်။ ခုန်​ရန်​မြေပုံ​ငယ်​ကလစ်။ F စွမ်းရည်။ H လမ်းညွှန်။ P ပရိုတိုကော​ဖွင့်။"
+
+msgid "naval structures go on water"
+msgstr "ရေတပ်​အဆောက်အအုံ​များ ရေ​ပေါ်​တွင်​သာ ဆောက်​ရ​သည်"
+
+msgid "needs dry ground"
+msgstr "ကုန်းမြေ​လို​သည်"
+
+msgid "no ground under the cursor"
+msgstr "ကာဆာ​အောက်​တွင် မြေပြင်​မရှိ"
+
+msgid "no open water in reach"
+msgstr "အနီး​တွင် ပွင့်​သော​ရေပြင်​မရှိ"
+
+msgid "no side"
+msgstr "ဘက်​မရှိ"
+
+msgid "off the map"
+msgstr "မြေပုံ​ပြင်​ပ"
+
+msgid "Only vehicles and boats reverse"
+msgstr "ယာဉ်​နှင့် လှေ​များ​သာ နောက်​ဆုတ်​နိုင်​သည်"
+
+msgid "only vehicles and boats reverse"
+msgstr "ယာဉ်​နှင့် လှေ​များ​သာ နောက်​ဆုတ်​နိုင်​သည်"
+
+msgid "outside the build radius"
+msgstr "ဆောက်​လုပ်​နိုင်​သော​အကွာ​အဝေး​ပြင်​ပ"
+
+msgid "Pack & Redeploy"
+msgstr "သိမ်း​ပြီး ပြန်​တပ်ဆင်"
+
+msgid "packer redeployed"
+msgstr "စခန်း​ယာဉ် ပြန်​တပ်ဆင်​ပြီး"
+
+msgid "place %s: click a spot, drag to face the exit, R turns"
+msgstr "%s ချ​ရန်: နေရာ​ကလစ်၊ ထွက်​ပေါက်​မျက်နှာ​မူ​ရန် ဆွဲ၊ R လှည့်"
+
+msgid "placement cancelled"
+msgstr "ချ​ခြင်း​ပယ်ဖျက်​ပြီး"
+
+msgid "Primary"
+msgstr "ပင်မ"
+
+msgid "Rally point set"
+msgstr "စုရပ်​သတ်မှတ်​ပြီး"
+
+msgid "redeploy: click to place, drag to face, R turns"
+msgstr "ပြန်​တပ်ဆင်: ချ​ရန် ကလစ်၊ မျက်နှာ​မူ​ရန် ဆွဲ၊ R လှည့်"
+
+msgid "Reset to north (Home)"
+msgstr "မြောက်​ဘက်​သို့ ပြန်​ထား (Home)"
+
+msgid "Reverse"
+msgstr "နောက်​ဆုတ်"
+
+msgid "Reverse move. Press D, then right-click: vehicles back up with their front armor toward the enemy."
+msgstr "နောက်​ဆုတ်​ရွှေ့။ D ကို​နှိပ်​ပြီး ညာ​ကလစ်: ယာဉ်​များ​သည် ရှေ့​သံချပ်​ကာ​ကို ရန်သူ​ဘက်​ထား​လျက် နောက်​ဆုတ်​သည်။"
+
+msgid "Reverse: right-click where to back up"
+msgstr "နောက်​ဆုတ်: ဆုတ်​မည့်​နေရာ​ကို ညာ​ကလစ်​နှိပ်ပါ"
+
+msgid "reverse: right-click where to back up"
+msgstr "နောက်​ဆုတ်: ဆုတ်​မည့်​နေရာ​ကို ညာ​ကလစ်​နှိပ်ပါ"
+
+msgid "Right-click the map to pin this building's rally point"
+msgstr "ဤ​အဆောက်အအုံ​၏ စုရပ်​ကို သတ်မှတ်​ရန် မြေပုံ​ကို ညာ​ကလစ်​နှိပ်ပါ"
+
+msgid "Rotate the camera left (Q)"
+msgstr "ကင်မရာ​ကို ဘယ်​သို့ လှည့် (Q)"
+
+msgid "Rotate the camera right (E)"
+msgstr "ကင်မရာ​ကို ညာ​သို့ လှည့် (E)"
+
+msgid "Secondary"
+msgstr "ဒုတိယ"
+
+msgid "Stop (S or X)."
+msgstr "ရပ် (S သို့မဟုတ် X)။"
+
+msgid "the bay must face open water"
+msgstr "ထွက်​ပေါက်​သည် ပွင့်​သော​ရေပြင်​ဘက် မျက်နှာ​မူ​ရ​မည်"
+
+msgid "the exit is blocked"
+msgstr "ထွက်​ပေါက် ပိတ်​နေ​သည်"
+
+msgid "the ground is taken"
+msgstr "မြေ​နေရာ​ယူ​ထား​ပြီး"
+
+msgid "the yard cannot pack up"
+msgstr "စခန်း​ကို သိမ်း​၍​မရ"
+
+msgid "too close to another building"
+msgstr "အခြား​အဆောက်အအုံ​နှင့် နီး​လွန်း​သည်"
+
+msgid "too far for the yard to drive"
+msgstr "စခန်း​ယာဉ် မောင်း​သွား​ရန် ဝေး​လွန်း​သည်"

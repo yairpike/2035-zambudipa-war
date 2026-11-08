@@ -145,7 +145,15 @@
         "infantry"
       ],
       "ability": "Kris Plasma Rush",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Pintle MG", "kind": "pintle", "damage": 8, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "AA Pintle", "mode": "Anti-air", "kind": "flak", "damage": 6.4, "range": 10, "interval": 0.5, "targets": ["air"], "tint": "#9FE7FF"}
+      },
+      "weapons": {
+        "primary": {"name": "Assault Rifle", "kind": "rifle", "damage": 9, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Rifle Grenade", "mode": "Grenade", "kind": "grenade", "damage": 14.4, "range": 7, "interval": 1.6, "targets": ["ground"], "tint": "#FFB347"}
+      }
     },
     {
       "id": "sampan",
@@ -166,7 +174,11 @@
         "sub"
       ],
       "ability": "Last-Stand Ram",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Machine Gun", "kind": "mg", "damage": 7, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Mini Torpedo", "mode": "Torpedo", "kind": "torpedo", "damage": 12.6, "range": 9, "interval": 2.0, "targets": ["naval"], "tint": "#58E0FF"}
+      }
     },
     {
       "id": "emerald_gunboat",
@@ -186,7 +198,11 @@
         "naval"
       ],
       "ability": "Ramming Hydro-Shield",
-      "f_stat": "incoming"
+      "f_stat": "incoming",
+      "weapons": {
+        "primary": {"name": "Deck Gun", "kind": "deck_gun", "damage": 18, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Torpedo Spread", "mode": "Torpedo", "kind": "torpedo", "damage": 28.8, "range": 10, "interval": 2.2, "targets": ["naval"], "tint": "#58E0FF"}
+      }
     },
     {
       "id": "mangrove_tube",
@@ -206,7 +222,11 @@
         "artillery"
       ],
       "ability": "Premature Discharge",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Rocket Tube", "kind": "tube", "damage": 24, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Siege Barrage", "mode": "Deployed", "kind": "tube", "damage": 36, "range": 16, "interval": 2.4, "targets": ["ground", "naval"], "tint": "#FF7A2E"}
+      }
     },
     {
       "id": "packer",
@@ -247,7 +267,11 @@
         "jet"
       ],
       "ability": "Submersible or Sky-Jet",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Bow Gun", "kind": "bow_gun", "damage": 9, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flak Burst", "mode": "Anti-air", "kind": "flak", "damage": 7.2, "range": 9, "interval": 0.6, "targets": ["air"], "tint": "#9FE7FF"}
+      }
     },
     {
       "id": "olive_ranger",
@@ -267,7 +291,11 @@
         "infantry"
       ],
       "ability": "Spider-Hole Ambush",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Assault Rifle", "kind": "rifle", "damage": 8, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Rifle Grenade", "mode": "Grenade", "kind": "grenade", "damage": 12.8, "range": 7, "interval": 1.6, "targets": ["ground"], "tint": "#FFB347"}
+      }
     },
     {
       "id": "emerald_cutter",
@@ -287,7 +315,11 @@
         "infantry"
       ],
       "ability": "Magnetic Hull Breach",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Hull Saw", "kind": "saw", "damage": 12, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Hull Breach Charge", "mode": "Breach", "kind": "charge", "damage": 24, "range": 3, "interval": 2.2, "targets": ["ground", "naval"], "tint": "#FF4545"}
+      }
     },
     {
       "id": "mangrove_skiff",
@@ -307,7 +339,11 @@
         "armor"
       ],
       "ability": "Nano-Deflector Barrier",
-      "f_stat": "incoming"
+      "f_stat": "incoming",
+      "weapons": {
+        "primary": {"name": "Machine Gun", "kind": "mg", "damage": 12, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Incendiary Rounds", "mode": "Incendiary", "kind": "mg", "damage": 15.6, "range": 8, "interval": 0.7, "targets": ["ground"], "tint": "#FF8C3A"}
+      }
     },
     {
       "id": "river_tug",
@@ -328,7 +364,11 @@
         "air"
       ],
       "ability": "Electro-Latch Detonate",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Pintle MG", "kind": "pintle", "damage": 7, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "AA Pintle", "mode": "Anti-air", "kind": "flak", "damage": 5.6, "range": 10, "interval": 0.5, "targets": ["air"], "tint": "#9FE7FF"}
+      }
     },
     {
       "id": "jade_mortar",
@@ -349,7 +389,11 @@
         "jet"
       ],
       "ability": "Jet Interceptor",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Mortar", "kind": "mortar", "damage": 18, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Incendiary Shell", "mode": "Incendiary", "kind": "mortar", "damage": 14.4, "range": 10, "interval": 1.6, "targets": ["ground"], "tint": "#FF5A1F"}
+      }
     },
     {
       "id": "packer_escort",
@@ -370,7 +414,11 @@
         "hero"
       ],
       "ability": "Telekinetic Maelstrom",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Machine Gun", "kind": "mg", "damage": 9, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Incendiary Rounds", "mode": "Incendiary", "kind": "mg", "damage": 11.7, "range": 8, "interval": 0.7, "targets": ["ground"], "tint": "#FF8C3A"}
+      }
     },
     {
       "id": "olive_sapper",
@@ -390,7 +438,11 @@
         "infantry"
       ],
       "ability": "Sprint Skates",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Assault Rifle", "kind": "rifle", "damage": 8, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Rifle Grenade", "mode": "Grenade", "kind": "grenade", "damage": 12.8, "range": 7, "interval": 1.6, "targets": ["ground"], "tint": "#FFB347"}
+      }
     },
     {
       "id": "emerald_ferry",
@@ -410,7 +462,11 @@
         "naval"
       ],
       "ability": "Torpedo Fan Spread",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Bow Gun", "kind": "bow_gun", "damage": 8, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flak Burst", "mode": "Anti-air", "kind": "flak", "damage": 6.4, "range": 9, "interval": 0.6, "targets": ["air"], "tint": "#9FE7FF"}
+      }
     },
     {
       "id": "wharf_gun",
@@ -430,7 +486,11 @@
         "vehicle"
       ],
       "ability": "Chopper Mode",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Deck Gun", "kind": "deck_gun", "damage": 20, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Torpedo Spread", "mode": "Torpedo", "kind": "torpedo", "damage": 32, "range": 10, "interval": 2.2, "targets": ["naval"], "tint": "#58E0FF"}
+      }
     },
     {
       "id": "plantation_bomber",
@@ -449,7 +509,11 @@
       "locomotion": "air",
       "tags": ["drone", "air"],
       "ability": "Bomblet Carpet",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Bomblet Rack", "kind": "bomblet", "damage": 12, "range": 11, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Cluster Drop", "mode": "Carpet", "kind": "bomblet", "damage": 16.8, "range": 8, "interval": 1.8, "targets": ["ground", "naval"], "tint": "#FFB347"}
+      }
     },
     {
       "id": "longtail_raider",
@@ -468,7 +532,11 @@
       "locomotion": "amphibious",
       "tags": ["naval"],
       "ability": "Beach Rockets",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Rocket Pods", "kind": "rocket", "damage": 16, "range": 9, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Saturation Salvo", "mode": "Salvo", "kind": "rocket", "damage": 11.2, "range": 12, "interval": 0.6, "targets": ["ground", "naval"], "tint": "#FF7A2E"}
+      }
     }
   ],
   "balance": "pass1"

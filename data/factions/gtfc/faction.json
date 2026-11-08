@@ -158,7 +158,11 @@
         "infantry"
       ],
       "ability": "Slag Molotov",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Assault Rifle", "kind": "rifle", "damage": 8, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Rifle Grenade", "mode": "Grenade", "kind": "grenade", "damage": 12.8, "range": 7, "interval": 1.6, "targets": ["ground"], "tint": "#FFB347"}
+      }
     },
     {
       "id": "slag_hauler",
@@ -178,7 +182,11 @@
         "vehicle"
       ],
       "ability": "3D-Print Overdrive",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Cab Gun", "kind": "cab_gun", "damage": 6, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flare AA", "mode": "Anti-air", "kind": "flare", "damage": 3.6, "range": 9, "interval": 0.9, "targets": ["air"], "tint": "#FFD27F"}
+      }
     },
     {
       "id": "ruby_lancer",
@@ -198,7 +206,11 @@
         "infantry"
       ],
       "ability": "Bunker Lock",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Ruby Lance", "kind": "lance", "damage": 16, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Lance Overcharge", "mode": "Siege", "kind": "lance", "damage": 28.8, "range": 10, "interval": 2.0, "targets": ["ground", "naval"], "tint": "#FF3B5C"}
+      }
     },
     {
       "id": "amber_tank",
@@ -218,7 +230,11 @@
         "armor"
       ],
       "ability": "Magnetic Harpoon Grinder",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "AP Cannon", "kind": "cannon", "damage": 22, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Coaxial MG", "mode": "Anti-infantry", "kind": "mg", "damage": 9.9, "range": 8, "interval": 0.35, "targets": ["ground"], "tint": "#FFF2A8"}
+      }
     },
     {
       "id": "monsoon_tube",
@@ -238,7 +254,11 @@
         "artillery"
       ],
       "ability": "Slag Jump Thruster",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Rocket Tube", "kind": "tube", "damage": 28, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Siege Barrage", "mode": "Deployed", "kind": "tube", "damage": 42, "range": 16, "interval": 2.4, "targets": ["ground", "naval"], "tint": "#FF7A2E"}
+      }
     },
     {
       "id": "channel_skiff",
@@ -258,7 +278,11 @@
         "naval"
       ],
       "ability": "Land Legs",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Bow Gun", "kind": "bow_gun", "damage": 10, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flak Burst", "mode": "Anti-air", "kind": "flak", "damage": 8, "range": 9, "interval": 0.6, "targets": ["air"], "tint": "#9FE7FF"}
+      }
     },
     {
       "id": "crimson_sapper",
@@ -278,7 +302,11 @@
         "infantry"
       ],
       "ability": "Inflatable Raft and C4",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Assault Rifle", "kind": "rifle", "damage": 9, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Rifle Grenade", "mode": "Grenade", "kind": "grenade", "damage": 14.4, "range": 7, "interval": 1.6, "targets": ["ground"], "tint": "#FFB347"}
+      }
     },
     {
       "id": "amber_scout",
@@ -298,7 +326,11 @@
         "infantry"
       ],
       "ability": "Adrenaline Cloud",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Carbine", "kind": "carbine", "damage": 7, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flashbang Volley", "mode": "Suppress", "kind": "flashbang", "damage": 8.4, "range": 6, "interval": 1.2, "targets": ["ground"], "tint": "#F4F1C1"}
+      }
     },
     {
       "id": "yard_crane",
@@ -318,7 +350,11 @@
         "vehicle"
       ],
       "ability": "Evacuate and Lay Mines",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Cab Gun", "kind": "cab_gun", "damage": 6, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flare AA", "mode": "Anti-air", "kind": "flare", "damage": 3.6, "range": 9, "interval": 0.9, "targets": ["air"], "tint": "#FFD27F"}
+      }
     },
     {
       "id": "ruby_mortar",
@@ -339,7 +375,11 @@
         "hero"
       ],
       "ability": "Warlord's Bribe",
-      "f_stat": "hp"
+      "f_stat": "hp",
+      "weapons": {
+        "primary": {"name": "Mortar", "kind": "mortar", "damage": 20, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Incendiary Shell", "mode": "Incendiary", "kind": "mortar", "damage": 16, "range": 10, "interval": 1.6, "targets": ["ground"], "tint": "#FF5A1F"}
+      }
     },
     {
       "id": "slag_dozer",
@@ -359,7 +399,11 @@
         "vehicle"
       ],
       "ability": "Salvage Leech Beam",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Dozer Blade", "kind": "blade", "damage": 11, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Dozer Ram", "mode": "Ram", "kind": "ram", "damage": 18.7, "range": 3, "interval": 1.6, "targets": ["ground"], "tint": "#E6C07B"}
+      }
     },
     {
       "id": "amber_welder",
@@ -380,7 +424,11 @@
         "jet"
       ],
       "ability": "Fiber-Optic Tether",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Plasma Torch", "kind": "torch", "damage": 8, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Cutting Beam", "mode": "Beam", "kind": "beam", "damage": 12, "range": 4, "interval": 1.2, "targets": ["ground", "naval"], "tint": "#FF6BD6"}
+      }
     },
     {
       "id": "monsoon_spotter",
@@ -401,7 +449,11 @@
         "air"
       ],
       "ability": "Electro-Stasis Tether",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Assault Rifle", "kind": "rifle", "damage": 8, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Rifle Grenade", "mode": "Grenade", "kind": "grenade", "damage": 12.8, "range": 7, "interval": 1.6, "targets": ["ground"], "tint": "#FFB347"}
+      }
     },
     {
       "id": "bullion_truck",
@@ -421,7 +473,11 @@
         "air"
       ],
       "ability": "Cargo Winch Airlift",
-      "f_stat": "hp"
+      "f_stat": "hp",
+      "weapons": {
+        "primary": {"name": "Pintle MG", "kind": "pintle", "damage": 7, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "AA Pintle", "mode": "Anti-air", "kind": "flak", "damage": 5.6, "range": 10, "interval": 0.5, "targets": ["air"], "tint": "#9FE7FF"}
+      }
     },
     {
       "id": "scaffold_rig",
@@ -441,7 +497,11 @@
         "air"
       ],
       "ability": "Chemical Afterburner",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Rivet Hammer", "kind": "hammer", "damage": 10, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Pile Driver", "mode": "Siege", "kind": "hammer", "damage": 18, "range": 3, "interval": 1.8, "targets": ["ground"], "tint": "#E6C07B"}
+      }
     },
     {
       "id": "channel_ferry",
@@ -461,7 +521,11 @@
         "naval"
       ],
       "ability": "Overload Barrage",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Bow Gun", "kind": "bow_gun", "damage": 9, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Flak Burst", "mode": "Anti-air", "kind": "flak", "damage": 7.2, "range": 9, "interval": 0.6, "targets": ["air"], "tint": "#9FE7FF"}
+      }
     },
     {
       "id": "kachin_dog",
@@ -481,7 +545,11 @@
         "infantry"
       ],
       "ability": "Sonic Howl",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Bark Charge", "kind": "howl", "damage": 8, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Sonic Pulse", "mode": "Shock", "kind": "sonic", "damage": 10.4, "range": 6, "interval": 1.4, "targets": ["ground"], "tint": "#B8F2FF"}
+      }
     },
     {
       "id": "fpv_kamikaze",
@@ -501,7 +569,11 @@
       "locomotion": "air",
       "tags": ["drone", "air"],
       "ability": "Shaped Charge",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Shaped Charge", "kind": "shaped_charge", "damage": 34, "range": 6, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Recon Hover", "mode": "Spotter", "kind": "spotter", "damage": 8.5, "range": 10, "interval": 1.0, "targets": ["ground", "naval"], "tint": "#C8FFC8"}
+      }
     },
     {
       "id": "printsmith",
@@ -520,7 +592,11 @@
       "locomotion": "ground",
       "tags": ["infantry"],
       "ability": "Street Press",
-      "f_stat": "damage"
+      "f_stat": "damage",
+      "weapons": {
+        "primary": {"name": "Assault Rifle", "kind": "rifle", "damage": 7, "range": 7, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "Rifle Grenade", "mode": "Grenade", "kind": "grenade", "damage": 11.2, "range": 6, "interval": 1.6, "targets": ["ground"], "tint": "#FFB347"}
+      }
     },
     {
       "id": "teak_technical",
@@ -539,7 +615,11 @@
       "locomotion": "ground",
       "tags": ["vehicle"],
       "ability": "Bench Seat",
-      "f_stat": "speed"
+      "f_stat": "speed",
+      "weapons": {
+        "primary": {"name": "Pintle MG", "kind": "pintle", "damage": 9, "range": 8, "interval": 0.8, "targets": ["ground", "naval"], "tint": "#FFD15A"},
+        "secondary": {"name": "AA Pintle", "mode": "Anti-air", "kind": "flak", "damage": 7.2, "range": 10, "interval": 0.5, "targets": ["air"], "tint": "#9FE7FF"}
+      }
     }
   ],
   "balance": "pass1"
