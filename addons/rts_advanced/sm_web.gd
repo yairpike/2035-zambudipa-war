@@ -55,7 +55,7 @@ func _fit_display() -> void:
 	if phys.y > phys.x:
 		factor = dpi
 	elif float(phys.y) > 720.0:
-		factor = minf(float(phys.y) / 720.0, dpi)
+		factor = minf(maxf(float(phys.y) / 960.0, dpi), float(phys.y) / 720.0)
 	if factor < 1.0:
 		factor = 1.0
 	_applied_phys = phys

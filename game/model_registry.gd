@@ -2,6 +2,8 @@ extends RefCounted
 ## Swaps a procedural mesh for res://game/models/<id>.glb or .gltf when that file exists.
 ## The procedural mesh stays when the file is missing. See game/models/README.md.
 
+const AssetPack = preload("res://game/asset_pack.gd")
+
 static func apply_unit(body: MeshInstance3D, id: String, primary: Color = Color.WHITE, accent: Color = Color.WHITE) -> bool:
 	if body == null or id == "":
 		return false
@@ -334,6 +336,7 @@ static func _path(key: String) -> String:
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/models"))
 	roots.append(base.path_join("models"))
 	roots.append(base.get_base_dir().path_join("Resources/models"))
+	roots.append(AssetPack.root().path_join("models"))
 	for root: String in roots:
 		var found: String = root.path_join("%s.glb" % id)
 		if FileAccess.file_exists(found):
@@ -354,6 +357,7 @@ static func _rigged_path(id: String) -> String:
 	tries.append(ProjectSettings.globalize_path("res://").path_join("build/web/models/rigged/%s.glb" % id))
 	tries.append(base.path_join("models/rigged/%s.glb" % id))
 	tries.append(base.get_base_dir().path_join("Resources/models/rigged/%s.glb" % id))
+	tries.append(AssetPack.root().path_join("models/rigged/%s.glb" % id))
 	for path: String in tries:
 		if FileAccess.file_exists(path):
 			return path
@@ -465,16 +469,21 @@ static func _prefetch_listed(owner: Node) -> void:
 		_fetch(owner, id)
 
 static func _request_owner(owner: Node) -> Node:
-	if owner != null and owner.get_tree() != null and owner.get_tree().root != null:
+	if owner != null and owner.is_inside_tree() and owner.get_tree() != null and owner.get_tree().root != null:
 		return owner.get_tree().root
 	return owner
+
+## Re-deferring until the host enters the tree spins inside one message flush and overflows the queue on web.
+static func _when_in_tree(host: Node, job: Callable) -> void:
+	if not host.tree_entered.is_connected(job):
+		host.tree_entered.connect(job, CONNECT_ONE_SHOT)
 
 static func _pull_index(owner: Node) -> void:
 	if owner == null or _index_read:
 		return
 	var host: Node = _request_owner(owner)
 	if not host.is_inside_tree():
-		_pull_index.call_deferred(owner)
+		_when_in_tree(host, _pull_index.bind(owner))
 		return
 	var http := HTTPRequest.new()
 	http.timeout = 20.0
@@ -492,7 +501,8 @@ static func _start_index(http: HTTPRequest, host: Node) -> void:
 	if err != OK:
 		http.queue_free()
 
-static func _got_index(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, owner: Node) -> void:
+static func _got_index(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, owner: Variant) -> void:
+	var parent: Node = http.get_parent() if is_instance_valid(http) else null
 	if is_instance_valid(http):
 		http.queue_free()
 	if result != HTTPRequest.RESULT_SUCCESS or code != 200 or body.is_empty():
@@ -500,7 +510,8 @@ static func _got_index(result: int, code: int, _headers: PackedStringArray, body
 			_index_read = true
 			_release_unlisted()
 		return
-	_arm_index(owner, body.get_string_from_utf8())
+	var target: Node = owner as Node if is_instance_valid(owner) else parent
+	_arm_index(target, body.get_string_from_utf8())
 
 static func _page() -> String:
 	var href: String = str(JavaScriptBridge.eval("window.location.href", true))
@@ -524,6 +535,7 @@ static func _index_text() -> String:
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/models/index.txt"))
 	roots.append(base.path_join("models/index.txt"))
 	roots.append(base.get_base_dir().path_join("Resources/models/index.txt"))
+	roots.append(AssetPack.root().path_join("models/index.txt"))
 	for path: String in roots:
 		if FileAccess.file_exists(path):
 			return FileAccess.get_file_as_string(path)
@@ -556,7 +568,7 @@ static func _fetch(owner: Node, id: String) -> void:
 		return
 	var host: Node = _request_owner(owner)
 	if not host.is_inside_tree():
-		_fetch.call_deferred(owner, id)
+		_when_in_tree(host, _fetch.bind(owner, id))
 		return
 	_inflight[id] = true
 	var http := HTTPRequest.new()

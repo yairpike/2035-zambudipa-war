@@ -1,0 +1,276 @@
+{
+ "place": "yangon_downtown",
+ "note": "Golden Confluence showcase: Yangon's downtown grid on the north bank under the Shwedagon, a Lao river village and jungle tracks on the south bank, one ford between them.",
+ "layout": "showcase",
+ "open": [
+  [
+   2,
+   34,
+   16,
+   16
+  ],
+  [
+   52,
+   2,
+   18,
+   12
+  ]
+ ],
+ "towns": [
+  {
+   "id": "golden_city",
+   "place": "yangon_downtown",
+   "rect": [
+    0,
+    0,
+    52,
+    22
+   ],
+   "axis": "x",
+   "block": [
+    4,
+    4
+   ],
+   "homes": [
+    "peranakan_shophouse",
+    "neon_shophouse",
+    "city_hdb"
+   ],
+   "shops": "peranakan_shophouse",
+   "high": [
+    1,
+    2
+   ],
+   "civic": [
+    {
+     "block": [
+      6,
+      1
+     ],
+     "id": "city_highrise"
+    },
+    {
+     "block": [
+      8,
+      2
+     ],
+     "id": "wet_market"
+    },
+    {
+     "block": [
+      5,
+      3
+     ],
+     "id": "city_hdb"
+    },
+    {
+     "block": [
+      9,
+      0
+     ],
+     "id": "city_highrise"
+    }
+   ]
+  },
+  {
+   "id": "ban_confluence",
+   "place": "pak_beng",
+   "rect": [
+    40,
+    30,
+    26,
+    16
+   ],
+   "axis": "z",
+   "block": [
+    4,
+    4
+   ],
+   "homes": [
+    "khmer_stilt_house",
+    "shan_stilt_house",
+    "mekong_stilt_house"
+   ],
+   "civic": [
+    {
+     "block": [
+      2,
+      1
+     ],
+     "id": "lao_sim"
+    }
+   ]
+  }
+ ],
+ "grid": {
+  "pitch": [
+   12,
+   12
+  ],
+  "at": [
+   5,
+   29
+  ]
+ },
+ "landmark": {
+  "id": "lm_shwedagon",
+  "rect": [
+   7,
+   8,
+   7,
+   6
+  ]
+ },
+ "nodes": [
+  {
+   "id": "slag_west",
+   "kind": "slag",
+   "cell": [
+    14,
+    40
+   ],
+   "rate": 20
+  },
+  {
+   "id": "slag_north",
+   "kind": "slag",
+   "cell": [
+    12,
+    31
+   ],
+   "rate": 12
+  },
+  {
+   "id": "slag_south",
+   "kind": "slag",
+   "cell": [
+    6,
+    47
+   ],
+   "rate": 12
+  },
+  {
+   "id": "slag_mid",
+   "kind": "slag",
+   "cell": [
+    22,
+    35
+   ],
+   "rate": 12
+  },
+  {
+   "id": "bullion_east",
+   "kind": "bullion",
+   "cell": [
+    57,
+    15
+   ],
+   "rate": 25
+  },
+  {
+   "id": "bullion_north",
+   "kind": "bullion",
+   "cell": [
+    66,
+    4
+   ],
+   "rate": 18
+  },
+  {
+   "id": "rare_shore",
+   "kind": "rare",
+   "cell": [
+    28,
+    21
+   ],
+   "rate": 0,
+   "water": true
+  },
+  {
+   "id": "rare_ford",
+   "kind": "rare",
+   "cell": [
+    44,
+    28
+   ],
+   "rate": 0,
+   "water": true
+  }
+ ],
+ "sites": [
+  {
+   "id": "cyber",
+   "kind": "cyber",
+   "cell": [
+    38,
+    12
+   ]
+  },
+  {
+   "id": "cyber_north",
+   "kind": "cyber",
+   "cell": [
+    22,
+    4
+   ]
+  },
+  {
+   "id": "salvage_wreck",
+   "kind": "salvage",
+   "cell": [
+    26,
+    24
+   ]
+  }
+ ],
+ "props": [
+  {
+   "id": "concrete_bridge",
+   "cell": [
+    35,
+    24
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "longtail_boat",
+   "cell": [
+    18,
+    24
+   ],
+   "yaw": 30
+  },
+  {
+   "id": "jungle_waterfall",
+   "cell": [
+    1,
+    30
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "karst_tower",
+   "cell": [
+    68,
+    47
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "banyan_tree",
+   "cell": [
+    24,
+    44
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "bamboo_clump",
+   "cell": [
+    30,
+    40
+   ],
+   "yaw": 0
+  }
+ ]
+}

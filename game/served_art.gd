@@ -3,6 +3,8 @@ extends RefCounted
 ## Desktop and headless runs also read res://, build/web/, and tests/fixtures/.
 ## The web build fetches briefings/<id>.webp over HTTP, the same way models are fetched.
 
+const AssetPack = preload("res://game/asset_pack.gd")
+
 static var _cache: Dictionary = {}
 static var _inflight: Dictionary = {}
 static var _waiters: Dictionary = {}
@@ -51,6 +53,7 @@ static func _read(rel: String) -> PackedByteArray:
 		roots.append(ProjectSettings.globalize_path("res://").path_join("build/web"))
 		roots.append(base)
 		roots.append(base.get_base_dir().path_join("Resources"))
+		roots.append(AssetPack.root())
 		for root: String in roots:
 			var path: String = root.path_join(rel)
 			if FileAccess.file_exists(path):
@@ -78,8 +81,14 @@ static func _fetch(owner: Node, rel: String) -> void:
 	http.timeout = 20.0
 	http.accept_gzip = false
 	var host: Node = owner
-	if owner.get_tree() != null and owner.get_tree().root != null:
+	if owner.is_inside_tree() and owner.get_tree() != null and owner.get_tree().root != null:
 		host = owner.get_tree().root
+	if not host.is_inside_tree():
+		if not host.tree_entered.is_connected(_fetch.bind(owner, rel)):
+			host.tree_entered.connect(_fetch.bind(owner, rel), CONNECT_ONE_SHOT)
+		_inflight.erase(rel)
+		http.queue_free()
+		return
 	http.ready.connect(_start_fetch.bind(http, rel), CONNECT_ONE_SHOT)
 	host.add_child.call_deferred(http)
 

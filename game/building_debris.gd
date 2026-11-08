@@ -5,6 +5,7 @@ extends RefCounted
 
 const FX = preload("res://game/motion_fx.gd")
 const Catalog = preload("res://game/model_catalog.gd")
+const Settings = preload("res://game/match_settings.gd")
 
 ## Above this many triangles the model is not cut; pieces and the pancaking husk carry the collapse instead.
 const CHUNK_BUDGET: int = 40000
@@ -337,7 +338,7 @@ static func effects(parent: Node3D, kinds: PackedStringArray, ink: PackedColorAr
 static func splinters(parent: Node3D, at: Vector3, span: float, ink: PackedColorArray) -> CPUParticles3D:
 	var p: CPUParticles3D = CPUParticles3D.new()
 	p.name = "Splinters"
-	p.amount = 40
+	p.amount = Settings.particles(40)
 	p.lifetime = 1.4
 	p.one_shot = true
 	p.explosiveness = 0.9
@@ -398,7 +399,7 @@ static func sparks(parent: Node3D, at: Vector3, span: float) -> CPUParticles3D:
 static func glass(parent: Node3D, at: Vector3, span: float, ink: PackedColorArray) -> CPUParticles3D:
 	var p: CPUParticles3D = CPUParticles3D.new()
 	p.name = "Glass"
-	p.amount = 48
+	p.amount = Settings.particles(48)
 	p.lifetime = 1.3
 	p.one_shot = true
 	p.explosiveness = 0.95

@@ -1,19 +1,33 @@
 {
  "place": "jakarta_kota_tua",
  "note": "Jakarta's Kota Tua: Dutch grid round Fatahillah square, shophouse rows on the canal street.",
+ "open": [
+  [
+   5,
+   2,
+   18,
+   18
+  ],
+  [
+   13,
+   7,
+   12,
+   10
+  ]
+ ],
  "towns": [
   {
    "id": "kota_tua",
    "place": "jakarta_kota_tua",
    "rect": [
-    28,
+    0,
     1,
-    8,
-    21
+    36,
+    22
    ],
    "axis": "x",
    "block": [
-    6,
+    4,
     4
    ],
    "homes": [
@@ -28,33 +42,11 @@
    "civic": [
     {
      "block": [
-      0,
+      6,
       1
      ],
      "id": "city_colonial"
     }
-   ]
-  },
-  {
-   "id": "kota_tua_row",
-   "place": "jakarta_kota_tua",
-   "rect": [
-    0,
-    19,
-    22,
-    4
-   ],
-   "axis": "x",
-   "block": [
-    6,
-    2
-   ],
-   "homes": [
-    "peranakan_shophouse"
-   ],
-   "shops": "peranakan_shophouse",
-   "high": [
-    0
    ]
   }
  ]

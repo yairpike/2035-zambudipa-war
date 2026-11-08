@@ -318,6 +318,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	var host: Node = get_parent()
 	if host == null:
 		return
+	var builder: SMSide = host.get("side") as SMSide
+	if builder != null and builder.placement.active:
+		builder.placement.cancel()
+		_handled()
+		return
 	var settings: Control = _settings()
 	if settings != null and settings.visible and not _shown:
 		return

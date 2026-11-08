@@ -5,6 +5,7 @@ extends Control
 ## Headless runs never open a video. A missing file keeps the still.
 ## Quiet beds in ui/menu/video/bed/ are not played.
 
+const AssetPack = preload("res://game/asset_pack.gd")
 const HOLD: float = 12.0
 const FADE: float = 0.65
 
@@ -204,6 +205,7 @@ func _video_file(stem: String) -> String:
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/ui/menu/video"))
 	roots.append(base.path_join("ui/menu/video"))
 	roots.append(base.get_base_dir().path_join("Resources/ui/menu/video"))
+	roots.append(AssetPack.root().path_join("ui/menu/video"))
 	for root: String in roots:
 		var path: String = root.path_join(name)
 		if FileAccess.file_exists(path):
@@ -255,12 +257,17 @@ func _pull(file_name: String, slot: String) -> void:
 	if not OS.has_feature("web") or file_name.contains("..") or file_name.contains("\\"):
 		return
 	if not is_inside_tree():
-		_pull.call_deferred(file_name, slot)
+		_when_in_tree(_pull.bind(file_name, slot))
 		return
 	var http := HTTPRequest.new()
 	http.timeout = 20.0
 	http.ready.connect(_start_pull.bind(http, file_name, slot), CONNECT_ONE_SHOT)
 	add_child.call_deferred(http)
+
+## Re-deferring until the node enters the tree spins inside one message flush and overflows the queue on web.
+func _when_in_tree(job: Callable) -> void:
+	if not tree_entered.is_connected(job):
+		tree_entered.connect(job, CONNECT_ONE_SHOT)
 
 func _start_pull(http: HTTPRequest, file_name: String, slot: String) -> void:
 	if not is_instance_valid(http) or not http.is_inside_tree():
@@ -295,7 +302,7 @@ func _pull_video(stem: String) -> void:
 	if _video_wait.has(stem) or stem.contains(".."):
 		return
 	if not is_inside_tree():
-		_pull_video.call_deferred(stem)
+		_when_in_tree(_pull_video.bind(stem))
 		return
 	_video_wait[stem] = true
 	var http := HTTPRequest.new()
@@ -396,6 +403,7 @@ static func _read(file_name: String) -> PackedByteArray:
 		roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/ui/menu"))
 		roots.append(base.path_join("ui/menu"))
 		roots.append(base.get_base_dir().path_join("Resources/ui/menu"))
+		roots.append(AssetPack.root().path_join("ui/menu"))
 		for root: String in roots:
 			var path: String = root.path_join(file_name)
 			if FileAccess.file_exists(path):

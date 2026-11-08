@@ -1,19 +1,44 @@
 {
  "place": "kawthaung",
  "note": "Kawthaung waterfront: shophouse row on the jetty road, kampung houses up the slope, rubber behind.",
+ "open": [
+  [
+   5,
+   2,
+   18,
+   18
+  ],
+  [
+   13,
+   7,
+   12,
+   10
+  ]
+ ],
+ "paint": [
+  {
+   "rect": [
+    17,
+    0,
+    2,
+    24
+   ],
+   "domain": "deep"
+  }
+ ],
  "towns": [
   {
    "id": "kawthaung",
    "place": "kawthaung",
    "rect": [
-    28,
+    0,
     1,
-    8,
-    21
+    36,
+    22
    ],
    "axis": "x",
    "block": [
-    6,
+    4,
     4
    ],
    "homes": [
@@ -25,28 +50,6 @@
     1,
     2
    ]
-  },
-  {
-   "id": "kawthaung_row",
-   "place": "kawthaung",
-   "rect": [
-    0,
-    19,
-    22,
-    4
-   ],
-   "axis": "x",
-   "block": [
-    6,
-    2
-   ],
-   "homes": [
-    "peranakan_shophouse"
-   ],
-   "shops": "peranakan_shophouse",
-   "high": [
-    0
-   ]
   }
  ],
  "orchards": [
@@ -54,10 +57,52 @@
    "id": "rubber_estate",
    "tree": "rubber_tree",
    "rect": [
-    0,
     1,
+    2,
     4,
-    17
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "rubber_estate",
+   "tree": "rubber_tree",
+   "rect": [
+    1,
+    7,
+    4,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "rubber_estate",
+   "tree": "rubber_tree",
+   "rect": [
+    1,
+    12,
+    4,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "rubber_estate",
+   "tree": "rubber_tree",
+   "rect": [
+    1,
+    17,
+    4,
+    4
    ],
    "pitch": [
     1,

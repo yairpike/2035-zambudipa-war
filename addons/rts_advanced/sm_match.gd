@@ -2,7 +2,7 @@ class_name SMMatch
 extends RefCounted
 ## Headless match: faction pipeline, channel crossing, abilities, passive enemy, bots.
 
-signal site_made(host: Node3D, node_name: String, pos: Vector3, size: Vector3, color: Color, form: String)
+signal site_made(host: Node3D, node_name: String, pos: Vector3, size: Vector3, color: Color, form: String, yaw: float)
 signal plate_sunk(host: Node3D, node_name: String)
 signal deck_fit(host: Node3D, deck_name: String, north_up: bool, south_up: bool)
 
@@ -28,6 +28,8 @@ var pipeline_ok: bool = false
 var claimed: bool = false
 var faction_id: String = "gtfc"
 var spans: Dictionary = {}
+## Site id to the yaw its front faces, from the map plan or dressing.
+var site_yaw: Dictionary = {}
 
 func setup_phillips(faction: String = "gtfc") -> void:
 	faction_id = faction
@@ -49,7 +51,7 @@ func setup_phillips(faction: String = "gtfc") -> void:
 	yard.building_tier[&"barracks"] = 1
 	goods = SMCommodityNet.new()
 	tech = SMTechNet.new()
-	_sites_phillips()
+	_sites_dressed("phillips")
 	abilities = SMAbilities.new()
 	ew = SMEwField.new()
 	ew.center = grid.cell_center(SMDomainGrid.at("phillips", Vector2i(10, 6)))
@@ -231,10 +233,10 @@ func place_sites(map_id: String, p_grid: SMDomainGrid) -> void:
 	tech = SMTechNet.new()
 	if SMMapPlan.exists(map_id):
 		_sites_plan(SMMapPlan.of(map_id))
-	elif map_id == "sop_ruak":
-		_sites_sop()
+	elif SMMapPlan.dressing(map_id) != null:
+		_sites_dressed(map_id)
 	else:
-		_sites_phillips()
+		_sites_dressed("phillips")
 
 func tick_live(delta: float, purse: RTSEconomy, squad: SMPointer, foe_purse: RTSEconomy = null) -> void:
 	goods.advance(delta, purse)
@@ -292,7 +294,8 @@ func paint_sites(host: Node3D) -> void:
 			size = Vector3(0.36, 2.3, 0.36)
 		elif kind == SMTechNet.SALVAGE:
 			size = Vector3(1.8, 0.45, 1.1)
-		_site_mesh(host, node_name, spot + Vector3(0.0, lift, 0.0), size, _site_color(kind), _tech_form(kind))
+		var facing: float = SMMapPlan.turn_for("", float(site_yaw.get(StringName(str(site.get("id", ""))), 180.0)))
+		_site_mesh(host, node_name, spot + Vector3(0.0, lift, 0.0), size, _site_color(kind), _tech_form(kind), facing)
 
 func collapse_bridge(id: StringName, squad: SMPointer, host: Node3D) -> void:
 	var span: Rect2i = _bridge_span(id)
@@ -323,43 +326,20 @@ func _owns(kind: StringName) -> bool:
 			return true
 	return false
 
-func _sites_phillips() -> void:
-	_node(&"slag_west", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("phillips", Vector2i(8, 8)), 20, false)
-	_node(&"slag_north", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("phillips", Vector2i(6, 4)), 12, false)
-	_node(&"slag_south", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("phillips", Vector2i(4, 16)), 12, false)
-	_node(&"slag_mid", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("phillips", Vector2i(10, 14)), 12, false)
-	_node(&"bullion_east", SMCommodityNet.KIND_BULLION, SMDomainGrid.at("phillips", Vector2i(32, 16)), 25, false)
-	_node(&"bullion_north", SMCommodityNet.KIND_BULLION, SMDomainGrid.at("phillips", Vector2i(34, 6)), 18, false)
-	_node(&"rare_shore", SMCommodityNet.KIND_RARE, SMDomainGrid.at("phillips", Vector2i(13, 12)), 0, true)
-	_node(&"rare_ford", SMCommodityNet.KIND_RARE, SMDomainGrid.at("phillips", Vector2i(14, 18)), 0, true)
-	tech.add_site(&"cyber", SMTechNet.CYBER, grid.cell_center(SMDomainGrid.at("phillips", Vector2i(28, 18))))
-	tech.add_site(&"cyber_north", SMTechNet.CYBER, grid.cell_center(SMDomainGrid.at("phillips", Vector2i(24, 4))))
-	tech.add_site(&"salvage_wreck", SMTechNet.SALVAGE, grid.cell_center(SMDomainGrid.at("phillips", Vector2i(18, 12))))
-
-func _sites_sop() -> void:
-	_node(&"slag_a", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(4, 20)), 14, false)
-	_node(&"slag_b", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(8, 30)), 14, false)
-	_node(&"slag_c", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(12, 32)), 12, false)
-	_node(&"slag_d", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(2, 28)), 12, false)
-	_node(&"slag_e", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(14, 24)), 12, false)
-	_node(&"slag_f", SMCommodityNet.KIND_SLAG, SMDomainGrid.at("sop_ruak", Vector2i(6, 34)), 12, false)
-	_node(&"jade_a", SMCommodityNet.KIND_JADE, SMDomainGrid.at("sop_ruak", Vector2i(4, 6)), 15, false)
-	_node(&"jade_b", SMCommodityNet.KIND_JADE, SMDomainGrid.at("sop_ruak", Vector2i(8, 4)), 15, false)
-	_node(&"jade_c", SMCommodityNet.KIND_JADE, SMDomainGrid.at("sop_ruak", Vector2i(12, 8)), 15, false)
-	_node(&"bullion_a", SMCommodityNet.KIND_BULLION, SMDomainGrid.at("sop_ruak", Vector2i(24, 28)), 20, false)
-	_node(&"bullion_b", SMCommodityNet.KIND_BULLION, SMDomainGrid.at("sop_ruak", Vector2i(30, 24)), 20, false)
-	_node(&"bullion_c", SMCommodityNet.KIND_BULLION, SMDomainGrid.at("sop_ruak", Vector2i(32, 30)), 18, false)
-	tech.add_site(&"cyber_a", SMTechNet.CYBER, grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(10, 26))))
-	tech.add_site(&"cyber_b", SMTechNet.CYBER, grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(28, 32))))
-	tech.add_site(&"cyber_c", SMTechNet.CYBER, grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(6, 10))))
-	tech.add_site(&"bazaar", SMTechNet.BAZAAR, grid.cell_center(SMDomainGrid.at("sop_ruak", Vector2i(12, 22))))
+## Maps with no skirmish plan list nodes and sites in their dressing. Its lots go solid on the sim grid here.
+func _sites_dressed(map_id: String) -> void:
+	var dress: SMMapPlan = SMMapPlan.dressing(map_id)
+	dress.hold_lots(grid)
+	_sites_plan(dress)
 
 func _sites_plan(plan: SMMapPlan) -> void:
 	spans.clear()
+	site_yaw.clear()
 	for row: Dictionary in plan.nodes:
 		_node(row["id"] as StringName, SMMapPlan.goods_kind(row["kind"] as StringName), row["cell"] as Vector2i, int(row["rate"]), bool(row["water"]))
 	for row: Dictionary in plan.sites:
 		tech.add_site(row["id"] as StringName, SMMapPlan.site_kind(row["kind"] as StringName), grid.cell_center(row["cell"] as Vector2i))
+		site_yaw[row["id"] as StringName] = float(row["yaw"])
 		var span: Rect2i = row["span"] as Rect2i
 		if span.size != Vector2i.ZERO:
 			spans[row["id"] as StringName] = span
@@ -438,5 +418,5 @@ func _tech_form(kind: StringName) -> String:
 		return "garrison"
 	return "salvage"
 
-func _site_mesh(host: Node3D, node_name: String, pos: Vector3, size: Vector3, color: Color, form: String = "") -> void:
-	site_made.emit(host, node_name, pos, size, color, form)
+func _site_mesh(host: Node3D, node_name: String, pos: Vector3, size: Vector3, color: Color, form: String = "", yaw: float = 0.0) -> void:
+	site_made.emit(host, node_name, pos, size, color, form, yaw)

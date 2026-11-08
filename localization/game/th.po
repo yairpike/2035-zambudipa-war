@@ -198,7 +198,7 @@ msgid "Artillery Telemetry Link"
 msgstr "ลิงก์​ข้อมูล​ปืน​ใหญ่"
 
 msgid "ASEAN 2031"
-msgstr "ASEAN 2031"
+msgstr "2035 - Zambudipa War"
 
 msgid "Athena Orbital Designator"
 msgstr "เครื่อง​ชี้​เป้า​วง​โคจร​อธีนา"
@@ -211,9 +211,6 @@ msgstr "เดิน​โจมตี"
 
 msgid "Attack-move"
 msgstr "เดิน​โจมตี"
-
-msgid "Attack-move ahead of the lead unit."
-msgstr "เดิน​โจมตี​นำ​หน้า​หน่วย​หัว​ขบวน"
 
 msgid "AUDIO"
 msgstr "เสียง"
@@ -992,9 +989,6 @@ msgstr "รถ​ถัง GTFC"
 msgid "Guard"
 msgstr "เฝ้า"
 
-msgid "Guard. Fire at enemies in range."
-msgstr "เฝ้า ยิง​ศัตรู​ใน​ระยะ"
-
 msgid "Guide"
 msgstr "คู่​มือ"
 
@@ -1061,9 +1055,6 @@ msgstr "นัก​ก่อ​วินาศ​กรรม​ที่​ส
 msgid "Highlight a row to read what it changes."
 msgstr "เลือก​แถว​เพื่อ​อ่าน​ว่า​เปลี่ยน​อะไร"
 
-msgid "Hold"
-msgstr "ยึด​ที่"
-
 msgid "hold the blocks %ds"
 msgstr "ยึด​บล็อก​ไว้ %ds"
 
@@ -1072,9 +1063,6 @@ msgstr "รักษา​เรดาร์​ไว้​ตลอด​หม
 
 msgid "Hold the radar. The haze is the clock."
 msgstr "รักษา​เรดาร์​ไว้ หมอก​ควัน​คือ​นาฬิกา"
-
-msgid "Hold. Do not acquire targets."
-msgstr "ยึด​ที่ ไม่​เล็ง​เป้า"
 
 msgid "Holder"
 msgstr "ผู้​ถือ​ครอง"
@@ -1282,38 +1270,6 @@ msgstr "เปิด​ลำ​แสง​ดูด"
 
 msgid "Left click selects. Right click moves. F ability."
 msgstr "คลิก​ซ้าย​เลือก คลิก​ขวา​เคลื่อน​ที่ F ความ​สามารถ"
-
-msgid ""
-"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
-"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
-"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
-"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
-"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
-"Click the minimap to jump the camera there.\n"
-"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
-"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
-"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
-"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
-"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
-"P opens protocols. H opens this guide.\n"
-"The status line reads Objective complete when you win, and Objective failed if your company dies."
-msgstr ""
-"คลิก​ซ้าย​ที่​หน่วย หรือ​ลาก​กรอบ​รอบ​กองร้อย​ของ​คุณ วง​แหวน​สี​ส้ม​แสดง​ระยะ​อาวุธ​ของ​หน่วย​ที่​เลือก และ​วง​แหวน​เดียวกัน​จะ​ปรากฏ​เมื่อ​ตัว​ชี้​วาง​อยู่​บน​หน่วย\n"
-"คลิก​ขวา​ที่​พื้น​โล่ง​เพื่อ​เคลื่อน​ที่ คลิก​ขวา​ที่​ศัตรู​เพื่อ​โจมตี วง​แหวน​จะ​ทำ​เครื่องหมาย​ที่​จุด​นั้น แล้ว​ค่อยๆ​จาง​หาย\n"
-"กด Q เพื่อ​โจมตี​ขณะ​เคลื่อน​ที่​ไป​ยัง​เคอร์เซอร์ กด X เพื่อ​หยุด Ctrl กับ 1 ถึง 9 เก็บ​กลุ่ม กด​ตัว​เลข​เพื่อ​เรียก​กลุ่ม และ​กด​อีก​ครั้ง​เพื่อ​จัด​กล้อง​ไว้​ตรง​กลาง\n"
-"Shift-คลิก​เพิ่ม​หน่วย Ctrl-คลิก​สลับ​การ​เลือก ดับเบิล​คลิก หรือ E เลือก​ทุก​หน่วย​ประเภท​นั้น Z จัด​แถว​กองร้อย​สำหรับ​การ​เคลื่อน​ที่​ครั้ง​ถัดไป Shift-คลิก​ขวา​บน​พื้น​โล่ง​เพิ่ม​ขั้น​ต่อ​ไป R ปัก​ธง​จุด​รวม​พล และ​หน่วย​ใหม่​จะ​ปรากฏ​ข้างๆ แถบ​ด้าน​บน​แสดง​เครดิต​ที่​ได้​ต่อ​วินาที\n"
-"รูป​เพชร​อยู่​ที่​ขั้น​ถัดไป​ของ​หน่วย​นำ ชีพจร​บางๆ​ทำ​เครื่องหมาย​เป้า​หมาย​ปัจจุบัน และ​มินิแมพ​ตี​กรอบ​จุด​นั้น การ​โจมตี​ที่​ถูก​เป้า​แสดง​ตัว​เลข​ลอย\n"
-"คลิก​มินิแมพ​เพื่อ​ย้าย​กล้อง​ไป​ที่​นั่น\n"
-"กด F หรือ​ปุ่ม​ความ​สามารถ เพื่อ​ใช้​พลัง​ของ​หน่วย​ที่​เลือก สมาร์ท​คาสต์​ยิง​เฉพาะ​หน่วย​ที่​พร้อม​และ​ใกล้​ที่สุด\n"
-"คอลัมน์​ด้าน​ขวา​ฝึก​หน่วย​และ​สร้าง​อาคาร เดิน​ขึ้น​แท่น​สี​เพื่อ​ยึด\n"
-"เรือ​ข้าม​น้ำ​ลึก​ได้ รถ​ถัง​และ​ทหาร​ราบ​อยู่​บน​บก และ​ใช้​ทาง​ข้าม​น้ำ​ตื้น​เมื่อ​เปิด​อยู่\n"
-"โคลน​มรสุม​ทำ​ให้​รถ​ถัง​และ​ทหาร​ราบ​ช้า​ลง หมอก​ช่อง​แคบ​ลด​ระยะ​มอง​เห็น เว้น​แต่​คุณ​ครอง​เรดาร์​พลัง​น้ำ บน​แม่น้ำ​โขง คลิก​ขวา​ที่​สะพาน​เพื่อ​ทำลาย​และ​เปิด​คลอง ตลาด​อาวุธ​ที่​ยึด​ได้​ขาย CH-4, Su-30, Orlan-10 และ​หน่วย FLH7 และ​สูบ​เงิน​จาก​คลัง​ศัตรู\n"
-"พลังงาน​ต่ำ​หยุด​การ​ผลิต​ใหม่ จน​กว่า​โรง​ไฟฟ้า​จะ​รองรับ​การ​ใช้​ไฟ และ​ทำ​ให้​แนว​ป้องกัน​เงียบ ยกเลิก​จะ​ทิ้ง​อาคาร​ที่​กำลัง​สร้าง เรดาร์​พลัง​น้ำ​ส่อง​แนว​แม่น้ำ คลิก​ขวา​ที่​บังเกอร์​ตะกรัน หรือ​ป้อม​ปืน​หลาย​กระบอก ด้วย​ทหาร​ราบ​เพื่อ​เข้า​ประจำ​การ แล้ว​คลิก​อาคาร​ที่​เสร็จ​แล้ว​เพื่อ​ถอน​ออก คลิก​ครั้ง​ที่​สอง​บน Defender-VX ที่​เสร็จ​แล้ว จะ​สลับ​ปืน​ภาค​พื้น​กับ​ปืน​ต่อ​สู้​อากาศ​ยาน\n"
-"P เปิด​โพรโทคอล H เปิด​คู่มือ​นี้\n"
-"แถบ​สถานะ​จะ​แสดง ภารกิจ​สำเร็จ เมื่อ​คุณ​ชนะ และ ภารกิจ​ล้มเหลว หาก​กองร้อย​ของ​คุณ​ถูก​ทำลาย"
-
-msgid "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
-msgstr "คลิก​ซ้าย​เลือก Shift-คลิก​เพิ่ม ดับเบิล​คลิก หรือ E เลือก​ประเภท​นั้น คลิก​ขวา​ที่​พื้น​เพื่อ​เคลื่อน​ที่ ที่​ศัตรู​เพื่อ​โจมตี Shift-คลิก​ขวา​เพิ่ม​จุด​ทาง​ผ่าน Z จัด​แถว​กองร้อย Q โจมตี​ขณะ​เคลื่อน​ที่ X หยุด R ย้าย​ธง​จุด​รวม​พล Ctrl+1-9 เก็บ​กลุ่ม ตัว​เลข​เรียก​กลุ่ม วง​แหวน​ทำ​เครื่องหมาย​คำ​สั่ง คลิก​มินิแมพ​เพื่อ​ย้าย F ความ​สามารถ H คู่มือ P เปิด​โพรโทคอล"
 
 msgid "Line"
 msgstr "แถว​หน้า​กระดาน"
@@ -1526,7 +1482,7 @@ msgid "need an airfield"
 msgstr "ต้อง​มี​สนาม​บิน"
 
 msgid "New to ASEAN 2031?"
-msgstr "เพิ่ง​เริ่ม​เล่น ASEAN 2031 ใช่​ไหม?"
+msgstr "เพิ่ง​เริ่ม​เล่น 2035 - Zambudipa War ใช่​ไหม?"
 
 msgid "Next skirmish: %s"
 msgstr "สมรภูมิ​ถัดไป: %s"
@@ -2745,3 +2701,762 @@ msgstr "ลาน​ตั้ง​แล้ว"
 
 msgid "Z    Formation"
 msgstr "Z    รูป​ขบวน"
+
+msgid " (or press F)"
+msgstr ""
+
+msgid "%s  dmg %d  rng %d  %s"
+msgstr ""
+
+msgid "%s redeployed"
+msgstr ""
+
+msgid ""
+"%s weapon: %s\n"
+"Click to switch%s."
+msgstr ""
+
+msgid "Aggressive"
+msgstr ""
+
+msgid "Attack-move. Press A, then right-click a spot."
+msgstr ""
+
+msgid "Attack-move: right-click a spot"
+msgstr ""
+
+msgid "blocks a resource site"
+msgstr ""
+
+msgid "Click to place  ·  drag to face  ·  R turns"
+msgstr ""
+
+msgid "Hold Fire"
+msgstr ""
+
+msgid "Hold Ground"
+msgstr ""
+
+msgid "II"
+msgstr ""
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press A, then right-click, to attack-move. Press D, then right-click, and vehicles back up with their front armour toward the enemy. S or X halts. The orders strip sets the stance: Aggressive, Guard, Hold Ground or Hold Fire. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or W, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag. Select a barracks, factory, naval yard or airfield and right-click the map to pin its own rally point: new units roll out of its bay door and head there. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there. Q and E, the compass beside the minimap, Alt-drag or the middle mouse turn the camera all the way round. Home faces north again.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit. Every combat unit has two weapons: click a weapon slot on the unit card to switch, and a toggle unit's F switches with it.\n"
+"The column on the right trains units and raises buildings. A building click shows a ghost: click to place, drag to face its exit, R or the wheel turns it, right-click or Esc cancels. Naval structures only go on water. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+
+msgid "Left-click select. Shift-click adds. Double-click or W selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. A attack-move, D reverse, S or X halt. Q/E or the compass turn the camera, Home faces north. Select a factory and right-click to pin its rally point. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr ""
+
+msgid "naval structures go on water"
+msgstr ""
+
+msgid "needs dry ground"
+msgstr ""
+
+msgid "no ground under the cursor"
+msgstr ""
+
+msgid "no open water in reach"
+msgstr ""
+
+msgid "no side"
+msgstr ""
+
+msgid "off the map"
+msgstr ""
+
+msgid "Only vehicles and boats reverse"
+msgstr ""
+
+msgid "only vehicles and boats reverse"
+msgstr ""
+
+msgid "outside the build radius"
+msgstr ""
+
+msgid "Pack & Redeploy"
+msgstr ""
+
+msgid "packer redeployed"
+msgstr ""
+
+msgid "place %s: click a spot, drag to face the exit, R turns"
+msgstr ""
+
+msgid "placement cancelled"
+msgstr ""
+
+msgid "Primary"
+msgstr ""
+
+msgid "Rally point set"
+msgstr ""
+
+msgid "redeploy: click to place, drag to face, R turns"
+msgstr ""
+
+msgid "Reset to north (Home)"
+msgstr ""
+
+msgid "Reverse"
+msgstr ""
+
+msgid "Reverse move. Press D, then right-click: vehicles back up with their front armor toward the enemy."
+msgstr ""
+
+msgid "Reverse: right-click where to back up"
+msgstr ""
+
+msgid "reverse: right-click where to back up"
+msgstr ""
+
+msgid "Right-click the map to pin this building's rally point"
+msgstr ""
+
+msgid "Rotate the camera left (Q)"
+msgstr ""
+
+msgid "Rotate the camera right (E)"
+msgstr ""
+
+msgid "Secondary"
+msgstr ""
+
+msgid "Stop (S or X)."
+msgstr ""
+
+msgid "the bay must face open water"
+msgstr ""
+
+msgid "the exit is blocked"
+msgstr ""
+
+msgid "the ground is taken"
+msgstr ""
+
+msgid "the yard cannot pack up"
+msgstr ""
+
+msgid "too close to another building"
+msgstr ""
+
+msgid "too far for the yard to drive"
+msgstr ""
+
+msgid " (or press F)"
+msgstr " (หรือ​กด F)"
+
+msgid "%s  dmg %d  rng %d  %s"
+msgstr "%s  ความ​เสียหาย %d  ระยะ %d  %s"
+
+msgid "%s redeployed"
+msgstr "%s ติด​ตั้ง​ใหม่​แล้ว"
+
+msgid ""
+"%s weapon: %s\n"
+"Click to switch%s."
+msgstr ""
+"อาวุธ %s: %s\n"
+"คลิก​เพื่อ​สลับ%s"
+
+msgid "Aggressive"
+msgstr "เชิง​รุก"
+
+msgid "Attack-move. Press A, then right-click a spot."
+msgstr "โจมตี​ขณะ​เคลื่อน​ที่ กด A แล้ว​คลิก​ขวา​ที่​จุด​หมาย"
+
+msgid "Attack-move: right-click a spot"
+msgstr "โจมตี​ขณะ​เคลื่อน​ที่: คลิก​ขวา​ที่​จุด​หมาย"
+
+msgid "blocks a resource site"
+msgstr "ขวาง​จุด​ทรัพยากร"
+
+msgid "Click to place  ·  drag to face  ·  R turns"
+msgstr "คลิก​เพื่อ​วาง  ·  ลาก​เพื่อ​หัน  ·  R หมุน"
+
+msgid "Hold Fire"
+msgstr "ห้าม​ยิง"
+
+msgid "Hold Ground"
+msgstr "ยึด​พื้นที่"
+
+msgid "II"
+msgstr "II"
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press A, then right-click, to attack-move. Press D, then right-click, and vehicles back up with their front armour toward the enemy. S or X halts. The orders strip sets the stance: Aggressive, Guard, Hold Ground or Hold Fire. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or W, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag. Select a barracks, factory, naval yard or airfield and right-click the map to pin its own rally point: new units roll out of its bay door and head there. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there. Q and E, the compass beside the minimap, Alt-drag or the middle mouse turn the camera all the way round. Home faces north again.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit. Every combat unit has two weapons: click a weapon slot on the unit card to switch, and a toggle unit's F switches with it.\n"
+"The column on the right trains units and raises buildings. A building click shows a ghost: click to place, drag to face its exit, R or the wheel turns it, right-click or Esc cancels. Naval structures only go on water. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+"คลิก​ซ้าย​ที่​หน่วย หรือ​ลาก​กรอบ​รอบ​กองร้อย​ของ​คุณ วง​แหวน​สี​ส้ม​แสดง​ระยะ​อาวุธ​ของ​หน่วย​ที่​เลือก และ​วง​แหวน​เดียวกัน​จะ​ปรากฏ​เมื่อ​ตัว​ชี้​วาง​อยู่​บน​หน่วย\n"
+"คลิก​ขวา​ที่​พื้น​โล่ง​เพื่อ​เคลื่อน​ที่ คลิก​ขวา​ที่​ศัตรู​เพื่อ​โจมตี วง​แหวน​จะ​ทำ​เครื่องหมาย​ที่​จุด​นั้น แล้ว​ค่อยๆ​จาง​หาย\n"
+"กด A แล้ว​คลิก​ขวา เพื่อ​โจมตี​ขณะ​เคลื่อน​ที่ กด D แล้ว​คลิก​ขวา ยาน​พาหนะ​จะ​ถอย​หลัง​โดย​หัน​เกราะ​หน้า​เข้า​หา​ศัตรู S หรือ X หยุด แถบ​คำ​สั่ง​ตั้ง​ท่าที: เชิง​รุก ระวัง​ภัย ยึด​พื้นที่ หรือ​ห้าม​ยิง Ctrl กับ 1 ถึง 9 เก็บ​กลุ่ม กด​ตัว​เลข​เพื่อ​เรียก​กลุ่ม และ​กด​อีก​ครั้ง​เพื่อ​จัด​กล้อง​ไว้​ตรง​กลาง\n"
+"Shift-คลิก​เพิ่ม​หน่วย Ctrl-คลิก​สลับ​การ​เลือก ดับเบิล​คลิก หรือ W เลือก​ทุก​หน่วย​ประเภท​นั้น Z จัด​แถว​กองร้อย​สำหรับ​การ​เคลื่อน​ที่​ครั้ง​ถัดไป Shift-คลิก​ขวา​บน​พื้น​โล่ง​เพิ่ม​ขั้น​ต่อ​ไป R ปัก​ธง​จุด​รวม​พล เลือก​ค่าย​ทหาร โรงงาน อู่​เรือ หรือ​สนาม​บิน แล้ว​คลิก​ขวา​บน​แผนที่​เพื่อ​ปัก​จุด​รวม​พล​ของ​อาคาร​นั้น: หน่วย​ใหม่​จะ​ออก​จาก​ประตู​โรง​และ​มุ่ง​ไป​ที่​นั่น แถบ​ด้าน​บน​แสดง​เครดิต​ที่​ได้​ต่อ​วินาที\n"
+"รูป​เพชร​อยู่​ที่​ขั้น​ถัดไป​ของ​หน่วย​นำ ชีพจร​บางๆ​ทำ​เครื่องหมาย​เป้า​หมาย​ปัจจุบัน และ​มินิแมพ​ตี​กรอบ​จุด​นั้น การ​โจมตี​ที่​ถูก​เป้า​แสดง​ตัว​เลข​ลอย\n"
+"คลิก​มินิแมพ​เพื่อ​ย้าย​กล้อง​ไป​ที่​นั่น Q และ E เข็ม​ทิศ​ข้าง​มินิแมพ Alt-ลาก หรือ​เมาส์​ปุ่ม​กลาง หมุน​กล้อง​ได้​รอบ​ทิศ Home หัน​กลับ​ไป​ทิศ​เหนือ\n"
+"กด F หรือ​ปุ่ม​ความ​สามารถ เพื่อ​ใช้​พลัง​ของ​หน่วย​ที่​เลือก สมาร์ท​คาสต์​ยิง​เฉพาะ​หน่วย​ที่​พร้อม​และ​ใกล้​ที่สุด หน่วย​รบ​ทุก​หน่วย​มี​อาวุธ​สอง​แบบ: คลิก​ช่อง​อาวุธ​บน​การ์ด​หน่วย​เพื่อ​สลับ และ F ของ​หน่วย​แบบ​สลับ​โหมด​จะ​สลับ​อาวุธ​ไป​ด้วย\n"
+"คอลัมน์​ด้าน​ขวา​ฝึก​หน่วย​และ​สร้าง​อาคาร คลิก​อาคาร​จะ​แสดง​เงา​ร่าง: คลิก​เพื่อ​วาง ลาก​เพื่อ​หัน​ทาง​ออก R หรือ​ล้อ​เมาส์​หมุน คลิก​ขวา หรือ Esc ยก​เลิก สิ่ง​ก่อ​สร้าง​ทาง​เรือ​วาง​ได้​บน​น้ำ​เท่า​นั้น เดิน​ขึ้น​แท่น​สี​เพื่อ​ยึด\n"
+"เรือ​ข้าม​น้ำ​ลึก​ได้ รถ​ถัง​และ​ทหาร​ราบ​อยู่​บน​บก และ​ใช้​ทาง​ข้าม​น้ำ​ตื้น​เมื่อ​เปิด​อยู่\n"
+"โคลน​มรสุม​ทำ​ให้​รถ​ถัง​และ​ทหาร​ราบ​ช้า​ลง หมอก​ช่อง​แคบ​ลด​ระยะ​มอง​เห็น เว้น​แต่​คุณ​ครอง​เรดาร์​พลัง​น้ำ บน​แม่น้ำ​โขง คลิก​ขวา​ที่​สะพาน​เพื่อ​ทำลาย​และ​เปิด​คลอง ตลาด​อาวุธ​ที่​ยึด​ได้​ขาย CH-4, Su-30, Orlan-10 และ​หน่วย FLH7 และ​สูบ​เงิน​จาก​คลัง​ศัตรู\n"
+"พลังงาน​ต่ำ​หยุด​การ​ผลิต​ใหม่ จน​กว่า​โรง​ไฟฟ้า​จะ​รองรับ​การ​ใช้​ไฟ และ​ทำ​ให้​แนว​ป้องกัน​เงียบ ยกเลิก​จะ​ทิ้ง​อาคาร​ที่​กำลัง​สร้าง เรดาร์​พลัง​น้ำ​ส่อง​แนว​แม่น้ำ คลิก​ขวา​ที่​บังเกอร์​ตะกรัน หรือ​ป้อม​ปืน​หลาย​กระบอก ด้วย​ทหาร​ราบ​เพื่อ​เข้า​ประจำ​การ แล้ว​คลิก​อาคาร​ที่​เสร็จ​แล้ว​เพื่อ​ถอน​ออก คลิก​ครั้ง​ที่​สอง​บน Defender-VX ที่​เสร็จ​แล้ว จะ​สลับ​ปืน​ภาค​พื้น​กับ​ปืน​ต่อ​สู้​อากาศ​ยาน\n"
+"P เปิด​โพรโทคอล H เปิด​คู่มือ​นี้\n"
+"แถบ​สถานะ​จะ​แสดง ภารกิจ​สำเร็จ เมื่อ​คุณ​ชนะ และ ภารกิจ​ล้มเหลว หาก​กองร้อย​ของ​คุณ​ถูก​ทำลาย"
+
+msgid "Left-click select. Shift-click adds. Double-click or W selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. A attack-move, D reverse, S or X halt. Q/E or the compass turn the camera, Home faces north. Select a factory and right-click to pin its rally point. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr "คลิก​ซ้าย​เลือก Shift-คลิก​เพิ่ม ดับเบิล​คลิก หรือ W เลือก​ประเภท​นั้น คลิก​ขวา​ที่​พื้น​เพื่อ​เคลื่อน​ที่ ที่​ศัตรู​เพื่อ​โจมตี Shift-คลิก​ขวา​เพิ่ม​จุด​ทาง​ผ่าน Z จัด​แถว​กองร้อย A โจมตี​ขณะ​เคลื่อน​ที่ D ถอย​หลัง S หรือ X หยุด Q/E หรือ​เข็ม​ทิศ​หมุน​กล้อง Home หัน​ไป​ทิศ​เหนือ เลือก​โรงงาน​แล้ว​คลิก​ขวา​เพื่อ​ปัก​จุด​รวม​พล Ctrl+1-9 เก็บ​กลุ่ม ตัว​เลข​เรียก​กลุ่ม วง​แหวน​ทำ​เครื่องหมาย​คำ​สั่ง คลิก​มินิแมพ​เพื่อ​ย้าย F ความ​สามารถ H คู่มือ P เปิด​โพรโทคอล"
+
+msgid "naval structures go on water"
+msgstr "สิ่ง​ก่อ​สร้าง​ทาง​เรือ​ต้อง​อยู่​บน​น้ำ"
+
+msgid "needs dry ground"
+msgstr "ต้อง​เป็น​พื้น​ดิน"
+
+msgid "no ground under the cursor"
+msgstr "ไม่​มี​พื้น​ใต้​เคอร์เซอร์"
+
+msgid "no open water in reach"
+msgstr "ไม่​มี​น้ำ​เปิด​ใน​ระยะ"
+
+msgid "no side"
+msgstr "ไม่​มี​ฝ่าย"
+
+msgid "off the map"
+msgstr "นอก​แผนที่"
+
+msgid "Only vehicles and boats reverse"
+msgstr "ถอย​หลัง​ได้​เฉพาะ​ยาน​พาหนะ​และ​เรือ"
+
+msgid "only vehicles and boats reverse"
+msgstr "ถอย​หลัง​ได้​เฉพาะ​ยาน​พาหนะ​และ​เรือ"
+
+msgid "outside the build radius"
+msgstr "นอก​รัศมี​การ​สร้าง"
+
+msgid "Pack & Redeploy"
+msgstr "เก็บ​และ​ติด​ตั้ง​ใหม่"
+
+msgid "packer redeployed"
+msgstr "ติด​ตั้ง​ฐาน​ใหม่​แล้ว"
+
+msgid "place %s: click a spot, drag to face the exit, R turns"
+msgstr "วาง %s: คลิก​จุด ลาก​เพื่อ​หัน​ทาง​ออก R หมุน"
+
+msgid "placement cancelled"
+msgstr "ยก​เลิก​การ​วาง"
+
+msgid "Primary"
+msgstr "หลัก"
+
+msgid "Rally point set"
+msgstr "ตั้ง​จุด​รวม​พล​แล้ว"
+
+msgid "redeploy: click to place, drag to face, R turns"
+msgstr "ติด​ตั้ง​ใหม่: คลิก​เพื่อ​วาง ลาก​เพื่อ​หัน R หมุน"
+
+msgid "Reset to north (Home)"
+msgstr "รี​เซ็ต​ไป​ทิศ​เหนือ (Home)"
+
+msgid "Reverse"
+msgstr "ถอย​หลัง"
+
+msgid "Reverse move. Press D, then right-click: vehicles back up with their front armor toward the enemy."
+msgstr "ถอย​หลัง กด D แล้ว​คลิก​ขวา: ยาน​พาหนะ​ถอย​หลัง​โดย​หัน​เกราะ​หน้า​เข้า​หา​ศัตรู"
+
+msgid "Reverse: right-click where to back up"
+msgstr "ถอย​หลัง: คลิก​ขวา​ที่​จุด​ที่​จะ​ถอย​ไป"
+
+msgid "reverse: right-click where to back up"
+msgstr "ถอย​หลัง: คลิก​ขวา​ที่​จุด​ที่​จะ​ถอย​ไป"
+
+msgid "Right-click the map to pin this building's rally point"
+msgstr "คลิก​ขวา​บน​แผนที่​เพื่อ​ปัก​จุด​รวม​พล​ของ​อาคาร​นี้"
+
+msgid "Rotate the camera left (Q)"
+msgstr "หมุน​กล้อง​ไป​ทาง​ซ้าย (Q)"
+
+msgid "Rotate the camera right (E)"
+msgstr "หมุน​กล้อง​ไป​ทาง​ขวา (E)"
+
+msgid "Secondary"
+msgstr "รอง"
+
+msgid "Stop (S or X)."
+msgstr "หยุด (S หรือ X)"
+
+msgid "the bay must face open water"
+msgstr "ช่อง​ทาง​ออก​ต้อง​หัน​สู่​น้ำ​เปิด"
+
+msgid "the exit is blocked"
+msgstr "ทาง​ออก​ถูก​ขวาง"
+
+msgid "the ground is taken"
+msgstr "พื้นที่​ถูก​ใช้​แล้ว"
+
+msgid "the yard cannot pack up"
+msgstr "ฐาน​เก็บ​ไม่​ได้"
+
+msgid "too close to another building"
+msgstr "ใกล้​อาคาร​อื่น​เกิน​ไป"
+
+msgid "too far for the yard to drive"
+msgstr "ไกล​เกิน​กว่า​ที่​ฐาน​จะ​ขับ​ไป​ถึง"
+
+msgid "A second column is coming down the valley road. Our armour is moving up."
+msgstr "ขบวน​ที่​สอง​กำลัง​ลง​มา​ตาม​ถนน​หุบเขา ยานเกราะ​ของ​เรา​กำลัง​รุก​ขึ้น​ไป"
+
+msgid "A supply convoy is moving on the streets."
+msgstr "ขบวน​เสบียง​กำลัง​เคลื่อน​ไป​บน​ถนน"
+
+msgid "All stages clear"
+msgstr "ผ่าน​ทุก​ขั้น​แล้ว"
+
+msgid "Ambush! Enemy troops in the side streets."
+msgstr "ซุ่ม​โจมตี! ทหาร​ศัตรู​อยู่​ใน​ซอย"
+
+msgid "An armoured column is rolling in on the road."
+msgstr "ขบวน​ยานเกราะ​กำลัง​เคลื่อน​เข้า​มา​ตาม​ถนน"
+
+msgid "An armoured push is coming down the river road. Our column is moving up."
+msgstr "ยานเกราะ​ศัตรู​กำลัง​บุก​มา​ตาม​ถนน​ริม​แม่น้ำ ขบวน​ของ​เรา​กำลัง​รุก​ขึ้น​ไป"
+
+msgid "Bo Mya is counter-attacking across the channel. Landing craft are bringing marines."
+msgstr "โบ​มยะ​กำลัง​ตีโต้​ข้าม​ช่องแคบ เรือ​ยกพล​กำลัง​นำ​นาวิกโยธิน​มา"
+
+msgid "Bo Mya's compound"
+msgstr "ฐาน​ของ​โบ​มยะ"
+
+msgid "Boats are landing raiders under the haze. Our landing craft are coming in."
+msgstr "เรือ​ศัตรู​กำลัง​ส่ง​หน่วย​จู่โจม​ขึ้น​ฝั่ง​ใต้​หมอก​ควัน เรือ​ยกพล​ของ​เรา​กำลัง​เข้า​มา"
+
+msgid "Bonus complete. Air-strike cooldowns are reset."
+msgstr "โบนัส​สำเร็จ คูลดาวน์​โจมตี​ทาง​อากาศ​ถูก​รีเซ็ต"
+
+msgid "Bonus complete. Bonus funds: +600 credits."
+msgstr "โบนัส​สำเร็จ เงิน​โบนัส: +600 เครดิต"
+
+msgid "Bonus complete. Reinforcements are on the way."
+msgstr "โบนัส​สำเร็จ กำลัง​เสริม​กำลัง​มา"
+
+msgid "Bonus complete. Your troops earn a veterancy crate."
+msgstr "โบนัส​สำเร็จ ทหาร​ของ​คุณ​ได้​รับ​ลัง​ทหาร​ผ่าน​ศึก"
+
+msgid "Bonus done: %s"
+msgstr "โบนัส​สำเร็จ: %s"
+
+msgid "Bonus failed: %s"
+msgstr "โบนัส​ล้มเหลว: %s"
+
+msgid "Bonus objective"
+msgstr "ภารกิจ​โบนัส"
+
+msgid "Bonus: %s"
+msgstr "โบนัส: %s"
+
+msgid "Break the citadel guard"
+msgstr "ตี​แนว​ทหาร​รักษา​ป้อม​ให้​แตก"
+
+msgid "Break the counter-attack (%d)"
+msgstr "ตี​การ​ตีโต้​ให้​แตก (%d)"
+
+msgid "Capture the bazaar"
+msgstr "ยึด​ตลาด"
+
+msgid "Capture the hydro radar"
+msgstr "ยึด​เรดาร์​อุทก"
+
+msgid "Capture the relay mast"
+msgstr "ยึด​เสา​ถ่ายทอด​สัญญาณ"
+
+msgid "Casino command post"
+msgstr "กอง​บัญชาการ​คาสิโน"
+
+msgid "Citadel armour is counter-attacking along the ring road. Our column is coming in."
+msgstr "ยานเกราะ​ของ​ป้อม​กำลัง​ตีโต้​ตาม​ถนน​วงแหวน ขบวน​ของ​เรา​กำลัง​เข้า​มา"
+
+msgid "Citadel guard"
+msgstr "ทหาร​รักษา​ป้อม"
+
+msgid "Claim a site in the Golden Triangle"
+msgstr "ยึด​จุด​หนึ่ง​ใน​สามเหลี่ยม​ทองคำ"
+
+msgid "Claim a site on the channel"
+msgstr "ยึด​จุด​หนึ่ง​ริม​ช่องแคบ"
+
+msgid "Clear the caravan ambush"
+msgstr "เคลียร์​ซุ่ม​โจมตี​คาราวาน"
+
+msgid "Clear the compound garrison"
+msgstr "เคลียร์​ทหาร​รักษา​ฐาน"
+
+msgid "Clear the radar garrison"
+msgstr "เคลียร์​ทหาร​รักษา​เรดาร์"
+
+msgid "Clear the shore guns"
+msgstr "เคลียร์​ปืน​ชายฝั่ง"
+
+msgid "Clear the street ambush (%d)"
+msgstr "เคลียร์​ซุ่ม​โจมตี​ใน​ถนน (%d)"
+
+msgid "Climax"
+msgstr "ศึก​ชี้ขาด"
+
+msgid "Command"
+msgstr "กอง​บัญชาการ"
+
+msgid "Command spire"
+msgstr "ยอด​หอ​บัญชาการ"
+
+msgid "Counter-attack"
+msgstr "หน่วย​ตีโต้"
+
+msgid "Customs house boss"
+msgstr "หัวหน้า​ที่​ด่าน​ศุลกากร"
+
+msgid "Destroy %s"
+msgstr "ทำลาย %s"
+
+msgid "Destroy the battery radar jammer"
+msgstr "ทำลาย​เครื่อง​รบกวน​เรดาร์​ปืน​ใหญ่"
+
+msgid "Destroy the citadel power grid"
+msgstr "ทำลาย​โครงข่าย​ไฟฟ้า​ของ​ป้อม"
+
+msgid "Destroy the relay jammer"
+msgstr "ทำลาย​เครื่อง​รบกวน​สัญญาณ​ถ่ายทอด"
+
+msgid "Drop the EW towers"
+msgstr "โค่น​หอ EW"
+
+msgid "Enemy commanders are switching weapon modes."
+msgstr "ผู้บัญชาการ​ศัตรู​กำลัง​สลับ​โหมด​อาวุธ"
+
+msgid "Escalation"
+msgstr "ยกระดับ"
+
+msgid "Fire the beam at the phantom"
+msgstr "ยิง​ลำแสง​ใส่​แฟนทอม"
+
+msgid "Floating fortress"
+msgstr "ป้อม​ลอยน้ำ"
+
+msgid "Foothold"
+msgstr "ตั้ง​หลัก"
+
+msgid "Free the captive runners"
+msgstr "ปลดปล่อย​คน​เดิน​เอกสาร​ที่​ถูก​จับ"
+
+msgid "Freeze the tank column"
+msgstr "แช่แข็ง​ขบวน​รถถัง"
+
+msgid "Get the ferry across"
+msgstr "พา​เรือ​ข้ามฟาก​ข้าม​ไป"
+
+msgid "Guards from the next block are pushing in. Choppers are dropping a team on your flank."
+msgstr "ทหาร​รักษา​การณ์​จาก​ตึก​ข้างๆ​กำลัง​บุก​เข้า​มา ฮ.​กำลัง​ส่ง​ทีม​ลง​ที่​ปีก​ของ​คุณ"
+
+msgid "Gunboats are counter-attacking the reef. Landing craft bring our crews."
+msgstr "เรือ​ปืน​กำลัง​ตีโต้​ที่​แนว​ปะการัง เรือ​ยกพล​นำ​ลูกเรือ​ของ​เรา​มา"
+
+msgid "Harbour fort"
+msgstr "ป้อม​ท่าเรือ"
+
+msgid "Haze flagship"
+msgstr "เรือ​ธง​หมอก​ควัน"
+
+msgid "Helicopters are dropping reinforcements."
+msgstr "ฮ.​กำลัง​ส่ง​กำลัง​เสริม​ลง​มา"
+
+msgid "His command compound is exposed. Destroy it."
+msgstr "ฐาน​บัญชาการ​ของ​เขา​เปิด​โล่ง​แล้ว ทำลาย​มัน"
+
+msgid "His command compound is open. Destroy it."
+msgstr "ฐาน​บัญชาการ​ของ​เขา​ไร้​การ​ป้องกัน ทำลาย​มัน"
+
+msgid "Hold the line: %d seconds (%d attackers)"
+msgstr "รักษา​แนว: %d วินาที (%d ผู้​บุก)"
+
+msgid "Hunt the jammer ghost"
+msgstr "ล่า​ผี​รบกวน​สัญญาณ"
+
+msgid "Intercept the defoliant sprayer"
+msgstr "สกัด​เครื่อง​พ่น​สาร​ทำลาย​ใบไม้"
+
+msgid "Iskandar is sending a column down the river road. Our armour is coming in from the west."
+msgstr "อิสกันดาร์​กำลัง​ส่ง​ขบวน​มา​ตาม​ถนน​ริม​แม่น้ำ ยานเกราะ​ของ​เรา​กำลัง​มา​จาก​ทิศ​ตะวันตก"
+
+msgid "Iskandar's compound"
+msgstr "ฐาน​ของ​อิสกันดาร์"
+
+msgid "Island battery"
+msgstr "ป้อม​ปืน​บน​เกาะ"
+
+msgid "Joint flagship"
+msgstr "เรือ​ธง​ร่วม"
+
+msgid "Junta armour is counter-attacking along the highway. Allied helicopters are inbound."
+msgstr "ยานเกราะ​ของ​รัฐบาล​ทหาร​กำลัง​ตีโต้​ตาม​ทาง​หลวง ฮ.​พันธมิตร​กำลัง​มา"
+
+msgid "Junta trucks are rolling down the market street. Hold the yard. Gunships are inbound."
+msgstr "รถบรรทุก​ของ​รัฐบาล​ทหาร​กำลัง​วิ่ง​มา​ตาม​ถนน​ตลาด รักษา​ฐาน​ไว้ ฮ.​ติด​อาวุธ​กำลัง​มา"
+
+msgid "Landing craft are coming ashore."
+msgstr "เรือ​ยกพล​กำลัง​เข้า​ฝั่ง"
+
+msgid "Market hall safe house"
+msgstr "บ้าน​ลับ​ใน​ห้อง​โถง​ตลาด"
+
+msgid "More ghosts are slipping through the rubber groves. Air cavalry is dropping in to help."
+msgstr "ผี​อีก​หลาย​ตัว​กำลัง​แทรก​ผ่าน​สวน​ยาง ทหาร​ม้า​อากาศ​กำลัง​ลง​มา​ช่วย"
+
+msgid "Mortar teams are moving through the jar fields. Gunships are dropping support."
+msgstr "ทีม​ปืน​ครก​กำลัง​เคลื่อน​ผ่าน​ทุ่ง​ไห ฮ.​ติด​อาวุธ​กำลัง​ส่ง​การ​สนับสนุน​ลง​มา"
+
+msgid "Objectives"
+msgstr "ภารกิจ"
+
+msgid "Patrol boats are closing on the channel. Landing craft are bringing marines in."
+msgstr "เรือ​ลาดตระเวน​กำลัง​ประชิด​ช่องแคบ เรือ​ยกพล​กำลัง​นำ​นาวิกโยธิน​เข้า​มา"
+
+msgid "Pinned squad"
+msgstr "หมู่​ที่​ถูก​ตรึง"
+
+msgid "Plateau command post"
+msgstr "กอง​บัญชาการ​บน​ที่ราบสูง"
+
+msgid "Raiders are crossing the Mekong in the fog. Helicopters drop a team on the bank."
+msgstr "หน่วย​จู่โจม​กำลัง​ข้าม​แม่น้ำโขง​ใน​หมอก ฮ.​ส่ง​ทีม​ลง​ที่​ริม​ตลิ่ง"
+
+msgid "Raise the scaffold yard in Laukkai"
+msgstr "สร้าง​ลาน​นั่งร้าน​ใน​เล่าก์ก่าย"
+
+msgid "Regional command bunker"
+msgstr "บังเกอร์​บัญชาการ​ภูมิภาค"
+
+msgid "Rescue the allied marines"
+msgstr "ช่วย​นาวิกโยธิน​พันธมิตร"
+
+msgid "Rescue the downed pilots"
+msgstr "ช่วย​นักบิน​ที่​ถูก​ยิง​ตก"
+
+msgid "Rescue the fishing crew"
+msgstr "ช่วย​ลูกเรือ​ประมง"
+
+msgid "Rescue the stranded boat crew"
+msgstr "ช่วย​ลูกเรือ​ที่​ติด​ค้าง"
+
+msgid "Rescue the village scouts"
+msgstr "ช่วย​หน่วย​สอดแนม​หมู่บ้าน"
+
+msgid "Secure the field clinic"
+msgstr "ยึด​คลินิก​สนาม"
+
+msgid "Seize the fuel depot"
+msgstr "ยึด​คลัง​เชื้อเพลิง"
+
+msgid "Seize the jade cache on the side street"
+msgstr "ยึด​คลัง​หยก​ใน​ซอย​ข้าง"
+
+msgid "Sink the joint picket"
+msgstr "จม​เรือ​ระวัง​ภัย​ร่วม"
+
+msgid "Sink the shore boats"
+msgstr "จม​เรือ​ริม​ฝั่ง"
+
+msgid "Smugglers want the rubies back. A counter-raid is coming up the border road. Our armour is on the way."
+msgstr "พวก​ลักลอบ​ต้องการ​ทับทิม​คืน หน่วย​ตีโต้​กำลัง​ขึ้น​มา​ตาม​ถนน​ชายแดน ยานเกราะ​ของ​เรา​กำลัง​มา"
+
+msgid "Space: jump to the event"
+msgstr "Space: ข้าม​ไป​ที่​เหตุการณ์"
+
+msgid "Stage %d done: %s"
+msgstr "ขั้น %d สำเร็จ: %s"
+
+msgid "Stage %d now: %s"
+msgstr "ขั้น %d ตอนนี้: %s"
+
+msgid "Stage %d/3: %s"
+msgstr "ขั้น %d/3: %s"
+
+msgid "Stage %d: %s"
+msgstr "ขั้น %d: %s"
+
+msgid "Stop the haze convoy"
+msgstr "หยุด​ขบวน​หมอก​ควัน"
+
+msgid "Stop the smuggler convoy before it crosses the bridge"
+msgstr "หยุด​ขบวน​ลักลอบ​ก่อน​ข้าม​สะพาน"
+
+msgid "Street ambush"
+msgstr "ซุ่ม​โจมตี​ใน​ถนน"
+
+msgid "Supply convoy"
+msgstr "ขบวน​เสบียง"
+
+msgid "Syndicate tower"
+msgstr "ตึก​ของ​แก๊ง"
+
+msgid "Tea station command"
+msgstr "กอง​บัญชาการ​สถานี​ชา"
+
+msgid "The bonus slipped away."
+msgstr "โบนัส​หลุด​มือ​ไป​แล้ว"
+
+msgid "The citadel command spire is open. Bring it down."
+msgstr "ยอด​หอ​บัญชาการ​ของ​ป้อม​ไร้​การ​ป้องกัน โค่น​มัน​ลง"
+
+msgid "The flagship is coming about. Sink it."
+msgstr "เรือ​ธง​กำลัง​หัน​ลำ จม​มัน"
+
+msgid "The fleet is turning to fight. Landing craft carry our marines."
+msgstr "กองเรือ​หัน​มา​สู้ เรือ​ยกพล​นำ​นาวิกโยธิน​ของ​เรา​มา"
+
+msgid "The harbour fort is the last gun line. Silence it."
+msgstr "ป้อม​ท่าเรือ​คือ​แนว​ปืน​สุดท้าย ทำให้​มัน​เงียบ"
+
+msgid "The haze flagship is in range. Sink it."
+msgstr "เรือ​ธง​หมอก​ควัน​อยู่​ใน​ระยะ​ยิง จม​มัน"
+
+msgid "The plateau command post is exposed. Destroy it."
+msgstr "กอง​บัญชาการ​บน​ที่ราบสูง​เปิด​โล่ง​แล้ว ทำลาย​มัน"
+
+msgid "The regional command bunker is exposed. Finish it."
+msgstr "บังเกอร์​บัญชาการ​ภูมิภาค​เปิด​โล่ง​แล้ว จัดการ​มัน"
+
+msgid "The ring boss is holed up in the river customs house. End it."
+msgstr "หัวหน้า​แก๊ง​หลบ​อยู่​ใน​ด่าน​ศุลกากร​ริม​แม่น้ำ ปิด​ฉาก​มัน"
+
+msgid "The syndicate director is in the server tower. Bring it down."
+msgstr "ผู้อำนวยการ​แก๊ง​อยู่​ใน​ตึก​เซิร์ฟเวอร์ โค่น​มัน​ลง"
+
+msgid "Their command post sits in the old casino. Take it down."
+msgstr "กอง​บัญชาการ​ของ​พวก​มัน​อยู่​ใน​คาสิโน​เก่า โค่น​มัน​ลง"
+
+msgid "Their floating fortress has moved in. Sink it."
+msgstr "ป้อม​ลอยน้ำ​ของ​พวก​มัน​เข้า​มา​แล้ว จม​มัน"
+
+msgid "Their forward command is dug in at the tea station. Take it."
+msgstr "กอง​บัญชาการ​แนว​หน้า​ของ​พวก​มัน​ตั้ง​มั่น​ที่​สถานี​ชา ยึด​มัน"
+
+msgid "Their island battery covers the strait. Destroy it."
+msgstr "ป้อม​ปืน​บน​เกาะ​ของ​พวก​มัน​คุม​ช่องแคบ ทำลาย​มัน"
+
+msgid "Their last wave hits the radar now. Hold for thirty seconds."
+msgstr "ระลอก​สุดท้าย​ของ​พวก​มัน​กำลัง​ถล่ม​เรดาร์ ยืน​หยัด​สามสิบ​วินาที"
+
+msgid "Their safe house is in the old market hall. Clear it."
+msgstr "บ้าน​ลับ​ของ​พวก​มัน​อยู่​ใน​ห้อง​โถง​ตลาด​เก่า เคลียร์​มัน"
+
+msgid "They are throwing everything at the radar. Hold for thirty seconds."
+msgstr "พวก​มัน​ทุ่ม​ทุก​อย่าง​ใส่​เรดาร์ ยืน​หยัด​สามสิบ​วินาที"
+
+msgid "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
+msgstr "เรือ​สาม​ลำตัว​กำลัง​วน​รอบ​เรือ​ข้ามฟาก เรือ​ยกพล​กำลัง​นำ​กำลัง​เสริม​มา"
+
+msgid "Downloading game assets"
+msgstr "กำลัง​ดาวน์โหลด​ไฟล์​เกม"
+
+msgid "First launch only. The game restarts when the download finishes."
+msgstr "เฉพาะ​การ​เปิด​ครั้ง​แรก เกม​จะ​เริ่ม​ใหม่​เมื่อ​ดาวน์โหลด​เสร็จ"
+
+msgid "%d of %d MB"
+msgstr "%d จาก %d MB"
+
+msgid "%.1f MB/s"
+msgstr "%.1f MB/s"
+
+msgid "Some files could not be downloaded. Check your connection and retry."
+msgstr "ดาวน์โหลด​บาง​ไฟล์​ไม่​สำเร็จ ตรวจสอบ​การ​เชื่อมต่อ​แล้ว​ลอง​ใหม่"
+
+msgid "Download complete. Restarting…"
+msgstr "ดาวน์โหลด​เสร็จ​แล้ว กำลัง​เริ่ม​ใหม่…"
+
+msgid "Retry"
+msgstr "ลอง​ใหม่"
+
+msgid "Play now"
+msgstr "เล่น​เลย"
+
+msgid "Start with placeholder models and no sound. The download continues in the background."
+msgstr "เริ่ม​ด้วย​โมเดล​ชั่วคราว​และ​ไม่มี​เสียง การ​ดาวน์โหลด​จะ​ดำเนิน​ต่อ​เบื้องหลัง"
+
+msgid "DOWNLOAD DESKTOP"
+msgstr "ดาวน์โหลดเกม"
+
+msgid "First launch downloads game assets automatically."
+msgstr "เฉพาะ​การ​เปิด​ครั้ง​แรก กำลัง​ดาวน์โหลด​ไฟล์​เกม"
+
+msgid "macOS (Apple Silicon & Intel) — .dmg"
+msgstr "macOS (Apple Silicon & Intel) — .dmg"
+
+msgid "Windows (64-bit) — .exe"
+msgstr "Windows (64-bit) — .exe"
+
+msgid "Linux (x86_64) — .AppImage"
+msgstr "Linux (x86_64) — .AppImage"
+
+msgid "UI scale"
+msgstr "ขนาดหน้าจอ"
+
+msgid "Scales menus, HUD, and text across 1080p, 1440p, and 4K displays."
+msgstr "ปรับขนาดเมนูและข้อความ"
+
+msgid "Auto"
+msgstr "อัตโนมัติ"
+
+msgid "100%"
+msgstr "100%"
+
+msgid "125%"
+msgstr "125%"
+
+msgid "150%"
+msgstr "150%"
+
+msgid "Zoom in (+ / scroll up)"
+msgstr "ซูมเข้า (+)"
+
+msgid "Zoom out (- / scroll down)"
+msgstr "ซูมออก (-)"
+
+msgid "2035 - Zambudipa War"
+msgstr "2035 - Zambudipa War"
+
+msgid "New to 2035 - Zambudipa War?"
+msgstr "เพิ่ง​เริ่ม​เล่น 2035 - Zambudipa War ใช่​ไหม?"
+
+msgid "Android (ARM64) — .apk"
+msgstr "Android (ARM64) — .apk"
+
+msgid "iOS Sideload (AltStore / SideStore) — .ipa"
+msgstr "iOS Sideload (AltStore / SideStore) — .ipa"
+
+msgid "%s (%.1f MiB)"
+msgstr "%s (%.1f MiB)"
+
+msgid "DOWNLOAD GAME"
+msgstr "ดาวน์โหลดเกม"
+
+msgid "Download complete. Close the game and open it again to load everything."
+msgstr "ดาวน์โหลด​เสร็จ​แล้ว ปิด​เกม​แล้ว​เปิด​ใหม่​เพื่อ​โหลด​ทั้งหมด"

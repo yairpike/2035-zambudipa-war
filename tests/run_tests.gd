@@ -89,6 +89,7 @@ func _run() -> void:
 	await H.section("test_sm_story", test_sm_story)
 	await H.section("test_set_piece", test_set_piece)
 	await H.section("test_signature_rules", test_signature_rules)
+	await H.section("test_campaign_stages", test_campaign_stages)
 	await H.section("test_sm_play", test_sm_play)
 	await H.section("test_sm_web", test_sm_web)
 	await H.section("test_sm_boot", test_sm_boot)
@@ -116,6 +117,12 @@ func _run() -> void:
 	await H.section("test_street_towns", test_street_towns)
 	await H.section("test_game_language", test_game_language)
 	await H.section("test_render_budget", test_render_budget)
+	await H.section("test_web_budget", test_web_budget)
+	await H.section("test_ra3_placement", test_ra3_placement)
+	await H.section("test_ra3_camera", test_ra3_camera)
+	await H.section("test_ra3_factory", test_ra3_factory)
+	await H.section("test_ra3_weapons", test_ra3_weapons)
+	await H.section("test_asset_pack", test_asset_pack)
 	preload("res://game/render_budget.gd").shutdown(self)
 	quit(H.finish())
 
@@ -173,6 +180,25 @@ func test_map_symmetry() -> void:
 				if grid.domain_at_cell(c) != grid.domain_at_cell(t) or grid.holding(c) != grid.holding(t):
 					mirrored = false
 		check(mirrored, "%s terrain and holds match their twin cell by cell" % map_id)
+		var paving: bool = plan.paved.size() > 0
+		for c: Variant in plan.paved:
+			paving = paving and plan.paved.has(plan.twin_cell(c as Vector2i))
+		var fronts: bool = true
+		for row: Dictionary in plan.sites:
+			if int(row["side"]) == 0 and plan.fronts_street(row):
+				var found: bool = false
+				for other: Dictionary in plan.sites:
+					found = found or (other["cell"] == plan.twin_cell(row["cell"] as Vector2i) and other["street"] == plan.twin_cell(row["street"] as Vector2i))
+				fronts = fronts and found
+		check(paving and fronts and _lots_twinned(plan), "%s streets, roads, buildings and tech-site fronts are twins of each other" % map_id)
+		var lattice: bool = plan.avenues.size() > 0
+		var pitch: Vector2i = plan._cell((plan.data.get("grid", {}) as Dictionary).get("pitch", [0, 0]))
+		var at: Vector2i = plan._cell((plan.data.get("grid", {}) as Dictionary).get("at", [0, 0]))
+		for c: Vector2i in plan.avenues:
+			var on_x: bool = pitch.x > 0 and (posmod(c.x - at.x, pitch.x) == 0 or posmod(plan.cols - 1 - c.x - at.x, pitch.x) == 0)
+			var on_y: bool = pitch.y > 0 and (posmod(c.y - at.y, pitch.y) == 0 or posmod(plan.rows - 1 - c.y - at.y, pitch.y) == 0)
+			lattice = lattice and (on_x or on_y) and plan.paved.has(plan.twin_cell(c))
+		check(lattice, "%s avenues sit on a symmetric lattice" % map_id)
 		var half: int = plan.starts.size() / 2
 		var seats_ok: bool = plan.starts.size() >= 2 and plan.starts.size() % 2 == 0
 		for seat: int in half:
@@ -251,12 +277,40 @@ func _base_plots(grid: SMDomainGrid, plan: SMMapPlan, seat: int) -> int:
 			placed += 1
 	return placed if base.overlaps() == 0 else -1
 
+## Every skirmish plan and every campaign dressing, the showcase included.
+func _all_layouts() -> Array[SMMapPlan]:
+	var out: Array[SMMapPlan] = []
+	for map_id: String in PLANNED_MAPS:
+		out.append(SMMapPlan.of(map_id))
+	for file: String in DirAccess.get_files_at("res://data/maps/missions"):
+		if file.ends_with(".json"):
+			out.append(SMMapPlan.dressing(file.get_basename()))
+	return out
+
 func test_street_towns() -> void:
+	var layouts: Array[SMMapPlan] = _all_layouts()
+	check(layouts.size() >= 23, "grid mode covers the four skirmish plans and every dressing (%d)" % layouts.size())
+	for plan: SMMapPlan in layouts:
+		var grid: SMDomainGrid = plan.grid()
+		var why: String = _grid_mode(plan, grid)
+		check(why == "", "%s: every building, hall, landmark and tech site is grid-aligned, fronts a street with its calibrated facade, and overlaps nothing%s" % [plan.id, "" if why == "" else " (" + why + ")"])
+		why = _paving_joined(plan, grid)
+		check(why == "", "%s: streets, avenues, base gates and fronts form one road network per landmass%s" % [plan.id, "" if why == "" else " (" + why + ")"])
+		why = _paving_covers(plan, grid, 7)
+		check(why == "", "%s: the street grid reaches every part of the playable land%s" % [plan.id, "" if why == "" else " (" + why + ")"])
+		var held: bool = true
+		for lot: Dictionary in plan.lots:
+			var r: Rect2i = lot["rect"] as Rect2i
+			for y: int in range(r.position.y, r.end.y):
+				for x: int in range(r.position.x, r.end.x):
+					held = held and grid.holding(Vector2i(x, y))
+		for c: Variant in plan.paved:
+			held = held and not grid.holding(c as Vector2i)
+		check(held, "%s: every lot blocks ground movement and every paved cell stays open" % plan.id)
 	for map_id: String in PLANNED_MAPS:
 		var plan: SMMapPlan = SMMapPlan.of(map_id)
 		var grid: SMDomainGrid = plan.grid()
 		check(not plan.towns.is_empty() and _lots_twinned(plan), "%s towns are twinned lot for lot, model and facing included" % map_id)
-		check(_lots_squared(plan, grid), "%s every lot squares to 90 degrees and fronts a street of its own town" % map_id)
 		var clear: bool = true
 		var spots: Array[Vector2i] = plan.starts.duplicate()
 		for row: Dictionary in plan.nodes + plan.sites:
@@ -265,26 +319,14 @@ func test_street_towns() -> void:
 			var r: Rect2i = lot["rect"] as Rect2i
 			for p: Rect2i in plan.plateaus:
 				clear = clear and not p.intersects(r)
-			for spot: Vector2i in spots:
-				clear = clear and not r.grow(1).has_point(spot)
+			if str(lot["kind"]) != "landmark":
+				for spot: Vector2i in spots:
+					clear = clear and not r.grow(1).has_point(spot)
 		for tree: Dictionary in plan.groves:
 			for p: Rect2i in plan.plateaus:
 				clear = clear and not p.has_point(tree["cell"] as Vector2i)
-		check(clear, "%s towns and orchards stay off plateaus, starts, nodes and tech sites" % map_id)
-		var held: bool = true
-		for lot: Dictionary in plan.lots:
-			var r: Rect2i = lot["rect"] as Rect2i
-			for y: int in range(r.position.y, r.end.y):
-				for x: int in range(r.position.x, r.end.x):
-					var c := Vector2i(x, y)
-					if grid.domain_at_cell(c) == SMDomainGrid.Domain.LAND and not grid.holding(c):
-						held = false
-		for r: Rect2i in plan.streets:
-			for y: int in range(r.position.y, r.end.y):
-				for x: int in range(r.position.x, r.end.x):
-					if grid.in_bounds(Vector2i(x, y)) and grid.holding(Vector2i(x, y)):
-						held = false
-		check(held, "%s town blocks block ground movement and every street stays open" % map_id)
+			clear = clear and not plan.paved.has(tree["cell"])
+		check(clear, "%s towns and orchards stay off plateaus, streets, starts, nodes and tech sites" % map_id)
 		var rows_ok: bool = true
 		var twins: Dictionary = {}
 		for tree: Dictionary in plan.groves:
@@ -302,49 +344,227 @@ func test_street_towns() -> void:
 		check(rows_ok, "%s orchards are planted in full straight rows on both sides" % map_id)
 	var places_ok: bool = true
 	var named: Array[String] = []
-	for map_id: String in PLANNED_MAPS:
-		for town: Dictionary in SMMapPlan.of(map_id).towns:
-			named.append(str(town["place"]))
-	var missions: PackedStringArray = DirAccess.get_files_at("res://data/maps/missions")
-	for file: String in missions:
-		var dressing: SMMapPlan = SMMapPlan.dressing(file.get_basename())
-		for town: Dictionary in dressing.towns:
+	for plan: SMMapPlan in layouts:
+		for town: Dictionary in plan.towns:
 			named.append(str(town["place"]))
 	for place: String in named:
 		var path: String = "res://data/places/%s.json" % place
 		var ref: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
 		places_ok = places_ok and ref is Dictionary and str((ref as Dictionary).get("license", "")).contains("OpenStreetMap") and (ref as Dictionary).has("stats")
 	check(named.size() >= 20 and places_ok, "every town names a real place with an OpenStreetMap street reference (%d towns)" % named.size())
-	var shared: PackedStringArray = PackedStringArray()
-	var dress_ok: bool = missions.size() >= 15
-	for file: String in missions:
+	var dress_ok: bool = true
+	var shared: int = 0
+	for file: String in DirAccess.get_files_at("res://data/maps/missions"):
 		var id: String = file.get_basename()
+		if id == "phillips_channel" or id == "sop_ruak" or id == "showcase" or id == "kokang":
+			continue
+		shared += 1
 		var dressing: SMMapPlan = SMMapPlan.dressing(id)
-		dress_ok = dress_ok and dressing != null and not dressing.lots.is_empty() and _lots_squared(dressing, null)
-		for town: Dictionary in dressing.towns:
-			dress_ok = dress_ok and not bool(town["solid"])
-		if id != "kokang" and id != "phillips_channel" and id != "sop_ruak":
-			shared.append(id)
-			for lot: Dictionary in dressing.lots:
-				var r: Rect2i = lot["rect"] as Rect2i
-				dress_ok = dress_ok and Rect2i(0, 0, 36, 24).encloses(r) and not r.intersects(Rect2i(5, 2, 18, 18)) and not r.intersects(Rect2i(9, 6, 19, 13))
-	check(dress_ok and shared.size() >= 12, "every campaign mission dresses a squared street town outside its base and action ground")
-	var host := Node3D.new()
-	root.add_child(host)
-	var plan: SMMapPlan = SMMapPlan.of("burma_road")
-	preload("res://game/ground_view.gd").dress(host, plan.grid(), "burma", plan)
-	var drawn: int = 0
-	var square: bool = true
-	for child: Node in host.get_children():
-		if child is MultiMeshInstance3D and str(child.name).begins_with("Town_"):
-			var mm: MultiMesh = (child as MultiMeshInstance3D).multimesh
-			for i: int in mm.instance_count:
+		dress_ok = dress_ok and dressing.cols == 36 and dressing.rows == 24 and dressing.lots.size() >= 20
+		for lot: Dictionary in dressing.lots:
+			var r: Rect2i = lot["rect"] as Rect2i
+			dress_ok = dress_ok and bool(lot["solid"]) and not r.intersects(Rect2i(5, 2, 18, 18)) and not r.intersects(Rect2i(13, 7, 12, 10))
+		dress_ok = dress_ok and _open_reach(dressing, Vector2i(16, 11)) == ""
+	check(dress_ok and shared >= 14, "every campaign city is solid, keeps its base and action ground clear, and leaves no ground cut off from the rally")
+	check(_open_reach(SMMapPlan.dressing("kokang"), Vector2i(12, 8)) == "", "kokang leaves no ground cut off from the rally")
+	for id: String in ["tachileik", "kilometer_watch", "andaman", "kokang"]:
+		var dressing: SMMapPlan = SMMapPlan.dressing(id)
+		var at: Vector2i = Vector2i(20, 10) if id != "kokang" else Vector2i(14, 9)
+		var seat: Dictionary = dressing.frontage_near(at)
+		var cell: Vector2i = seat.get("cell", Vector2i(-1, -1)) as Vector2i
+		check(not seat.is_empty() and not dressing.paved.has(cell) and dressing.lot_at(cell).is_empty() and dressing.paved.has(SMMapPlan.front_of(Rect2i(cell, Vector2i.ONE), float(seat["yaw"]))) and cell.distance_to(at) < 10.0 and not _in_rects(dressing.opens, cell), "%s seats its objective structure on a street-front cell" % id)
+	for map_id: String in ["burma_road", "chiang_rai", "sop_ruak", "showcase"]:
+		var plan: SMMapPlan = SMMapPlan.of(map_id) if SMMapPlan.exists(map_id) else SMMapPlan.dressing(map_id)
+		var sim := SMMatch.new()
+		sim.place_sites(map_id, plan.grid())
+		var yaws_ok: bool = not plan.sites.is_empty()
+		for row: Dictionary in plan.sites:
+			yaws_ok = yaws_ok and is_equal_approx(float(sim.site_yaw.get(row["id"] as StringName, -1.0)), float(row["yaw"]))
+		check(yaws_ok, "%s match turns every tech site to the street the plan gave it" % map_id)
+	await _facades_drawn()
+
+func _facades_drawn() -> void:
+	for pair: Array in [["burma_road", "burma"], ["tachileik", "mission"], ["sop_ruak", "sop"]]:
+		var map_id: String = str(pair[0])
+		var plan: SMMapPlan = SMMapPlan.of(map_id) if SMMapPlan.exists(map_id) else SMMapPlan.dressing(map_id)
+		var host := Node3D.new()
+		root.add_child(host)
+		var grid: SMDomainGrid = plan.grid()
+		if SMMapPlan.exists(map_id):
+			preload("res://game/ground_view.gd").dress(host, grid, str(pair[1]), plan)
+		else:
+			preload("res://game/ground_view.gd").dress(host, grid, str(pair[1]), null, Rect2i(), plan)
+		var drawn: int = 0
+		var facing: bool = true
+		for child: Node in host.get_children():
+			if not (child is MultiMeshInstance3D and str(child.name).begins_with("Town_")):
+				continue
+			var model: String = str(child.name).trim_prefix("Town_")
+			var local: Vector3 = Vector3(sin(deg_to_rad(SMMapPlan.front_yaw(model))), 0.0, cos(deg_to_rad(SMMapPlan.front_yaw(model))))
+			for spot: Variant in child.get_meta("all_spots", []) as Array:
+				var xf: Transform3D = spot as Transform3D
 				drawn += 1
-				var ahead: Vector3 = mm.get_instance_transform(i).basis.z
-				square = square and (absf(ahead.x) < 0.001 or absf(ahead.z) < 0.001)
-	check(drawn == plan.lots.size() and square, "burma road draws every lot as a house squared to the street grid (%d)" % drawn)
-	check(host.get_node_or_null("Houses") == null and host.get_node_or_null("Orchard_rubber_tree") != null, "planned maps draw no loose houses, and orchards draw in rows")
-	host.free()
+				var lot: Dictionary = plan.lot_at(grid.cell_at(xf.origin))
+				if lot.is_empty() or str(lot["id"]) != model:
+					facing = false
+					continue
+				var yaw: float = deg_to_rad(float(lot["yaw"]))
+				facing = facing and _faces(lot["rect"] as Rect2i, float(lot["yaw"]), lot["street"] as Vector2i) and (xf.basis * local).normalized().dot(Vector3(sin(yaw), 0.0, cos(yaw))) > 0.99
+		var standing: int = 0
+		for lot: Dictionary in plan.lots:
+			if str(lot["kind"]) == "landmark":
+				var mark: Node3D = host.get_node_or_null("Landmark_%s%s" % [lot["id"], "" if int(lot["side"]) == 0 else "_b"]) as Node3D
+				if mark != null:
+					var front: float = deg_to_rad(SMMapPlan.front_yaw(str(lot["id"])))
+					var face: Vector3 = mark.global_transform.basis * Vector3(sin(front), 0.0, cos(front))
+					var yaw: float = deg_to_rad(float(lot["yaw"]))
+					facing = facing and face.normalized().dot(Vector3(sin(yaw), 0.0, cos(yaw))) > 0.99
+			else:
+				standing += 1
+		check(drawn == standing and facing, "%s draws every building with its calibrated facade turned to its street (%d)" % [map_id, drawn])
+		check(host.get_node_or_null("Houses") == null and host.get_node_or_null("Stilts") == null, "%s draws no loose houses off the street grid" % map_id)
+		host.free()
+		await process_frame
+
+## "" when the layout keeps grid mode, else the first fault.
+func _grid_mode(plan: SMMapPlan, grid: SMDomainGrid) -> String:
+	var taken: Dictionary = {}
+	for lot: Dictionary in plan.lots:
+		var r: Rect2i = lot["rect"] as Rect2i
+		var model: String = str(lot["id"])
+		var yaw: float = float(lot["yaw"])
+		if not SMMapPlan.is_building(model):
+			return "%s is not a calibrated building" % model
+		if absf(fposmod(yaw, 90.0)) > 0.001 or not Rect2i(0, 0, plan.cols, plan.rows).encloses(r):
+			return "%s at %s is off the grid" % [model, r]
+		var street: Vector2i = lot["street"] as Vector2i
+		if not _faces(r, yaw, street) or not plan.paved.has(street) or grid.holding(street) or plan.ground.domain_at_cell(street) != SMDomainGrid.Domain.LAND:
+			return "%s at %s has no open street in front" % [model, r]
+		for y: int in range(r.position.y, r.end.y):
+			for x: int in range(r.position.x, r.end.x):
+				var c := Vector2i(x, y)
+				if taken.has(c) or plan.paved.has(c) or plan.ground.domain_at_cell(c) != SMDomainGrid.Domain.LAND:
+					return "%s at %s overlaps a street, water or another building" % [model, r]
+				taken[c] = true
+	for lot: Dictionary in plan.lots:
+		if taken.has(lot["street"]):
+			return "%s fronts another building" % lot["id"]
+	for site: Dictionary in plan.sites:
+		var c: Vector2i = site["cell"] as Vector2i
+		if not plan.fronts_street(site):
+			continue
+		var street: Vector2i = site["street"] as Vector2i
+		if absf(fposmod(float(site["yaw"]), 90.0)) > 0.001 or not _faces(Rect2i(c, Vector2i.ONE), float(site["yaw"]), street) or not plan.paved.has(street) or plan.paved.has(c) or taken.has(c) or taken.has(street):
+			return "site %s has no street of its own in front" % site["id"]
+	for row: Dictionary in plan.props:
+		if SMMapPlan.is_building(str(row["id"])):
+			return "%s is a loose prop, not a lot" % row["id"]
+	return ""
+
+## The cell touches the edge of the rect that yaw turns to.
+func _faces(r: Rect2i, yaw: float, c: Vector2i) -> bool:
+	var turn: int = posmod(roundi(yaw / 90.0), 4)
+	if turn == 0 or turn == 2:
+		return c.x >= r.position.x and c.x < r.end.x and c.y == (r.end.y if turn == 0 else r.position.y - 1)
+	return c.y >= r.position.y and c.y < r.end.y and c.x == (r.end.x if turn == 1 else r.position.x - 1)
+
+func _passable(plan: SMMapPlan, grid: SMDomainGrid, c: Vector2i) -> bool:
+	return grid.in_bounds(c) and not grid.holding(c) and (plan.paved.has(c) or grid.domain_at_cell(c) == SMDomainGrid.Domain.LAND)
+
+## Paved cells on one landmass are joined by paved cells.
+func _paving_joined(plan: SMMapPlan, grid: SMDomainGrid) -> String:
+	var land: Dictionary = {}
+	var street: Dictionary = {}
+	for c: Variant in plan.paved:
+		if street.has(c):
+			continue
+		var group: int = street.size() + 1
+		var wave: Array[Vector2i] = [c as Vector2i]
+		street[c] = group
+		var head: int = 0
+		while head < wave.size():
+			var at: Vector2i = wave[head]
+			head += 1
+			for step: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				if plan.paved.has(at + step) and not street.has(at + step):
+					street[at + step] = group
+					wave.append(at + step)
+	for c: Variant in plan.paved:
+		if land.has(c) or not _passable(plan, grid, c as Vector2i):
+			continue
+		var wave: Array[Vector2i] = [c as Vector2i]
+		land[c] = true
+		var groups: Dictionary = {}
+		var head: int = 0
+		while head < wave.size():
+			var at: Vector2i = wave[head]
+			head += 1
+			if street.has(at):
+				groups[street[at]] = true
+			for step: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				var n: Vector2i = at + step
+				if not land.has(n) and _passable(plan, grid, n) and not _in_rects(plan.plateaus, n):
+					land[n] = true
+					wave.append(n)
+		if groups.size() > 1:
+			return "%d separate street networks share the land at %s" % [groups.size(), c]
+	for p: Rect2i in plan.plateaus:
+		var gate: bool = false
+		for y: int in range(p.position.y - 1, p.end.y + 1):
+			for x: int in range(p.position.x - 1, p.end.x + 1):
+				gate = gate or plan.paved.has(Vector2i(x, y))
+		if not gate:
+			return "the base at %s has no road to it" % p
+	return ""
+
+## Land cells off plateaus, base build zones, holds and lots lie within `reach` cells of a paved cell.
+func _paving_covers(plan: SMMapPlan, grid: SMDomainGrid, reach: int) -> String:
+	var far: int = 0
+	var worst: Vector2i = Vector2i(-1, -1)
+	for y: int in plan.rows:
+		for x: int in plan.cols:
+			var c := Vector2i(x, y)
+			if not _passable(plan, grid, c) or _in_rects(plan.plateaus, c) or _in_rects(plan.orchards, c) or _in_rects(plan.opens, c):
+				continue
+			var near: bool = false
+			for dy: int in range(-reach, reach + 1):
+				for dx: int in range(-reach, reach + 1):
+					if plan.paved.has(c + Vector2i(dx, dy)):
+						near = true
+						break
+				if near:
+					break
+			if not near:
+				far += 1
+				worst = c
+	return "" if far == 0 else "%d cells such as %s are over %d cells from a street" % [far, worst, reach]
+
+func _in_rects(rects: Array[Rect2i], c: Vector2i) -> bool:
+	for r: Rect2i in rects:
+		if r.has_point(c):
+			return true
+	return false
+
+## Every cell a ground unit can stand on in a campaign city joins the rally: no pocket is walled in by lots.
+func _open_reach(plan: SMMapPlan, rally: Vector2i) -> String:
+	var grid: SMDomainGrid = plan.grid()
+	var seen: Dictionary = {rally: true}
+	var wave: Array[Vector2i] = [rally]
+	var head: int = 0
+	while head < wave.size():
+		var at: Vector2i = wave[head]
+		head += 1
+		for step: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+			var n: Vector2i = at + step
+			if grid.in_bounds(n) and not seen.has(n) and not grid.holding(n) and grid.domain_at_cell(n) != SMDomainGrid.Domain.CLIFF:
+				seen[n] = true
+				wave.append(n)
+	for y: int in plan.rows:
+		for x: int in plan.cols:
+			var c := Vector2i(x, y)
+			if not grid.holding(c) and grid.domain_at_cell(c) != SMDomainGrid.Domain.CLIFF and not seen.has(c):
+				return "%s is walled off" % c
+	return ""
 
 func _lots_twinned(plan: SMMapPlan) -> bool:
 	var seen: Dictionary = {}
@@ -352,27 +572,11 @@ func _lots_twinned(plan: SMMapPlan) -> bool:
 		seen["%s|%s|%d" % [lot["id"], lot["rect"], roundi(float(lot["yaw"]))]] = int(lot["side"])
 	for lot: Dictionary in plan.lots:
 		var r: Rect2i = plan.twin_rect(lot["rect"] as Rect2i)
-		var yaw: float = fposmod(float(lot["yaw"]) + 180.0, 360.0) if plan.symmetry == "rot180" else fposmod(360.0 - float(lot["yaw"]), 360.0)
-		var key: String = "%s|%s|%d" % [lot["id"], r, roundi(yaw)]
+		if r == lot["rect"]:
+			continue
+		var key: String = "%s|%s|%d" % [lot["id"], r, roundi(plan.twin_yaw(float(lot["yaw"])))]
 		if not seen.has(key) or int(seen[key]) == int(lot["side"]):
 			return false
-	return true
-
-func _lots_squared(plan: SMMapPlan, grid: SMDomainGrid) -> bool:
-	var taken: Dictionary = {}
-	for lot: Dictionary in plan.lots:
-		var r: Rect2i = lot["rect"] as Rect2i
-		var yaw: float = float(lot["yaw"])
-		var town: Rect2i = plan.towns[int(lot["town"])]["rect"] as Rect2i
-		if absf(fposmod(yaw, 90.0)) > 0.001 or not town.encloses(r) or not town.has_point(lot["street"] as Vector2i) or not plan.on_street(lot["street"] as Vector2i):
-			return false
-		if grid != null and not Rect2i(0, 0, grid.cols, grid.rows).encloses(r):
-			return false
-		for y: int in range(r.position.y, r.end.y):
-			for x: int in range(r.position.x, r.end.x):
-				if taken.has(Vector2i(x, y)) or plan.on_street(Vector2i(x, y)):
-					return false
-				taken[Vector2i(x, y)] = true
 	return true
 
 func test_model_scale() -> void:
@@ -2083,10 +2287,13 @@ func test_sm_hud() -> void:
 	var turbine: Button = burma.find_child("Build_tidal_turbine", true, false) as Button
 	var air: Button = burma.find_child("Build_airfield", true, false) as Button
 	var naval: Button = burma.find_child("Build_naval_yard", true, false) as Button
-	turbine.pressed.emit()
-	air.pressed.emit()
-	naval.pressed.emit()
-	check(nmrf_side.yard.finished.has(&"tidal_turbine") and nmrf_side.yard.finished.has(&"airfield") and nmrf_side.yard.finished.has(&"naval_yard"), "later buildings annex beside the unpacked core")
+	for annex: Button in [turbine, air, naval]:
+		annex.pressed.emit()
+		check(nmrf_side.placement.active, "%s opens the placement ghost instead of dropping the building" % annex.name)
+		annex.pressed.emit()
+	check(nmrf_side.yard.finished.has(&"tidal_turbine") and nmrf_side.yard.finished.has(&"airfield"), "later buildings annex beside the unpacked core")
+	check(not nmrf_side.yard.finished.has(&"naval_yard") and nmrf_side.placement.active and nmrf_side.placement.reason != "", "burma road has no water, so the naval yard ghost refuses to land on dry ground")
+	nmrf_side.placement.cancel()
 	burma.free()
 	SMFront.faction_id = "mvd"
 	var atoll: Node = (load("res://game/ten_degree_atolls.tscn") as PackedScene).instantiate()
@@ -3105,8 +3312,7 @@ func test_set_piece() -> void:
 		var field: SMPointer = scene.get("field") as SMPointer
 		check(not bool(piece.get("bonus_done")) and not story.done, "%s leaves the bonus optional" % id)
 		if bool(piece.get("has_bonus")):
-			var walker: RTSUnit = field.units_of(0)[0]
-			walker.global_position = piece.get("bonus_at") as Vector3
+			_claim_bonus(scene)
 			piece.call("drive", 0.2)
 		var before: float = cam.distance
 		story.done = true
@@ -3239,6 +3445,7 @@ func test_signature_rules() -> void:
 	check(is_equal_approx(shwe_story.hack_left, 20.0) and not shwe_story.done and not shwe_story.lost, "shwe kokko resets the hack when the block is abandoned")
 	_park(shwe_field, "", shwe_story.pad)
 	shwe_story.tick(shwe_story.hack_left)
+	_clear_stages(shwe_story)
 	check(shwe_story.done and not shwe_story.lost and shwe_story.hack_left <= 0.0, "shwe kokko wins when the hack is held through")
 	shwe.free()
 	await process_frame
@@ -3260,6 +3467,7 @@ func test_signature_rules() -> void:
 	landed_boat.global_position = landed_story.far_shore
 	var shore_hp: float = landed_boat.hp
 	landed_story.tick(1.0)
+	_clear_stages(landed_story)
 	check(is_equal_approx(landed_boat.hp, shore_hp) and landed_story.done and not landed_story.lost, "andaman wins when a ship reaches the far shore off the mines")
 	landed.free()
 	await process_frame
@@ -3302,6 +3510,7 @@ func test_signature_rules() -> void:
 	var crossed_story: SMStory = crossed.get("story") as SMStory
 	var crossed_field: SMPointer = crossed.get("field") as SMPointer
 	crossed_story.tick(crossed_story.hold_left)
+	_clear_stages(crossed_story)
 	var ferry_won: RTSUnit = _duty_units(crossed_field, "ferry")[0]
 	check(crossed_story.done and not crossed_story.lost and crossed_story.ferry_across and ferry_won.is_alive(), "tonle sap wins when the ferry survives the crossing")
 	crossed.free()
@@ -3318,10 +3527,224 @@ func test_signature_rules() -> void:
 	var count_before: float = dropped_story.count_left
 	_kill_duty(dropped_field, "super")
 	dropped_story.tick(0.2)
+	_clear_stages(dropped_story)
 	check(dropped_story.done and not dropped_story.lost and dropped_story.count_left > 10.0 and dropped_story.count_left <= count_before, "shattered monsoon wins when both weapons fall before zero")
 	dropped.free()
 	await process_frame
 	SMCampaign.selected = "tachileik"
+
+func _stage_scene(id: String) -> Node:
+	SMCampaign.selected = id
+	SMFront.faction_id = "gtfc"
+	var path: String = "res://game/campaign_mission.tscn"
+	if id == "kokang":
+		path = "res://game/mission_kokang.tscn"
+	elif id == "sop_ruak":
+		path = "res://game/sop_ruak.tscn"
+	elif id == "phillips":
+		path = "res://game/phillips_channel.tscn"
+	var scene: Node = (load(path) as PackedScene).instantiate()
+	root.add_child(scene)
+	return scene
+
+func _stage_arc(scene: Node) -> SMStages:
+	var story: SMStory = scene.get("story") as SMStory
+	if story != null:
+		return story.stages
+	return scene.get("stages") as SMStages
+
+func test_campaign_stages() -> void:
+	var ids: PackedStringArray = SMStages.ids()
+	check(ids.size() == 17 and ids.has("kokang") and ids.has("sop_ruak") and ids.has("phillips"), "seventeen missions carry a stage arc (%d)" % ids.size())
+	var bonus_kinds: Dictionary = {}
+	var rewards: Dictionary = {}
+	var modes: Dictionary = {}
+	for id: String in ids:
+		var scene: Node = _stage_scene(id)
+		await process_frame
+		var arc: SMStages = _stage_arc(scene)
+		var field: SMPointer = scene.get("field") as SMPointer
+		var view: Node = scene.get_node_or_null("StageView")
+		if arc == null or field == null or view == null:
+			check(false, "%s binds a stage arc and its view" % id)
+			scene.free()
+			await process_frame
+			continue
+		var plan: Dictionary = arc.plan
+		var bonus: Dictionary = plan["bonus"] as Dictionary
+		bonus_kinds[str(bonus["kind"])] = true
+		rewards[str(bonus["reward"])] = true
+		modes[str(plan["allies"])] = true
+		var tracker: Control = scene.find_child("StageTracker", true, false) as Control
+		var bonus_row: Label = scene.find_child("StageBonusRow", true, false) as Label
+		var row_one: Label = scene.find_child("StageRow1", true, false) as Label
+		check(arc.stage == SMStages.FOOTHOLD and str(plan["goal"]) != "" and (plan["calls"] as Array).size() == 2 and tracker != null and row_one != null and row_one.text.begins_with("Stage 1 now:") and bonus_row != null and bonus_row.text.begins_with("Bonus:"), "%s opens on stage 1 with its goal and bonus on the tracker" % id)
+		_stage_bonus(scene, arc, field, id)
+		for duty: String in arc.targets():
+			_kill_duty(field, duty)
+		arc.tick(0.1, true)
+		view.call("drive", 0.1)
+		var counters: Array[RTSUnit] = _duty_units(field, "counter")
+		var routed: bool = counters.size() == 3
+		for u: RTSUnit in counters:
+			routed = routed and not u.path.is_empty() and bool(u.get_meta("road", false))
+		var paved_ok: bool = _route_paved(arc, counters)
+		var mode: String = str(plan["allies"])
+		var arrived: int = 0
+		for u: RTSUnit in arc.allies:
+			if is_instance_valid(u) and str(u.get_meta("arrived_by", "")) == mode:
+				arrived += 1
+		check(arc.stage == SMStages.ESCALATION and routed and paved_ok and arc.history.has("stage:2") and arc.history.has("allies:%s" % mode), "%s escalates: a counter-attack drives in along the streets" % id)
+		var prop: String = "DropHeli" if mode == "heli" else ("LandingCraft" if mode == "landing" else "")
+		var prop_ok: bool = prop == "" or int(view.call("props_named", prop)) >= 1
+		check(arrived == 3 and prop_ok, "%s allies arrive by %s" % [id, mode])
+		var banner: Control = scene.find_child("StageBanner", true, false) as Control
+		var line: Label = scene.find_child("StageLine", true, false) as Label
+		var pinged: bool = not field.pings.is_empty() and field.has_meta("alert_at")
+		var cam: RTSCamera = scene.get_node_or_null("Camera") as RTSCamera
+		var focus_before: Vector3 = cam.focus if cam != null else Vector3.ZERO
+		view.call("drive", 0.1)
+		var cam_free: bool = cam == null or cam.focus.distance_to(focus_before) < 0.01
+		check(banner != null and banner.visible and line != null and line.text != "" and pinged and cam_free, "%s calls the escalation on the banner and the minimap without moving the camera" % id)
+		_kill_duty(field, "counter")
+		arc.tick(0.1, true)
+		view.call("drive", 0.1)
+		var boss_plan: Dictionary = plan["boss"] as Dictionary
+		var ambushers: int = 0
+		for u: RTSUnit in _duty_units(field, "counter"):
+			if bool(u.get_meta("ambush", false)):
+				ambushers += 1
+		var climax_ok: bool = arc.stage == SMStages.CLIMAX and ambushers == 2 and arc.history.has("stage:3")
+		if boss_plan.is_empty():
+			climax_ok = climax_ok and arc.hold_left > 0.0 and _duty_units(field, "boss").is_empty()
+		else:
+			var boss: Array[RTSUnit] = _duty_units(field, "boss")
+			climax_ok = climax_ok and boss.size() == 1 and SMArms.slot_of(boss[0]) == SMArms.SECONDARY
+			if bool(boss_plan.get("fixed", false)):
+				climax_ok = climax_ok and scene.get_node_or_null("BossCompound") != null
+		check(climax_ok, "%s climaxes with %s and a street ambush" % [id, "a timed hold" if boss_plan.is_empty() else "the boss"])
+		var swaps_before: int = arc.foe_swaps
+		_kill_duty(field, "counter")
+		arc.tick(SMStages.SWAP_EVERY + 0.1, true)
+		var swapped: bool = arc.foe_swaps > swaps_before or boss_plan.is_empty()
+		if boss_plan.is_empty():
+			swapped = arc.history.has("wave:1") or arc.hold_left > 0.0
+		check(swapped and not arc.cleared(), "%s keeps the climax open while the boss or the hold stands" % id)
+		var rounds: int = 0
+		while not arc.cleared() and rounds < 8:
+			_kill_duty(field, "counter")
+			_kill_duty(field, "boss")
+			arc.tick(maxf(arc.hold_left, 0.0) + 0.1, true)
+			rounds += 1
+		check(arc.cleared() and arc.goal_line() == "All stages clear", "%s clears all three stages" % id)
+		scene.free()
+		await process_frame
+	check(bonus_kinds.has("capture") and bonus_kinds.has("rescue") and bonus_kinds.has("intercept") and bonus_kinds.has("jammer"), "the bonuses capture, rescue, intercept, and jam")
+	check(rewards.has("funds") and rewards.has("reinforce") and rewards.has("veteran") and rewards.has("strike"), "the rewards are funds, reinforcements, veterancy, and an air-strike reset")
+	check(modes.has("heli") and modes.has("landing") and modes.has("column"), "allies come by helicopter, landing craft, and armoured column")
+	var lost_convoy: Node = _stage_scene("tachileik")
+	await process_frame
+	var convoy_arc: SMStages = _stage_arc(lost_convoy)
+	var convoy_field: SMPointer = lost_convoy.get("field") as SMPointer
+	convoy_arc.tick(0.1, true)
+	var rolling: bool = convoy_arc.convoy_rolling
+	for u: RTSUnit in _duty_units(convoy_field, "convoy"):
+		rolling = rolling and not u.path.is_empty()
+		u.global_position = Vector3(28.0, 0.0, 30.0)
+	convoy_arc.tick(0.1, true)
+	check(rolling and convoy_arc.bonus_state == "failed" and convoy_arc.reward_paid == "", "the smuggler convoy rolls with the escalation and the bonus fails when it gets away")
+	lost_convoy.free()
+	await process_frame
+	var lost_squad: Node = _stage_scene("andaman")
+	await process_frame
+	var squad_arc: SMStages = _stage_arc(lost_squad)
+	_kill_duty(lost_squad.get("field") as SMPointer, "pinned")
+	squad_arc.tick(0.1, false)
+	check(squad_arc.bonus_state == "failed", "the rescue fails when the pinned squad dies")
+	lost_squad.free()
+	await process_frame
+	var sprayed: Node = _stage_scene("keng_tung")
+	await process_frame
+	var spray_story: SMStory = sprayed.get("story") as SMStory
+	spray_story.bonus_failed = true
+	spray_story.tick(0.1)
+	check(spray_story.stages.bonus_state == "failed", "keng tung's sprayer landing fails the stage bonus")
+	sprayed.free()
+	await process_frame
+	var gated: Node = _stage_scene("shwe_kokko")
+	await process_frame
+	var gate_story: SMStory = gated.get("story") as SMStory
+	var gate_field: SMPointer = gated.get("field") as SMPointer
+	_kill_duty(gate_field, "clear")
+	_park(gate_field, "", gate_story.pad)
+	gate_story.tick(gate_story.hack_left)
+	var held_open: bool = not gate_story.done and gate_story.stages.stage == SMStages.ESCALATION and gate_story.progress().begins_with("Stage 2/3")
+	var marked: bool = gate_story.beacon().distance_to(_duty_units(gate_field, "counter")[0].global_position) < 0.1
+	_clear_stages(gate_story)
+	check(held_open and marked and gate_story.done, "the core objective alone does not win: the climax must fall")
+	gated.free()
+	await process_frame
+	SMCampaign.selected = "tachileik"
+	SMFront.faction_id = "gtfc"
+
+func _route_paved(arc: SMStages, units: Array[RTSUnit]) -> bool:
+	if arc.dress == null or arc.grid == null or units.is_empty():
+		return true
+	var path: PackedVector3Array = units[0].path
+	if path.size() < 2 or not arc.dress.paved.has(arc.grid.cell_at(path[0])):
+		return false
+	var on_street: int = 0
+	for p: Vector3 in path:
+		if arc.dress.paved.has(arc.grid.cell_at(p)):
+			on_street += 1
+	return on_street >= 2
+
+func _stage_bonus(scene: Node, arc: SMStages, field: SMPointer, id: String) -> void:
+	var kind: String = arc.bonus_kind()
+	var reward: String = str((arc.plan["bonus"] as Dictionary)["reward"])
+	if id == "keng_tung":
+		var piece: Node = scene.get_node_or_null("SetPiece")
+		if piece != null:
+			piece.call("drive", 13.0)
+	arc.tick(0.05, false)
+	var credits: int = arc.economy.credits(SMPointer.PLAYER) if arc.economy != null else 0
+	var probe: RTSUnit = _marcher(field, "")
+	var probe_hp: float = probe.max_hp if probe != null else 0.0
+	var allies_before: int = arc.allies.size()
+	if arc.protocols != null:
+		for key: StringName in arc.protocols.cool_left.keys():
+			arc.protocols.cool_left[key] = 9.0
+	var duty: String = arc.bonus_duty()
+	if duty != "":
+		_kill_duty(field, duty)
+	else:
+		var spot: Vector3 = arc.bonus_at()
+		var pinned: Array[RTSUnit] = _duty_units(field, "pinned")
+		if not pinned.is_empty():
+			spot = pinned[0].global_position
+		if probe != null:
+			probe.global_position = spot + Vector3(0.6, 0.0, 0.0)
+	arc.tick(0.05, false)
+	var paid: bool = arc.bonus_state == "done" and arc.reward_paid == reward
+	if reward == "funds":
+		paid = paid and arc.economy != null and arc.economy.credits(SMPointer.PLAYER) == credits + SMStages.FUNDS
+	elif reward == "reinforce":
+		paid = paid and arc.allies.size() == allies_before + 3
+	elif reward == "veteran":
+		paid = paid and probe != null and int(probe.get_meta("veteran", 0)) == 1 and probe.max_hp > probe_hp * 1.2
+	elif reward == "strike":
+		var reset: bool = true
+		if arc.protocols != null:
+			for key: StringName in arc.protocols.cool_left.keys():
+				reset = reset and float(arc.protocols.cool_left[key]) <= 0.0
+		paid = paid and reset
+	if kind == "rescue":
+		paid = paid and _duty_units(field, "pinned").is_empty()
+	var bonus_row: Label = scene.find_child("StageBonusRow", true, false) as Label
+	var view: Node = scene.get_node_or_null("StageView")
+	if view != null:
+		view.call("drive", 0.05)
+	check(paid and bonus_row != null and bonus_row.text.begins_with("Bonus done:") and arc.history.has("bonus:done:%s" % reward), "%s bonus (%s) pays %s" % [id, kind, reward])
 
 func _signature_scene(id: String) -> Node:
 	SMCampaign.selected = id
@@ -3747,6 +4170,7 @@ func _meet_story(scene: Node, id: String) -> void:
 		story.tick(2.0)
 		_park(field, "", Vector3(-6.0, 0.0, 4.0))
 		story.tick(4.0)
+		_clear_stages(story)
 		return
 	if id == "shwe_kokko":
 		_kill_duty(field, "clear")
@@ -3806,6 +4230,41 @@ func _meet_story(scene: Node, id: String) -> void:
 		_press_proto(scene, "cryoshot")
 		_kill_duty(field, "super")
 		story.tick(0.1)
+	_clear_stages(story)
+
+## Plays out the mission arc once its own objective is met: kills each stage's targets and runs out a hold.
+func _clear_stages(story: SMStory) -> void:
+	var rounds: int = 0
+	while story != null and story.stages != null and not story.done and not story.lost and rounds < 8:
+		for duty: String in story.stages.targets():
+			_kill_duty(story.field, duty)
+		var step: float = 0.1
+		if story.stages.stage == SMStages.CLIMAX:
+			step = story.stages.hold_left + 0.1
+		story.tick(step)
+		rounds += 1
+
+## Completes the mission's bonus the way its kind asks: reach the site, reach the pinned squad, or kill the
+## jammer or the convoy.
+func _claim_bonus(scene: Node) -> void:
+	var story: SMStory = scene.get("story") as SMStory
+	var field: SMPointer = scene.get("field") as SMPointer
+	if story == null or story.stages == null:
+		return
+	var arc: SMStages = story.stages
+	story.tick(0.05)
+	var duty: String = arc.bonus_duty()
+	if duty != "":
+		_kill_duty(field, duty)
+	else:
+		var spot: Vector3 = arc.bonus_at()
+		var pinned: Array[RTSUnit] = _duty_units(field, "pinned")
+		if not pinned.is_empty():
+			spot = pinned[0].global_position
+		var walker: RTSUnit = _marcher(field, "")
+		if walker != null:
+			walker.global_position = spot + Vector3(0.6, 0.0, 0.0)
+	story.tick(0.05)
 
 func _park(field: SMPointer, kind: String, at: Vector3) -> void:
 	for u: RTSUnit in field.units_of(0):
@@ -3985,6 +4444,21 @@ func _order_crossing(field: SMPointer) -> void:
 		RTSOrders.attack(one, target, nav, field.teams)
 
 func _script_orders(scene: Node, id: String) -> void:
+	_script_core(scene, id)
+	_fight_stages(scene)
+
+## After the mission's own objective: break the counter-attack, then the boss or the hold, as a player would.
+func _fight_stages(scene: Node) -> void:
+	var story: SMStory = scene.get("story") as SMStory
+	var field: SMPointer = scene.get("field") as SMPointer
+	var rounds: int = 0
+	while story != null and story.stages != null and not story.done and not story.lost and rounds < 8:
+		_favor_script(field)
+		_fight_enemies(scene, field, 160)
+		_sim_until_done(scene, 24, 0.5)
+		rounds += 1
+
+func _script_core(scene: Node, id: String) -> void:
 	var field: SMPointer = scene.get("field") as SMPointer
 	var story: SMStory = scene.get("story") as SMStory
 	if id != "plain_of_jars":
@@ -5160,7 +5634,7 @@ func test_sm_boot() -> void:
 	var control_bar: Label = boot.find_child("ControlBar", true, false) as Label
 	var title_font: Font = game_title.get_theme_font("font") if game_title != null else null
 	var bar_font: Font = control_bar.get_theme_font("font") if control_bar != null else null
-	check(game_title != null and game_title.text == "ASEAN 2031" and str(ProjectSettings.get_setting("application/config/name")) == "ASEAN 2031", "the boot title and window title are ASEAN 2031")
+	check(game_title != null and game_title.text == "2035 - Zambudipa War" and str(ProjectSettings.get_setting("application/config/name")) == "2035 - Zambudipa War", "the boot title and window title are 2035 - Zambudipa War")
 	check(title_font != null and title_font.resource_path.contains("Warheed") and game_title.theme_type_variation == "Header", "the boot title uses Warheed")
 	check(bar_font != null and bar_font.resource_path.contains("OperationNapalm"), "the control bar uses Operation Napalm")
 	check(SMCampaign.title_of("shattered_monsoon") == "Operation Shattered Monsoon", "the final mission keeps its story name")
@@ -5215,7 +5689,7 @@ func test_sm_boot() -> void:
 	var field: SMPointer = scene.get("field") as SMPointer
 	check(_has_names(field, PackedStringArray(["Patani Corsair Guard", "Malacca Pocket-Sub", "Krakatoa Dreadnought", "Phillips Wave-Cannon", "Garuda Mecha-Overlord", "Johor Loiter-Swarm"])), "burma plays the selected nmrf side")
 	var hud_title: Label = scene.find_child("HudTitle", true, false) as Label
-	check(hud_title != null and hud_title.text == "ASEAN 2031" and hud_title.theme_type_variation == "Header", "the hud titles the match ASEAN 2031")
+	check(hud_title != null and hud_title.text == "2035 - Zambudipa War" and hud_title.theme_type_variation == "Header", "the hud titles the match 2035 - Zambudipa War")
 	check(scene.find_child("MovePacker", true, false) != null, "nmrf skirmish can move the packer")
 	check(str(scene.call("train_unit")) == "Sulu Tank-Buster", "nmrf skirmish trains an nmrf unit")
 	scene.free()
@@ -6618,7 +7092,7 @@ func test_game_language() -> void:
 	var bot_row: Control = boot.find_child("SkirmishBotCycle", true, false) as Control
 	var menu_back: Control = boot.find_child("MenuBack", true, false) as Control
 	var back_hit: Rect2 = bot_row.get_global_rect().intersection(menu_back.get_global_rect()) if bot_row != null and menu_back != null else Rect2()
-	check(top_card != null and title_node != null and top_card.position.y >= title_node.position.y + 88.0 and bot_row != null and menu_back != null and (back_hit.size.x < 1.0 or back_hit.size.y < 1.0), "the Skirmish map list sits below the ASEAN 2031 logo and Back stays clear of the Commander and Difficulty rows")
+	check(top_card != null and title_node != null and top_card.position.y >= title_node.position.y + 88.0 and bot_row != null and menu_back != null and (back_hit.size.x < 1.0 or back_hit.size.y < 1.0), "the Skirmish map list sits below the 2035 - Zambudipa War logo and Back stays clear of the Commander and Difficulty rows")
 	boot.call("_show_tab", "campaign")
 	boot.call("layout_for", Vector2(1231, 663))
 	await process_frame
@@ -6738,3 +7212,694 @@ func test_render_budget() -> void:
 	var icons_ok: bool = FileAccess.file_exists("res://icon.png") and FileAccess.file_exists("res://brand/icon.ico") and FileAccess.file_exists("res://brand/icon.icns") and presets_cfg.contains("res://brand/icon.ico") and presets_cfg.contains("res://brand/icon.icns")
 	check(bgs_ok and splash_ok and icons_ok, "Four Fronts splash, Vanguard wordmark, six menu backgrounds, and Chevron app icons resolve without build/web")
 	Settings.set_graphics("high")
+
+func test_web_budget() -> void:
+	var host: Node3D = Node3D.new()
+	root.add_child(host)
+	var field: SMPointer = SMPointer.new()
+	field.bind(host, null)
+	field.faction_id = "gtfc"
+	var first: String = field.category_of(&"amber_tank")
+	var row_category: String = field.call("_category_from", field.call("_unit_row", &"amber_tank"))
+	check(first == "vehicle" and field.category_of(&"amber_tank") == first and row_category == first and field.category_of(&"militia") == "infantry", "unit categories are cached per faction and match the catalog")
+	var ViewBudget: GDScript = load("res://game/view_budget.gd") as GDScript
+	var cam: Camera3D = Camera3D.new()
+	host.add_child(cam)
+	cam.make_current()
+	cam.look_at_from_position(Vector3(0.0, 20.0, 20.0), Vector3.ZERO)
+	check(bool(ViewBudget.call("on_screen", cam, Vector3.ZERO)) and not bool(ViewBudget.call("on_screen", cam, Vector3(0.0, 0.0, 60.0))), "frustum test keeps the focus and drops what is behind the camera")
+	ViewBudget.set("force", 1)
+	var u: RTSUnit = RTSUnit.new()
+	var body: MeshInstance3D = MeshInstance3D.new()
+	body.name = "Body"
+	u.add_child(body)
+	var player: AnimationPlayer = AnimationPlayer.new()
+	body.add_child(player)
+	body.set_meta("anim_player", player)
+	var wheel: MeshInstance3D = MeshInstance3D.new()
+	wheel.name = "Wheel0"
+	body.add_child(wheel)
+	host.add_child(u)
+	u.position = Vector3(0.0, 0.0, 60.0)
+	var away: float = float(ViewBudget.call("motion_step", u, body, 0.1))
+	var parked: bool = away < 0.0 and not player.active and bool(body.get_meta("parked"))
+	u.position = Vector3.ZERO
+	var back: float = float(ViewBudget.call("motion_step", u, body, 0.1))
+	check(parked and is_equal_approx(back, 0.2) and player.active and wheel.visibility_range_end > 0.0, "an off-camera unit parks its animation, then replays the skipped time when back in view")
+	ViewBudget.set("force", 0)
+	check(is_equal_approx(float(ViewBudget.call("motion_step", u, body, 0.05)), 0.05), "native budgets pose every unit every frame")
+	ViewBudget.set("force", -1)
+	var Budget: GDScript = load("res://game/render_budget.gd") as GDScript
+	var gov: Node = Budget.new() as Node
+	Settings.strain = 0
+	var steps: Array[int] = []
+	for i: int in 260:
+		steps.append(int(gov.call("feed", 0.04)))
+	var strained: int = Settings.strain
+	var lean: bool = Settings.lean() and Settings.particles(48) < 48
+	for i: int in 1200:
+		gov.call("feed", 0.01)
+	check(steps[30] == 0 and strained >= 2 and lean and Settings.strain < strained, "40 ms frames step the web budget down, smooth frames give it back")
+	Settings.strain = 0
+	check(not Settings.lean() and Settings.particles(48) == 48, "native and unstrained budgets keep full crowds and particles")
+	gov.free()
+	var box: BoxMesh = BoxMesh.new()
+	box.size = Vector3(6.0, 12.0, 6.0)
+	var mm: MultiMesh = MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.use_colors = true
+	mm.mesh = box
+	mm.instance_count = 1
+	var spot: Transform3D = Transform3D(Basis.IDENTITY, Vector3(30.0, 6.0, 0.0))
+	mm.set_instance_transform(0, spot)
+	var trees: MultiMeshInstance3D = MultiMeshInstance3D.new()
+	trees.name = "JungleTrees"
+	trees.multimesh = mm
+	var spots: Array[Transform3D] = [spot]
+	trees.set_meta("all_spots", spots)
+	host.add_child(trees)
+	var rts: RTSCamera = RTSCamera.new()
+	host.add_child(rts)
+	rts.focus_on(Vector3.ZERO)
+	Ground._cull_named(host, "JungleTrees", Vector3.ZERO, false)
+	Ground.fade_occluders(host, rts)
+	var marker: PackedFloat32Array = PackedFloat32Array([0.5])
+	trees.set_meta("canopy_fade", marker)
+	Ground.fade_occluders(host, rts)
+	Ground._cull_named(host, "JungleTrees", Vector3(1.0, 0.0, 1.0), false)
+	var kept: bool = trees.get_meta("canopy_fade", PackedFloat32Array()) == marker
+	Ground._cull_named(host, "JungleTrees", Vector3(40.0, 0.0, 0.0), false)
+	check(kept and not trees.has_meta("canopy_fade"), "a still camera rewrites no prop instances")
+	var backdrop: Control = preload("res://game/menu_backdrop.gd").new()
+	var hits: Array[int] = [0]
+	var job: Callable = func() -> void: hits[0] += 1
+	backdrop.call("_when_in_tree", job)
+	backdrop.call("_when_in_tree", job)
+	var waits: int = backdrop.tree_entered.get_connections().size()
+	host.add_child(backdrop)
+	check(waits == 1 and hits[0] == 1 and backdrop.tree_entered.get_connections().is_empty(), "an orphaned menu backdrop waits for the tree once instead of re-deferring every flush")
+	backdrop.queue_free()
+	host.free()
+
+func _ra3_scene(faction: String, path: String) -> Node:
+	SMFront.faction_id = faction
+	var scene: Node = (load(path) as PackedScene).instantiate()
+	root.add_child(scene)
+	current_scene = scene
+	await process_frame
+	return scene
+
+func _ra3_done(scene: Node) -> void:
+	current_scene = null
+	scene.free()
+	await process_frame
+
+func _ra3_key(code: Key, shift: bool = false) -> void:
+	var touch: Node = root.get_node_or_null("SMTouch")
+	var key: InputEventKey = InputEventKey.new()
+	key.pressed = true
+	key.keycode = code
+	key.physical_keycode = code
+	key.shift_pressed = shift
+	if touch != null:
+		touch._unhandled_input(key)
+
+func _ra3_click(field: SMPointer, cam: RTSCamera, at: Vector3, pressed: bool) -> bool:
+	var mb: InputEventMouseButton = InputEventMouseButton.new()
+	mb.button_index = MOUSE_BUTTON_LEFT
+	mb.pressed = pressed
+	mb.position = cam.unproject_position(at)
+	return field.handle_button(mb)
+
+func _ra3_hover(field: SMPointer, cam: RTSCamera, at: Vector3) -> void:
+	var motion: InputEventMouseMotion = InputEventMouseMotion.new()
+	motion.position = cam.unproject_position(at)
+	field.handle_motion(motion)
+
+## A cell centre where `id` fits facing some quarter, searched outward from `from`. Returns [pos, yaw] or [].
+func _ra3_fit(side: SMSide, id: StringName, from: Vector3, reach: int) -> Array:
+	var grid: SMDomainGrid = side.plan.grid
+	var c0: Vector2i = grid.cell_at(from)
+	for r: int in range(0, reach):
+		for y: int in range(c0.y - r, c0.y + r + 1):
+			for x: int in range(c0.x - r, c0.x + r + 1):
+				if maxi(absi(x - c0.x), absi(y - c0.y)) != r:
+					continue
+				var at: Vector3 = grid.cell_center(Vector2i(x, y))
+				for q: int in 4:
+					if side.placement_reason(id, at, float(q) * 90.0) == "":
+						return [at, float(q) * 90.0]
+	return []
+
+func _ra3_all_cells(grid: SMDomainGrid, rect: Rect2i, water: bool) -> bool:
+	for y: int in range(rect.position.y, rect.end.y):
+		for x: int in range(rect.position.x, rect.end.x):
+			var d: int = grid.domain_at_cell(Vector2i(x, y))
+			if SMBasePlan.is_water(d) != water:
+				return false
+	return true
+
+func test_ra3_placement() -> void:
+	var scene: Node = await _ra3_scene("gtfc", "res://game/phillips_channel.tscn")
+	var side: SMSide = scene.get("side") as SMSide
+	var field: SMPointer = scene.get("field") as SMPointer
+	var cam: RTSCamera = scene.get_node_or_null("Camera") as RTSCamera
+	var placing: SMPlacement = side.placement
+	check(not side.needs_spot(&"scaffold_yard"), "the first construction yard deploys where it stands")
+	(scene.find_child("Build_scaffold_yard", true, false) as Button).pressed.emit()
+	check(side.yard.finished.has(&"scaffold_yard") and not placing.active, "a yard click deploys it without a ghost")
+	for id: String in ["salween_hydro", "slag_refinery"]:
+		side.order_building(StringName(id))
+	var barracks: Button = scene.find_child("Build_barracks", true, false) as Button
+	barracks.pressed.emit()
+	var ghost: Node3D = scene.get_node_or_null("PlacementGhost") as Node3D
+	check(placing.active and placing.id == &"barracks" and not side.yard.finished.has(&"barracks"), "a building click opens a placement ghost instead of dropping the building")
+	var tiles: MultiMeshInstance3D = ghost.get_node_or_null("GhostCells") as MultiMeshInstance3D if ghost != null else null
+	check(ghost != null and ghost.get_node_or_null("GhostBody") != null and ghost.get_node_or_null("GhostArrow") != null and tiles != null and tiles.multimesh.instance_count == placing.cells().size() and placing.exit_cells().size() >= 2, "the ghost shows the building, its footprint grid, its exit cells and a front arrow")
+	_ra3_hover(field, cam, side.yard.center + Vector3(SMBasePlan.cell_m() * 4.0, 0.0, SMBasePlan.cell_m() * 2.0))
+	check(placing.cursor.distance_to(side.yard.center + Vector3(SMBasePlan.cell_m() * 4.0, 0.0, SMBasePlan.cell_m() * 2.0)) < 0.6, "the ghost follows the cursor across the ground")
+	var y0: float = placing.yaw
+	_ra3_key(KEY_R)
+	var y1: float = placing.yaw
+	check(is_equal_approx(fposmod(y0 - y1, 360.0), 90.0), "R turns the ghost a quarter")
+	var wheel: InputEventMouseButton = InputEventMouseButton.new()
+	wheel.button_index = MOUSE_BUTTON_WHEEL_UP
+	wheel.pressed = true
+	check(field.handle_button(wheel) and is_equal_approx(fposmod(y1 - placing.yaw, 360.0), 90.0), "the mouse wheel turns the ghost while placing")
+	var arrow: Node3D = ghost.get_node_or_null("GhostArrow") as Node3D
+	var arrow_dir: Vector3 = arrow.global_basis.z if arrow != null else Vector3.ZERO
+	check(arrow != null and arrow_dir.dot(placing.front()) > 0.95, "the exit arrow points out of the front bay")
+	var fit: Array = _ra3_fit(side, &"barracks", side.yard.center + Vector3(SMBasePlan.cell_m() * 3.0, 0.0, 0.0), 10)
+	check(not fit.is_empty(), "phillips has a barracks plot in reach")
+	if not fit.is_empty():
+		var at: Vector3 = fit[0]
+		var east: Vector3 = at + Vector3(6.0, 0.0, 0.0)
+		var north: Vector3 = at + Vector3(0.0, 0.0, -6.0)
+		_ra3_hover(field, cam, at)
+		check(_ra3_click(field, cam, at, true) and placing.pressed, "pressing on a cell anchors the ghost there")
+		_ra3_hover(field, cam, east)
+		check(placing.dragged and is_equal_approx(placing.yaw, 90.0) and placing.front().x > 0.99, "dragging east faces the exit east")
+		_ra3_hover(field, cam, north)
+		var want: float = placing.yaw
+		check(is_equal_approx(want, 180.0) and placing.front().z < -0.99, "dragging north turns the exit north")
+		var ok_north: bool = side.placement_reason(&"barracks", at, 180.0) == ""
+		var aim: Vector3 = north if ok_north else at + SMBasePlan.front_dir(float(fit[1])) * 6.0
+		_ra3_click(field, cam, aim, false)
+		var faced: float = 180.0 if ok_north else float(fit[1])
+		var built: MeshInstance3D = scene.get_node_or_null("Built_barracks") as MeshInstance3D
+		check(side.yard.finished.has(&"barracks") and not placing.active and is_equal_approx(side.front_of(&"barracks"), faced), "releasing the drag places the barracks facing the drag")
+		check(built != null and side.yard.position_of(&"barracks").distance_to(side.snap_spot(&"barracks", at, faced)) < 0.6 and is_equal_approx(fposmod(built.rotation_degrees.y, 360.0), SMMapPlan.turn_for("barracks", faced)) and scene.get_node_or_null("PlacementGhost") == null, "the barracks stands on the chosen cell, its facade turned to the exit, and the ghost clears")
+	side.order_building(&"war_factory")
+	var naval: Button = scene.find_child("Build_naval_yard", true, false) as Button
+	naval.pressed.emit()
+	check(placing.active and placing.id == &"naval_yard" and SMBasePlan.must_float("naval", false), "a naval yard click opens the ghost")
+	var grid: SMDomainGrid = side.plan.grid
+	var dry: Vector3 = Vector3.INF
+	var c0: Vector2i = grid.cell_at(side.yard.center)
+	for y: int in range(c0.y - 8, c0.y + 9):
+		for x: int in range(c0.x - 8, c0.x + 9):
+			var probe: Vector3 = grid.cell_center(Vector2i(x, y))
+			if dry == Vector3.INF and _ra3_all_cells(grid, side.plan.rect_at(probe, side.footprint_at(&"naval_yard", 0.0)), false) and side.placement_reason(&"barracks", probe, 0.0) != "too close to another building" and side.placement_reason(&"naval_yard", probe, 0.0) == "naval structures go on water":
+				dry = probe
+	check(dry != Vector3.INF, "a naval yard refuses dry land")
+	placing.hover(dry)
+	check(placing.confirm() == "naval structures go on water" and placing.active and not side.yard.finished.has(&"naval_yard"), "confirming on land keeps the ghost up and builds nothing")
+	var wet: Array = _ra3_fit(side, &"naval_yard", side.yard.center, 30)
+	check(not wet.is_empty(), "a naval yard finds open water inside the extended naval reach")
+	if not wet.is_empty():
+		var sea: Vector3 = wet[0]
+		placing.hover(sea)
+		placing.face(float(wet[1]))
+		naval.pressed.emit()
+		var rect: Rect2i = side.plan.plots.get(&"naval_yard", Rect2i()) as Rect2i
+		check(side.yard.finished.has(&"naval_yard") and _ra3_all_cells(grid, rect, true), "the naval yard stands on water cells only")
+		var exits: Array[Vector2i] = side.plan.exit_cells(rect, side.front_of(&"naval_yard"), true)
+		var all_wet: bool = not exits.is_empty()
+		for c: Vector2i in exits:
+			all_wet = all_wet and SMBasePlan.is_water(grid.domain_at_cell(c)) and not field.nav_naval.is_blocked(c)
+		check(all_wet, "its exit bay opens onto navigable water")
+		var boat: RTSUnit = field.produce(SMPointer.PLAYER, &"emerald_gunboat", side.yard.center)
+		var boat_cell: Vector2i = field.nav_naval.cell_at(boat.global_position)
+		check(boat != null and side.bays.rolling(boat) and not field.nav_naval.is_blocked(boat_cell), "a boat spawns inside the naval bay on water")
+		for i: int in 10:
+			side.bays.tick(0.2)
+		var out_at: Vector3 = boat.global_position
+		check(not side.bays.rolling(boat) and not field.nav_naval.is_blocked(field.nav_naval.cell_at(out_at)), "the boat rolls out onto open water")
+		var goal: Vector3 = field.water_spot(out_at + SMBasePlan.front_dir(side.front_of(&"naval_yard")) * 10.0)
+		boat.set_path(field.nav_naval.find_path(boat.global_position, goal))
+		for i: int in 20:
+			field.tick(0.1)
+		check(boat.global_position.distance_to(out_at) > 1.0 and not field.nav_naval.is_blocked(field.nav_naval.cell_at(boat.global_position)), "the boat sails away on water")
+	var land_spawn: Vector3 = side.yard.center
+	var snapped: RTSUnit = field.spawn(SMPointer.PLAYER, land_spawn, &"emerald_gunboat")
+	check(not field.nav_naval.is_blocked(field.nav_naval.cell_at(snapped.global_position)), "a boat spawned on land snaps to the nearest navigable water")
+	var helper: SMBasePlan = SMBasePlan.new()
+	helper.grid = grid
+	helper.center = side.yard.center
+	helper.radius = side.yard.radius
+	var auto: Vector3 = helper.plot(&"naval_yard", "naval", true)
+	var auto_rect: Rect2i = helper.plots.get(&"naval_yard", Rect2i()) as Rect2i
+	check(auto != Vector3.INF and _ra3_all_cells(grid, auto_rect, true) and helper.exit_open(auto_rect, helper.yaw_of(&"naval_yard"), true), "the AI plot helper puts a naval yard on water with an open water exit")
+	var landlocked: SMDomainGrid = SMDomainGrid.new(24, 24, 4.0, Vector3(-48.0, 0.0, -48.0))
+	var dry_plan: SMBasePlan = SMBasePlan.new()
+	dry_plan.grid = landlocked
+	dry_plan.center = Vector3.ZERO
+	dry_plan.radius = 30.0
+	check(dry_plan.plot(&"naval_yard", "naval", true) == Vector3.INF, "with no water in reach the helper refuses a naval yard instead of dropping it on land")
+	await _ra3_done(scene)
+	var hub_scene: Node = await _ra3_scene("mvd", "res://game/ten_degree_atolls.tscn")
+	var mvd: SMSide = hub_scene.get("side") as SMSide
+	(hub_scene.find_child("Build_command_hub", true, false) as Button).pressed.emit()
+	check(mvd.yard.finished.has(&"command_hub") and not mvd.placement.active, "the MVD hub deploys in place")
+	var redeploy: Button = hub_scene.find_child("RedeployButton", true, false) as Button
+	var hud: SMHud = hub_scene.get("hud") as SMHud
+	check(redeploy != null and mvd.can_redeploy(), "the command hub can pack up and redeploy")
+	hud.start_redeploy()
+	check(mvd.placement.active and mvd.placement.redeploy and hub_scene.get_node_or_null("PlacementGhost") != null, "pack and redeploy opens the same ghost")
+	var hop: Array = []
+	var start_at: Vector3 = mvd.yard.center
+	for r: int in range(2, 9):
+		for q: int in 4:
+			var cand: Vector3 = start_at + SMBasePlan.front_dir(float(q) * 90.0) * SMBasePlan.cell_m() * float(r)
+			if hop.is_empty() and mvd.placement_reason(&"command_hub", cand, 90.0) == "":
+				hop = [cand]
+	check(not hop.is_empty(), "the hub finds a redeploy spot")
+	if not hop.is_empty():
+		mvd.placement.hover(hop[0])
+		mvd.placement.face(90.0)
+		check(mvd.placement.confirm() == "redeployed" and mvd.yard.center.distance_to(mvd.snap_spot(&"command_hub", hop[0], 90.0)) < 0.6 and is_equal_approx(mvd.front_of(&"command_hub"), 90.0), "the hub redeploys to the chosen spot and facing")
+	await _ra3_done(hub_scene)
+	var nmrf_scene: Node = await _ra3_scene("nmrf", "res://game/burma_road.tscn")
+	var nmrf: SMSide = nmrf_scene.get("side") as SMSide
+	(nmrf_scene.find_child("MovePacker", true, false) as Button).pressed.emit()
+	check(nmrf.can_redeploy() and nmrf.yard.style == SMBuildYard.Style.MOBILE, "the packed NMRF core can redeploy")
+	(nmrf_scene.get("hud") as SMHud).start_redeploy()
+	var core_hop: Array = _ra3_fit(nmrf, &"packer", nmrf.yard.packer_pos + Vector3(SMBasePlan.cell_m() * 3.0, 0.0, 0.0), 8)
+	if not core_hop.is_empty():
+		nmrf.placement.hover(core_hop[0])
+		nmrf.placement.face(float(core_hop[1]))
+	check(nmrf.placement.active and nmrf.placement.redeploy and not core_hop.is_empty() and nmrf.placement.confirm() == "redeployed", "the NMRF core redeploys through the ghost")
+	(nmrf_scene.find_child("Build_gun_wharf", true, false) as Button).pressed.emit()
+	var annex: Button = nmrf_scene.find_child("Build_tidal_turbine", true, false) as Button
+	annex.pressed.emit()
+	check(nmrf.placement.active and nmrf.placement.id == &"tidal_turbine", "NMRF annexes go through the ghost")
+	nmrf.placement.cancel()
+	check(not nmrf.placement.active and not nmrf.yard.finished.has(&"tidal_turbine") and nmrf_scene.get_node_or_null("PlacementGhost") == null, "cancelling the ghost builds nothing and clears it")
+	await _ra3_done(nmrf_scene)
+	SMFront.faction_id = "gtfc"
+	await process_frame
+
+func test_ra3_camera() -> void:
+	var scene: Node = await _ra3_scene("gtfc", "res://game/phillips_channel.tscn")
+	var cam: RTSCamera = scene.get_node_or_null("Camera") as RTSCamera
+	var rig: SMCamRig = SMCamRig.of(cam)
+	check(cam != null and rig != null and SMCamRig.of(cam) == rig, "the camera keeps one orbit rig")
+	cam.focus_on(Vector3(cam.bounds.get_center().x, 0.0, cam.bounds.get_center().y))
+	var y0: float = cam.yaw_degrees
+	_ra3_key(KEY_E)
+	check(is_equal_approx(rig.target_yaw, y0 + 45.0) and is_equal_approx(cam.yaw_degrees, y0), "E sets an eased turn instead of jumping")
+	rig.step(0.05)
+	var mid: float = cam.yaw_degrees
+	check(mid > y0 + 1.0 and mid < y0 + 44.0, "the turn eases over several frames")
+	for i: int in 60:
+		rig.step(0.05)
+	check(rig.settled() and is_equal_approx(cam.yaw_degrees, y0 + 45.0), "the turn settles on the target")
+	_ra3_key(KEY_Q)
+	rig.snap()
+	_ra3_key(KEY_BRACKETRIGHT)
+	rig.snap()
+	_ra3_key(KEY_BRACKETLEFT)
+	rig.snap()
+	check(is_equal_approx(cam.yaw_degrees, y0), "Q and [ turn back the other way")
+	var picked_ok: bool = true
+	var pan_ok: bool = true
+	var seen: Dictionary = {}
+	var vp: Vector2 = scene.get_viewport().get_visible_rect().size
+	for i: int in 8:
+		rig.turn(SMCamRig.TURN_STEP)
+		rig.snap()
+		seen[int(roundf(rig.heading())) % 360] = true
+		var center: Vector3 = cam.ground_at(vp * 0.5)
+		picked_ok = picked_ok and center != Vector3.INF and Vector2(center.x - cam.focus.x, center.z - cam.focus.z).length() < 1.0
+		var before: Vector3 = cam.focus
+		rig.pan_keys(Vector2(0.0, 1.0), 0.05)
+		var moved: Vector3 = cam.focus - before
+		var fwd: Vector3 = -cam.global_basis.z
+		fwd.y = 0.0
+		pan_ok = pan_ok and moved.length() > 0.01 and moved.normalized().dot(fwd.normalized()) > 0.98
+		cam.focus_on(before)
+	check(seen.size() == 8 and is_equal_approx(fposmod(cam.yaw_degrees - y0, 360.0), 0.0), "eight 45-degree turns go all the way round")
+	check(picked_ok, "ground picking under the screen centre hits the focus at every heading")
+	check(pan_ok, "forward pan follows the camera's view at every heading")
+	rig.turn(135.0)
+	rig.snap()
+	var before_right: Vector3 = cam.focus
+	rig.pan_keys(Vector2(1.0, 0.0), 0.05)
+	var right_move: Vector3 = cam.focus - before_right
+	var right: Vector3 = cam.global_basis.x
+	check(right_move.normalized().dot(Vector3(right.x, 0.0, right.z).normalized()) > 0.98, "right pan follows the camera's right at 135 degrees")
+	var keys: Node = root.get_node_or_null("SMTouch")
+	check(keys != null and keys.call("key_pan", false) == Vector2.ZERO and float(keys.call("turn_dir", KEY_Q)) < 0.0 and float(keys.call("turn_dir", KEY_E)) > 0.0, "Q turns left and E turns right")
+	_ra3_key(KEY_HOME)
+	rig.snap()
+	check(is_equal_approx(fposmod(cam.yaw_degrees, 360.0), 0.0) and is_equal_approx(rig.heading(), 0.0), "Home resets the camera to north")
+	var touch: Node = root.get_node_or_null("SMTouch")
+	var alt_drag: InputEventMouseMotion = InputEventMouseMotion.new()
+	alt_drag.alt_pressed = true
+	alt_drag.button_mask = MOUSE_BUTTON_MASK_LEFT
+	alt_drag.relative = Vector2(80.0, -20.0)
+	var yaw_before: float = cam.yaw_degrees
+	var pitch_before: float = cam.pitch_near
+	touch._unhandled_input(alt_drag)
+	check(is_equal_approx(cam.yaw_degrees - yaw_before, 20.0) and cam.pitch_near > pitch_before, "Alt and left drag orbits the yaw and tilts the pitch")
+	var middle: InputEventMouseMotion = InputEventMouseMotion.new()
+	middle.button_mask = MOUSE_BUTTON_MASK_MIDDLE
+	middle.relative = Vector2(-120.0, 0.0)
+	var yaw_mid: float = cam.yaw_degrees
+	scene._unhandled_input(middle)
+	check(is_equal_approx(cam.yaw_degrees - yaw_mid, -30.0), "middle-mouse drag orbits the yaw")
+	rig.step(0.1)
+	check(is_equal_approx(cam.yaw_degrees, yaw_mid - 30.0), "the eased rig follows a mouse orbit instead of fighting it")
+	var spin_from: float = cam.yaw_degrees
+	for i: int in 30:
+		rig.drag(Vector2(48.0, 0.0))
+	check(is_equal_approx(cam.yaw_degrees - spin_from, 360.0), "a long drag spins the full 360 degrees")
+	var compass: Control = scene.find_child("CameraCompass", true, false) as Control
+	var left: Button = scene.find_child("CompassLeft", true, false) as Button
+	var right_b: Button = scene.find_child("CompassRight", true, false) as Button
+	var north: BaseButton = scene.find_child("CompassNorth", true, false) as BaseButton
+	var zoom_in_b: Button = scene.find_child("CompassZoomIn", true, false) as Button
+	var zoom_out_b: Button = scene.find_child("CompassZoomOut", true, false) as Button
+	check(compass != null and compass.visible and left != null and right_b != null and north != null and zoom_in_b != null and zoom_out_b != null and left.custom_minimum_size.y >= 36.0, "the HUD compass has rotate left, north, rotate right, and zoom in/out buttons")
+	var t0: float = rig.target_yaw
+	right_b.pressed.emit()
+	check(is_equal_approx(rig.target_yaw - t0, SMCamRig.TURN_STEP), "the compass rotate-right button turns the camera")
+	left.pressed.emit()
+	left.pressed.emit()
+	check(is_equal_approx(rig.target_yaw - t0, -SMCamRig.TURN_STEP), "the compass rotate-left button turns it back")
+	north.pressed.emit()
+	rig.snap()
+	check(is_equal_approx(fposmod(cam.yaw_degrees, 360.0), 0.0), "clicking the compass dial resets north")
+	var d_before_btn: float = cam.distance
+	zoom_in_b.pressed.emit()
+	var d_after_in: float = cam.distance
+	zoom_out_b.pressed.emit()
+	var mag: InputEventMagnifyGesture = InputEventMagnifyGesture.new()
+	mag.factor = 1.15
+	mag.position = vp * 0.5
+	var d_before_mag: float = cam.distance
+	touch._unhandled_input(mag)
+	var pan_g: InputEventPanGesture = InputEventPanGesture.new()
+	pan_g.alt_pressed = true
+	pan_g.delta = Vector2(-2.0, 0.0)
+	var y_before_pan: float = cam.yaw_degrees
+	touch._unhandled_input(pan_g)
+	check(d_after_in < d_before_btn and cam.distance < d_before_mag and not is_equal_approx(cam.yaw_degrees, y_before_pan), "compass zoom buttons and macOS trackpad pinch/pan gestures zoom and orbit the camera")
+	await _ra3_done(scene)
+
+func test_ra3_factory() -> void:
+	var scene: Node = await _ra3_scene("gtfc", "res://game/phillips_channel.tscn")
+	var side: SMSide = scene.get("side") as SMSide
+	var field: SMPointer = scene.get("field") as SMPointer
+	(scene.find_child("Build_scaffold_yard", true, false) as Button).pressed.emit()
+	for id: String in ["salween_hydro", "slag_refinery", "barracks", "war_factory"]:
+		side.order_building(StringName(id))
+	check(side.is_producer(&"barracks") and side.is_producer(&"war_factory") and side.producer_for("infantry") == &"barracks" and side.producer_for("vehicle") == &"war_factory", "barracks train infantry and the war factory builds vehicles")
+	var cues: Array[String] = []
+	side.bays.door_cue.connect(func(_b: StringName, kind: String) -> void: cues.append(kind))
+	var picked: StringName = field.pick_building(side.yard.position_of(&"barracks"))
+	var rally: Vector3 = side.exit_point(&"barracks") + SMBasePlan.front_dir(side.front_of(&"barracks")) * 14.0
+	check(picked == &"barracks" and field.selected_buildings.has(&"barracks"), "clicking the barracks selects it")
+	var right: InputEventMouseButton = InputEventMouseButton.new()
+	right.button_index = MOUSE_BUTTON_RIGHT
+	right.pressed = true
+	var cam: RTSCamera = scene.get_node_or_null("Camera") as RTSCamera
+	right.position = cam.unproject_position(rally)
+	field.handle_button(right)
+	var pinned: Vector3 = side.rally_for(&"barracks", Vector3.INF)
+	check(pinned != Vector3.INF and Vector2(pinned.x - rally.x, pinned.z - rally.z).length() < 0.8, "right-clicking with the barracks selected pins its rally point")
+	var flag: Node3D = scene.find_child("RallyFlag_barracks", true, false) as Node3D
+	var line: MultiMeshInstance3D = scene.find_child("RallyLine_barracks", true, false) as MultiMeshInstance3D
+	check(flag != null and Vector2(flag.position.x - pinned.x, flag.position.z - pinned.z).length() < 0.1 and line != null and int(line.get_meta("dashes", 0)) >= 4, "the rally shows a faction flag and a dashed line from the front exit")
+	var before_n: int = field.count_team(SMPointer.PLAYER)
+	(scene.find_child("Train_militia", true, false) as Button).pressed.emit()
+	check(field.count_team(SMPointer.PLAYER) == before_n + 1, "training adds the unit")
+	var trooper: RTSUnit = field.units[field.units.size() - 1]
+	var front: Vector3 = SMBasePlan.front_dir(side.front_of(&"barracks"))
+	var facing: Vector3 = -trooper.global_basis.z
+	var center: Vector3 = side.yard.position_of(&"barracks")
+	var inside: Vector3 = trooper.global_position - center
+	check(side.bays.rolling(trooper) and side.bays.phase_of(trooper) == "opening" and inside.dot(front) < side.half_depth(&"barracks") and Vector2(inside.x, inside.z).length() < side.half_depth(&"barracks") + 0.5, "the new unit waits inside the recessed bay, not beside the building")
+	check(facing.dot(front) > 0.95, "it faces out of the building's front")
+	check(cues.has("open") and is_equal_approx(side.bays.door_open(&"barracks"), 0.0), "the door starts to open with a mechanical cue")
+	side.bays.tick(0.2)
+	var bay: Node3D = scene.find_child("BayDoor", true, false) as Node3D
+	var panel: Node3D = bay.get_node_or_null("DoorPanel") as Node3D if bay != null else null
+	var half_open: float = side.bays.door_open(&"barracks")
+	check(half_open > 0.2 and half_open < 0.8 and bay != null and panel != null and panel.scale.y < 0.9, "the bay door rolls up on the barracks facade")
+	var built: Node3D = scene.get_node_or_null("Built_barracks") as Node3D
+	check(built != null and bay != null and bay.get_parent() == built and (bay.global_position - built.global_position).normalized().dot(front) > 0.9, "the door sits on the building's front")
+	check(trooper.global_position.distance_to(Vector3(side.bay_point(&"barracks").x, trooper.global_position.y, side.bay_point(&"barracks").z)) < 1.2, "the unit holds in the bay while the door opens")
+	side.bays.tick(0.3)
+	check(side.bays.phase_of(trooper) == "rolling" and is_equal_approx(side.bays.door_open(&"barracks"), 1.0), "the door is open and the unit rolls out")
+	var start_roll: Vector3 = trooper.global_position
+	side.bays.tick(0.35)
+	var mid_roll: Vector3 = trooper.global_position
+	check((mid_roll - start_roll).dot(front) > 0.3 and side.bays.rolling(trooper) and trooper.path.is_empty(), "it drives out through the doorway on its own")
+	side.bays.tick(0.4)
+	var exit: Vector3 = side.exit_point(&"barracks")
+	check(not side.bays.rolling(trooper) and side.bays.phase_of(trooper) == "closing" and Vector2(trooper.global_position.x - exit.x, trooper.global_position.z - exit.z).length() < 1.2, "it stops on the exit pad")
+	var path_end: Vector3 = trooper.path[trooper.path.size() - 1] if not trooper.path.is_empty() else Vector3.INF
+	var reachable: Vector3 = field.open_spot(trooper, pinned)
+	check(path_end != Vector3.INF and Vector2(path_end.x - reachable.x, path_end.z - reachable.z).length() < 2.5, "then it heads for the pinned rally point (or the open ground nearest it)")
+	side.bays.tick(0.5)
+	check(is_equal_approx(side.bays.door_open(&"barracks"), 0.0) and cues.has("close") and side.bays.phase_of(trooper) == "", "the door closes behind it")
+	var gap_before: float = trooper.global_position.distance_to(reachable)
+	for i: int in 15:
+		field.tick(0.1)
+	check(trooper.global_position.distance_to(reachable) < gap_before - 1.0, "the unit walks toward the rally point")
+	var first: RTSUnit = field.produce(SMPointer.PLAYER, &"amber_tank", center)
+	var second: RTSUnit = field.produce(SMPointer.PLAYER, &"amber_tank", center)
+	check(side.bays.phase_of(first) == "opening" and side.bays.phase_of(second) == "waiting", "the war factory rolls out one vehicle at a time")
+	var tank_front: Vector3 = SMBasePlan.front_dir(side.front_of(&"war_factory"))
+	check((-first.global_basis.z).dot(tank_front) > 0.95, "the tank waits in the factory bay facing out")
+	for i: int in 8:
+		side.bays.tick(0.2)
+	check(not side.bays.rolling(first) and side.bays.phase_of(second) != "waiting", "the second vehicle follows once the first is out")
+	for i: int in 12:
+		side.bays.tick(0.2)
+	check(not side.bays.rolling(second) and side.bays.runs.is_empty(), "both vehicles leave the bay")
+	field.clear_buildings()
+	check(scene.find_child("RallyFlag_barracks", true, false) == null, "the rally flag hides once the barracks is deselected")
+	await _ra3_done(scene)
+
+func _ra3_armed_rows(faction: String) -> Array:
+	var out: Array = [0, 0]
+	for row: Dictionary in SMCatalog.units_of(SMCatalog.faction(faction)):
+		out[1] = int(out[1]) + 1
+		if str(row.get("role", "")) == "core":
+			out[1] = int(out[1]) - 1
+			continue
+		var both: Dictionary = SMArms.profiles(row)
+		if both.is_empty():
+			continue
+		var p: Dictionary = both[SMArms.PRIMARY]
+		var s: Dictionary = both[SMArms.SECONDARY]
+		if str(p.get("name", "")) != "" and str(s.get("name", "")) != "" and str(p.get("name")) != str(s.get("name")) and float(p.get("range", 0.0)) > 0.0 and float(s.get("range", 0.0)) > 0.0 and not SMArms.targets(p).is_empty() and not SMArms.targets(s).is_empty():
+			out[0] = int(out[0]) + 1
+	return out
+
+func test_ra3_weapons() -> void:
+	for faction: String in ["gtfc", "nmrf", "mvd", "black_market"]:
+		var counts: Array = _ra3_armed_rows(faction)
+		check(int(counts[1]) > 0 and int(counts[0]) == int(counts[1]), "every %s combat unit has a distinct primary and secondary weapon" % faction)
+	var scene: Node = await _ra3_scene("gtfc", "res://game/phillips_channel.tscn")
+	var field: SMPointer = scene.get("field") as SMPointer
+	var hud: SMHud = scene.get("hud") as SMHud
+	var base: Vector3 = Vector3(0.0, 0.0, 0.0)
+	for f: RTSUnit in field.units_of(SMPointer.ENEMY):
+		f.global_position = Vector3(400.0, 0.0, 400.0)
+	var tanks: Dictionary = {"gtfc": &"amber_tank", "nmrf": &"mangrove_skiff", "mvd": &"cyan_ifv"}
+	for faction: String in tanks.keys():
+		var kind: StringName = tanks[faction]
+		var spot: Vector3 = field.open_spot(field.spawn(SMPointer.PLAYER, base, &"militia"), base)
+		var tank: RTSUnit = field.spawn(SMPointer.PLAYER, spot + Vector3(2.0, 0.0, 0.0), kind)
+		var dmg0: float = tank.attack_damage
+		var rng0: float = tank.attack_range
+		var sec: Dictionary = SMArms.profile(tank, SMArms.SECONDARY)
+		var pri: Dictionary = SMArms.profile(tank, SMArms.PRIMARY)
+		field.selection.clear()
+		field.selection.units.append(tank)
+		check(SMArms.armed(tank) and SMArms.slot_of(tank) == SMArms.PRIMARY and str(tank.get_meta("weapon_name", "")) == str(pri.get("name", "")), "%s %s starts on its primary weapon" % [faction, kind])
+		check(field.toggle_weapons() == 1 and SMArms.slot_of(tank) == SMArms.SECONDARY and str(tank.get_meta("weapon_name", "")) == str(sec.get("name", "")), "%s %s switches to its secondary weapon" % [faction, kind])
+		var want_dmg: float = dmg0 * float(sec.get("damage", 1.0)) / maxf(float(pri.get("damage", 1.0)), 0.001)
+		var want_rng: float = rng0 * float(sec.get("range", 1.0)) / maxf(float(pri.get("range", 1.0)), 0.001)
+		check(is_equal_approx(tank.attack_damage, want_dmg) and is_equal_approx(tank.attack_range, want_rng), "%s secondary swaps the damage and range profile" % faction)
+		field.tick(0.01)
+		var chevron: Label3D = tank.get_node_or_null("WeaponChevron") as Label3D
+		check(chevron != null and chevron.text == "II" and chevron.modulate.is_equal_approx(Color.html(str(sec.get("tint", "#FFD15A")))), "%s shows the secondary mode chevron in its muzzle colour" % faction)
+		field.toggle_weapons()
+		check(SMArms.slot_of(tank) == SMArms.PRIMARY and is_equal_approx(tank.attack_damage, dmg0) and is_equal_approx(tank.attack_range, rng0), "%s switching back restores the primary exactly" % faction)
+		var from: Vector3 = tank.global_position
+		var heading: Vector3 = -tank.global_basis.z
+		var back_to: Vector3 = field.open_spot(tank, from - heading * 10.0)
+		check(field.reverse_move_at(back_to) == 1 and bool(tank.get_meta("reverse", false)), "%s %s takes a reverse move order" % [faction, kind])
+		var moved_ok: bool = true
+		for i: int in 10:
+			var was: Vector3 = tank.global_position
+			field.tick(0.1)
+			var step: Vector3 = tank.global_position - was
+			step.y = 0.0
+			if step.length() > 0.01:
+				moved_ok = moved_ok and (-tank.global_basis.z).dot(step.normalized()) < -0.7
+		check(moved_ok and tank.global_position.distance_to(from) > 0.5, "%s backs up with its front armour still facing forward" % faction)
+		field.selection.clear()
+		tank.global_position = Vector3(-400.0, 0.0, -400.0)
+		tank.path = PackedVector3Array()
+	var infantry: RTSUnit = field.spawn(SMPointer.PLAYER, base, &"militia")
+	field.selection.clear()
+	field.selection.units.append(infantry)
+	check(field.reverse_move_at(base + Vector3(0.0, 0.0, 6.0)) == 0 and not field.selection_can_reverse(), "infantry do not reverse")
+	var tank2: RTSUnit = field.spawn(SMPointer.PLAYER, field.open_spot(infantry, base + Vector3(3.0, 0.0, 0.0)), &"amber_tank")
+	field.selection.clear()
+	field.selection.units.append(tank2)
+	_ra3_key(KEY_D)
+	check(field.reverse_armed and not field.attack_armed, "D arms a reverse move for vehicles")
+	_ra3_key(KEY_A)
+	check(field.attack_armed and not field.reverse_armed, "A arms an attack-move instead")
+	field.attack_armed = false
+	var f_cast: String = field.cast_f(tank2.global_position)
+	check(f_cast == "toggle" and SMArms.slot_of(tank2) == SMArms.SECONDARY, "F toggles the group mode and its secondary weapon")
+	field.cast_f(tank2.global_position)
+	check(SMArms.slot_of(tank2) == SMArms.PRIMARY, "F again returns to the primary weapon")
+	hud.refresh()
+	var w1: Button = scene.find_child("WeaponPrimary", true, false) as Button
+	var w2: Button = scene.find_child("WeaponSecondary", true, false) as Button
+	check(w1 != null and w2 != null and w1.is_visible_in_tree() and w2.is_visible_in_tree() and w1.text.contains(str(SMArms.profile(tank2, SMArms.PRIMARY).get("name", ""))) and w2.text.contains(str(SMArms.profile(tank2, SMArms.SECONDARY).get("name", ""))), "the unit card shows both weapon slots")
+	check(bool(w1.get_meta("active", false)) and not bool(w2.get_meta("active", false)) and w2.tooltip_text.contains("rng") and w2.tooltip_text.contains("dmg"), "the live slot is highlighted and each slot has a range and damage tooltip")
+	var badge: Label = w2.get_node_or_null("KeyChip") as Label
+	check(badge != null and badge.text == "F", "the secondary slot carries the F hotkey badge")
+	w2.pressed.emit()
+	hud.refresh()
+	check(SMArms.slot_of(tank2) == SMArms.SECONDARY and bool(w2.get_meta("active", false)), "clicking the secondary slot switches to it")
+	w1.pressed.emit()
+	check(SMArms.slot_of(tank2) == SMArms.PRIMARY, "clicking the primary slot switches back")
+	var air_kind: StringName = &""
+	var gun_kind: StringName = &""
+	for faction: String in ["gtfc", "nmrf", "mvd"]:
+		for row: Dictionary in SMCatalog.units_of(SMCatalog.faction(faction)):
+			var both: Dictionary = SMArms.profiles(row)
+			if both.is_empty():
+				continue
+			if gun_kind == &"" and not SMArms.can_hit(both[SMArms.PRIMARY], "aircraft") and SMArms.can_hit(both[SMArms.SECONDARY], "aircraft"):
+				gun_kind = StringName(str(row["id"]))
+			if air_kind == &"" and str(row.get("locomotion", "")) == "air":
+				air_kind = StringName(str(row["id"]))
+	check(gun_kind != &"" and air_kind != &"", "some units carry a secondary that reaches aircraft")
+	if gun_kind != &"" and air_kind != &"":
+		var gunner: RTSUnit = field.spawn(SMPointer.PLAYER, field.open_spot(infantry, base + Vector3(-3.0, 0.0, 0.0)), gun_kind)
+		var flier: RTSUnit = field.spawn(SMPointer.ENEMY, base + Vector3(-3.0, 0.0, 4.0), air_kind)
+		gunner.attack_target = flier
+		field.tick(0.01)
+		check(SMArms.slot_of(gunner) == SMArms.SECONDARY, "a unit switches to the weapon that can hit an aircraft target")
+	for name: String in ["StanceAggressive", "StanceGuard", "StanceGround", "StanceHold"]:
+		check(scene.find_child(name, true, false) is Button, "the orders strip has %s" % name)
+	field.selection.clear()
+	field.selection.units.append(tank2)
+	(scene.find_child("StanceGround", true, false) as Button).pressed.emit()
+	check(str(tank2.get_meta("stance", "")) == "hold_ground" and field.stance_of_selection() == "hold_ground", "Hold Ground sets the stance")
+	var foe: RTSUnit = field.spawn(SMPointer.ENEMY, tank2.global_position + Vector3(tank2.attack_range + 6.0, 0.0, 0.0), &"militia")
+	var hold_at: Vector3 = tank2.global_position
+	tank2.attack_target = foe
+	for i: int in 10:
+		field.tick(0.1)
+	check(Vector2(tank2.global_position.x - hold_at.x, tank2.global_position.z - hold_at.z).length() < 0.3, "Hold Ground fires from where it stands and never chases")
+	foe.global_position = tank2.global_position + Vector3(2.0, 0.0, 0.0)
+	tank2.attack_target = null
+	(scene.find_child("StanceHold", true, false) as Button).pressed.emit()
+	field._return_fire(tank2)
+	check(tank2.attack_target == null and str(tank2.get_meta("stance", "")) == "hold", "Hold Fire never acquires a target")
+	(scene.find_child("StanceAggressive", true, false) as Button).pressed.emit()
+	check(str(tank2.get_meta("stance", "")) == "aggressive", "Aggressive restores the default stance")
+	await _ra3_done(scene)
+
+func test_asset_pack() -> void:
+	var pack: GDScript = preload("res://game/asset_pack.gd")
+	var download: GDScript = preload("res://game/asset_download.gd")
+	check(str(pack.call("manifest_path")) == "" and not bool(download.call("needed")), "a build without asset_pack.json never opens the download screen")
+	var root: String = str(pack.call("root"))
+	var dir: String = root.path_join("pack_test")
+	DirAccess.make_dir_recursive_absolute(dir)
+	var hello: String = dir.path_join("hello.txt")
+	var out: FileAccess = FileAccess.open(hello, FileAccess.WRITE)
+	out.store_string("hello\n")
+	out.close()
+	var sha: String = str(pack.call("blob_sha1", hello))
+	check(sha == "ce013625030ba8dba906f756967f9e9ca394464a", "file hashes match git blob ids")
+	var row: Dictionary = {"ref": "test", "urls": ["https://example.invalid/"], "files": [["pack_test/hello.txt", 6, sha], ["pack_test/later.txt", 6, sha], ["../escape.txt", 6, sha]]}
+	var waiting: Array = pack.call("pending", row) as Array
+	check(waiting.size() == 1 and str((waiting[0] as Array)[0]) == "pack_test/later.txt", "only missing files with safe paths are queued")
+	var later: String = dir.path_join("later.txt")
+	var part: String = later + ".part"
+	out = FileAccess.open(part, FileAccess.WRITE)
+	out.store_string("HELLO\n")
+	out.close()
+	var refused: bool = not bool(download.call("accept", part, later, waiting[0])) and not FileAccess.file_exists(part) and not FileAccess.file_exists(later)
+	out = FileAccess.open(part, FileAccess.WRITE)
+	out.store_string("hello\n")
+	out.close()
+	var taken: bool = bool(download.call("accept", part, later, waiting[0])) and FileAccess.file_exists(later) and not FileAccess.file_exists(part)
+	check(refused and taken and (pack.call("pending", row) as Array).is_empty(), "a download only takes its name after size and hash match")
+	var done_file: String = str(pack.get_script_constant_map()["DONE"])
+	var had_done: bool = FileAccess.file_exists(done_file)
+	var kept: String = FileAccess.get_file_as_string(done_file) if had_done else ""
+	pack.call("mark_complete", row)
+	var done: bool = bool(pack.call("complete", row))
+	row["files"] = (row["files"] as Array) + [["pack_test/new.txt", 6, sha]]
+	check(done and not bool(pack.call("complete", row)), "a changed asset list reopens the download")
+	if had_done:
+		var back: FileAccess = FileAccess.open(done_file, FileAccess.WRITE)
+		back.store_string(kept)
+		back.close()
+	else:
+		DirAccess.remove_absolute(done_file)
+	check(str(pack.call("url_for", "https://yairpike.github.io/asean-2031/", "ui/menu/a b.webp")) == "https://yairpike.github.io/asean-2031/ui/menu/a%20b.webp", "asset URLs encode each path segment")
+	var bad: String = dir.path_join("bad.json")
+	out = FileAccess.open(bad, FileAccess.WRITE)
+	out.store_string("{\"files\": []}")
+	out.close()
+	check((pack.call("read", bad) as Dictionary).is_empty(), "an asset list without URLs is ignored")
+	var clips: GDScript = preload("res://game/match_audio.gd")
+	var roots: PackedStringArray = clips.call("_roots") as PackedStringArray
+	check(roots.has(root.path_join("audio")), "sidecar loaders also search the downloaded asset folder")
+	var boot: Node = (load("res://game/boot.tscn") as PackedScene).instantiate()
+	self.root.add_child(boot)
+	await process_frame
+	var dl_btn: Button = boot.find_child("DownloadsButton", true, false) as Button
+	if dl_btn != null:
+		dl_btn.pressed.emit()
+	var dl_panel: Control = boot.find_child("DownloadsPanel", true, false) as Control
+	var mac_btn: Button = boot.find_child("DownloadMacOS", true, false) as Button
+	var win_btn: Button = boot.find_child("DownloadWindows", true, false) as Button
+	var lin_btn: Button = boot.find_child("DownloadLinux", true, false) as Button
+	if mac_btn != null:
+		mac_btn.pressed.emit()
+	var dl_script: GDScript = preload("res://game/downloads_panel.gd")
+	var sw_text: String = FileAccess.get_file_as_string("res://web/sw.js")
+	check(dl_panel != null and dl_panel.visible and mac_btn != null and win_btn != null and lin_btn != null and str(dl_script.last_requested).ends_with("downloads/ASEAN-2031-macOS.dmg") and sw_text.contains("/downloads/"), "the main menu opens the desktop downloads panel for macOS, Windows, and Linux and sw.js skips caching installers")
+	var apk_btn: Button = boot.find_child("DownloadAndroid", true, false) as Button
+	var ipa_btn: Button = boot.find_child("DownloadIOS", true, false) as Button
+	if ipa_btn != null:
+		ipa_btn.pressed.emit()
+	var ipa_url: String = str(dl_script.last_requested)
+	if apk_btn != null:
+		apk_btn.pressed.emit()
+	var sized: bool = true
+	for item: Dictionary in dl_script.ITEMS:
+		sized = sized and float(item["mib"]) > 0.0 and str(dl_script.label_for(item)).ends_with(" MiB)")
+	check(apk_btn != null and ipa_btn != null and ipa_url.ends_with("downloads/ASEAN-2031-iOS.ipa") and str(dl_script.last_requested).ends_with("downloads/ASEAN-2031-Android.apk") and sized and str(pack.get_script_constant_map()["MOBILE_FILE"]).begins_with("res://"), "the downloads panel also lists the Android .apk and iOS .ipa, every row shows its size, and mobile builds read their asset list from the .pck")
+	boot.free()
+	await process_frame
+	for name: String in ["hello.txt", "later.txt", "bad.json"]:
+		DirAccess.remove_absolute(dir.path_join(name))
+	DirAccess.remove_absolute(dir)

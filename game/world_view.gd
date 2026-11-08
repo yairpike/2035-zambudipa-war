@@ -15,7 +15,7 @@ static func sync(host: Node3D, sight: SMSight, cam: RTSCamera) -> void:
 static func quiet_crowd(host: Node3D) -> void:
 	if host == null:
 		return
-	var low: bool = Settings.low()
+	var low: bool = Settings.lean()
 	var field: SMPointer = host.get("field") as SMPointer
 	if field == null:
 		return
@@ -145,10 +145,12 @@ void fragment() {
 """
 	return _shader
 
-static func place_site(host: Node3D, node_name: String, pos: Vector3, size: Vector3, color: Color, form: String) -> void:
+## `yaw` turns the site so its sign side (-Z) faces the street in front of it.
+static func place_site(host: Node3D, node_name: String, pos: Vector3, size: Vector3, color: Color, form: String, yaw: float = 0.0) -> void:
 	var mi: MeshInstance3D = MeshInstance3D.new()
 	mi.name = node_name
 	mi.position = pos
+	mi.rotation_degrees.y = yaw
 	if form != "":
 		Ground.dress_site(mi, form, color)
 	else:

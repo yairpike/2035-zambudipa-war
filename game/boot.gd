@@ -6,6 +6,7 @@ const Backdrop = preload("res://game/menu_backdrop.gd")
 const Lan = preload("res://game/lan_link.gd")
 const Marks = preload("res://game/faction_mark.gd")
 const Glass = preload("res://game/glass.gd")
+const Download = preload("res://game/asset_download.gd")
 const VERSION: String = "v0.9.0"
 
 var selected_map: String = ""
@@ -67,7 +68,7 @@ func _ready() -> void:
 		move_child(blur, backdrop.get_index() + 1)
 	var title: Label = Label.new()
 	title.name = "GameTitle"
-	title.text = "ASEAN 2031"
+	title.text = "2035 - Zambudipa War"
 	title.position = Vector2(48, 16)
 	title.theme_type_variation = "Header"
 	title.add_theme_font_size_override("font_size", 64)
@@ -156,6 +157,15 @@ func _ready() -> void:
 	multi.pressed.connect(_show_tab.bind("multi"))
 	add_child(multi)
 	tab_buttons.append(multi)
+	var dl: Button = Plate.new() as Button
+	dl.name = "DownloadsButton"
+	dl.text = "DOWNLOAD GAME"
+	dl.theme_type_variation = "HeaderButton"
+	dl.set_meta("nav", true)
+	dl.add_theme_font_size_override("font_size", 32)
+	dl.pressed.connect(_open_downloads)
+	add_child(dl)
+	tab_buttons.append(dl)
 	var roll: Button = Plate.new() as Button
 	roll.name = "CreditsButton"
 	roll.text = "CREDITS"
@@ -197,6 +207,7 @@ func _ready() -> void:
 	preload("res://game/match_settings.gd").pull_web()
 	preload("res://game/settings_panel.gd").attach(self)
 	preload("res://game/credits_panel.gd").attach(self)
+	preload("res://game/downloads_panel.gd").attach(self)
 	preload("res://game/match_settings.gd").apply_scene(self)
 	mark_difficulty()
 	preload("res://game/match_audio.gd").arm(self, "menu")
@@ -207,6 +218,14 @@ func _ready() -> void:
 	_offer_training()
 	_layout_menu(_view_size())
 	_paint_detail()
+	_fetch_assets()
+
+## Parented to the root so a download left running behind Play now survives scene changes.
+func _fetch_assets() -> void:
+	if DisplayServer.get_name() == "headless" or get_tree().root.has_node("AssetDownload"):
+		return
+	if Download.needed():
+		get_tree().root.add_child.call_deferred(Download.new())
 
 func _lan_panel() -> void:
 	lan_panel = Control.new()
@@ -298,6 +317,13 @@ func _lan_panel() -> void:
 	send.custom_minimum_size = Vector2(80.0, 32.0)
 	send.pressed.connect(_lan_say)
 	lan_panel.add_child(send)
+	var dl: Button = Button.new()
+	dl.name = "LanDownloadDesktop"
+	dl.text = "DOWNLOAD DESKTOP"
+	dl.position = Vector2(0.0, 524.0)
+	dl.custom_minimum_size = Vector2(240.0, 36.0)
+	dl.pressed.connect(_open_downloads)
+	lan_panel.add_child(dl)
 
 func _paste_panel() -> void:
 	paste_panel = Control.new()
@@ -393,6 +419,13 @@ func _paste_panel() -> void:
 	send.custom_minimum_size = Vector2(80.0, 32.0)
 	send.pressed.connect(_paste_say)
 	paste_panel.add_child(send)
+	var dl: Button = Button.new()
+	dl.name = "PasteDownloadDesktop"
+	dl.text = "DOWNLOAD DESKTOP"
+	dl.position = Vector2(0.0, 496.0)
+	dl.custom_minimum_size = Vector2(240.0, 36.0)
+	dl.pressed.connect(_open_downloads)
+	paste_panel.add_child(dl)
 
 func _paste_choice(node_name: String, caption: String, at: Vector2, fn: Callable) -> void:
 	var b: Button = Button.new()
@@ -856,9 +889,10 @@ func _process(delta: float) -> void:
 			_ensure_done(button, id)
 	var settings: Control = find_child("SettingsPanel", true, false) as Control
 	var credits: Control = find_child("CreditsPanel", true, false) as Control
+	var downloads: Control = find_child("DownloadsPanel", true, false) as Control
 	var offer: CanvasItem = find_child("TrainingOffer", true, false) as CanvasItem
 	if offer != null and offer.visible:
-		if _training_done() or _menu_tab != "main" or (settings != null and settings.visible) or (credits != null and credits.visible) or (faction_submenu != null and faction_submenu.visible):
+		if _training_done() or _menu_tab != "main" or (settings != null and settings.visible) or (credits != null and credits.visible) or (downloads != null and downloads.visible) or (faction_submenu != null and faction_submenu.visible):
 			offer.visible = false
 	_pad_cool = maxf(0.0, _pad_cool - delta)
 	if _pad_cool > 0.0:
@@ -1178,6 +1212,16 @@ func _open_credits() -> void:
 func credits_closed() -> void:
 	_show_tab(_menu_tab)
 
+func _open_downloads() -> void:
+	var panel: Control = find_child("DownloadsPanel", true, false) as Control
+	if panel == null:
+		return
+	panel.call("open")
+	_hide_menu_chrome()
+
+func downloads_closed() -> void:
+	_show_tab(_menu_tab)
+
 func settings_closed() -> void:
 	var panel: Control = find_child("SettingsPanel", true, false) as Control
 	if panel != null:
@@ -1292,7 +1336,7 @@ func _offer_training() -> void:
 	box.add_theme_constant_override("separation", 8)
 	card.add_child(box)
 	var title: Label = Label.new()
-	title.text = "New to ASEAN 2031?"
+	title.text = "New to 2035 - Zambudipa War?"
 	title.theme_type_variation = "Header"
 	title.add_theme_font_size_override("font_size", 22)
 	title.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
@@ -1546,11 +1590,11 @@ func _layout_menu(size: Vector2) -> void:
 		var wordmark: Control = find_child("TitleWordmark", true, false) as Control
 		if wordmark != null:
 			wordmark.visible = title.visible
-			wordmark.position = title.position
-			var wm_w: float = maxf(200.0, (size.x if portrait else rail_w) - title_x - 16.0)
+			wordmark.position = Vector2(title_x, 24.0 if sub_open else (28.0 if narrow else 44.0))
+			var wm_w: float = maxf(220.0, (size.x if portrait else rail_w) - title_x - 16.0)
 			if sub_open:
 				wm_w = minf(wm_w, 340.0)
-			wordmark.size = Vector2(wm_w, 60.0 if sub_open or narrow else 74.0)
+			wordmark.size = Vector2(wm_w, 88.0 if sub_open or narrow else 112.0)
 	var settings_open: bool = false
 	var settings_panel: Control = find_child("SettingsPanel", true, false) as Control
 	if settings_panel != null:
@@ -1574,9 +1618,10 @@ func _layout_menu(size: Vector2) -> void:
 		chip.position = Vector2(size.x - 360.0, chip_y)
 		chip.size = Vector2(340.0, 34.0 if portrait else 40.0)
 	var plate_w: float = rail_w - (48.0 if narrow else 104.0)
-	var y: float = 120.0 if narrow else 180.0
-	var row_h: float = 48.0
-	y = _seat(find_child("TabCampaign", true, false) as Control, left, y, plate_w, row_h)
+	var y: float = 120.0 if narrow else 164.0
+	var row_h: float = 44.0
+	var nav_gap: float = 6.0 if size.y < 760.0 else 8.0
+	y = _seat(find_child("TabCampaign", true, false) as Control, left, y, plate_w, row_h, nav_gap)
 	var faction_end: float = y
 	var camp_open: bool = campaign_panel != null and campaign_panel.visible
 	if faction_submenu != null and faction_submenu.visible:
@@ -1587,13 +1632,14 @@ func _layout_menu(size: Vector2) -> void:
 		else:
 			faction_end = _seat_factions(left, y, plate_w, narrow or plate_w < 520.0)
 			y = faction_end
-	y = _seat(find_child("TabSkirmish", true, false) as Control, left, y, plate_w, row_h)
+	y = _seat(find_child("TabSkirmish", true, false) as Control, left, y, plate_w, row_h, nav_gap)
 	var multi_h: float = row_h
-	y = _seat(find_child("TabMultiplayer", true, false) as Control, left, y, plate_w, multi_h)
-	y = _seat(find_child("SettingsButton", true, false) as Control, left, y, plate_w, row_h)
-	y = _seat(find_child("CreditsButton", true, false) as Control, left, y, plate_w, row_h)
-	y = _seat(find_child("QuitButton", true, false) as Control, left, y, plate_w, row_h)
-	_seat(find_child("MenuBack", true, false) as Control, left, size.y - 88.0, 220.0, row_h)
+	y = _seat(find_child("TabMultiplayer", true, false) as Control, left, y, plate_w, multi_h, nav_gap)
+	y = _seat(find_child("SettingsButton", true, false) as Control, left, y, plate_w, row_h, nav_gap)
+	y = _seat(find_child("DownloadsButton", true, false) as Control, left, y, plate_w, row_h, nav_gap)
+	y = _seat(find_child("CreditsButton", true, false) as Control, left, y, plate_w, row_h, nav_gap)
+	y = _seat(find_child("QuitButton", true, false) as Control, left, y, plate_w, row_h, nav_gap)
+	_seat(find_child("MenuBack", true, false) as Control, left, size.y - 88.0, 220.0, row_h, nav_gap)
 	var side: Control = find_child("TabFaction", true, false) as Control
 	if side != null:
 		side.position = Vector2(-400, -400)
@@ -1627,7 +1673,9 @@ func _layout_menu(size: Vector2) -> void:
 		var seen: bool = _training_done()
 		var credits_panel: Control = find_child("CreditsPanel", true, false) as Control
 		var credits_open: bool = credits_panel != null and credits_panel.visible
-		offer.visible = _menu_tab == "main" and not seen and not narrow and not settings_open and not credits_open and (faction_submenu == null or not faction_submenu.visible)
+		var downloads_panel: Control = find_child("DownloadsPanel", true, false) as Control
+		var downloads_open: bool = downloads_panel != null and downloads_panel.visible
+		offer.visible = _menu_tab == "main" and not seen and not narrow and not settings_open and not credits_open and not downloads_open and (faction_submenu == null or not faction_submenu.visible)
 		offer.position = Vector2(minf(640.0, size.x * 0.46), 240.0)
 		offer.size = Vector2(minf(460.0, maxf(280.0, size.x - offer.position.x - 24.0)), 150.0)
 	var card: Control = find_child("MenuDetail", true, false) as Control
@@ -1685,7 +1733,7 @@ func _quit() -> void:
 
 func _focusables() -> Array[Button]:
 	var rows: Array[Button] = []
-	for node_name: String in ["TabCampaign", "TabSkirmish", "TabMultiplayer", "SettingsButton", "CreditsButton", "QuitButton"]:
+	for node_name: String in ["TabCampaign", "TabSkirmish", "TabMultiplayer", "SettingsButton", "DownloadsButton", "CreditsButton", "QuitButton"]:
 		var button: Button = find_child(node_name, true, false) as Button
 		if button != null:
 			rows.append(button)
@@ -1697,6 +1745,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	var roll: Control = find_child("CreditsPanel", true, false) as Control
 	if roll != null and roll.visible:
+		return
+	var dl_panel: Control = find_child("DownloadsPanel", true, false) as Control
+	if dl_panel != null and dl_panel.visible:
 		return
 	var key: InputEventKey = event as InputEventKey
 	if key != null and key.pressed and not key.echo:
@@ -1768,14 +1819,14 @@ func _activate_focus() -> void:
 	if owner != null and owner.is_visible_in_tree() and not owner.disabled:
 		owner.pressed.emit()
 
-func _seat(node: Control, x: float, y: float, w: float, h: float) -> float:
+func _seat(node: Control, x: float, y: float, w: float, h: float, gap: float = 8.0) -> float:
 	if node == null:
 		return y
 	node.position = Vector2(x, y)
 	node.size = Vector2(w, h)
 	node.custom_minimum_size = Vector2(w, h)
 	node.set_meta("base_pos", node.position)
-	return y + h + 8.0
+	return y + h + gap
 
 func _menu_fade() -> void:
 	var veil: ColorRect = ColorRect.new()

@@ -93,6 +93,22 @@ while [ $# -gt 0 ]; do
       KEY_ART_SRC="$2"
       shift 2
       ;;
+    --cname)
+      if [ $# -lt 2 ]; then
+        echo "finish_web_export: --cname needs a domain"
+        exit 1
+      fi
+      CNAME_DOMAIN="$2"
+      shift 2
+      ;;
+    --downloads)
+      if [ $# -lt 2 ]; then
+        echo "finish_web_export: --downloads needs a directory"
+        exit 1
+      fi
+      DOWNLOADS_SRC="$2"
+      shift 2
+      ;;
     *)
       echo "finish_web_export: unknown argument $1"
       exit 1
@@ -109,6 +125,17 @@ MODEL_SRC="${MODEL_SRC:-}"
 BRIEFINGS_SRC="${BRIEFINGS_SRC:-}"
 TRIPO_SRC="${TRIPO_SRC:-}"
 KEY_ART_SRC="${KEY_ART_SRC:-}"
+CNAME_DOMAIN="${CNAME_DOMAIN:-}"
+DOWNLOADS_SRC="${DOWNLOADS_SRC:-}"
+# GitHub Pages redirects the github.io URL to this domain as soon as the CNAME file
+# is published, so pass --cname only after the domain's DNS points at GitHub Pages.
+if [ -n "$CNAME_DOMAIN" ]; then
+  if ! printf '%s' "$CNAME_DOMAIN" | grep -Eq '^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$'; then
+    echo "finish_web_export: --cname needs a bare host name such as play.example.com"
+    exit 1
+  fi
+  printf '%s\n' "$CNAME_DOMAIN" > "$DEST/CNAME"
+fi
 # Keep the project worker. Godot's exported worker reloads every open client
 # when it receives "update", which boots a match back to the menu.
 cp "$ROOT/web/sw.js" "$DEST/sw.js"
@@ -146,8 +173,8 @@ import json
 import sys
 path = sys.argv[1]
 data = json.loads(open(path, encoding="utf-8").read())
-data["name"] = "ASEAN 2031"
-data["short_name"] = "ASEAN 2031"
+data["name"] = "2035 - Zambudipa War"
+data["short_name"] = "2035 - Zambudipa War"
 data["start_url"] = "./index.html"
 data["scope"] = "./"
 icons = data.get("icons", [])
@@ -168,7 +195,7 @@ import sys
 path = sys.argv[1]
 html = open(path, encoding="utf-8").read()
 needle = '<div id="status">'
-title = needle + '\n\t\t\t<p id="status-title" style="font-family: sans-serif; font-size: 28px; letter-spacing: 0.08em; margin: 0 0 16px;">ASEAN 2031</p>'
+title = needle + '\n\t\t\t<p id="status-title" style="font-family: sans-serif; font-size: 28px; letter-spacing: 0.08em; margin: 0 0 16px;">2035 - Zambudipa War</p>'
 if needle in html:
     html = html.replace(needle, title, 1)
     open(path, "w", encoding="utf-8").write(html)
@@ -507,8 +534,20 @@ if [ -n "$KEY_ART_SRC" ]; then
   fi
   if [ -d "$KEY_ART_SRC/wordmark" ]; then
     mkdir -p "$DEST/wordmark"
-    find "$KEY_ART_SRC/wordmark" -maxdepth 1 -type f \( -name '*.png' -o -name '*.svg' \) -exec cp {} "$DEST/wordmark/" \;
+    find "$KEY_ART_SRC/wordmark" -maxdepth 1 -type f \( -name '*.png' -o -name '*.svg' -o -name '*.webp' \) -exec cp {} "$DEST/wordmark/" \;
     : > "$DEST/wordmark/.gdignore"
+  fi
+  if [ -d "$KEY_ART_SRC/ui/menu" ]; then
+    mkdir -p "$DEST/ui/menu" "$DEST/ui/menu/cinematic"
+    find "$KEY_ART_SRC/ui/menu" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.svg' \) -exec cp {} "$DEST/ui/menu/" \;
+    find "$KEY_ART_SRC/ui/menu" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' \) -exec cp {} "$DEST/ui/menu/cinematic/" \;
+    find "$DEST/ui/menu/cinematic" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -printf 'cinematic/%f\n' | sort > "$DEST/ui/menu/index.txt"
+    : > "$DEST/ui/menu/.gdignore"
+    : > "$DEST/ui/menu/cinematic/.gdignore"
+  fi
+  if [ -f "$KEY_ART_SRC/web/splash.png" ]; then
+    cp "$KEY_ART_SRC/web/splash.png" "$DEST/index.png"
+    cp "$KEY_ART_SRC/web/splash.png" "$DEST/splash.png"
   fi
 fi
 if [ -n "$MODEL_SRC" ]; then
@@ -583,6 +622,19 @@ if [ -n "$UI_SRC" ]; then
   find "$UI_SRC/icons" -maxdepth 1 -type f -name '*.webp' -exec cp {} "$DEST/ui/icons/" \;
   : > "$DEST/ui/frames/.gdignore"
   : > "$DEST/ui/icons/.gdignore"
+fi
+if [ -n "$DOWNLOADS_SRC" ]; then
+  if [ ! -d "$DOWNLOADS_SRC" ]; then
+    echo "finish_web_export: downloads source is not a directory"
+    exit 1
+  fi
+  mkdir -p "$DEST/downloads"
+  for installer in ASEAN-2031-macOS.dmg ASEAN-2031-Windows.exe ASEAN-2031-Linux-x86_64.AppImage ASEAN-2031-Android.apk ASEAN-2031-iOS.ipa README.md; do
+    if [ -f "$DOWNLOADS_SRC/$installer" ]; then
+      cp "$DOWNLOADS_SRC/$installer" "$DEST/downloads/$installer"
+    fi
+  done
+  : > "$DEST/downloads/.gdignore"
 fi
 if ! grep -q "brotli" "$DEST/brotli_host.conf" || ! grep -q "wasm" "$DEST/brotli_host.conf"; then
   echo "finish_web_export: brotli host config is missing"

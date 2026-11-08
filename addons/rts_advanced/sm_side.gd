@@ -26,12 +26,36 @@ var gun_units: Dictionary = {}
 var gun_cool: Dictionary = {}
 var plan: SMBasePlan = SMBasePlan.new()
 
-## Footprint-sized plot for `id`, ringed out from `around`. Falls back to `around` when nothing fits.
+var building_yaw: Dictionary[StringName, float] = {}
+## This side's own building nodes. The raider names its buildings the same way, so look them up here.
+var building_nodes: Dictionary[StringName, Node3D] = {}
+var rally_of: Dictionary[StringName, Vector3] = {}
+var placement: SMPlacement = SMPlacement.new()
+var bays: SMFactoryBay = SMFactoryBay.new()
+
+## Footprint-sized plot for `id`, ringed out from `around`. Falls back to `around` when nothing fits on land.
+## Naval structures return Vector3.INF when no water with an open bay is in reach.
 func plot_of(id: StringName, around: Vector3) -> Vector3:
 	plan.radius = yard.radius
 	plan.center = around
 	var role: String = str(yard.building_role.get(id, ""))
-	return plan.plot(id, role, role == "naval" or bool(yard.water_marked.get(id, false)))
+	return plan.plot(id, role, floats(id), bool(yard.water_marked.get(id, false)))
+
+func floats(id: StringName) -> bool:
+	return SMBasePlan.must_float(str(yard.building_role.get(id, "")), bool(yard.water_marked.get(id, false)))
+
+func role_of(id: StringName) -> String:
+	if id == yard_id():
+		return "yard"
+	return str(yard.building_role.get(id, ""))
+
+## The construction yard id: the scaffold yard, the command hub, or the packer.
+func yard_id() -> StringName:
+	if yard.style == SMBuildYard.Style.MOBILE:
+		return &"packer"
+	if not yard.tech_order.is_empty():
+		return yard.tech_order[0]
+	return &""
 
 func prepare(p_host: Node3D, p_status: Label, grid: SMDomainGrid, center: Vector3, purse: RTSEconomy, p_faction: String = "") -> void:
 	host = p_host
@@ -78,6 +102,198 @@ func order_building(id: StringName) -> String:
 	if yard.style == SMBuildYard.Style.INTERNAL:
 		return _order_internal(id)
 	return _order_mobile(id)
+
+## True when the player should pick a spot and a facing before `id` is raised.
+## Yards deploy where they stand, and a packed NMRF core unpacks in place.
+func needs_spot(id: StringName) -> bool:
+	if yard == null or id == &"" or yard.finished.has(id) or role_of(id) == "yard" or id == &"packer":
+		return false
+	if not yard.building_time.has(id) or not Power.allows(yard, role_of(id)):
+		return false
+	if yard.style == SMBuildYard.Style.SCAFFOLD:
+		return not yard.scaffold_active and yard.can_build(id)
+	if yard.style == SMBuildYard.Style.INTERNAL:
+		return not (yard.queue.has(id) or yard.ready.has(id) or yard.placed.has(id)) and not yard.placed.is_empty()
+	return yard.unpacked
+
+## Where the build radius for `id` is measured from.
+func placement_center(id: StringName) -> Vector3:
+	if yard.style == SMBuildYard.Style.MOBILE and yard.unpacked and id != &"packer":
+		return yard.packer_pos
+	return yard.center
+
+## Why `id` cannot stand at `pos` facing `yaw`, or "" when it can.
+func placement_reason(id: StringName, pos: Vector3, yaw: float) -> String:
+	if pos == Vector3.INF:
+		return "no ground under the cursor"
+	if id == yard_id() and yard.finished.has(id) or id == &"packer":
+		return _redeploy_reason(id, pos, yaw)
+	plan.radius = yard.radius
+	plan.center = placement_center(id)
+	return plan.check_at(id, role_of(id), pos, yaw, floats(id))
+
+## Grid-aligned centre `id` would take at `pos` facing `yaw`.
+func snap_spot(id: StringName, pos: Vector3, yaw: float) -> Vector3:
+	if pos == Vector3.INF or plan.grid == null:
+		return pos
+	return plan.rect_center(plan.rect_at(pos, footprint_at(id, yaw)))
+
+## Footprint in cells once turned by `yaw`.
+func footprint_at(id: StringName, yaw: float) -> Vector2i:
+	return SMBasePlan.turned(SMBasePlan.size_of(str(id), role_of(id)), yaw)
+
+## Raises `id` at the player's chosen spot, its exit bay facing `yaw` (degrees).
+func place_building(id: StringName, pos: Vector3, yaw: float) -> String:
+	var why: String = placement_reason(id, pos, yaw)
+	if why != "":
+		_say(why)
+		return why
+	if id == yard_id() and yard.finished.has(id) or id == &"packer":
+		return redeploy_yard(pos, yaw)
+	var role: String = role_of(id)
+	if not Power.allows(yard, role):
+		_say("low power")
+		return "low power"
+	var spot: Vector3 = snap_spot(id, pos, yaw)
+	plan.claim(id, plan.rect_at(spot, footprint_at(id, yaw)), yaw)
+	var out: String = ""
+	if yard.style == SMBuildYard.Style.SCAFFOLD:
+		out = _order_scaffold(id, spot)
+	elif yard.style == SMBuildYard.Style.INTERNAL:
+		out = _order_internal(id, spot)
+	else:
+		out = _order_mobile(id, spot)
+	if not ["built", "placed", "unpacked"].has(out):
+		plan.release(id)
+	return out
+
+## Packs the construction yard and redeploys it at `pos` facing `yaw`. Other buildings stay.
+func redeploy_yard(pos: Vector3, yaw: float) -> String:
+	var id: StringName = yard_id()
+	var why: String = _redeploy_reason(id, pos, yaw)
+	if why != "":
+		_say(why)
+		return why
+	var spot: Vector3 = snap_spot(id, pos, yaw)
+	if id == &"packer":
+		if not yard.move_packer(spot):
+			_say("packer stayed packed")
+			return "packer stayed packed"
+		plan.release(&"packer")
+		plan.claim(&"packer", plan.rect_at(spot, footprint_at(id, yaw)), yaw)
+		yard.center = spot
+		_face(&"packer", packer_mesh, yaw)
+		if packer_mesh != null:
+			packer_mesh.position = SMPointer.building_at(spot)
+		_say("packer redeployed")
+		return "redeployed"
+	plan.release(id)
+	plan.claim(id, plan.rect_at(spot, footprint_at(id, yaw)), yaw)
+	yard.center = spot
+	yard.structure_pos[id] = spot
+	var node: Node3D = node_of(id)
+	if node == null and host != null:
+		node = host.get_node_or_null("Built_%s" % str(id)) as Node3D
+	if node == null and yard.style == SMBuildYard.Style.INTERNAL:
+		node = hub_mesh
+	if node != null:
+		node.position = SMPointer.building_at(spot)
+	_face(id, node, yaw)
+	_say("%s redeployed" % building_label(id))
+	return "redeployed"
+
+func can_redeploy() -> bool:
+	if yard.style == SMBuildYard.Style.MOBILE:
+		return not yard.unpacked and yard.grid != null
+	var id: StringName = yard_id()
+	return id != &"" and yard.finished.has(id) and yard.structure_alive(id)
+
+func _redeploy_reason(id: StringName, pos: Vector3, yaw: float) -> String:
+	if not can_redeploy():
+		return "the yard cannot pack up"
+	if plan.grid == null:
+		return ""
+	plan.center = yard.center
+	plan.radius = yard.radius * 2.0
+	var why: String = plan.check_at(id, "yard", pos, yaw, false)
+	plan.radius = yard.radius
+	if why == "outside the build radius":
+		return "too far for the yard to drive"
+	return why
+
+func front_of(id: StringName) -> float:
+	return float(building_yaw.get(id, plan.yaw_of(id)))
+
+## Half the depth of `id` along its front, in metres.
+func half_depth(id: StringName) -> float:
+	return float(SMBasePlan.size_of(str(id), role_of(id)).y) * SMBasePlan.cell_m() * 0.5
+
+## Recessed spawn point just inside the front bay of `id`.
+func bay_point(id: StringName) -> Vector3:
+	var at: Vector3 = yard.position_of(id)
+	return at + SMBasePlan.front_dir(front_of(id)) * maxf(half_depth(id) - SMBasePlan.cell_m() * 0.7, 0.6)
+
+## Exit pad on the street (or water) in front of `id`.
+func exit_point(id: StringName) -> Vector3:
+	var at: Vector3 = yard.position_of(id)
+	return at + SMBasePlan.front_dir(front_of(id)) * (half_depth(id) + SMBasePlan.cell_m() * 0.9)
+
+## Production building that rolls out a unit of `category` (infantry, vehicle, boat, aircraft), or &"".
+func producer_for(category: String) -> StringName:
+	var want: PackedStringArray = PackedStringArray(["factory"])
+	if category == "infantry":
+		want = PackedStringArray(["barracks"])
+	elif category == "boat":
+		want = PackedStringArray(["naval"])
+	elif category == "aircraft":
+		want = PackedStringArray(["air", "factory"])
+	for role: String in want:
+		for id: StringName in yard.finished:
+			if role_of(id) == role and yard.structure_alive(id):
+				return id
+	return &""
+
+func is_producer(id: StringName) -> bool:
+	return ["barracks", "factory", "naval", "air"].has(role_of(id)) and yard.finished.has(id)
+
+## Pins the rally point of production building `id`.
+func set_rally_for(id: StringName, at: Vector3) -> bool:
+	if not is_producer(id) or at == Vector3.INF:
+		return false
+	rally_of[id] = at
+	return true
+
+func rally_for(id: StringName, fallback: Vector3) -> Vector3:
+	return rally_of.get(id, fallback) as Vector3
+
+## Living finished building whose footprint covers `at`, or &"".
+func building_at(at: Vector3) -> StringName:
+	if at == Vector3.INF:
+		return &""
+	for id: StringName in yard.finished:
+		if not yard.structure_alive(id):
+			continue
+		var size: Vector2 = Vector2(footprint_at(id, front_of(id))) * SMBasePlan.cell_m()
+		var c: Vector3 = yard.position_of(id)
+		if absf(at.x - c.x) <= size.x * 0.5 and absf(at.z - c.z) <= size.y * 0.5:
+			return id
+	return &""
+
+## This side's node for building `id`, or null.
+func node_of(id: StringName) -> Node3D:
+	var raw: Variant = building_nodes.get(id, null)
+	if raw == null or not is_instance_valid(raw):
+		return null
+	return raw as Node3D
+
+func _face(id: StringName, node: Node3D, yaw: float) -> void:
+	building_yaw[id] = fposmod(yaw, 360.0)
+	if node == null:
+		return
+	building_nodes[id] = node
+	node.rotation_degrees.y = SMMapPlan.turn_for(str(id), building_yaw[id])
+	node.set_meta("front_yaw", building_yaw[id])
+	node.set_meta("building_id", str(id))
 
 func move_packer() -> bool:
 	if faction_id != "nmrf":
@@ -142,9 +358,15 @@ func place_hub() -> bool:
 	_say("hub placed" if ok else "hub not ready")
 	return ok
 
-func _order_scaffold(id: StringName) -> String:
-	var pos: Vector3 = plot_of(id, yard.center)
-	if not yard.inside(pos):
+func _order_scaffold(id: StringName, at: Vector3 = Vector3.INF) -> String:
+	var pos: Vector3 = at if at != Vector3.INF else plot_of(id, yard.center)
+	if pos == Vector3.INF:
+		_say("no open water in reach")
+		return "no open water in reach"
+	if not yard.inside_for(id, pos):
+		if floats(id):
+			_say("no open water in reach")
+			return "no open water in reach"
 		pos = yard.center
 	var hp: float = float(building_hp.get(id, 200.0))
 	if not yard.begin_scaffold(id, pos, hp):
@@ -154,11 +376,16 @@ func _order_scaffold(id: StringName) -> String:
 	if not yard.finished.has(id):
 		_say("scaffold stalled")
 		return "scaffold stalled"
-	_slab("Built_%s" % str(id), SMPointer.building_at(pos), SMPointer.BUILDING_SIZE, SMFront.primary())
+	var node: MeshInstance3D = _slab("Built_%s" % str(id), SMPointer.building_at(pos), SMPointer.BUILDING_SIZE, SMFront.primary())
+	_face(id, node, plan.yaw_of(id))
 	_say("%s built" % building_label(id))
 	return "built"
 
-func _order_internal(id: StringName) -> String:
+func _order_internal(id: StringName, at: Vector3 = Vector3.INF) -> String:
+	var pos: Vector3 = at if at != Vector3.INF else plot_of(id, yard.center)
+	if pos == Vector3.INF:
+		_say("no open water in reach")
+		return "no open water in reach"
 	if not yard.queue_internal(id):
 		var tier: int = int(yard.building_tier.get(id, 1))
 		if tier > yard.clearance and buy_clearance() and yard.queue_internal(id):
@@ -170,8 +397,10 @@ func _order_internal(id: StringName) -> String:
 	if not yard.ready.has(id):
 		_say("hub not queued")
 		return "hub not queued"
-	var pos: Vector3 = plot_of(id, yard.center)
 	if not yard.place_finished(id, pos):
+		if floats(id):
+			_say("no open water in reach")
+			return "no open water in reach"
 		pos = yard.center
 		if not yard.place_finished(id, pos):
 			_say("hub not ready")
@@ -181,22 +410,31 @@ func _order_internal(id: StringName) -> String:
 		hub_mesh.set_meta("hub_placed", true)
 		if not bool(hub_mesh.get_meta("standin_held", false)):
 			hub_mesh.visible = true
+		_face(id, hub_mesh, plan.yaw_of(id))
 	else:
-		_slab("Built_%s" % str(id), SMPointer.building_at(pos), SMPointer.BUILDING_SIZE, SMFront.accent())
+		var node: MeshInstance3D = _slab("Built_%s" % str(id), SMPointer.building_at(pos), SMPointer.BUILDING_SIZE, SMFront.accent())
+		_face(id, node, plan.yaw_of(id))
 	_say("hub placed")
 	return "placed"
 
-func _order_mobile(id: StringName) -> String:
+func _order_mobile(id: StringName, at: Vector3 = Vector3.INF) -> String:
 	if str(id) == "packer":
 		return "packer sailed" if move_packer() else "packer stayed packed"
 	if yard.unpacked and yard.finished.has(id):
 		var raised: bool = upgrade_factory_named(id)
 		return "upgraded" if raised else "wharf not ready"
 	if yard.unpacked:
+		if yard.finished.has(id) or not yard.building_time.has(id):
+			_say("packer already unpacked")
+			return "packer already unpacked"
+		var spot: Vector3 = at if at != Vector3.INF else plot_of(id, yard.packer_pos)
+		if spot == Vector3.INF:
+			_say("no open water in reach")
+			return "no open water in reach"
 		if yard.place_annex(id):
-			var at: Vector3 = plot_of(id, yard.packer_pos)
-			yard.structure_pos[id] = at
-			_slab("Built_%s" % str(id), SMPointer.building_at(at), SMPointer.BUILDING_SIZE, SMFront.accent())
+			yard.structure_pos[id] = spot
+			var node: MeshInstance3D = _slab("Built_%s" % str(id), SMPointer.building_at(spot), SMPointer.BUILDING_SIZE, SMFront.accent())
+			_face(id, node, plan.yaw_of(id))
 			_say("%s built" % building_label(id))
 			return "built"
 		_say("packer already unpacked")
@@ -206,7 +444,8 @@ func _order_mobile(id: StringName) -> String:
 	plot_of(&"packer", yard.packer_pos)
 	var ok: bool = yard.unpack(id)
 	if ok:
-		_slab("Built_%s" % str(id), SMPointer.building_at(yard.packer_pos), SMPointer.BUILDING_SIZE, SMFront.accent())
+		var core: MeshInstance3D = _slab("Built_%s" % str(id), SMPointer.building_at(yard.packer_pos), SMPointer.BUILDING_SIZE, SMFront.accent())
+		_face(id, core, plan.yaw_of(&"packer"))
 	_say("wharf unpacked" if ok else "already unpacked")
 	return "unpacked" if ok else "already unpacked"
 
@@ -293,8 +532,13 @@ func sell_structure(id: StringName) -> int:
 	var refund: int = yard.sell(id)
 	if refund > 0:
 		plan.release(id)
+		rally_of.erase(id)
+		building_yaw.erase(id)
 	if refund > 0 and host != null:
-		var built: Node = host.get_node_or_null("Built_%s" % str(id))
+		var built: Node = node_of(id)
+		building_nodes.erase(id)
+		if built == null:
+			built = host.get_node_or_null("Built_%s" % str(id))
 		if built != null:
 			built.queue_free()
 	return refund

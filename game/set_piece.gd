@@ -10,6 +10,7 @@ extends Node
 
 const Clips = preload("res://game/match_audio.gd")
 const Cameos = preload("res://game/match_cameos.gd")
+const StageView = preload("res://game/stage_view.gd")
 
 var mission_id: String = ""
 var stage: int = 0
@@ -47,6 +48,9 @@ var _outro_t: float = 0.0
 var _outro_from: float = 18.0
 var _intro_from: Vector3 = Vector3.ZERO
 var _intro_to: Vector3 = Vector3.ZERO
+var _last_intro_dist: float = 0.0
+var _last_intro_focus: Vector3 = Vector3.ZERO
+var _last_intro_yaw: float = 0.0
 var _plate: ColorRect
 var _portrait: TextureRect
 var _speaker: Label
@@ -74,7 +78,13 @@ func open(host: Node3D, id: String) -> void:
 	mission_id = id
 	_cast()
 	_arm_plan()
+	var arc: SMStages = _stages()
+	if arc != null:
+		has_bonus = true
+		bonus_at = arc.bonus_at()
 	_chrome()
+	if arc != null:
+		StageView.attach(host, arc, speaker_name)
 	if beat_ids.has("bridge"):
 		_span()
 	_say(_line("open"), "", "open")
@@ -87,6 +97,13 @@ func drive(delta: float) -> void:
 	_retry_voice()
 	if not _armed:
 		_arm_camera()
+	var cam: RTSCamera = _host.get_node_or_null("Camera") as RTSCamera
+	if cam != null:
+		if not intro_done and (not is_equal_approx(cam.distance, _last_intro_dist) or cam.focus.distance_squared_to(_last_intro_focus) > 0.05 or not is_equal_approx(cam.yaw_degrees, _last_intro_yaw)):
+			intro_done = true
+	var view: Node = _host.get_node_or_null("StageView")
+	if view != null:
+		view.call("drive", delta)
 	var story: SMStory = _host.get("story") as SMStory
 	if story != null and (story.done or story.lost):
 		_outro(delta)
@@ -563,7 +580,7 @@ func _chrome() -> void:
 	_bonus.name = "SetBonus"
 	_bonus.position = Vector2(96.0, 80.0)
 	_bonus.size = Vector2(600.0, 24.0)
-	_bonus.text = "Bonus: reach the side cache" if has_bonus else ""
+	_bonus.text = _stages().bonus_line() if _stages() != null else ("Bonus: reach the side cache" if has_bonus else "")
 	_bonus.visible = has_bonus
 	_bonus.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_bonus.add_theme_font_size_override("font_size", 16)
@@ -620,6 +637,9 @@ func _arm_camera() -> void:
 	_intro_to = home_focus
 	_intro_from = home_focus + Vector3(0.0, 0.0, 12.0)
 	wide_distance = minf(cam.zoom_max, home_distance + 24.0)
+	_last_intro_dist = cam.distance
+	_last_intro_focus = cam.focus
+	_last_intro_yaw = cam.yaw_degrees
 
 func _intro() -> void:
 	if intro_done:
@@ -632,6 +652,9 @@ func _intro() -> void:
 	cam.focus = _intro_from.lerp(_intro_to, t)
 	cam.distance = lerpf(wide_distance, home_distance, t)
 	cam.apply()
+	_last_intro_dist = cam.distance
+	_last_intro_focus = cam.focus
+	_last_intro_yaw = cam.yaw_degrees
 	if t >= 1.0:
 		intro_done = true
 
@@ -711,7 +734,19 @@ func _wagon() -> RTSUnit:
 		return null
 	return story.wagon()
 
+func _stages() -> SMStages:
+	if _host == null:
+		return null
+	var story: SMStory = _host.get("story") as SMStory
+	return story.stages if story != null else null
+
 func _bonus_check() -> void:
+	var arc: SMStages = _stages()
+	if arc != null:
+		bonus_done = arc.bonus_state == "done"
+		if _bonus != null:
+			_bonus.text = arc.bonus_line()
+		return
 	if not has_bonus or bonus_done:
 		return
 	var story: SMStory = _host.get("story") as SMStory
@@ -856,6 +891,19 @@ func _mines() -> void:
 		line.add_child(rock)
 	_say(_line("mines"), "", "mines")
 
+## {"cell", "yaw", "at"} for a structure placed near `at` on a dressed mission map, or {} with no dressing.
+static func seat_of(host: Node3D, id: String, at: Vector3) -> Dictionary:
+	var grid: SMDomainGrid = host.get("grid") as SMDomainGrid if host != null else null
+	var dress: SMMapPlan = SMMapPlan.dressing(id)
+	if grid == null or dress == null:
+		return {}
+	var seat: Dictionary = dress.frontage_near(grid.cell_at(at))
+	if seat.is_empty():
+		return {}
+	seat["at"] = grid.cell_center(seat["cell"] as Vector2i)
+	return seat
+
+## Wharf and radar are built structures: they take the street-front cell nearest `at` and face that street.
 func _marker(node_name: String, at: Vector3, size: Vector3, color: Color, glow: bool) -> void:
 	var prop: MeshInstance3D = MeshInstance3D.new()
 	prop.name = node_name
@@ -863,6 +911,11 @@ func _marker(node_name: String, at: Vector3, size: Vector3, color: Color, glow: 
 	box.size = size
 	prop.mesh = box
 	prop.position = at
+	if node_name == "SetRadar" or node_name == "SetWharf":
+		var seat: Dictionary = seat_of(_host, mission_id, at)
+		if not seat.is_empty():
+			prop.position = Vector3((seat["at"] as Vector3).x, at.y, (seat["at"] as Vector3).z)
+			prop.rotation_degrees.y = SMMapPlan.turn_for("", float(seat["yaw"]))
 	var mat: StandardMaterial3D = StandardMaterial3D.new()
 	mat.albedo_color = color
 	if glow:

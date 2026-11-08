@@ -63,6 +63,7 @@ static var _manifest_left: int = 0
 static var _take_n: Dictionary = {}
 
 const Settings = preload("res://game/match_settings.gd")
+const AssetPack = preload("res://game/asset_pack.gd")
 
 static func arm(host: Node, mode: String) -> void:
 	if host == null or host.get_node_or_null("MatchAudio") != null:
@@ -305,8 +306,12 @@ static func _add_http(owner: Node, http: HTTPRequest, start_fn: Callable) -> voi
 		http.queue_free()
 		return
 	var host: Node = owner
-	if owner.get_tree() != null and owner.get_tree().root != null:
+	if owner.is_inside_tree() and owner.get_tree() != null and owner.get_tree().root != null:
 		host = owner.get_tree().root
+	if not host.is_inside_tree():
+		if not host.tree_entered.is_connected(_add_http.bind(owner, http, start_fn)):
+			host.tree_entered.connect(_add_http.bind(owner, http, start_fn), CONNECT_ONE_SHOT)
+		return
 	http.ready.connect(start_fn, CONNECT_ONE_SHOT)
 	host.add_child.call_deferred(http)
 
@@ -975,17 +980,19 @@ static func _pull_sfx(host: Node) -> void:
 			http.queue_free()
 	)
 
-static func _got_sfx(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, host: Node) -> void:
+static func _got_sfx(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, host: Variant) -> void:
+	var parent: Node = http.get_parent() if is_instance_valid(http) else null
 	if is_instance_valid(http):
 		http.queue_free()
-	if result != HTTPRequest.RESULT_SUCCESS or code != 200 or not is_instance_valid(host):
+	var target: Node = host as Node if is_instance_valid(host) else parent
+	if result != HTTPRequest.RESULT_SUCCESS or code != 200 or target == null or not is_instance_valid(target):
 		return
 	for line: String in body.get_string_from_utf8().split("\n"):
 		var name: String = line.strip_edges()
 		if not name.ends_with(".ogg") or name.contains("..") or name.contains("/"):
 			continue
 		_remember_variant(name)
-		prefetch(host, "sfx/%s" % name)
+		prefetch(target, "sfx/%s" % name)
 
 static func clip_for(unit_id: String, event: String) -> AudioStream:
 	if unit_id == "":
@@ -1601,6 +1608,7 @@ static func _roots() -> PackedStringArray:
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/audio"))
 	roots.append(base.path_join("audio"))
 	roots.append(base.get_base_dir().path_join("Resources/audio"))
+	roots.append(AssetPack.root().path_join("audio"))
 	return roots
 
 static func _decode(bytes: PackedByteArray) -> AudioStream:
@@ -1671,19 +1679,21 @@ static func _begin_fetch(player: AudioStreamPlayer, rel: String, loop: bool) -> 
 			http.queue_free()
 	)
 
-static func _fetched(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, player: AudioStreamPlayer, http: HTTPRequest, rel: String, loop: bool) -> void:
-	if is_instance_valid(player):
-		player.set_meta("fetching", false)
+static func _fetched(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, player: Variant, http: HTTPRequest, rel: String, loop: bool) -> void:
+	var audio_player: AudioStreamPlayer = player as AudioStreamPlayer if is_instance_valid(player) else null
+	if audio_player != null:
+		audio_player.set_meta("fetching", false)
 	if is_instance_valid(http):
 		http.queue_free()
 	if result != HTTPRequest.RESULT_SUCCESS or code != 200:
 		return
 	var stream: AudioStream = _decode(body)
-	if stream == null or not is_instance_valid(player):
+	if stream == null:
 		return
 	_cache[rel] = stream
 	_catalog[rel] = true
-	_arm_player(player, stream, loop)
+	if audio_player != null:
+		_arm_player(audio_player, stream, loop)
 
 static func _prefetched(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, rel: String) -> void:
 	_inflight.erase(rel)

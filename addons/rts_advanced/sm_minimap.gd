@@ -211,6 +211,13 @@ func _draw() -> void:
 			var beacon_p: Vector2 = _world_to_local(field.beacon_at)
 			var pulse: float = 4.0 + 1.5 * sin(float(Time.get_ticks_msec()) * 0.006)
 			draw_arc(beacon_p, pulse, 0.0, TAU, 16, Color(0.98, 0.82, 0.28), 1.5, true)
+		for ping: Dictionary in field.pings:
+			var ping_p: Vector2 = _world_to_local(ping["at"] as Vector3)
+			var age: float = SMPointer.PING_TIME - float(ping["left"])
+			var ring: float = 3.0 + fmod(age * 9.0, 12.0)
+			var ink: Color = ping["color"] as Color
+			draw_arc(ping_p, ring, 0.0, TAU, 20, Color(ink.r, ink.g, ink.b, clampf(1.0 - ring / 16.0, 0.2, 1.0)), 2.0, true)
+			draw_circle(ping_p, 2.5, ink)
 	if frustum.size() == 4:
 		var edge: Vector2 = size - Vector2(1, 1)
 		var bounds: PackedVector2Array = PackedVector2Array([Vector2(1, 1), Vector2(edge.x, 1), edge, Vector2(1, edge.y)])

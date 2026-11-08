@@ -5,6 +5,7 @@ extends RefCounted
 ## Drop the file in and re-export. A missing file leaves the text button.
 
 const Clips = preload("res://game/match_audio.gd")
+const AssetPack = preload("res://game/asset_pack.gd")
 
 static var _cache: Dictionary = {}
 static var _inflight: Dictionary = {}
@@ -56,6 +57,7 @@ static func _read_local(file_name: String) -> PackedByteArray:
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/cameos"))
 	roots.append(base.path_join("cameos"))
 	roots.append(base.get_base_dir().path_join("Resources/cameos"))
+	roots.append(AssetPack.root().path_join("cameos"))
 	for root: String in roots:
 		var path: String = root.path_join(file_name)
 		if FileAccess.file_exists(path):
@@ -66,7 +68,9 @@ static func _fetch_list(node: Node) -> void:
 	if node == null or not is_instance_valid(node):
 		return
 	if not node.is_inside_tree():
-		_fetch_list.call_deferred(node)
+		var job: Callable = _fetch_list.bind(node)
+		if not node.tree_entered.is_connected(job):
+			node.tree_entered.connect(job, CONNECT_ONE_SHOT)
 		return
 	var http: HTTPRequest = HTTPRequest.new()
 	http.timeout = 30.0
@@ -85,16 +89,17 @@ static func _start_list(node: Node, http: HTTPRequest) -> void:
 	if err != OK:
 		http.queue_free()
 
-static func _got_list(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, node: Node, http: HTTPRequest) -> void:
+static func _got_list(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, node: Variant, http: HTTPRequest) -> void:
 	if is_instance_valid(http):
 		http.queue_free()
-	if result != HTTPRequest.RESULT_SUCCESS or code != 200 or not is_instance_valid(node):
+	var host_node: Node = node as Node if is_instance_valid(node) else null
+	if result != HTTPRequest.RESULT_SUCCESS or code != 200 or host_node == null:
 		return
 	var lines: PackedStringArray = body.get_string_from_utf8().split("\n")
 	for line: String in lines:
 		var file_name: String = line.strip_edges()
 		if file_name.ends_with(".webp") and not file_name.contains("..") and not file_name.begins_with("/"):
-			_prefetch(node, file_name)
+			_prefetch(host_node, file_name)
 
 static func _prefetch(node: Node, file_name: String) -> void:
 	if _cache.has(file_name) or _inflight.has(file_name) or node == null or not is_instance_valid(node):
@@ -119,7 +124,7 @@ static func _start_prefetch(node: Node, http: HTTPRequest, file_name: String) ->
 		_inflight.erase(file_name)
 		http.queue_free()
 
-static func _prefetched(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, node: Node, http: HTTPRequest, file_name: String) -> void:
+static func _prefetched(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, node: Variant, http: HTTPRequest, file_name: String) -> void:
 	_inflight.erase(file_name)
 	if is_instance_valid(http):
 		http.queue_free()
@@ -129,7 +134,8 @@ static func _prefetched(result: int, code: int, _headers: PackedStringArray, bod
 	if portrait == null:
 		return
 	_cache[file_name] = portrait
-	if is_instance_valid(node):
-		var hud: SMHud = node.get_meta("hud") as SMHud
+	var host_node: Node = node as Node if is_instance_valid(node) else null
+	if host_node != null and host_node.has_meta("hud"):
+		var hud: SMHud = host_node.get_meta("hud") as SMHud
 		if hud != null:
 			hud.apply_cameos()

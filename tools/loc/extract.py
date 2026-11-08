@@ -26,6 +26,7 @@ SKIP_FILES = {
     "hud_skin.gd", "menu_scrim.gd", "served_art.gd", "match_cameos.gd", "sm_web.gd",
     "rts_loc.gd", "sm_lang.gd", "font_faces.gd", "rts_bindings.gd",
     "perf_probe.gd", "render_budget.gd", "model_textures.gd",
+    "bay_door_view.gd", "rally_view.gd", "weapon_mode_view.gd",
 }
 CODE_MARKERS = ("(function", "window.", "console.log", "indexedDB", "res://", "user://", "audio context")
 # Literal arguments of these calls are node names, metas, or ids, never shown.

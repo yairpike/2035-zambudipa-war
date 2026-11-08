@@ -16,6 +16,7 @@ var pan_slider: HSlider
 var edge_box: CheckButton
 var voice_value: Button
 var language_value: Button
+var ui_scale_value: Button
 var master_readout: Label
 var music_readout: Label
 var sfx_readout: Label
@@ -182,6 +183,12 @@ func _ready() -> void:
 	add_child(hud_note)
 	var hud_value: Label = _caption("HudValue", "On")
 	add_child(hud_value)
+	var scale_label: Label = _caption("UiScaleLabel", "UI scale")
+	add_child(scale_label)
+	ui_scale_value = _choice("UiScaleValue", Settings.ui_scale_name(Settings.ui_scale))
+	ui_scale_value.set_meta("blurb", "Scales menus, HUD, and text across 1080p, 1440p, and 4K displays.")
+	ui_scale_value.pressed.connect(_cycle_ui_scale.bind(1))
+	add_child(ui_scale_value)
 	var close: Button = _choice("SettingsClose", "Back")
 	close.set_meta("blurb", "Return to the previous screen.")
 	close.pressed.connect(_close)
@@ -210,6 +217,7 @@ func _ready() -> void:
 	_watch(normal)
 	_watch(hard)
 	_watch(language_value)
+	_watch(ui_scale_value)
 	_watch(close)
 	_watch(restore)
 	_page_tab("SettingsTabVideo", "VIDEO", "video")
@@ -260,7 +268,7 @@ func _tag_pages() -> void:
 		"audio": ["SectionAudio", "MasterLabel", "MasterVolume", "MasterValue", "MusicLabel", "MusicVolume", "MusicValue", "SfxLabel", "SfxVolume", "SfxValue", "VoiceLabel", "VoiceValue"],
 		"controls": ["SectionControls", "EdgePan", "PanLabel", "PanSpeed", "PanValue"],
 		"gameplay": ["SectionGameplay", "DifficultyLabel", "SettingsDiffEasy", "SettingsDiffNormal", "SettingsDiffHard"],
-		"hud": ["SectionHud", "HudNote", "HudValue"],
+		"hud": ["SectionHud", "HudNote", "HudValue", "UiScaleLabel", "UiScaleValue"],
 		"language": ["SectionLanguage", "LanguageLabel", "LanguageValue"],
 	}
 	for page: Variant in groups.keys():
@@ -344,6 +352,8 @@ func _layout(view: Vector2) -> void:
 	var hud_label_w: float = minf(156.0, content_w * 0.5)
 	y = _place_row(get_node_or_null("HudNote"), content_x, y, hud_label_w)
 	_place_value(get_node_or_null("HudValue"), content_x + hud_label_w + 16.0, y - 44.0, value_w)
+	y = _place_row(get_node_or_null("UiScaleLabel"), content_x, y, hud_label_w)
+	_place_value(ui_scale_value, content_x + hud_label_w + 16.0, y - 44.0, maxf(88.0, content_x + content_w - (content_x + hud_label_w + 16.0)))
 	y = _place_section("SectionLanguage", content_x, y, content_w)
 	var lang_label_w: float = minf(164.0, content_w * 0.52)
 	var lang_val_x: float = content_x + lang_label_w + 16.0
@@ -493,6 +503,8 @@ func _nudge(step: int) -> void:
 		_cycle_voice(step)
 	elif owner == language_value:
 		_cycle_language(step)
+	elif owner == ui_scale_value:
+		_cycle_ui_scale(step)
 
 func _on_visibility() -> void:
 	if not visible:
@@ -521,6 +533,7 @@ func pull() -> void:
 	_mark_difficulty()
 	_paint_voice()
 	_paint_language()
+	_paint_ui_scale()
 	_paint_readouts()
 	_syncing = false
 	_layout(size if size.x > 32.0 else Vector2(1280, 720))
@@ -592,6 +605,19 @@ func _cycle_language(step: int) -> void:
 func _paint_language() -> void:
 	if language_value != null:
 		language_value.text = SMLang.native_name(Settings.language)
+
+func _cycle_ui_scale(step: int) -> void:
+	if _syncing:
+		return
+	var order: PackedStringArray = Settings.ui_scale_ids()
+	var at: int = maxi(0, order.find(Settings.ui_scale))
+	Settings.set_ui_scale(order[posmod(at + step, order.size())])
+	_paint_ui_scale()
+	_apply()
+
+func _paint_ui_scale() -> void:
+	if ui_scale_value != null:
+		ui_scale_value.text = Settings.ui_scale_name(Settings.ui_scale)
 
 func _paint_voice() -> void:
 	if voice_value == null:

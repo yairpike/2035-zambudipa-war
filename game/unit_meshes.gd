@@ -7,6 +7,7 @@ const RUBBER: Color = Color(0.12, 0.12, 0.13)
 const GLASS: Color = Color(0.55, 0.75, 0.85)
 const Models = preload("res://game/model_registry.gd")
 const Motion = preload("res://game/unit_motion.gd")
+const ViewBudget = preload("res://game/view_budget.gd")
 const Scale = preload("res://game/model_scale.gd")
 
 static var _ink: StandardMaterial3D
@@ -65,7 +66,10 @@ static func animate(u: RTSUnit, delta: float) -> void:
 	var body: MeshInstance3D = u.get_node_or_null("Body") as MeshInstance3D
 	if body == null:
 		return
-	Motion.pose(u, delta)
+	var step: float = ViewBudget.motion_step(u, body, delta)
+	if step < 0.0:
+		return
+	Motion.pose(u, step)
 	var wake: MeshInstance3D = body.get_node_or_null("Wake") as MeshInstance3D
 	if wake != null:
 		wake.visible = u.is_moving()

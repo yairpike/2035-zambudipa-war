@@ -1,4 +1,30 @@
+<p align="center"><img src="brand/boot_splash.png" alt="2035 - Zambudipa War: three fronts, one monsoon" width="100%"></p>
+
+<p align="center"><img src="brand/wordmark-vanguard-1024.png" alt="2035 - Zambudipa War" width="560"></p>
+
+<p align="center">
+  <a href="https://yairpike.github.io/asean-2031/"><img src="https://img.shields.io/badge/%E2%96%B6%20Play%20Now%20in%20Browser-yairpike.github.io%2Fasean--2031-d4a017?style=for-the-badge" alt="Play Now in Browser"></a>
+</p>
+
+Real-time strategy across a monsoon-soaked Southeast Asia in 2035: four factions, a story campaign, skirmish, and LAN multiplayer. Play it in the browser, or install it on a computer, phone, or tablet below.
+
+## Direct Downloads
+
+| Platform | One-click download | Size | SHA-256 | Install |
+| --- | --- | --- | --- | --- |
+| **macOS (Apple Silicon & Intel)** | [`ASEAN-2031-macOS.dmg`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-macOS.dmg) | 80.0 MiB | `233e7eeb86b7d13df2b79752bb8a849bc227b34925f9df87ebe8580c290ab116` | Open the .dmg and drag the game to Applications. First launch: right-click, Open (macOS 15+: System Settings, Privacy & Security, Open Anyway). |
+| **Windows (64-bit Installer)** | [`ASEAN-2031-Windows.exe`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Windows.exe) | 46.7 MiB | `6f0f50e1c5c8bde8eaedcac91bac7dd77267abd1cf2e012054f9caeecb24e803` | Run it. On a SmartScreen warning choose More info, Run anyway. Adds Start menu and desktop shortcuts. |
+| **Linux (x86_64 AppImage)** | [`ASEAN-2031-Linux-x86_64.AppImage`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Linux-x86_64.AppImage) | 46.2 MiB | `13ef523620fb00a8fae790e7052cbca19bdeb9a2782d726373f522cb7ec06159` | Mark it executable (Properties, or `chmod +x`) and run it. |
+| **Android (ARM64 APK)** | [`ASEAN-2031-Android.apk`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-Android.apk) | 65.2 MiB | `25f2992b565ef682421b82eba987c1375e848a10eea4d8e82b60567f95730f4e` | Android 7.0+. Open the file, allow installing unknown apps, tap Install (Play Protect: More details, Install anyway). |
+| **iOS (Sideload IPA — AltStore / SideStore / Sideloadly)** | [`ASEAN-2031-iOS.ipa`](https://yairpike.github.io/asean-2031/downloads/ASEAN-2031-iOS.ipa) | 39.8 MiB | `4be082557beb58031c1707e85d698705fff8c3dffb23a63a468d884c9951e49d` | iOS 16+, experimental. Add it in AltStore or SideStore (My Apps, +) or Sideloadly, turn on Developer Mode, and trust your Apple ID in Settings, General, VPN & Device Management. |
+
+Every installer downloads the game's music, voices, models, and cinematics (about 250 MiB) on first launch, then the game restarts (on phones and tablets, reopen it). Full instructions: [downloads/README.md](downloads/README.md). Built from commit `6a64f4d`. Players can also press **DOWNLOAD GAME** on the main menu.
+
+---
+
 # Godot RTS Advanced Lite – Godot 4 3D RTS starter (free, MIT)
+
+The game is built on this starter kit. Its original documentation follows.
 
 **Godot RTS Advanced Lite is a free, MIT-licensed Godot 4 real-time strategy (RTS) starter kit / project template in strictly typed GDScript.**
 
@@ -8,8 +34,6 @@
 - **Tests:** 114 headless checks in 17 sections passing (`bash tools/run_tests.sh`)
 - **Website:** https://openclawaimac.github.io/godot-rts-advanced/ · **Pro edition (€19, 356 tests, commercial EULA):** https://huginhelm.itch.io/godot-rts-advanced
 - **For AI agents:** [AGENTS.md](AGENTS.md) · [llms.txt](llms.txt)
-
-![Demo](docs/demo.gif)
 
 ## Quickstart
 ```bash
@@ -48,6 +72,8 @@ Full comparison below and on https://openclawaimac.github.io/godot-rts-advanced/
 | Localization | `RTSLoc` | `t(key, {params})`, bound texts, live language switch, missing-key report |
 
 ## Demo
+![Demo](docs/demo.gif)
+
 `examples/demo.tscn` (F5). Primitive shapes only: two teams, capturable resource points, a producer and walls to path around.
 - **Mouse:** left drag selects, Shift adds, Ctrl toggles; right click moves or attacks; wheel zooms.
 - **Keys:** WASD pans, `B` builds a scout, `C` cancels, `F` line formation, `X` stops, `E` selects all, `Ctrl+1..9` / `1..9` control groups, `L` switches English / French.

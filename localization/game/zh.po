@@ -168,7 +168,7 @@ msgid "Andaman breakout"
 msgstr "安达曼突围"
 
 msgid "Andaman breakout. Text briefing. Sink the channel boats and the second wave, then land an amphibious unit on the far shore. A mine line in the channel damages ships. The far shore opens, and a squall crosses. The side cache is optional."
-msgstr "安达曼突围。文字简报。击沉海峡中的船只和第二波敌人，然后让一支两栖单位登上对岸。海峡中的水雷带会损伤舰船。对岸开放后，一场暴风雨将掠过。侧翼物资点为可选目标。"
+msgstr "安达曼突围。文字简报。击沉海峡中的船只和第二波敌人，然后让一支两栖单位登上对岸。海峡中的水雷带会损伤船只。对岸开放后，一场暴风雨将掠过。侧翼物资点为可选目标。"
 
 msgid "Andaman Siege Barge"
 msgstr "安达曼攻城驳船"
@@ -198,7 +198,7 @@ msgid "Artillery Telemetry Link"
 msgstr "炮兵遥测链路"
 
 msgid "ASEAN 2031"
-msgstr "ASEAN 2031"
+msgstr "2035 - Zambudipa War"
 
 msgid "Athena Orbital Designator"
 msgstr "雅典娜轨道指示器"
@@ -211,9 +211,6 @@ msgstr "攻击移动"
 
 msgid "Attack-move"
 msgstr "攻击移动"
-
-msgid "Attack-move ahead of the lead unit."
-msgstr "在领头单位前方进行攻击移动。"
 
 msgid "AUDIO"
 msgstr "音频"
@@ -501,7 +498,7 @@ msgid "Clear the shore (%d). A boat is on the far shore."
 msgstr "清除海岸守军（%d）。已有船只抵达对岸。"
 
 msgid "Clear the shore (%d). Land a boat on the far shore. The mine line hurts ships."
-msgstr "清除海岸守军（%d）。让一艘船登上对岸。水雷带会损伤舰船。"
+msgstr "清除海岸守军（%d）。让一艘船登上对岸。水雷带会损伤船只。"
 
 msgid "clearance %d"
 msgstr "许可 %d"
@@ -992,9 +989,6 @@ msgstr "GTFC 坦克"
 msgid "Guard"
 msgstr "警戒"
 
-msgid "Guard. Fire at enemies in range."
-msgstr "警戒。攻击射程内的敌人。"
-
 msgid "Guide"
 msgstr "指南"
 
@@ -1061,9 +1055,6 @@ msgstr "高地破坏者"
 msgid "Highlight a row to read what it changes."
 msgstr "高亮某一行以查看其作用。"
 
-msgid "Hold"
-msgstr "坚守"
-
 msgid "hold the blocks %ds"
 msgstr "守住机组 %ds"
 
@@ -1072,9 +1063,6 @@ msgstr "在黑霾中守住雷达。剩余 %d 秒。"
 
 msgid "Hold the radar. The haze is the clock."
 msgstr "守住雷达。黑霾就是计时器。"
-
-msgid "Hold. Do not acquire targets."
-msgstr "坚守。不主动索敌。"
 
 msgid "Holder"
 msgstr "占领方"
@@ -1282,38 +1270,6 @@ msgstr "吸取光束开启。"
 
 msgid "Left click selects. Right click moves. F ability."
 msgstr "左键选择。右键移动。F 技能。"
-
-msgid ""
-"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
-"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
-"Press Q to attack-move toward the cursor. Press X to halt. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
-"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or E, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag, and new units appear beside it. The top bar shows credits gained per second.\n"
-"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
-"Click the minimap to jump the camera there.\n"
-"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit.\n"
-"The column on the right trains units and raises buildings. Walk onto a colored pad to claim it.\n"
-"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
-"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
-"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
-"P opens protocols. H opens this guide.\n"
-"The status line reads Objective complete when you win, and Objective failed if your company dies."
-msgstr ""
-"左键单击单位，或拖框选中你的连队。橙色圆环显示所选单位的武器射程，指针停在单位上时也会出现同样的圆环。\n"
-"右键单击空地移动。右键单击敌人攻击。圆环标记该位置，随后淡出。\n"
-"按 Q 向光标处攻击移动。按 X 停止。Ctrl 加 1 至 9 保存编队。按数字调出编队，再按一次将镜头居中。\n"
-"Shift 单击添加单位。Ctrl 单击切换选中。双击或按 E 选中同类全部单位。Z 让连队为下次移动列队。Shift 右键单击空地添加下一步路径点。R 放置集结旗，新单位会在旗旁出现。顶栏显示每秒获得的资金。\n"
-"菱形标记领头单位的下一步。细脉冲标记当前目标，小地图会框出该位置。命中时显示浮动数字。\n"
-"单击小地图可将镜头跳转到该处。\n"
-"按 F 或技能键使用所选单位的技能。智能施放只让最近的就绪单位开火。\n"
-"右侧栏用于训练单位和建造建筑。走上彩色资源台即可占领。\n"
-"船只可穿越深水。坦克和步兵只能在陆地行动，浅滩开放时可涉水通过。\n"
-"季风泥泞减慢坦克和步兵。海峡迷雾缩短视野，除非你拥有水文雷达。在湄公河上，右键单击桥梁可将其炸毁并打通运河。占领的军火集市出售 CH-4、Su-30、Orlan-10 和 FLH7 小队，并抽取敌方资金。\n"
-"电力不足时新生产会停止，直到电厂满足用电需求，防御设施也会停火。取消会撤销正在建造的建筑。水文雷达照亮河道走廊。用步兵右键单击熔渣碉堡或多管炮塔即可驻守，然后单击该建成建筑卸载。再次单击已建成的守卫者-VX 可切换对地和对空武器。\n"
-"P 打开协议。H 打开本指南。\n"
-"获胜时状态栏显示“目标完成”，连队覆灭则显示“目标失败”。"
-
-msgid "Left-click select. Shift-click adds. Double-click or E selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. Q attack-move. X halt. R moves the rally flag. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
-msgstr "左键单击选择。Shift 单击添加。双击或按 E 选中同类。右键单击地面移动，单击敌人攻击。Shift 右键单击添加路径点。Z 让连队列队。Q 攻击移动。X 停止。R 移动集结旗。Ctrl+1-9 保存编队，按数字调出。圆环标记命令位置。单击小地图跳转。F 技能。H 指南。P 打开协议。"
 
 msgid "Line"
 msgstr "横列"
@@ -1526,7 +1482,7 @@ msgid "need an airfield"
 msgstr "需要机场"
 
 msgid "New to ASEAN 2031?"
-msgstr "初次接触 ASEAN 2031？"
+msgstr "初次接触 2035 - Zambudipa War？"
 
 msgid "Next skirmish: %s"
 msgstr "下一场遭遇战：%s"
@@ -2745,3 +2701,762 @@ msgstr "工场已建成"
 
 msgid "Z    Formation"
 msgstr "Z    阵型"
+
+msgid " (or press F)"
+msgstr ""
+
+msgid "%s  dmg %d  rng %d  %s"
+msgstr ""
+
+msgid "%s redeployed"
+msgstr ""
+
+msgid ""
+"%s weapon: %s\n"
+"Click to switch%s."
+msgstr ""
+
+msgid "Aggressive"
+msgstr ""
+
+msgid "Attack-move. Press A, then right-click a spot."
+msgstr ""
+
+msgid "Attack-move: right-click a spot"
+msgstr ""
+
+msgid "blocks a resource site"
+msgstr ""
+
+msgid "Click to place  ·  drag to face  ·  R turns"
+msgstr ""
+
+msgid "Hold Fire"
+msgstr ""
+
+msgid "Hold Ground"
+msgstr ""
+
+msgid "II"
+msgstr ""
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press A, then right-click, to attack-move. Press D, then right-click, and vehicles back up with their front armour toward the enemy. S or X halts. The orders strip sets the stance: Aggressive, Guard, Hold Ground or Hold Fire. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or W, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag. Select a barracks, factory, naval yard or airfield and right-click the map to pin its own rally point: new units roll out of its bay door and head there. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there. Q and E, the compass beside the minimap, Alt-drag or the middle mouse turn the camera all the way round. Home faces north again.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit. Every combat unit has two weapons: click a weapon slot on the unit card to switch, and a toggle unit's F switches with it.\n"
+"The column on the right trains units and raises buildings. A building click shows a ghost: click to place, drag to face its exit, R or the wheel turns it, right-click or Esc cancels. Naval structures only go on water. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+
+msgid "Left-click select. Shift-click adds. Double-click or W selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. A attack-move, D reverse, S or X halt. Q/E or the compass turn the camera, Home faces north. Select a factory and right-click to pin its rally point. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr ""
+
+msgid "naval structures go on water"
+msgstr ""
+
+msgid "needs dry ground"
+msgstr ""
+
+msgid "no ground under the cursor"
+msgstr ""
+
+msgid "no open water in reach"
+msgstr ""
+
+msgid "no side"
+msgstr ""
+
+msgid "off the map"
+msgstr ""
+
+msgid "Only vehicles and boats reverse"
+msgstr ""
+
+msgid "only vehicles and boats reverse"
+msgstr ""
+
+msgid "outside the build radius"
+msgstr ""
+
+msgid "Pack & Redeploy"
+msgstr ""
+
+msgid "packer redeployed"
+msgstr ""
+
+msgid "place %s: click a spot, drag to face the exit, R turns"
+msgstr ""
+
+msgid "placement cancelled"
+msgstr ""
+
+msgid "Primary"
+msgstr ""
+
+msgid "Rally point set"
+msgstr ""
+
+msgid "redeploy: click to place, drag to face, R turns"
+msgstr ""
+
+msgid "Reset to north (Home)"
+msgstr ""
+
+msgid "Reverse"
+msgstr ""
+
+msgid "Reverse move. Press D, then right-click: vehicles back up with their front armor toward the enemy."
+msgstr ""
+
+msgid "Reverse: right-click where to back up"
+msgstr ""
+
+msgid "reverse: right-click where to back up"
+msgstr ""
+
+msgid "Right-click the map to pin this building's rally point"
+msgstr ""
+
+msgid "Rotate the camera left (Q)"
+msgstr ""
+
+msgid "Rotate the camera right (E)"
+msgstr ""
+
+msgid "Secondary"
+msgstr ""
+
+msgid "Stop (S or X)."
+msgstr ""
+
+msgid "the bay must face open water"
+msgstr ""
+
+msgid "the exit is blocked"
+msgstr ""
+
+msgid "the ground is taken"
+msgstr ""
+
+msgid "the yard cannot pack up"
+msgstr ""
+
+msgid "too close to another building"
+msgstr ""
+
+msgid "too far for the yard to drive"
+msgstr ""
+
+msgid " (or press F)"
+msgstr " （或按 F）"
+
+msgid "%s  dmg %d  rng %d  %s"
+msgstr "%s  伤害 %d  射程 %d  %s"
+
+msgid "%s redeployed"
+msgstr "%s 已重新展开"
+
+msgid ""
+"%s weapon: %s\n"
+"Click to switch%s."
+msgstr ""
+"%s武器：%s\n"
+"单击切换%s。"
+
+msgid "Aggressive"
+msgstr "进攻"
+
+msgid "Attack-move. Press A, then right-click a spot."
+msgstr "攻击移动。按 A，然后右键单击目标位置。"
+
+msgid "Attack-move: right-click a spot"
+msgstr "攻击移动：右键单击目标位置"
+
+msgid "blocks a resource site"
+msgstr "挡住了资源点"
+
+msgid "Click to place  ·  drag to face  ·  R turns"
+msgstr "单击放置  ·  拖动设定方向  ·  R 旋转"
+
+msgid "Hold Fire"
+msgstr "停火"
+
+msgid "Hold Ground"
+msgstr "坚守阵地"
+
+msgid "II"
+msgstr "II"
+
+msgid ""
+"Left-click a unit, or drag a box around your company. An orange ring shows a selected unit's weapon range, and the same ring appears while the pointer rests on a unit.\n"
+"Right-click open ground to move. Right-click an enemy to attack. A ring marks that spot, then fades.\n"
+"Press A, then right-click, to attack-move. Press D, then right-click, and vehicles back up with their front armour toward the enemy. S or X halts. The orders strip sets the stance: Aggressive, Guard, Hold Ground or Hold Fire. Ctrl and 1 through 9 stores a group. Press the number to recall it, and press it again to center the camera.\n"
+"Shift-click adds a unit. Ctrl-click toggles it. Double-click, or W, selects every unit of that type. Z lines the company up for the next move. Shift-right-click on open ground adds another step. R plants the rally flag. Select a barracks, factory, naval yard or airfield and right-click the map to pin its own rally point: new units roll out of its bay door and head there. The top bar shows credits gained per second.\n"
+"A diamond sits on the lead unit's next step. A thin pulse marks the current objective, and the minimap frames that spot. Hits show a floating number.\n"
+"Click the minimap to jump the camera there. Q and E, the compass beside the minimap, Alt-drag or the middle mouse turn the camera all the way round. Home faces north again.\n"
+"Press F, or Ability, to use the selected unit's power. Smart-cast fires only the closest ready unit. Every combat unit has two weapons: click a weapon slot on the unit card to switch, and a toggle unit's F switches with it.\n"
+"The column on the right trains units and raises buildings. A building click shows a ghost: click to place, drag to face its exit, R or the wheel turns it, right-click or Esc cancels. Naval structures only go on water. Walk onto a colored pad to claim it.\n"
+"Boats cross deep water. Tanks and infantry stay on land, and they use a shallow ford when one is open.\n"
+"Monsoon mud slows tanks and infantry. Strait Haze shortens sight unless a hydro radar is yours. On the Mekong, right-click a bridge to bring it down and open the canal. A captured arms bazaar sells CH-4, Su-30, Orlan-10, and the FLH7 Squad, and skims the enemy purse.\n"
+"Low power stops new production until a plant covers the draw, and it silences defenses. Cancel drops the building in progress. A hydro radar lights the river corridor. Right-click a Slag Pillbox or Multigunner with infantry to garrison them, then click that finished building to unload. A second click on a finished Defender-VX swaps its ground and air guns.\n"
+"P opens protocols. H opens this guide.\n"
+"The status line reads Objective complete when you win, and Objective failed if your company dies."
+msgstr ""
+"左键单击单位，或拖框选中你的连队。橙色圆环显示所选单位的武器射程，指针停在单位上时也会出现同样的圆环。\n"
+"右键单击空地移动。右键单击敌人攻击。圆环标记该位置，随后淡出。\n"
+"按 A 后右键单击进行攻击移动。按 D 后右键单击，载具会倒车，正面装甲面向敌人。S 或 X 停止。命令栏设置模式：进攻、警戒、坚守阵地或停火。Ctrl 加 1 至 9 保存编队。按数字调出编队，再按一次将镜头居中。\n"
+"Shift 单击添加单位。Ctrl 单击切换选中。双击或按 W 选中同类全部单位。Z 让连队为下次移动列队。Shift 右键单击空地添加下一步路径点。R 放置集结旗。选中兵营、工厂、船坞或机场后右键单击地图，可设置该建筑的集结点：新单位会从舱门驶出并前往该处。顶栏显示每秒获得的资金。\n"
+"菱形标记领头单位的下一步。细脉冲标记当前目标，小地图会框出该位置。命中时显示浮动数字。\n"
+"单击小地图可将镜头跳转到该处。Q 和 E、小地图旁的指南针、Alt 拖动或按住中键可将镜头旋转 360 度。Home 重新面向正北。\n"
+"按 F 或技能键使用所选单位的技能。智能施放只让最近的就绪单位开火。每个作战单位都有两种武器：单击单位卡上的武器栏即可切换，切换型单位的 F 也会同时切换。\n"
+"右侧栏用于训练单位和建造建筑。单击建筑会显示预览：单击放置，拖动设定出口方向，R 或中键滑轮旋转，右键或 Esc 取消。海军建筑只能建在水面上。走上彩色资源台即可占领。\n"
+"船只可穿越深水。坦克和步兵只能在陆地行动，浅滩开放时可涉水通过。\n"
+"季风泥泞减慢坦克和步兵。海峡迷雾缩短视野，除非你拥有水文雷达。在湄公河上，右键单击桥梁可将其炸毁并打通运河。占领的军火集市出售 CH-4、Su-30、Orlan-10 和 FLH7 小队，并抽取敌方资金。\n"
+"电力不足时新生产会停止，直到电厂满足用电需求，防御设施也会停火。取消会撤销正在建造的建筑。水文雷达照亮河道走廊。用步兵右键单击熔渣碉堡或多管炮塔即可驻守，然后单击该建成建筑卸载。再次单击已建成的守卫者-VX 可切换对地和对空武器。\n"
+"P 打开协议。H 打开本指南。\n"
+"获胜时状态栏显示“目标完成”，连队覆灭则显示“目标失败”。"
+
+msgid "Left-click select. Shift-click adds. Double-click or W selects that type. Right-click ground to move, an enemy to attack. Shift-right-click adds a waypoint. Z lines the company up. A attack-move, D reverse, S or X halt. Q/E or the compass turn the camera, Home faces north. Select a factory and right-click to pin its rally point. Ctrl+1-9 stores a group, the number recalls it. A ring marks the order. Click the minimap to jump. F ability. H guide. P opens protocols."
+msgstr "左键单击选择。Shift 单击添加。双击或按 W 选中同类。右键单击地面移动，单击敌人攻击。Shift 右键单击添加路径点。Z 让连队列队。A 攻击移动，D 倒车，S 或 X 停止。Q/E 或指南针旋转镜头，Home 面向正北。选中工厂后右键单击设置其集结点。Ctrl+1-9 保存编队，按数字调出。圆环标记命令位置。单击小地图跳转。F 技能。H 指南。P 打开协议。"
+
+msgid "naval structures go on water"
+msgstr "海军建筑必须建在水面上"
+
+msgid "needs dry ground"
+msgstr "需要陆地"
+
+msgid "no ground under the cursor"
+msgstr "光标下没有地面"
+
+msgid "no open water in reach"
+msgstr "范围内没有开阔水域"
+
+msgid "no side"
+msgstr "无阵营"
+
+msgid "off the map"
+msgstr "超出地图"
+
+msgid "Only vehicles and boats reverse"
+msgstr "只有载具和船只可以倒车"
+
+msgid "only vehicles and boats reverse"
+msgstr "只有载具和船只可以倒车"
+
+msgid "outside the build radius"
+msgstr "超出建造范围"
+
+msgid "Pack & Redeploy"
+msgstr "打包并重新展开"
+
+msgid "packer redeployed"
+msgstr "基地车已重新展开"
+
+msgid "place %s: click a spot, drag to face the exit, R turns"
+msgstr "放置%s：单击位置，拖动设定出口方向，R 旋转"
+
+msgid "placement cancelled"
+msgstr "已取消放置"
+
+msgid "Primary"
+msgstr "主武器"
+
+msgid "Rally point set"
+msgstr "集结点已设置"
+
+msgid "redeploy: click to place, drag to face, R turns"
+msgstr "重新展开：单击放置，拖动设定方向，R 旋转"
+
+msgid "Reset to north (Home)"
+msgstr "重置为正北（Home）"
+
+msgid "Reverse"
+msgstr "倒车"
+
+msgid "Reverse move. Press D, then right-click: vehicles back up with their front armor toward the enemy."
+msgstr "倒车移动。按 D，然后右键单击：载具倒退，正面装甲面向敌人。"
+
+msgid "Reverse: right-click where to back up"
+msgstr "倒车：右键单击要倒退到的位置"
+
+msgid "reverse: right-click where to back up"
+msgstr "倒车：右键单击要倒退到的位置"
+
+msgid "Right-click the map to pin this building's rally point"
+msgstr "右键单击地图设置此建筑的集结点"
+
+msgid "Rotate the camera left (Q)"
+msgstr "向左旋转镜头（Q）"
+
+msgid "Rotate the camera right (E)"
+msgstr "向右旋转镜头（E）"
+
+msgid "Secondary"
+msgstr "备用武器"
+
+msgid "Stop (S or X)."
+msgstr "停止（S 或 X）。"
+
+msgid "the bay must face open water"
+msgstr "船坞出口必须面向开阔水域"
+
+msgid "the exit is blocked"
+msgstr "出口被挡住"
+
+msgid "the ground is taken"
+msgstr "该地已被占用"
+
+msgid "the yard cannot pack up"
+msgstr "基地无法打包"
+
+msgid "too close to another building"
+msgstr "离其他建筑太近"
+
+msgid "too far for the yard to drive"
+msgstr "超出基地车行驶范围"
+
+msgid "A second column is coming down the valley road. Our armour is moving up."
+msgstr "第二支纵队正沿山谷公路南下。我方装甲部队正在推进。"
+
+msgid "A supply convoy is moving on the streets."
+msgstr "一支补给车队正在街道上行进。"
+
+msgid "All stages clear"
+msgstr "所有阶段完成"
+
+msgid "Ambush! Enemy troops in the side streets."
+msgstr "伏击！敌军藏在小巷里。"
+
+msgid "An armoured column is rolling in on the road."
+msgstr "一支装甲纵队正沿公路驶来。"
+
+msgid "An armoured push is coming down the river road. Our column is moving up."
+msgstr "敌方装甲部队正沿河边公路推进。我方纵队正在前出。"
+
+msgid "Bo Mya is counter-attacking across the channel. Landing craft are bringing marines."
+msgstr "波妙正跨过海峡反击。登陆艇正运来海军陆战队。"
+
+msgid "Bo Mya's compound"
+msgstr "波妙的大院"
+
+msgid "Boats are landing raiders under the haze. Our landing craft are coming in."
+msgstr "敌船正借黑霾运送突袭队登陆。我方登陆艇正在驶来。"
+
+msgid "Bonus complete. Air-strike cooldowns are reset."
+msgstr "额外目标完成。空袭冷却已重置。"
+
+msgid "Bonus complete. Bonus funds: +600 credits."
+msgstr "额外目标完成。奖励资金：+600 资金。"
+
+msgid "Bonus complete. Reinforcements are on the way."
+msgstr "额外目标完成。援军正在赶来。"
+
+msgid "Bonus complete. Your troops earn a veterancy crate."
+msgstr "额外目标完成。你的部队获得老兵补给箱。"
+
+msgid "Bonus done: %s"
+msgstr "额外目标完成：%s"
+
+msgid "Bonus failed: %s"
+msgstr "额外目标失败：%s"
+
+msgid "Bonus objective"
+msgstr "额外目标"
+
+msgid "Bonus: %s"
+msgstr "额外目标：%s"
+
+msgid "Break the citadel guard"
+msgstr "击破要塞守卫"
+
+msgid "Break the counter-attack (%d)"
+msgstr "击退反击（%d）"
+
+msgid "Capture the bazaar"
+msgstr "占领集市"
+
+msgid "Capture the hydro radar"
+msgstr "占领水文雷达"
+
+msgid "Capture the relay mast"
+msgstr "占领中继天线"
+
+msgid "Casino command post"
+msgstr "赌场指挥所"
+
+msgid "Citadel armour is counter-attacking along the ring road. Our column is coming in."
+msgstr "要塞装甲部队正沿环路反击。我方纵队正在赶来。"
+
+msgid "Citadel guard"
+msgstr "要塞守卫"
+
+msgid "Claim a site in the Golden Triangle"
+msgstr "在金三角夺取一处据点"
+
+msgid "Claim a site on the channel"
+msgstr "在海峡沿岸夺取一处据点"
+
+msgid "Clear the caravan ambush"
+msgstr "清除商队伏兵"
+
+msgid "Clear the compound garrison"
+msgstr "清除大院守军"
+
+msgid "Clear the radar garrison"
+msgstr "清除雷达守军"
+
+msgid "Clear the shore guns"
+msgstr "清除岸防炮"
+
+msgid "Clear the street ambush (%d)"
+msgstr "清除街头伏兵（%d）"
+
+msgid "Climax"
+msgstr "决战"
+
+msgid "Command"
+msgstr "指挥部"
+
+msgid "Command spire"
+msgstr "指挥尖塔"
+
+msgid "Counter-attack"
+msgstr "反击部队"
+
+msgid "Customs house boss"
+msgstr "海关楼头目"
+
+msgid "Destroy %s"
+msgstr "摧毁%s"
+
+msgid "Destroy the battery radar jammer"
+msgstr "摧毁炮兵雷达干扰器"
+
+msgid "Destroy the citadel power grid"
+msgstr "摧毁要塞电网"
+
+msgid "Destroy the relay jammer"
+msgstr "摧毁中继干扰器"
+
+msgid "Drop the EW towers"
+msgstr "摧毁 EW 塔"
+
+msgid "Enemy commanders are switching weapon modes."
+msgstr "敌方指挥官正在切换武器模式。"
+
+msgid "Escalation"
+msgstr "升级"
+
+msgid "Fire the beam at the phantom"
+msgstr "用光束射击幻影"
+
+msgid "Floating fortress"
+msgstr "浮动要塞"
+
+msgid "Foothold"
+msgstr "立足"
+
+msgid "Free the captive runners"
+msgstr "解救被困的跑腿"
+
+msgid "Freeze the tank column"
+msgstr "冻结坦克纵队"
+
+msgid "Get the ferry across"
+msgstr "让渡船过河"
+
+msgid "Guards from the next block are pushing in. Choppers are dropping a team on your flank."
+msgstr "隔壁街区的守卫正在压上来。直升机正在你的侧翼投放一个小队。"
+
+msgid "Gunboats are counter-attacking the reef. Landing craft bring our crews."
+msgstr "炮艇正在反击礁石阵地。登陆艇运来我方人员。"
+
+msgid "Harbour fort"
+msgstr "港口要塞"
+
+msgid "Haze flagship"
+msgstr "黑霾旗舰"
+
+msgid "Helicopters are dropping reinforcements."
+msgstr "直升机正在投放援军。"
+
+msgid "His command compound is exposed. Destroy it."
+msgstr "他的指挥大院已暴露。摧毁它。"
+
+msgid "His command compound is open. Destroy it."
+msgstr "他的指挥大院已无防备。摧毁它。"
+
+msgid "Hold the line: %d seconds (%d attackers)"
+msgstr "守住防线：%d 秒（%d 名进攻者）"
+
+msgid "Hunt the jammer ghost"
+msgstr "猎杀干扰幽灵"
+
+msgid "Intercept the defoliant sprayer"
+msgstr "拦截落叶剂喷洒机"
+
+msgid "Iskandar is sending a column down the river road. Our armour is coming in from the west."
+msgstr "伊斯坎达正派一支纵队沿河边公路而来。我方装甲部队正从西面赶来。"
+
+msgid "Iskandar's compound"
+msgstr "伊斯坎达的大院"
+
+msgid "Island battery"
+msgstr "岛屿炮台"
+
+msgid "Joint flagship"
+msgstr "联合旗舰"
+
+msgid "Junta armour is counter-attacking along the highway. Allied helicopters are inbound."
+msgstr "军政府装甲部队正沿公路反击。友军直升机正在赶来。"
+
+msgid "Junta trucks are rolling down the market street. Hold the yard. Gunships are inbound."
+msgstr "军政府卡车正沿市场街驶来。守住基地。武装直升机正在赶来。"
+
+msgid "Landing craft are coming ashore."
+msgstr "登陆艇正在靠岸。"
+
+msgid "Market hall safe house"
+msgstr "市场大厅安全屋"
+
+msgid "More ghosts are slipping through the rubber groves. Air cavalry is dropping in to help."
+msgstr "更多幽灵正穿过橡胶林潜入。空中骑兵正投放下来支援。"
+
+msgid "Mortar teams are moving through the jar fields. Gunships are dropping support."
+msgstr "迫击炮小组正穿过石缸田。武装直升机正在投放支援。"
+
+msgid "Objectives"
+msgstr "目标"
+
+msgid "Patrol boats are closing on the channel. Landing craft are bringing marines in."
+msgstr "巡逻艇正逼近水道。登陆艇正运来海军陆战队。"
+
+msgid "Pinned squad"
+msgstr "被困小队"
+
+msgid "Plateau command post"
+msgstr "高原指挥所"
+
+msgid "Raiders are crossing the Mekong in the fog. Helicopters drop a team on the bank."
+msgstr "突袭队正借雾渡过湄公河。直升机在岸边投放一个小队。"
+
+msgid "Raise the scaffold yard in Laukkai"
+msgstr "在老街建起脚手架基地"
+
+msgid "Regional command bunker"
+msgstr "地区指挥地堡"
+
+msgid "Rescue the allied marines"
+msgstr "营救友军海军陆战队"
+
+msgid "Rescue the downed pilots"
+msgstr "营救被击落的飞行员"
+
+msgid "Rescue the fishing crew"
+msgstr "营救渔船船员"
+
+msgid "Rescue the stranded boat crew"
+msgstr "营救被困的船员"
+
+msgid "Rescue the village scouts"
+msgstr "营救村庄侦察兵"
+
+msgid "Secure the field clinic"
+msgstr "控制野战诊所"
+
+msgid "Seize the fuel depot"
+msgstr "夺取燃料库"
+
+msgid "Seize the jade cache on the side street"
+msgstr "夺取小巷里的翡翠藏点"
+
+msgid "Sink the joint picket"
+msgstr "击沉联合警戒舰"
+
+msgid "Sink the shore boats"
+msgstr "击沉岸边船只"
+
+msgid "Smugglers want the rubies back. A counter-raid is coming up the border road. Our armour is on the way."
+msgstr "走私者想夺回红宝石。一支反突袭部队正沿边境公路而来。我方装甲部队正在赶来。"
+
+msgid "Space: jump to the event"
+msgstr "Space：跳到事件位置"
+
+msgid "Stage %d done: %s"
+msgstr "阶段 %d 完成：%s"
+
+msgid "Stage %d now: %s"
+msgstr "阶段 %d 进行中：%s"
+
+msgid "Stage %d/3: %s"
+msgstr "阶段 %d/3：%s"
+
+msgid "Stage %d: %s"
+msgstr "阶段 %d：%s"
+
+msgid "Stop the haze convoy"
+msgstr "拦下黑霾车队"
+
+msgid "Stop the smuggler convoy before it crosses the bridge"
+msgstr "在走私车队过桥前拦下它"
+
+msgid "Street ambush"
+msgstr "街头伏兵"
+
+msgid "Supply convoy"
+msgstr "补给车队"
+
+msgid "Syndicate tower"
+msgstr "集团大楼"
+
+msgid "Tea station command"
+msgstr "茶站指挥部"
+
+msgid "The bonus slipped away."
+msgstr "额外目标已错失。"
+
+msgid "The citadel command spire is open. Bring it down."
+msgstr "要塞指挥尖塔已无防备。把它打下来。"
+
+msgid "The flagship is coming about. Sink it."
+msgstr "旗舰正在掉头。击沉它。"
+
+msgid "The fleet is turning to fight. Landing craft carry our marines."
+msgstr "舰队正掉头迎战。登陆艇运来我方海军陆战队。"
+
+msgid "The harbour fort is the last gun line. Silence it."
+msgstr "港口要塞是最后一道炮线。让它闭嘴。"
+
+msgid "The haze flagship is in range. Sink it."
+msgstr "黑霾旗舰已进入射程。击沉它。"
+
+msgid "The plateau command post is exposed. Destroy it."
+msgstr "高原指挥所已暴露。摧毁它。"
+
+msgid "The regional command bunker is exposed. Finish it."
+msgstr "地区指挥地堡已暴露。解决它。"
+
+msgid "The ring boss is holed up in the river customs house. End it."
+msgstr "团伙头目躲在河边海关楼里。结束他。"
+
+msgid "The syndicate director is in the server tower. Bring it down."
+msgstr "集团总管在服务器大楼里。把它打下来。"
+
+msgid "Their command post sits in the old casino. Take it down."
+msgstr "他们的指挥所设在旧赌场里。摧毁它。"
+
+msgid "Their floating fortress has moved in. Sink it."
+msgstr "他们的浮动要塞已经开进来。击沉它。"
+
+msgid "Their forward command is dug in at the tea station. Take it."
+msgstr "他们的前线指挥部固守在茶站。拿下它。"
+
+msgid "Their island battery covers the strait. Destroy it."
+msgstr "他们的岛屿炮台控制着海峡。摧毁它。"
+
+msgid "Their last wave hits the radar now. Hold for thirty seconds."
+msgstr "他们的最后一波正冲向雷达。坚守三十秒。"
+
+msgid "Their safe house is in the old market hall. Clear it."
+msgstr "他们的安全屋在旧市场大厅里。清除它。"
+
+msgid "They are throwing everything at the radar. Hold for thirty seconds."
+msgstr "他们正倾尽全力攻打雷达。坚守三十秒。"
+
+msgid "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
+msgstr "三体船正围着渡船打转。登陆艇正运来援军。"
+
+msgid "Downloading game assets"
+msgstr "正在下载游戏资源"
+
+msgid "First launch only. The game restarts when the download finishes."
+msgstr "只在首次启动时下载。下载完成后游戏将自动重启。"
+
+msgid "%d of %d MB"
+msgstr "%d / %d MB"
+
+msgid "%.1f MB/s"
+msgstr "%.1f MB/s"
+
+msgid "Some files could not be downloaded. Check your connection and retry."
+msgstr "有的文件无法下载。请确认网络连接后重新下载。"
+
+msgid "Download complete. Restarting…"
+msgstr "下载完成。正在重启…"
+
+msgid "Retry"
+msgstr "重新下载"
+
+msgid "Play now"
+msgstr "立即开始"
+
+msgid "Start with placeholder models and no sound. The download continues in the background."
+msgstr "使用简易模型开始游戏，没有音效。下载将在后台继续。"
+
+msgid "DOWNLOAD DESKTOP"
+msgstr "下载游戏"
+
+msgid "First launch downloads game assets automatically."
+msgstr "首次启动时下载游戏资源。"
+
+msgid "macOS (Apple Silicon & Intel) — .dmg"
+msgstr "macOS (Apple Silicon & Intel) — .dmg"
+
+msgid "Windows (64-bit) — .exe"
+msgstr "Windows (64-bit) — .exe"
+
+msgid "Linux (x86_64) — .AppImage"
+msgstr "Linux (x86_64) — .AppImage"
+
+msgid "UI scale"
+msgstr "界面大小"
+
+msgid "Scales menus, HUD, and text across 1080p, 1440p, and 4K displays."
+msgstr "缩放菜单、界面与文字。"
+
+msgid "Auto"
+msgstr "自动"
+
+msgid "100%"
+msgstr "100%"
+
+msgid "125%"
+msgstr "125%"
+
+msgid "150%"
+msgstr "150%"
+
+msgid "Zoom in (+ / scroll up)"
+msgstr "放大 (+)"
+
+msgid "Zoom out (- / scroll down)"
+msgstr "缩小 (-)"
+
+msgid "2035 - Zambudipa War"
+msgstr "2035 - Zambudipa War"
+
+msgid "New to 2035 - Zambudipa War?"
+msgstr "初次接触 2035 - Zambudipa War？"
+
+msgid "Android (ARM64) — .apk"
+msgstr "Android (ARM64) — .apk"
+
+msgid "iOS Sideload (AltStore / SideStore) — .ipa"
+msgstr "iOS Sideload (AltStore / SideStore) — .ipa"
+
+msgid "%s (%.1f MiB)"
+msgstr "%s (%.1f MiB)"
+
+msgid "DOWNLOAD GAME"
+msgstr "下载游戏"
+
+msgid "Download complete. Close the game and open it again to load everything."
+msgstr "下载完成。请关闭游戏后重新打开。"

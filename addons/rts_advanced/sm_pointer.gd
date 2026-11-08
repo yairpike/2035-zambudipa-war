@@ -8,6 +8,7 @@ const Weather = preload("res://addons/rts_advanced/sm_weather.gd")
 const PLAYER: int = 0
 const ENEMY: int = 1
 const PICK_PX: float = 28.0
+const PING_TIME: float = 6.0
 const ATTACK_M: float = 2.2
 const BUILDING_SIZE: Vector3 = Vector3(2.2, 4.6, 2.2)
 const GTFC_KINDS: Array[StringName] = [&"militia", &"slag_hauler", &"ruby_lancer", &"amber_tank", &"monsoon_tube", &"channel_skiff"]
@@ -28,6 +29,8 @@ var nav_air: RTSGridNav
 var domain: SMDomainGrid
 var selection: RTSSelection = RTSSelection.new()
 var units: Array[RTSUnit] = []
+## Minimap callouts: {"at", "color", "left"}. The newest one is where Space jumps.
+var pings: Array[Dictionary] = []
 var box: RTSSelectionBox
 var cam: RTSCamera
 var host: Node3D
@@ -47,6 +50,9 @@ var last_pick_ms: int = 0
 var hover_at: Vector2 = Vector2.INF
 var visual_node: Node3D
 var side_link: SMSide
+var selected_buildings: Array[StringName] = []
+var reverse_armed: bool = false
+var attack_armed: bool = false
 const Cast = preload("res://addons/rts_advanced/sm_cast.gd")
 const F_COOLDOWN: float = 3.0
 signal dressed(host: Node3D)
@@ -60,7 +66,13 @@ signal ping_made(host: Node3D, at: Vector3, order: String)
 signal path_moved(host: Node3D, show: bool, step: Vector3)
 signal damage_shown(u: RTSUnit, amount: float)
 signal ally_lost
+## Selected production buildings and their pinned rally points. Rows: {id, from, at}.
+signal rallies_shown(host: Node3D, rows: Array[Dictionary])
+## Active weapon slot of `u` changed (primary or secondary); the view restyles its turret and muzzle.
+signal weapon_shown(u: RTSUnit, slot: String, tint: Color)
 const BEAM_TIME: float = 1.5
+const REVERSE_SPEED: float = 0.7
+const STANCES: PackedStringArray = ["aggressive", "guard", "hold_ground", "hold"]
 
 func bind(p_host: Node3D, p_cam: RTSCamera) -> void:
 	host = p_host
@@ -164,6 +176,8 @@ func spawn(team: int, at: Vector3, kind: StringName, lead: bool = true) -> RTSUn
 	u.attack_range = 8.0
 	u.attack_interval = 0.8
 	u.position = at
+	if _naval_kind(kind):
+		u.position = water_spot(at)
 	if next_look != "":
 		u.set_meta("look", next_look)
 		next_look = ""
@@ -183,6 +197,47 @@ func spawn(team: int, at: Vector3, kind: StringName, lead: bool = true) -> RTSUn
 		var flight: int = int(_unit_row(kind).get("flight", 1))
 		for n: int in range(1, flight):
 			spawn(team, at + Vector3(1.3 * float(n), 0.0, 0.4 * float(n)), kind, false)
+	return u
+
+func _naval_kind(kind: StringName) -> bool:
+	return str(_unit_row(kind).get("locomotion", "")) == "naval"
+
+## Nearest navigable water to `at`, or `at` itself when there is no naval grid or no water nearby.
+func water_spot(at: Vector3) -> Vector3:
+	if nav_naval == null:
+		return at
+	var cell: Vector2i = nav_naval.nearest_open(nav_naval.cell_at(at), 24)
+	if cell.x < 0:
+		return at
+	if cell == nav_naval.cell_at(at):
+		return at
+	var c: Vector3 = nav_naval.cell_center(cell)
+	return Vector3(c.x, at.y, c.z)
+
+## Nearest cell `u` may stand on: water for boats, open ground for the rest.
+func open_spot(u: RTSUnit, at: Vector3) -> Vector3:
+	var grid: RTSGridNav = nav_for_unit(u)
+	if grid == null or at == Vector3.INF:
+		return at
+	var cell: Vector2i = grid.cell_at(at)
+	if not grid.is_blocked(cell):
+		return at
+	var near: Vector2i = grid.nearest_open(cell, 24)
+	if near.x < 0:
+		return at
+	var c: Vector3 = grid.cell_center(near)
+	return Vector3(c.x, at.y, c.z)
+
+## Spawns `kind` inside the bay of the building that makes it and rolls it out to that building's rally.
+## Without a producer it appears at `fallback` as before.
+func produce(team: int, kind: StringName, fallback: Vector3) -> RTSUnit:
+	var maker: StringName = &""
+	if side_link != null:
+		maker = side_link.producer_for(category_of(kind))
+	if maker == &"":
+		return spawn(team, fallback, kind)
+	var u: RTSUnit = spawn(team, side_link.bay_point(maker), kind)
+	side_link.bays.launch(u, maker, side_link.rally_for(maker, fallback), side_link, self)
 	return u
 
 func spawn_support(at: Vector3) -> void:
@@ -248,6 +303,7 @@ func _apply_catalog(u: RTSUnit, kind: StringName) -> void:
 	u.set_meta("tags", _tag_list(unit))
 	u.set_meta("ability", str(unit.get("ability", "")))
 	u.set_meta("f_stat", str(unit.get("f_stat", "damage")))
+	SMArms.arm(u, unit)
 	SMCatalog.mark_unit(u, unit)
 
 func _body_color(team: int, kind: StringName) -> Color:
@@ -269,8 +325,18 @@ func _accent_kind(kind: StringName) -> bool:
 static func building_at(at: Vector3) -> Vector3:
 	return at + Vector3(0.0, BUILDING_SIZE.y * 0.5, 0.0)
 
+## Faction catalogs are parsed from disk on every _unit_row call, and this runs per unit per frame.
+static var _categories: Dictionary = {}
+
 func category_of(kind: StringName) -> String:
-	var unit: Dictionary = _unit_row(kind)
+	var key: String = "%s|%s" % [faction_id, kind]
+	if _categories.has(key):
+		return str(_categories[key])
+	var found: String = _category_from(_unit_row(kind))
+	_categories[key] = found
+	return found
+
+func _category_from(unit: Dictionary) -> String:
 	if unit.is_empty():
 		return "infantry"
 	var role: String = str(unit.get("role", ""))
@@ -422,10 +488,11 @@ func command_at(ground: Vector3, screen: Vector2, project_fn: Callable, queue: b
 	return &"garrison" if housed > 0 else &"none"
 
 ## Walks the selection to formation slots. Hunt keeps them shooting on the way.
-func _send(ground: Vector3, hunt: bool, queue: bool = false) -> int:
+func _send(ground: Vector3, hunt: bool, queue: bool = false, only: Array[RTSUnit] = []) -> int:
 	var live: Array[RTSUnit] = []
-	for u: RTSUnit in selection.units:
-		if is_instance_valid(u) and u.is_alive():
+	var pool: Array[RTSUnit] = only if not only.is_empty() else selection.units
+	for u: RTSUnit in pool:
+		if is_instance_valid(u) and u.is_alive() and not bool(u.get_meta("rolling", false)):
 			live.append(u)
 	if live.is_empty():
 		return 0
@@ -453,6 +520,7 @@ func _send(ground: Vector3, hunt: bool, queue: bool = false) -> int:
 			sent += 1
 			continue
 		mover.attack_target = null
+		mover.set_meta("reverse", false)
 		mover.set_meta("bridge_id", "")
 		mover.set_meta("hunt", hunt)
 		if hunt:
@@ -555,15 +623,134 @@ func halt_selected() -> void:
 	group_note = "Halt"
 	group_note_t = 1.4
 
+## aggressive chases what it sees, guard holds its ground on attack-move, hold_ground fires in range
+## without moving, hold (hold fire) never picks its own target.
 func set_stance(mode: String) -> void:
 	for u: RTSUnit in selection.units:
 		if not is_instance_valid(u):
 			continue
 		u.set_meta("stance", mode)
-		if mode == "hold" or mode == "guard":
+		if mode == "hold" or mode == "guard" or mode == "hold_ground":
 			u.set_meta("hunt", false)
-	group_note = mode.capitalize()
+		if mode == "hold":
+			u.attack_target = null
+	group_note = stance_label(mode)
 	group_note_t = 1.4
+
+static func stance_label(mode: String) -> String:
+	if mode == "hold":
+		return "Hold Fire"
+	if mode == "hold_ground":
+		return "Hold Ground"
+	return mode.capitalize()
+
+func stance_of_selection() -> String:
+	for u: RTSUnit in selection.units:
+		if is_instance_valid(u):
+			return str(u.get_meta("stance", "aggressive"))
+	return ""
+
+## RA3 reverse move: vehicles and boats back up to `at`, keeping their front armor toward where they came from.
+func reverse_move_at(at: Vector3) -> int:
+	if at == Vector3.INF:
+		return 0
+	var backers: Array[RTSUnit] = []
+	for u: RTSUnit in selection.units:
+		if is_instance_valid(u) and u.is_alive() and can_reverse(u):
+			backers.append(u)
+	if backers.is_empty():
+		return 0
+	var sent: int = _send(at, false, false, backers)
+	for u: RTSUnit in backers:
+		if not u.path.is_empty():
+			u.set_meta("reverse", true)
+	if sent > 0:
+		_mark(at, "move")
+		group_note = "Reverse"
+		group_note_t = 1.4
+		_cue("move")
+	return sent
+
+func can_reverse(u: RTSUnit) -> bool:
+	var category: String = category_of(u.unit_type)
+	return category == "vehicle" or category == "boat"
+
+func selection_can_reverse() -> bool:
+	for u: RTSUnit in selection.units:
+		if is_instance_valid(u) and u.is_alive() and can_reverse(u):
+			return true
+	return false
+
+## F weapon swap for the whole selection. Returns how many units changed slot.
+func toggle_weapons() -> int:
+	var n: int = 0
+	for u: RTSUnit in selection.units:
+		if is_instance_valid(u) and u.is_alive() and SMArms.toggle(u) != "":
+			u.set_meta("burst_t", 0.0)
+			n += 1
+	if n > 0:
+		var lead: RTSUnit = _first_player()
+		if lead != null:
+			group_note = "%s: %s" % [SMArms.slot_of(lead).capitalize(), str(lead.get_meta("weapon_name", ""))]
+			group_note_t = 1.6
+	return n
+
+## Sets one weapon slot on every selected unit that has it.
+func use_weapon(slot: String) -> int:
+	var n: int = 0
+	for u: RTSUnit in selection.units:
+		if is_instance_valid(u) and u.is_alive() and SMArms.armed(u) and SMArms.slot_of(u) != slot and SMArms.equip(u, slot):
+			u.set_meta("burst_t", 0.0)
+			n += 1
+	return n
+
+func _placing() -> bool:
+	return side_link != null and side_link.placement.active
+
+## Picks a finished player building under `ground`. Returns its id or &"".
+func pick_building(ground: Vector3) -> StringName:
+	selected_buildings.clear()
+	if side_link == null:
+		_show_rallies()
+		return &""
+	var id: StringName = side_link.building_at(ground)
+	if id != &"":
+		selected_buildings.append(id)
+		group_note = side_link.building_label(id)
+		group_note_t = 1.2
+		_cue("select")
+	_show_rallies()
+	return id
+
+func clear_buildings() -> void:
+	if selected_buildings.is_empty():
+		return
+	selected_buildings.clear()
+	_show_rallies()
+
+## Pins the rally of every selected production building at `at`. Returns how many moved.
+func pin_rally(at: Vector3) -> int:
+	if side_link == null or at == Vector3.INF:
+		return 0
+	var n: int = 0
+	for id: StringName in selected_buildings:
+		if side_link.set_rally_for(id, at):
+			n += 1
+	if n > 0:
+		_mark(at, "move")
+		group_note = "Rally point set"
+		group_note_t = 1.4
+		_cue("move")
+	_show_rallies()
+	return n
+
+func _show_rallies() -> void:
+	var rows: Array[Dictionary] = []
+	if side_link != null:
+		for id: StringName in selected_buildings:
+			if side_link.is_producer(id) and side_link.rally_of.has(id):
+				rows.append({"id": id, "from": side_link.exit_point(id), "at": side_link.rally_of[id]})
+	rallies_shown.emit(host, rows)
 
 ## Move toward `at` and shoot anything that enters range along the way.
 func attack_move_at(at: Vector3) -> int:
@@ -593,6 +780,23 @@ func enemy_anchor() -> Vector3:
 func place_beacon(at: Vector3) -> void:
 	beacon_at = at
 	beacon_moved.emit(host, at)
+
+## Rings a spot on the minimap for a few seconds and makes it the Space jump target. The camera stays put.
+func ping(at: Vector3, color: Color = Color(0.98, 0.82, 0.28)) -> void:
+	if at == Vector3.INF:
+		return
+	pings.append({"at": at, "color": color, "left": PING_TIME})
+	if pings.size() > 8:
+		pings.remove_at(0)
+	set_meta("alert_at", at)
+
+func age_pings(delta: float) -> void:
+	for i: int in range(pings.size() - 1, -1, -1):
+		var left: float = float(pings[i]["left"]) - delta
+		if left <= 0.0:
+			pings.remove_at(i)
+		else:
+			pings[i]["left"] = left
 
 func place_rally(at: Vector3) -> void:
 	rally_moved.emit(host, at)
@@ -684,6 +888,7 @@ func cast_f(aim: Vector3) -> String:
 			elif guidance == "hop":
 				u.set_meta("hop_on", on)
 			apply_named_f(u)
+			SMArms.equip(u, SMArms.SECONDARY if on else SMArms.PRIMARY)
 			toggled += 1
 		elif kind == "smart_cast" and float(u.get_meta("f_ready", 0.0)) <= 0.0 and flat < smart_d:
 			smart_d = flat
@@ -702,6 +907,7 @@ func cast_f(aim: Vector3) -> String:
 		var strike: RTSUnit = nearest_enemy(aim, 240.0)
 		if strike != null:
 			strike.take_damage(smart.attack_damage * smart.damage_mult)
+		_burst(smart)
 		fired = "smart" if fired == "" else fired + "+smart"
 	if beam != null:
 		beam.set_meta("channeling", true)
@@ -712,6 +918,11 @@ func cast_f(aim: Vector3) -> String:
 	if fired != "":
 		announce(_first_player(), "ability")
 	return fired
+
+## A cast ability fires on the secondary weapon until the F cooldown runs out.
+func _burst(u: RTSUnit) -> void:
+	if SMArms.armed(u) and SMArms.equip(u, SMArms.SECONDARY):
+		u.set_meta("burst_t", F_COOLDOWN)
 
 func apply_named_f(u: RTSUnit) -> bool:
 	if not is_instance_valid(u):
@@ -939,6 +1150,12 @@ func _park_hides() -> void:
 
 func _tick_ability(u: RTSUnit, delta: float) -> void:
 	u.set_meta("f_ready", maxf(0.0, float(u.get_meta("f_ready", 0.0)) - delta))
+	var burst: float = float(u.get_meta("burst_t", 0.0))
+	if burst > 0.0:
+		burst -= delta
+		u.set_meta("burst_t", maxf(burst, 0.0))
+		if burst <= 0.0:
+			SMArms.equip(u, SMArms.PRIMARY)
 	var status: String = str(u.get_meta("status", "none"))
 	if status != "none":
 		var left: float = float(u.get_meta("status_t", 0.0)) - delta
@@ -1000,6 +1217,10 @@ func nearest_enemy(from: Vector3, reach: float) -> RTSUnit:
 func handle_button(mb: InputEventMouseButton) -> bool:
 	if box == null or cam == null:
 		return false
+	if _placing():
+		return _place_button(mb)
+	if mb.button_index == MOUSE_BUTTON_LEFT and mb.alt_pressed:
+		return true
 	if mb.button_index == MOUSE_BUTTON_LEFT:
 		if _touch_blocks_select(mb.pressed):
 			if not mb.pressed:
@@ -1013,12 +1234,50 @@ func handle_button(mb: InputEventMouseButton) -> bool:
 			var toggle: bool = mb.ctrl_pressed and not add
 			if box.is_box():
 				select_drag(box.rect(), project_fn, add)
+				clear_buildings()
 			else:
-				select_click(mb.position, project_fn, add, toggle)
+				var picked: RTSUnit = select_click(mb.position, project_fn, add, toggle)
+				if picked == null and selection.count() == 0 and not add:
+					pick_building(cam.ground_at(mb.position))
+				else:
+					clear_buildings()
 			box.end()
 		return true
 	if mb.button_index == MOUSE_BUTTON_RIGHT and mb.pressed:
-		command_at(cam.ground_at(mb.position), mb.position, Callable(self, "project_point"), mb.shift_pressed)
+		var ground: Vector3 = cam.ground_at(mb.position)
+		if reverse_armed:
+			reverse_armed = false
+			if reverse_move_at(ground) > 0:
+				return true
+		if attack_armed:
+			attack_armed = false
+			if attack_move_at(ground) > 0:
+				return true
+		if selection.count() == 0 and not selected_buildings.is_empty():
+			pin_rally(ground)
+			return true
+		command_at(ground, mb.position, Callable(self, "project_point"), mb.shift_pressed)
+		return true
+	return false
+
+## While placing: left press aims, drag turns the bay, release places; right click cancels; the wheel turns.
+func _place_button(mb: InputEventMouseButton) -> bool:
+	var plan: SMPlacement = side_link.placement
+	var ground: Vector3 = cam.ground_at(mb.position)
+	if mb.button_index == MOUSE_BUTTON_LEFT:
+		if mb.pressed:
+			plan.press(ground)
+		else:
+			plan.release(ground)
+		return true
+	if mb.button_index == MOUSE_BUTTON_RIGHT and mb.pressed:
+		plan.cancel()
+		return true
+	if mb.pressed and mb.button_index == MOUSE_BUTTON_WHEEL_UP:
+		plan.rotate(1)
+		return true
+	if mb.pressed and mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+		plan.rotate(-1)
 		return true
 	return false
 
@@ -1040,11 +1299,18 @@ func _touch_blocks_select(pressed: bool) -> bool:
 
 func handle_motion(motion: InputEventMouseMotion) -> void:
 	hover_at = motion.position
+	if _placing() and cam != null:
+		side_link.placement.hover(cam.ground_at(motion.position))
+		return
 	if box != null and box.active:
 		box.update_drag(motion.position)
 
 func tick(delta: float) -> void:
 	_fade_marks(delta)
+	age_pings(delta)
+	if side_link != null:
+		side_link.bays.field = self
+		side_link.bays.tick(delta)
 	if group_note_t > 0.0:
 		group_note_t = maxf(0.0, group_note_t - delta)
 	var alive: Array[RTSUnit] = []
@@ -1067,8 +1333,19 @@ func tick(delta: float) -> void:
 		_press_hunt(u)
 		_return_fire(u)
 		_press_bridge(u, delta)
+		_hold_ground(u)
+		_auto_weapon(u)
+		_show_weapon(u)
 		var before: Vector3 = u.global_position
+		var backing: bool = bool(u.get_meta("reverse", false)) and not u.path.is_empty()
+		if backing:
+			u.speed_scale *= REVERSE_SPEED
 		Weather.step(u, delta)
+		if backing:
+			u.speed_scale /= REVERSE_SPEED
+			_face_back(u, before)
+		elif bool(u.get_meta("reverse", false)):
+			u.set_meta("reverse", false)
 		_crush_under(u, before)
 		_keep_domain(u, before)
 		unit_posed.emit(u, delta)
@@ -1088,6 +1365,36 @@ func tick(delta: float) -> void:
 	_park_hides()
 	_paint_names(alive, hover_unit)
 	_paint_path()
+
+## Reversing units face away from where they are heading.
+func _face_back(u: RTSUnit, before: Vector3) -> void:
+	var d: Vector3 = u.global_position - before
+	if Vector2(d.x, d.z).length_squared() > 0.000001:
+		u.rotation.y = atan2(d.x, d.z)
+
+## Hold Ground drops a target that left weapon range instead of chasing it.
+func _hold_ground(u: RTSUnit) -> void:
+	if str(u.get_meta("stance", "aggressive")) != "hold_ground" or u.attack_target == null:
+		return
+	if not is_instance_valid(u.attack_target):
+		return
+	var flat: float = Vector2(u.global_position.x, u.global_position.z).distance_to(Vector2(u.attack_target.global_position.x, u.attack_target.global_position.z))
+	if flat > u.attack_range:
+		u.attack_target = null
+		u.path = PackedVector3Array()
+
+## Switches to the slot that can hit the current target (air, naval or ground).
+func _show_weapon(u: RTSUnit) -> void:
+	var slot: String = str(u.get_meta("weapon_slot", ""))
+	if slot == "" or str(u.get_meta("slot_shown", "")) == slot:
+		return
+	u.set_meta("slot_shown", slot)
+	weapon_shown.emit(u, slot, Color.html(str(u.get_meta("muzzle_tint", "#FFD15A"))))
+
+func _auto_weapon(u: RTSUnit) -> void:
+	if not SMArms.armed(u) or u.attack_target == null or not is_instance_valid(u.attack_target):
+		return
+	SMArms.auto_pick(u, category_of(u.attack_target.unit_type))
 
 func _drop_wreck(at: Vector3) -> void:
 	if host == null:
@@ -1239,7 +1546,7 @@ func _paint_vitals(u: RTSUnit, delta: float) -> void:
 	_rise_pop(u, delta)
 
 func _return_fire(u: RTSUnit) -> void:
-	if u.team != PLAYER or u.attack_damage <= 0.0 or bool(u.get_meta("garrisoned", false)):
+	if u.team != PLAYER or u.attack_damage <= 0.0 or bool(u.get_meta("garrisoned", false)) or bool(u.get_meta("rolling", false)):
 		return
 	if str(u.get_meta("stance", "aggressive")) == "hold":
 		return
@@ -1255,7 +1562,7 @@ func _press_hunt(u: RTSUnit) -> void:
 	if not bool(u.get_meta("hunt", false)) or bool(u.get_meta("frozen", false)) or bool(u.get_meta("garrisoned", false)):
 		return
 	var stance: String = str(u.get_meta("stance", "aggressive"))
-	if stance == "hold" or stance == "guard":
+	if stance == "hold" or stance == "guard" or stance == "hold_ground":
 		return
 	if u.attack_target != null and is_instance_valid(u.attack_target) and u.attack_target.is_alive():
 		return
