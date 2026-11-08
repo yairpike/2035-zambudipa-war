@@ -26,6 +26,9 @@ func _ready() -> void:
 		mission_id = "tachileik"
 	briefing_text = SMCampaign.briefing_of(mission_id)
 	grid = SMDomainGrid.new(36, 24, 4.0, Vector3(-72.0, 0.0, -48.0))
+	var dress: SMMapPlan = SMMapPlan.dressing(mission_id)
+	if dress != null:
+		dress.hold_lots(grid)
 	_world()
 	_ui()
 	var faction: String = SMCampaign.player_faction(mission_id)
@@ -155,7 +158,7 @@ func _still(layer: CanvasLayer) -> void:
 func _arm_units() -> void:
 	var cam: RTSCamera = get_node("Camera") as RTSCamera
 	field.bind_faction(self, cam, side.faction_id)
-	field.use_open(36, 24, 2.0, Vector3(-36.0, 0.0, -24.0))
+	field.use_domain(grid)
 	field.attach_box(ui_layer)
 	var kinds: Array[StringName] = SMCampaign.company_of(side.faction_id)
 	for i: int in kinds.size():

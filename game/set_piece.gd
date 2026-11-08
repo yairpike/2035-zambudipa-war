@@ -856,6 +856,19 @@ func _mines() -> void:
 		line.add_child(rock)
 	_say(_line("mines"), "", "mines")
 
+## {"cell", "yaw", "at"} for a structure placed near `at` on a dressed mission map, or {} with no dressing.
+static func seat_of(host: Node3D, id: String, at: Vector3) -> Dictionary:
+	var grid: SMDomainGrid = host.get("grid") as SMDomainGrid if host != null else null
+	var dress: SMMapPlan = SMMapPlan.dressing(id)
+	if grid == null or dress == null:
+		return {}
+	var seat: Dictionary = dress.frontage_near(grid.cell_at(at))
+	if seat.is_empty():
+		return {}
+	seat["at"] = grid.cell_center(seat["cell"] as Vector2i)
+	return seat
+
+## Wharf and radar are built structures: they take the street-front cell nearest `at` and face that street.
 func _marker(node_name: String, at: Vector3, size: Vector3, color: Color, glow: bool) -> void:
 	var prop: MeshInstance3D = MeshInstance3D.new()
 	prop.name = node_name
@@ -863,6 +876,11 @@ func _marker(node_name: String, at: Vector3, size: Vector3, color: Color, glow: 
 	box.size = size
 	prop.mesh = box
 	prop.position = at
+	if node_name == "SetRadar" or node_name == "SetWharf":
+		var seat: Dictionary = seat_of(_host, mission_id, at)
+		if not seat.is_empty():
+			prop.position = Vector3((seat["at"] as Vector3).x, at.y, (seat["at"] as Vector3).z)
+			prop.rotation_degrees.y = SMMapPlan.turn_for("", float(seat["yaw"]))
 	var mat: StandardMaterial3D = StandardMaterial3D.new()
 	mat.albedo_color = color
 	if glow:

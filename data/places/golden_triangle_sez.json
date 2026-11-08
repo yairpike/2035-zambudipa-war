@@ -1,0 +1,35 @@
+{
+ "place": "Golden Triangle Special Economic Zone, Ton Pheung",
+ "maps": [
+  "sop_ruak"
+ ],
+ "bbox_swne": [
+  20.352,
+  100.075,
+  20.364,
+  100.087
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 31,
+  "grid_share": 0.2,
+  "street_m": 17329,
+  "spacing_across_u_m": 82.9,
+  "spacing_across_v_m": 86.9,
+  "streets_along_u": 22,
+  "streets_along_v": 21,
+  "main_streets": [
+   {
+    "name": "ຖະໜົນແຄມຂອງ 滨河路",
+    "m": 2678,
+    "runs": "north-south"
+   },
+   {
+    "name": "ถนนเชียงแสน-แม่สาย",
+    "m": 1624,
+    "runs": "diagonal"
+   }
+  ]
+ }
+}

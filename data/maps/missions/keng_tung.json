@@ -1,19 +1,33 @@
 {
  "place": "kengtung",
  "note": "Kengtung: market grid by Naung Tung lake, Shan houses and Wat Jong Kham.",
+ "open": [
+  [
+   5,
+   2,
+   18,
+   18
+  ],
+  [
+   13,
+   7,
+   12,
+   10
+  ]
+ ],
  "towns": [
   {
    "id": "kengtung",
    "place": "kengtung",
    "rect": [
-    28,
+    0,
     1,
-    8,
-    21
+    36,
+    22
    ],
    "axis": "x",
    "block": [
-    6,
+    4,
     4
    ],
    "homes": [
@@ -28,33 +42,11 @@
    "civic": [
     {
      "block": [
-      0,
+      6,
       1
      ],
      "id": "lanna_wat"
     }
-   ]
-  },
-  {
-   "id": "kengtung_row",
-   "place": "kengtung",
-   "rect": [
-    0,
-    19,
-    22,
-    4
-   ],
-   "axis": "x",
-   "block": [
-    6,
-    2
-   ],
-   "homes": [
-    "neon_shophouse"
-   ],
-   "shops": "neon_shophouse",
-   "high": [
-    0
    ]
   }
  ],
@@ -63,10 +55,52 @@
    "id": "tea_rows",
    "tree": "banana_clump",
    "rect": [
-    0,
     1,
+    2,
     4,
-    17
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "tea_rows",
+   "tree": "banana_clump",
+   "rect": [
+    1,
+    7,
+    4,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "tea_rows",
+   "tree": "banana_clump",
+   "rect": [
+    1,
+    12,
+    4,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "tea_rows",
+   "tree": "banana_clump",
+   "rect": [
+    1,
+    17,
+    4,
+    4
    ],
    "pitch": [
     1,

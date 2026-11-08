@@ -1,19 +1,33 @@
 {
  "place": "bangkok_yaowarat",
  "note": "Bangkok's Yaowarat: Sino-Portuguese shophouse rows on Yaowarat and Charoen Krung, Talat Noi market.",
+ "open": [
+  [
+   5,
+   2,
+   18,
+   18
+  ],
+  [
+   13,
+   7,
+   12,
+   10
+  ]
+ ],
  "towns": [
   {
    "id": "yaowarat",
    "place": "bangkok_yaowarat",
    "rect": [
-    28,
+    0,
     1,
-    8,
-    21
+    36,
+    22
    ],
    "axis": "x",
    "block": [
-    6,
+    4,
     4
    ],
    "homes": [
@@ -28,33 +42,11 @@
    "civic": [
     {
      "block": [
-      0,
-      2
+      6,
+      1
      ],
      "id": "wet_market"
     }
-   ]
-  },
-  {
-   "id": "yaowarat_row",
-   "place": "bangkok_yaowarat",
-   "rect": [
-    0,
-    19,
-    22,
-    4
-   ],
-   "axis": "x",
-   "block": [
-    6,
-    2
-   ],
-   "homes": [
-    "peranakan_shophouse"
-   ],
-   "shops": "peranakan_shophouse",
-   "high": [
-    0
    ]
   }
  ]

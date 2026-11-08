@@ -1,20 +1,34 @@
 {
  "place": "mandalay",
  "note": "Mandalay's square grid south of the moat: deep square blocks, numbered streets, a teak monastery.",
+ "open": [
+  [
+   5,
+   2,
+   18,
+   18
+  ],
+  [
+   13,
+   7,
+   12,
+   10
+  ]
+ ],
  "towns": [
   {
    "id": "mandalay",
    "place": "mandalay",
    "rect": [
-    28,
+    0,
     1,
-    8,
-    21
+    36,
+    22
    ],
    "axis": "x",
    "block": [
-    6,
-    6
+    4,
+    4
    ],
    "homes": [
     "border_guesthouse",
@@ -28,33 +42,11 @@
    "civic": [
     {
      "block": [
-      0,
+      6,
       1
      ],
      "id": "teak_kyaung"
     }
-   ]
-  },
-  {
-   "id": "mandalay_row",
-   "place": "mandalay",
-   "rect": [
-    0,
-    19,
-    22,
-    4
-   ],
-   "axis": "x",
-   "block": [
-    6,
-    2
-   ],
-   "homes": [
-    "neon_shophouse"
-   ],
-   "shops": "neon_shophouse",
-   "high": [
-    0
    ]
   }
  ]

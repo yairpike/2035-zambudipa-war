@@ -21,8 +21,6 @@ const ROCK: Color = Color(0.46, 0.44, 0.4)
 const WOOD: Color = Color(0.42, 0.3, 0.18)
 const LEAF: Color = Color(0.18, 0.4, 0.16)
 const PADDY: Color = Color(0.42, 0.58, 0.28)
-## Tripo scenery puts its street face on -Z, so a house facing yaw turns half round from its authored pose.
-const FRONT_TURN: float = 180.0
 
 static var _land_ink: StandardMaterial3D
 static var _water_ink: ShaderMaterial
@@ -54,12 +52,9 @@ static func dress(host: Node3D, grid: SMDomainGrid, profile: String, plan: SMMap
 	var paddy: SurfaceTool = _begin(_ground("paddy", false))
 	var trees: Array[Transform3D] = []
 	var palms: Array[Transform3D] = []
-	var houses: Array[Transform3D] = []
-	var stilts: Array[Transform3D] = []
 	var campaign: bool = profile == "kokang" or profile == "mission"
 	var tree_cap: int = 28 if campaign else (16 if grid.cols < 24 else (160 if plan != null else 64))
 	var palm_cap: int = 16 if campaign else (10 if grid.cols < 24 else (60 if plan != null else 36))
-	var house_cap: int = 8 if campaign else (6 if grid.cols < 24 else 14)
 	var land_n: int = 0
 	var mud_n: int = 0
 	var sand_n: int = 0
@@ -124,12 +119,8 @@ static func dress(host: Node3D, grid: SMDomainGrid, profile: String, plan: SMMap
 			var roll: int = _hash(x, y)
 			if bank and roll % 7 == 0:
 				palms.append(_xf(grid, cell, high, roll))
-			elif not bank and roll % 11 == 0:
+			elif not bank and roll % (5 if _dressing != null else 11) == 0:
 				trees.append(_xf(grid, cell, high, roll))
-			if bank and roll % 17 == 3:
-				stilts.append(_square(grid, cell, high, _to_water(grid, cell)))
-			elif not bank and not track and roll % 37 == 4 and (_dressing == null or _dressing.lots.is_empty()):
-				houses.append(_square(grid, cell, high, 0.0 if posmod(cell.y, 8) < 3 else 180.0))
 			var rice: bool = profile == "mekong" and roll % 3 == 0 or roll % 23 == 1
 			if rice and not track and not bank and paddy_n < 48 and not _bridge_cell(cell):
 				var rice_shade: float = _vary(cell)
@@ -151,16 +142,13 @@ static func dress(host: Node3D, grid: SMDomainGrid, profile: String, plan: SMMap
 	_commit(host, "TerrainRoadBlend", road_fade, road_fade_n > 0)
 	_multi(host, "JungleTrees", _prop("tree", profile), _spread(trees, tree_cap))
 	_multi(host, "Palms", _prop("palm", profile), _spread(palms, palm_cap))
-	_multi(host, "Houses", _prop("house", profile), _spread(houses, house_cap))
-	_multi(host, "Stilts", _prop("stilt", profile), _spread(stilts, 10))
 	_settle(host, grid, _plan if _plan != null else _dressing)
 	_tag_prop(host, "JungleTrees", Env.tree_id(profile))
 	_tag_prop(host, "Palms", Env.palm_id(profile))
-	_tag_prop(host, "Houses", Env.house_id(profile))
-	_tag_prop(host, "Stilts", "mekong_stilt_house" if profile == "mekong" or profile == "atolls" else "shan_stilt_house")
 	host.set_meta("env_profile", profile)
 	host.set_meta("env_grid", grid)
 	host.set_meta("map_plan", "" if plan == null else plan.id)
+	host.set_meta("map_dressing", "" if dressing == null else dressing.id)
 	Env.pull_web(host, Env.wanted(profile, plan if plan != null else dressing))
 	_markers(host, profile)
 	_ocean_skirt(host, grid)
@@ -176,9 +164,11 @@ static func _settle(host: Node3D, grid: SMDomainGrid, layout: SMMapPlan) -> void
 		return
 	var built: Dictionary = {}
 	for lot: Dictionary in layout.lots:
+		if str(lot["kind"]) == "landmark":
+			continue
 		var r: Rect2i = lot["rect"] as Rect2i
 		var at: Vector3 = grid.origin + Vector3((float(r.position.x) + float(r.size.x) * 0.5) * grid.cell_size, 0.22, (float(r.position.y) + float(r.size.y) * 0.5) * grid.cell_size)
-		_gather(built, "Town_%s" % lot["id"], Transform3D(Basis(Vector3.UP, deg_to_rad(float(lot["yaw"]) + FRONT_TURN)), at))
+		_gather(built, "Town_%s" % lot["id"], Transform3D(Basis(Vector3.UP, deg_to_rad(SMMapPlan.turn_for(str(lot["id"]), float(lot["yaw"])))), at))
 	for tree: Dictionary in layout.groves:
 		var cell: Vector2i = tree["cell"] as Vector2i
 		if not grid.in_bounds(cell) or grid.domain_at_cell(cell) != SMDomainGrid.Domain.LAND:
@@ -200,20 +190,6 @@ static func _gather(built: Dictionary, key: String, xf: Transform3D) -> void:
 	if not built.has(key):
 		built[key] = []
 	(built[key] as Array).append(xf)
-
-static func _square(grid: SMDomainGrid, cell: Vector2i, high: float, yaw_deg: float) -> Transform3D:
-	var at: Vector3 = grid.cell_center(cell)
-	at.y = high
-	return Transform3D(Basis(Vector3.UP, deg_to_rad(snappedf(yaw_deg, 90.0) + FRONT_TURN)), at)
-
-## Stilt houses face the nearest water, squared to the bank.
-static func _to_water(grid: SMDomainGrid, cell: Vector2i) -> float:
-	var dirs: Array[Vector2i] = [Vector2i(0, 1), Vector2i(1, 0), Vector2i(0, -1), Vector2i(-1, 0)]
-	for i: int in dirs.size():
-		var next: Vector2i = cell + dirs[i]
-		if grid.in_bounds(next) and _wet(grid.domain_at_cell(next)):
-			return float(i) * 90.0
-	return 0.0
 
 ## Planned maps: forest on cliffs, a fringe of trees along cliff feet and the margin. Houses only stand in towns.
 static func _scatter(grid: SMDomainGrid, cell: Vector2i, domain: int, high: float, bank: bool, trees: Array[Transform3D], palms: Array[Transform3D]) -> void:
@@ -843,8 +819,6 @@ static func cull_props(host: Node3D, cam: RTSCamera) -> void:
 		_cull_low = low
 		_cull_named(host, "JungleTrees", focus, low)
 		_cull_named(host, "Palms", focus, low)
-		_cull_named(host, "Houses", focus, low)
-		_cull_named(host, "Stilts", focus, low)
 		for child: Node in host.get_children():
 			var mname: String = String(child.name)
 			if mname.begins_with("Town_") or mname.begins_with("Orchard_"):
@@ -886,7 +860,7 @@ static func fade_occluders(host: Node3D, cam: RTSCamera, flat: bool = false) -> 
 		return
 	var aim: Vector3 = Vector3.ZERO if flat else cam.focus
 	var eye: Vector3 = Vector3(0.0, 10000.0, 0.0) if flat else cam.global_position
-	for node_name: String in ["JungleTrees", "Palms", "Houses", "Stilts"]:
+	for node_name: String in ["JungleTrees", "Palms"]:
 		_fade_multi(host.get_node_or_null(node_name) as MultiMeshInstance3D, eye, aim)
 	for child: Node in host.get_children():
 		var multi: MultiMeshInstance3D = child as MultiMeshInstance3D

@@ -173,7 +173,7 @@ func _world() -> void:
 	sun.rotation_degrees = Vector3(-48, 25, 0)
 	add_child(sun)
 	if map_id == "showcase":
-		Ground.dress(self, grid, "showcase")
+		Ground.dress(self, grid, "showcase", null, Rect2i(), SMMapPlan.dressing("showcase"))
 	elif map_id == "ten_degree_atolls":
 		_atoll_world()
 	elif map_id == "mekong_delta":

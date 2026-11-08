@@ -1,0 +1,55 @@
+{
+ "place": "Batam, Nagoya and Jodoh",
+ "maps": [
+  "phillips_channel"
+ ],
+ "bbox_swne": [
+  1.14,
+  104.004,
+  1.15,
+  104.014
+ ],
+ "source": "OpenStreetMap via Overpass (https://overpass-api.de/api/interpreter)",
+ "license": "Data (c) OpenStreetMap contributors, ODbL 1.0",
+ "stats": {
+  "grid_bearing_deg": 45,
+  "grid_share": 0.3,
+  "street_m": 51564,
+  "spacing_across_u_m": 29.6,
+  "spacing_across_v_m": 23.1,
+  "streets_along_u": 53,
+  "streets_along_v": 68,
+  "main_streets": [
+   {
+    "name": "Jalan Imam Bonjol",
+    "m": 2501,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Jalan Raja Ali Haji",
+    "m": 1832,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Jalan Pembangunan",
+    "m": 1826,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Hypermart Nagoya Hill",
+    "m": 1292,
+    "runs": "diagonal"
+   },
+   {
+    "name": "Jalan Teuku Umar",
+    "m": 1058,
+    "runs": "east-west"
+   },
+   {
+    "name": "Jalan Sultan Abdurrahman",
+    "m": 1000,
+    "runs": "east-west"
+   }
+  ]
+ }
+}
