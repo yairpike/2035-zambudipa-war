@@ -3407,14 +3407,14 @@ msgstr "ဂိမ်းဒေါင်းလုဒ်"
 msgid "First launch downloads game assets automatically."
 msgstr "ပထမအကြိမ် ဖွင့်ချိန်တွင် ဂိမ်းဖိုင်များ ဒေါင်းလုဒ်ဆွဲနေသည်။"
 
-msgid "macOS (Apple Silicon & Intel) — .dmg (79 MB)"
-msgstr "macOS (Apple Silicon & Intel) — .dmg (79 MB)"
+msgid "macOS (Apple Silicon & Intel) — .dmg"
+msgstr "macOS (Apple Silicon & Intel) — .dmg"
 
-msgid "Windows (64-bit) — .exe (46 MB)"
-msgstr "Windows (64-bit) — .exe (46 MB)"
+msgid "Windows (64-bit) — .exe"
+msgstr "Windows (64-bit) — .exe"
 
-msgid "Linux (x86_64) — .AppImage (45 MB)"
-msgstr "Linux (x86_64) — .AppImage (45 MB)"
+msgid "Linux (x86_64) — .AppImage"
+msgstr "Linux (x86_64) — .AppImage"
 
 msgid "UI scale"
 msgstr "မျက်နှာပြင် အရွယ်အစား"
@@ -3445,3 +3445,18 @@ msgstr "2035 - Zambudipa War"
 
 msgid "New to 2035 - Zambudipa War?"
 msgstr "2035 - Zambudipa War ကို​အသစ်​ကစား​သလား?"
+
+msgid "Android (ARM64) — .apk"
+msgstr "Android (ARM64) — .apk"
+
+msgid "iOS Sideload (AltStore / SideStore) — .ipa"
+msgstr "iOS Sideload (AltStore / SideStore) — .ipa"
+
+msgid "%s (%.1f MiB)"
+msgstr "%s (%.1f MiB)"
+
+msgid "DOWNLOAD GAME"
+msgstr "ဂိမ်းဒေါင်းလုဒ်"
+
+msgid "Download complete. Close the game and open it again to load everything."
+msgstr "ဒေါင်းလုဒ် ပြီးပါပြီ။ ဂိမ်းကို ပိတ်ပြီး ပြန်ဖွင့်ပါ။"

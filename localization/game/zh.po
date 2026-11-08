@@ -3407,14 +3407,14 @@ msgstr "下载游戏"
 msgid "First launch downloads game assets automatically."
 msgstr "首次启动时下载游戏资源。"
 
-msgid "macOS (Apple Silicon & Intel) — .dmg (79 MB)"
-msgstr "macOS (Apple Silicon & Intel) — .dmg (79 MB)"
+msgid "macOS (Apple Silicon & Intel) — .dmg"
+msgstr "macOS (Apple Silicon & Intel) — .dmg"
 
-msgid "Windows (64-bit) — .exe (46 MB)"
-msgstr "Windows (64-bit) — .exe (46 MB)"
+msgid "Windows (64-bit) — .exe"
+msgstr "Windows (64-bit) — .exe"
 
-msgid "Linux (x86_64) — .AppImage (45 MB)"
-msgstr "Linux (x86_64) — .AppImage (45 MB)"
+msgid "Linux (x86_64) — .AppImage"
+msgstr "Linux (x86_64) — .AppImage"
 
 msgid "UI scale"
 msgstr "界面大小"
@@ -3445,3 +3445,18 @@ msgstr "2035 - Zambudipa War"
 
 msgid "New to 2035 - Zambudipa War?"
 msgstr "初次接触 2035 - Zambudipa War？"
+
+msgid "Android (ARM64) — .apk"
+msgstr "Android (ARM64) — .apk"
+
+msgid "iOS Sideload (AltStore / SideStore) — .ipa"
+msgstr "iOS Sideload (AltStore / SideStore) — .ipa"
+
+msgid "%s (%.1f MiB)"
+msgstr "%s (%.1f MiB)"
+
+msgid "DOWNLOAD GAME"
+msgstr "下载游戏"
+
+msgid "Download complete. Close the game and open it again to load everything."
+msgstr "下载完成。请关闭游戏后重新打开。"

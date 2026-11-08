@@ -10,6 +10,8 @@
 #   root. A file Pages serves differently must match a blob in SOURCE_REF (default: the
 #   merge-base with origin/cursor/web-playtest) and is fetched from there instead.
 # --full: the same three with -Offline in the name, every sidecar inside, nothing to download.
+# --mobile: only <dest>/asset_pack.json, listing every sidecar, for the Android and iOS .pck
+#   (tools/pack_mobile.sh), which have no folder beside the executable to ship files in.
 #
 # Needs git, makensis (NSIS), mkfs.hfsplus (hfsprogs), hfsplus (planetbeing/libdmg-hfsplus),
 # dmg (fanquake/libdmg-hfsplus), appimagetool, and rcodesign.
@@ -19,9 +21,11 @@ ASSETS="$(cd "${1:?pack_installers: need the served asset root}" && pwd)"
 DEST="${2:?pack_installers: need the output directory}"
 REF="${3:?pack_installers: need the gh-pages commit that serves the asset root}"
 FULL=0
-if [ "${4:-}" = "--full" ]; then
-  FULL=1
-fi
+MOBILE=0
+case "${4:-}" in
+  --full) FULL=1 ;;
+  --mobile) MOBILE=1 ;;
+esac
 git -C "$ROOT" cat-file -e "$REF^{commit}" 2>/dev/null || git -C "$ROOT" fetch -q origin gh-pages
 REF="$(git -C "$ROOT" rev-parse "$REF^{commit}")"
 PAGES_URL="${PAGES_URL:-https://yairpike.github.io/asean-2031/}"
@@ -40,7 +44,11 @@ if [ "$FULL" = 1 ]; then
   SUFFIX="-Offline"
 fi
 
-for tool in git makensis mkfs.hfsplus hfsplus dmg appimagetool "$RCODESIGN"; do
+tools="git makensis mkfs.hfsplus hfsplus dmg appimagetool $RCODESIGN"
+if [ "$MOBILE" = 1 ]; then
+  tools="git"
+fi
+for tool in $tools; do
   if ! command -v "$tool" >/dev/null 2>&1; then
     echo "pack_installers: missing $tool"
     exit 1
@@ -81,6 +89,9 @@ while IFS= read -r rel; do
   kind="$(classify "$rel")"
   if [ "$kind" = skip ]; then
     continue
+  fi
+  if [ "$MOBILE" = 1 ]; then
+    kind=fetch
   fi
   if [ "$kind" = fetch ]; then
     echo "$rel" >> "$STAGE/fetch.txt"
@@ -127,6 +138,10 @@ if [ "$FULL" = 0 ]; then
   ' "$STAGE/direct.tsv" "$STAGE/local.tsv" > "$side/asset_pack.json"
   echo "pack_installers: $(wc -l < "$STAGE/direct.tsv") files come from $SOURCE_REF instead of Pages"
   echo "pack_installers: first launch fetches $(wc -l < "$STAGE/local.tsv") files, $(( $(awk -F'\t' '{s+=$3} END {print s}' "$STAGE/local.tsv") / 1048576 )) MiB"
+fi
+if [ "$MOBILE" = 1 ]; then
+  cp "$side/asset_pack.json" "$DEST/asset_pack.json"
+  exit 0
 fi
 
 # macOS: signed universal app plus an /Applications link in a zlib-compressed (UDZO) image.

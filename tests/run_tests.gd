@@ -7887,6 +7887,17 @@ func test_asset_pack() -> void:
 	var dl_script: GDScript = preload("res://game/downloads_panel.gd")
 	var sw_text: String = FileAccess.get_file_as_string("res://web/sw.js")
 	check(dl_panel != null and dl_panel.visible and mac_btn != null and win_btn != null and lin_btn != null and str(dl_script.last_requested).ends_with("downloads/ASEAN-2031-macOS.dmg") and sw_text.contains("/downloads/"), "the main menu opens the desktop downloads panel for macOS, Windows, and Linux and sw.js skips caching installers")
+	var apk_btn: Button = boot.find_child("DownloadAndroid", true, false) as Button
+	var ipa_btn: Button = boot.find_child("DownloadIOS", true, false) as Button
+	if ipa_btn != null:
+		ipa_btn.pressed.emit()
+	var ipa_url: String = str(dl_script.last_requested)
+	if apk_btn != null:
+		apk_btn.pressed.emit()
+	var sized: bool = true
+	for item: Dictionary in dl_script.ITEMS:
+		sized = sized and float(item["mib"]) > 0.0 and str(dl_script.label_for(item)).ends_with(" MiB)")
+	check(apk_btn != null and ipa_btn != null and ipa_url.ends_with("downloads/ASEAN-2031-iOS.ipa") and str(dl_script.last_requested).ends_with("downloads/ASEAN-2031-Android.apk") and sized and str(pack.get_script_constant_map()["MOBILE_FILE"]).begins_with("res://"), "the downloads panel also lists the Android .apk and iOS .ipa, every row shows its size, and mobile builds read their asset list from the .pck")
 	boot.free()
 	await process_frame
 	for name: String in ["hello.txt", "later.txt", "bad.json"]:

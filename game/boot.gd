@@ -159,7 +159,7 @@ func _ready() -> void:
 	tab_buttons.append(multi)
 	var dl: Button = Plate.new() as Button
 	dl.name = "DownloadsButton"
-	dl.text = "DOWNLOAD DESKTOP"
+	dl.text = "DOWNLOAD GAME"
 	dl.theme_type_variation = "HeaderButton"
 	dl.set_meta("nav", true)
 	dl.add_theme_font_size_override("font_size", 32)

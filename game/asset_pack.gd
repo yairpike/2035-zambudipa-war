@@ -3,8 +3,11 @@ extends RefCounted
 ## asset_pack.json beside the executable (Contents/Resources on macOS). It lists each file
 ## with its size and git blob SHA-1 and the URLs that serve it. First launch fetches the list
 ## into user://assets, and every sidecar loader searches that folder after the bundled ones.
+## Android and iOS have no folder beside the executable, so their .pck carries MOBILE_FILE,
+## which lists every sidecar.
 
 const FILE: String = "asset_pack.json"
+const MOBILE_FILE: String = "res://build/mobile/asset_pack.json"
 const DIR: String = "user://assets"
 const DONE: String = "user://assets/.complete"
 const CHUNK: int = 1 << 20
@@ -19,6 +22,8 @@ static func root() -> String:
 static func manifest_path() -> String:
 	if OS.has_feature("web"):
 		return ""
+	if OS.has_feature("mobile"):
+		return MOBILE_FILE if FileAccess.file_exists(MOBILE_FILE) else ""
 	var base: String = OS.get_executable_path().get_base_dir()
 	for path: String in [base.path_join(FILE), base.get_base_dir().path_join("Resources").path_join(FILE)]:
 		if FileAccess.file_exists(path):

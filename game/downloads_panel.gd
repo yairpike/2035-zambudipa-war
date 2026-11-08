@@ -1,29 +1,53 @@
 extends Control
-## Desktop installer downloads modal on the main menu: one-click .dmg, .exe, and .AppImage links. Esc or Back closes it.
+## Installer downloads modal on the main menu: one-click .dmg, .exe, .AppImage, .apk, and .ipa links. Esc or Back closes it.
 
 const Glass = preload("res://game/glass.gd")
 const PUBLIC_BASE: String = "https://yairpike.github.io/asean-2031/"
 
+## mib is the size of the file in downloads/, which the installers themselves contain,
+## so it is set after a build and checked against the rebuilt files.
 const ITEMS: Array[Dictionary] = [
 	{
 		"id": "macos",
 		"node": "DownloadMacOS",
-		"label": "macOS (Apple Silicon & Intel) — .dmg (79 MB)",
+		"label": "macOS (Apple Silicon & Intel) — .dmg",
 		"file": "ASEAN-2031-macOS.dmg",
+		"mib": 80.0,
 	},
 	{
 		"id": "windows",
 		"node": "DownloadWindows",
-		"label": "Windows (64-bit) — .exe (46 MB)",
+		"label": "Windows (64-bit) — .exe",
 		"file": "ASEAN-2031-Windows.exe",
+		"mib": 46.7,
 	},
 	{
 		"id": "linux",
 		"node": "DownloadLinux",
-		"label": "Linux (x86_64) — .AppImage (45 MB)",
+		"label": "Linux (x86_64) — .AppImage",
 		"file": "ASEAN-2031-Linux-x86_64.AppImage",
+		"mib": 46.2,
+	},
+	{
+		"id": "android",
+		"node": "DownloadAndroid",
+		"label": "Android (ARM64) — .apk",
+		"file": "ASEAN-2031-Android.apk",
+		"mib": 65.2,
+	},
+	{
+		"id": "ios",
+		"node": "DownloadIOS",
+		"label": "iOS Sideload (AltStore / SideStore) — .ipa",
+		"file": "ASEAN-2031-iOS.ipa",
+		"mib": 39.8,
 	},
 ]
+
+static func label_for(row: Dictionary) -> String:
+	var mib: float = float(row.get("mib", 0.0))
+	var text: String = TranslationServer.translate(str(row["label"]))
+	return text if mib <= 0.0 else "%s (%.1f MiB)" % [text, mib]
 
 static var last_requested: String = ""
 
@@ -82,7 +106,7 @@ func _ready() -> void:
 	add_child(card)
 	var title: Label = Label.new()
 	title.name = "DownloadsTitle"
-	title.text = "DOWNLOAD DESKTOP"
+	title.text = "DOWNLOAD GAME"
 	title.theme_type_variation = "Header"
 	title.add_theme_font_size_override("font_size", 32)
 	title.add_theme_color_override("font_color", Color(1, 1, 1, 0.96))
@@ -96,13 +120,13 @@ func _ready() -> void:
 	card.add_child(note)
 	var list: VBoxContainer = VBoxContainer.new()
 	list.name = "DownloadsList"
-	list.add_theme_constant_override("separation", 12)
+	list.add_theme_constant_override("separation", 10)
 	card.add_child(list)
 	for row: Dictionary in ITEMS:
 		var btn: Button = Button.new()
 		btn.name = str(row["node"])
-		btn.text = str(row["label"])
-		btn.custom_minimum_size = Vector2(280, 52)
+		btn.text = label_for(row)
+		btn.custom_minimum_size = Vector2(280, 48)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.add_theme_font_size_override("font_size", 18)
 		preload("res://game/match_exit.gd")._glass_button(btn)
@@ -143,7 +167,7 @@ func _seat() -> void:
 	if card == null:
 		return
 	var w: float = minf(680.0, view.x - 32.0)
-	var h: float = minf(420.0, view.y - 32.0)
+	var h: float = minf(520.0, view.y - 32.0)
 	card.position = ((view - Vector2(w, h)) * 0.5).floor()
 	card.size = Vector2(w, h)
 	var title: Control = card.get_node_or_null("DownloadsTitle") as Control
@@ -157,7 +181,7 @@ func _seat() -> void:
 	var list: Control = card.get_node_or_null("DownloadsList") as Control
 	if list != null:
 		list.position = Vector2(28, 118)
-		list.size = Vector2(w - 56.0, maxf(180.0, h - 190.0))
+		list.size = Vector2(w - 56.0, maxf(280.0, h - 190.0))
 	var back: Control = card.get_node_or_null("DownloadsBack") as Control
 	if back != null:
 		back.position = Vector2(28, h - 58.0)

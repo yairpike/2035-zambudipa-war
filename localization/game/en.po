@@ -4316,7 +4316,7 @@ msgstr "Play now"
 msgid "Start with placeholder models and no sound. The download continues in the background."
 msgstr "Start with placeholder models and no sound. The download continues in the background."
 
-#: game/boot.gd game/downloads_panel.gd
+#: game/boot.gd
 msgid "DOWNLOAD DESKTOP"
 msgstr "DOWNLOAD DESKTOP"
 
@@ -4325,16 +4325,16 @@ msgid "First launch downloads game assets automatically."
 msgstr "First launch downloads game assets automatically."
 
 #: game/downloads_panel.gd
-msgid "macOS (Apple Silicon & Intel) — .dmg (79 MB)"
-msgstr "macOS (Apple Silicon & Intel) — .dmg (79 MB)"
+msgid "macOS (Apple Silicon & Intel) — .dmg"
+msgstr "macOS (Apple Silicon & Intel) — .dmg"
 
 #: game/downloads_panel.gd
-msgid "Windows (64-bit) — .exe (46 MB)"
-msgstr "Windows (64-bit) — .exe (46 MB)"
+msgid "Windows (64-bit) — .exe"
+msgstr "Windows (64-bit) — .exe"
 
 #: game/downloads_panel.gd
-msgid "Linux (x86_64) — .AppImage (45 MB)"
-msgstr "Linux (x86_64) — .AppImage (45 MB)"
+msgid "Linux (x86_64) — .AppImage"
+msgstr "Linux (x86_64) — .AppImage"
 
 #: game/settings_panel.gd
 msgid "UI scale"
@@ -4375,3 +4375,23 @@ msgstr "2035 - Zambudipa War"
 #: game/boot.gd
 msgid "New to 2035 - Zambudipa War?"
 msgstr "New to 2035 - Zambudipa War?"
+
+#: game/downloads_panel.gd
+msgid "Android (ARM64) — .apk"
+msgstr "Android (ARM64) — .apk"
+
+#: game/downloads_panel.gd
+msgid "iOS Sideload (AltStore / SideStore) — .ipa"
+msgstr "iOS Sideload (AltStore / SideStore) — .ipa"
+
+#: game/downloads_panel.gd
+msgid "%s (%.1f MiB)"
+msgstr "%s (%.1f MiB)"
+
+#: game/boot.gd game/downloads_panel.gd
+msgid "DOWNLOAD GAME"
+msgstr "DOWNLOAD GAME"
+
+#: game/asset_download.gd
+msgid "Download complete. Close the game and open it again to load everything."
+msgstr "Download complete. Close the game and open it again to load everything."

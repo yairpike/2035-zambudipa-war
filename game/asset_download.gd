@@ -212,6 +212,9 @@ func _finish() -> void:
 	if not restart or not visible:
 		queue_free()
 		return
+	if OS.has_feature("mobile"):
+		_say("Download complete. Close the game and open it again to load everything.")
+		return
 	_say("Download complete. Restarting…")
 	await get_tree().create_timer(0.8).timeout
 	OS.set_restart_on_exit(true, OS.get_cmdline_args())
