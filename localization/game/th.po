@@ -3373,3 +3373,30 @@ msgstr "พวก​มัน​ทุ่ม​ทุก​อย่าง​ใ
 
 msgid "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
 msgstr "เรือ​สาม​ลำตัว​กำลัง​วน​รอบ​เรือ​ข้ามฟาก เรือ​ยกพล​กำลัง​นำ​กำลัง​เสริม​มา"
+
+msgid "Downloading game assets"
+msgstr "กำลัง​ดาวน์โหลด​ไฟล์​เกม"
+
+msgid "First launch only. The game restarts when the download finishes."
+msgstr "เฉพาะ​การ​เปิด​ครั้ง​แรก เกม​จะ​เริ่ม​ใหม่​เมื่อ​ดาวน์โหลด​เสร็จ"
+
+msgid "%d of %d MB"
+msgstr "%d จาก %d MB"
+
+msgid "%.1f MB/s"
+msgstr "%.1f MB/s"
+
+msgid "Some files could not be downloaded. Check your connection and retry."
+msgstr "ดาวน์โหลด​บาง​ไฟล์​ไม่​สำเร็จ ตรวจสอบ​การ​เชื่อมต่อ​แล้ว​ลอง​ใหม่"
+
+msgid "Download complete. Restarting…"
+msgstr "ดาวน์โหลด​เสร็จ​แล้ว กำลัง​เริ่ม​ใหม่…"
+
+msgid "Retry"
+msgstr "ลอง​ใหม่"
+
+msgid "Play now"
+msgstr "เล่น​เลย"
+
+msgid "Start with placeholder models and no sound. The download continues in the background."
+msgstr "เริ่ม​ด้วย​โมเดล​ชั่วคราว​และ​ไม่มี​เสียง การ​ดาวน์โหลด​จะ​ดำเนิน​ต่อ​เบื้องหลัง"

@@ -2,6 +2,8 @@ extends RefCounted
 ## Swaps a procedural mesh for res://game/models/<id>.glb or .gltf when that file exists.
 ## The procedural mesh stays when the file is missing. See game/models/README.md.
 
+const AssetPack = preload("res://game/asset_pack.gd")
+
 static func apply_unit(body: MeshInstance3D, id: String, primary: Color = Color.WHITE, accent: Color = Color.WHITE) -> bool:
 	if body == null or id == "":
 		return false
@@ -334,6 +336,7 @@ static func _path(key: String) -> String:
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/models"))
 	roots.append(base.path_join("models"))
 	roots.append(base.get_base_dir().path_join("Resources/models"))
+	roots.append(AssetPack.root().path_join("models"))
 	for root: String in roots:
 		var found: String = root.path_join("%s.glb" % id)
 		if FileAccess.file_exists(found):
@@ -354,6 +357,7 @@ static func _rigged_path(id: String) -> String:
 	tries.append(ProjectSettings.globalize_path("res://").path_join("build/web/models/rigged/%s.glb" % id))
 	tries.append(base.path_join("models/rigged/%s.glb" % id))
 	tries.append(base.get_base_dir().path_join("Resources/models/rigged/%s.glb" % id))
+	tries.append(AssetPack.root().path_join("models/rigged/%s.glb" % id))
 	for path: String in tries:
 		if FileAccess.file_exists(path):
 			return path
@@ -531,6 +535,7 @@ static func _index_text() -> String:
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/models/index.txt"))
 	roots.append(base.path_join("models/index.txt"))
 	roots.append(base.get_base_dir().path_join("Resources/models/index.txt"))
+	roots.append(AssetPack.root().path_join("models/index.txt"))
 	for path: String in roots:
 		if FileAccess.file_exists(path):
 			return FileAccess.get_file_as_string(path)

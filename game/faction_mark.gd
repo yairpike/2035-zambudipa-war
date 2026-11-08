@@ -1,6 +1,8 @@
 extends RefCounted
 ## Faction emblem. The imported 64 and 256 marks win. A flat diamond is only a fallback.
 
+const AssetPack = preload("res://game/asset_pack.gd")
+
 static var _cache: Dictionary = {}
 
 static func texture(id: String) -> Texture2D:
@@ -39,6 +41,7 @@ static func _from_file(id: String, limit: int) -> Texture2D:
 	var roots: PackedStringArray = PackedStringArray()
 	roots.append(base.path_join("ui/logos"))
 	roots.append(base.get_base_dir().path_join("Resources/ui/logos"))
+	roots.append(AssetPack.root().path_join("ui/logos"))
 	var alias: String = _alias(id)
 	for root: String in roots:
 		for stem: String in [id, alias]:

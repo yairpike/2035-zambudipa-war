@@ -5,6 +5,7 @@ extends RefCounted
 const Settings = preload("res://game/match_settings.gd")
 const Scale = preload("res://game/model_scale.gd")
 const Models = preload("res://game/model_registry.gd")
+const AssetPack = preload("res://game/asset_pack.gd")
 
 static var _mesh: Dictionary = {}
 static var _scene: Dictionary = {}
@@ -186,6 +187,9 @@ static func _file(id: String) -> String:
 	var bundle_res: String = base.get_base_dir().path_join("Resources/models/env/%s.glb" % id)
 	if FileAccess.file_exists(bundle_res):
 		return bundle_res
+	var fetched: String = AssetPack.root().path_join("models/env/%s.glb" % id)
+	if FileAccess.file_exists(fetched):
+		return fetched
 	var web: String = ProjectSettings.globalize_path("res://build/web/models/env/%s.glb" % id)
 	if FileAccess.file_exists(web):
 		return web

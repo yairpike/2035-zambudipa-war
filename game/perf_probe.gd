@@ -6,6 +6,7 @@ extends Node
 ## `campaign:<mission id>` opens that campaign mission. Prints one `PERF {json}` line; the web page also sets window.__perf.
 
 const Settings = preload("res://game/match_settings.gd")
+const AssetPack = preload("res://game/asset_pack.gd")
 const CROWD_KINDS: Array[StringName] = [&"militia", &"amber_tank", &"ruby_lancer", &"monsoon_tube", &"crimson_sapper", &"slag_hauler"]
 
 var _args: Dictionary = {}
@@ -268,6 +269,7 @@ func _bench_models(limit: int) -> Dictionary:
 		"user://models/tripo",
 		base.path_join("models"),
 		base.get_base_dir().path_join("Resources/models"),
+		AssetPack.root().path_join("models"),
 		ProjectSettings.globalize_path("res://game/models/tripo"),
 	])
 	var files: PackedStringArray = PackedStringArray()

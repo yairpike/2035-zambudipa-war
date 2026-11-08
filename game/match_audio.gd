@@ -63,6 +63,7 @@ static var _manifest_left: int = 0
 static var _take_n: Dictionary = {}
 
 const Settings = preload("res://game/match_settings.gd")
+const AssetPack = preload("res://game/asset_pack.gd")
 
 static func arm(host: Node, mode: String) -> void:
 	if host == null or host.get_node_or_null("MatchAudio") != null:
@@ -1607,6 +1608,7 @@ static func _roots() -> PackedStringArray:
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/audio"))
 	roots.append(base.path_join("audio"))
 	roots.append(base.get_base_dir().path_join("Resources/audio"))
+	roots.append(AssetPack.root().path_join("audio"))
 	return roots
 
 static func _decode(bytes: PackedByteArray) -> AudioStream:

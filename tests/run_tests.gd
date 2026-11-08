@@ -122,6 +122,7 @@ func _run() -> void:
 	await H.section("test_ra3_camera", test_ra3_camera)
 	await H.section("test_ra3_factory", test_ra3_factory)
 	await H.section("test_ra3_weapons", test_ra3_weapons)
+	await H.section("test_asset_pack", test_asset_pack)
 	preload("res://game/render_budget.gd").shutdown(self)
 	quit(H.finish())
 
@@ -7804,3 +7805,56 @@ func test_ra3_weapons() -> void:
 	(scene.find_child("StanceAggressive", true, false) as Button).pressed.emit()
 	check(str(tank2.get_meta("stance", "")) == "aggressive", "Aggressive restores the default stance")
 	await _ra3_done(scene)
+
+func test_asset_pack() -> void:
+	var pack: GDScript = preload("res://game/asset_pack.gd")
+	var download: GDScript = preload("res://game/asset_download.gd")
+	check(str(pack.call("manifest_path")) == "" and not bool(download.call("needed")), "a build without asset_pack.json never opens the download screen")
+	var root: String = str(pack.call("root"))
+	var dir: String = root.path_join("pack_test")
+	DirAccess.make_dir_recursive_absolute(dir)
+	var hello: String = dir.path_join("hello.txt")
+	var out: FileAccess = FileAccess.open(hello, FileAccess.WRITE)
+	out.store_string("hello\n")
+	out.close()
+	var sha: String = str(pack.call("blob_sha1", hello))
+	check(sha == "ce013625030ba8dba906f756967f9e9ca394464a", "file hashes match git blob ids")
+	var row: Dictionary = {"ref": "test", "urls": ["https://example.invalid/"], "files": [["pack_test/hello.txt", 6, sha], ["pack_test/later.txt", 6, sha], ["../escape.txt", 6, sha]]}
+	var waiting: Array = pack.call("pending", row) as Array
+	check(waiting.size() == 1 and str((waiting[0] as Array)[0]) == "pack_test/later.txt", "only missing files with safe paths are queued")
+	var later: String = dir.path_join("later.txt")
+	var part: String = later + ".part"
+	out = FileAccess.open(part, FileAccess.WRITE)
+	out.store_string("HELLO\n")
+	out.close()
+	var refused: bool = not bool(download.call("accept", part, later, waiting[0])) and not FileAccess.file_exists(part) and not FileAccess.file_exists(later)
+	out = FileAccess.open(part, FileAccess.WRITE)
+	out.store_string("hello\n")
+	out.close()
+	var taken: bool = bool(download.call("accept", part, later, waiting[0])) and FileAccess.file_exists(later) and not FileAccess.file_exists(part)
+	check(refused and taken and (pack.call("pending", row) as Array).is_empty(), "a download only takes its name after size and hash match")
+	var done_file: String = str(pack.get_script_constant_map()["DONE"])
+	var had_done: bool = FileAccess.file_exists(done_file)
+	var kept: String = FileAccess.get_file_as_string(done_file) if had_done else ""
+	pack.call("mark_complete", row)
+	var done: bool = bool(pack.call("complete", row))
+	row["files"] = (row["files"] as Array) + [["pack_test/new.txt", 6, sha]]
+	check(done and not bool(pack.call("complete", row)), "a changed asset list reopens the download")
+	if had_done:
+		var back: FileAccess = FileAccess.open(done_file, FileAccess.WRITE)
+		back.store_string(kept)
+		back.close()
+	else:
+		DirAccess.remove_absolute(done_file)
+	check(str(pack.call("url_for", "https://yairpike.github.io/asean-2031/", "ui/menu/a b.webp")) == "https://yairpike.github.io/asean-2031/ui/menu/a%20b.webp", "asset URLs encode each path segment")
+	var bad: String = dir.path_join("bad.json")
+	out = FileAccess.open(bad, FileAccess.WRITE)
+	out.store_string("{\"files\": []}")
+	out.close()
+	check((pack.call("read", bad) as Dictionary).is_empty(), "an asset list without URLs is ignored")
+	var clips: GDScript = preload("res://game/match_audio.gd")
+	var roots: PackedStringArray = clips.call("_roots") as PackedStringArray
+	check(roots.has(root.path_join("audio")), "sidecar loaders also search the downloaded asset folder")
+	for name: String in ["hello.txt", "later.txt", "bad.json"]:
+		DirAccess.remove_absolute(dir.path_join(name))
+	DirAccess.remove_absolute(dir)

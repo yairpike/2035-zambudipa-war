@@ -3,6 +3,8 @@ extends RefCounted
 ## Desktop and headless runs also read res://, build/web/, and tests/fixtures/.
 ## The web build fetches briefings/<id>.webp over HTTP, the same way models are fetched.
 
+const AssetPack = preload("res://game/asset_pack.gd")
+
 static var _cache: Dictionary = {}
 static var _inflight: Dictionary = {}
 static var _waiters: Dictionary = {}
@@ -51,6 +53,7 @@ static func _read(rel: String) -> PackedByteArray:
 		roots.append(ProjectSettings.globalize_path("res://").path_join("build/web"))
 		roots.append(base)
 		roots.append(base.get_base_dir().path_join("Resources"))
+		roots.append(AssetPack.root())
 		for root: String in roots:
 			var path: String = root.path_join(rel)
 			if FileAccess.file_exists(path):

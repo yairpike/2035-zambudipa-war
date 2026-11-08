@@ -3373,3 +3373,30 @@ msgstr "他们正倾尽全力攻打雷达。坚守三十秒。"
 
 msgid "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
 msgstr "三体船正围着渡船打转。登陆艇正运来援军。"
+
+msgid "Downloading game assets"
+msgstr "正在下载游戏资源"
+
+msgid "First launch only. The game restarts when the download finishes."
+msgstr "只在首次启动时下载。下载完成后游戏将自动重启。"
+
+msgid "%d of %d MB"
+msgstr "%d / %d MB"
+
+msgid "%.1f MB/s"
+msgstr "%.1f MB/s"
+
+msgid "Some files could not be downloaded. Check your connection and retry."
+msgstr "有的文件无法下载。请确认网络连接后重新下载。"
+
+msgid "Download complete. Restarting…"
+msgstr "下载完成。正在重启…"
+
+msgid "Retry"
+msgstr "重新下载"
+
+msgid "Play now"
+msgstr "立即开始"
+
+msgid "Start with placeholder models and no sound. The download continues in the background."
+msgstr "使用简易模型开始游戏，没有音效。下载将在后台继续。"

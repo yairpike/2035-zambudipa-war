@@ -3373,3 +3373,30 @@ msgstr "သူတို့​ရေဒါ​ကို​အင်အား​က
 
 msgid "Trimarans are circling the ferry. Landing craft are bringing reinforcements."
 msgstr "သုံး​ကိုယ်​လှေ​များ​ကူးတို့​ကို​ဝိုင်း​ပတ်​နေ​သည်။ ကမ်းတက်​သင်္ဘော​များ​အင်အား​ဖြည့်​တပ်​ခေါ်​လာ​နေ​သည်။"
+
+msgid "Downloading game assets"
+msgstr "ဂိမ်းဖိုင်များ ဒေါင်းလုဒ်ဆွဲနေသည်"
+
+msgid "First launch only. The game restarts when the download finishes."
+msgstr "ပထမအကြိမ် ဖွင့်ချိန်တွင်သာ။ ဒေါင်းလုဒ် ပြီးဆုံးသောအခါ ဂိမ်းကို ပြန်စတင်ပါမည်။"
+
+msgid "%d of %d MB"
+msgstr "%d / %d MB"
+
+msgid "%.1f MB/s"
+msgstr "%.1f MB/s"
+
+msgid "Some files could not be downloaded. Check your connection and retry."
+msgstr "ဖိုင်အချို့ကို ဒေါင်းလုဒ်ဆွဲ၍ မရပါ။ ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်ကြိုးစားပါ။"
+
+msgid "Download complete. Restarting…"
+msgstr "ဒေါင်းလုဒ် ပြီးပါပြီ။ ပြန်စတင်နေသည်…"
+
+msgid "Retry"
+msgstr "ထပ်ကြိုးစားရန်"
+
+msgid "Play now"
+msgstr "ယခုကစားရန်"
+
+msgid "Start with placeholder models and no sound. The download continues in the background."
+msgstr "ယာယီမော်ဒယ်များဖြင့် အသံမပါဘဲ စတင်ပါ။ ဒေါင်းလုဒ်ကို နောက်ကွယ်တွင် ဆက်ဆွဲပါမည်။"

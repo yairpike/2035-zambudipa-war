@@ -6,6 +6,7 @@ const Backdrop = preload("res://game/menu_backdrop.gd")
 const Lan = preload("res://game/lan_link.gd")
 const Marks = preload("res://game/faction_mark.gd")
 const Glass = preload("res://game/glass.gd")
+const Download = preload("res://game/asset_download.gd")
 const VERSION: String = "v0.9.0"
 
 var selected_map: String = ""
@@ -207,6 +208,14 @@ func _ready() -> void:
 	_offer_training()
 	_layout_menu(_view_size())
 	_paint_detail()
+	_fetch_assets()
+
+## Parented to the root so a download left running behind Play now survives scene changes.
+func _fetch_assets() -> void:
+	if DisplayServer.get_name() == "headless" or get_tree().root.has_node("AssetDownload"):
+		return
+	if Download.needed():
+		get_tree().root.add_child.call_deferred(Download.new())
 
 func _lan_panel() -> void:
 	lan_panel = Control.new()

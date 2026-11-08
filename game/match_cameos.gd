@@ -5,6 +5,7 @@ extends RefCounted
 ## Drop the file in and re-export. A missing file leaves the text button.
 
 const Clips = preload("res://game/match_audio.gd")
+const AssetPack = preload("res://game/asset_pack.gd")
 
 static var _cache: Dictionary = {}
 static var _inflight: Dictionary = {}
@@ -56,6 +57,7 @@ static func _read_local(file_name: String) -> PackedByteArray:
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/cameos"))
 	roots.append(base.path_join("cameos"))
 	roots.append(base.get_base_dir().path_join("Resources/cameos"))
+	roots.append(AssetPack.root().path_join("cameos"))
 	for root: String in roots:
 		var path: String = root.path_join(file_name)
 		if FileAccess.file_exists(path):
