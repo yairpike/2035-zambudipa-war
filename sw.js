@@ -55,7 +55,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
   const url = new URL(request.url);
-  if (!sameOrigin(url) || url.pathname.endsWith("/sw.js")) {
+  if (!sameOrigin(url) || url.pathname.endsWith("/sw.js") || url.pathname.includes("/downloads/")) {
     return;
   }
   if (request.headers.get("range")) {
