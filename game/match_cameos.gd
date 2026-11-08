@@ -87,16 +87,17 @@ static func _start_list(node: Node, http: HTTPRequest) -> void:
 	if err != OK:
 		http.queue_free()
 
-static func _got_list(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, node: Node, http: HTTPRequest) -> void:
+static func _got_list(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, node: Variant, http: HTTPRequest) -> void:
 	if is_instance_valid(http):
 		http.queue_free()
-	if result != HTTPRequest.RESULT_SUCCESS or code != 200 or not is_instance_valid(node):
+	var host_node: Node = node as Node if is_instance_valid(node) else null
+	if result != HTTPRequest.RESULT_SUCCESS or code != 200 or host_node == null:
 		return
 	var lines: PackedStringArray = body.get_string_from_utf8().split("\n")
 	for line: String in lines:
 		var file_name: String = line.strip_edges()
 		if file_name.ends_with(".webp") and not file_name.contains("..") and not file_name.begins_with("/"):
-			_prefetch(node, file_name)
+			_prefetch(host_node, file_name)
 
 static func _prefetch(node: Node, file_name: String) -> void:
 	if _cache.has(file_name) or _inflight.has(file_name) or node == null or not is_instance_valid(node):
@@ -121,7 +122,7 @@ static func _start_prefetch(node: Node, http: HTTPRequest, file_name: String) ->
 		_inflight.erase(file_name)
 		http.queue_free()
 
-static func _prefetched(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, node: Node, http: HTTPRequest, file_name: String) -> void:
+static func _prefetched(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, node: Variant, http: HTTPRequest, file_name: String) -> void:
 	_inflight.erase(file_name)
 	if is_instance_valid(http):
 		http.queue_free()
@@ -131,7 +132,8 @@ static func _prefetched(result: int, code: int, _headers: PackedStringArray, bod
 	if portrait == null:
 		return
 	_cache[file_name] = portrait
-	if is_instance_valid(node):
-		var hud: SMHud = node.get_meta("hud") as SMHud
+	var host_node: Node = node as Node if is_instance_valid(node) else null
+	if host_node != null and host_node.has_meta("hud"):
+		var hud: SMHud = host_node.get_meta("hud") as SMHud
 		if hud != null:
 			hud.apply_cameos()

@@ -275,7 +275,7 @@ static func _file(id: String) -> String:
 	return ""
 
 static func _request_owner(owner: Node) -> Node:
-	if owner != null and owner.get_tree() != null and owner.get_tree().root != null:
+	if owner != null and owner.is_inside_tree() and owner.get_tree() != null and owner.get_tree().root != null:
 		return owner.get_tree().root
 	return owner
 

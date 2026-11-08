@@ -465,7 +465,7 @@ static func _prefetch_listed(owner: Node) -> void:
 		_fetch(owner, id)
 
 static func _request_owner(owner: Node) -> Node:
-	if owner != null and owner.get_tree() != null and owner.get_tree().root != null:
+	if owner != null and owner.is_inside_tree() and owner.get_tree() != null and owner.get_tree().root != null:
 		return owner.get_tree().root
 	return owner
 
@@ -497,7 +497,8 @@ static func _start_index(http: HTTPRequest, host: Node) -> void:
 	if err != OK:
 		http.queue_free()
 
-static func _got_index(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, owner: Node) -> void:
+static func _got_index(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray, http: HTTPRequest, owner: Variant) -> void:
+	var parent: Node = http.get_parent() if is_instance_valid(http) else null
 	if is_instance_valid(http):
 		http.queue_free()
 	if result != HTTPRequest.RESULT_SUCCESS or code != 200 or body.is_empty():
@@ -505,7 +506,8 @@ static func _got_index(result: int, code: int, _headers: PackedStringArray, body
 			_index_read = true
 			_release_unlisted()
 		return
-	_arm_index(owner, body.get_string_from_utf8())
+	var target: Node = owner as Node if is_instance_valid(owner) else parent
+	_arm_index(target, body.get_string_from_utf8())
 
 static func _page() -> String:
 	var href: String = str(JavaScriptBridge.eval("window.location.href", true))

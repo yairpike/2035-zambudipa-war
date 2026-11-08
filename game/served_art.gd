@@ -78,8 +78,14 @@ static func _fetch(owner: Node, rel: String) -> void:
 	http.timeout = 20.0
 	http.accept_gzip = false
 	var host: Node = owner
-	if owner.get_tree() != null and owner.get_tree().root != null:
+	if owner.is_inside_tree() and owner.get_tree() != null and owner.get_tree().root != null:
 		host = owner.get_tree().root
+	if not host.is_inside_tree():
+		if not host.tree_entered.is_connected(_fetch.bind(owner, rel)):
+			host.tree_entered.connect(_fetch.bind(owner, rel), CONNECT_ONE_SHOT)
+		_inflight.erase(rel)
+		http.queue_free()
+		return
 	http.ready.connect(_start_fetch.bind(http, rel), CONNECT_ONE_SHOT)
 	host.add_child.call_deferred(http)
 
