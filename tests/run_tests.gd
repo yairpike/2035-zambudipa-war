@@ -5634,7 +5634,7 @@ func test_sm_boot() -> void:
 	var control_bar: Label = boot.find_child("ControlBar", true, false) as Label
 	var title_font: Font = game_title.get_theme_font("font") if game_title != null else null
 	var bar_font: Font = control_bar.get_theme_font("font") if control_bar != null else null
-	check(game_title != null and game_title.text == "ASEAN 2031" and str(ProjectSettings.get_setting("application/config/name")) == "ASEAN 2031", "the boot title and window title are ASEAN 2031")
+	check(game_title != null and game_title.text == "2035 - Zambudipa War" and str(ProjectSettings.get_setting("application/config/name")) == "2035 - Zambudipa War", "the boot title and window title are 2035 - Zambudipa War")
 	check(title_font != null and title_font.resource_path.contains("Warheed") and game_title.theme_type_variation == "Header", "the boot title uses Warheed")
 	check(bar_font != null and bar_font.resource_path.contains("OperationNapalm"), "the control bar uses Operation Napalm")
 	check(SMCampaign.title_of("shattered_monsoon") == "Operation Shattered Monsoon", "the final mission keeps its story name")
@@ -5689,7 +5689,7 @@ func test_sm_boot() -> void:
 	var field: SMPointer = scene.get("field") as SMPointer
 	check(_has_names(field, PackedStringArray(["Patani Corsair Guard", "Malacca Pocket-Sub", "Krakatoa Dreadnought", "Phillips Wave-Cannon", "Garuda Mecha-Overlord", "Johor Loiter-Swarm"])), "burma plays the selected nmrf side")
 	var hud_title: Label = scene.find_child("HudTitle", true, false) as Label
-	check(hud_title != null and hud_title.text == "ASEAN 2031" and hud_title.theme_type_variation == "Header", "the hud titles the match ASEAN 2031")
+	check(hud_title != null and hud_title.text == "2035 - Zambudipa War" and hud_title.theme_type_variation == "Header", "the hud titles the match 2035 - Zambudipa War")
 	check(scene.find_child("MovePacker", true, false) != null, "nmrf skirmish can move the packer")
 	check(str(scene.call("train_unit")) == "Sulu Tank-Buster", "nmrf skirmish trains an nmrf unit")
 	scene.free()
@@ -7092,7 +7092,7 @@ func test_game_language() -> void:
 	var bot_row: Control = boot.find_child("SkirmishBotCycle", true, false) as Control
 	var menu_back: Control = boot.find_child("MenuBack", true, false) as Control
 	var back_hit: Rect2 = bot_row.get_global_rect().intersection(menu_back.get_global_rect()) if bot_row != null and menu_back != null else Rect2()
-	check(top_card != null and title_node != null and top_card.position.y >= title_node.position.y + 88.0 and bot_row != null and menu_back != null and (back_hit.size.x < 1.0 or back_hit.size.y < 1.0), "the Skirmish map list sits below the ASEAN 2031 logo and Back stays clear of the Commander and Difficulty rows")
+	check(top_card != null and title_node != null and top_card.position.y >= title_node.position.y + 88.0 and bot_row != null and menu_back != null and (back_hit.size.x < 1.0 or back_hit.size.y < 1.0), "the Skirmish map list sits below the 2035 - Zambudipa War logo and Back stays clear of the Commander and Difficulty rows")
 	boot.call("_show_tab", "campaign")
 	boot.call("layout_for", Vector2(1231, 663))
 	await process_frame
@@ -7588,7 +7588,9 @@ func test_ra3_camera() -> void:
 	var left: Button = scene.find_child("CompassLeft", true, false) as Button
 	var right_b: Button = scene.find_child("CompassRight", true, false) as Button
 	var north: BaseButton = scene.find_child("CompassNorth", true, false) as BaseButton
-	check(compass != null and compass.visible and left != null and right_b != null and north != null and left.custom_minimum_size.y >= 40.0, "the HUD compass has rotate left, north and rotate right")
+	var zoom_in_b: Button = scene.find_child("CompassZoomIn", true, false) as Button
+	var zoom_out_b: Button = scene.find_child("CompassZoomOut", true, false) as Button
+	check(compass != null and compass.visible and left != null and right_b != null and north != null and zoom_in_b != null and zoom_out_b != null and left.custom_minimum_size.y >= 36.0, "the HUD compass has rotate left, north, rotate right, and zoom in/out buttons")
 	var t0: float = rig.target_yaw
 	right_b.pressed.emit()
 	check(is_equal_approx(rig.target_yaw - t0, SMCamRig.TURN_STEP), "the compass rotate-right button turns the camera")
@@ -7598,6 +7600,21 @@ func test_ra3_camera() -> void:
 	north.pressed.emit()
 	rig.snap()
 	check(is_equal_approx(fposmod(cam.yaw_degrees, 360.0), 0.0), "clicking the compass dial resets north")
+	var d_before_btn: float = cam.distance
+	zoom_in_b.pressed.emit()
+	var d_after_in: float = cam.distance
+	zoom_out_b.pressed.emit()
+	var mag: InputEventMagnifyGesture = InputEventMagnifyGesture.new()
+	mag.factor = 1.15
+	mag.position = vp * 0.5
+	var d_before_mag: float = cam.distance
+	touch._unhandled_input(mag)
+	var pan_g: InputEventPanGesture = InputEventPanGesture.new()
+	pan_g.alt_pressed = true
+	pan_g.delta = Vector2(-2.0, 0.0)
+	var y_before_pan: float = cam.yaw_degrees
+	touch._unhandled_input(pan_g)
+	check(d_after_in < d_before_btn and cam.distance < d_before_mag and not is_equal_approx(cam.yaw_degrees, y_before_pan), "compass zoom buttons and macOS trackpad pinch/pan gestures zoom and orbit the camera")
 	await _ra3_done(scene)
 
 func test_ra3_factory() -> void:

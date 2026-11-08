@@ -80,11 +80,11 @@ func _world() -> void:
 	Ground.dress(self, grid, "mission", null, BASE_CLEAR, SMMapPlan.dressing(mission_id))
 	var cam: RTSCamera = RTSCamera.new()
 	cam.name = "Camera"
-	cam.bounds = Rect2(-76, -52, 152, 104)
-	cam.distance = 46.0
-	cam.zoom_max = 90.0
+	cam.bounds = Rect2(-72, -48, 144, 96)
+	cam.distance = 32.0
+	cam.zoom_max = 82.0
 	cam.edge_pan_px = 16.0
-	cam.focus = Vector3(0, 0, 2)
+	cam.focus = Vector3(-4, 0, 0)
 	add_child(cam)
 	cam.current = true
 

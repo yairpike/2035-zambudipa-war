@@ -326,7 +326,7 @@ func loopback_beacon(listen_port: int) -> bool:
 		recv.close()
 		return false
 	udp.set_dest_address("127.0.0.1", listen_port)
-	var body: String = JSON.stringify({"k": "here", "port": port, "map": map_path, "name": "ASEAN 2031"})
+	var body: String = JSON.stringify({"k": "here", "port": port, "map": map_path, "name": "2035 - Zambudipa War"})
 	udp.put_packet(body.to_utf8_buffer())
 	var ok: bool = false
 	for _i: int in 20:
@@ -1064,6 +1064,6 @@ func _send_beacon() -> void:
 		"k": "here",
 		"port": port,
 		"map": map_path,
-		"name": "ASEAN 2031",
+		"name": "2035 - Zambudipa War",
 	})
 	_beacon.put_packet(body.to_utf8_buffer())

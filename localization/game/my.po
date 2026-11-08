@@ -198,7 +198,7 @@ msgid "Artillery Telemetry Link"
 msgstr "အမြောက်​အဝေးတိုင်း​ချိတ်ဆက်​မှု"
 
 msgid "ASEAN 2031"
-msgstr "ASEAN 2031"
+msgstr "2035 - Zambudipa War"
 
 msgid "Athena Orbital Designator"
 msgstr "အေသီနာ​ပတ်လမ်း​ပစ်မှတ်​သတ်မှတ်​ကိရိယာ"
@@ -1482,7 +1482,7 @@ msgid "need an airfield"
 msgstr "လေ​ကွင်း​လို"
 
 msgid "New to ASEAN 2031?"
-msgstr "ASEAN 2031 ကို​အသစ်​ကစား​သလား?"
+msgstr "2035 - Zambudipa War ကို​အသစ်​ကစား​သလား?"
 
 msgid "Next skirmish: %s"
 msgstr "နောက်​တိုက်ပွဲ: %s"
@@ -3415,3 +3415,33 @@ msgstr "Windows (64-bit) — .exe (43 MB)"
 
 msgid "Linux (x86_64) — .AppImage (44 MB)"
 msgstr "Linux (x86_64) — .AppImage (44 MB)"
+
+msgid "UI scale"
+msgstr "မျက်နှာပြင် အရွယ်အစား"
+
+msgid "Scales menus, HUD, and text across 1080p, 1440p, and 4K displays."
+msgstr "မီနူးနှင့် စာသားအရွယ်အစားကို ချိန်ညှိသည်။"
+
+msgid "Auto"
+msgstr "အလိုအလျောက်"
+
+msgid "100%"
+msgstr "100%"
+
+msgid "125%"
+msgstr "125%"
+
+msgid "150%"
+msgstr "150%"
+
+msgid "Zoom in (+ / scroll up)"
+msgstr "ချဲ့ရန် (+)"
+
+msgid "Zoom out (- / scroll down)"
+msgstr "ချုံ့ရန် (-)"
+
+msgid "2035 - Zambudipa War"
+msgstr "2035 - Zambudipa War"
+
+msgid "New to 2035 - Zambudipa War?"
+msgstr "2035 - Zambudipa War ကို​အသစ်​ကစား​သလား?"

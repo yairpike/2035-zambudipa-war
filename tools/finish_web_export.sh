@@ -173,8 +173,8 @@ import json
 import sys
 path = sys.argv[1]
 data = json.loads(open(path, encoding="utf-8").read())
-data["name"] = "ASEAN 2031"
-data["short_name"] = "ASEAN 2031"
+data["name"] = "2035 - Zambudipa War"
+data["short_name"] = "2035 - Zambudipa War"
 data["start_url"] = "./index.html"
 data["scope"] = "./"
 icons = data.get("icons", [])
@@ -195,7 +195,7 @@ import sys
 path = sys.argv[1]
 html = open(path, encoding="utf-8").read()
 needle = '<div id="status">'
-title = needle + '\n\t\t\t<p id="status-title" style="font-family: sans-serif; font-size: 28px; letter-spacing: 0.08em; margin: 0 0 16px;">ASEAN 2031</p>'
+title = needle + '\n\t\t\t<p id="status-title" style="font-family: sans-serif; font-size: 28px; letter-spacing: 0.08em; margin: 0 0 16px;">2035 - Zambudipa War</p>'
 if needle in html:
     html = html.replace(needle, title, 1)
     open(path, "w", encoding="utf-8").write(html)
@@ -534,8 +534,20 @@ if [ -n "$KEY_ART_SRC" ]; then
   fi
   if [ -d "$KEY_ART_SRC/wordmark" ]; then
     mkdir -p "$DEST/wordmark"
-    find "$KEY_ART_SRC/wordmark" -maxdepth 1 -type f \( -name '*.png' -o -name '*.svg' \) -exec cp {} "$DEST/wordmark/" \;
+    find "$KEY_ART_SRC/wordmark" -maxdepth 1 -type f \( -name '*.png' -o -name '*.svg' -o -name '*.webp' \) -exec cp {} "$DEST/wordmark/" \;
     : > "$DEST/wordmark/.gdignore"
+  fi
+  if [ -d "$KEY_ART_SRC/ui/menu" ]; then
+    mkdir -p "$DEST/ui/menu" "$DEST/ui/menu/cinematic"
+    find "$KEY_ART_SRC/ui/menu" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.svg' \) -exec cp {} "$DEST/ui/menu/" \;
+    find "$KEY_ART_SRC/ui/menu" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' \) -exec cp {} "$DEST/ui/menu/cinematic/" \;
+    find "$DEST/ui/menu/cinematic" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -printf 'cinematic/%f\n' | sort > "$DEST/ui/menu/index.txt"
+    : > "$DEST/ui/menu/.gdignore"
+    : > "$DEST/ui/menu/cinematic/.gdignore"
+  fi
+  if [ -f "$KEY_ART_SRC/web/splash.png" ]; then
+    cp "$KEY_ART_SRC/web/splash.png" "$DEST/index.png"
+    cp "$KEY_ART_SRC/web/splash.png" "$DEST/splash.png"
   fi
 fi
 if [ -n "$MODEL_SRC" ]; then

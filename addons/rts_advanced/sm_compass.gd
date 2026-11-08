@@ -14,11 +14,13 @@ func setup(p_camera: RTSCamera) -> void:
 	var dial: SMCompassDial = SMCompassDial.new()
 	dial.name = "CompassNorth"
 	dial.camera = camera
-	dial.custom_minimum_size = Vector2(40, 40)
+	dial.custom_minimum_size = Vector2(36, 36)
 	dial.tooltip_text = "Reset to north (Home)"
 	dial.pressed.connect(_north)
 	add_child(dial)
 	_button("CompassRight", "⟳", "Rotate the camera right (E)", _turn.bind(SMCamRig.TURN_STEP))
+	_button("CompassZoomIn", "+", "Zoom in (+ / scroll up)", _zoom.bind(2.0))
+	_button("CompassZoomOut", "−", "Zoom out (- / scroll down)", _zoom.bind(-2.0))
 
 func _button(node_name: String, glyph: String, tip: String, fn: Callable) -> void:
 	var b: Button = Button.new()
@@ -26,7 +28,7 @@ func _button(node_name: String, glyph: String, tip: String, fn: Callable) -> voi
 	b.text = glyph
 	b.tooltip_text = tip
 	b.focus_mode = Control.FOCUS_NONE
-	b.custom_minimum_size = Vector2(40, 40)
+	b.custom_minimum_size = Vector2(36, 36) if node_name.begins_with("CompassZoom") else Vector2(40, 40)
 	b.add_theme_font_size_override("font_size", 20)
 	b.add_theme_font_override("font", ThemeDB.fallback_font)
 	b.pressed.connect(fn)
@@ -36,6 +38,10 @@ func _turn(degrees: float) -> void:
 	var rig: SMCamRig = SMCamRig.of(camera)
 	if rig != null:
 		rig.turn(degrees)
+
+func _zoom(steps: float) -> void:
+	if camera != null:
+		camera.zoom(steps)
 
 func _north() -> void:
 	var rig: SMCamRig = SMCamRig.of(camera)

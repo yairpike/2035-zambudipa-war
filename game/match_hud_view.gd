@@ -40,7 +40,7 @@ func _bind(hud: SMHud, grid: SMDomainGrid, camera: RTSCamera) -> void:
 	now_playing.add_theme_color_override("font_color", Color(1, 1, 1, 0.6))
 	_anchor(now_playing, 0.0, 0.0, 0.0, 0.0, 12.0, 36.0, 480.0, 54.0)
 	add_child(now_playing)
-	hud.faction_label = _label(top, "HudFaction", 15)
+	hud.faction_label = _label(top, "HudFaction", 16)
 	_pin_bar_label(hud.faction_label)
 	hud.faction_label.add_theme_color_override("font_color", Look.color(_skin, "trim_hi"))
 	var purse: PanelContainer = PanelContainer.new()
@@ -57,21 +57,21 @@ func _bind(hud: SMHud, grid: SMDomainGrid, camera: RTSCamera) -> void:
 	purse_row.add_theme_constant_override("separation", 8)
 	purse_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	purse.add_child(purse_row)
-	hud.credits_label = _label(purse_row, "HudCredits", 17)
+	hud.credits_label = _label(purse_row, "HudCredits", 18)
 	_pin_bar_label(hud.credits_label)
 	hud.credits_label.add_theme_color_override("font_color", Look.color(_skin, "glow").lightened(0.2))
 	hud.credits_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))
 	hud.credits_label.add_theme_constant_override("outline_size", 3)
-	hud.income_label = _label(purse_row, "HudIncome", 14)
+	hud.income_label = _label(purse_row, "HudIncome", 15)
 	_pin_bar_label(hud.income_label)
 	hud.income_label.add_theme_color_override("font_color", Color(0.55, 0.92, 0.5))
 	hud.income_label.visible = false
-	hud.map_label = _label(top, "HudMap", 15)
+	hud.map_label = _label(top, "HudMap", 16)
 	hud.map_label.size_flags_stretch_ratio = 2.2
 	hud.map_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hud.map_label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	hud.map_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.88))
-	hud.weather_label = _label(top, "HudWeather", 14)
+	hud.weather_label = _label(top, "HudWeather", 15)
 	_pin_bar_label(hud.weather_label)
 	hud.weather_label.add_theme_color_override("font_color", Color(0.8, 0.9, 1.0, 0.85))
 	var menu: Button = Button.new()

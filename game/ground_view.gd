@@ -151,7 +151,7 @@ static func dress(host: Node3D, grid: SMDomainGrid, profile: String, plan: SMMap
 	host.set_meta("map_dressing", "" if dressing == null else dressing.id)
 	Env.pull_web(host, Env.wanted(profile, plan if plan != null else dressing))
 	_markers(host, profile)
-	_ocean_skirt(host, grid)
+	_ocean_skirt(host, grid, profile)
 	_sky(host)
 	Env.stamp(host, grid, profile)
 	_plan = null
@@ -222,21 +222,28 @@ static func _near_cliff(grid: SMDomainGrid, cell: Vector2i) -> bool:
 				return true
 	return false
 
-static func _ocean_skirt(host: Node3D, grid: SMDomainGrid) -> void:
+static func _ocean_skirt(host: Node3D, grid: SMDomainGrid, profile: String = "") -> void:
 	if host.get_node_or_null("OceanSkirt") != null:
 		return
 	var mesh: PlaneMesh = PlaneMesh.new()
 	var span: float = maxf(float(grid.cols), float(grid.rows)) * grid.cell_size
-	mesh.size = Vector2(span * 8.0, span * 8.0)
+	mesh.size = Vector2(span * 10.0, span * 10.0)
 	var mi: MeshInstance3D = MeshInstance3D.new()
 	mi.name = "OceanSkirt"
 	mi.mesh = mesh
-	var mat: StandardMaterial3D = StandardMaterial3D.new()
-	mat.albedo_color = Color(0.04, 0.1, 0.14)
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mi.material_override = mat
+	var maritime: bool = profile == "atolls" or profile == "phillips" or profile == "mekong"
+	if maritime:
+		var mat: StandardMaterial3D = StandardMaterial3D.new()
+		mat.albedo_color = Color(0.05, 0.14, 0.19)
+		mat.roughness = 0.85
+		mi.material_override = mat
+	else:
+		var ground_mat: ShaderMaterial = _ground("grass", true)
+		var skirt_mat: ShaderMaterial = ground_mat.duplicate() as ShaderMaterial
+		skirt_mat.set_shader_parameter("albedo_tint", Color(0.2, 0.31, 0.15))
+		mi.material_override = skirt_mat
 	var mid: Vector3 = grid.cell_center(Vector2i(int(grid.cols / 2), int(grid.rows / 2)))
-	mi.position = Vector3(mid.x, -0.55, mid.z)
+	mi.position = Vector3(mid.x, -0.35, mid.z)
 	host.add_child(mi)
 
 static func dress_site(mi: MeshInstance3D, form: String, accent: Color) -> void:

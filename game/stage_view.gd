@@ -130,31 +130,31 @@ func _chrome() -> void:
 	col.add_child(head)
 	_banner_speaker = Label.new()
 	_banner_speaker.name = "StageSpeaker"
-	_banner_speaker.add_theme_font_size_override("font_size", 15)
+	_banner_speaker.add_theme_font_size_override("font_size", 17)
 	_banner_speaker.add_theme_color_override("font_color", Color(0.98, 0.78, 0.3))
 	_banner_speaker.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head.add_child(_banner_speaker)
 	var hint: Label = Label.new()
 	hint.name = "StageJumpHint"
 	hint.text = "Space: jump to the event"
-	hint.add_theme_font_size_override("font_size", 13)
-	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.55))
+	hint.add_theme_font_size_override("font_size", 14)
+	hint.add_theme_color_override("font_color", Color(1, 1, 1, 0.65))
 	head.add_child(hint)
 	_banner_line = Label.new()
 	_banner_line.name = "StageLine"
 	_banner_line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_banner_line.custom_minimum_size = Vector2(572.0, 0.0)
-	_banner_line.add_theme_font_size_override("font_size", 17)
+	_banner_line.add_theme_font_size_override("font_size", 18)
 	col.add_child(_banner_line)
 	_banner.visible = false
 	layer.add_child(_banner)
 	var tracker: PanelContainer = PanelContainer.new()
 	tracker.name = "StageTracker"
 	tracker.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	tracker.position = Vector2(12.0, 150.0)
+	tracker.position = Vector2(72.0, 172.0)
 	tracker.custom_minimum_size = Vector2(300.0, 0.0)
 	var tplate: StyleBoxFlat = StyleBoxFlat.new()
-	tplate.bg_color = Color(0.05, 0.06, 0.08, 0.72)
+	tplate.bg_color = Color(0.05, 0.06, 0.08, 0.82)
 	tplate.content_margin_left = 10.0
 	tplate.content_margin_right = 10.0
 	tplate.content_margin_top = 6.0
@@ -166,28 +166,40 @@ func _chrome() -> void:
 	var title: Label = Label.new()
 	title.name = "StageTrackerTitle"
 	title.text = "Objectives"
-	title.add_theme_font_size_override("font_size", 14)
+	title.add_theme_font_size_override("font_size", 16)
 	title.add_theme_color_override("font_color", Color(0.98, 0.78, 0.3))
 	list.add_child(title)
 	for n: int in 3:
 		var row: Label = Label.new()
 		row.name = "StageRow%d" % (n + 1)
 		row.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		row.custom_minimum_size = Vector2(280.0, 0.0)
-		row.add_theme_font_size_override("font_size", 13)
+		row.custom_minimum_size = Vector2(300.0, 0.0)
+		row.add_theme_font_size_override("font_size", 15)
 		list.add_child(row)
 		_rows.append(row)
 	_bonus_row = Label.new()
 	_bonus_row.name = "StageBonusRow"
 	_bonus_row.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_bonus_row.custom_minimum_size = Vector2(280.0, 0.0)
-	_bonus_row.add_theme_font_size_override("font_size", 13)
+	_bonus_row.custom_minimum_size = Vector2(300.0, 0.0)
+	_bonus_row.add_theme_font_size_override("font_size", 15)
 	list.add_child(_bonus_row)
 	layer.add_child(tracker)
 
 func _refresh() -> void:
 	if _rows.is_empty():
 		return
+	var layer: CanvasLayer = _host.get("ui_layer") as CanvasLayer if _host != null else null
+	if layer != null:
+		var tracker: Control = layer.get_node_or_null("StageTracker") as Control
+		var dialogue: Control = layer.find_child("SetDialogue", true, false) as Control
+		var brief: Control = layer.find_child("Briefing", true, false) as Control
+		if tracker != null:
+			var top_y: float = 160.0
+			if brief != null and brief.visible:
+				top_y = maxf(top_y, brief.position.y + brief.size.y + 38.0)
+			if dialogue != null and dialogue.visible:
+				top_y = maxf(top_y, dialogue.position.y + dialogue.size.y + 8.0)
+			tracker.position = Vector2(72.0, top_y)
 	for n: int in 3:
 		var stage: int = n + 1
 		var row: Label = _rows[n]

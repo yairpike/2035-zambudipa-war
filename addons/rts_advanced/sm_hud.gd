@@ -401,7 +401,8 @@ func _mount_compass(layer: CanvasLayer) -> void:
 func _seat_compass() -> void:
 	if compass == null or minimap == null or compass.get_parent() != minimap.get_parent():
 		return
-	compass.position = Vector2(minimap.position.x + minimap.size.x - compass.get_combined_minimum_size().x - 4.0, minimap.position.y + 4.0)
+	var cw: float = compass.get_combined_minimum_size().x
+	compass.position = Vector2(maxf(2.0, minimap.position.x + minimap.size.x - cw - 2.0), minimap.position.y + 4.0)
 
 func _power_pair() -> Vector2i:
 	return Power.tally(side.yard if side != null else null)
@@ -581,7 +582,7 @@ func _fill_roster() -> void:
 	if box == null:
 		return
 	if box.get_node_or_null("HudTitle") == null:
-		_header(box, "HudTitle", "ASEAN 2031")
+		_header(box, "HudTitle", "2035 - Zambudipa War")
 		_header(box, "GroupBuildings", "Buildings")
 	var data: Dictionary = SMCatalog.faction(_faction_id())
 	var tile_host: Container = icon_grid if use_tiles and icon_grid != null else box
@@ -1562,14 +1563,14 @@ func _paint_button(b: Button) -> void:
 	_tint_roster_button(b)
 
 func _cameo_corners(b: Button, caption: String) -> void:
-	var name_line: Label = _corner_label(b, "CameoName", Vector2(2, 56), Vector2(68, 14), 12)
+	var name_line: Label = _corner_label(b, "CameoName", Vector2(2, 54), Vector2(72, 16), 13)
 	name_line.text = caption
 	name_line.clip_text = true
 	var cost: int = int(b.get_meta("cost", -1))
-	var cost_line: Label = _corner_label(b, "CameoCost", Vector2(34, 1), Vector2(36, 14), 11)
+	var cost_line: Label = _corner_label(b, "CameoCost", Vector2(34, 1), Vector2(36, 15), 12)
 	cost_line.text = str(cost) if cost >= 0 else ""
 	cost_line.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	var key_line: Label = _corner_label(b, "CameoKey", Vector2(2, 1), Vector2(16, 14), 11)
+	var key_line: Label = _corner_label(b, "CameoKey", Vector2(2, 1), Vector2(18, 15), 12)
 	key_line.text = _grid_key(b)
 
 func _corner_label(b: Button, node_name: String, at: Vector2, box: Vector2, px: int) -> Label:

@@ -48,6 +48,9 @@ var _outro_t: float = 0.0
 var _outro_from: float = 18.0
 var _intro_from: Vector3 = Vector3.ZERO
 var _intro_to: Vector3 = Vector3.ZERO
+var _last_intro_dist: float = 0.0
+var _last_intro_focus: Vector3 = Vector3.ZERO
+var _last_intro_yaw: float = 0.0
 var _plate: ColorRect
 var _portrait: TextureRect
 var _speaker: Label
@@ -94,6 +97,10 @@ func drive(delta: float) -> void:
 	_retry_voice()
 	if not _armed:
 		_arm_camera()
+	var cam: RTSCamera = _host.get_node_or_null("Camera") as RTSCamera
+	if cam != null:
+		if not intro_done and (not is_equal_approx(cam.distance, _last_intro_dist) or cam.focus.distance_squared_to(_last_intro_focus) > 0.05 or not is_equal_approx(cam.yaw_degrees, _last_intro_yaw)):
+			intro_done = true
 	var view: Node = _host.get_node_or_null("StageView")
 	if view != null:
 		view.call("drive", delta)
@@ -630,6 +637,9 @@ func _arm_camera() -> void:
 	_intro_to = home_focus
 	_intro_from = home_focus + Vector3(0.0, 0.0, 12.0)
 	wide_distance = minf(cam.zoom_max, home_distance + 24.0)
+	_last_intro_dist = cam.distance
+	_last_intro_focus = cam.focus
+	_last_intro_yaw = cam.yaw_degrees
 
 func _intro() -> void:
 	if intro_done:
@@ -642,6 +652,9 @@ func _intro() -> void:
 	cam.focus = _intro_from.lerp(_intro_to, t)
 	cam.distance = lerpf(wide_distance, home_distance, t)
 	cam.apply()
+	_last_intro_dist = cam.distance
+	_last_intro_focus = cam.focus
+	_last_intro_yaw = cam.yaw_degrees
 	if t >= 1.0:
 		intro_done = true
 

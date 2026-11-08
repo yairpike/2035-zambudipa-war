@@ -68,7 +68,7 @@ func _ready() -> void:
 		move_child(blur, backdrop.get_index() + 1)
 	var title: Label = Label.new()
 	title.name = "GameTitle"
-	title.text = "ASEAN 2031"
+	title.text = "2035 - Zambudipa War"
 	title.position = Vector2(48, 16)
 	title.theme_type_variation = "Header"
 	title.add_theme_font_size_override("font_size", 64)
@@ -1336,7 +1336,7 @@ func _offer_training() -> void:
 	box.add_theme_constant_override("separation", 8)
 	card.add_child(box)
 	var title: Label = Label.new()
-	title.text = "New to ASEAN 2031?"
+	title.text = "New to 2035 - Zambudipa War?"
 	title.theme_type_variation = "Header"
 	title.add_theme_font_size_override("font_size", 22)
 	title.add_theme_color_override("font_color", Color(1, 1, 1, 0.95))
@@ -1590,11 +1590,11 @@ func _layout_menu(size: Vector2) -> void:
 		var wordmark: Control = find_child("TitleWordmark", true, false) as Control
 		if wordmark != null:
 			wordmark.visible = title.visible
-			wordmark.position = title.position
-			var wm_w: float = maxf(200.0, (size.x if portrait else rail_w) - title_x - 16.0)
+			wordmark.position = Vector2(title_x, 24.0 if sub_open else (28.0 if narrow else 44.0))
+			var wm_w: float = maxf(220.0, (size.x if portrait else rail_w) - title_x - 16.0)
 			if sub_open:
 				wm_w = minf(wm_w, 340.0)
-			wordmark.size = Vector2(wm_w, 60.0 if sub_open or narrow else 74.0)
+			wordmark.size = Vector2(wm_w, 88.0 if sub_open or narrow else 112.0)
 	var settings_open: bool = false
 	var settings_panel: Control = find_child("SettingsPanel", true, false) as Control
 	if settings_panel != null:
@@ -1618,9 +1618,10 @@ func _layout_menu(size: Vector2) -> void:
 		chip.position = Vector2(size.x - 360.0, chip_y)
 		chip.size = Vector2(340.0, 34.0 if portrait else 40.0)
 	var plate_w: float = rail_w - (48.0 if narrow else 104.0)
-	var y: float = 120.0 if narrow else 180.0
-	var row_h: float = 48.0
-	y = _seat(find_child("TabCampaign", true, false) as Control, left, y, plate_w, row_h)
+	var y: float = 120.0 if narrow else 164.0
+	var row_h: float = 44.0
+	var nav_gap: float = 6.0 if size.y < 760.0 else 8.0
+	y = _seat(find_child("TabCampaign", true, false) as Control, left, y, plate_w, row_h, nav_gap)
 	var faction_end: float = y
 	var camp_open: bool = campaign_panel != null and campaign_panel.visible
 	if faction_submenu != null and faction_submenu.visible:
@@ -1631,14 +1632,14 @@ func _layout_menu(size: Vector2) -> void:
 		else:
 			faction_end = _seat_factions(left, y, plate_w, narrow or plate_w < 520.0)
 			y = faction_end
-	y = _seat(find_child("TabSkirmish", true, false) as Control, left, y, plate_w, row_h)
+	y = _seat(find_child("TabSkirmish", true, false) as Control, left, y, plate_w, row_h, nav_gap)
 	var multi_h: float = row_h
-	y = _seat(find_child("TabMultiplayer", true, false) as Control, left, y, plate_w, multi_h)
-	y = _seat(find_child("SettingsButton", true, false) as Control, left, y, plate_w, row_h)
-	y = _seat(find_child("DownloadsButton", true, false) as Control, left, y, plate_w, row_h)
-	y = _seat(find_child("CreditsButton", true, false) as Control, left, y, plate_w, row_h)
-	y = _seat(find_child("QuitButton", true, false) as Control, left, y, plate_w, row_h)
-	_seat(find_child("MenuBack", true, false) as Control, left, size.y - 88.0, 220.0, row_h)
+	y = _seat(find_child("TabMultiplayer", true, false) as Control, left, y, plate_w, multi_h, nav_gap)
+	y = _seat(find_child("SettingsButton", true, false) as Control, left, y, plate_w, row_h, nav_gap)
+	y = _seat(find_child("DownloadsButton", true, false) as Control, left, y, plate_w, row_h, nav_gap)
+	y = _seat(find_child("CreditsButton", true, false) as Control, left, y, plate_w, row_h, nav_gap)
+	y = _seat(find_child("QuitButton", true, false) as Control, left, y, plate_w, row_h, nav_gap)
+	_seat(find_child("MenuBack", true, false) as Control, left, size.y - 88.0, 220.0, row_h, nav_gap)
 	var side: Control = find_child("TabFaction", true, false) as Control
 	if side != null:
 		side.position = Vector2(-400, -400)
@@ -1818,14 +1819,14 @@ func _activate_focus() -> void:
 	if owner != null and owner.is_visible_in_tree() and not owner.disabled:
 		owner.pressed.emit()
 
-func _seat(node: Control, x: float, y: float, w: float, h: float) -> float:
+func _seat(node: Control, x: float, y: float, w: float, h: float, gap: float = 8.0) -> float:
 	if node == null:
 		return y
 	node.position = Vector2(x, y)
 	node.size = Vector2(w, h)
 	node.custom_minimum_size = Vector2(w, h)
 	node.set_meta("base_pos", node.position)
-	return y + h + 8.0
+	return y + h + gap
 
 func _menu_fade() -> void:
 	var veil: ColorRect = ColorRect.new()

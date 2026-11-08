@@ -19,7 +19,35 @@ static var edge: bool = true
 static var difficulty: String = "normal"
 static var voice: String = "english"
 static var language: String = "english"
+static var ui_scale: String = "auto"
 static var lock: String = ""
+
+static func ui_scale_ids() -> PackedStringArray:
+	return PackedStringArray(["auto", "100", "125", "150"])
+
+static func ui_scale_name(id: String) -> String:
+	if id == "100":
+		return "100%"
+	if id == "125":
+		return "125%"
+	if id == "150":
+		return "150%"
+	return "Auto"
+
+static func ui_scale_factor() -> float:
+	ensure()
+	if ui_scale == "100":
+		return 1.0
+	if ui_scale == "125":
+		return 1.25
+	if ui_scale == "150":
+		return 1.5
+	return 1.15
+
+static func set_ui_scale(id: String) -> void:
+	ensure()
+	ui_scale = id if ui_scale_ids().has(id) else "auto"
+	_write()
 
 static func voice_ids() -> PackedStringArray:
 	return PackedStringArray(["english", "burmese", "mandarin", "thai", "malay"])
@@ -130,6 +158,9 @@ static func _apply_payload_dict(raw: String) -> bool:
 	if row.has("voice"):
 		var v: String = str(row.get("voice", language))
 		voice = v if voice_ids().has(v) else "english"
+	if row.has("ui_scale"):
+		var us: String = str(row.get("ui_scale", "auto"))
+		ui_scale = us if ui_scale_ids().has(us) else "auto"
 	return true
 
 static func _adapter() -> String:
@@ -216,6 +247,7 @@ static func restore() -> void:
 	pan = 1.0
 	edge = true
 	difficulty = "normal"
+	ui_scale = "auto"
 	voice = language
 	_write()
 
@@ -409,6 +441,8 @@ static func _read() -> void:
 	voice = stored_voice if voice_ids().has(stored_voice) else "english"
 	var stored_language: String = str(cfg.get_value("game", "language", "english"))
 	language = stored_language if language_ids().has(stored_language) else "english"
+	var stored_scale: String = str(cfg.get_value("game", "ui_scale", "auto"))
+	ui_scale = stored_scale if ui_scale_ids().has(stored_scale) else "auto"
 
 static func _write() -> void:
 	var cfg: ConfigFile = ConfigFile.new()
@@ -421,6 +455,7 @@ static func _write() -> void:
 	cfg.set_value("game", "difficulty", difficulty)
 	cfg.set_value("game", "voice", voice)
 	cfg.set_value("game", "language", language)
+	cfg.set_value("game", "ui_scale", ui_scale)
 	cfg.save(PATH)
 	_mirror()
 
@@ -437,6 +472,7 @@ static func _mirror() -> void:
 		"difficulty": difficulty,
 		"voice": voice,
 		"language": language,
+		"ui_scale": ui_scale,
 	}
 	var body: String = JSON.stringify(payload)
 	JavaScriptBridge.eval(IDB_JS % JSON.stringify(body))

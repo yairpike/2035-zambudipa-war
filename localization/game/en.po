@@ -260,7 +260,7 @@ msgstr "Artillery Telemetry Link"
 
 #: addons/rts_advanced/sm_hud.gd:419
 msgid "ASEAN 2031"
-msgstr "ASEAN 2031"
+msgstr "2035 - Zambudipa War"
 
 #: data/factions/mvd/faction.json
 msgid "Athena Orbital Designator"
@@ -1972,7 +1972,7 @@ msgstr "need an airfield"
 
 #: game/boot.gd:1278
 msgid "New to ASEAN 2031?"
-msgstr "New to ASEAN 2031?"
+msgstr "New to 2035 - Zambudipa War?"
 
 #: game/boot.gd:1137
 msgid "Next skirmish: %s"
@@ -4335,3 +4335,43 @@ msgstr "Windows (64-bit) — .exe (43 MB)"
 #: game/downloads_panel.gd
 msgid "Linux (x86_64) — .AppImage (44 MB)"
 msgstr "Linux (x86_64) — .AppImage (44 MB)"
+
+#: game/settings_panel.gd
+msgid "UI scale"
+msgstr "UI scale"
+
+#: game/settings_panel.gd
+msgid "Scales menus, HUD, and text across 1080p, 1440p, and 4K displays."
+msgstr "Scales menus, HUD, and text across 1080p, 1440p, and 4K displays."
+
+#: game/match_settings.gd
+msgid "Auto"
+msgstr "Auto"
+
+#: game/match_settings.gd
+msgid "100%"
+msgstr "100%"
+
+#: game/match_settings.gd
+msgid "125%"
+msgstr "125%"
+
+#: game/match_settings.gd
+msgid "150%"
+msgstr "150%"
+
+#: addons/rts_advanced/sm_compass.gd
+msgid "Zoom in (+ / scroll up)"
+msgstr "Zoom in (+ / scroll up)"
+
+#: addons/rts_advanced/sm_compass.gd
+msgid "Zoom out (- / scroll down)"
+msgstr "Zoom out (- / scroll down)"
+
+#: game/boot.gd addons/rts_advanced/sm_hud.gd
+msgid "2035 - Zambudipa War"
+msgstr "2035 - Zambudipa War"
+
+#: game/boot.gd
+msgid "New to 2035 - Zambudipa War?"
+msgstr "New to 2035 - Zambudipa War?"

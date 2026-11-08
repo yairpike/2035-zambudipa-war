@@ -77,11 +77,11 @@ func _world() -> void:
 	_feature("RareNode", "rock_set", Vector3(-6.0, 0.0, 4.0), Vector3(2.4, 1.4, 2.4), Color(0.42, 0.62, 0.3), "rare")
 	var cam: RTSCamera = RTSCamera.new()
 	cam.name = "Camera"
-	cam.bounds = Rect2(-60, -40, 120, 80)
-	cam.distance = 44.0
-	cam.zoom_max = 90.0
+	cam.bounds = Rect2(-52, -32, 104, 64)
+	cam.distance = 30.0
+	cam.zoom_max = 72.0
 	cam.edge_pan_px = 16.0
-	cam.focus = Vector3(0, 0, 2)
+	cam.focus = Vector3(-4, 0, -2)
 	add_child(cam)
 	cam.current = true
 

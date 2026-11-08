@@ -16,6 +16,8 @@ var twist: float = 0.0
 var turn_held: float = 0.0
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _trackpad_gesture(event):
+		return
 	if _orbit_mouse(event):
 		return
 	if _toggle_help(event):
@@ -118,6 +120,15 @@ func _command_key(event: InputEvent) -> bool:
 		return true
 	if key.keycode == KEY_HOME and rig != null:
 		rig.north()
+		get_viewport().set_input_as_handled()
+		return true
+	var zoom_cam: RTSCamera = _camera()
+	if zoom_cam != null and (key.keycode == KEY_EQUAL or key.keycode == KEY_PLUS or key.keycode == KEY_KP_ADD or key.keycode == KEY_PAGEUP):
+		zoom_cam.zoom(2.0)
+		get_viewport().set_input_as_handled()
+		return true
+	if zoom_cam != null and (key.keycode == KEY_MINUS or key.keycode == KEY_KP_SUBTRACT or key.keycode == KEY_PAGEDOWN):
+		zoom_cam.zoom(-2.0)
 		get_viewport().set_input_as_handled()
 		return true
 	var units_picked: bool = match_field.selection.count() > 0
@@ -304,12 +315,43 @@ func _orbit_mouse(event: InputEvent) -> bool:
 	if camera == null or _field() == null:
 		return false
 	var rig: SMCamRig = SMCamRig.of(camera)
-	if motion.alt_pressed and (motion.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
+	if (motion.alt_pressed or motion.meta_pressed) and (motion.button_mask & MOUSE_BUTTON_MASK_LEFT) != 0:
 		rig.drag(motion.relative)
 		get_viewport().set_input_as_handled()
 		return true
 	if (motion.button_mask & MOUSE_BUTTON_MASK_MIDDLE) != 0:
 		rig.tilt_by(-motion.relative.y * 0.15)
+		return true
+	return false
+
+## macOS / laptop trackpad two-finger scroll and pinch-to-zoom gestures.
+func _trackpad_gesture(event: InputEvent) -> bool:
+	var mag: InputEventMagnifyGesture = event as InputEventMagnifyGesture
+	if mag != null:
+		var camera: RTSCamera = _camera()
+		var board: SMHud = _hud()
+		if camera == null or _field() == null or (board != null and board.column_hovered()):
+			return false
+		var steps: float = clampf((mag.factor - 1.0) * 14.0, -4.0, 4.0)
+		if absf(steps) > 0.01:
+			camera.zoom_toward(steps, camera.ground_at(mag.position))
+		get_viewport().set_input_as_handled()
+		return true
+	var pan: InputEventPanGesture = event as InputEventPanGesture
+	if pan != null:
+		var camera: RTSCamera = _camera()
+		var board: SMHud = _hud()
+		if camera == null or _field() == null or (board != null and board.column_hovered()):
+			return false
+		var rig: SMCamRig = SMCamRig.of(camera)
+		if (pan.alt_pressed or pan.meta_pressed or pan.shift_pressed) and rig != null:
+			rig.drag(Vector2(-pan.delta.x * 16.0, -pan.delta.y * 12.0))
+		else:
+			if absf(pan.delta.y) >= absf(pan.delta.x) * 0.5 and absf(pan.delta.y) > 0.001:
+				camera.zoom_toward(-pan.delta.y * 1.6, camera.ground_at(pan.position))
+			if absf(pan.delta.x) > absf(pan.delta.y) * 1.4 and rig != null:
+				rig.turn(pan.delta.x * 8.0)
+		get_viewport().set_input_as_handled()
 		return true
 	return false
 

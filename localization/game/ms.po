@@ -198,7 +198,7 @@ msgid "Artillery Telemetry Link"
 msgstr "Pautan Telemetri Artileri"
 
 msgid "ASEAN 2031"
-msgstr "ASEAN 2031"
+msgstr "2035 - Zambudipa War"
 
 msgid "Athena Orbital Designator"
 msgstr "Penanda Orbit Athena"
@@ -1482,7 +1482,7 @@ msgid "need an airfield"
 msgstr "perlu lapangan terbang"
 
 msgid "New to ASEAN 2031?"
-msgstr "Baru dengan ASEAN 2031?"
+msgstr "Baru dengan 2035 - Zambudipa War?"
 
 msgid "Next skirmish: %s"
 msgstr "Pertempuran seterusnya: %s"
@@ -3415,3 +3415,33 @@ msgstr "Windows (64-bit) — .exe (43 MB)"
 
 msgid "Linux (x86_64) — .AppImage (44 MB)"
 msgstr "Linux (x86_64) — .AppImage (44 MB)"
+
+msgid "UI scale"
+msgstr "Skala UI"
+
+msgid "Scales menus, HUD, and text across 1080p, 1440p, and 4K displays."
+msgstr "Menskalakan menu, HUD, dan teks merentas paparan 1080p, 1440p, dan 4K."
+
+msgid "Auto"
+msgstr "Auto"
+
+msgid "100%"
+msgstr "100%"
+
+msgid "125%"
+msgstr "125%"
+
+msgid "150%"
+msgstr "150%"
+
+msgid "Zoom in (+ / scroll up)"
+msgstr "Zum masuk (+)"
+
+msgid "Zoom out (- / scroll down)"
+msgstr "Zum keluar (-)"
+
+msgid "2035 - Zambudipa War"
+msgstr "2035 - Zambudipa War"
+
+msgid "New to 2035 - Zambudipa War?"
+msgstr "Baru dengan 2035 - Zambudipa War?"

@@ -25,6 +25,61 @@ var _settle: float = 0.0
 var _avg_ms: float = 0.0
 var _over: float = 0.0
 var _under: float = 0.0
+var _win_phys: Vector2i = Vector2i(-1, -1)
+var _win_pref: String = ""
+var _win_factor: float = 1.0
+var _tracked_hud: SMHud
+
+static func window_scale_for(phys: Vector2i, dpi: float, user_mult: float) -> float:
+	var factor: float = user_mult
+	if phys.y > phys.x:
+		factor = maxf(dpi, user_mult)
+	elif float(phys.y) > 720.0:
+		factor = maxf((float(phys.y) / 960.0) * user_mult, user_mult)
+		factor = minf(factor, float(phys.y) / 720.0)
+	return clampf(factor, 1.0, 4.0)
+
+func _fit_window() -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+	var win: Window = get_window()
+	if win == null:
+		return
+	if win.content_scale_mode != Window.CONTENT_SCALE_MODE_CANVAS_ITEMS:
+		win.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
+	if win.content_scale_aspect != Window.CONTENT_SCALE_ASPECT_EXPAND:
+		win.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
+	var reported: Vector2i = DisplayServer.window_get_size()
+	if win.content_scale_size != reported:
+		win.content_scale_size = reported
+	var dpi: float = maxf(1.0, DisplayServer.screen_get_scale())
+	var pref: String = Settings.ui_scale
+	var phys: Vector2i = reported
+	if _win_factor > 1.01 and _win_phys.x > 0:
+		var grown: Vector2i = Vector2i(int(round(float(reported.x) * _win_factor)), int(round(float(reported.y) * _win_factor)))
+		if grown == _win_phys:
+			phys = _win_phys
+	var factor: float = window_scale_for(phys, dpi, Settings.ui_scale_factor())
+	if phys != _win_phys or pref != _win_pref or not is_equal_approx(win.content_scale_factor, factor):
+		_win_phys = phys
+		_win_pref = pref
+		_win_factor = factor
+		win.content_scale_factor = factor
+	var vp: Viewport = get_viewport()
+	if vp == null:
+		return
+	var view_size: Vector2 = vp.get_visible_rect().size
+	var cur: Node = get_tree().current_scene
+	if cur != null and cur.has_method("layout_for"):
+		cur.call("layout_for", view_size)
+	if _tracked_hud != null and (_tracked_hud.layer_node == null or not is_instance_valid(_tracked_hud.layer_node)):
+		_tracked_hud = null
+	if _tracked_hud == null and cur != null:
+		var raw_hud: Variant = cur.get("hud")
+		if raw_hud is SMHud:
+			_tracked_hud = raw_hud as SMHud
+	if _tracked_hud != null:
+		_tracked_hud.layout_for(view_size)
 
 static func install() -> void:
 	if _textures != null:
@@ -56,6 +111,7 @@ func _ready() -> void:
 	install()
 
 func _process(delta: float) -> void:
+	_fit_window()
 	if not governing():
 		if Settings.strain != 0:
 			_set_strain(0)
