@@ -6,6 +6,7 @@ const Served = preload("res://game/served_art.gd")
 const Models = preload("res://game/model_registry.gd")
 const Env = preload("res://game/env_dress.gd")
 const MapArt = preload("res://game/hud_minimap_art.gd")
+const Fit = preload("res://game/camera_fit.gd")
 ## GTFC night raid. Scaffold, ruby night shift, one rare-earth node. Text briefing.
 
 static var _model_cache: Dictionary = {}
@@ -79,10 +80,9 @@ func _world() -> void:
 	var cam: RTSCamera = RTSCamera.new()
 	cam.name = "Camera"
 	cam.bounds = Rect2(-52, -32, 104, 64)
-	cam.distance = 30.0
-	cam.zoom_max = 72.0
 	cam.edge_pan_px = 16.0
 	cam.focus = Vector3(-4, 0, -2)
+	Fit.apply_play(cam, "company")
 	add_child(cam)
 	cam.current = true
 

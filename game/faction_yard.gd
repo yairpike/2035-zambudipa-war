@@ -4,6 +4,7 @@ const Power = preload("res://addons/rts_advanced/sm_power.gd")
 const Fx = preload("res://game/fx_view.gd")
 const Forms = preload("res://game/unit_meshes.gd")
 const Ground = preload("res://game/ground_view.gd")
+const Fit = preload("res://game/camera_fit.gd")
 ## NMRF mobile packer, or MVD internal queue with clearance.
 ## Same pointer controls as Sop Ruak. Six named placeholders.
 
@@ -167,9 +168,8 @@ func _world() -> void:
 	var cam: RTSCamera = RTSCamera.new()
 	cam.name = "Camera"
 	cam.bounds = Rect2(-90, -60, 180, 120)
-	cam.distance = 32.0
-	cam.zoom_max = 90.0
 	cam.edge_pan_px = 20.0
+	Fit.apply_play(cam, "yard")
 	cam.focus = grid.cell_center(SMDomainGrid.at("phillips", Vector2i(4, 8)))
 	add_child(cam)
 	cam.current = true

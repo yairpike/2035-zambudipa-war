@@ -4,6 +4,7 @@ const Power = preload("res://addons/rts_advanced/sm_power.gd")
 const Fx = preload("res://game/fx_view.gd")
 const Ground = preload("res://game/ground_view.gd")
 const StageView = preload("res://game/stage_view.gd")
+const Fit = preload("res://game/camera_fit.gd")
 ## Sop Ruak. Three land sectors split by a Y-shaped river.
 ## GTFC versus one enemy across a Y-shaped river. Same pointer controls as Phillips Channel.
 
@@ -91,10 +92,9 @@ func _world() -> void:
 	var cam: RTSCamera = RTSCamera.new()
 	cam.name = "Camera"
 	cam.bounds = Rect2(-100.0, -100.0, 200.0, 200.0)
-	cam.distance = 32.0
-	cam.zoom_max = 90.0
 	cam.edge_pan_px = 20.0
 	cam.focus = Vector3(-36, 0, 16)
+	Fit.apply_play(cam, "company")
 	add_child(cam)
 	cam.current = true
 	sim.paint_sites(self)

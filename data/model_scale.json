@@ -1,8 +1,18 @@
 {
-  "about": "One scale chart for every model. 1 unit = 1 m. Cells are 4 m. Units fit a height or a hull length, buildings fill their footprint in cells, scenery fits its class. See docs/map-scale.md in the project store.",
+  "about": "One scale chart for every model. 1 unit = 1 m. Cells are 4 m. Units fit a height or a hull length, buildings fill their footprint in cells, civilian lots fill lot_fill of their street lot. See docs/map-scale.md in the project store.",
   "cell_m": 4.0,
   "building_fill": 0.88,
   "building_height_ratio_max": 1.35,
+  "lot_fill": 0.72,
+  "camera": {
+    "company": 48.0,
+    "skirmish": 64.0,
+    "skirmish_large": 72.0,
+    "yard": 42.0,
+    "pitch_near": 50.0,
+    "pitch_far": 58.0,
+    "zoom_max": 96.0
+  },
   "unit_classes": {
     "infantry": {
       "height": 1.8
@@ -175,27 +185,27 @@
   },
   "scenery_classes": {
     "tree": {
-      "height": 9.0
+      "height": 7.5
     },
     "big_tree": {
-      "height": 11.0
+      "height": 9.5
     },
     "small_tree": {
-      "height": 5.5
+      "height": 4.8
     },
     "palm": {
-      "height": 8.5
+      "height": 7.0
     },
     "clump": {
-      "height": 4.5
+      "height": 3.8
     },
     "house": {
-      "length": 7.5,
-      "height_max": 8.0
+      "length": 5.6,
+      "height_max": 7.0
     },
     "hall": {
-      "length": 11.0,
-      "height_max": 11.0
+      "length": 8.5,
+      "height_max": 9.0
     },
     "tower": {
       "height": 16.0

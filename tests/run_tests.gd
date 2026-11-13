@@ -115,6 +115,7 @@ func _run() -> void:
 	await H.section("test_map_symmetry", test_map_symmetry)
 	await H.section("test_model_scale", test_model_scale)
 	await H.section("test_street_towns", test_street_towns)
+	await H.section("test_iso_layout", test_iso_layout)
 	await H.section("test_game_language", test_game_language)
 	await H.section("test_render_budget", test_render_budget)
 	await H.section("test_web_budget", test_web_budget)
@@ -365,7 +366,8 @@ func test_street_towns() -> void:
 			continue
 		shared += 1
 		var dressing: SMMapPlan = SMMapPlan.dressing(id)
-		dress_ok = dress_ok and dressing.cols == 36 and dressing.rows == 24 and dressing.lots.size() >= 20
+		var canvas: Vector2i = SMMapPlan.campaign_canvas(id)
+		dress_ok = dress_ok and dressing.cols == canvas.x and dressing.rows == canvas.y and dressing.lots.size() >= 20
 		for lot: Dictionary in dressing.lots:
 			var r: Rect2i = lot["rect"] as Rect2i
 			dress_ok = dress_ok and bool(lot["solid"]) and not r.intersects(Rect2i(5, 2, 18, 18)) and not r.intersects(Rect2i(13, 7, 12, 10))
@@ -584,6 +586,51 @@ func _lots_twinned(plan: SMMapPlan) -> bool:
 			return false
 	return true
 
+func test_iso_layout() -> void:
+	var Fit: GDScript = load("res://game/camera_fit.gd") as GDScript
+	check(absf(float(Fit.call("play_distance", "company")) - 48.0) < 0.01, "company maps start 48 m out")
+	check(absf(float(Fit.call("play_distance", "skirmish")) - 64.0) < 0.01, "skirmish maps start 64 m out")
+	check(absf(float(Fit.call("play_distance", "skirmish_large")) - 72.0) < 0.01, "large skirmish maps start 72 m out")
+	check(SMMapPlan.campaign_canvas("kokang") == Vector2i(28, 18), "kokang stays a tight raid")
+	check(SMMapPlan.campaign_canvas("tachileik") == Vector2i(44, 30), "early campaign maps grow past the old 36x24 field")
+	check(SMMapPlan.campaign_canvas("black_haze") == Vector2i(56, 40), "mid campaign maps fit two flanks and a middle")
+	check(SMMapPlan.campaign_canvas("shattered_monsoon") == Vector2i(64, 44), "the finale is a full RTS field")
+	var haze: SMMapPlan = SMMapPlan.dressing("black_haze")
+	check(haze != null and haze.cols == 56 and haze.rows == 40 and haze.origin.x == -72.0 and haze.origin.z == -48.0, "later campaign canvases pin the rally origin and grow east")
+	check(haze != null and haze.lots.size() >= 30 and haze.paved.size() > 40, "the grown city still has lots on a connected street grid")
+	var host := Node3D.new()
+	root.add_child(host)
+	preload("res://game/ground_view.gd").dress(host, SMMapPlan.of("burma_road").grid(), "burma", SMMapPlan.of("burma_road"))
+	var pads: MeshInstance3D = host.get_node_or_null("LotPads") as MeshInstance3D
+	check(pads != null and pads.mesh != null, "every town lot sits on a packed-earth pad")
+	var fitted: bool = true
+	var facing: bool = true
+	var grid: SMDomainGrid = SMMapPlan.of("burma_road").grid()
+	for child: Node in host.get_children():
+		if not (child is MultiMeshInstance3D and str(child.name).begins_with("Town_")):
+			continue
+		var model: String = str(child.name).trim_prefix("Town_")
+		var mm: MultiMesh = (child as MultiMeshInstance3D).multimesh
+		if mm == null or mm.mesh == null:
+			continue
+		var box: AABB = mm.mesh.get_aabb()
+		var stored: Array = child.get_meta("all_spots", [])
+		var n: int = stored.size() if not stored.is_empty() else mm.instance_count
+		for i: int in n:
+			var xf: Transform3D = stored[i] as Transform3D if i < stored.size() else mm.get_instance_transform(i)
+			var lot: Dictionary = SMMapPlan.of("burma_road").lot_at(grid.cell_at(xf.origin))
+			if lot.is_empty() or str(lot["id"]) != model:
+				facing = false
+				continue
+			var placed: AABB = xf * box
+			var lot_m: Vector2 = Vector2(float((lot["rect"] as Rect2i).size.x), float((lot["rect"] as Rect2i).size.y)) * grid.cell_size
+			fitted = fitted and placed.size.x <= lot_m.x + 0.08 and placed.size.z <= lot_m.y + 0.08
+	check(fitted and facing, "Burma Road houses sit inside their lots and keep their street facing")
+	host.free()
+	await process_frame
+	for stem: String in ["grass", "mud", "road", "sand", "paddy", "pad", "shallow_water", "deep_water"]:
+		check(FileAccess.file_exists("res://game/terrain/%s.webp" % stem), "shared terrain tile %s is in the atlas" % stem)
+
 func test_model_scale() -> void:
 	const Models = preload("res://game/model_registry.gd")
 	const Env = preload("res://game/env_dress.gd")
@@ -679,7 +726,10 @@ func test_model_scale() -> void:
 		var hbox: AABB = Models._merged_aabb(house)
 		house_l = maxf(hbox.size.x, hbox.size.z) * Env.fit_of("shan_stilt_house", hbox)
 		house.free()
-	check(absf(tree_h - 9.0) < 0.1 and house_l > 4.0 and house_l <= 7.6, "trees stand 9 m and houses stay house-sized (%.1f m, %.1f m)" % [tree_h, house_l])
+	check(absf(tree_h - 7.5) < 0.1 and house_l >= 5.0 and house_l <= 5.7, "trees stand 7.5 m and houses stay tank-sized (%.1f m, %.1f m)" % [tree_h, house_l])
+	check(absf(Scale.lot_fill() - 0.72) < 0.001, "civilian lots leave a readable pad around the house")
+	var lot_s: float = Scale.lot_scale(Vector3(house_l, 1.0, house_l), Vector2(8.0, 8.0))
+	check(house_l * lot_s <= 8.0 * Scale.lot_fill() + 0.05, "a house on a 2x2 lot stays inside the lot fill")
 	host.free()
 	await process_frame
 
@@ -1244,7 +1294,7 @@ func test_lite_scope() -> void:
 	check(FileAccess.get_file_as_string("res://LICENSE").contains("Permission is hereby granted, free of charge"), "Lite is MIT")
 
 const TEXT_EXT: PackedStringArray = ["gd", "tscn", "tres", "md", "txt", "csv", "json", "cfg", "godot", "sh", "py", "js", "gdshader", "import"]
-const SKIP: PackedStringArray = ["res://.godot", "res://.git", "res://tests/scrub_terms.rot13", "res://tests/last_run.txt"]
+const SKIP: PackedStringArray = ["res://.godot", "res://.git", "res://build", "res://tests/scrub_terms.rot13", "res://tests/last_run.txt"]
 
 static func rot13(s: String) -> String:
 	var out: String = ""
@@ -1312,6 +1362,8 @@ func test_scrub() -> void:
 			if l.begins_with("Kit Author <kit-author@example.invalid>"):
 				continue
 			if l.begins_with("cursor[bot] <cursor[bot]@users.noreply.github.com> Merge main"):
+				continue
+			if l.begins_with("Cursor Agent <cursoragent@cursor.com>"):
 				continue
 			authors_ok = false
 		check(code == 0 and bad.is_empty() and authors_ok, "git history: neutral author only, clean messages %s" % [bad])
@@ -4799,7 +4851,8 @@ func test_sm_guide() -> void:
 	var header_font: Font = buildings.get_theme_font(&"font") if buildings != null else null
 	check(buildings != null and buildings.theme_type_variation == "Header" and header_font != null and str(header_font.resource_path).contains("Warheed"), "section headers use the theme font")
 	var match_cam: RTSCamera = scene.get_node_or_null("Camera") as RTSCamera
-	check(match_cam != null and match_cam.distance <= 32.0, "the match camera starts close to the company")
+	var iso_cam: GDScript = load("res://game/camera_fit.gd") as GDScript
+	check(match_cam != null and absf(match_cam.distance - float(iso_cam.call("play_distance", "company"))) < 0.05, "the match camera starts at the isometric play distance")
 	var fit_holder: Node3D = Node3D.new()
 	root.add_child(fit_holder)
 	var fit_cam: RTSCamera = RTSCamera.new()

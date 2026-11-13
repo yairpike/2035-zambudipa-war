@@ -11,12 +11,14 @@ void vertex() {
 }
 
 void fragment() {
-	vec3 shallow_col = vec3(0.24, 0.58, 0.6);
-	vec3 deep_col = vec3(0.03, 0.09, 0.18);
+	vec3 shallow_col = vec3(0.18, 0.48, 0.52);
+	vec3 deep_col = vec3(0.04, 0.12, 0.2);
 	vec3 painted = mix(shallow_col, deep_col, COLOR.r);
 	vec3 sampled = mix(texture(shallow_tex, UV).rgb, texture(deep_tex, UV).rgb, COLOR.r);
-	ALBEDO = mix(painted, sampled, clamp(use_tex, 0.0, 1.0));
-	ROUGHNESS = 0.16;
+	vec3 water = mix(painted, sampled, clamp(use_tex, 0.0, 1.0));
+	float foam = pow(1.0 - COLOR.r, 2.4) * 0.22;
+	ALBEDO = mix(water, vec3(0.72, 0.82, 0.78), foam);
+	ROUGHNESS = mix(0.18, 0.08, COLOR.r);
 	METALLIC = 0.04;
-	ALPHA = mix(0.8, 0.95, COLOR.r);
+	ALPHA = mix(0.82, 0.96, COLOR.r);
 }

@@ -3,6 +3,7 @@ extends Node3D
 const Fx = preload("res://game/fx_view.gd")
 const Ground = preload("res://game/ground_view.gd")
 const Served = preload("res://game/served_art.gd")
+const Fit = preload("res://game/camera_fit.gd")
 ## One solo text briefing. The objective button runs the sim system for that mission.
 
 var campaign: SMCampaign = SMCampaign.new()
@@ -25,10 +26,12 @@ func _ready() -> void:
 	if mission_id == "":
 		mission_id = "tachileik"
 	briefing_text = SMCampaign.briefing_of(mission_id)
-	grid = SMDomainGrid.new(36, 24, 4.0, Vector3(-72.0, 0.0, -48.0))
 	var dress: SMMapPlan = SMMapPlan.dressing(mission_id)
 	if dress != null:
+		grid = SMDomainGrid.new(dress.cols, dress.rows, dress.cell_size, dress.origin)
 		dress.hold_lots(grid)
+	else:
+		grid = SMDomainGrid.new(36, 24, 4.0, Vector3(-72.0, 0.0, -48.0))
 	_world()
 	_ui()
 	var faction: String = SMCampaign.player_faction(mission_id)
@@ -81,11 +84,11 @@ func _world() -> void:
 	Ground.dress(self, grid, "mission", null, BASE_CLEAR, SMMapPlan.dressing(mission_id))
 	var cam: RTSCamera = RTSCamera.new()
 	cam.name = "Camera"
-	cam.bounds = Rect2(-72, -48, 144, 96)
-	cam.distance = 32.0
-	cam.zoom_max = 82.0
+	var span: Vector2 = Vector2(float(grid.cols) * grid.cell_size, float(grid.rows) * grid.cell_size)
+	cam.bounds = Rect2(grid.origin.x - 8.0, grid.origin.z - 8.0, span.x + 16.0, span.y + 16.0)
 	cam.edge_pan_px = 16.0
 	cam.focus = Vector3(-4, 0, 0)
+	Fit.apply_play(cam, "company")
 	add_child(cam)
 	cam.current = true
 
