@@ -1,21 +1,15 @@
 extends Control
 ## Cinematic still under a lazy Theora loop.
-## The main menu crossfades gtfc, nmrf, mvd, and mvd_bunker.
-## A faction screen holds that faction's loop. Settings stays on stills.
-## Headless runs never open a video. A missing file keeps the still.
-## Quiet beds in ui/menu/video/bed/ are not played.
+## Main, Campaign, Skirmish, Multiplayer and Settings each hold one 12 s loop.
+## A faction screen holds that faction's loop. Web and headless keep stills.
+## A missing file keeps the still. Quiet beds in ui/menu/video/bed/ are not played.
 
 const AssetPack = preload("res://game/asset_pack.gd")
-const HOLD: float = 12.0
 const FADE: float = 0.65
 
-var _main_reel: PackedStringArray = PackedStringArray([
-	"main-menu-loop",
-])
-var _neutral_reel: PackedStringArray = PackedStringArray([
-	"black_market", "loading",
-])
 var _bg_reel: PackedStringArray = PackedStringArray([
+	"main_menu_2035", "campaign_menu_2035", "skirmish_menu_2035",
+	"multiplayer_menu_2035", "settings_menu_2035",
 	"main_menu", "gtfc", "nmrf", "mvd", "black_market", "loading",
 ])
 
@@ -24,8 +18,6 @@ var screen: String = "main"
 var _spin: float = 0.0
 var _aim: Vector2 = Vector2.ZERO
 var _art: Texture2D
-var _reel_t: float = 0.0
-var _reel_i: int = 0
 var _players: Array[VideoStreamPlayer] = []
 var _show: int = 0
 var _fading: bool = false
@@ -64,7 +56,6 @@ func _ready() -> void:
 		for poster: String in _bg_reel:
 			if texture(poster) == null:
 				_pull("cinematic/%s.webp" % poster, poster)
-		_start_web_video()
 
 func set_faction(id: String) -> void:
 	faction_id = id
@@ -79,6 +70,8 @@ func set_screen(which: String) -> void:
 func _apply_art() -> void:
 	var stem: String = _stem()
 	_art = texture(stem)
+	if _art == null and stem.ends_with("_2035"):
+		_art = texture("main_menu")
 	if _art == null and OS.has_feature("web") and stem != "":
 		_pull("cinematic/%s.webp" % stem, stem)
 	queue_redraw()
@@ -88,31 +81,33 @@ func _stem() -> String:
 		return faction_id
 	if screen == "loading":
 		return "loading"
+	var named: String = _screen_art()
+	if named != "":
+		return named
+	return "main_menu_2035"
+
+func _screen_art() -> String:
+	if screen == "campaign":
+		return "campaign_menu_2035"
+	if screen == "skirmish":
+		return "skirmish_menu_2035"
+	if screen == "multi" or screen == "multiplayer":
+		return "multiplayer_menu_2035"
 	if screen == "settings":
-		if _neutral_reel.is_empty():
-			return "black_market"
-		return _neutral_reel[_reel_i % _neutral_reel.size()]
-	return "main_menu"
+		return "settings_menu_2035"
+	if screen == "main" or screen == "faction" or screen == "":
+		return "main_menu_2035"
+	return ""
 
 func _video_stem() -> String:
-	if screen == "settings" or screen == "loading" or _headless:
+	if _headless or OS.has_feature("web") or screen == "loading":
 		return ""
 	if faction_id == "gtfc" or faction_id == "nmrf" or faction_id == "mvd" or faction_id == "black_market":
 		return faction_id
-	if _main_reel.is_empty():
-		return ""
-	return _main_reel[_reel_i % _main_reel.size()]
+	return _stem()
 
 func _process(delta: float) -> void:
 	_spin += delta * 0.22
-	var held: bool = faction_id == "gtfc" or faction_id == "nmrf" or faction_id == "mvd" or faction_id == "black_market"
-	if not held and screen != "settings" and screen != "loading":
-		_reel_t += delta
-		if _reel_t >= HOLD:
-			_reel_t = 0.0
-			_reel_i += 1
-			_apply_art()
-			_sync_video(true)
 	var view: Vector2 = get_viewport_rect().size
 	var mouse: Vector2 = get_viewport().get_mouse_position()
 	var norm := Vector2.ZERO
@@ -124,8 +119,6 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _sync_video(fade: bool) -> void:
-	if OS.has_feature("web"):
-		_sync_web_video()
 	if _headless or _players.size() < 2:
 		return
 	var stem: String = _video_stem()
@@ -351,18 +344,6 @@ func _page() -> String:
 	if slash >= 0:
 		href = href.substr(0, slash + 1)
 	return href
-
-func _start_web_video() -> void:
-	if not OS.has_feature("web") or _headless:
-		return
-	var base: String = _page() + "ui/menu/video/main-menu-loop"
-	JavaScriptBridge.eval("try{(function(u){var v=document.getElementById('asean-menu-video');if(!v){v=document.createElement('video');v.id='asean-menu-video';v.muted=true;v.loop=true;v.playsInline=true;v.preload='auto';v.poster=u+'-poster.webp';v.style.display='none';var s1=document.createElement('source');s1.src=u+'.webm';s1.type='video/webm';v.appendChild(s1);var s2=document.createElement('source');s2.src=u+'.mp4';s2.type='video/mp4';v.appendChild(s2);document.body.appendChild(v);v.play().catch(function(){});}})(%s)}catch(_){}" % JSON.stringify(base), true)
-
-func _sync_web_video() -> void:
-	if not OS.has_feature("web") or _headless:
-		return
-	var active: bool = screen == "main" and faction_id == ""
-	JavaScriptBridge.eval("try{var v=document.getElementById('asean-menu-video');if(v){if(%s){v.play().catch(function(){});}else{v.pause();}}}catch(_){}" % ("true" if active else "false"), true)
 
 static var _cache: Dictionary = {}
 static var skip_export: bool = false

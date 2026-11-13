@@ -505,7 +505,7 @@ if [ -n "$VIDEO_SRC" ]; then
     find "$VIDEO_SRC/bed" -maxdepth 1 -type f -name '*.ogg' -exec cp {} "$DEST/ui/menu/video/bed/" \;
   fi
   : > "$DEST/ui/menu/video/.gdignore"
-  if [ ! -f "$DEST/ui/menu/video/main-menu-loop.ogv" ] && [ ! -f "$DEST/ui/menu/video/main-menu-loop.webm" ] && [ ! -f "$DEST/ui/menu/video/gtfc.ogv" ]; then
+  if [ ! -f "$DEST/ui/menu/video/main_menu_2035.ogv" ] && [ ! -f "$DEST/ui/menu/video/main_menu_2035.webm" ] && [ ! -f "$DEST/ui/menu/video/main-menu-loop.ogv" ] && [ ! -f "$DEST/ui/menu/video/main-menu-loop.webm" ] && [ ! -f "$DEST/ui/menu/video/gtfc.ogv" ]; then
     echo "finish_web_export: video folder has no menu loop"
     exit 1
   fi
@@ -635,6 +635,16 @@ if [ -n "$DOWNLOADS_SRC" ]; then
     fi
   done
   : > "$DEST/downloads/.gdignore"
+fi
+# 2035 stills last so --menu / --key-art cannot replace them. Loops stay off the PWA.
+if [ -d "$ROOT/ui/menu/cinematic" ]; then
+  mkdir -p "$DEST/ui/menu/cinematic"
+  find "$ROOT/ui/menu/cinematic" -maxdepth 1 -type f -name '*_2035.webp' -exec cp {} "$DEST/ui/menu/cinematic/" \;
+  if [ -d "$DEST/ui/menu/cinematic" ]; then
+    find "$DEST/ui/menu/cinematic" -maxdepth 1 -type f \( -name '*.webp' -o -name '*.png' -o -name '*.jpg' \) -printf 'cinematic/%f\n' | sort > "$DEST/ui/menu/index.txt"
+    : > "$DEST/ui/menu/.gdignore"
+    : > "$DEST/ui/menu/cinematic/.gdignore"
+  fi
 fi
 if ! grep -q "brotli" "$DEST/brotli_host.conf" || ! grep -q "wasm" "$DEST/brotli_host.conf"; then
   echo "finish_web_export: brotli host config is missing"

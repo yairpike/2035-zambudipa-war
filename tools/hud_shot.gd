@@ -62,9 +62,13 @@ func _process(delta: float) -> bool:
 			if pause != null:
 				pause.visible = true
 		elif menu == "settings":
-			var settings: Control = scene.find_child("SettingsPanel", true, false) as Control
-			if settings != null:
-				settings.visible = true
+			var gear: Button = scene.find_child("SettingsButton", true, false) as Button
+			if gear != null:
+				gear.pressed.emit()
+			else:
+				var settings: Control = scene.find_child("SettingsPanel", true, false) as Control
+				if settings != null:
+					settings.visible = true
 		elif menu == "guide":
 			var guide: CanvasItem = scene.find_child("HowToOverlay", true, false) as CanvasItem
 			if guide != null:
@@ -80,6 +84,13 @@ func _process(delta: float) -> bool:
 			var campaign: Button = scene.find_child("TabCampaign", true, false) as Button
 			if campaign != null:
 				campaign.pressed.emit()
+			var faction: Button = scene.find_child(str(_args.get("card", "FactionGtfc")), true, false) as Button
+			if faction != null:
+				faction.pressed.emit()
+		elif menu == "multi" or menu == "multiplayer":
+			var multi: Button = scene.find_child("TabMultiplayer", true, false) as Button
+			if multi != null:
+				multi.pressed.emit()
 		elif menu == "credits":
 			var roll: Button = scene.find_child("CreditsButton", true, false) as Button
 			if roll != null:

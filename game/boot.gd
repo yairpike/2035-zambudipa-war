@@ -1169,7 +1169,19 @@ func _sync_art() -> void:
 		backdrop.call("set_screen", "settings")
 		backdrop.call("set_faction", "")
 		return
-	if skirmish_panel.visible or campaign_panel.visible or faction_panel.visible:
+	if _menu_tab == "skirmish":
+		backdrop.call("set_screen", "skirmish")
+		backdrop.call("set_faction", "")
+		return
+	if _menu_tab == "multi":
+		backdrop.call("set_screen", "multiplayer")
+		backdrop.call("set_faction", "")
+		return
+	if _menu_tab == "campaign" or (faction_submenu != null and faction_submenu.visible):
+		backdrop.call("set_screen", "campaign")
+		backdrop.call("set_faction", "")
+		return
+	if faction_panel.visible:
 		_paint_faction(SMFront.current())
 		return
 	backdrop.call("set_screen", "main")
