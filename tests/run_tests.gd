@@ -118,6 +118,7 @@ func _run() -> void:
 	await H.section("test_game_language", test_game_language)
 	await H.section("test_render_budget", test_render_budget)
 	await H.section("test_web_budget", test_web_budget)
+	await H.section("test_menu_backdrops", test_menu_backdrops)
 	await H.section("test_ra3_placement", test_ra3_placement)
 	await H.section("test_ra3_camera", test_ra3_camera)
 	await H.section("test_ra3_factory", test_ra3_factory)
@@ -7304,6 +7305,66 @@ func test_web_budget() -> void:
 	check(waits == 1 and hits[0] == 1 and backdrop.tree_entered.get_connections().is_empty(), "an orphaned menu backdrop waits for the tree once instead of re-deferring every flush")
 	backdrop.queue_free()
 	host.free()
+
+func test_menu_backdrops() -> void:
+	var backdrop_script: GDScript = load("res://game/menu_backdrop.gd") as GDScript
+	backdrop_script.skip_export = true
+	backdrop_script._cache.clear()
+	var stills_ok: bool = true
+	var loops_ok: bool = true
+	var names: PackedStringArray = PackedStringArray([
+		"main_menu_2035", "campaign_menu_2035", "skirmish_menu_2035",
+		"multiplayer_menu_2035", "settings_menu_2035",
+	])
+	for stem: String in names:
+		var tex: Texture2D = backdrop_script.call("texture", stem) as Texture2D
+		if tex == null or tex.get_width() < 64:
+			stills_ok = false
+		if not FileAccess.file_exists("res://ui/menu/video/%s.ogv" % stem):
+			loops_ok = false
+	backdrop_script.skip_export = false
+	backdrop_script._cache.clear()
+	check(stills_ok, "five 2035 menu stills resolve from ui/menu")
+	check(loops_ok, "five 2035 Theora loops sit next to the stills")
+	var art: Control = backdrop_script.new() as Control
+	root.add_child(art)
+	await process_frame
+	var scrim: Node = art.find_child("MenuScrim", true, false)
+	check(scrim != null, "the left-rail scrim stays on the menu backdrop")
+	var want: Dictionary = {
+		"main": "main_menu_2035",
+		"campaign": "campaign_menu_2035",
+		"skirmish": "skirmish_menu_2035",
+		"multiplayer": "multiplayer_menu_2035",
+		"settings": "settings_menu_2035",
+	}
+	var mapped: bool = true
+	for which: Variant in want.keys():
+		art.call("set_screen", str(which))
+		art.call("set_faction", "")
+		if str(art.call("_stem")) != str(want[which]) or str(art.call("_video_stem")) != "":
+			mapped = false
+	check(mapped, "each menu screen maps to its 2035 still and skips video when headless")
+	art.queue_free()
+	var boot: Node = (load("res://game/boot.tscn") as PackedScene).instantiate()
+	root.add_child(boot)
+	await process_frame
+	var bg: Control = boot.find_child("MenuBackdrop", true, false) as Control
+	var main_ok: bool = bg != null and str(bg.call("_stem")) == "main_menu_2035"
+	(boot.find_child("TabCampaign", true, false) as Button).pressed.emit()
+	var camp_ok: bool = str(bg.call("_stem")) == "campaign_menu_2035"
+	(boot.find_child("TabSkirmish", true, false) as Button).pressed.emit()
+	var skirm_ok: bool = str(bg.call("_stem")) == "skirmish_menu_2035"
+	(boot.find_child("TabMultiplayer", true, false) as Button).pressed.emit()
+	var multi_ok: bool = str(bg.call("_stem")) == "multiplayer_menu_2035"
+	(boot.find_child("SettingsButton", true, false) as Button).pressed.emit()
+	var settings_bg: Control = boot.find_child("SettingsBackdrop", true, false) as Control
+	var set_ok: bool = settings_bg != null and str(settings_bg.call("_stem")) == "settings_menu_2035"
+	check(main_ok and camp_ok and skirm_ok and multi_ok and set_ok, "boot wires the five 2035 backdrops onto Main, Campaign, Skirmish, Multiplayer, and Settings")
+	var src: String = FileAccess.get_file_as_string("res://game/menu_backdrop.gd")
+	check(src.contains("OS.has_feature(\"web\")") and src.contains("main_menu_2035") and not src.contains("main-menu-loop"), "web keeps 2035 stills and does not start the old HTML5 loop")
+	boot.free()
+	await process_frame
 
 func _ra3_scene(faction: String, path: String) -> Node:
 	SMFront.faction_id = faction
