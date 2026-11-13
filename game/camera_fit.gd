@@ -1,5 +1,30 @@
 extends Node
 ## Portrait framing for an RTSCamera, using only its existing distance and apply().
+## Play distances come from the scale chart so campaign, skirmish and LAN share one isometric view.
+
+static func _cam_chart() -> Dictionary:
+	return SMBasePlan.chart().get("camera", {}) as Dictionary
+
+static func play_distance(kind: String) -> float:
+	var cam: Dictionary = _cam_chart()
+	if kind == "skirmish_large":
+		return float(cam.get("skirmish_large", 72.0))
+	if kind == "skirmish":
+		return float(cam.get("skirmish", 64.0))
+	if kind == "yard":
+		return float(cam.get("yard", 42.0))
+	return float(cam.get("company", 48.0))
+
+static func apply_play(cam: RTSCamera, kind: String) -> void:
+	if cam == null:
+		return
+	var chart: Dictionary = _cam_chart()
+	cam.distance = play_distance(kind)
+	cam.zoom_max = maxf(cam.zoom_max, float(chart.get("zoom_max", 96.0)))
+	cam.pitch_near = float(chart.get("pitch_near", 50.0))
+	cam.pitch_far = float(chart.get("pitch_far", 58.0))
+	if cam.is_inside_tree():
+		cam.apply()
 
 static func fit(cam: RTSCamera, viewport_size: Vector2) -> void:
 	if cam == null:

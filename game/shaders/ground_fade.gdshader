@@ -5,6 +5,7 @@ uniform sampler2D albedo_tex : source_color, repeat_enable, filter_linear_mipmap
 uniform float use_tex = 0.0;
 uniform float contrast = 1.0;
 uniform vec3 tone_mid : source_color = vec3(0.32, 0.24, 0.15);
+uniform float wear = 0.0;
 
 varying vec3 world_pos;
 
@@ -30,9 +31,14 @@ void vertex() {
 void fragment() {
 	vec3 tex = mix(vec3(1.0), texture(albedo_tex, UV).rgb, clamp(use_tex, 0.0, 1.0));
 	tex = mix(tone_mid, tex, clamp(contrast, 0.0, 1.0));
+	float n = hash21(floor(world_pos.xz * 3.2));
+	tex *= mix(0.9, 1.08, n);
+	if (wear > 0.01) {
+		float rut = abs(sin(world_pos.x * 0.55) * 0.35 + sin(world_pos.z * 0.22) * 0.65);
+		tex *= mix(1.0, mix(0.78, 1.0, rut), clamp(wear, 0.0, 1.0));
+	}
 	ALBEDO = tex * COLOR.rgb;
-	ROUGHNESS = 0.94;
-	float n = value_noise(world_pos.xz * 1.6);
-	float fringe = (n - 0.5) * 0.7;
+	ROUGHNESS = mix(0.94, 0.82, clamp(wear, 0.0, 1.0));
+	float fringe = (value_noise(world_pos.xz * 1.6) - 0.5) * 0.7;
 	ALPHA = clamp(COLOR.a + fringe, 0.0, 1.0) * 0.92;
 }

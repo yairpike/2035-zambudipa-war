@@ -9,6 +9,7 @@ const Models = preload("res://game/model_registry.gd")
 const World = preload("res://game/world_view.gd")
 const MapArt = preload("res://game/hud_minimap_art.gd")
 const Settings = preload("res://game/match_settings.gd")
+const Fit = preload("res://game/camera_fit.gd")
 
 var grid: SMDomainGrid
 var plan: SMMapPlan
@@ -153,9 +154,11 @@ func _world() -> void:
 	_cam.name = "Camera"
 	var span: Vector2 = Vector2(float(grid.cols) * grid.cell_size, float(grid.rows) * grid.cell_size)
 	_cam.bounds = Rect2(grid.origin.x - 8.0, grid.origin.z - 8.0, span.x + 16.0, span.y + 16.0)
-	_cam.distance = 32.0 if plan == null else (56.0 if map_id == "chiang_rai" else 52.0)
-	_cam.zoom_max = 90.0
 	_cam.edge_pan_px = 20.0
+	var cam_kind: String = "company"
+	if plan != null:
+		cam_kind = "skirmish_large" if map_id == "chiang_rai" or map_id == "showcase" else "skirmish"
+	Fit.apply_play(_cam, cam_kind)
 	_cam.focus = _default_home()
 	add_child(_cam)
 	_cam.current = true

@@ -21,8 +21,17 @@ static func scenery_class(id: String) -> String:
 static func fill() -> float:
 	return float(SMBasePlan.chart().get("building_fill", 0.88))
 
+static func lot_fill() -> float:
+	return float(SMBasePlan.chart().get("lot_fill", 0.72))
+
 static func height_ratio_max() -> float:
 	return float(SMBasePlan.chart().get("building_height_ratio_max", 1.35))
+
+## Uniform scale that sits a civilian building inside its street lot, leaving a readable pad.
+## Uses the longer mesh side against the shorter lot side so a 90-degree facade turn still fits.
+static func lot_scale(size: Vector3, lot_m: Vector2) -> float:
+	var room: float = minf(lot_m.x, lot_m.y) * lot_fill()
+	return room / maxf(maxf(size.x, size.z), 0.001)
 
 ## Uniform scale that brings an authored box to `target`. 1.0 when the target is empty.
 static func scale_for(size: Vector3, target: Dictionary) -> float:
