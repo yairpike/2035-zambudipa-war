@@ -7,8 +7,9 @@ const RAIN_SHADER = preload("res://game/shaders/monsoon_rain.gdshader")
 const Settings = preload("res://game/match_settings.gd")
 const Art = preload("res://game/served_art.gd")
 const Env = preload("res://game/env_dress.gd")
+const Scale = preload("res://game/model_scale.gd")
 const RAIN_CAP: int = 24
-const TREE_REACH: float = 80.0
+const TREE_REACH: float = 110.0
 ## A prop layer is recut once the camera focus drifts this far from where it was last cut.
 const CULL_STEP: float = 6.0
 const CANOPY_MIN: float = 5.0
@@ -112,14 +113,22 @@ static func dress(host: Node3D, grid: SMDomainGrid, profile: String, plan: SMMap
 					_flat(paddy, grid, cell, high + 0.05, Color(plan_shade, plan_shade, plan_shade, 1.0))
 					paddy_n += 1
 				continue
-			if domain != SMDomainGrid.Domain.LAND or _busy(profile, cell):
+			if _busy(profile, cell):
 				continue
-			if _dressing != null and not _dressing.clear_of_props(cell):
+			if domain != SMDomainGrid.Domain.LAND and domain != SMDomainGrid.Domain.CLIFF:
+				continue
+			if _dressing != null and domain != SMDomainGrid.Domain.CLIFF and not _tree_cell(cell):
 				continue
 			var roll: int = _hash(x, y)
+			if domain == SMDomainGrid.Domain.CLIFF:
+				if roll % 3 == 0:
+					trees.append(_xf(grid, cell, high, roll))
+				elif roll % 5 == 0:
+					palms.append(_xf(grid, cell, high, roll))
+				continue
 			if bank and roll % 7 == 0:
 				palms.append(_xf(grid, cell, high, roll))
-			elif not bank and roll % (5 if _dressing != null else 11) == 0:
+			elif not bank and roll % (3 if _dressing != null else 11) == 0:
 				trees.append(_xf(grid, cell, high, roll))
 			var rice: bool = profile == "mekong" and roll % 3 == 0 or roll % 23 == 1
 			if rice and not track and not bank and paddy_n < 48 and not _bridge_cell(cell):
@@ -159,16 +168,25 @@ static func dress(host: Node3D, grid: SMDomainGrid, profile: String, plan: SMMap
 	_dressing = null
 
 ## One MultiMesh per model: "Town_<id>" for lots, "Orchard_<id>" for planted rows. Missing models fall back to boxes until the web pack lands.
+## Each house is scaled to its lot so the facade sits on a visible pad and never spills into the street.
 static func _settle(host: Node3D, grid: SMDomainGrid, layout: SMMapPlan) -> void:
 	if layout == null:
 		return
 	var built: Dictionary = {}
+	var pads: SurfaceTool = _begin(_ground("pad", false))
+	var pad_n: int = 0
 	for lot: Dictionary in layout.lots:
 		if str(lot["kind"]) == "landmark":
 			continue
 		var r: Rect2i = lot["rect"] as Rect2i
-		var at: Vector3 = grid.origin + Vector3((float(r.position.x) + float(r.size.x) * 0.5) * grid.cell_size, 0.22, (float(r.position.y) + float(r.size.y) * 0.5) * grid.cell_size)
-		_gather(built, "Town_%s" % lot["id"], Transform3D(Basis(Vector3.UP, deg_to_rad(SMMapPlan.turn_for(str(lot["id"]), float(lot["yaw"])))), at))
+		_pad_lot(pads, grid, r)
+		pad_n += 1
+		var key: String = "Town_%s" % lot["id"]
+		if not built.has(key):
+			built[key] = []
+		(built[key] as Array).append(lot)
+	if pad_n > 0:
+		_commit(host, "LotPads", pads, true)
 	for tree: Dictionary in layout.groves:
 		var cell: Vector2i = tree["cell"] as Vector2i
 		if not grid.in_bounds(cell) or grid.domain_at_cell(cell) != SMDomainGrid.Domain.LAND:
@@ -182,9 +200,33 @@ static func _settle(host: Node3D, grid: SMDomainGrid, layout: SMMapPlan) -> void
 		if mesh == null:
 			mesh = _prop("tree" if key.begins_with("Orchard_") else "house", "")
 		var spots: Array[Transform3D] = []
-		spots.assign(built[key] as Array)
+		if key.begins_with("Town_"):
+			var box: AABB = mesh.get_aabb() if mesh != null else AABB()
+			for row: Variant in built[key] as Array:
+				var lot: Dictionary = row as Dictionary
+				var r: Rect2i = lot["rect"] as Rect2i
+				var at: Vector3 = grid.origin + Vector3((float(r.position.x) + float(r.size.x) * 0.5) * grid.cell_size, 0.22, (float(r.position.y) + float(r.size.y) * 0.5) * grid.cell_size)
+				var s: float = 1.0
+				if mesh != null:
+					s = Scale.lot_scale(box.size, Vector2(float(r.size.x), float(r.size.y)) * grid.cell_size)
+				var yaw: float = deg_to_rad(SMMapPlan.turn_for(str(lot["id"]), float(lot["yaw"])))
+				var xf := Transform3D.IDENTITY
+				xf.basis = Basis(Vector3.UP, yaw).scaled(Vector3(s, s, s))
+				xf.origin = at
+				spots.append(xf)
+		else:
+			spots.assign(built[key] as Array)
 		_multi(host, key, mesh, spots)
 		_tag_prop(host, key, model)
+
+static func _pad_lot(st: SurfaceTool, grid: SMDomainGrid, r: Rect2i) -> void:
+	var pad: float = 0.16
+	var x0: float = grid.origin.x + float(r.position.x) * grid.cell_size + pad
+	var z0: float = grid.origin.z + float(r.position.y) * grid.cell_size + pad
+	var x1: float = grid.origin.x + float(r.end.x) * grid.cell_size - pad
+	var z1: float = grid.origin.z + float(r.end.y) * grid.cell_size - pad
+	var y: float = 0.26
+	_quad(st, Vector3(x0, y, z0), Vector3(x1, y, z0), Vector3(x1, y, z1), Vector3(x0, y, z1), Color(1.0, 1.0, 1.0, 1.0))
 
 static func _gather(built: Dictionary, key: String, xf: Transform3D) -> void:
 	if not built.has(key):
@@ -366,6 +408,17 @@ static func _track(profile: String, cell: Vector2i) -> bool:
 	if _dressing != null and _dressing.on_street(cell):
 		return true
 	return cell.y % 8 == 3
+
+## Leftover land on a dressed map: not a lot, not a street, not a build pad. Jungle can sit in the start ring.
+static func _tree_cell(cell: Vector2i) -> bool:
+	if _dressing == null:
+		return true
+	if _dressing.paved.has(cell) or not _dressing.lot_at(cell).is_empty():
+		return false
+	for r: Rect2i in _dressing.opens:
+		if r.has_point(cell):
+			return false
+	return true
 
 static func _bridge_cell(cell: Vector2i) -> bool:
 	if _plan != null:
@@ -628,6 +681,8 @@ static func _ground(stem: String, tint: bool, fade: bool = false) -> ShaderMater
 	if stem == "mud":
 		mat.set_shader_parameter("contrast", 0.28)
 		mat.set_shader_parameter("tone_mid", Color(0.32, 0.24, 0.15))
+	if stem == "road" or stem == "pad":
+		mat.set_shader_parameter("wear", 1.0 if stem == "road" else 0.35)
 	_prop_cache[key] = mat
 	return mat
 

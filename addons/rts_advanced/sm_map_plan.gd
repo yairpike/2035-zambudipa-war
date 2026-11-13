@@ -77,15 +77,49 @@ static func dressing(mission_id: String) -> SMMapPlan:
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if mission_id != "" and FileAccess.file_exists(path) else null
 	var plan: SMMapPlan = null
 	if parsed is Dictionary:
-		var d: Dictionary = (parsed as Dictionary).duplicate()
+		var d: Dictionary = (parsed as Dictionary).duplicate(true)
 		d["symmetry"] = "none"
-		if not d.has("cols"):
-			d["cols"] = 36
-			d["rows"] = 24
+		_fit_campaign_canvas(mission_id, d)
 		plan = SMMapPlan.new()
 		plan._read(mission_id, d)
 	_cache[key] = plan
 	return plan
+
+## Early missions stay tight. Later ones grow so two bases, flanks and a middle can read.
+static func campaign_canvas(mission_id: String) -> Vector2i:
+	match mission_id:
+		"kokang":
+			return Vector2i(28, 18)
+		"tachileik", "mae_sai":
+			return Vector2i(44, 30)
+		"shwe_kokko", "operation_1027", "andaman":
+			return Vector2i(48, 32)
+		"ghosts_of_patani", "kilometer_watch":
+			return Vector2i(52, 36)
+		"black_haze", "archipelago_rising", "wrath_of_the_garuda", "fog_over_pakbeng", "keng_tung":
+			return Vector2i(56, 40)
+		"plain_of_jars", "tonle_sap":
+			return Vector2i(60, 42)
+		"shattered_monsoon":
+			return Vector2i(64, 44)
+		_:
+			return Vector2i(40, 28)
+
+static func _fit_campaign_canvas(mission_id: String, d: Dictionary) -> void:
+	if str(d.get("layout", "")) != "":
+		return
+	var size: Vector2i = campaign_canvas(mission_id)
+	var cols: int = maxi(int(d.get("cols", size.x)), size.x)
+	var rows: int = maxi(int(d.get("rows", size.y)), size.y)
+	d["cols"] = cols
+	d["rows"] = rows
+	if cols <= 36 and rows <= 24:
+		return
+	var towns: Array = d.get("towns", []) as Array
+	if towns.size() > 0 and towns[0] is Dictionary:
+		(towns[0] as Dictionary)["rect"] = [1, 1, cols - 2, rows - 2]
+	if not d.has("grid"):
+		d["grid"] = {"pitch": [12, 12], "at": [6, 6]}
 
 ## Local yaw of a building model's facade from "fronts" in res://data/model_scale.json: 0 is +Z, 90 +X, 180 -Z, 270 -X.
 ## Procedural meshes and unlisted models face -Z.
@@ -235,6 +269,9 @@ func _read(map_id: String, d: Dictionary) -> void:
 	cell_size = float(d.get("cell", 4.0))
 	symmetry = str(d.get("symmetry", "rot180"))
 	origin = Vector3(-float(cols) * cell_size * 0.5, 0.0, -float(rows) * cell_size * 0.5)
+	# Campaign dressings pin the origin so scripted world positions and the rally stay put while the canvas grows east and south.
+	if symmetry == "none" and str(d.get("layout", "")) == "" and cols >= 36:
+		origin = Vector3(-72.0, 0.0, -48.0)
 	ground = _terrain(d)
 	var side_b: Array[Vector2i] = []
 	for raw: Variant in d.get("starts", []):

@@ -5,6 +5,7 @@ const Fx = preload("res://game/fx_view.gd")
 const Forms = preload("res://game/unit_meshes.gd")
 const Ground = preload("res://game/ground_view.gd")
 const StageView = preload("res://game/stage_view.gd")
+const Fit = preload("res://game/camera_fit.gd")
 ## Phillips Channel. Two land masses, a deep channel, shallow crossings.
 ## The far shore builds, expands, and attacks.
 
@@ -112,10 +113,9 @@ func _world() -> void:
 	var cam: RTSCamera = RTSCamera.new()
 	cam.name = "Camera"
 	cam.bounds = Rect2(-112.0, -68.0, 224.0, 136.0)
-	cam.distance = 32.0
-	cam.zoom_max = 90.0
 	cam.edge_pan_px = 20.0
 	cam.focus = Vector3(-58, 0, -12)
+	Fit.apply_play(cam, "company")
 	add_child(cam)
 	cam.current = true
 

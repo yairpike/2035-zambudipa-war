@@ -3,6 +3,7 @@ extends Node3D
 const Power = preload("res://addons/rts_advanced/sm_power.gd")
 const Fx = preload("res://game/fx_view.gd")
 const Ground = preload("res://game/ground_view.gd")
+const Fit = preload("res://game/camera_fit.gd")
 ## Shared GTFC skirmish. The map id picks the terrain. Controls match Sop Ruak.
 
 @export var map_id: String = "burma_road"
@@ -187,9 +188,8 @@ func _world() -> void:
 	cam.name = "Camera"
 	var span: Vector2 = Vector2(float(grid.cols) * grid.cell_size, float(grid.rows) * grid.cell_size)
 	cam.bounds = Rect2(grid.origin.x - 8.0, grid.origin.z - 8.0, span.x + 16.0, span.y + 16.0)
-	cam.distance = 60.0 if map_id == "showcase" else (56.0 if map_id == "chiang_rai" else 52.0)
-	cam.zoom_max = 90.0
 	cam.edge_pan_px = 20.0
+	Fit.apply_play(cam, "skirmish_large" if map_id == "showcase" or map_id == "chiang_rai" else "skirmish")
 	cam.focus = grid.cell_center(_yard_cell())
 	add_child(cam)
 	cam.current = true
