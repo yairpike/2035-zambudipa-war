@@ -2,11 +2,11 @@
 
 ## Direct Download Links
 
-- **macOS (Apple Silicon and Intel):** [ASEAN-2031-macOS.dmg (83.0 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-macOS.dmg)
-- **Windows (64-bit):** [ASEAN-2031-Windows.exe (49.5 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Windows.exe)
-- **Linux (x86_64):** [ASEAN-2031-Linux-x86_64.AppImage (49.2 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Linux-x86_64.AppImage)
-- **Android (ARM64):** [ASEAN-2031-Android.apk (69.2 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Android.apk)
-- **iOS sideload (AltStore / SideStore / Sideloadly):** [ASEAN-2031-iOS.ipa (42.7 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-iOS.ipa)
+- **macOS (Apple Silicon and Intel):** [ASEAN-2031-macOS.dmg (85.7 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-macOS.dmg)
+- **Windows (64-bit):** [ASEAN-2031-Windows.exe (52.3 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Windows.exe)
+- **Linux (x86_64):** [ASEAN-2031-Linux-x86_64.AppImage (51.9 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Linux-x86_64.AppImage)
+- **Android (ARM64):** [ASEAN-2031-Android.apk (72.8 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Android.apk)
+- **iOS sideload (AltStore / SideStore / Sideloadly):** [ASEAN-2031-iOS.ipa (46.3 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-iOS.ipa)
 
 *(You can also click **DOWNLOAD GAME** on the main menu of the [web version](https://yairpike.github.io/2035-zambudipa-war/).)*
 
@@ -16,13 +16,13 @@ Download the one file for your device, then open it. The file names still start 
 
 | System | File | Size |
 | --- | --- | --- |
-| macOS (Apple Silicon and Intel) | [`ASEAN-2031-macOS.dmg`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-macOS.dmg) | 83.0 MiB |
-| Windows (64-bit) | [`ASEAN-2031-Windows.exe`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Windows.exe) | 49.5 MiB |
-| Linux (x86_64) | [`ASEAN-2031-Linux-x86_64.AppImage`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Linux-x86_64.AppImage) | 49.2 MiB |
-| Android 7.0 or later (ARM64, also x86_64) | [`ASEAN-2031-Android.apk`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Android.apk) | 69.2 MiB |
-| iPhone and iPad, iOS 16 or later (sideload) | [`ASEAN-2031-iOS.ipa`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-iOS.ipa) | 42.7 MiB |
+| macOS (Apple Silicon and Intel) | [`ASEAN-2031-macOS.dmg`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-macOS.dmg) | 85.7 MiB |
+| Windows (64-bit) | [`ASEAN-2031-Windows.exe`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Windows.exe) | 52.3 MiB |
+| Linux (x86_64) | [`ASEAN-2031-Linux-x86_64.AppImage`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Linux-x86_64.AppImage) | 51.9 MiB |
+| Android 7.0 or later (ARM64, also x86_64) | [`ASEAN-2031-Android.apk`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Android.apk) | 72.8 MiB |
+| iPhone and iPad, iOS 16 or later (sideload) | [`ASEAN-2031-iOS.ipa`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-iOS.ipa) | 46.3 MiB |
 
-The first time the game opens, it downloads its music, voices, 3D models, and cinematics (250 MiB on a computer, 258 MiB on a phone or tablet) with a progress bar. On a computer the game then restarts by itself. On a phone or tablet, close the game and open it again when the download says it is complete. This happens only once. Press Play now to start right away with simple models and no sound while the download finishes in the background. Use Wi-Fi on a phone.
+The first time the game opens, it downloads its music, voices, 3D models, and cinematics (250 MiB on a computer, 259 MiB on a phone or tablet) with a progress bar. On a computer the game then restarts by itself. On a phone or tablet, close the game and open it again when the download says it is complete. This happens only once. Press Play now to start right away with simple models and no sound while the download finishes in the background. Use Wi-Fi on a phone.
 
 ## macOS
 
@@ -85,12 +85,12 @@ The match uses port 7777. The discovery beacon uses port 7778. Allow both throug
 
 ## Checksums
 
-Built from commit `a09f9ff8adfa418383a0c0174632a5974c0647c6` (`a09f9ff` on `cursor/eva-hud-installers-570e`: `cursor/web-playtest` at `d902bd3` plus these size labels), with the fixed menus, rebalanced HUD, 50% default music volume, and 250 EVA voice callouts. The first-launch download comes from GitHub Pages at `f914c11`. SHA-256:
+Built from commit `e57463490ee8897ccc45fbd0cda7174e77dbc2a1` (`e574634` on `cursor/web-playtest`: isometric maps at `eb1f5b8` plus these size labels). The first-launch download comes from GitHub Pages at `8899e11`. SHA-256:
 
-- `ASEAN-2031-macOS.dmg`: `f7fd1146676de2a3cc48facbedcf313f1d691cf4fa232b134b42fbc077fc35b5`
-- `ASEAN-2031-Windows.exe`: `9f051bc1cae0073120f72b1519427a3759b747f67803e1a7af478e36bda6e2bf`
-- `ASEAN-2031-Linux-x86_64.AppImage`: `e6dad13485aaa2b4b009ede3639b61f2fb9dd728931955c693202b9637660863`
-- `ASEAN-2031-Android.apk`: `f94230b2514cbe9bfc2462f7bec11d74dd19bb16aba6de61a6308af70bedbdf7`
-- `ASEAN-2031-iOS.ipa`: `015e5f5966a9b5d66c345ded840c59eaf1ca80e57beeb8e533acccd4e27cbb56`
+- `ASEAN-2031-macOS.dmg`: `06857d582d70bade22e4aef7d951fe709314a70e58f88547e5cec04735a52d10`
+- `ASEAN-2031-Windows.exe`: `a6dd2792b7addc656ccfe0cd224b13feb176b8097f3e5aa4b500b2ad725be2d3`
+- `ASEAN-2031-Linux-x86_64.AppImage`: `9bedf284ffb74507f23e4fdd35e041796304e425a7d32d9a2ac2dd5a68de36ce`
+- `ASEAN-2031-Android.apk`: `3d953eac536c47e21f74ac5b44b81193583ad6783b2b6ed678abdcc4741aeacd`
+- `ASEAN-2031-iOS.ipa`: `c97842f37f29e9031b6c18eeb5f292017307cbc59a65a3099bd01f8bb106ac6a`
 
 The Android signing certificate SHA-256 is `68a73898d947a4b7fc9068608c37e42b820607c69adef901494ecc775c94122b`.
