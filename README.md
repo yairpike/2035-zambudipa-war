@@ -1,6 +1,4 @@
-<p align="center"><img src="brand/boot_splash.png" alt="2035 - Zambudipa War: three fronts, one monsoon" width="100%"></p>
-
-<p align="center"><img src="brand/wordmark-vanguard-1024.png" alt="2035 - Zambudipa War" width="560"></p>
+<p align="center"><img src="brand/boot_splash.webp" alt="2035 - Zambudipa War" width="100%"></p>
 
 <p align="center">
   <a href="https://yairpike.github.io/2035-zambudipa-war/"><img src="https://img.shields.io/badge/%E2%96%B6%20Play%20Now%20in%20Browser-yairpike.github.io%2F2035--zambudipa--war-d4a017?style=for-the-badge" alt="Play Now in Browser"></a>
