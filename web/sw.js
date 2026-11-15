@@ -1,4 +1,4 @@
-const CACHE = "shattered-monsoon-v5";
+const CACHE = "shattered-monsoon-v6";
 
 // The page, the engine, and the pack. Missing files are skipped so one
 // absent icon does not abort install.
