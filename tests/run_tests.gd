@@ -129,7 +129,20 @@ func _run() -> void:
 	await H.section("test_placement_feedback", test_placement_feedback)
 	await H.section("test_objective_guidance", test_objective_guidance)
 	await H.section("test_campaign_pressure", test_campaign_pressure)
-	preload("res://game/render_budget.gd").shutdown(self)
+	var probe: Node = Node.new()
+	probe.name = "QuitProbe"
+	root.add_child(probe)
+	var prior_scene: Node = current_scene
+	current_scene = probe
+	var Budget: GDScript = preload("res://game/render_budget.gd")
+	Budget.release_caches()
+	var live: bool = is_instance_valid(probe) and probe.is_inside_tree() and current_scene == probe
+	current_scene = prior_scene
+	probe.free()
+	var close_src: String = FileAccess.get_file_as_string("res://game/render_budget.gd")
+	var boot_src: String = FileAccess.get_file_as_string("res://game/boot.gd")
+	check(live and close_src.contains("func request_quit") and not close_src.contains("scene.free()") and boot_src.contains("request_quit(get_tree())"), "quit releases caches and leaves the live scene for the engine to exit")
+	Budget.shutdown(self)
 	quit(H.finish())
 
 func test_scripts() -> void:
@@ -4993,12 +5006,12 @@ func test_sm_guide() -> void:
 	check(lesson_label != null and lesson_label.visible and lesson_label.text == lesson, "kokang shows the first-mission lesson")
 	var raid_brief: Label = raid.find_child("Briefing", true, false) as Label
 	var raid_boot: Button = raid.find_child("MissionBoot", true, false) as Button
-	check(raid_brief != null and raid_brief.position.x >= 210.0 and raid_brief.size.x <= 820.0 and raid_brief.size.y >= 60.0 and raid_brief.autowrap_mode == TextServer.AUTOWRAP_WORD_SMART and raid_brief.clip_text, "the kokang briefing clears the minimap and wraps")
+	check(raid_brief != null and raid_brief.position.x >= 64.0 and raid_brief.position.x <= 96.0 and raid_brief.position.y < 180.0 and raid_brief.size.x <= 340.0 and raid_brief.size.y <= 40.0 and raid_brief.position.x + raid_brief.size.x < 460.0 and raid_brief.clip_text, "the kokang briefing is a compact line at the top left")
 	var raid_status: Control = raid.find_child("Status", true, false) as Control
 	var brief_box: Rect2 = raid_brief.get_global_rect() if raid_brief != null else Rect2()
 	var status_box: Rect2 = raid_status.get_global_rect() if raid_status != null else Rect2()
 	var brief_hit: Rect2 = brief_box.intersection(status_box)
-	check(raid_status != null and brief_box.size.y >= 60.0 and status_box.size.y >= 8.0 and (brief_hit.size.x < 1.0 or brief_hit.size.y < 1.0), "the kokang briefing lines do not overlap")
+	check(raid_status != null and brief_box.size.y >= 8.0 and brief_box.size.y <= 40.0 and status_box.size.y >= 8.0 and (brief_hit.size.x < 1.0 or brief_hit.size.y < 1.0), "the kokang briefing lines do not overlap")
 	var raid_hud: SMHud = raid.get("hud") as SMHud
 	var raid_coach: Node = raid.get_node_or_null("MatchCoach")
 	var raid_toast: Control = raid.find_child("ToastLane", true, false) as Control
@@ -8192,6 +8205,10 @@ func test_objective_guidance() -> void:
 	var net: Label = scene.find_child("StageNet", true, false) as Label
 	var face: Control = scene.find_child("StageFace", true, false) as Control
 	check(directive != null and directive.text.begins_with("Stage 1/3: ") and net != null and face != null, "a tactical transmission banner carries a portrait and a one-line directive")
+	var banner: Control = scene.find_child("StageBanner", true, false) as Control
+	var tracker: Control = scene.find_child("StageTracker", true, false) as Control
+	var stacked: bool = banner != null and tracker != null and banner.position.x <= 80.0 and banner.position.x + banner.size.x < 460.0 and tracker.position.x <= 80.0 and tracker.position.x + tracker.size.x < 460.0
+	check(stacked, "the transmission and objective list stay in a compact top-left stack")
 	view.call("drive", 0.1)
 	var beacon: Node3D = scene.get_node_or_null("ObjectiveBeacon") as Node3D
 	check(beacon != null and beacon.visible and beacon.get_node_or_null("Arrow") != null and beacon.get_node_or_null("Ring") != null and field.beacon_at != Vector3.INF, "a 3D beacon and the minimap ring mark the objective")

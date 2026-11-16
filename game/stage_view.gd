@@ -261,8 +261,8 @@ func _chrome() -> void:
 	_banner = PanelContainer.new()
 	_banner.name = "StageBanner"
 	_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_banner.position = Vector2(view.x * 0.35, view.y * 0.41)
-	_banner.custom_minimum_size = Vector2(minf(560.0, view.x * 0.36), 0.0)
+	_banner.position = Vector2(72.0, 108.0)
+	_banner.custom_minimum_size = Vector2(minf(308.0, maxf(180.0, view.x - 360.0)), 0.0)
 	var plate: StyleBoxFlat = StyleBoxFlat.new()
 	plate.bg_color = Color(0.05, 0.06, 0.08, 0.86)
 	plate.border_color = Color(0.95, 0.72, 0.25, 0.9)
@@ -278,7 +278,7 @@ func _chrome() -> void:
 	_banner.add_child(strip)
 	var frame: Panel = Panel.new()
 	frame.name = "StageFace"
-	frame.custom_minimum_size = Vector2(68.0, 68.0)
+	frame.custom_minimum_size = Vector2(40.0, 40.0)
 	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var fplate: StyleBoxFlat = StyleBoxFlat.new()
 	fplate.bg_color = Color(0.1, 0.12, 0.1, 0.95)
@@ -315,7 +315,7 @@ func _chrome() -> void:
 	col.add_child(head)
 	_banner_speaker = Label.new()
 	_banner_speaker.name = "StageSpeaker"
-	_banner_speaker.add_theme_font_size_override("font_size", 17)
+	_banner_speaker.add_theme_font_size_override("font_size", 13)
 	_banner_speaker.add_theme_color_override("font_color", Color(0.98, 0.78, 0.3))
 	head.add_child(_banner_speaker)
 	var net: Label = Label.new()
@@ -336,18 +336,24 @@ func _chrome() -> void:
 	_banner_directive = Label.new()
 	_banner_directive.name = "StageDirective"
 	_banner_directive.uppercase = true
-	_banner_directive.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_banner_directive.custom_minimum_size = Vector2(320.0, 0.0)
-	_banner_directive.add_theme_font_size_override("font_size", 18)
+	_banner_directive.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_banner_directive.clip_text = true
+	_banner_directive.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_banner_directive.max_lines_visible = 1
+	_banner_directive.custom_minimum_size = Vector2(180.0, 0.0)
+	_banner_directive.add_theme_font_size_override("font_size", 13)
 	_banner_directive.add_theme_color_override("font_color", Color(1.0, 0.92, 0.6))
 	_banner_directive.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))
 	_banner_directive.add_theme_constant_override("outline_size", 3)
 	col.add_child(_banner_directive)
 	_banner_line = Label.new()
 	_banner_line.name = "StageLine"
-	_banner_line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_banner_line.custom_minimum_size = Vector2(320.0, 0.0)
-	_banner_line.add_theme_font_size_override("font_size", 18)
+	_banner_line.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_banner_line.clip_text = true
+	_banner_line.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_banner_line.max_lines_visible = 1
+	_banner_line.custom_minimum_size = Vector2(180.0, 0.0)
+	_banner_line.add_theme_font_size_override("font_size", 13)
 	col.add_child(_banner_line)
 	col.add_child(hint)
 	_banner.visible = false
@@ -355,8 +361,8 @@ func _chrome() -> void:
 	var tracker: PanelContainer = PanelContainer.new()
 	tracker.name = "StageTracker"
 	tracker.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	tracker.position = Vector2(72.0, 172.0)
-	tracker.custom_minimum_size = Vector2(300.0, 0.0)
+	tracker.position = Vector2(72.0, 168.0)
+	tracker.custom_minimum_size = Vector2(308.0, 0.0)
 	var tplate: StyleBoxFlat = StyleBoxFlat.new()
 	tplate.bg_color = Color(0.05, 0.06, 0.08, 0.82)
 	tplate.content_margin_left = 10.0
@@ -376,16 +382,20 @@ func _chrome() -> void:
 	for n: int in 3:
 		var row: Label = Label.new()
 		row.name = "StageRow%d" % (n + 1)
-		row.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		row.custom_minimum_size = Vector2(300.0, 0.0)
-		row.add_theme_font_size_override("font_size", 15)
+		row.autowrap_mode = TextServer.AUTOWRAP_OFF
+		row.clip_text = true
+		row.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		row.custom_minimum_size = Vector2(280.0, 18.0)
+		row.add_theme_font_size_override("font_size", 13)
 		list.add_child(row)
 		_rows.append(row)
 	_bonus_row = Label.new()
 	_bonus_row.name = "StageBonusRow"
-	_bonus_row.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_bonus_row.custom_minimum_size = Vector2(300.0, 0.0)
-	_bonus_row.add_theme_font_size_override("font_size", 15)
+	_bonus_row.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_bonus_row.clip_text = true
+	_bonus_row.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_bonus_row.custom_minimum_size = Vector2(280.0, 18.0)
+	_bonus_row.add_theme_font_size_override("font_size", 13)
 	list.add_child(_bonus_row)
 	var ping: Button = Button.new()
 	ping.name = "StagePingButton"
@@ -399,9 +409,11 @@ func _chrome() -> void:
 	_tip = Label.new()
 	_tip.name = "StageWeaponTip"
 	_tip.text = "[F] Switch weapon mode (primary / secondary)"
-	_tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_tip.custom_minimum_size = Vector2(300.0, 0.0)
-	_tip.add_theme_font_size_override("font_size", 15)
+	_tip.autowrap_mode = TextServer.AUTOWRAP_OFF
+	_tip.clip_text = true
+	_tip.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_tip.custom_minimum_size = Vector2(280.0, 18.0)
+	_tip.add_theme_font_size_override("font_size", 12)
 	_tip.add_theme_color_override("font_color", Color(0.55, 0.95, 1.0))
 	_tip.visible = false
 	list.add_child(_tip)
@@ -410,18 +422,8 @@ func _chrome() -> void:
 func _refresh() -> void:
 	if _rows.is_empty():
 		return
-	var layer: CanvasLayer = _host.get("ui_layer") as CanvasLayer if _host != null else null
-	if layer != null:
-		var tracker: Control = layer.get_node_or_null("StageTracker") as Control
-		var dialogue: Control = layer.find_child("SetDialogue", true, false) as Control
-		var brief: Control = layer.find_child("Briefing", true, false) as Control
-		if tracker != null:
-			var top_y: float = 160.0
-			if brief != null and brief.visible:
-				top_y = maxf(top_y, brief.position.y + brief.size.y + 38.0)
-			if dialogue != null and dialogue.visible:
-				top_y = maxf(top_y, dialogue.position.y + dialogue.size.y + 8.0)
-			tracker.position = Vector2(72.0, top_y)
+	# The match HUD stacks the tracker under the top-left brief. Leaving it here
+	# would push the list down the map whenever a transmission is on screen.
 	for n: int in 3:
 		var stage: int = n + 1
 		var row: Label = _rows[n]

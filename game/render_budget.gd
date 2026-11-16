@@ -88,7 +88,11 @@ static func install() -> void:
 	_textures = ModelTextures.new()
 	GLTFDocument.register_gltf_document_extension(_textures)
 
-static func shutdown(tree: SceneTree = null) -> void:
+## Drop static caches. Does not free the live scene: window close and the Quit
+## button run while the macOS run-loop observer is still dispatching that event,
+## and freeing the scene there calls a native method on a null instance
+## (std::recursive_mutex at this+0x138).
+static func release_caches() -> void:
 	if _textures != null:
 		GLTFDocument.unregister_gltf_document_extension(_textures)
 		_textures = null
@@ -96,12 +100,16 @@ static func shutdown(tree: SceneTree = null) -> void:
 	preload("res://game/env_dress.gd").clear_cache()
 	preload("res://game/mission_kokang.gd").clear_cache()
 	SMLang.uninstall()
-	if tree != null and tree.current_scene != null and is_instance_valid(tree.current_scene):
-		var scene: Node = tree.current_scene
+
+static func request_quit(tree: SceneTree) -> void:
+	release_caches()
+	if tree != null:
+		tree.quit()
+
+static func shutdown(tree: SceneTree = null) -> void:
+	release_caches()
+	if tree != null and tree.current_scene != null and not is_instance_valid(tree.current_scene):
 		tree.current_scene = null
-		if scene.get_parent() != null:
-			scene.get_parent().remove_child(scene)
-		scene.free()
 
 static func governing() -> bool:
 	if governs >= 0:
@@ -167,8 +175,6 @@ func _apply_view() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		shutdown(get_tree())
-		if get_tree() != null:
-			get_tree().quit()
+		request_quit(get_tree())
 	elif what == NOTIFICATION_PREDELETE:
-		shutdown()
+		release_caches()
