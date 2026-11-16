@@ -2280,7 +2280,8 @@ func test_sm_hud() -> void:
 	var trained: Button = scene.find_child("Train_militia", true, false) as Button
 	var ability: Button = scene.find_child("AbilityButton", true, false) as Button
 	var boot_back: Button = scene.find_child("MissionBoot", true, false) as Button
-	check(built != null and trained != null and ability != null and ability.text == "Ability (F)" and boot_back != null and boot_back.text == "Boot menu" and boot_back.visible, "phillips can build, train, use F, and return to the menu")
+	var abort: Button = scene.find_child("PauseQuit", true, false) as Button
+	check(built != null and trained != null and ability != null and ability.text == "Ability (F)" and boot_back != null and not boot_back.visible and abort != null and abort.text == "Abort", "phillips can build, train, and use F; Abort lives in the match menu")
 	var deck: SMHud = scene.get("hud") as SMHud
 	check(scene.find_child("PowerFill", true, false) != null and scene.find_child("RepairButton", true, false) != null and scene.find_child("SellButton", true, false) != null and scene.find_child("TabInfantry", true, false) != null, "the sidebar shows power, repair, sell, and build tabs")
 	if deck != null:
@@ -3675,7 +3676,7 @@ func test_campaign_stages() -> void:
 		var focus_before: Vector3 = cam.focus if cam != null else Vector3.ZERO
 		view.call("drive", 0.1)
 		var cam_free: bool = cam == null or cam.focus.distance_to(focus_before) < 0.01
-		check(banner != null and banner.visible and line != null and line.text != "" and pinged and cam_free, "%s calls the escalation on the banner and the minimap without moving the camera" % id)
+		check(banner != null and not banner.visible and line != null and line.text != "" and pinged and cam_free, "%s keeps the escalation behind Details and pings the minimap without moving the camera" % id)
 		_kill_duty(field, "counter")
 		arc.tick(0.1, true)
 		view.call("drive", 0.1)
@@ -4169,10 +4170,14 @@ func test_sm_story() -> void:
 		if id == "kokang":
 			check(_duty_units(field_now, "recon").size() >= 2, "kokang posts Orlan recon over the pits")
 			var still: TextureRect = scene.find_child("BriefingStill", true, false) as TextureRect
-			check(still != null and still.texture != null and still.visible, "kokang shows the briefing still")
+			check(still != null and still.texture != null and not still.visible, "kokang keeps the briefing still behind Details")
 		if id == "ghosts_of_patani" or id == "fog_over_pakbeng":
 			var mission_still: TextureRect = scene.find_child("BriefingStill", true, false) as TextureRect
-			check(mission_still != null and mission_still.texture != null and mission_still.visible, "%s shows the briefing still" % id)
+			check(mission_still != null and mission_still.texture != null and not mission_still.visible, "%s keeps the briefing still behind Details" % id)
+		if id == "fog_over_pakbeng":
+			var mission_title: Label = scene.find_child("MissionHeading", true, false) as Label
+			var title_face: Font = mission_title.get_theme_font("font") if mission_title != null else null
+			check(mission_title != null and mission_title.text == "Fog Over Pakbeng" and title_face != null and str(title_face.resource_path).contains("OperationNapalm") and mission_title.theme_type_variation == &"", "the mission title uses a font that draws the name")
 		if id == "tachileik":
 			check(story_now.has_caravan(), "tachileik fields the jade caravan")
 		if id == "shwe_kokko":
@@ -4829,7 +4834,10 @@ func test_sm_guide() -> void:
 	if overlay != null:
 		overlay.visible = false
 	var short_line: Label = scene.find_child("MatchHint", true, false) as Label
-	check(short_line != null and overlay != null and short_line.visible and not overlay.is_ancestor_of(short_line) and short_line.text.length() <= 32 and not short_line.text.contains("Shift"), "one short line stays on screen")
+	var bar_guide: Button = scene.find_child("BarGuide", true, false) as Button
+	var bar_protocols: Button = scene.find_child("BarProtocols", true, false) as Button
+	var bar: Node = scene.find_child("TopBar", true, false)
+	check(short_line != null and overlay != null and not overlay.is_ancestor_of(short_line) and short_line.text.length() <= 32 and not short_line.is_visible_in_tree() and bar_guide != null and bar_protocols != null and bar != null and bar.is_ancestor_of(bar_guide) and bar.is_ancestor_of(bar_protocols), "H Guide and P Protocols sit in the top bar")
 	var column: Control = scene.find_child("CommandColumn", true, false) as Control
 	check(column != null and column.size.x <= 280.0 and column.size.x >= 220.0, "the build column fits the cameos")
 	var roster_scroll: ScrollContainer = column as ScrollContainer
@@ -5006,28 +5014,31 @@ func test_sm_guide() -> void:
 	check(lesson_label != null and lesson_label.visible and lesson_label.text == lesson, "kokang shows the first-mission lesson")
 	var raid_brief: Label = raid.find_child("Briefing", true, false) as Label
 	var raid_boot: Button = raid.find_child("MissionBoot", true, false) as Button
-	check(raid_brief != null and raid_brief.position.x >= 64.0 and raid_brief.position.x <= 96.0 and raid_brief.position.y < 180.0 and raid_brief.size.x <= 340.0 and raid_brief.size.y <= 40.0 and raid_brief.position.x + raid_brief.size.x < 460.0 and raid_brief.clip_text, "the kokang briefing is a compact line at the top left")
 	var raid_status: Control = raid.find_child("Status", true, false) as Control
-	var brief_box: Rect2 = raid_brief.get_global_rect() if raid_brief != null else Rect2()
-	var status_box: Rect2 = raid_status.get_global_rect() if raid_status != null else Rect2()
-	var brief_hit: Rect2 = brief_box.intersection(status_box)
-	check(raid_status != null and brief_box.size.y >= 8.0 and brief_box.size.y <= 40.0 and status_box.size.y >= 8.0 and (brief_hit.size.x < 1.0 or brief_hit.size.y < 1.0), "the kokang briefing lines do not overlap")
+	var raid_banner: CanvasItem = raid.find_child("StageBanner", true, false) as CanvasItem
+	var raid_tracker: CanvasItem = raid.find_child("StageTracker", true, false) as CanvasItem
+	var raid_dock: Control = raid.find_child("SuperDock", true, false) as Control
+	check(raid_brief != null and not raid_brief.visible and raid_status != null and raid_status.visible and raid_status.offset_left >= 70.0 and raid_status.size.y <= 40.0 and (raid_banner == null or not raid_banner.visible) and (raid_tracker == null or not raid_tracker.visible) and raid_boot != null and not raid_boot.visible and raid_dock != null and raid_dock.offset_left > 120.0, "kokang shows one objective line, with Ready off the left edge and Boot Menu off the field")
+	var raid_exit: Node = raid.get_node_or_null("MatchExit")
+	if raid_exit != null:
+		raid_exit.call("show_objectives")
+	await process_frame
+	var brief_head: Control = raid.find_child("PauseBriefHead", true, false) as Control
+	var brief_body: Control = raid.find_child("PauseBriefBody", true, false) as Control
+	var tx_head: Control = raid.find_child("PauseTxHead", true, false) as Control
+	var tight: float = brief_body.position.y - (brief_head.position.y + brief_head.size.y) if brief_head != null and brief_body != null else 99.0
+	var section: float = tx_head.position.y - (brief_body.position.y + brief_body.size.y) if brief_body != null and tx_head != null else 0.0
+	check(raid_brief != null and not raid_brief.visible and brief_head != null and brief_body != null and brief_body.text != "" and tight <= 4.0 and section >= 14.0 and section > tight + 8.0, "the match menu holds the briefing, with the header tight on the body and a larger gap before the next section")
+	if raid_exit != null:
+		raid_exit.call("_resume")
 	var raid_hud: SMHud = raid.get("hud") as SMHud
-	var raid_coach: Node = raid.get_node_or_null("MatchCoach")
-	var raid_toast: Control = raid.find_child("ToastLane", true, false) as Control
 	var raid_eva: Control = raid.find_child("MessageLane", true, false) as Control
 	if raid_hud != null:
 		raid_hud.show_line("Under fire.")
-	if raid_coach != null:
-		raid_coach.call("_once", "pad", "Resource pad in sight.")
 	await process_frame
-	check(raid_brief != null and raid_brief.visible and (raid_toast == null or not raid_toast.visible) and (raid_eva == null or not raid_eva.visible), "toasts and EVA lines queue while a briefing is shown")
-	var raid_dismiss: Button = raid.find_child("BriefingDismiss", true, false) as Button
-	if raid_dismiss != null:
-		raid_dismiss.pressed.emit()
-	await process_frame
-	await process_frame
-	check(raid_brief != null and not raid_brief.visible and raid_toast != null and raid_toast.visible, "queued toasts appear in their lane once the briefing closes")
+	check(raid_brief != null and not raid_brief.visible and (raid_eva == null or not raid_eva.visible) and raid_status.size.y <= 40.0, "an EVA line does not open a second panel on the field")
+	var raid_abort: Button = raid.find_child("PauseQuit", true, false) as Button
+	check(raid_abort != null and raid_abort.text == "Abort" and raid_brief != null and not raid_brief.visible, "Abort is in the match menu and the briefing stays off the field")
 	check(not _plain_box(raid.get_node_or_null("Scaffold")) and not _plain_box(raid.get_node_or_null("RubyNode")) and not _plain_box(raid.get_node_or_null("RareNode")), "kokang yard and ore nodes are not plain boxes")
 	var teak: MultiMeshInstance3D = raid.get_node_or_null("JungleTrees") as MultiMeshInstance3D
 	var teak_mesh: Mesh = teak.multimesh.mesh if teak != null and teak.multimesh != null else null
@@ -5038,7 +5049,7 @@ func test_sm_guide() -> void:
 	check(raid_map != null and raid_map.backdrop != null and not _flat_olive(raid_map.backdrop), "the kokang minimap is not a flat olive square")
 	var worker: String = FileAccess.get_file_as_string("res://web/sw.js")
 	check(worker.contains("shattered-monsoon-v6") and worker.contains("cache.put") and worker.contains("/models/") and worker.contains("/audio/") and worker.contains("index.wasm") and worker.contains("index.pck"), "the service worker precaches the shell and stores models and audio")
-	check(raid_boot != null and raid_boot.visible and raid_boot.text == "Boot menu", "kokang can return to the boot menu")
+	check(raid_boot != null and not raid_boot.visible and raid_boot.text == "Boot menu", "kokang keeps the front-end Boot Menu off the match")
 	raid.free()
 	await process_frame
 	var raid_second: Node = (load("res://game/mission_kokang.tscn") as PackedScene).instantiate()
@@ -8207,8 +8218,19 @@ func test_objective_guidance() -> void:
 	check(directive != null and directive.text.begins_with("Stage 1/3: ") and net != null and face != null, "a tactical transmission banner carries a portrait and a one-line directive")
 	var banner: Control = scene.find_child("StageBanner", true, false) as Control
 	var tracker: Control = scene.find_child("StageTracker", true, false) as Control
-	var stacked: bool = banner != null and tracker != null and banner.position.x <= 80.0 and banner.position.x + banner.size.x < 460.0 and tracker.position.x <= 80.0 and tracker.position.x + tracker.size.x < 460.0
-	check(stacked, "the transmission and objective list stay in a compact top-left stack")
+	check(banner != null and tracker != null and not banner.visible and not tracker.visible, "the transmission and the stage list stay off the field")
+	var tip: Label = scene.find_child("StageWeaponTip", true, false) as Label
+	check(tip != null and not tip.is_visible_in_tree(), "the weapon tip stays off the map")
+	var story_exit: Node = scene.get_node_or_null("MatchExit")
+	if story_exit != null:
+		story_exit.call("show_objectives")
+	await process_frame
+	var story_page: CanvasItem = scene.find_child("PauseObjectivePage", true, false) as CanvasItem
+	var story_tx: Label = scene.find_child("PauseTxBody", true, false) as Label
+	var story_stages: Label = scene.find_child("PauseStageBody", true, false) as Label
+	check(story_page != null and story_page.visible and story_tx != null and story_tx.text != "" and story_stages != null and story_stages.text != "" and not banner.visible and not tracker.visible, "Esc objectives hold the transmission and the stage list")
+	if story_exit != null:
+		story_exit.call("_resume")
 	view.call("drive", 0.1)
 	var beacon: Node3D = scene.get_node_or_null("ObjectiveBeacon") as Node3D
 	check(beacon != null and beacon.visible and beacon.get_node_or_null("Arrow") != null and beacon.get_node_or_null("Ring") != null and field.beacon_at != Vector3.INF, "a 3D beacon and the minimap ring mark the objective")
@@ -8228,8 +8250,6 @@ func test_objective_guidance() -> void:
 	check(int(view.get("pings")) == 2, "Tab pings the objective")
 	_ra3_key(KEY_TAB, true)
 	check(int(view.get("pings")) == 2, "Shift+Tab leaves the objective alone for build tabs")
-	var tip: Label = scene.find_child("StageWeaponTip", true, false) as Label
-	check(tip != null and tip.visible, "early missions show the [F] weapon mode tip")
 	var gun: RTSUnit = null
 	for u: RTSUnit in field.units_of(SMPointer.PLAYER):
 		if gun == null and SMArms.armed(u):

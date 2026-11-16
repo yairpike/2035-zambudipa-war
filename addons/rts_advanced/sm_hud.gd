@@ -1876,7 +1876,8 @@ func _sync_card() -> void:
 	if unit_card != null:
 		unit_card.visible = busy
 	if match_strip != null:
-		match_strip.visible = not busy and not phone
+		# The RA3 top bar carries Guide and Protocols. The old hint strip sat on the map.
+		match_strip.visible = false if use_tiles else not busy and not phone
 
 func _dock(node: Control, left: float, top: float, right: float, bottom: float, anchor_l: float, anchor_t: float, anchor_r: float, anchor_b: float) -> void:
 	node.anchor_left = anchor_l

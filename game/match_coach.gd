@@ -110,7 +110,9 @@ func _show_step() -> void:
 		return
 	prompt.text = _prompt(step)
 	if card != null:
-		card.visible = true
+		var host: Node = get_parent()
+		var seated: bool = host != null and host.find_child("ObjectiveShade", true, false) != null
+		card.visible = not seated
 
 func _hide_card() -> void:
 	coaching = false
@@ -275,6 +277,9 @@ func _once(key: String, text: String) -> void:
 func _show_toast(text: String) -> void:
 	if toast_line == null or toast_panel == null:
 		return
+	if _seated():
+		toast_panel.visible = false
+		return
 	toast_line.text = text
 	toast_panel.modulate.a = 1.0
 	toast_panel.visible = true
@@ -292,8 +297,15 @@ func _briefing_shown() -> bool:
 		return true
 	return false
 
+func _seated() -> bool:
+	var host: Node = get_parent()
+	return host != null and host.find_child("ObjectiveShade", true, false) != null
+
 func _fade_toast() -> void:
 	if toast_panel == null:
+		return
+	if _seated():
+		toast_panel.visible = false
 		return
 	if _briefing_shown():
 		if toast_until > 0 and toast_line != null and toast_line.text != "":
@@ -334,28 +346,33 @@ func _cap_brief(host: Node) -> void:
 	shade.name = "BriefingShade"
 	shade.color = Color(0.05, 0.06, 0.07, 0.88)
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	shade.visible = false
 	shade.position = brief.position
 	shade.size = brief.size
 	parent.add_child(shade)
 	parent.move_child(shade, brief.get_index())
-	var details: Button = Button.new()
-	details.name = "BriefingDetails"
-	details.text = "Details"
-	details.focus_mode = Control.FOCUS_NONE
-	details.position = Vector2(brief.position.x + brief.size.x - 108.0, brief.position.y + 4.0)
-	details.custom_minimum_size = Vector2(96, 28)
-	details.add_theme_font_size_override("font_size", 16)
-	details.pressed.connect(_toggle_brief.bind(brief))
-	parent.add_child(details)
-	var dismiss: Button = Button.new()
-	dismiss.name = "BriefingDismiss"
-	dismiss.text = "Got it"
-	dismiss.focus_mode = Control.FOCUS_NONE
-	dismiss.position = Vector2(brief.position.x + brief.size.x - 212.0, brief.position.y + 4.0)
-	dismiss.custom_minimum_size = Vector2(96, 28)
-	dismiss.add_theme_font_size_override("font_size", 16)
-	dismiss.pressed.connect(_dismiss_brief.bind(brief))
-	parent.add_child(dismiss)
+	var details: Button = parent.get_node_or_null("BriefingDetails") as Button
+	if details == null:
+		details = Button.new()
+		details.name = "BriefingDetails"
+		details.text = "Details"
+		details.focus_mode = Control.FOCUS_NONE
+		details.custom_minimum_size = Vector2(96, 28)
+		details.add_theme_font_size_override("font_size", 16)
+		parent.add_child(details)
+	if not details.pressed.is_connected(_toggle_brief):
+		details.pressed.connect(_toggle_brief.bind(brief))
+	var dismiss: Button = parent.get_node_or_null("BriefingDismiss") as Button
+	if dismiss == null:
+		dismiss = Button.new()
+		dismiss.name = "BriefingDismiss"
+		dismiss.text = "Got it"
+		dismiss.focus_mode = Control.FOCUS_NONE
+		dismiss.custom_minimum_size = Vector2(96, 28)
+		dismiss.add_theme_font_size_override("font_size", 16)
+		parent.add_child(dismiss)
+	if not dismiss.pressed.is_connected(_dismiss_brief):
+		dismiss.pressed.connect(_dismiss_brief.bind(brief))
 
 func _dismiss_brief(brief: Label) -> void:
 	if brief == null:
@@ -364,7 +381,7 @@ func _dismiss_brief(brief: Label) -> void:
 	var base: Node = brief.get_parent()
 	if base == null:
 		return
-	for node_name: String in ["MissionHeading", "BriefingShade", "BriefingShadeGlass", "BriefingDetails", "BriefingDismiss", "BriefingStill"]:
+	for node_name: String in ["MissionHeading", "BriefingShade", "BriefingShadeGlass", "BriefingStill"]:
 		var item: CanvasItem = base.get_node_or_null(node_name) as CanvasItem
 		if item != null:
 			item.visible = false

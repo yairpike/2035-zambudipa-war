@@ -29,6 +29,7 @@ func _arm() -> void:
 		back.position = Vector2(568, 40)
 		back.custom_minimum_size = Vector2(160, 36)
 		back.z_index = 40
+		back.visible = false
 		back.pressed.connect(_to_boot)
 		layer.add_child(back)
 	if layer.find_child("PauseMenu", true, false) == null:
@@ -64,9 +65,11 @@ func _build_pause(layer: CanvasLayer) -> void:
 	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.add_child(rule)
 	_pause_row(card, "PauseResume", "Resume", _resume)
+	_pause_row(card, "PauseObjectives", "Objectives", show_objectives)
 	_pause_row(card, "PauseRestart", "Restart", _restart)
 	_pause_row(card, "PauseControls", "Key guide", _open_controls)
-	_pause_row(card, "PauseQuit", "Quit to menu", _to_boot)
+	_pause_row(card, "PauseQuit", "Abort", _to_boot)
+	_build_objectives(card)
 	var caption: Label = Label.new()
 	caption.name = "PauseNowCaption"
 	caption.text = "NOW PLAYING"
@@ -165,12 +168,117 @@ func _process(_delta: float) -> void:
 		_paint_track(pause)
 	_wire_hud_skip()
 
+## Esc's Objectives page: the briefing, the transmission and the stage list.
+## A header sits 2px above its body. The next section starts 18px later.
+func show_objectives() -> void:
+	open()
+	var pause: Control = _pause() as Control
+	if pause == null:
+		return
+	var page: CanvasItem = pause.find_child("PauseObjectivePage", true, false) as CanvasItem
+	if page != null:
+		page.visible = true
+	var settings: CanvasItem = _settings()
+	if settings != null:
+		settings.visible = false
+	_seat_pause()
+
+func _build_objectives(card: Control) -> void:
+	var page: Control = Control.new()
+	page.name = "PauseObjectivePage"
+	page.visible = false
+	page.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	page.clip_contents = true
+	card.add_child(page)
+	_obj_label(page, "PauseBriefHead", 15, Color(1.0, 0.92, 0.7, 0.95))
+	_obj_label(page, "PauseBriefBody", 13, Color(1, 1, 1, 0.92))
+	_obj_label(page, "PauseTxHead", 15, Color(1.0, 0.92, 0.7, 0.95))
+	_obj_label(page, "PauseTxBody", 13, Color(1, 1, 1, 0.92))
+	_obj_label(page, "PauseStageHead", 15, Color(1.0, 0.92, 0.7, 0.95))
+	_obj_label(page, "PauseStageBody", 13, Color(1, 1, 1, 0.92))
+
+func _obj_label(page: Control, node_name: String, size: int, color: Color) -> void:
+	var label: Label = Label.new()
+	label.name = node_name
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.add_theme_font_size_override("font_size", size)
+	label.add_theme_color_override("font_color", color)
+	var face: Font = load("res://assets/fonts/OperationNapalm-Regular.ttf") as Font
+	if face != null:
+		label.add_theme_font_override("font", face)
+	page.add_child(label)
+
+func _fill_objectives(page: Control) -> void:
+	var width: float = maxf(160.0, page.size.x)
+	var title: String = _label_text("MissionHeading")
+	if title == "":
+		title = "Briefing"
+	var brief: String = _label_text("Briefing")
+	var directive: String = _label_text("StageDirective")
+	var said: String = _label_text("StageLine")
+	var spoken: String = directive
+	if said != "" and said != directive:
+		spoken = "%s\n%s" % [directive, said] if directive != "" else said
+	if spoken == "":
+		spoken = "—"
+	var stages: String = _stage_lines()
+	var y: float = _pair(page, "PauseBriefHead", title, "PauseBriefBody", brief if brief != "" else "—", 0.0, width)
+	y = _pair(page, "PauseTxHead", "Transmission", "PauseTxBody", spoken, y + 18.0, width)
+	_pair(page, "PauseStageHead", "Objectives", "PauseStageBody", stages if stages != "" else "—", y + 18.0, width)
+
+func _pair(page: Control, head_name: String, head_text: String, body_name: String, body_text: String, y: float, width: float) -> float:
+	var head: Label = page.get_node_or_null(head_name) as Label
+	var body: Label = page.get_node_or_null(body_name) as Label
+	if head == null or body == null:
+		return y
+	head.text = head_text
+	head.position = Vector2(0.0, y)
+	head.size = Vector2(width, 18.0)
+	body.text = body_text
+	body.custom_minimum_size = Vector2(width, 0.0)
+	body.size = Vector2(width, 0.0)
+	var body_h: float = maxf(18.0, body.get_minimum_size().y)
+	body.position = Vector2(0.0, y + 18.0 + 2.0)
+	body.size = Vector2(width, body_h)
+	return body.position.y + body_h
+
+func _label_text(node_name: String) -> String:
+	var host: Node = get_parent()
+	if host == null:
+		return ""
+	var label: Label = host.find_child(node_name, true, false) as Label
+	if label == null:
+		return ""
+	return label.text
+
+func _stage_lines() -> String:
+	var host: Node = get_parent()
+	if host == null:
+		return ""
+	var tracker: Node = host.find_child("StageTracker", true, false)
+	if tracker == null:
+		var goal: String = _label_text("Status")
+		return goal
+	var lines: PackedStringArray = PackedStringArray()
+	var rows: Array[Node] = tracker.find_children("*", "Label", true, false)
+	for row: Node in rows:
+		var label: Label = row as Label
+		if label != null and label.text != "" and label.name != "StageWeaponTip" and label.text.to_lower() != "objectives":
+			lines.append(label.text)
+	if lines.is_empty():
+		return _label_text("Status")
+	return "\n".join(lines)
+
 func open() -> void:
 	var pause: Control = _pause() as Control
 	if pause == null:
 		return
 	_shown = true
 	pause.visible = true
+	var page: CanvasItem = pause.find_child("PauseObjectivePage", true, false) as CanvasItem
+	if page != null:
+		page.visible = false
 	var layer: Node = pause.get_parent()
 	if layer != null:
 		layer.move_child(pause, layer.get_child_count() - 1)
@@ -223,7 +331,7 @@ func _seat_pause() -> void:
 		title.size = Vector2(nav - 24.0, 32)
 	y += 44.0 if tight else 52.0
 	var row_h: float = 38.0 if tight else 44.0
-	for node_name: String in ["PauseResume", "PauseRestart", "PauseControls", "PauseQuit"]:
+	for node_name: String in ["PauseResume", "PauseObjectives", "PauseRestart", "PauseControls", "PauseQuit"]:
 		var row: Control = card.get_node_or_null(node_name) as Control
 		if row == null:
 			continue
@@ -250,8 +358,15 @@ func _seat_pause() -> void:
 	if rule != null:
 		rule.position = Vector2(nav, 18.0)
 		rule.size = Vector2(1, h - 36.0)
+	var page: Control = card.get_node_or_null("PauseObjectivePage") as Control
+	if page != null:
+		page.position = Vector2(nav + 16.0, 16.0)
+		page.size = Vector2(maxf(160.0, w - nav - 32.0), maxf(120.0, h - 32.0))
+		if page.visible:
+			_fill_objectives(page)
 	var settings: Control = _settings()
 	if settings != null and settings.get_parent() == pause:
+		settings.visible = page == null or not page.visible
 		settings.position = card.position + Vector2(nav + 12.0, 8.0)
 		settings.size = Vector2(w - nav - 24.0, h - 16.0)
 		var blurb: CanvasItem = settings.get_node_or_null("SettingsBlurb") as CanvasItem

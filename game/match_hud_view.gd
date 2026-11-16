@@ -15,6 +15,9 @@ const SIDE_W: float = 276.0
 const TOP_H: float = 34.0
 
 var _goals_open: bool = false
+var _details_open: bool = false
+var _transmission_closed: bool = false
+var _tx_seen: String = ""
 var _skin: String = "gtfc"
 var _tiles_key: String = ""
 var _glassed: Dictionary = {}
@@ -75,6 +78,14 @@ func _bind(hud: SMHud, grid: SMDomainGrid, camera: RTSCamera) -> void:
 	hud.weather_label = _label(top, "HudWeather", 13)
 	_pin_bar_label(hud.weather_label)
 	hud.weather_label.add_theme_color_override("font_color", Color(0.8, 0.9, 1.0, 0.85))
+	var guide: Button = _bar_chip("H Guide")
+	guide.name = "BarGuide"
+	guide.pressed.connect(_press_guide)
+	top.add_child(guide)
+	var protocols: Button = _bar_chip("P Protocols")
+	protocols.name = "BarProtocols"
+	protocols.pressed.connect(_press_protocols)
+	top.add_child(protocols)
 	var menu: Button = Button.new()
 	menu.name = "HudMenu"
 	menu.text = "☰"
@@ -1063,6 +1074,29 @@ func _tidy_card() -> void:
 	if extra != null:
 		extra.visible = false
 
+func _bar_chip(text: String) -> Button:
+	var button: Button = Button.new()
+	button.text = text
+	button.focus_mode = Control.FOCUS_NONE
+	button.clip_text = true
+	button.custom_minimum_size = Vector2(86, 22)
+	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	button.add_theme_font_size_override("font_size", 12)
+	Look.dress_button(button, _skin)
+	return button
+
+func _press_guide() -> void:
+	var layer: Node = get_parent()
+	var help: BaseButton = layer.find_child("HelpButton", true, false) as BaseButton if layer != null else null
+	if help != null:
+		help.pressed.emit()
+
+func _press_protocols() -> void:
+	var layer: Node = get_parent()
+	var toggle: BaseButton = layer.find_child("ProtocolsToggle", true, false) as BaseButton if layer != null else null
+	if toggle != null:
+		toggle.pressed.emit()
+
 func _label(parent: Node, node_name: String, size: int) -> Label:
 	var label: Label = Label.new()
 	label.name = node_name
@@ -1090,10 +1124,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		var pause: CanvasItem = layer.find_child("PauseMenu", true, false) as CanvasItem
 		if pause != null and pause.visible:
 			return
-	_goals_open = not _goals_open
+	_open_match_objectives()
 	var view: Viewport = get_viewport()
 	if view != null:
 		view.set_input_as_handled()
+
+func _open_match_objectives() -> void:
+	var layer: Node = get_parent()
+	var host: Node = layer.get_parent() if layer != null else null
+	var exit: Node = host.get_node_or_null("MatchExit") if host != null else null
+	if exit != null and exit.has_method("show_objectives"):
+		exit.call("show_objectives")
 
 func _open_menu() -> void:
 	var layer: Node = get_parent()
@@ -1136,6 +1177,7 @@ func _glass(node: Control) -> void:
 		pane.position = shade.position
 		pane.size = shade.size
 		Glass.dress(pane, 6, tint, 0)
+		pane.visible = shade.visible
 		var parent: Node = shade.get_parent()
 		if parent != null:
 			parent.add_child(pane)
@@ -1156,6 +1198,7 @@ func _seat_chrome() -> void:
 	_seat_context()
 	_seat_objective()
 	_seat_story_stack()
+	_seat_ready()
 	_seat_now_playing()
 	_seat_flyout()
 	_seat_strip()
@@ -1166,12 +1209,15 @@ func _seat_chrome() -> void:
 	var help: CanvasItem = layer.find_child("HelpButton", true, false) as CanvasItem
 	if help != null:
 		help.visible = false
+	var protocols_bolt: CanvasItem = layer.find_child("ProtocolsToggle", true, false) as CanvasItem
+	if protocols_bolt != null:
+		protocols_bolt.visible = false
 
 ## The base phone layout docks the card at 72 px tall; the RA3 card needs two rows.
 func _seat_phone(hud: SMHud) -> void:
 	var layer: Node = get_parent()
 	if layer != null:
-		for node_name: String in ["ObjectiveShade", "ObjectiveMark"]:
+		for node_name: String in ["ObjectiveShade", "ObjectiveMark", "MissionBoot"]:
 			var chrome: CanvasItem = layer.get_node_or_null(node_name) as CanvasItem
 			if chrome != null:
 				chrome.visible = false
@@ -1269,108 +1315,88 @@ func _story_column() -> Rect2:
 	var width: float = minf(308.0, maxf(160.0, play_right - x))
 	return Rect2(x, 40.0, width, 220.0)
 
-## Objective line, brief, still, transmission, wave callout, and the objective list,
-## stacked at the top left so none of them cover the middle of the map.
+## The battlefield keeps one objective line. Briefing, the stage list and the
+## transmission stay in the Esc match menu, so none of them stack on the map.
 func _seat_story_stack() -> void:
 	var layer: Node = get_parent()
 	if layer == null:
 		return
-	var column: Rect2 = _story_column()
-	var x: float = column.position.x
-	var w: float = column.size.x
-	var y: float = 40.0
-	var status: Control = layer.find_child("Status", true, false) as Control
-	if status != null and status.visible:
-		var status_bottom: float = status.position.y + status.size.y
-		y = maxf(y, status_bottom + 6.0)
+	layer.set_meta("details_open", false)
+	layer.set_meta("transmission_closed", true)
 	var heading: Label = layer.find_child("MissionHeading", true, false) as Label
-	if heading != null and heading.visible:
-		heading.position = Vector2(x, y)
-		heading.size = Vector2(w, 18.0)
-		heading.clip_text = true
-		heading.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-		y += 20.0
-	var brief: Label = layer.find_child("Briefing", true, false) as Label
-	var brief_up: bool = brief != null and brief.visible
-	if brief_up:
-		var open: bool = bool(brief.get_meta("brief_open", false))
-		var brief_h: float = 96.0 if open else 20.0
-		brief.max_lines_visible = 6 if open else 1
-		brief.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART if open else TextServer.AUTOWRAP_OFF
-		brief.clip_text = true
-		brief.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-		brief.add_theme_font_size_override("font_size", 14)
-		brief.position = Vector2(x, y)
-		brief.custom_minimum_size = Vector2(w, brief_h)
-		brief.size = Vector2(w, brief_h)
-		var base: Node = brief.get_parent()
-		for node_name: String in ["BriefingShade", "BriefingShadeGlass"]:
-			var shade: Control = base.get_node_or_null(node_name) as Control if base != null else null
-			if shade != null:
-				shade.position = brief.position
-				shade.size = brief.size
-		y += brief_h + 2.0
-		var details: Control = base.get_node_or_null("BriefingDetails") as Control if base != null else null
-		var dismiss: Control = base.get_node_or_null("BriefingDismiss") as Control if base != null else null
-		if dismiss != null:
-			dismiss.position = Vector2(x, y)
-			dismiss.size = Vector2(96.0, 22.0)
-		if details != null:
-			details.position = Vector2(x + 100.0, y)
-			details.size = Vector2(96.0, 22.0)
-		if dismiss != null or details != null:
-			y += 26.0
-	var still: Control = layer.find_child("BriefingStill", true, false) as Control
-	if still != null and still.visible:
-		still.position = Vector2(x, y)
-		still.size = Vector2(72.0, 32.0)
-		still.custom_minimum_size = Vector2(72.0, 32.0)
-		y += 36.0
-	var lane: Control = get_node_or_null("MessageLane") as Control
-	var radio: Label = find_child("RadioLine", true, false) as Label
-	if lane != null and radio != null:
-		var show_radio: bool = radio.visible and radio.text != "" and not brief_up
-		lane.visible = show_radio
-		lane.modulate.a = radio.modulate.a
-		if show_radio:
-			_anchor(lane, 0.0, 0.0, 0.0, 0.0, x, y, x + w, y + 22.0)
-			y += 26.0
-	var toast: Control = layer.find_child("ToastLane", true, false) as Control
-	if toast != null:
-		if brief_up:
-			toast.visible = false
-		elif toast.visible:
-			toast.position = Vector2(x, y)
-			toast.size = Vector2(w, 22.0)
-			var toast_line: Control = toast.find_child("ToastLine", true, false) as Control
-			if toast_line != null:
-				toast_line.size = Vector2(maxf(40.0, w - 16.0), 18.0)
-			y += 26.0
-	var banner: Control = layer.find_child("StageBanner", true, false) as Control
-	if banner != null and banner.visible:
-		banner.position = Vector2(x, y)
-		banner.custom_minimum_size = Vector2(w, 0.0)
-		banner.size = Vector2(w, banner.size.y)
-		var banner_h: float = maxf(banner.get_combined_minimum_size().y, 48.0)
-		banner.size.y = banner_h
-		y += banner_h + 4.0
-	var dialogue: Control = layer.find_child("SetDialogue", true, false) as Control
-	if dialogue != null and dialogue.visible:
-		dialogue.position = Vector2(x, y)
-		dialogue.size = Vector2(w, 44.0)
-		_fit_dialogue(dialogue, w)
-		y += 48.0
-	var tracker: Control = layer.find_child("StageTracker", true, false) as Control
-	if tracker != null and tracker.visible:
-		tracker.position = Vector2(x, y)
-		tracker.custom_minimum_size.x = w
-		tracker.size.x = w
-		y += 4.0
-	var coach: Control = layer.find_child("CoachCard", true, false) as Control
-	if coach != null and coach.visible:
-		var tracker_h: float = tracker.get_combined_minimum_size().y if tracker != null and tracker.visible else 0.0
-		coach.position = Vector2(x, y + tracker_h)
-		coach.size = Vector2(w, 28.0)
+	if heading != null:
+		_readable(heading)
+		heading.visible = false
+	for node_name: String in ["Briefing", "BriefingShade", "BriefingShadeGlass", "BriefingStill", "BriefingDetails", "BriefingDismiss", "StageBanner", "SetDialogue", "StageTracker", "CoachCard", "ToastLane"]:
+		var item: CanvasItem = layer.find_child(node_name, true, false) as CanvasItem
+		if item != null:
+			item.visible = false
+	var lane: CanvasItem = get_node_or_null("MessageLane") as CanvasItem
+	if lane != null:
+		lane.visible = false
+
+## Superweapon Ready sits off the left edge, beside the sidebar, not on the map's rim.
+func _seat_ready() -> void:
+	var dock: Control = get_node_or_null("SuperDock") as Control
+	if dock == null:
+		return
+	var view: Vector2 = _view_rect()
+	var right: float = view.x - SIDE_W - 12.0
+	var left: float = right - 56.0
+	if left < 160.0:
+		left = 160.0
+		right = left + 56.0
+	_anchor(dock, 0.0, 0.0, 0.0, 0.0, left, 46.0, right, 200.0)
+
+func _transmission_text(layer: Node) -> String:
+	var parts: PackedStringArray = PackedStringArray()
+	var banner: Node = layer.find_child("StageBanner", true, false)
+	if banner != null:
+		var directive: Label = banner.find_child("StageDirective", true, false) as Label
+		var line: Label = banner.find_child("StageLine", true, false) as Label
+		if directive != null and directive.text != "":
+			parts.append(directive.text)
+		if line != null and line.text != "":
+			parts.append(line.text)
+	var dialogue: Node = layer.find_child("SetDialogue", true, false)
+	if dialogue != null:
+		var subtitle: Label = dialogue.find_child("SetSubtitle", true, false) as Label
+		if subtitle != null and subtitle.text != "":
+			parts.append(subtitle.text)
+	return "|".join(parts)
+
+func _readable(label: Label) -> void:
+	label.theme_type_variation = &""
+	var face: Font = load("res://assets/fonts/OperationNapalm-Regular.ttf") as Font
+	if face != null:
+		label.add_theme_font_override("font", face)
+
+func _story_button(layer: Node, node_name: String, text: String) -> Button:
+	var button: Button = layer.find_child(node_name, true, false) as Button
+	if button != null:
+		return button
+	button = Button.new()
+	button.name = node_name
+	button.text = text
+	button.focus_mode = Control.FOCUS_NONE
+	button.add_theme_font_size_override("font_size", 13)
+	layer.add_child(button)
+	return button
+
+func _arm_story_buttons(details: Button, dismiss: Button) -> void:
+	if not details.has_meta("folds_story"):
+		details.set_meta("folds_story", true)
+		details.pressed.connect(_toggle_details)
+	if not dismiss.has_meta("folds_story"):
+		dismiss.set_meta("folds_story", true)
+		dismiss.pressed.connect(_close_transmission)
+
+func _toggle_details() -> void:
+	_details_open = not _details_open
+
+func _close_transmission() -> void:
+	_details_open = false
+	_transmission_closed = true
 
 func _fit_dialogue(panel: Control, width: float) -> void:
 	var plate: Control = panel.find_child("SetPortraitPlate", true, false) as Control
@@ -1430,17 +1456,18 @@ func _seat_objective() -> void:
 		if face != null:
 			mark.add_theme_font_override("font", face)
 		layer.add_child(mark)
-	var height: float = 120.0 if _goals_open else 28.0
+	var height: float = 36.0
 	_anchor(shade, 0.0, 0.0, 0.0, 0.0, 72.0, 40.0, 384.0, 40.0 + height)
 	_anchor(mark, 0.0, 0.0, 0.0, 0.0, 78.0, 42.0, 98.0, 66.0)
 	status.z_index = 7
-	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART if _goals_open else TextServer.AUTOWRAP_OFF
+	status.autowrap_mode = TextServer.AUTOWRAP_OFF
 	status.clip_text = true
-	status.max_lines_visible = 6 if _goals_open else 1
+	status.max_lines_visible = 1
 	status.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	status.custom_minimum_size = Vector2(0, 22)
 	status.add_theme_font_size_override("font_size", 15)
 	status.add_theme_color_override("font_color", Color(1, 1, 1, 0.92))
+	_readable(status)
 	_anchor(status, 0.0, 0.0, 0.0, 0.0, 100.0, 42.0, 376.0, 40.0 + height)
 
 func _seat_flyout() -> void:
@@ -1475,28 +1502,14 @@ func _seat_strip() -> void:
 		return
 	_anchor(strip, 0.0, 0.0, 0.0, 0.0, 448.0, 40.0, right, 68.0)
 
-## Menu chip on the left rail, under the superweapon dial, clear of the unit panel.
+## Esc is the match menu. The front-end Boot Menu button does not sit on the battlefield.
 func _seat_boot() -> void:
 	var layer: Node = get_parent()
 	if layer == null:
 		return
-	var boot: Control = layer.find_child("MissionBoot", true, false) as Control
-	if boot == null:
-		return
-	var match_end: CanvasItem = layer.get_node_or_null("MatchEnd") as CanvasItem
-	var outro_plate: CanvasItem = layer.get_node_or_null("OutroPlate") as CanvasItem
-	if (match_end != null and match_end.visible) or (outro_plate != null and outro_plate.visible):
+	var boot: CanvasItem = layer.find_child("MissionBoot", true, false) as CanvasItem
+	if boot != null:
 		boot.visible = false
-		return
-	var view: Vector2 = _view_rect()
-	var y: float = clampf(view.y - 176.0, 290.0, view.y - 52.0)
-	boot.position = Vector2(8.0, y)
-	boot.size = Vector2(64.0, 40.0)
-	boot.custom_minimum_size = Vector2(64.0, 40.0)
-	var tap: Button = boot as Button
-	if tap != null:
-		tap.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		tap.add_theme_font_size_override("font_size", 11)
 
 func _seat_now_playing() -> void:
 	var line: Control = get_node_or_null("NowPlaying") as Control
