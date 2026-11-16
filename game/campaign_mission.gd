@@ -98,11 +98,12 @@ func _ui() -> void:
 	var title: Label = Label.new()
 	title.name = "MissionHeading"
 	title.text = SMCampaign.title_of(mission_id)
-	title.theme_type_variation = "Header"
-	title.add_theme_font_size_override("font_size", 18)
+	title.add_theme_font_override("font", load("res://assets/fonts/OperationNapalm-Regular.ttf") as Font)
+	title.add_theme_font_size_override("font_size", 16)
 	title.position = Vector2(220, 108)
 	title.size = Vector2(840, 26)
 	title.clip_text = false
+	title.visible = false
 	ui_layer.add_child(title)
 	var brief: Label = Label.new()
 	brief.name = "Briefing"
@@ -113,6 +114,7 @@ func _ui() -> void:
 	brief.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	brief.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	brief.text = briefing_text
+	brief.visible = false
 	ui_layer.add_child(brief)
 	_still(ui_layer)
 	var goal: Button = Button.new()
@@ -127,6 +129,7 @@ func _ui() -> void:
 	back.text = "Boot menu"
 	back.position = Vector2(220, 216)
 	back.custom_minimum_size = Vector2(160, 36)
+	back.visible = false
 	back.pressed.connect(func() -> void:
 		get_tree().change_scene_to_file("res://game/boot.tscn")
 	)
@@ -158,6 +161,7 @@ func _still(layer: CanvasLayer) -> void:
 		still.visible = false
 	else:
 		Served.bind(still, rel)
+		still.visible = false
 
 func _arm_units() -> void:
 	var cam: RTSCamera = get_node("Camera") as RTSCamera

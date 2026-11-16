@@ -233,7 +233,10 @@ func _say(text: String, kind: String, on_stage: int = 0) -> void:
 	_banner_t = BANNER_TIME
 	if _banner == null:
 		return
-	_banner.visible = true
+	var layer: CanvasLayer = _host.get("ui_layer") as CanvasLayer if _host != null else null
+	var closed: bool = layer != null and bool(layer.get_meta("transmission_closed", false))
+	var open: bool = layer != null and bool(layer.get_meta("details_open", false))
+	_banner.visible = open and not closed
 	_banner_speaker.text = speaker if kind != "bonus" else "Bonus objective"
 	var directive: String = "Stage %d/3: %s" % [on_stage if on_stage > 0 else maxi(1, stages.stage), stages.goal_line()]
 	_banner_directive.text = directive
@@ -361,6 +364,7 @@ func _chrome() -> void:
 	var tracker: PanelContainer = PanelContainer.new()
 	tracker.name = "StageTracker"
 	tracker.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	tracker.visible = false
 	tracker.position = Vector2(72.0, 168.0)
 	tracker.custom_minimum_size = Vector2(308.0, 0.0)
 	var tplate: StyleBoxFlat = StyleBoxFlat.new()

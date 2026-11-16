@@ -522,6 +522,7 @@ func _chrome() -> void:
 	panel.size = Vector2(308.0, 44.0)
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.clip_contents = true
+	panel.visible = false
 	layer.add_child(panel)
 	var shade: ColorRect = ColorRect.new()
 	shade.color = Color(0.05, 0.06, 0.07, 0.88)

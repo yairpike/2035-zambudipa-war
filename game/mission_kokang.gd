@@ -99,6 +99,7 @@ func _ui() -> void:
 	brief.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	brief.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	brief.text = briefing_text
+	brief.visible = false
 	layer.add_child(brief)
 	var still: TextureRect = TextureRect.new()
 	still.name = "BriefingStill"
@@ -109,6 +110,7 @@ func _ui() -> void:
 	still.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(still)
 	Served.bind(still, SMCampaign.still_of("kokang"))
+	still.visible = false
 	var row: HBoxContainer = HBoxContainer.new()
 	row.position = Vector2(220, 230)
 	row.add_theme_constant_override("separation", 8)
@@ -126,6 +128,7 @@ func _ui() -> void:
 	var back: Button = Button.new()
 	back.name = "MissionBoot"
 	back.text = "Boot menu"
+	back.visible = false
 	back.position = Vector2(220, 188)
 	back.custom_minimum_size = Vector2(160, 36)
 	back.pressed.connect(func() -> void:
