@@ -189,12 +189,14 @@ func _place() -> void:
 	var view: Viewport = get_viewport()
 	if view == null:
 		return
-	var sz: Vector2 = view.get_visible_rect().size
-	if card != null and card.visible:
-		card.position = Vector2(72, 66)
-		card.size = Vector2(360, 32)
-	if toast_panel == null:
+	var host: Node = get_parent()
+	var seated: bool = host != null and host.find_child("ObjectiveShade", true, false) != null
+	if card != null and card.visible and not seated:
+		card.position = Vector2(72, 68)
+		card.size = Vector2(308, 28)
+	if toast_panel == null or seated:
 		return
+	var sz: Vector2 = view.get_visible_rect().size
 	var sidebar: float = sz.x - 268.0
 	var card_top: float = sz.y - 140.0
 	var x: float = 72.0
@@ -370,7 +372,9 @@ func _dismiss_brief(brief: Label) -> void:
 func _toggle_brief(brief: Label) -> void:
 	if brief == null:
 		return
-	brief.max_lines_visible = 0 if brief.max_lines_visible == 2 else 2
+	var open: bool = not bool(brief.get_meta("brief_open", false))
+	brief.set_meta("brief_open", open)
+	brief.max_lines_visible = 6 if open else 1
 
 func _moved(field: SMPointer) -> bool:
 	for u: RTSUnit in field.units_of(SMPointer.PLAYER):

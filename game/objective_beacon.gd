@@ -5,7 +5,7 @@ extends RefCounted
 
 const GOLD: Color = Color(1.0, 0.8, 0.22)
 const RED: Color = Color(1.0, 0.28, 0.22)
-const PILLAR_H: float = 16.0
+const PILLAR_H: float = 4.5
 const MAX_CHEVRONS: int = 8
 
 static func place(host: Node3D, at: Vector3, targets: Array[RTSUnit], clock: float) -> void:
@@ -21,7 +21,7 @@ static func place(host: Node3D, at: Vector3, targets: Array[RTSUnit], clock: flo
 		beacon.visible = true
 		beacon.position = Vector3(at.x, 0.0, at.z)
 		var arrow: Node3D = beacon.get_node("Arrow") as Node3D
-		arrow.position.y = 7.5 + 0.9 * sin(clock * 3.2)
+		arrow.position.y = 3.4 + 0.35 * sin(clock * 3.2)
 		arrow.rotation.y = clock * 1.4
 		var ring: Node3D = beacon.get_node("Ring") as Node3D
 		ring.rotation.y = -clock * 0.8
@@ -75,13 +75,13 @@ static func _build(host: Node3D) -> Node3D:
 	tag.text = "Objective"
 	tag.uppercase = true
 	tag.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	tag.no_depth_test = true
-	tag.font_size = 44
-	tag.pixel_size = 0.03
-	tag.outline_size = 12
+	tag.font_size = 22
+	tag.pixel_size = 0.018
+	tag.outline_size = 8
 	tag.outline_modulate = Color(0, 0, 0, 0.9)
 	tag.modulate = GOLD
-	tag.position = Vector3(0.0, 10.4, 0.0)
+	tag.no_depth_test = false
+	tag.position = Vector3(0.0, 5.2, 0.0)
 	root.add_child(tag)
 	host.add_child(root)
 	return root

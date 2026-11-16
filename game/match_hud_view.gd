@@ -1154,14 +1154,12 @@ func _seat_chrome() -> void:
 		return
 	_seat_desktop()
 	_seat_context()
-	_seat_message()
 	_seat_objective()
+	_seat_story_stack()
 	_seat_now_playing()
 	_seat_flyout()
 	_seat_strip()
 	_seat_boot()
-	_seat_toast()
-	_seat_briefing()
 	var layer: Node = get_parent()
 	if layer == null:
 		return
@@ -1263,85 +1261,145 @@ func _seat_context() -> void:
 	var slot_x: float = maxf(x + 112.0, 360.0 if not orders_vis else x + 112.0)
 	_anchor(slots, 0.0, 1.0, 0.0, 1.0, slot_x, -100.0, minf(slot_x + 392.0, x + width - 10.0), -62.0)
 
-func _seat_message() -> void:
-	var lane: Control = get_node_or_null("MessageLane") as Control
-	var radio: Label = find_child("RadioLine", true, false) as Label
-	if lane == null or radio == null:
-		return
-	var column: Rect2 = _story_column()
-	_anchor(lane, 0.0, 0.0, 0.0, 0.0, column.position.x, 70.0, column.end.x, 106.0)
-	var layer: Node = get_parent()
-	var brief: CanvasItem = layer.find_child("Briefing", true, false) as CanvasItem if layer != null else null
-	var brief_up: bool = brief != null and brief.visible
-	lane.visible = radio.visible and radio.text != "" and not brief_up
-	lane.modulate.a = radio.modulate.a
-
-## The centre column under the top bar, right of the objective and coach stack:
-## EVA line, then toast, then mission heading and briefing, so none of them overlap.
+## Top-left column under the objective line. The map centre stays open.
 func _story_column() -> Rect2:
 	var view: Vector2 = _view_rect()
-	var play_w: float = view.x - SIDE_W
-	var x: float = 448.0
-	var width: float = clampf(play_w - x - 12.0, 280.0, 560.0)
-	if x + width > play_w - 8.0:
-		x = maxf(220.0, play_w - 8.0 - width)
-	return Rect2(x, 70.0, width, 180.0)
+	var play_right: float = view.x - SIDE_W - 8.0
+	var x: float = 72.0
+	var width: float = minf(308.0, maxf(160.0, play_right - x))
+	return Rect2(x, 40.0, width, 220.0)
 
-func _seat_briefing() -> void:
+## Objective line, brief, still, transmission, wave callout, and the objective list,
+## stacked at the top left so none of them cover the middle of the map.
+func _seat_story_stack() -> void:
 	var layer: Node = get_parent()
 	if layer == null:
 		return
-	var brief: Label = layer.find_child("Briefing", true, false) as Label
-	if brief == null or not brief.visible:
-		return
 	var column: Rect2 = _story_column()
-	var heading: Control = layer.find_child("MissionHeading", true, false) as Control
-	var top: float = 148.0
+	var x: float = column.position.x
+	var w: float = column.size.x
+	var y: float = 40.0
+	var status: Control = layer.find_child("Status", true, false) as Control
+	if status != null and status.visible:
+		var status_bottom: float = status.position.y + status.size.y
+		y = maxf(y, status_bottom + 6.0)
+	var heading: Label = layer.find_child("MissionHeading", true, false) as Label
 	if heading != null and heading.visible:
-		heading.position = Vector2(column.position.x, top)
-		heading.size = Vector2(column.size.x, 24.0)
-		(heading as Label).clip_text = true
-		top += 28.0
-	var width: float = minf(column.size.x, 760.0)
-	brief.position = Vector2(column.position.x, top)
-	brief.custom_minimum_size = Vector2(width, 64.0)
-	brief.size = Vector2(width, 64.0)
-	var base: Node = brief.get_parent()
-	for node_name: String in ["BriefingShade", "BriefingShadeGlass"]:
-		var shade: Control = base.get_node_or_null(node_name) as Control if base != null else null
-		if shade != null:
-			shade.position = brief.position
-			shade.size = brief.size
-	var details: Control = base.get_node_or_null("BriefingDetails") as Control if base != null else null
-	if details != null:
-		details.position = Vector2(brief.position.x + brief.size.x - 104.0, brief.position.y + brief.size.y + 4.0)
-	var dismiss: Control = base.get_node_or_null("BriefingDismiss") as Control if base != null else null
-	if dismiss != null:
-		dismiss.position = Vector2(brief.position.x + brief.size.x - 208.0, brief.position.y + brief.size.y + 4.0)
-	var dialogue: Control = layer.find_child("SetDialogue", true, false) as Control
-	if dialogue != null:
-		var dialogue_top: float = brief.position.y + brief.size.y + 40.0
-		if dialogue.position.y < dialogue_top:
-			dialogue.position.y = dialogue_top
-
-func _seat_toast() -> void:
-	var layer: Node = get_parent()
-	if layer == null:
-		return
+		heading.position = Vector2(x, y)
+		heading.size = Vector2(w, 18.0)
+		heading.clip_text = true
+		heading.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		y += 20.0
+	var brief: Label = layer.find_child("Briefing", true, false) as Label
+	var brief_up: bool = brief != null and brief.visible
+	if brief_up:
+		var open: bool = bool(brief.get_meta("brief_open", false))
+		var brief_h: float = 96.0 if open else 20.0
+		brief.max_lines_visible = 6 if open else 1
+		brief.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART if open else TextServer.AUTOWRAP_OFF
+		brief.clip_text = true
+		brief.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		brief.add_theme_font_size_override("font_size", 14)
+		brief.position = Vector2(x, y)
+		brief.custom_minimum_size = Vector2(w, brief_h)
+		brief.size = Vector2(w, brief_h)
+		var base: Node = brief.get_parent()
+		for node_name: String in ["BriefingShade", "BriefingShadeGlass"]:
+			var shade: Control = base.get_node_or_null(node_name) as Control if base != null else null
+			if shade != null:
+				shade.position = brief.position
+				shade.size = brief.size
+		y += brief_h + 2.0
+		var details: Control = base.get_node_or_null("BriefingDetails") as Control if base != null else null
+		var dismiss: Control = base.get_node_or_null("BriefingDismiss") as Control if base != null else null
+		if dismiss != null:
+			dismiss.position = Vector2(x, y)
+			dismiss.size = Vector2(96.0, 22.0)
+		if details != null:
+			details.position = Vector2(x + 100.0, y)
+			details.size = Vector2(96.0, 22.0)
+		if dismiss != null or details != null:
+			y += 26.0
+	var still: Control = layer.find_child("BriefingStill", true, false) as Control
+	if still != null and still.visible:
+		still.position = Vector2(x, y)
+		still.size = Vector2(72.0, 32.0)
+		still.custom_minimum_size = Vector2(72.0, 32.0)
+		y += 36.0
+	var lane: Control = get_node_or_null("MessageLane") as Control
+	var radio: Label = find_child("RadioLine", true, false) as Label
+	if lane != null and radio != null:
+		var show_radio: bool = radio.visible and radio.text != "" and not brief_up
+		lane.visible = show_radio
+		lane.modulate.a = radio.modulate.a
+		if show_radio:
+			_anchor(lane, 0.0, 0.0, 0.0, 0.0, x, y, x + w, y + 22.0)
+			y += 26.0
 	var toast: Control = layer.find_child("ToastLane", true, false) as Control
-	if toast == null or not toast.visible:
-		return
-	var brief: CanvasItem = layer.find_child("Briefing", true, false) as CanvasItem
-	if brief != null and brief.visible:
-		toast.visible = false
-		return
-	var column: Rect2 = _story_column()
-	var width: float = minf(column.size.x, 420.0)
-	toast.position = Vector2(column.position.x, 112.0)
-	toast.size = Vector2(width, 28.0)
-	var line: Control = toast.find_child("ToastLine", true, false) as Control
-	if line != null:
-		line.size = Vector2(width - 16.0, 20.0)
+	if toast != null:
+		if brief_up:
+			toast.visible = false
+		elif toast.visible:
+			toast.position = Vector2(x, y)
+			toast.size = Vector2(w, 22.0)
+			var toast_line: Control = toast.find_child("ToastLine", true, false) as Control
+			if toast_line != null:
+				toast_line.size = Vector2(maxf(40.0, w - 16.0), 18.0)
+			y += 26.0
+	var banner: Control = layer.find_child("StageBanner", true, false) as Control
+	if banner != null and banner.visible:
+		banner.position = Vector2(x, y)
+		banner.custom_minimum_size = Vector2(w, 0.0)
+		banner.size = Vector2(w, banner.size.y)
+		var banner_h: float = maxf(banner.get_combined_minimum_size().y, 48.0)
+		banner.size.y = banner_h
+		y += banner_h + 4.0
+	var dialogue: Control = layer.find_child("SetDialogue", true, false) as Control
+	if dialogue != null and dialogue.visible:
+		dialogue.position = Vector2(x, y)
+		dialogue.size = Vector2(w, 44.0)
+		_fit_dialogue(dialogue, w)
+		y += 48.0
+	var tracker: Control = layer.find_child("StageTracker", true, false) as Control
+	if tracker != null and tracker.visible:
+		tracker.position = Vector2(x, y)
+		tracker.custom_minimum_size.x = w
+		tracker.size.x = w
+		y += 4.0
+	var coach: Control = layer.find_child("CoachCard", true, false) as Control
+	if coach != null and coach.visible:
+		var tracker_h: float = tracker.get_combined_minimum_size().y if tracker != null and tracker.visible else 0.0
+		coach.position = Vector2(x, y + tracker_h)
+		coach.size = Vector2(w, 28.0)
+
+func _fit_dialogue(panel: Control, width: float) -> void:
+	var plate: Control = panel.find_child("SetPortraitPlate", true, false) as Control
+	var portrait: Control = panel.find_child("SetPortrait", true, false) as Control
+	var text_x: float = 8.0
+	if portrait != null and portrait.visible:
+		if plate != null:
+			plate.position = Vector2(4.0, 4.0)
+			plate.size = Vector2(32.0, 32.0)
+		portrait.position = Vector2(4.0, 4.0)
+		portrait.size = Vector2(32.0, 32.0)
+		text_x = 42.0
+	var text_w: float = maxf(80.0, width - text_x - 8.0)
+	for node_name: String in ["SetSpeaker", "SetSubtitle", "SetBonus"]:
+		var line: Label = panel.find_child(node_name, true, false) as Label
+		if line == null:
+			continue
+		line.size = Vector2(text_w, 18.0)
+		line.clip_text = true
+		line.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		line.autowrap_mode = TextServer.AUTOWRAP_OFF
+		line.max_lines_visible = 1
+		line.add_theme_font_size_override("font_size", 13)
+	var speaker: Control = panel.find_child("SetSpeaker", true, false) as Control
+	if speaker != null:
+		speaker.position = Vector2(text_x, 2.0)
+	var subtitle: Control = panel.find_child("SetSubtitle", true, false) as Control
+	if subtitle != null:
+		subtitle.position = Vector2(text_x, 20.0)
 
 func _seat_objective() -> void:
 	var layer: Node = get_parent()

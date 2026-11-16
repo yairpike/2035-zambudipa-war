@@ -1782,8 +1782,7 @@ func _fit_mark(card: Button) -> void:
 		title.size = Vector2(maxf(60.0, card.size.x - tx - 8.0), 24.0)
 
 func _quit() -> void:
-	preload("res://game/render_budget.gd").shutdown(get_tree())
-	get_tree().quit()
+	preload("res://game/render_budget.gd").request_quit(get_tree())
 
 func _focusables() -> Array[Button]:
 	var rows: Array[Button] = []

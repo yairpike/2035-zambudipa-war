@@ -518,19 +518,8 @@ func _chrome() -> void:
 		return
 	var panel: Control = Control.new()
 	panel.name = "SetDialogue"
-	var view_h: float = 720.0
-	var view: Viewport = _host.get_viewport()
-	if view != null:
-		view_h = view.get_visible_rect().size.y
-	var lane_top: float = view_h - 196.0
-	var panel_y: float = lane_top - 136.0
-	if panel_y < 200.0:
-		panel_y = 200.0
-	var panel_h: float = minf(128.0, lane_top - panel_y - 8.0)
-	if panel_h < 64.0:
-		panel_h = 64.0
-	panel.position = Vector2(220.0, panel_y)
-	panel.size = Vector2(720.0, panel_h)
+	panel.position = Vector2(72.0, 150.0)
+	panel.size = Vector2(308.0, 44.0)
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.clip_contents = true
 	layer.add_child(panel)
