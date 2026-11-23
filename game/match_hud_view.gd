@@ -18,6 +18,10 @@ var _goals_open: bool = false
 var _details_open: bool = false
 var _transmission_closed: bool = false
 var _tx_seen: String = ""
+var _story_kind: String = ""
+var _brief_dismissed: bool = false
+var _tx_dismissed: bool = false
+var _tx_key: String = ""
 var _skin: String = "gtfc"
 var _tiles_key: String = ""
 var _glassed: Dictionary = {}
@@ -1193,6 +1197,7 @@ func _seat_chrome() -> void:
 	var hud: SMHud = get_meta("hud", null) as SMHud
 	if hud != null and hud.phone:
 		_seat_phone(hud)
+		_seat_story_stack()
 		return
 	_seat_desktop()
 	_seat_context()
@@ -1315,14 +1320,12 @@ func _story_column() -> Rect2:
 	var width: float = minf(308.0, maxf(160.0, play_right - x))
 	return Rect2(x, 40.0, width, 220.0)
 
-## The battlefield keeps one objective line. Briefing, the stage list and the
-## transmission stay in the Esc match menu, so none of them stack on the map.
+## One mission or transmission card under the objective line. A new beat replaces
+## the card; Close, Got it and Esc dismiss it. The old stack stays off the map.
 func _seat_story_stack() -> void:
 	var layer: Node = get_parent()
 	if layer == null:
 		return
-	layer.set_meta("details_open", false)
-	layer.set_meta("transmission_closed", true)
 	var heading: Label = layer.find_child("MissionHeading", true, false) as Label
 	if heading != null:
 		_readable(heading)
@@ -1334,6 +1337,107 @@ func _seat_story_stack() -> void:
 	var lane: CanvasItem = get_node_or_null("MessageLane") as CanvasItem
 	if lane != null:
 		lane.visible = false
+	var old_got: Button = layer.find_child("BriefingDismiss", true, false) as Button
+	if old_got != null and not old_got.pressed.is_connected(dismiss_story):
+		old_got.pressed.connect(dismiss_story)
+	var tx: String = _transmission_text(layer)
+	if tx != _tx_key:
+		_tx_key = tx
+		if tx != "":
+			_tx_dismissed = false
+	var brief: Label = layer.find_child("Briefing", true, false) as Label
+	var brief_text: String = brief.text if brief != null else ""
+	var kind: String = ""
+	var body: String = ""
+	if not _brief_dismissed and brief_text != "":
+		kind = "mission"
+		body = brief_text
+	elif not _tx_dismissed and tx != "":
+		kind = "transmission"
+		body = tx.replace("|", " ")
+	_story_kind = kind
+	var card: Panel = _ensure_story_card()
+	card.visible = kind != ""
+	if kind == "":
+		return
+	var kicker: Label = card.get_node("StoryKicker") as Label
+	var copy: Label = card.get_node("StoryBody") as Label
+	kicker.text = "MISSION" if kind == "mission" else "TRANSMISSION"
+	copy.text = body
+	var view: Vector2 = _view_rect()
+	var width: float = minf(340.0, maxf(200.0, view.x - SIDE_W - 96.0))
+	var height: float = 132.0
+	card.position = Vector2(72.0, 84.0)
+	card.size = Vector2(width, height)
+	kicker.position = Vector2(12.0, 8.0)
+	kicker.size = Vector2(width - 24.0, 18.0)
+	copy.position = Vector2(12.0, 28.0)
+	copy.size = Vector2(width - 24.0, 58.0)
+	var close: Button = card.get_node("StoryClose") as Button
+	var got: Button = card.get_node("StoryGotIt") as Button
+	close.position = Vector2(12.0, height - 36.0)
+	close.size = Vector2(88.0, 28.0)
+	got.position = Vector2(108.0, height - 36.0)
+	got.size = Vector2(88.0, 28.0)
+
+func story_open() -> bool:
+	var card: CanvasItem = get_node_or_null("StoryCard") as CanvasItem
+	return card != null and card.visible
+
+func dismiss_story() -> void:
+	if _story_kind == "mission":
+		_brief_dismissed = true
+	elif _story_kind == "transmission":
+		_tx_dismissed = true
+	_story_kind = ""
+	var card: CanvasItem = get_node_or_null("StoryCard") as CanvasItem
+	if card != null:
+		card.visible = false
+
+func _ensure_story_card() -> Panel:
+	var found: Panel = get_node_or_null("StoryCard") as Panel
+	if found != null:
+		return found
+	var card := Panel.new()
+	card.name = "StoryCard"
+	card.visible = false
+	card.mouse_filter = Control.MOUSE_FILTER_STOP
+	card.z_index = 8
+	var plate := StyleBoxFlat.new()
+	plate.bg_color = Color(0.05, 0.06, 0.08, 0.92)
+	plate.border_color = Color(0.95, 0.72, 0.25, 0.95)
+	plate.border_width_left = 4
+	plate.set_corner_radius_all(4)
+	card.add_theme_stylebox_override("panel", plate)
+	var kicker := Label.new()
+	kicker.name = "StoryKicker"
+	kicker.add_theme_font_size_override("font_size", 12)
+	kicker.add_theme_color_override("font_color", Color(0.98, 0.82, 0.35))
+	card.add_child(kicker)
+	var copy := Label.new()
+	copy.name = "StoryBody"
+	copy.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	copy.clip_text = true
+	copy.max_lines_visible = 3
+	copy.add_theme_font_size_override("font_size", 14)
+	copy.add_theme_color_override("font_color", Color(1, 1, 1))
+	card.add_child(copy)
+	var close := Button.new()
+	close.name = "StoryClose"
+	close.text = "Close"
+	close.focus_mode = Control.FOCUS_NONE
+	close.add_theme_font_size_override("font_size", 13)
+	close.pressed.connect(dismiss_story)
+	card.add_child(close)
+	var got := Button.new()
+	got.name = "StoryGotIt"
+	got.text = "Got it"
+	got.focus_mode = Control.FOCUS_NONE
+	got.add_theme_font_size_override("font_size", 13)
+	got.pressed.connect(dismiss_story)
+	card.add_child(got)
+	add_child(card)
+	return card
 
 ## Superweapon Ready sits off the left edge, beside the sidebar, not on the map's rim.
 func _seat_ready() -> void:
@@ -1356,7 +1460,7 @@ func _transmission_text(layer: Node) -> String:
 		var line: Label = banner.find_child("StageLine", true, false) as Label
 		if directive != null and directive.text != "":
 			parts.append(directive.text)
-		if line != null and line.text != "":
+		if line != null and line.text != "" and (directive == null or not directive.text.contains(line.text)):
 			parts.append(line.text)
 	var dialogue: Node = layer.find_child("SetDialogue", true, false)
 	if dialogue != null:

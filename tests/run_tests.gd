@@ -129,6 +129,8 @@ func _run() -> void:
 	await H.section("test_placement_feedback", test_placement_feedback)
 	await H.section("test_objective_guidance", test_objective_guidance)
 	await H.section("test_campaign_pressure", test_campaign_pressure)
+	await H.section("test_story_card", test_story_card)
+	await H.section("test_unit_actions", test_unit_actions)
 	var probe: Node = Node.new()
 	probe.name = "QuitProbe"
 	root.add_child(probe)
@@ -676,7 +678,7 @@ func test_model_scale() -> void:
 				var target: Dictionary = Scale.unit_target(id)
 				if cls == "infantry":
 					infantry_seen += 1
-					infantry_ok = infantry_ok and absf(size.y - 1.8) < 0.1
+					infantry_ok = infantry_ok and absf(size.y - 2.45) < 0.1
 				elif target.has("length") and not target.has("height_max"):
 					vehicles_ok = vehicles_ok and absf(maxf(size.x, size.z) - float(target["length"])) < float(target["length"]) * 0.06
 			body.free()
@@ -707,7 +709,7 @@ func test_model_scale() -> void:
 	SMFront.faction_id = "gtfc"
 	check(unclassed.is_empty(), "every unit has a scale class %s" % [unclassed.slice(0, 6)])
 	check(unroled.is_empty(), "every building has a footprint %s" % [unroled.slice(0, 6)])
-	check(infantry_seen > 0 and infantry_ok, "infantry models stand 1.8 m tall")
+	check(infantry_seen > 0 and infantry_ok, "infantry models stand 2.45 m tall, shorter than a tank")
 	check(vehicles_ok, "vehicle, aircraft and ship models match their class length")
 	check(fitted > 10 and too_big.is_empty(), "%d building models sit inside their grid footprint %s" % [fitted, too_big.slice(0, 6)])
 	check(too_small.is_empty(), "building models fill their footprint %s" % [too_small.slice(0, 6)])
@@ -740,6 +742,17 @@ func test_model_scale() -> void:
 		house_l = maxf(hbox.size.x, hbox.size.z) * Env.fit_of("shan_stilt_house", hbox)
 		house.free()
 	check(absf(tree_h - 7.5) < 0.1 and house_l >= 5.0 and house_l <= 5.7, "trees stand 7.5 m and houses stay tank-sized (%.1f m, %.1f m)" % [tree_h, house_l])
+	var tank_body: MeshInstance3D = Forms.dress_unit("amber_tank", "armor", "ground", Color.GRAY)
+	var mech_body: MeshInstance3D = Forms.dress_unit("wharf_gun", "armor", "ground", Color.GRAY)
+	host.add_child(tank_body)
+	host.add_child(mech_body)
+	var tank_model: Node3D = tank_body.get_node_or_null("Model") as Node3D
+	var mech_model: Node3D = mech_body.get_node_or_null("Model") as Node3D
+	var tank_h: float = (tank_model.transform * Models._merged_aabb(tank_model)).size.y if tank_model != null else 0.0
+	var mech_h: float = (mech_model.transform * Models._merged_aabb(mech_model)).size.y if mech_model != null else 0.0
+	check(tank_h > 2.7 and tank_h <= 3.3 and mech_h > 3.0 and mech_h <= 3.5 and tank_h > 2.45, "a tank is taller than a soldier and a mech sits with the tank (%.2f m, %.2f m)" % [tank_h, mech_h])
+	tank_body.free()
+	mech_body.free()
 	check(absf(Scale.lot_fill() - 0.72) < 0.001, "civilian lots leave a readable pad around the house")
 	var lot_s: float = Scale.lot_scale(Vector3(house_l, 1.0, house_l), Vector2(8.0, 8.0))
 	check(house_l * lot_s <= 8.0 * Scale.lot_fill() + 0.05, "a house on a 2x2 lot stays inside the lot fill")
@@ -807,6 +820,9 @@ func test_hud_pause() -> void:
 	var esc: InputEventKey = InputEventKey.new()
 	esc.pressed = true
 	esc.keycode = KEY_ESCAPE
+	var match_hud: Node = scene.find_child("MatchHud", true, false)
+	if match_hud != null and match_hud.has_method("story_open") and bool(match_hud.call("story_open")):
+		exit._unhandled_input(esc)
 	exit._unhandled_input(esc)
 	var settings: Control = scene.find_child("SettingsPanel", true, false) as Control
 	check(pause.visible and paused and settings != null and settings.visible and settings.get_parent() == pause and bool(settings.get("embedded")), "Esc pauses the match and opens settings inside the glass view")
@@ -8310,3 +8326,113 @@ func test_campaign_pressure() -> void:
 		reach_ok = SMArms.tactical_pick(tank, cat, (near + far) * 0.5) and SMArms.slot_of(tank) == SMArms.other(short)
 	check(reach_ok, "enemy units switch to the weapon mode that reaches their target")
 	await _ra3_done(scene)
+
+func test_story_card() -> void:
+	var scene: Node = (load("res://game/mission_kokang.tscn") as PackedScene).instantiate()
+	root.add_child(scene)
+	await process_frame
+	await process_frame
+	var card: Control = scene.find_child("StoryCard", true, false) as Control
+	var close: Button = scene.find_child("StoryClose", true, false) as Button
+	var got: Button = scene.find_child("StoryGotIt", true, false) as Button
+	var body: Label = scene.find_child("StoryBody", true, false) as Label
+	var brief: CanvasItem = scene.find_child("Briefing", true, false) as CanvasItem
+	var banner: CanvasItem = scene.find_child("StageBanner", true, false) as CanvasItem
+	var dialogue: CanvasItem = scene.find_child("SetDialogue", true, false) as CanvasItem
+	var tracker: CanvasItem = scene.find_child("StageTracker", true, false) as CanvasItem
+	var coach: CanvasItem = scene.find_child("CoachCard", true, false) as CanvasItem
+	var status: Control = scene.find_child("Status", true, false) as Control
+	var boot: CanvasItem = scene.find_child("MissionBoot", true, false) as CanvasItem
+	var dock: Control = scene.find_child("SuperDock", true, false) as Control
+	check(card != null and card.visible and close != null and close.text == "Close" and got != null and got.text == "Got it" and body != null and body.text.contains("Kokang"), "the mission card is on the field with Close and Got it")
+	check((brief == null or not brief.visible) and (banner == null or not banner.visible) and (dialogue == null or not dialogue.visible) and (tracker == null or not tracker.visible) and (coach == null or not coach.visible) and status != null and status.visible and status.size.y <= 40.0 and boot != null and not boot.visible and dock != null and dock.offset_left > 120.0, "one card only: the objective line stays, Ready stays off the left edge, and Boot Menu stays off")
+	var field: SMPointer = scene.get("field") as SMPointer
+	var militia: RTSUnit = null
+	for u: RTSUnit in field.units_of(SMPointer.PLAYER):
+		if militia == null and str(u.unit_type) == "militia":
+			militia = u
+	field.selection.clear()
+	field.selection.units.append(militia)
+	var key: InputEventKey = InputEventKey.new()
+	key.pressed = true
+	key.keycode = KEY_F
+	scene._unhandled_input(key)
+	check(militia != null and SMArms.slot_of(militia) == SMArms.SECONDARY, "F on a campaign mission switches the selected unit to its secondary weapon")
+	got.pressed.emit()
+	await process_frame
+	check(card != null and card.visible and not body.text.contains("Kokang") and body.text.contains("Laukkai"), "Got it retires the mission and the waiting transmission takes the same card")
+	got.pressed.emit()
+	await process_frame
+	check(not card.visible, "Got it dismisses the transmission")
+	var line: Label = scene.find_child("StageLine", true, false) as Label
+	line.text = "Hold the ruby yard."
+	await process_frame
+	var cards: Array[Node] = []
+	for node: Node in scene.find_children("StoryCard", "Panel", true, false):
+		if node.visible:
+			cards.append(node)
+	check(card.visible and body.text.contains("Hold the ruby yard.") and cards.size() == 1 and brief != null and not brief.visible, "a new transmission replaces the card instead of stacking")
+	var exit: Node = scene.get_node("MatchExit")
+	var esc: InputEventKey = InputEventKey.new()
+	esc.pressed = true
+	esc.keycode = KEY_ESCAPE
+	exit._unhandled_input(esc)
+	await process_frame
+	var pause: CanvasItem = scene.find_child("PauseMenu", true, false) as CanvasItem
+	check(not card.visible and (pause == null or not pause.visible), "Esc dismisses the transmission and leaves the match menu closed")
+	exit._unhandled_input(esc)
+	await process_frame
+	pause = scene.find_child("PauseMenu", true, false) as CanvasItem
+	check(pause != null and pause.visible and not card.visible, "Esc with no card opens the match menu")
+	scene.free()
+	await process_frame
+
+func test_unit_actions() -> void:
+	const Actions = preload("res://game/unit_actions.gd")
+	var militia: Dictionary = {}
+	var packer: Dictionary = {}
+	var invented: bool = false
+	for faction: String in ["gtfc", "nmrf", "mvd", "black_market"]:
+		for row: Dictionary in SMCatalog.units_of(SMCatalog.faction(faction)):
+			var actions: PackedStringArray = Actions.list_for(row)
+			if actions.has("crawl") or actions.has("hide"):
+				invented = true
+			if str(row.get("id", "")) == "militia":
+				militia = row
+			if str(row.get("id", "")) == "packer" and str(row.get("role", "")) == "core":
+				packer = row
+	var militia_actions: PackedStringArray = Actions.list_for(militia)
+	var packer_actions: PackedStringArray = Actions.list_for(packer)
+	check(militia_actions.has("idle") and militia_actions.has("move") and militia_actions.has("attack") and militia_actions.has("ability") and militia_actions.has("secondary") and not militia_actions.has("deploy"), "a militia row lists idle, move, attack, ability and secondary fire")
+	check(packer_actions.has("idle") and packer_actions.has("move") and packer_actions.has("attack") and packer_actions.has("ability") and packer_actions.has("deploy") and not packer_actions.has("secondary"), "the packer lists deploy and has no second weapon")
+	check(not invented, "crawl and hide are not listed when no unit performs them")
+	var one: int = 0
+	var two: int = 0
+	for faction: String in ["gtfc", "nmrf", "mvd", "black_market"]:
+		for row: Dictionary in SMCatalog.units_of(SMCatalog.faction(faction)):
+			if SMArms.profiles(row).is_empty():
+				one += 1
+			else:
+				two += 1
+	check(two == 60 and one == 1, "sixty combat units have two weapons and the packer has one")
+	var boot: Node = (load("res://game/boot.tscn") as PackedScene).instantiate()
+	root.add_child(boot)
+	await process_frame
+	var gear: Button = boot.find_child("SettingsButton", true, false) as Button
+	gear.pressed.emit()
+	var tab: Button = boot.find_child("SettingsTabUnits", true, false) as Button
+	tab.pressed.emit()
+	await process_frame
+	await process_frame
+	var rows: Array[Node] = boot.find_children("UnitRow_*", "HBoxContainer", true, false)
+	var militia_row: Node = boot.find_child("UnitRow_militia", true, false)
+	var name_label: Label = militia_row.find_child("UnitName", true, false) as Label if militia_row != null else null
+	var idle_cell: Node = militia_row.find_child("Cell_idle", true, false) if militia_row != null else null
+	var preview: Node = idle_cell.find_child("PreviewUnit", true, false) if idle_cell != null else null
+	check(tab != null and rows.size() == 20 and militia_row != null and name_label != null and name_label.text != "" and idle_cell != null and idle_cell.find_child("ActionLabel", true, false) != null and preview != null, "settings shows one labeled row per unit and plays that unit's idle")
+	var attack_cell: Node = militia_row.find_child("Cell_attack", true, false) if militia_row != null else null
+	var attack_label: Label = attack_cell.find_child("ActionLabel", true, false) as Label if attack_cell != null else null
+	var secondary_cell: Node = militia_row.find_child("Cell_secondary", true, false) if militia_row != null else null
+	check(attack_label != null and attack_label.text == "attack" and secondary_cell != null and militia_row.find_child("Cell_crawl", true, false) == null and militia_row.find_child("Cell_hide", true, false) == null, "each column is a real action, labeled on the cell")
+	boot.free()
+	await process_frame

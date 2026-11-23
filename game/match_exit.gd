@@ -452,6 +452,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		guide.visible = false
 		_handled()
 		return
+	var hud: Node = host.find_child("MatchHud", true, false)
+	if hud != null and hud.has_method("story_open") and bool(hud.call("story_open")):
+		hud.call("dismiss_story")
+		_handled()
+		return
 	if _pause() != null:
 		open()
 		_handled()

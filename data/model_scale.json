@@ -15,57 +15,57 @@
   },
   "unit_classes": {
     "infantry": {
-      "height": 1.8
+      "height": 2.45
     },
     "hero": {
-      "height": 2.05
+      "height": 2.65
     },
     "dog": {
-      "length": 1.3
+      "length": 1.45
     },
     "walker": {
-      "height": 4.2
+      "height": 3.35
     },
     "small_drone": {
-      "length": 1.4
+      "length": 1.25
     },
     "uav": {
-      "length": 3.6
+      "length": 3.1
     },
     "light_vehicle": {
-      "length": 4.6,
-      "height_max": 3.2
+      "length": 4.2,
+      "height_max": 2.55
     },
     "armour": {
-      "length": 5.6,
-      "height_max": 3.6
+      "length": 5.0,
+      "height_max": 3.15
     },
     "heavy_vehicle": {
-      "length": 7.0,
-      "height_max": 4.8
+      "length": 6.2,
+      "height_max": 3.5
     },
     "mobile_yard": {
-      "length": 8.5,
-      "height_max": 8.0
+      "length": 7.4,
+      "height_max": 4.6
     },
     "helicopter": {
-      "length": 7.0
+      "length": 6.2
     },
     "jet": {
-      "length": 10.0
+      "length": 8.5
     },
     "airship": {
-      "length": 14.0
+      "length": 11.5
     },
     "skiff": {
-      "length": 6.0,
-      "height_max": 3.6
+      "length": 5.2,
+      "height_max": 2.7
     },
     "warship": {
-      "length": 11.0
+      "length": 9.5
     },
     "capital_ship": {
-      "length": 15.0
+      "length": 12.5
     }
   },
   "units": {
