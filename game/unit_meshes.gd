@@ -407,7 +407,10 @@ static func _to_plot(mesh: ArrayMesh, plot: Vector2, ground: float) -> ArrayMesh
 	if span < 0.001 or plot == Vector2.ZERO:
 		return mesh
 	var s: float = minf(plot.x, plot.y) * Scale.fill() / span
-	var key: String = "plot|%d|%.2f|%.2f" % [mesh.get_instance_id(), plot.x, plot.y]
+	var cap: float = maxf(plot.x, plot.y) * Scale.height_ratio_max()
+	if box.size.y * s > cap:
+		s = cap / maxf(box.size.y, 0.001)
+	var key: String = "plot|%d|%.2f|%.2f|%.3f" % [mesh.get_instance_id(), plot.x, plot.y, s]
 	if _cache.has(key):
 		return _cache[key] as ArrayMesh
 	var xf := Transform3D(Basis.from_scale(Vector3.ONE * s), Vector3(0.0, ground - ground * s, 0.0))
@@ -722,14 +725,16 @@ static func _jet(st: SurfaceTool, accent: Color) -> void:
 	_box(st, Vector3(0.0, 0.95, 1.35), Vector3(1.15, 0.06, 0.32), METAL)
 	_box(st, Vector3(0.0, 1.05, 1.3), Vector3(0.08, 0.48, 0.38), accent)
 
-static func _yard(st: SurfaceTool, ground: float, accent: Color, height: float) -> void:
-	var h: float = height * 0.9
-	var posts: Array[Vector3] = [Vector3(-0.62, 0.0, -0.62), Vector3(0.62, 0.0, -0.62), Vector3(-0.62, 0.0, 0.62), Vector3(0.62, 0.0, 0.62)]
+static func _yard(st: SurfaceTool, ground: float, accent: Color, _height: float) -> void:
+	# Wide and only slightly taller than its span, so filling a 16 m lot stays a building
+	# instead of a tower. The plot scale in _to_plot still applies the chart height cap.
+	var h: float = 2.7
+	var posts: Array[Vector3] = [Vector3(-1.05, 0.0, -1.05), Vector3(1.05, 0.0, -1.05), Vector3(-1.05, 0.0, 1.05), Vector3(1.05, 0.0, 1.05)]
 	for p: Vector3 in posts:
-		_box(st, Vector3(p.x, ground + h * 0.5, p.z), Vector3(0.16, h, 0.16), METAL)
-	_box(st, Vector3(0.0, ground + 0.85, 0.0), Vector3(1.35, 0.12, 1.35), accent)
-	_box(st, Vector3(0.4, ground + h * 0.62, 0.0), Vector3(0.14, h * 0.7, 0.14), accent)
-	_box(st, Vector3(0.0, ground + h * 0.96, 0.0), Vector3(1.2, 0.08, 0.12), METAL)
+		_box(st, Vector3(p.x, ground + h * 0.5, p.z), Vector3(0.18, h, 0.18), METAL)
+	_box(st, Vector3(0.0, ground + 0.35, 0.0), Vector3(2.15, 0.16, 2.15), accent)
+	_box(st, Vector3(0.55, ground + h * 0.42, 0.0), Vector3(0.16, h * 0.55, 0.16), accent)
+	_box(st, Vector3(0.0, ground + h * 0.96, 0.0), Vector3(2.15, 0.1, 0.14), METAL)
 
 static func _power(st: SurfaceTool, ground: float, accent: Color) -> void:
 	_box(st, Vector3(-0.25, ground + 0.7, 0.0), Vector3(2.2, 1.3, 1.7), METAL)

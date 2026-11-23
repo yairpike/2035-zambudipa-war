@@ -29,9 +29,14 @@ static func height_ratio_max() -> float:
 
 ## Uniform scale that sits a civilian building inside its street lot, leaving a readable pad.
 ## Uses the longer mesh side against the shorter lot side so a 90-degree facade turn still fits.
+## The same height cap as a player building keeps a tall, narrow mesh from becoming a tower.
 static func lot_scale(size: Vector3, lot_m: Vector2) -> float:
 	var room: float = minf(lot_m.x, lot_m.y) * lot_fill()
-	return room / maxf(maxf(size.x, size.z), 0.001)
+	var s: float = room / maxf(maxf(size.x, size.z), 0.001)
+	var cap: float = maxf(lot_m.x, lot_m.y) * height_ratio_max()
+	if size.y * s > cap:
+		s = cap / maxf(size.y, 0.001)
+	return s
 
 ## Uniform scale that brings an authored box to `target`. 1.0 when the target is empty.
 static func scale_for(size: Vector3, target: Dictionary) -> float:

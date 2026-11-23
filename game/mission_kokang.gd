@@ -48,7 +48,7 @@ func _ready() -> void:
 	side.yard.radius = maxf(side.yard.radius, 36.0)
 	_arm_units()
 	var cam: RTSCamera = get_node("Camera") as RTSCamera
-	hud.mount(ui_layer, field, roster, side, SMCampaign.title_of("kokang"), rally, Callable(self, "fire_secondary"), grid, cam)
+	hud.mount(ui_layer, field, roster, side, SMCampaign.title_of("kokang"), rally, Callable(self, "fire_ability"), grid, cam)
 	_paint_minimap()
 	hud.set_tutorial(SMGuide.tutorial_for("kokang"))
 	preload("res://game/match_settings.gd").apply_scene(self)
@@ -154,6 +154,12 @@ func fire_secondary() -> int:
 	var n: int = field.secondary_strike()
 	_say("F ability struck an enemy" if n > 0 else "F ability found no enemy")
 	return n
+
+func fire_ability() -> int:
+	var cam: RTSCamera = get_node_or_null("Camera") as RTSCamera
+	var aim: Vector3 = field.aim_from_camera(cam, get_viewport().get_mouse_position()) if cam != null else Vector3.ZERO
+	var cast: String = field.cast_f(aim)
+	return 1 if cast != "" else 0
 
 func _debug(row: HBoxContainer, node_name: String, caption: String, fn: Callable) -> void:
 	var b: Button = Button.new()
@@ -433,7 +439,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	var key: InputEventKey = event as InputEventKey
 	if key != null and key.pressed and not key.echo and key.keycode == KEY_F:
 		preload("res://game/sim_presenter.gd").play_selected_ability(self)
-		fire_secondary()
+		fire_ability()
 		return
 	if cam == null:
 		return

@@ -926,7 +926,11 @@ func cast_f(aim: Vector3) -> String:
 
 ## A cast ability fires on the secondary weapon until the F cooldown runs out.
 func _burst(u: RTSUnit) -> void:
-	if SMArms.armed(u) and SMArms.equip(u, SMArms.SECONDARY):
+	if not SMArms.armed(u):
+		return
+	if float(u.get_meta("burst_t", 0.0)) <= 0.0:
+		u.set_meta("burst_from", SMArms.slot_of(u))
+	if SMArms.equip(u, SMArms.SECONDARY):
 		u.set_meta("burst_t", F_COOLDOWN)
 
 func apply_named_f(u: RTSUnit) -> bool:
@@ -1160,7 +1164,9 @@ func _tick_ability(u: RTSUnit, delta: float) -> void:
 		burst -= delta
 		u.set_meta("burst_t", maxf(burst, 0.0))
 		if burst <= 0.0:
-			SMArms.equip(u, SMArms.PRIMARY)
+			var back: String = str(u.get_meta("burst_from", SMArms.PRIMARY))
+			SMArms.equip(u, back if back != "" else SMArms.PRIMARY)
+			u.remove_meta("burst_from")
 	var status: String = str(u.get_meta("status", "none"))
 	if status != "none":
 		var left: float = float(u.get_meta("status_t", 0.0)) - delta

@@ -226,6 +226,11 @@ func _ready() -> void:
 	_page_tab("SettingsTabGameplay", "GAMEPLAY", "gameplay")
 	_page_tab("SettingsTabHud", "HUD", "hud")
 	_page_tab("SettingsTabLanguage", "LANGUAGE", "language")
+	_page_tab("SettingsTabUnits", "UNITS", "units")
+	var grid: Control = (load("res://game/unit_action_grid.gd") as GDScript).new() as Control
+	grid.name = "UnitActionGrid"
+	grid.set_meta("page", "units")
+	add_child(grid)
 	_tag_pages()
 	_layout(Vector2(1280, 720))
 	resized.connect(_on_resized)
@@ -283,6 +288,9 @@ func _layout(view: Vector2) -> void:
 	if embedded:
 		narrow = view.x < 520.0
 	var rail_w: float = view.x if narrow or embedded else view.x * 0.4
+	if _page == "units":
+		rail_w = view.x
+		narrow = view.x < 720.0
 	var rail: Control = get_node_or_null("SettingsRail") as Control
 	if rail != null:
 		rail.position = Vector2.ZERO
@@ -308,7 +316,7 @@ func _layout(view: Vector2) -> void:
 		title.add_theme_font_size_override("font_size", 28 if not narrow else 24)
 	var tab_y: float = 8.0 if embedded else 92.0
 	var tabs: PackedStringArray = PackedStringArray([
-		"SettingsTabVideo", "SettingsTabAudio", "SettingsTabControls", "SettingsTabGameplay", "SettingsTabHud", "SettingsTabLanguage",
+		"SettingsTabVideo", "SettingsTabAudio", "SettingsTabControls", "SettingsTabGameplay", "SettingsTabHud", "SettingsTabLanguage", "SettingsTabUnits",
 	])
 	for i: int in tabs.size():
 		var tab: Control = get_node_or_null(tabs[i])
@@ -321,6 +329,7 @@ func _layout(view: Vector2) -> void:
 	var content_x: float = left if narrow else left + nav_w + 16.0
 	var content_w: float = maxf(140.0, rail_w - content_x - 16.0)
 	var y: float = tab_y + float(tabs.size()) * 44.0 + 12.0 if narrow else tab_y
+	var content_top: float = y
 	var label_w: float = minf(120.0, content_w * 0.34)
 	var value_w: float = 52.0
 	var value_x: float = content_x + content_w - value_w
@@ -379,6 +388,10 @@ func _layout(view: Vector2) -> void:
 	var card: CanvasItem = get_node_or_null("SettingsCard") as CanvasItem
 	if card != null:
 		card.visible = false
+	var grid: Control = get_node_or_null("UnitActionGrid") as Control
+	if grid != null and grid.visible:
+		grid.position = Vector2(content_x, content_top)
+		grid.size = Vector2(content_w, maxf(160.0, view.y - content_top - 12.0))
 
 func _place_slider(label: Control, slider: Control, value: Control, x: float, y: float, label_w: float, slider_x: float, slider_w: float, value_x: float) -> float:
 	if label != null and not label.visible:
