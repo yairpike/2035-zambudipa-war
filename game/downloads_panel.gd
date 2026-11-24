@@ -13,14 +13,14 @@ const ITEMS: Array[Dictionary] = [
 		"node": "DownloadMacOS",
 		"label": "macOS (Apple Silicon & Intel) — .dmg",
 		"file": "ASEAN-2031-macOS.dmg",
-		"mib": 84.6,
+		"mib": 84.7,
 	},
 	{
 		"id": "windows",
 		"node": "DownloadWindows",
 		"label": "Windows (64-bit) — .exe",
 		"file": "ASEAN-2031-Windows.exe",
-		"mib": 52.4,
+		"mib": 52.5,
 	},
 	{
 		"id": "linux",
@@ -34,14 +34,14 @@ const ITEMS: Array[Dictionary] = [
 		"node": "DownloadAndroid",
 		"label": "Android (ARM64) — .apk",
 		"file": "ASEAN-2031-Android.apk",
-		"mib": 72.8,
+		"mib": 72.9,
 	},
 	{
 		"id": "ios",
 		"node": "DownloadIOS",
 		"label": "iOS Sideload (AltStore / SideStore) — .ipa",
 		"file": "ASEAN-2031-iOS.ipa",
-		"mib": 46.3,
+		"mib": 46.4,
 	},
 ]
 
