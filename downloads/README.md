@@ -22,7 +22,7 @@ Download the one file for your device, then open it. The file names still start 
 | Android 7.0 or later (ARM64, also x86_64) | [`ASEAN-2031-Android.apk`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Android.apk) | 72.9 MiB |
 | iPhone and iPad, iOS 16 or later (sideload) | [`ASEAN-2031-iOS.ipa`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-iOS.ipa) | 46.4 MiB |
 
-The first time the game opens, it downloads its music, voices, 3D models, and cinematics (221 MiB on a computer, 226 MiB on a phone or tablet) with a progress bar. On a computer the game then restarts by itself. On a phone or tablet, close the game and open it again when the download says it is complete. This happens only once. Press Play now to start right away with simple models and no sound while the download finishes in the background. Use Wi-Fi on a phone.
+The first time the game opens, it downloads its music, voices, 3D models, and cinematics (217 MiB on a computer, 222 MiB on a phone or tablet) with a progress bar. On a computer the game then restarts by itself. On a phone or tablet, close the game and open it again when the download says it is complete. This happens only once. Press Play now to start right away with simple models and no sound while the download finishes in the background. Use Wi-Fi on a phone.
 
 ## macOS
 
@@ -85,12 +85,12 @@ The match uses port 7777. The discovery beacon uses port 7778. Allow both throug
 
 ## Checksums
 
-Built from commit `37c065f` (P2 meshes for the two bottom landmarks). The first-launch download comes from GitHub Pages at `2bcf966`. SHA-256:
+Built from commit `7cd355f` (44 Studio house GLBs). The first-launch download comes from GitHub Pages at `539bafb`. SHA-256:
 
-- `ASEAN-2031-macOS.dmg`: `f4f922ddde86a71d07498b52b4777f404bed46b0a3273bdc46103f36b2a604c4`
-- `ASEAN-2031-Windows.exe`: `209ec5bb3d0f0f2dd35caaafc2e42fbe1c23d61868e0bfde67910876adc91422`
-- `ASEAN-2031-Linux-x86_64.AppImage`: `7d777531cc3137876d12562e7ff9f5e2eb67043956374ea151e65852ee1dc280`
-- `ASEAN-2031-Android.apk`: `c0f8dac3a95f78f51c9eb310d138994f8e9d353171fa7a265257b6866da67fdc`
-- `ASEAN-2031-iOS.ipa`: `9d828f2a44fdb4c2cc47f8f5cd9c25eeaa556f522c7524c336ada4d84bf6155f`
+- `ASEAN-2031-macOS.dmg`: `c607857db6cd3d8ef5a662b4ab69e806ce0f4910d19a7ab59024773b5f017414`
+- `ASEAN-2031-Windows.exe`: `cc2bf56609d6c713356114248d7dff0f65abbf6d644c365624aa74ee7e0b6b9a`
+- `ASEAN-2031-Linux-x86_64.AppImage`: `948a22412747bfa3c270377be6fb83993bf59647754e659bf19c24642cabe4e7`
+- `ASEAN-2031-Android.apk`: `f9e034c7f1cbd1059088ca021e8446573f6e626a1fcb789c3961f7205ad097e4`
+- `ASEAN-2031-iOS.ipa`: `575545b1557ea4b11f23e0c969fa6414a49ef4cf0ea9c235b64e6da77f788b8c`
 
 The Android signing certificate SHA-256 is `68a73898d947a4b7fc9068608c37e42b820607c69adef901494ecc775c94122b`.
