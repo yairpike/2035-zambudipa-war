@@ -678,7 +678,7 @@ func test_model_scale() -> void:
 				var target: Dictionary = Scale.unit_target(id)
 				if cls == "infantry":
 					infantry_seen += 1
-					infantry_ok = infantry_ok and absf(size.y - 2.45) < 0.1
+					infantry_ok = infantry_ok and absf(size.y - 2.75) < 0.1
 				elif target.has("length") and not target.has("height_max"):
 					vehicles_ok = vehicles_ok and absf(maxf(size.x, size.z) - float(target["length"])) < float(target["length"]) * 0.06
 			body.free()
@@ -709,7 +709,7 @@ func test_model_scale() -> void:
 	SMFront.faction_id = "gtfc"
 	check(unclassed.is_empty(), "every unit has a scale class %s" % [unclassed.slice(0, 6)])
 	check(unroled.is_empty(), "every building has a footprint %s" % [unroled.slice(0, 6)])
-	check(infantry_seen > 0 and infantry_ok, "infantry models stand 2.45 m tall, shorter than a tank")
+	check(infantry_seen > 0 and infantry_ok, "infantry models stand 2.75 m tall, shorter than a tank")
 	check(vehicles_ok, "vehicle, aircraft and ship models match their class length")
 	check(fitted > 10 and too_big.is_empty(), "%d building models sit inside their grid footprint %s" % [fitted, too_big.slice(0, 6)])
 	check(too_small.is_empty(), "building models fill their footprint %s" % [too_small.slice(0, 6)])
@@ -748,9 +748,20 @@ func test_model_scale() -> void:
 	host.add_child(mech_body)
 	var tank_model: Node3D = tank_body.get_node_or_null("Model") as Node3D
 	var mech_model: Node3D = mech_body.get_node_or_null("Model") as Node3D
-	var tank_h: float = (tank_model.transform * Models._merged_aabb(tank_model)).size.y if tank_model != null else 0.0
-	var mech_h: float = (mech_model.transform * Models._merged_aabb(mech_model)).size.y if mech_model != null else 0.0
-	check(tank_h > 2.7 and tank_h <= 3.3 and mech_h > 3.0 and mech_h <= 3.5 and tank_h > 2.45, "a tank is taller than a soldier and a mech sits with the tank (%.2f m, %.2f m)" % [tank_h, mech_h])
+	var tank_box: AABB = tank_model.transform * Models._merged_aabb(tank_model) if tank_model != null else AABB()
+	var mech_box: AABB = mech_model.transform * Models._merged_aabb(mech_model) if mech_model != null else AABB()
+	var tank_h: float = tank_box.size.y
+	var mech_h: float = mech_box.size.y
+	var tank_len: float = maxf(tank_box.size.x, tank_box.size.z)
+	var soldier: MeshInstance3D = Forms.dress_unit("militia", "infantry", "ground", Color.GRAY)
+	host.add_child(soldier)
+	var soldier_model: Node3D = soldier.get_node_or_null("Model") as Node3D
+	var soldier_h: float = (soldier_model.transform * Models._merged_aabb(soldier_model)).size.y if soldier_model != null else 0.0
+	check(tank_h > 2.8 and tank_h <= 3.2 and mech_h > 3.0 and mech_h <= 3.4 and soldier_h > tank_len * 0.45 and soldier_h < tank_h - 0.05, "a soldier is about half a tank's length and shorter than the tank (%.2f m, tank %.2f x %.2f, mech %.2f)" % [soldier_h, tank_h, tank_len, mech_h])
+	var yard_pad: ArrayMesh = Forms._to_plot(Forms.structure_mesh("yard", Color.WHITE, 4.0), Vector2(16, 16), -2.0)
+	var yard_size: Vector3 = yard_pad.get_aabb().size
+	check(yard_size.x > yard_size.y and yard_size.z > yard_size.y and yard_size.y < 7.0, "the yard stand-in is a low pad (%.1f x %.1f m)" % [yard_size.x, yard_size.y])
+	soldier.free()
 	tank_body.free()
 	mech_body.free()
 	check(absf(Scale.lot_fill() - 0.72) < 0.001, "civilian lots leave a readable pad around the house")
@@ -2652,14 +2663,14 @@ func test_sm_shapes() -> void:
 	check(field.name_of(_unit_kind(field, 0, "militia")) == "Shan Insurgent Militia", "the floating name stays")
 	var player_yard: Mesh = (scene.get_node("PlayerYard") as MeshInstance3D).mesh
 	var enemy_yard: Mesh = (scene.get_node("EnemyYard") as MeshInstance3D).mesh
-	check(_yard_shown(scene.get_node("PlayerYard") as MeshInstance3D) and _yard_shown(scene.get_node("EnemyYard") as MeshInstance3D), "yard buildings are a model or a taller block")
+	check(_yard_shown(scene.get_node("PlayerYard") as MeshInstance3D) and _yard_shown(scene.get_node("EnemyYard") as MeshInstance3D), "yard buildings are a model or a low pad")
 	var side: SMSide = scene.get("side") as SMSide
 	side.order_building(&"scaffold_yard")
 	var built: MeshInstance3D = scene.get_node_or_null("Built_scaffold_yard") as MeshInstance3D
 	var built_mesh: Mesh = null
 	if built != null:
 		built_mesh = built.mesh
-	check(_tall_mesh(built_mesh) or (built != null and str(built.get_meta("model", "")) != ""), "a finished building is a taller block or a loaded model")
+	check(_pad_mesh(built_mesh) or (built != null and str(built.get_meta("model", "")) != ""), "a finished yard is a low pad or a loaded model")
 	field.faction_id = "mvd"
 	var gunship: RTSUnit = field.spawn(SMPointer.PLAYER, Vector3(-40, 0, -20), &"hub_drone")
 	check(_mesh_kind(gunship) == "heli", "a helicopter is a rotor aircraft")
@@ -2690,7 +2701,7 @@ func test_sm_shapes() -> void:
 	check(_shape_is(mfield, 0, "clearance_trooper", "figure"), "mvd infantry is a low-poly figure")
 	check(_shape_is(mfield, 0, "hub_drone", "heli") and _shape_is(mfield, 0, "river_drone", "heli"), "mvd aircraft are rotor aircraft")
 	check(_shape_is(mfield, 0, "charcoal_apc", "tank"), "mvd armor is a tank")
-	check(_tall_mesh((mvd.get_node("HubShell") as MeshInstance3D).mesh), "the mvd hub is a taller block")
+	check(_yard_shown(mvd.get_node("HubShell") as MeshInstance3D), "the mvd hub is a model or a low pad")
 	mvd.free()
 	await process_frame
 	var nmrf: Node = (load("res://game/nmrf_yard.tscn") as PackedScene).instantiate()
@@ -2700,7 +2711,7 @@ func test_sm_shapes() -> void:
 	check(_shape_is(nfield, 0, "river_rifle", "figure"), "nmrf infantry is a low-poly figure")
 	check(_shape_is(nfield, 0, "sampan", "sub") and _shape_is(nfield, 0, "emerald_gunboat", "boat"), "a pocket sub is a hull and a surface boat stays a hull")
 	check(_shape_is(nfield, 0, "packer", "truck"), "the packer unit is a truck")
-	check(_tall_mesh((nmrf.get_node("PackerCore") as MeshInstance3D).mesh), "the packer building is a taller block")
+	check(_yard_shown(nmrf.get_node("PackerCore") as MeshInstance3D), "the packer building is a model or a low pad")
 	nmrf.free()
 	await process_frame
 	SMFront.faction_id = "gtfc"
@@ -6066,7 +6077,13 @@ func _yard_shown(node: MeshInstance3D) -> bool:
 		return false
 	if str(node.get_meta("model", "")) != "":
 		return true
-	return _tall_mesh(node.mesh)
+	return _pad_mesh(node.mesh)
+
+func _pad_mesh(mesh: Mesh) -> bool:
+	if mesh == null:
+		return false
+	var aabb: AABB = mesh.get_aabb()
+	return aabb.size.x > aabb.size.y and aabb.size.z > aabb.size.y
 
 func _tall_mesh(mesh: Mesh) -> bool:
 	if mesh == null:
@@ -8434,5 +8451,16 @@ func test_unit_actions() -> void:
 	var attack_label: Label = attack_cell.find_child("ActionLabel", true, false) as Label if attack_cell != null else null
 	var secondary_cell: Node = militia_row.find_child("Cell_secondary", true, false) if militia_row != null else null
 	check(attack_label != null and attack_label.text == "attack" and secondary_cell != null and militia_row.find_child("Cell_crawl", true, false) == null and militia_row.find_child("Cell_hide", true, false) == null, "each column is a real action, labeled on the cell")
+	var move_unit: RTSUnit = militia_row.find_child("Cell_move", true, false).find_child("PreviewUnit", true, false) as RTSUnit if militia_row.find_child("Cell_move", true, false) != null else null
+	var attack_unit: RTSUnit = attack_cell.find_child("PreviewUnit", true, false) as RTSUnit if attack_cell != null else null
+	var ability_unit: RTSUnit = militia_row.find_child("Cell_ability", true, false).find_child("PreviewUnit", true, false) as RTSUnit if militia_row.find_child("Cell_ability", true, false) != null else null
+	var secondary_note: Label = secondary_cell.find_child("PoseNote", true, false) as Label if secondary_cell != null else null
+	var secondary_unit: RTSUnit = secondary_cell.find_child("PreviewUnit", true, false) as RTSUnit if secondary_cell != null else null
+	var move_pose: String = str(move_unit.get_meta("preview_pose", "")) if move_unit != null else ""
+	var attack_pose: String = str(attack_unit.get_meta("preview_pose", "")) if attack_unit != null else ""
+	var ability_pose: String = str(ability_unit.get_meta("preview_pose", "")) if ability_unit != null else ""
+	var secondary_pose: String = str(secondary_unit.get_meta("preview_pose", "")) if secondary_unit != null else ""
+	var secondary_said: bool = (secondary_note != null and secondary_note.visible and secondary_note.text.contains("no secondary")) or (secondary_pose != "" and secondary_pose != "idle" and secondary_pose != move_pose)
+	check((move_pose == "walk" or move_pose == "run") and attack_pose == "shoot" and ability_pose == "ability" and move_pose != attack_pose and secondary_said, "a row poses each action, or says the clip is missing (%s / %s / %s / %s)" % [move_pose, attack_pose, ability_pose, secondary_pose])
 	boot.free()
 	await process_frame

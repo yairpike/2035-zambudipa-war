@@ -4,8 +4,8 @@ extends Control
 
 const Actions = preload("res://game/unit_actions.gd")
 const Forms = preload("res://game/unit_meshes.gd")
+const Models = preload("res://game/model_registry.gd")
 const Motion = preload("res://game/unit_motion.gd")
-const WeaponMode = preload("res://game/weapon_mode_view.gd")
 
 const FACTIONS: PackedStringArray = ["gtfc", "nmrf", "mvd", "black_market"]
 const NAME_W: float = 168.0
@@ -23,13 +23,13 @@ func _on_visibility() -> void:
 	if visible:
 		call_deferred("_ensure")
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not visible:
 		return
 	for node: Node in find_children("PreviewUnit", "RTSUnit", true, false):
 		var unit: RTSUnit = node as RTSUnit
 		if unit != null:
-			_drive(unit, delta)
+			_pose(unit)
 
 func _ensure() -> void:
 	if not visible:
@@ -228,7 +228,7 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	var view := SubViewport.new()
 	view.own_world_3d = true
 	view.size = Vector2i(int(CELL_W - 4), int(CELL_H - 24))
-	view.render_target_update_mode = SubViewport.UPDATE_WHEN_VISIBLE
+	view.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	view.disable_3d = false
 	box.add_child(view)
 	var world := Node3D.new()
@@ -268,46 +268,222 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	unit.add_child(body)
 	Motion.attach(unit, body)
 	SMArms.arm(unit, item)
-	var foe := RTSUnit.new()
-	foe.name = "PreviewFoe"
-	foe.team = 1
-	foe.hp = 20.0
-	foe.visible = false
-	foe.position = Vector3(0, 0, -1.6)
-	unit.add_child(foe)
+	unit.set_meta("preview_cell", cell)
+	_frame(cam, body)
+	_pose(unit)
 
-func _drive(unit: RTSUnit, delta: float) -> void:
+## Holds one obvious frame of the action. A missing clip is named on the cell instead of another idle.
+func _pose(unit: RTSUnit) -> void:
 	var body: MeshInstance3D = unit.get_node_or_null("Body") as MeshInstance3D
 	if body == null:
 		return
 	var action: String = str(unit.get_meta("preview_action", "idle"))
-	var foe: RTSUnit = unit.get_node_or_null("PreviewFoe") as RTSUnit
+	var player: AnimationPlayer = Motion.player_of(body)
+	var missing: String = ""
+	var clip: String = ""
 	if action == "move":
-		unit.attack_target = null
-		if unit.path.is_empty():
-			unit.set_path(PackedVector3Array([unit.global_position + Vector3(0, 0, -4)]))
-	elif action == "attack" or action == "secondary":
-		unit.path = PackedVector3Array()
-		if SMArms.armed(unit):
-			SMArms.equip(unit, SMArms.SECONDARY if action == "secondary" else SMArms.PRIMARY)
-			var slot: String = SMArms.slot_of(unit)
-			var tint: Color = Color.html(str(SMArms.profile(unit, slot).get("tint", "#FFD15A")))
-			WeaponMode.show(unit, slot, tint)
-		unit.attack_target = foe
-		body.set_meta("anim_shot", 0.7)
+		clip = _move_clip(player)
+		if clip == "" and not _roll(body):
+			missing = "no move clip"
+	elif action == "attack":
+		clip = Motion.resolve(player, "shoot")
+		if clip == "" and not _aim(body):
+			missing = "no attack clip"
+	elif action == "secondary":
+		if _other_weapon(body):
+			clip = Motion.resolve(player, "shoot")
+		elif Motion.resolve(player, "secondary") != "":
+			clip = Motion.resolve(player, "secondary")
+		else:
+			missing = "no secondary clip"
 	elif action == "ability":
-		unit.stop()
-		if float(body.get_meta("anim_ability", 0.0)) < 0.25:
-			Motion.start_ability(unit, body, Motion.player_of(body))
+		clip = Motion.resolve(player, "ability")
+		if clip == "" or clip == "idle":
+			missing = "no ability clip"
+			clip = ""
 	elif action == "deploy":
-		unit.stop()
-		body.set_meta("anim_still", Motion.BRACE_AFTER + 0.5)
+		clip = Motion.resolve(player, "deploy")
+		if clip == "":
+			missing = "no deploy clip"
 	else:
-		unit.stop()
-		body.set_meta("anim_shot", 0.0)
-		body.set_meta("anim_ability", 0.0)
-		body.set_meta("anim_still", 0.0)
-	Motion.pose(unit, delta)
+		clip = Motion.resolve(player, "idle")
+	if missing == "" and clip != "":
+		_hold(player, clip, 0.0 if action == "idle" else 0.42)
+	if missing == "" and (action == "attack" or action == "secondary"):
+		_flash(body, action == "secondary")
+	if missing == "" and action == "ability":
+		_ring(body)
+	unit.set_meta("preview_pose", missing if missing != "" else (clip if clip != "" else action))
+	_note(unit, missing)
+	var cell: Control = _cell_of(unit)
+	if cell != null:
+		var view: Node = cell.get_node_or_null("ActionView")
+		if view != null:
+			view.visible = missing == ""
+
+func _move_clip(player: AnimationPlayer) -> String:
+	var run: String = Motion.resolve(player, "run")
+	if run != "" and run != "walk" and run != "idle":
+		return run
+	var walk: String = Motion.resolve(player, "walk")
+	if walk == "" or walk == "idle":
+		return ""
+	return walk
+
+func _hold(player: AnimationPlayer, clip: String, fraction: float) -> void:
+	if player == null or not Motion.play(player, clip, 1.0):
+		return
+	var anim: Animation = player.get_animation(player.current_animation)
+	if anim == null:
+		return
+	player.seek(anim.length * clampf(fraction, 0.0, 0.95), true)
+	player.pause()
+
+func _roll(body: MeshInstance3D) -> bool:
+	var wheels: Node3D = body.get_node_or_null("Wheels") as Node3D
+	if wheels == null or wheels.get_child_count() == 0:
+		return false
+	for idx: int in wheels.get_child_count():
+		var wheel: Node3D = wheels.get_child(idx) as Node3D
+		if wheel != null:
+			wheel.rotation.x = 1.35
+	body.rotation.x = -0.55
+	body.position.z = -0.45
+	_dust(body)
+	return true
+
+func _aim(body: MeshInstance3D) -> bool:
+	var turret: Node3D = body.get_node_or_null("Turret") as Node3D
+	if turret == null:
+		return false
+	turret.rotation.y = 1.35
+	var barrel: Node3D = turret.get_node_or_null("Barrel") as Node3D
+	if barrel != null:
+		if not barrel.has_meta("preview_rest"):
+			barrel.set_meta("preview_rest", barrel.position)
+		var rest: Vector3 = barrel.get_meta("preview_rest")
+		barrel.position = rest + Vector3(0.0, 0.0, 0.35)
+	return true
+
+func _other_weapon(body: MeshInstance3D) -> bool:
+	var weapons: Array[MeshInstance3D] = Motion.weapons_of(body)
+	if weapons.size() < 2:
+		return false
+	for i: int in weapons.size():
+		weapons[i].visible = i == 1
+	return true
+
+func _flash(body: MeshInstance3D, secondary: bool) -> void:
+	var flash: MeshInstance3D = body.get_node_or_null("PreviewFlash") as MeshInstance3D
+	if flash == null:
+		flash = MeshInstance3D.new()
+		flash.name = "PreviewFlash"
+		flash.mesh = BoxMesh.new()
+		var mat := StandardMaterial3D.new()
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		mat.emission_enabled = true
+		flash.material_override = mat
+		flash.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		body.add_child(flash)
+	var span: Vector3 = _bounds(body).size
+	var reach: float = maxf(maxf(span.x, span.z), 1.2)
+	var bolt: BoxMesh = flash.mesh as BoxMesh
+	bolt.size = Vector3(reach * 0.42, reach * 0.42, reach * 0.55)
+	var mat: StandardMaterial3D = flash.material_override as StandardMaterial3D
+	var ink: Color = Color(1.0, 0.22, 0.18) if secondary else Color(1.0, 0.78, 0.12)
+	mat.albedo_color = ink
+	mat.emission = ink
+	if flash.get_parent() != body:
+		flash.reparent(body)
+	flash.position = Vector3(0.0, span.y * 0.62, -reach * 0.62)
+	flash.rotation = Vector3.ZERO
+
+func _dust(body: MeshInstance3D) -> void:
+	if body.get_node_or_null("PreviewDust") != null:
+		return
+	var dust := Node3D.new()
+	dust.name = "PreviewDust"
+	var span: Vector3 = _bounds(body).size
+	var reach: float = maxf(span.z, 1.2)
+	for i: int in 3:
+		var puff := MeshInstance3D.new()
+		var ball := SphereMesh.new()
+		ball.radius = reach * (0.16 + float(i) * 0.05)
+		ball.height = ball.radius * 2.0
+		puff.mesh = ball
+		var mat := StandardMaterial3D.new()
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mat.albedo_color = Color(0.72, 0.58, 0.32, 0.8)
+		puff.material_override = mat
+		puff.position = Vector3(0.15 * float(i - 1), span.y * 0.25, reach * (0.35 + float(i) * 0.22))
+		puff.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		dust.add_child(puff)
+	body.add_child(dust)
+
+func _ring(body: MeshInstance3D) -> void:
+	if body.get_node_or_null("PreviewRing") != null:
+		return
+	var ring := MeshInstance3D.new()
+	ring.name = "PreviewRing"
+	var disc := CylinderMesh.new()
+	disc.top_radius = 1.15
+	disc.bottom_radius = 1.15
+	disc.height = 0.06
+	ring.mesh = disc
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.albedo_color = Color(0.35, 0.85, 1.0, 0.85)
+	mat.emission_enabled = true
+	mat.emission = Color(0.35, 0.85, 1.0)
+	ring.material_override = mat
+	ring.position = Vector3(0.0, 0.08, 0.0)
+	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	body.add_child(ring)
+
+func _note(unit: RTSUnit, missing: String) -> void:
+	var cell: Control = _cell_of(unit)
+	if cell == null:
+		return
+	var note: Label = cell.get_node_or_null("PoseNote") as Label
+	if missing == "":
+		if note != null:
+			note.visible = false
+		return
+	if note == null:
+		note = Label.new()
+		note.name = "PoseNote"
+		note.position = Vector2(6, 28)
+		note.size = Vector2(CELL_W - 12, 48)
+		note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		note.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		note.add_theme_font_size_override("font_size", 13)
+		note.add_theme_color_override("font_color", Color(1.0, 0.82, 0.35))
+		note.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		cell.add_child(note)
+	note.text = missing
+	note.visible = true
+
+func _cell_of(unit: RTSUnit) -> Control:
+	var kept: Variant = unit.get_meta("preview_cell") if unit.has_meta("preview_cell") else null
+	return kept as Control if kept != null and is_instance_valid(kept) else null
+
+func _frame(cam: Camera3D, body: MeshInstance3D) -> void:
+	var box: AABB = _bounds(body)
+	var center: Vector3 = box.get_center()
+	var span: float = maxf(box.size.length(), 1.2)
+	var eye: Vector3 = center + Vector3(span * 0.55, span * 0.42, span * 0.85)
+	cam.look_at_from_position(eye, Vector3(center.x, center.y, center.z))
+
+func _bounds(body: MeshInstance3D) -> AABB:
+	var model: Node3D = body.get_node_or_null("Model") as Node3D
+	if model != null:
+		return model.transform * Models._merged_aabb(model)
+	if body.mesh != null:
+		return body.get_aabb()
+	return AABB(Vector3(-0.6, 0.0, -0.6), Vector3(1.2, 1.6, 1.2))
 
 func _colors(faction: String) -> PackedColorArray:
 	if faction == "nmrf":

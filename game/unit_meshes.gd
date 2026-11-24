@@ -726,15 +726,17 @@ static func _jet(st: SurfaceTool, accent: Color) -> void:
 	_box(st, Vector3(0.0, 1.05, 1.3), Vector3(0.08, 0.48, 0.38), accent)
 
 static func _yard(st: SurfaceTool, ground: float, accent: Color, _height: float) -> void:
-	# Wide and only slightly taller than its span, so filling a 16 m lot stays a building
-	# instead of a tower. The plot scale in _to_plot still applies the chart height cap.
-	var h: float = 2.7
-	var posts: Array[Vector3] = [Vector3(-1.05, 0.0, -1.05), Vector3(1.05, 0.0, -1.05), Vector3(-1.05, 0.0, 1.05), Vector3(1.05, 0.0, 1.05)]
-	for p: Vector3 in posts:
-		_box(st, Vector3(p.x, ground + h * 0.5, p.z), Vector3(0.18, h, 0.18), METAL)
-	_box(st, Vector3(0.0, ground + 0.35, 0.0), Vector3(2.15, 0.16, 2.15), accent)
-	_box(st, Vector3(0.55, ground + h * 0.42, 0.0), Vector3(0.16, h * 0.55, 0.16), accent)
-	_box(st, Vector3(0.0, ground + h * 0.96, 0.0), Vector3(2.15, 0.1, 0.14), METAL)
+	# A construction pad: the span is much wider than the height, so filling a 16 m lot
+	# stays a low yard beside the shophouses instead of a scaffold tower.
+	_box(st, Vector3(0.0, ground + 0.16, 0.0), Vector3(4.4, 0.28, 4.4), accent)
+	_box(st, Vector3(0.0, ground + 0.4, -2.05), Vector3(4.2, 0.32, 0.18), METAL)
+	_box(st, Vector3(0.0, ground + 0.4, 2.05), Vector3(4.2, 0.32, 0.18), METAL)
+	_box(st, Vector3(-2.05, ground + 0.4, 0.0), Vector3(0.18, 0.32, 4.0), METAL)
+	_box(st, Vector3(2.05, ground + 0.4, 0.0), Vector3(0.18, 0.32, 4.0), METAL)
+	_box(st, Vector3(1.15, ground + 0.62, 0.55), Vector3(1.3, 0.7, 0.9), METAL)
+	_box(st, Vector3(1.15, ground + 1.02, 0.55), Vector3(1.4, 0.1, 1.0), accent)
+	_box(st, Vector3(-0.85, ground + 0.72, -0.45), Vector3(0.14, 1.15, 0.14), METAL)
+	_box(st, Vector3(-0.2, ground + 1.25, -0.45), Vector3(1.45, 0.08, 0.1), METAL)
 
 static func _power(st: SurfaceTool, ground: float, accent: Color) -> void:
 	_box(st, Vector3(-0.25, ground + 0.7, 0.0), Vector3(2.2, 1.3, 1.7), METAL)
