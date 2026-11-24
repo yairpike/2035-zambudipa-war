@@ -127,7 +127,7 @@ if [ "$FULL" = 0 ]; then
   }
   awk -F'\t' -v ref="$REF" -v pages="$PAGES_URL" -v raw="$RAW_URL" '
     function q(s) { gsub(/\\/, "\\\\", s); gsub(/"/, "\\\"", s); return "\"" s "\"" }
-    NR == FNR { direct[$1] = $2; next }
+    FILENAME == ARGV[1] { if (NF >= 2) direct[$1] = $2; next }
     FNR == 1 { printf "{\n\"ref\": %s,\n\"urls\": [%s, %s],\n\"files\": [", q(ref), q(pages), q(raw) }
     {
       extra = ($1 in direct) ? ", " q(direct[$1]) : ""
