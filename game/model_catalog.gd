@@ -18,6 +18,7 @@ const RIGGED_YAW: Dictionary = {
 	"olive_sapper": 91.4,
 	"packer": 90.0,
 	"packer_escort": 84.8,
+	"printsmith": 90.1,
 	"relay_van": 87.3,
 	"river_rifle": 86.6,
 	"ruby_lancer": 99.4,
