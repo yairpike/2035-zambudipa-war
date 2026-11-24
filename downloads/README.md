@@ -85,12 +85,12 @@ The match uses port 7777. The discovery beacon uses port 7778. Allow both throug
 
 ## Checksums
 
-Built from commit `deaa1921a5420efc561834a1b003c5c14ea566ce` (`deaa192`: each settings cell loops the unit's own clip on the mounted model). The first-launch download comes from GitHub Pages at `c3884f7`. SHA-256:
+Built from commit `faeb19b38be64e17c6c8fe0606a7f965c84c888f` (`faeb19b`: the units page fills the window, faces the camera, and a drag orbits the cell). The first-launch download comes from GitHub Pages at `c3884f7`. SHA-256:
 
-- `ASEAN-2031-macOS.dmg`: `f90ecb15766a87684da37215d2e2dcc3458ad0a115d2bdd17f2b37251125725a`
-- `ASEAN-2031-Windows.exe`: `ce3e74212469a5f57f4d1b658eaa31ea9ee5ed6aeacaf1f4c4039cb5fb1de6cf`
-- `ASEAN-2031-Linux-x86_64.AppImage`: `083b5550c38256c7f1c303c330f972d3d896c69845ad8c2b9321bd830f17fd10`
-- `ASEAN-2031-Android.apk`: `261a2a37055732a8ce2e0878426ce01ae5b194a28319a88c29ed0d4131908ad1`
-- `ASEAN-2031-iOS.ipa`: `84b6e688941ab4ac4c45acb49ab056e5f0795f225edb80bee37597abe56aa127`
+- `ASEAN-2031-macOS.dmg`: `5f6811477339baa397f0d5106bf2c03208d598030851c2584bce9fd3cd919e24`
+- `ASEAN-2031-Windows.exe`: `9c3d22e54be24c788a18828118b67a250d6a11b166533e82f70d8218e4e78242`
+- `ASEAN-2031-Linux-x86_64.AppImage`: `88350c23dc7074dbbca949e7731a5b7216e3c21e0c5537483a69f17d6e291e8b`
+- `ASEAN-2031-Android.apk`: `5d6691434902f3dbfe21710c6281405594285d55e5fa74a63ecd6454f54f54d7`
+- `ASEAN-2031-iOS.ipa`: `b5301ef768dcd87ff829d5d0b956e0657c32c14dc7cc21f699cf311d955ab3b0`
 
 The Android signing certificate SHA-256 is `68a73898d947a4b7fc9068608c37e42b820607c69adef901494ecc775c94122b`.
