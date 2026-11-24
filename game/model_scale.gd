@@ -27,6 +27,10 @@ static func lot_fill() -> float:
 static func height_ratio_max() -> float:
 	return float(SMBasePlan.chart().get("building_height_ratio_max", 1.35))
 
+## A construction yard is a low pad beside the houses, not a scaffold tower.
+static func yard_pad_m() -> float:
+	return float(SMBasePlan.chart().get("yard_pad_m", 4.8))
+
 ## Uniform scale that sits a civilian building inside its street lot, leaving a readable pad.
 ## Uses the longer mesh side against the shorter lot side so a 90-degree facade turn still fits.
 ## The same height cap as a player building keeps a tall, narrow mesh from becoming a tower.

@@ -4,6 +4,7 @@
   "building_fill": 0.88,
   "building_height_ratio_max": 1.35,
   "lot_fill": 0.72,
+  "yard_pad_m": 4.8,
   "camera": {
     "company": 48.0,
     "skirmish": 64.0,
@@ -15,16 +16,16 @@
   },
   "unit_classes": {
     "infantry": {
-      "height": 2.45
+      "height": 2.75
     },
     "hero": {
-      "height": 2.65
+      "height": 2.9
     },
     "dog": {
       "length": 1.45
     },
     "walker": {
-      "height": 3.35
+      "height": 3.2
     },
     "small_drone": {
       "length": 1.25
@@ -33,39 +34,39 @@
       "length": 3.1
     },
     "light_vehicle": {
-      "length": 4.2,
-      "height_max": 2.55
+      "length": 4.0,
+      "height_max": 2.35
     },
     "armour": {
-      "length": 5.0,
-      "height_max": 3.15
+      "length": 4.6,
+      "height_max": 3.0
     },
     "heavy_vehicle": {
-      "length": 6.2,
-      "height_max": 3.5
+      "length": 5.6,
+      "height_max": 3.15
     },
     "mobile_yard": {
-      "length": 7.4,
-      "height_max": 4.6
+      "length": 6.6,
+      "height_max": 3.6
     },
     "helicopter": {
-      "length": 6.2
+      "length": 5.4
     },
     "jet": {
-      "length": 8.5
+      "length": 7.5
     },
     "airship": {
-      "length": 11.5
+      "length": 10.0
     },
     "skiff": {
-      "length": 5.2,
-      "height_max": 2.7
+      "length": 4.8,
+      "height_max": 2.35
     },
     "warship": {
-      "length": 9.5
+      "length": 8.5
     },
     "capital_ship": {
-      "length": 12.5
+      "length": 11.0
     }
   },
   "units": {

@@ -70,7 +70,8 @@ static func _mount_structure(host: MeshInstance3D, id: String, primary: Color, a
 	var plot: Vector2 = host.get_meta("footprint_m", Vector2.ZERO) as Vector2
 	if plot != Vector2.ZERO:
 		footprint = AABB(Vector3(-plot.x * 0.5, footprint.position.y, -plot.y * 0.5), Vector3(plot.x, footprint.size.y, plot.y))
-	_mount(host, scene, footprint, true, id, _yaw_of(id), {}, plot)
+	var pad: float = Scale.yard_pad_m() if _yard_pad(id) else 0.0
+	_mount(host, scene, footprint, true, id, _yaw_of(id), {}, plot, pad)
 	host.set_meta("model_id", id)
 	_paint(host, primary, accent, id)
 	return true
@@ -701,7 +702,11 @@ static func _copy_mat(src: Material) -> StandardMaterial3D:
 	return mat
 
 ## `yaw_deg` turns the model's authored forward onto -Z inside the Model node, so fitting sees the turned bounds.
-static func _mount(body: MeshInstance3D, scene: Node3D, footprint: AABB, fill: bool, id: String, yaw_deg: float = 0.0, target: Dictionary = {}, plot: Vector2 = Vector2.ZERO) -> void:
+## Construction yards (the faction yard, not a naval yard) squash to a low pad. Uniform scale cannot, because the authored mesh is taller than it is wide.
+static func _yard_pad(id: String) -> bool:
+	return id == "scaffold_yard" or id == "command_hub" or id == "packer" or id.ends_with("scaffold_yard")
+
+static func _mount(body: MeshInstance3D, scene: Node3D, footprint: AABB, fill: bool, id: String, yaw_deg: float = 0.0, target: Dictionary = {}, plot: Vector2 = Vector2.ZERO, pad_y: float = 0.0) -> void:
 	if absf(yaw_deg) > 0.01:
 		var holder: Node3D = Node3D.new()
 		scene.name = "Facing"
@@ -712,7 +717,7 @@ static func _mount(body: MeshInstance3D, scene: Node3D, footprint: AABB, fill: b
 	body.add_child(scene)
 	body.set_meta("model_yaw", yaw_deg)
 	if not target.is_empty() or plot != Vector2.ZERO:
-		_fit_chart(scene, footprint, target, plot)
+		_fit_chart(scene, footprint, target, plot, pad_y)
 	else:
 		_fit(scene, footprint, fill, _authored_size(id))
 	_hoist(body, scene, "Turret")
@@ -775,14 +780,17 @@ static func _fit(model: Node3D, footprint: AABB, fill: bool, authored: Vector3) 
 	)
 
 ## Chart scale: a unit reaches its class height or length, a building fills its plot. Base on the ground, centred on the plot.
-static func _fit_chart(model: Node3D, footprint: AABB, target: Dictionary, plot: Vector2) -> void:
+static func _fit_chart(model: Node3D, footprint: AABB, target: Dictionary, plot: Vector2, pad_y: float = 0.0) -> void:
 	var bounds: AABB = _merged_aabb(model)
 	if bounds.size.length() < 0.001:
 		return
 	var scale: float = Scale.footprint_scale(bounds.size, plot) if plot != Vector2.ZERO else Scale.scale_for(bounds.size, target)
 	if scale <= 0.0 or is_inf(scale) or is_nan(scale):
 		return
-	model.scale = Vector3.ONE * scale
+	var y_scale: float = scale
+	if pad_y > 0.0 and bounds.size.y * scale > pad_y:
+		y_scale = pad_y / maxf(bounds.size.y, 0.001)
+	model.scale = Vector3(scale, y_scale, scale)
 	var fitted: AABB = Transform3D(Basis.from_scale(model.scale), Vector3.ZERO) * bounds
 	model.position = Vector3(
 		footprint.get_center().x - fitted.get_center().x,
