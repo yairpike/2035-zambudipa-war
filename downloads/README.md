@@ -85,12 +85,12 @@ The match uses port 7777. The discovery beacon uses port 7778. Allow both throug
 
 ## Checksums
 
-Built from commit `9f219e6` (remaining P2 combat and landform meshes). The first-launch download comes from GitHub Pages at `9eb9e5e`. SHA-256:
+Built from commit `37c065f` (P2 meshes for the two bottom landmarks). The first-launch download comes from GitHub Pages at `2bcf966`. SHA-256:
 
-- `ASEAN-2031-macOS.dmg`: `03e18640854e35d625e3e56727807b31c71a2fb8fafdce697dd125ede7b4f638`
-- `ASEAN-2031-Windows.exe`: `2f195fa444cedcca0540bb3cdac68d7719478e7e2741ae8e8dd59ceb6684ff20`
-- `ASEAN-2031-Linux-x86_64.AppImage`: `1861cfd349a167c107e20e116d79c1095837008c4e98904bbf55f3f31990e83b`
-- `ASEAN-2031-Android.apk`: `b71892a376f8eac305e506221396973f2d7554465667fc77381231533bac752c`
-- `ASEAN-2031-iOS.ipa`: `5c7bd0e18fcec6e5af30dd8a63fed31c8ab66dde04fc13c5fb7d24ef7fe2dad8`
+- `ASEAN-2031-macOS.dmg`: `f4f922ddde86a71d07498b52b4777f404bed46b0a3273bdc46103f36b2a604c4`
+- `ASEAN-2031-Windows.exe`: `209ec5bb3d0f0f2dd35caaafc2e42fbe1c23d61868e0bfde67910876adc91422`
+- `ASEAN-2031-Linux-x86_64.AppImage`: `7d777531cc3137876d12562e7ff9f5e2eb67043956374ea151e65852ee1dc280`
+- `ASEAN-2031-Android.apk`: `c0f8dac3a95f78f51c9eb310d138994f8e9d353171fa7a265257b6866da67fdc`
+- `ASEAN-2031-iOS.ipa`: `9d828f2a44fdb4c2cc47f8f5cd9c25eeaa556f522c7524c336ada4d84bf6155f`
 
 The Android signing certificate SHA-256 is `68a73898d947a4b7fc9068608c37e42b820607c69adef901494ecc775c94122b`.
