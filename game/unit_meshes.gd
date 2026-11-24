@@ -150,6 +150,7 @@ static func _ensure_wheels(body: MeshInstance3D, hull_box: AABB, tracked: bool) 
 		existing.free()
 	var holder: Node3D = Node3D.new()
 	holder.name = "Wheels"
+	holder.set_meta("procedural_part", true)
 	var r: float = clampf(hull_box.size.y * 0.17, 0.22, 0.42)
 	var wx: float = maxf(hull_box.size.x * 0.46, 0.55)
 	var cz: float = hull_box.get_center().z
@@ -184,6 +185,7 @@ static func _ensure_barrel(turret: Node3D, accent: Color) -> void:
 	barrel.name = "Barrel"
 	barrel.mesh = unit_mesh("barrel", accent)
 	barrel.position = Vector3(0.0, 0.18, -0.55)
+	barrel.set_meta("procedural_part", true)
 	turret.add_child(barrel)
 
 static func _ensure_water_foam(body: MeshInstance3D, hull_box: AABB, accent: Color) -> void:
@@ -459,6 +461,7 @@ static func _part(body: MeshInstance3D, node_name: String, form: String, accent:
 	part.name = node_name
 	part.mesh = unit_mesh(form, accent)
 	part.position = at
+	part.set_meta("procedural_part", true)
 	body.add_child(part)
 	return part
 

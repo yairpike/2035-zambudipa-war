@@ -1,6 +1,6 @@
 extends Control
-## Settings page: one row per unit, one column per action that unit really performs.
-## Each filled cell loops that action on the unit's own model.
+## Settings page: one row per unit, one column per action or clip that unit really has.
+## Each filled cell plays that clip in a loop on the mounted model, at the cell's own resolution.
 
 const Actions = preload("res://game/unit_actions.gd")
 const Forms = preload("res://game/unit_meshes.gd")
@@ -9,11 +9,15 @@ const Motion = preload("res://game/unit_motion.gd")
 
 const FACTIONS: PackedStringArray = ["gtfc", "nmrf", "mvd", "black_market"]
 const NAME_W: float = 168.0
-const CELL_W: float = 132.0
-const CELL_H: float = 108.0
+## Several times the old 132×108 still, so a soldier reads as a model instead of a speck.
+const CELL_W: float = 460.0
+const CELL_H: float = 380.0
+const COLUMN_ORDER: PackedStringArray = ["idle", "move", "attack", "ability", "deploy", "die", "flinch", "secondary"]
+const SKIP_CLIPS: PackedStringArray = ["crawl", "hide"]
 
 var _faction: String = ""
 var _rows_built: bool = false
+var _clip_cache: Dictionary = {}
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
@@ -22,14 +26,6 @@ func _ready() -> void:
 func _on_visibility() -> void:
 	if visible:
 		call_deferred("_ensure")
-
-func _process(_delta: float) -> void:
-	if not visible:
-		return
-	for node: Node in find_children("PreviewUnit", "RTSUnit", true, false):
-		var unit: RTSUnit = node as RTSUnit
-		if unit != null:
-			_pose(unit)
 
 func _ensure() -> void:
 	if not visible:
@@ -56,30 +52,34 @@ func _chrome() -> void:
 		button.custom_minimum_size = Vector2(72, 28)
 		button.pressed.connect(_show_faction.bind(id))
 		row.add_child(button)
-	var header := HBoxContainer.new()
-	header.name = "ActionHeader"
-	header.position = Vector2(0, 36)
-	header.add_theme_constant_override("separation", 4)
-	add_child(header)
 	var scroll := ScrollContainer.new()
 	scroll.name = "UnitScroll"
-	scroll.position = Vector2(0, 64)
-	scroll.size = Vector2(size.x, maxf(120.0, size.y - 64.0))
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.position = Vector2(0, 40)
+	scroll.size = Vector2(size.x, maxf(120.0, size.y - 40.0))
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
 	scroll.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(scroll)
 	scroll.gui_input.connect(_on_scroll_input)
+	var board := VBoxContainer.new()
+	board.name = "UnitBoard"
+	board.add_theme_constant_override("separation", 6)
+	scroll.add_child(board)
+	var header := HBoxContainer.new()
+	header.name = "ActionHeader"
+	header.add_theme_constant_override("separation", 4)
+	board.add_child(header)
 	var list := VBoxContainer.new()
 	list.name = "UnitRows"
 	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	list.add_theme_constant_override("separation", 6)
-	scroll.add_child(list)
+	list.add_theme_constant_override("separation", 8)
+	board.add_child(list)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED:
 		var scroll: Control = get_node_or_null("UnitScroll") as Control
 		if scroll != null:
-			scroll.size = Vector2(size.x, maxf(120.0, size.y - 64.0))
+			scroll.size = Vector2(size.x, maxf(120.0, size.y - 40.0))
 
 func _on_scroll_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -92,7 +92,7 @@ func _show_faction(id: String) -> void:
 		return
 	_faction = id
 	_rows_built = true
-	var list: Node = get_node("UnitScroll/UnitRows")
+	var list: Node = get_node("UnitScroll/UnitBoard/UnitRows")
 	var stale: Array[Node] = []
 	for child: Node in list.get_children():
 		stale.append(child)
@@ -112,17 +112,60 @@ func _ensure_chrome() -> void:
 
 func _columns(faction: String) -> PackedStringArray:
 	var seen: Dictionary = {}
+	var clips: Dictionary = {}
 	for item: Dictionary in SMCatalog.units_of(SMCatalog.faction(faction)):
 		for action: String in Actions.list_for(item):
 			seen[action] = true
+		for clip: String in _clips(str(item.get("id", ""))):
+			clips[clip] = true
+			var column: String = _column_for(clip)
+			if column != "":
+				seen[column] = true
 	var out: PackedStringArray = PackedStringArray()
-	for action: String in Actions.ORDER:
+	for action: String in COLUMN_ORDER:
 		if bool(seen.get(action, false)):
 			out.append(action)
+	var extra: PackedStringArray = PackedStringArray()
+	for clip: String in clips.keys():
+		if _column_for(clip) == "" and not SKIP_CLIPS.has(clip) and not extra.has(clip):
+			extra.append(clip)
+	extra.sort()
+	for clip: String in extra:
+		out.append(clip)
 	return out
 
+## A clip the model actually contains. Rigged Tripo first, then the in-repo model. No invented names.
+func _clips(id: String) -> PackedStringArray:
+	if _clip_cache.has(id):
+		return _clip_cache[id] as PackedStringArray
+	var names := PackedStringArray()
+	var scene: Node3D = Models._scene(Models.RIGGED + id)
+	if scene == null:
+		scene = Models._scene(id)
+	if scene != null:
+		var player: AnimationPlayer = scene.find_child("AnimationPlayer", true, false) as AnimationPlayer
+		if player != null:
+			for clip_name: StringName in player.get_animation_list():
+				var key: String = str(clip_name).get_slice("/", str(clip_name).get_slice_count("/") - 1).to_lower()
+				if key != "" and not names.has(key):
+					names.append(key)
+		scene.free()
+	_clip_cache[id] = names
+	return names
+
+func _column_for(clip: String) -> String:
+	if clip == "idle":
+		return "idle"
+	if clip == "walk" or clip == "run":
+		return "move"
+	if clip == "shoot":
+		return "attack"
+	if clip == "ability" or clip == "deploy" or clip == "die" or clip == "flinch" or clip == "secondary":
+		return clip
+	return ""
+
 func _header(columns: PackedStringArray) -> void:
-	var header: HBoxContainer = get_node("ActionHeader") as HBoxContainer
+	var header: HBoxContainer = get_node("UnitScroll/UnitBoard/ActionHeader") as HBoxContainer
 	var stale: Array[Node] = []
 	for child: Node in header.get_children():
 		stale.append(child)
@@ -159,7 +202,7 @@ func _row(faction: String, item: Dictionary, columns: PackedStringArray) -> HBox
 	name_label.add_theme_font_size_override("font_size", 13)
 	name_label.add_theme_color_override("font_color", Color(1, 1, 1))
 	line.add_child(name_label)
-	var mine: PackedStringArray = Actions.list_for(item)
+	var mine: PackedStringArray = _mine(item)
 	for action: String in columns:
 		if not mine.has(action):
 			var gap := Control.new()
@@ -188,8 +231,18 @@ func _row(faction: String, item: Dictionary, columns: PackedStringArray) -> HBox
 		line.add_child(cell)
 	return line
 
+func _mine(item: Dictionary) -> PackedStringArray:
+	var mine: PackedStringArray = Actions.list_for(item)
+	for clip: String in _clips(str(item.get("id", ""))):
+		var column: String = _column_for(clip)
+		if column != "" and not mine.has(column) and not SKIP_CLIPS.has(clip):
+			mine.append(column)
+		elif column == "" and not SKIP_CLIPS.has(clip) and not mine.has(clip):
+			mine.append(clip)
+	return mine
+
 func _fill_visible() -> void:
-	var list: Node = get_node_or_null("UnitScroll/UnitRows")
+	var list: Node = get_node_or_null("UnitScroll/UnitBoard/UnitRows")
 	var scroll: Control = get_node_or_null("UnitScroll") as Control
 	if list == null or scroll == null:
 		return
@@ -223,13 +276,21 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	box.position = Vector2(2, 2)
 	box.size = Vector2(CELL_W - 4, CELL_H - 24)
 	box.stretch = true
+	box.stretch_shrink = 1
+	box.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	cell.add_child(box)
 	var view := SubViewport.new()
+	view.name = "ActionViewport"
 	view.own_world_3d = true
-	view.size = Vector2i(int(CELL_W - 4), int(CELL_H - 24))
+	view.size = Vector2i(int(CELL_W - 4), int(CELL_H - 28))
 	view.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	view.disable_3d = false
+	view.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
+	view.scaling_3d_scale = 1.0
+	view.msaa_3d = Viewport.MSAA_4X
+	view.screen_space_aa = Viewport.SCREEN_SPACE_AA_DISABLED
+	view.use_taa = false
 	box.add_child(view)
 	var world := Node3D.new()
 	world.name = "PreviewWorld"
@@ -266,181 +327,98 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	var ink: PackedColorArray = _colors(faction)
 	var body: MeshInstance3D = Forms.dress_unit(str(item.get("id", "")), str(item.get("role", "")), str(item.get("locomotion", "ground")), ink[1], ink[0], ink[1], faction)
 	unit.add_child(body)
+	_strip_standin(body)
 	Motion.attach(unit, body)
 	SMArms.arm(unit, item)
 	unit.set_meta("preview_cell", cell)
 	_frame(cam, body)
 	_pose(unit)
 
-## Holds one obvious frame of the action. A missing clip is named on the cell instead of another idle.
+## Plays the clip the unit actually has. A missing clip stays a short label on top of the mounted mesh.
 func _pose(unit: RTSUnit) -> void:
+	if bool(unit.get_meta("preview_set", false)):
+		return
+	unit.set_meta("preview_set", true)
 	var body: MeshInstance3D = unit.get_node_or_null("Body") as MeshInstance3D
 	if body == null:
 		return
 	var action: String = str(unit.get_meta("preview_action", "idle"))
 	var player: AnimationPlayer = Motion.player_of(body)
+	var clip: String = _clip_for(player, action)
 	var missing: String = ""
-	var clip: String = ""
-	if action == "move":
-		clip = _move_clip(player)
-		if clip == "" and not _roll(body):
-			missing = "no move clip"
-	elif action == "attack":
-		clip = Motion.resolve(player, "shoot")
-		if clip == "" and not _aim(body):
-			missing = "no attack clip"
-	elif action == "secondary":
-		if _other_weapon(body):
-			clip = Motion.resolve(player, "shoot")
-		elif Motion.resolve(player, "secondary") != "":
-			clip = Motion.resolve(player, "secondary")
-		else:
-			missing = "no secondary clip"
-	elif action == "ability":
-		clip = Motion.resolve(player, "ability")
-		if clip == "" or clip == "idle":
-			missing = "no ability clip"
-			clip = ""
-	elif action == "deploy":
-		clip = Motion.resolve(player, "deploy")
-		if clip == "":
-			missing = "no deploy clip"
-	else:
-		clip = Motion.resolve(player, "idle")
-	if missing == "" and clip != "":
-		_hold(player, clip, 0.0 if action == "idle" else 0.42)
-	if missing == "" and (action == "attack" or action == "secondary"):
-		_flash(body, action == "secondary")
-	if missing == "" and action == "ability":
-		_ring(body)
-	unit.set_meta("preview_pose", missing if missing != "" else (clip if clip != "" else action))
+	if clip == "":
+		missing = "no %s clip" % action
+	elif not _loop(player, clip, 0.35 if action == "idle" else 1.0):
+		missing = "no %s clip" % action
+		clip = ""
+	unit.set_meta("preview_pose", missing if missing != "" else clip)
 	_note(unit, missing)
-	var cell: Control = _cell_of(unit)
-	if cell != null:
-		var view: Node = cell.get_node_or_null("ActionView")
-		if view != null:
-			view.visible = missing == ""
+
+func _clip_for(player: AnimationPlayer, action: String) -> String:
+	if action == "move":
+		return _move_clip(player)
+	if action == "attack":
+		return "shoot" if Motion.has_clip(player, "shoot") else ""
+	if action == "ability":
+		return "ability" if Motion.has_clip(player, "ability") else ""
+	if action == "idle":
+		return "idle" if Motion.has_clip(player, "idle") else ""
+	return action if Motion.has_clip(player, action) else ""
 
 func _move_clip(player: AnimationPlayer) -> String:
-	var run: String = Motion.resolve(player, "run")
-	if run != "" and run != "walk" and run != "idle":
-		return run
-	var walk: String = Motion.resolve(player, "walk")
-	if walk == "" or walk == "idle":
-		return ""
-	return walk
+	if Motion.has_clip(player, "run"):
+		return "run"
+	if Motion.has_clip(player, "walk"):
+		return "walk"
+	return ""
 
-func _hold(player: AnimationPlayer, clip: String, fraction: float) -> void:
-	if player == null or not Motion.play(player, clip, 1.0):
-		return
-	var anim: Animation = player.get_animation(player.current_animation)
-	if anim == null:
-		return
-	player.seek(anim.length * clampf(fraction, 0.0, 0.95), true)
-	player.pause()
-
-func _roll(body: MeshInstance3D) -> bool:
-	var wheels: Node3D = body.get_node_or_null("Wheels") as Node3D
-	if wheels == null or wheels.get_child_count() == 0:
+## A private copy of the library, so looping a preview never changes the match clips.
+func _loop(player: AnimationPlayer, key: String, pace: float) -> bool:
+	if player == null:
 		return false
-	for idx: int in wheels.get_child_count():
-		var wheel: Node3D = wheels.get_child(idx) as Node3D
-		if wheel != null:
-			wheel.rotation.x = 1.35
-	body.rotation.x = -0.55
-	body.position.z = -0.45
-	_dust(body)
+	_own_clips(player)
+	if not Motion.play(player, key, pace):
+		return false
+	player.speed_scale = pace
 	return true
 
-func _aim(body: MeshInstance3D) -> bool:
-	var turret: Node3D = body.get_node_or_null("Turret") as Node3D
-	if turret == null:
-		return false
-	turret.rotation.y = 1.35
-	var barrel: Node3D = turret.get_node_or_null("Barrel") as Node3D
-	if barrel != null:
-		if not barrel.has_meta("preview_rest"):
-			barrel.set_meta("preview_rest", barrel.position)
-		var rest: Vector3 = barrel.get_meta("preview_rest")
-		barrel.position = rest + Vector3(0.0, 0.0, 0.35)
-	return true
-
-func _other_weapon(body: MeshInstance3D) -> bool:
-	var weapons: Array[MeshInstance3D] = Motion.weapons_of(body)
-	if weapons.size() < 2:
-		return false
-	for i: int in weapons.size():
-		weapons[i].visible = i == 1
-	return true
-
-func _flash(body: MeshInstance3D, secondary: bool) -> void:
-	var flash: MeshInstance3D = body.get_node_or_null("PreviewFlash") as MeshInstance3D
-	if flash == null:
-		flash = MeshInstance3D.new()
-		flash.name = "PreviewFlash"
-		flash.mesh = BoxMesh.new()
-		var mat := StandardMaterial3D.new()
-		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		mat.emission_enabled = true
-		flash.material_override = mat
-		flash.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		body.add_child(flash)
-	var span: Vector3 = _bounds(body).size
-	var reach: float = maxf(maxf(span.x, span.z), 1.2)
-	var bolt: BoxMesh = flash.mesh as BoxMesh
-	bolt.size = Vector3(reach * 0.42, reach * 0.42, reach * 0.55)
-	var mat: StandardMaterial3D = flash.material_override as StandardMaterial3D
-	var ink: Color = Color(1.0, 0.22, 0.18) if secondary else Color(1.0, 0.78, 0.12)
-	mat.albedo_color = ink
-	mat.emission = ink
-	if flash.get_parent() != body:
-		flash.reparent(body)
-	flash.position = Vector3(0.0, span.y * 0.62, -reach * 0.62)
-	flash.rotation = Vector3.ZERO
-
-func _dust(body: MeshInstance3D) -> void:
-	if body.get_node_or_null("PreviewDust") != null:
+func _own_clips(player: AnimationPlayer) -> void:
+	if bool(player.get_meta("preview_owned", false)):
 		return
-	var dust := Node3D.new()
-	dust.name = "PreviewDust"
-	var span: Vector3 = _bounds(body).size
-	var reach: float = maxf(span.z, 1.2)
-	for i: int in 3:
-		var puff := MeshInstance3D.new()
-		var ball := SphereMesh.new()
-		ball.radius = reach * (0.16 + float(i) * 0.05)
-		ball.height = ball.radius * 2.0
-		puff.mesh = ball
-		var mat := StandardMaterial3D.new()
-		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-		mat.albedo_color = Color(0.72, 0.58, 0.32, 0.8)
-		puff.material_override = mat
-		puff.position = Vector3(0.15 * float(i - 1), span.y * 0.25, reach * (0.35 + float(i) * 0.22))
-		puff.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		dust.add_child(puff)
-	body.add_child(dust)
+	player.set_meta("preview_owned", true)
+	var ids: PackedStringArray = player.get_animation_library_list()
+	for lib_id: String in ids:
+		var library: AnimationLibrary = player.get_animation_library(StringName(lib_id))
+		if library == null:
+			continue
+		var local: AnimationLibrary = library.duplicate(true) as AnimationLibrary
+		if local == null:
+			continue
+		for anim_name: StringName in local.get_animation_list():
+			var anim: Animation = local.get_animation(anim_name)
+			if anim != null:
+				anim.loop_mode = Animation.LOOP_LINEAR
+		player.remove_animation_library(StringName(lib_id))
+		player.add_animation_library(StringName(lib_id), local)
 
-func _ring(body: MeshInstance3D) -> void:
-	if body.get_node_or_null("PreviewRing") != null:
+## Drops the box wheels, barrel and shadow once a Tripo or in-repo mesh is mounted.
+func _strip_standin(body: MeshInstance3D) -> void:
+	if str(body.get_meta("model", "")) == "":
 		return
-	var ring := MeshInstance3D.new()
-	ring.name = "PreviewRing"
-	var disc := CylinderMesh.new()
-	disc.top_radius = 1.15
-	disc.bottom_radius = 1.15
-	disc.height = 0.06
-	ring.mesh = disc
-	var mat := StandardMaterial3D.new()
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	mat.albedo_color = Color(0.35, 0.85, 1.0, 0.85)
-	mat.emission_enabled = true
-	mat.emission = Color(0.35, 0.85, 1.0)
-	ring.material_override = mat
-	ring.position = Vector3(0.0, 0.08, 0.0)
-	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	body.add_child(ring)
+	var drop: Array[Node] = []
+	_collect_procedural(body, drop)
+	for node: Node in drop:
+		if node == body or node.get_parent() == null:
+			continue
+		node.get_parent().remove_child(node)
+		node.free()
+
+func _collect_procedural(node: Node, drop: Array[Node]) -> void:
+	for child: Node in node.get_children():
+		if bool(child.get_meta("procedural_part", false)) or str(child.name) == "ContactShadow":
+			drop.append(child)
+		else:
+			_collect_procedural(child, drop)
 
 func _note(unit: RTSUnit, missing: String) -> void:
 	var cell: Control = _cell_of(unit)
@@ -454,12 +432,12 @@ func _note(unit: RTSUnit, missing: String) -> void:
 	if note == null:
 		note = Label.new()
 		note.name = "PoseNote"
-		note.position = Vector2(6, 28)
-		note.size = Vector2(CELL_W - 12, 48)
+		note.position = Vector2(6, CELL_H - 68)
+		note.size = Vector2(CELL_W - 12, 40)
 		note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		note.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		note.add_theme_font_size_override("font_size", 13)
+		note.add_theme_font_size_override("font_size", 18)
 		note.add_theme_color_override("font_color", Color(1.0, 0.82, 0.35))
 		note.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cell.add_child(note)
@@ -474,7 +452,7 @@ func _frame(cam: Camera3D, body: MeshInstance3D) -> void:
 	var box: AABB = _bounds(body)
 	var center: Vector3 = box.get_center()
 	var span: float = maxf(box.size.length(), 1.2)
-	var eye: Vector3 = center + Vector3(span * 0.55, span * 0.42, span * 0.85)
+	var eye: Vector3 = center + Vector3(span * 0.42, span * 0.32, span * 0.64)
 	cam.look_at_from_position(eye, Vector3(center.x, center.y, center.z))
 
 func _bounds(body: MeshInstance3D) -> AABB:
