@@ -1,6 +1,6 @@
 extends Control
-## Settings page: one row per unit, one column per action or clip that unit really has.
-## Each filled cell plays that clip in a loop on the mounted model, at the cell's own resolution.
+## Settings page: one unit fills the scroll view. Its actions wrap across that width.
+## Each filled cell loops the real clip. Drag a cell to orbit the model.
 
 const Actions = preload("res://game/unit_actions.gd")
 const Forms = preload("res://game/unit_meshes.gd")
@@ -8,10 +8,6 @@ const Models = preload("res://game/model_registry.gd")
 const Motion = preload("res://game/unit_motion.gd")
 
 const FACTIONS: PackedStringArray = ["gtfc", "nmrf", "mvd", "black_market"]
-const NAME_W: float = 168.0
-## Several times the old 132×108 still, so a soldier reads as a model instead of a speck.
-const CELL_W: float = 460.0
-const CELL_H: float = 380.0
 const COLUMN_ORDER: PackedStringArray = ["idle", "move", "attack", "ability", "deploy", "die", "flinch", "secondary"]
 const SKIP_CLIPS: PackedStringArray = ["crawl", "hide"]
 
@@ -35,6 +31,7 @@ func _ensure() -> void:
 	if _faction == "":
 		_show_faction("gtfc")
 	else:
+		_layout_rows()
 		_fill_visible()
 
 func _chrome() -> void:
@@ -56,23 +53,16 @@ func _chrome() -> void:
 	scroll.name = "UnitScroll"
 	scroll.position = Vector2(0, 40)
 	scroll.size = Vector2(size.x, maxf(120.0, size.y - 40.0))
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
 	scroll.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(scroll)
 	scroll.gui_input.connect(_on_scroll_input)
-	var board := VBoxContainer.new()
+	var board := Control.new()
 	board.name = "UnitBoard"
-	board.add_theme_constant_override("separation", 6)
 	scroll.add_child(board)
-	var header := HBoxContainer.new()
-	header.name = "ActionHeader"
-	header.add_theme_constant_override("separation", 4)
-	board.add_child(header)
-	var list := VBoxContainer.new()
+	var list := Control.new()
 	list.name = "UnitRows"
-	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	list.add_theme_constant_override("separation", 8)
 	board.add_child(list)
 
 func _notification(what: int) -> void:
@@ -80,6 +70,7 @@ func _notification(what: int) -> void:
 		var scroll: Control = get_node_or_null("UnitScroll") as Control
 		if scroll != null:
 			scroll.size = Vector2(size.x, maxf(120.0, size.y - 40.0))
+			_layout_rows()
 
 func _on_scroll_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -88,6 +79,7 @@ func _on_scroll_input(event: InputEvent) -> void:
 func _show_faction(id: String) -> void:
 	_ensure_chrome()
 	if id == _faction and _rows_built:
+		_layout_rows()
 		_fill_visible()
 		return
 	_faction = id
@@ -99,40 +91,15 @@ func _show_faction(id: String) -> void:
 	for child: Node in stale:
 		list.remove_child(child)
 		child.free()
-	var columns: PackedStringArray = _columns(id)
-	_header(columns)
 	var data: Dictionary = SMCatalog.faction(id)
 	for item: Dictionary in SMCatalog.units_of(data):
-		list.add_child(_row(id, item, columns))
+		list.add_child(_row(id, item))
+	_layout_rows()
 	call_deferred("_fill_visible")
 
 func _ensure_chrome() -> void:
 	if get_node_or_null("FactionRow") == null:
 		_chrome()
-
-func _columns(faction: String) -> PackedStringArray:
-	var seen: Dictionary = {}
-	var clips: Dictionary = {}
-	for item: Dictionary in SMCatalog.units_of(SMCatalog.faction(faction)):
-		for action: String in Actions.list_for(item):
-			seen[action] = true
-		for clip: String in _clips(str(item.get("id", ""))):
-			clips[clip] = true
-			var column: String = _column_for(clip)
-			if column != "":
-				seen[column] = true
-	var out: PackedStringArray = PackedStringArray()
-	for action: String in COLUMN_ORDER:
-		if bool(seen.get(action, false)):
-			out.append(action)
-	var extra: PackedStringArray = PackedStringArray()
-	for clip: String in clips.keys():
-		if _column_for(clip) == "" and not SKIP_CLIPS.has(clip) and not extra.has(clip):
-			extra.append(clip)
-	extra.sort()
-	for clip: String in extra:
-		out.append(clip)
-	return out
 
 ## A clip the model actually contains. Rigged Tripo first, then the in-repo model. No invented names.
 func _clips(id: String) -> PackedStringArray:
@@ -164,55 +131,29 @@ func _column_for(clip: String) -> String:
 		return clip
 	return ""
 
-func _header(columns: PackedStringArray) -> void:
-	var header: HBoxContainer = get_node("UnitScroll/UnitBoard/ActionHeader") as HBoxContainer
-	var stale: Array[Node] = []
-	for child: Node in header.get_children():
-		stale.append(child)
-	for child: Node in stale:
-		header.remove_child(child)
-		child.free()
-	var spacer := Control.new()
-	spacer.custom_minimum_size = Vector2(NAME_W, 22)
-	header.add_child(spacer)
-	for action: String in columns:
-		var label := Label.new()
-		label.name = "ActionHead_%s" % action
-		label.text = action
-		label.custom_minimum_size = Vector2(CELL_W, 22)
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.add_theme_font_size_override("font_size", 13)
-		label.add_theme_color_override("font_color", Color(0.98, 0.86, 0.4))
-		header.add_child(label)
-
-func _row(faction: String, item: Dictionary, columns: PackedStringArray) -> HBoxContainer:
+func _row(faction: String, item: Dictionary) -> Panel:
 	var id: String = str(item.get("id", ""))
-	var line := HBoxContainer.new()
+	var line := Panel.new()
 	line.name = "UnitRow_%s" % id
-	line.add_theme_constant_override("separation", 4)
 	line.set_meta("unit_id", id)
 	line.set_meta("faction", faction)
 	line.set_meta("unit_row", item)
+	line.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var name_label := Label.new()
 	name_label.name = "UnitName"
 	name_label.text = str(item.get("display_name", id))
-	name_label.custom_minimum_size = Vector2(NAME_W, CELL_H)
 	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	name_label.add_theme_font_size_override("font_size", 13)
+	name_label.add_theme_font_size_override("font_size", 16)
 	name_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	line.add_child(name_label)
-	var mine: PackedStringArray = _mine(item)
-	for action: String in columns:
-		if not mine.has(action):
-			var gap := Control.new()
-			gap.custom_minimum_size = Vector2(CELL_W, CELL_H)
-			line.add_child(gap)
-			continue
+	for action: String in _ordered(item):
 		var cell := Panel.new()
 		cell.name = "Cell_%s" % action
-		cell.custom_minimum_size = Vector2(CELL_W, CELL_H)
 		cell.set_meta("action", action)
+		cell.mouse_filter = Control.MOUSE_FILTER_STOP
 		var plate := StyleBoxFlat.new()
 		plate.bg_color = Color(0.08, 0.09, 0.11, 1)
 		plate.border_color = Color(1, 1, 1, 0.18)
@@ -221,15 +162,29 @@ func _row(faction: String, item: Dictionary, columns: PackedStringArray) -> HBox
 		var caption := Label.new()
 		caption.name = "ActionLabel"
 		caption.text = action
-		caption.position = Vector2(4, CELL_H - 20)
-		caption.size = Vector2(CELL_W - 8, 16)
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		caption.add_theme_font_size_override("font_size", 12)
 		caption.add_theme_color_override("font_color", Color(0.95, 0.92, 0.8))
 		caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cell.add_child(caption)
+		cell.gui_input.connect(_on_cell_input.bind(cell))
 		line.add_child(cell)
 	return line
+
+func _ordered(item: Dictionary) -> PackedStringArray:
+	var mine: PackedStringArray = _mine(item)
+	var out := PackedStringArray()
+	for action: String in COLUMN_ORDER:
+		if mine.has(action):
+			out.append(action)
+	var extra := PackedStringArray()
+	for action: String in mine:
+		if not out.has(action) and not extra.has(action):
+			extra.append(action)
+	extra.sort()
+	for action: String in extra:
+		out.append(action)
+	return out
 
 func _mine(item: Dictionary) -> PackedStringArray:
 	var mine: PackedStringArray = Actions.list_for(item)
@@ -241,19 +196,109 @@ func _mine(item: Dictionary) -> PackedStringArray:
 			mine.append(clip)
 	return mine
 
+func _layout_rows() -> void:
+	var scroll: ScrollContainer = get_node_or_null("UnitScroll") as ScrollContainer
+	var board: Control = get_node_or_null("UnitScroll/UnitBoard") as Control
+	var list: Control = get_node_or_null("UnitScroll/UnitBoard/UnitRows") as Control
+	if scroll == null or board == null or list == null:
+		return
+	if scroll.size.x < 40.0 or scroll.size.y < 40.0:
+		return
+	var gutter: float = 14.0
+	var bar: VScrollBar = scroll.get_v_scroll_bar()
+	if bar != null and bar.get_minimum_size().x > 1.0:
+		gutter = bar.get_minimum_size().x
+	var inner: float = maxf(80.0, scroll.size.x - gutter)
+	var page_h: float = scroll.size.y
+	var rows: Array[Control] = []
+	for child: Node in list.get_children():
+		var row: Control = child as Control
+		if row != null and str(row.name).begins_with("UnitRow_"):
+			rows.append(row)
+	if rows.is_empty():
+		return
+	var content_h: float = page_h * float(rows.size())
+	board.custom_minimum_size = Vector2(inner, content_h)
+	board.size = Vector2(inner, content_h)
+	list.position = Vector2.ZERO
+	list.custom_minimum_size = Vector2(inner, content_h)
+	list.size = Vector2(inner, content_h)
+	for i: int in rows.size():
+		var row: Control = rows[i]
+		row.position = Vector2(0, page_h * float(i))
+		row.size = Vector2(inner, page_h)
+		row.custom_minimum_size = Vector2(inner, page_h)
+		_place_cells(row, inner, page_h)
+
+func _place_cells(row: Control, width: float, height: float) -> void:
+	var name_label: Label = row.get_node_or_null("UnitName") as Label
+	if name_label != null:
+		name_label.position = Vector2(8, 2)
+		name_label.size = Vector2(maxf(40.0, width - 16.0), 24)
+	var cells: Array[Control] = []
+	for child: Node in row.get_children():
+		if str(child.name).begins_with("Cell_"):
+			var cell: Control = child as Control
+			if cell != null:
+				cells.append(cell)
+	if cells.is_empty():
+		return
+	var top: float = 28.0
+	var gap: float = 4.0
+	var area_w: float = maxf(40.0, width - 8.0)
+	var area_h: float = maxf(40.0, height - top - 4.0)
+	var cols: int = _best_cols(cells.size(), area_w, area_h)
+	var lines: int = int(ceili(float(cells.size()) / float(cols)))
+	var cw: float = (area_w - gap * float(cols - 1)) / float(cols)
+	var ch: float = (area_h - gap * float(lines - 1)) / float(lines)
+	for i: int in cells.size():
+		var cell: Control = cells[i]
+		var col: int = i % cols
+		var line_i: int = int(float(i) / float(cols))
+		cell.position = Vector2(4.0 + float(col) * (cw + gap), top + float(line_i) * (ch + gap))
+		cell.size = Vector2(cw, ch)
+		cell.custom_minimum_size = Vector2(cw, ch)
+		var caption: Label = cell.get_node_or_null("ActionLabel") as Label
+		if caption != null:
+			caption.position = Vector2(4, ch - 20.0)
+			caption.size = Vector2(maxf(8.0, cw - 8.0), 16)
+		var box: Control = cell.get_node_or_null("ActionView") as Control
+		if box != null:
+			box.position = Vector2(2, 2)
+			box.size = Vector2(maxf(8.0, cw - 4.0), maxf(8.0, ch - 24.0))
+		var note: Label = cell.get_node_or_null("PoseNote") as Label
+		if note != null:
+			note.position = Vector2(6, maxf(4.0, ch - 64.0))
+			note.size = Vector2(maxf(8.0, cw - 12.0), 36)
+
+func _best_cols(count: int, width: float, height: float) -> int:
+	var best: int = 1
+	var best_min: float = -1.0
+	var gap: float = 4.0
+	for cols: int in range(1, count + 1):
+		var lines: int = int(ceili(float(count) / float(cols)))
+		var cw: float = (width - gap * float(cols - 1)) / float(cols)
+		var ch: float = (height - gap * float(lines - 1)) / float(lines)
+		var score: float = minf(cw, ch)
+		if score > best_min:
+			best_min = score
+			best = cols
+	return best
+
 func _fill_visible() -> void:
+	_layout_rows()
 	var list: Node = get_node_or_null("UnitScroll/UnitBoard/UnitRows")
 	var scroll: Control = get_node_or_null("UnitScroll") as Control
 	if list == null or scroll == null:
 		return
-	var view: Rect2 = Rect2(scroll.global_position, scroll.size)
-	view = view.grow(CELL_H)
+	var view := Rect2(scroll.global_position, scroll.size).grow(4.0)
 	var index: int = 0
 	for child: Node in list.get_children():
 		var row: Control = child as Control
 		if row == null:
 			continue
-		var on_screen: bool = index < 4 or view.intersects(row.get_global_rect())
+		var rect: Rect2 = row.get_global_rect()
+		var on_screen: bool = index == 0 or (rect.size.y > 8.0 and view.intersects(rect))
 		if on_screen:
 			_fill_row(row)
 		index += 1
@@ -274,7 +319,7 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	var box := SubViewportContainer.new()
 	box.name = "ActionView"
 	box.position = Vector2(2, 2)
-	box.size = Vector2(CELL_W - 4, CELL_H - 24)
+	box.size = Vector2(maxf(8.0, cell.size.x - 4.0), maxf(8.0, cell.size.y - 24.0))
 	box.stretch = true
 	box.stretch_shrink = 1
 	box.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -283,7 +328,6 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	var view := SubViewport.new()
 	view.name = "ActionViewport"
 	view.own_world_3d = true
-	view.size = Vector2i(int(CELL_W - 4), int(CELL_H - 28))
 	view.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	view.disable_3d = false
 	view.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
@@ -309,10 +353,12 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	sun.shadow_enabled = false
 	world.add_child(sun)
 	var cam := Camera3D.new()
-	cam.position = Vector3(2.6, 2.1, 3.6)
+	cam.position = Vector3(0.4, 1.4, -2.8)
 	cam.current = true
 	world.add_child(cam)
-	cam.look_at_from_position(Vector3(2.6, 2.1, 3.6), Vector3(0, 0.9, 0))
+	var pivot := Node3D.new()
+	pivot.name = "OrbitPivot"
+	world.add_child(pivot)
 	var unit := RTSUnit.new()
 	unit.name = "PreviewUnit"
 	unit.unit_type = StringName(str(item.get("id", "")))
@@ -323,7 +369,7 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	unit.attack_damage = float(item.get("weapon_damage", 8.0))
 	unit.set_meta("preview_action", action)
 	unit.set_meta("preview_row", item)
-	world.add_child(unit)
+	pivot.add_child(unit)
 	var ink: PackedColorArray = _colors(faction)
 	var body: MeshInstance3D = Forms.dress_unit(str(item.get("id", "")), str(item.get("role", "")), str(item.get("locomotion", "ground")), ink[1], ink[0], ink[1], faction)
 	unit.add_child(body)
@@ -333,6 +379,25 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	unit.set_meta("preview_cell", cell)
 	_frame(cam, body)
 	_pose(unit)
+
+func _on_cell_input(event: InputEvent, cell: Panel) -> void:
+	var button: InputEventMouseButton = event as InputEventMouseButton
+	if button != null and button.button_index == MOUSE_BUTTON_LEFT:
+		cell.set_meta("orbit_drag", button.pressed)
+		cell.get_viewport().set_input_as_handled()
+		return
+	var motion: InputEventMouseMotion = event as InputEventMouseMotion
+	if motion != null and bool(cell.get_meta("orbit_drag", false)):
+		_orbit(cell, motion.relative)
+		cell.get_viewport().set_input_as_handled()
+
+## Drag delta in pixels. Yaw and pitch stay on this cell's pivot, and the clip keeps looping.
+func _orbit(cell: Control, delta: Vector2) -> void:
+	var pivot: Node3D = cell.find_child("OrbitPivot", true, false) as Node3D
+	if pivot == null:
+		return
+	pivot.rotation.y -= delta.x * 0.01
+	pivot.rotation.x = clampf(pivot.rotation.x + delta.y * 0.01, -1.15, 1.15)
 
 ## Plays the clip the unit actually has. A missing clip stays a short label on top of the mounted mesh.
 func _pose(unit: RTSUnit) -> void:
@@ -432,8 +497,6 @@ func _note(unit: RTSUnit, missing: String) -> void:
 	if note == null:
 		note = Label.new()
 		note.name = "PoseNote"
-		note.position = Vector2(6, CELL_H - 68)
-		note.size = Vector2(CELL_W - 12, 40)
 		note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		note.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -441,6 +504,8 @@ func _note(unit: RTSUnit, missing: String) -> void:
 		note.add_theme_color_override("font_color", Color(1.0, 0.82, 0.35))
 		note.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cell.add_child(note)
+	note.position = Vector2(6, maxf(4.0, cell.size.y - 64.0))
+	note.size = Vector2(maxf(8.0, cell.size.x - 12.0), 36)
 	note.text = missing
 	note.visible = true
 
@@ -448,12 +513,22 @@ func _cell_of(unit: RTSUnit) -> Control:
 	var kept: Variant = unit.get_meta("preview_cell") if unit.has_meta("preview_cell") else null
 	return kept as Control if kept != null and is_instance_valid(kept) else null
 
+## The eye sits on the -Z side. Authored forward is -Z, so the face, cockpit or gun looks at the camera.
+## The pivot is the visual centre, so a drag spins the mesh in place.
 func _frame(cam: Camera3D, body: MeshInstance3D) -> void:
 	var box: AABB = _bounds(body)
 	var center: Vector3 = box.get_center()
+	var unit: Node3D = body.get_parent() as Node3D
+	var pivot: Node3D = unit.get_parent() as Node3D if unit != null else null
+	if pivot != null and str(pivot.name) == "OrbitPivot":
+		pivot.position = center
+		unit.position = -center
+		center = pivot.position
 	var span: float = maxf(box.size.length(), 1.2)
-	var eye: Vector3 = center + Vector3(span * 0.42, span * 0.32, span * 0.64)
-	cam.look_at_from_position(eye, Vector3(center.x, center.y, center.z))
+	var eye: Vector3 = center + Vector3(span * 0.14, span * 0.22, -span * 1.05)
+	cam.name = "PreviewCamera"
+	cam.fov = 48.0
+	cam.look_at_from_position(eye, center)
 
 func _bounds(body: MeshInstance3D) -> AABB:
 	var model: Node3D = body.get_node_or_null("Model") as Node3D

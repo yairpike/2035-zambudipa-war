@@ -8441,7 +8441,7 @@ func test_unit_actions() -> void:
 	tab.pressed.emit()
 	await process_frame
 	await process_frame
-	var rows: Array[Node] = boot.find_children("UnitRow_*", "HBoxContainer", true, false)
+	var rows: Array[Node] = boot.find_children("UnitRow_*", "Control", true, false)
 	var militia_row: Node = boot.find_child("UnitRow_militia", true, false)
 	var name_label: Label = militia_row.find_child("UnitName", true, false) as Label if militia_row != null else null
 	var idle_cell: Node = militia_row.find_child("Cell_idle", true, false) if militia_row != null else null
@@ -8469,6 +8469,21 @@ func test_unit_actions() -> void:
 	var die_cell: Node = militia_row.find_child("Cell_die", true, false) if militia_row != null else null
 	var die_unit: RTSUnit = die_cell.find_child("PreviewUnit", true, false) as RTSUnit if die_cell != null else null
 	var die_player: AnimationPlayer = die_unit.find_child("AnimationPlayer", true, false) as AnimationPlayer if die_unit != null else null
-	check(body != null and body.get_node_or_null("Model") != null and str(body.get_meta("model", "")) != "" and port != null and port.size.x >= 400 and port.size.y >= 300 and port.scaling_3d_scale >= 0.99 and idle_player != null and idle_player.is_playing() and idle_player.speed_scale < 0.8 and move_player != null and move_player.is_playing() and move_player.speed_scale > 0.5 and die_unit != null and str(die_unit.get_meta("preview_pose", "")) == "die" and die_player != null and die_player.is_playing(), "the cell mounts the real model and loops each clip at the cell's resolution")
+	var scroll: ScrollContainer = boot.find_child("UnitScroll", true, false) as ScrollContainer
+	var cam: Camera3D = idle_cell.find_child("PreviewCamera", true, false) as Camera3D if idle_cell != null else null
+	var pivot: Node3D = idle_cell.find_child("OrbitPivot", true, false) as Node3D if idle_cell != null else null
+	var grid: Node = boot.find_child("UnitActionGrid", true, false)
+	var yaw_before: float = pivot.rotation.y if pivot != null else 0.0
+	if grid != null and idle_cell != null:
+		grid.call("_orbit", idle_cell, Vector2(80, 0))
+	var yaw_after: float = pivot.rotation.y if pivot != null else 0.0
+	var row_w: float = (militia_row as Control).size.x if militia_row is Control else 0.0
+	var right: float = 0.0
+	if militia_row != null:
+		for cell_node: Node in militia_row.get_children():
+			var placed: Control = cell_node as Control
+			if placed != null and str(placed.name).begins_with("Cell_"):
+				right = maxf(right, placed.position.x + placed.size.x)
+	check(body != null and body.get_node_or_null("Model") != null and str(body.get_meta("model", "")) != "" and port != null and port.size.x >= 120 and port.size.y >= 80 and port.scaling_3d_scale >= 0.99 and idle_player != null and idle_player.is_playing() and idle_player.speed_scale < 0.8 and move_player != null and move_player.is_playing() and move_player.speed_scale > 0.5 and die_unit != null and str(die_unit.get_meta("preview_pose", "")) == "die" and die_player != null and die_player.is_playing() and scroll != null and scroll.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED and scroll.size.x > 0.0 and row_w <= scroll.size.x + 1.0 and right > row_w * 0.75 and cam != null and cam.position.z < 0.0 and absf(yaw_after - yaw_before) > 0.2, "the cell fills the page, faces the camera, orbits, and loops each clip")
 	boot.free()
 	await process_frame
