@@ -1,10 +1,7 @@
-cinematic/black_market.webp
 cinematic/campaign_menu_2035.webp
 cinematic/gtfc_tank.webp
 cinematic/gtfc.webp
-cinematic/loading.webp
 cinematic/main_menu_2035.webp
-cinematic/main_menu.webp
 cinematic/multiplayer_menu_2035.webp
 cinematic/mvd.webp
 cinematic/neutral_embers.webp
@@ -12,6 +9,3 @@ cinematic/neutral_rain.webp
 cinematic/nmrf.webp
 cinematic/settings_menu_2035.webp
 cinematic/skirmish_menu_2035.webp
-cinematic/splash.webp
-cinematic/wordmark.png
-cinematic/wordmark.webp
