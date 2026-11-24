@@ -699,6 +699,7 @@ static func _copy_mat(src: Material) -> StandardMaterial3D:
 	mat.ao_texture = base.ao_texture
 	mat.ao_texture_channel = base.ao_texture_channel
 	mat.texture_filter = base.texture_filter
+	mat.cull_mode = base.cull_mode
 	return mat
 
 ## `yaw_deg` turns the model's authored forward onto -Z inside the Model node, so fitting sees the turned bounds.
