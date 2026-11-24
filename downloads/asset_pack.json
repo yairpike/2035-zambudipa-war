@@ -1,6 +1,6 @@
 {
-"ref": "9eb9e5e53ad15e8de7d92176a97ea3fb56f83d88",
-"urls": ["https://yairpike.github.io/2035-zambudipa-war/", "https://raw.githubusercontent.com/yairpike/2035-zambudipa-war/9eb9e5e53ad15e8de7d92176a97ea3fb56f83d88/"],
+"ref": "2bcf9663525c0084cf4f9306c9bf645475f1a0ae",
+"urls": ["https://yairpike.github.io/2035-zambudipa-war/", "https://raw.githubusercontent.com/yairpike/2035-zambudipa-war/2bcf9663525c0084cf4f9306c9bf645475f1a0ae/"],
 "files": [
 ["audio/announcer/en/gtfc/base_under_attack.ogg", 26899, "6f74a94d7ede5b7e726ebb2cf4f4573b5f89cacf"],
 ["audio/announcer/en/gtfc/building_captured.ogg", 21807, "ace41b8a87eab68aa62e30a61a75639a0352dbfd"],
@@ -3155,11 +3155,11 @@
 ["models/env/lao_that.glb", 389828, "a2287b8979ea97569ed7f39c924b3b33d8a7d599"],
 ["models/env/lm_angkor.glb", 575260, "f6f361cd9963c7fd54300eaa0233d2f12d145584"],
 ["models/env/lm_bali_gate.glb", 533456, "366370d1b604dd878639194401cfd5d54d4dbf77"],
-["models/env/lm_baroque_church.glb", 519652, "9ce653414c8b090ce9209a0009aad6a004146d55"],
+["models/env/lm_baroque_church.glb", 451180, "d6061e06d4963d9ec12145a27a4d20727f82da86"],
 ["models/env/lm_ben_thanh.glb", 409080, "1ff2fd03e1e3e1c35b2a775acf0888023ae0e58e"],
 ["models/env/lm_borobudur.glb", 548820, "6d94ddbfe0f1ece9a18bd4e4e4caaaaf16bc2a28"],
 ["models/env/lm_doi_suthep.glb", 399208, "f5c7072fcdf0d07fab0b37ce9d6de090ce7b8520"],
-["models/env/lm_durian_domes.glb", 471780, "b0e1809f065aaa9ab2dd660b7467ba8a4ff298b5"],
+["models/env/lm_durian_domes.glb", 401232, "855f9606efeba3dd747c295ae01eddf3cd08b1fe"],
 ["models/env/lm_grand_palace.glb", 516776, "0c8d6e85378e6f52bc09b60cdfe905e501f8dfcf"],
 ["models/env/lm_hanoi_opera.glb", 451640, "cce381059fdc8e76260b2699c5d872b127481dab"],
 ["models/env/lm_intramuros.glb", 369008, "f7a1cdcb70ded98d06f9b6442eebaa74b040c664"],
@@ -3313,5 +3313,5 @@
 ["ui/menu/cinematic/settings_menu_2035.webp", 21618, "322aa87afeb1fd512637e12ca7f274d2f07bc929"],
 ["ui/menu/cinematic/skirmish_menu_2035.webp", 131530, "f212dc05c6127a17e168a284bdd3e8978a83b194"]
 ],
-"bytes": 232213084
+"bytes": 232074064
 }
