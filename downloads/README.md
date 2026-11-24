@@ -85,12 +85,12 @@ The match uses port 7777. The discovery beacon uses port 7778. Allow both throug
 
 ## Checksums
 
-Built from commit `72617fdc439e5903a2c30c7d9e855225a35c0520` (`72617fd`: one story card, the unit-action grid, and the battlefield scale). The first-launch download comes from GitHub Pages at `c3884f7`. SHA-256:
+Built from commit `b504942c43496a698412819a003affa7c9d03a20` (`b504942`: each grid cell plays its action, infantry stand beside the tanks, and the yard is a low pad). The first-launch download comes from GitHub Pages at `c3884f7`. SHA-256:
 
-- `ASEAN-2031-macOS.dmg`: `e0f0b23a8da8d75fc4b004303fa0f844fd8e46f6c34cac7da40e4303dbc8c1fe`
-- `ASEAN-2031-Windows.exe`: `0655d23e9bb0e87ace66e64fdd8e4605d106f2b4c221d76078d1f4afc5ace030`
-- `ASEAN-2031-Linux-x86_64.AppImage`: `5ba3fee097bf315dc0dbefb15a8f121f5da223d568bb8cf10eb87f14dee29ef3`
-- `ASEAN-2031-Android.apk`: `7db05d68cd1bc3d788e0911f55ab5c5d294addd1daca007c794a04a1c28da737`
-- `ASEAN-2031-iOS.ipa`: `a62ff50bd47c788afd1994b0947f951acc5afc2401b219b5194af92eb9a40aee`
+- `ASEAN-2031-macOS.dmg`: `646182f36db453e4efc638c38c8999148f2db6aad85f7a79aa5850a6bfe3b006`
+- `ASEAN-2031-Windows.exe`: `f753eb22f84b9d4dfb677e0ac97ecc5049f722879e17c1bb8f46776f5902ab1c`
+- `ASEAN-2031-Linux-x86_64.AppImage`: `7cd1d593cf2de31e0a0eb076a32d83a423120158c614d0dc6a020a61f3751b4d`
+- `ASEAN-2031-Android.apk`: `7b226ddbda8c2997816cbf9d74801612e16d7441a5b1133918f2e8f42ad94a89`
+- `ASEAN-2031-iOS.ipa`: `45db6ae0e22b382937e88530cbf9035e1beda3e4de03f73e2796dc4e985ce83e`
 
 The Android signing certificate SHA-256 is `68a73898d947a4b7fc9068608c37e42b820607c69adef901494ecc775c94122b`.
