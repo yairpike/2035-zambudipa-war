@@ -623,19 +623,26 @@ if [ -n "$UI_SRC" ]; then
   : > "$DEST/ui/frames/.gdignore"
   : > "$DEST/ui/icons/.gdignore"
 fi
+# Keep DEST/downloads if it already has installers. Never rm -rf that folder:
+# GitHub Pages 404s a directory with no index, and later rsync to gh-pages must
+# --exclude downloads/ (then copy index.html) so the five ASEAN-2031-* binaries stay.
+mkdir -p "$DEST/downloads"
+if [ -f "$ROOT/downloads/index.html" ]; then
+  cp "$ROOT/downloads/index.html" "$DEST/downloads/index.html"
+fi
+if [ -f "$ROOT/downloads/README.md" ]; then
+  cp "$ROOT/downloads/README.md" "$DEST/downloads/README.md"
+fi
 if [ -n "$DOWNLOADS_SRC" ]; then
   if [ ! -d "$DOWNLOADS_SRC" ]; then
     echo "finish_web_export: downloads source is not a directory"
     exit 1
   fi
-  mkdir -p "$DEST/downloads"
-  for installer in ASEAN-2031-macOS.dmg ASEAN-2031-Windows.exe ASEAN-2031-Linux-x86_64.AppImage ASEAN-2031-Android.apk ASEAN-2031-iOS.ipa README.md; do
-    if [ -f "$DOWNLOADS_SRC/$installer" ]; then
-      cp "$DOWNLOADS_SRC/$installer" "$DEST/downloads/$installer"
-    fi
-  done
-  : > "$DEST/downloads/.gdignore"
+  # Overlay the source tree (listing page + ASEAN-2031-* binaries + README). Do not delete extras.
+  find "$DOWNLOADS_SRC" -maxdepth 1 -type f ! -name '.gdignore' -exec cp {} "$DEST/downloads/" \;
 fi
+: > "$DEST/downloads/.gdignore"
+
 # 2035 stills last so --menu / --key-art cannot replace them. Loops stay off the PWA.
 if [ -d "$ROOT/ui/menu/cinematic" ]; then
   mkdir -p "$DEST/ui/menu/cinematic"

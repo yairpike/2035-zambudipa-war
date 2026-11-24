@@ -2,6 +2,7 @@
 
 <p align="center">
   <a href="https://yairpike.github.io/2035-zambudipa-war/"><img src="https://img.shields.io/badge/%E2%96%B6%20Play%20Now%20in%20Browser-yairpike.github.io%2F2035--zambudipa--war-d4a017?style=for-the-badge" alt="Play Now in Browser"></a>
+  <a href="https://yairpike.github.io/2035-zambudipa-war/downloads/"><img src="https://img.shields.io/badge/Download%20Game-macOS%20%7C%20Windows%20%7C%20Linux%20%7C%20Android%20%7C%20iOS-d4a017?style=for-the-badge" alt="Download Game"></a>
 </p>
 
 Real-time strategy across a monsoon-soaked Southeast Asia in 2035: four factions, a story campaign, skirmish, and LAN multiplayer. Play it in the browser, or install it on a computer, phone, or tablet below.
@@ -16,7 +17,7 @@ Real-time strategy across a monsoon-soaked Southeast Asia in 2035: four factions
 | **Android (ARM64 APK)** | [`ASEAN-2031-Android.apk`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-Android.apk) | 72.9 MiB | `7338eb722a8f191bcc82527d6d1b9249e262d1e97186854862e89d346f45bc46` | Android 7.0+. Open the file, allow installing unknown apps, tap Install (Play Protect: More details, Install anyway). |
 | **iOS (Sideload IPA — AltStore / SideStore / Sideloadly)** | [`ASEAN-2031-iOS.ipa`](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-iOS.ipa) | 46.4 MiB | `a48d2cf6675a04263937bb5e1a2b70c7ed61f4564bc614826d052fe29c747f00` | iOS 16+, experimental. Add it in AltStore or SideStore (My Apps, +) or Sideloadly, turn on Developer Mode, and trust your Apple ID in Settings, General, VPN & Device Management. |
 
-Every installer downloads the game's music, voices, models, and cinematics (217 MiB on a computer, 222 MiB on a phone or tablet) on first launch, then the game restarts (on phones and tablets, reopen it). Full instructions: [downloads/README.md](downloads/README.md). Built from commit `4a6073a`. Players can also press **DOWNLOAD GAME** on the main menu.
+Every installer downloads the game's music, voices, models, and cinematics (217 MiB on a computer, 222 MiB on a phone or tablet) on first launch, then the game restarts (on phones and tablets, reopen it). Listing page: [downloads/](https://yairpike.github.io/2035-zambudipa-war/downloads/). Full instructions: [downloads/README.md](downloads/README.md). Built from commit `4a6073a`. Players can also press **DOWNLOAD GAME** on the main menu.
 
 ---
 
