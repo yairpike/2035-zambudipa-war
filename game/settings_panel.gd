@@ -390,8 +390,9 @@ func _layout(view: Vector2) -> void:
 		card.visible = false
 	var grid: Control = get_node_or_null("UnitActionGrid") as Control
 	if grid != null and grid.visible:
+		var foot_room: float = 176.0 if _page == "units" else 12.0
 		grid.position = Vector2(content_x, content_top)
-		grid.size = Vector2(content_w, maxf(160.0, view.y - content_top - 12.0))
+		grid.size = Vector2(content_w, maxf(160.0, view.y - content_top - foot_room))
 
 func _place_slider(label: Control, slider: Control, value: Control, x: float, y: float, label_w: float, slider_x: float, slider_w: float, value_x: float) -> float:
 	if label != null and not label.visible:

@@ -8462,5 +8462,13 @@ func test_unit_actions() -> void:
 	var secondary_pose: String = str(secondary_unit.get_meta("preview_pose", "")) if secondary_unit != null else ""
 	var secondary_said: bool = (secondary_note != null and secondary_note.visible and secondary_note.text.contains("no secondary")) or (secondary_pose != "" and secondary_pose != "idle" and secondary_pose != move_pose)
 	check((move_pose == "walk" or move_pose == "run") and attack_pose == "shoot" and ability_pose == "ability" and move_pose != attack_pose and secondary_said, "a row poses each action, or says the clip is missing (%s / %s / %s / %s)" % [move_pose, attack_pose, ability_pose, secondary_pose])
+	var body: MeshInstance3D = preview.get_node_or_null("Body") as MeshInstance3D if preview != null else null
+	var port: SubViewport = idle_cell.find_child("ActionViewport", true, false) as SubViewport if idle_cell != null else null
+	var idle_player: AnimationPlayer = body.find_child("AnimationPlayer", true, false) as AnimationPlayer if body != null else null
+	var move_player: AnimationPlayer = move_unit.find_child("Body", true, false).find_child("AnimationPlayer", true, false) as AnimationPlayer if move_unit != null and move_unit.find_child("Body", true, false) != null else null
+	var die_cell: Node = militia_row.find_child("Cell_die", true, false) if militia_row != null else null
+	var die_unit: RTSUnit = die_cell.find_child("PreviewUnit", true, false) as RTSUnit if die_cell != null else null
+	var die_player: AnimationPlayer = die_unit.find_child("AnimationPlayer", true, false) as AnimationPlayer if die_unit != null else null
+	check(body != null and body.get_node_or_null("Model") != null and str(body.get_meta("model", "")) != "" and port != null and port.size.x >= 400 and port.size.y >= 300 and port.scaling_3d_scale >= 0.99 and idle_player != null and idle_player.is_playing() and idle_player.speed_scale < 0.8 and move_player != null and move_player.is_playing() and move_player.speed_scale > 0.5 and die_unit != null and str(die_unit.get_meta("preview_pose", "")) == "die" and die_player != null and die_player.is_playing(), "the cell mounts the real model and loops each clip at the cell's resolution")
 	boot.free()
 	await process_frame
