@@ -382,15 +382,17 @@ func _layout(view: Vector2) -> void:
 		restore.size = Vector2(minf(200.0, rail_w - 140.0), 40)
 		restore.custom_minimum_size = Vector2(restore.size.x, 40)
 	if blurb != null:
-		blurb.position = Vector2(left, foot - 108.0)
-		blurb.size = Vector2(maxf(120.0, rail_w - 40.0), 96)
-		blurb.custom_minimum_size = Vector2(maxf(120.0, rail_w - 40.0), 96)
+		blurb.visible = _page != "units"
+		if blurb.visible:
+			blurb.position = Vector2(left, foot - 108.0)
+			blurb.size = Vector2(maxf(120.0, rail_w - 40.0), 96)
+			blurb.custom_minimum_size = Vector2(maxf(120.0, rail_w - 40.0), 96)
 	var card: CanvasItem = get_node_or_null("SettingsCard") as CanvasItem
 	if card != null:
 		card.visible = false
 	var grid: Control = get_node_or_null("UnitActionGrid") as Control
 	if grid != null and grid.visible:
-		var foot_room: float = 176.0 if _page == "units" else 12.0
+		var foot_room: float = 56.0 if _page == "units" else 12.0
 		grid.position = Vector2(content_x, content_top)
 		grid.size = Vector2(content_w, maxf(160.0, view.y - content_top - foot_room))
 
@@ -751,7 +753,7 @@ func _watch(node: Control) -> void:
 	node.focus_entered.connect(_show_blurb.bind(node))
 
 func _show_blurb(node: Control) -> void:
-	if blurb == null or node == null:
+	if blurb == null or node == null or _page == "units":
 		return
 	var text: String = str(node.get_meta("blurb", ""))
 	if text != "":
