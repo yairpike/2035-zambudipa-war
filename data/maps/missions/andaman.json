@@ -49,6 +49,15 @@
    "high": [
     1,
     2
+   ],
+   "civic": [
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "longtail_dock"
+    }
    ]
   }
  ],
@@ -116,5 +125,39 @@
   "wave_every": 65,
   "wave_size": 2,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "jetty",
+   "cell": [
+    16,
+    26
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "longtail_boat",
+   "cell": [
+    17,
+    28
+   ],
+   "yaw": 30
+  },
+  {
+   "id": "karst_sea_stack",
+   "cell": [
+    17,
+    8
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "mangrove",
+   "cell": [
+    19,
+    26
+   ],
+   "yaw": 0
+  }
+ ]
 }

@@ -284,6 +284,15 @@
    "homes": [
     "neon_shophouse",
     "border_guesthouse"
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      0
+     ],
+     "id": "lm_shwedagon"
+    }
    ]
   },
   {

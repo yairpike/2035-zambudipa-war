@@ -115,6 +115,7 @@ func _run() -> void:
 	await H.section("test_map_symmetry", test_map_symmetry)
 	await H.section("test_model_scale", test_model_scale)
 	await H.section("test_street_towns", test_street_towns)
+	await H.section("test_env_map_swap_in", test_env_map_swap_in)
 	await H.section("test_iso_layout", test_iso_layout)
 	await H.section("test_game_language", test_game_language)
 	await H.section("test_render_budget", test_render_budget)
@@ -307,6 +308,56 @@ func _all_layouts() -> Array[SMMapPlan]:
 		if file.ends_with(".json"):
 			out.append(SMMapPlan.dressing(file.get_basename()))
 	return out
+
+func _stamp_env(plan: SMMapPlan, used: Dictionary) -> void:
+	if plan == null:
+		return
+	for lot: Dictionary in plan.lots:
+		used[str(lot["id"])] = true
+	for row: Dictionary in plan.props:
+		used[str(row["id"])] = true
+	for row: Dictionary in plan.groves:
+		used[str(row["id"])] = true
+	if not plan.landmark.is_empty():
+		used[str(plan.landmark.get("id", ""))] = true
+
+
+func _has_lot(plan: SMMapPlan, model: String) -> bool:
+	for lot: Dictionary in plan.lots:
+		if str(lot["id"]) == model:
+			return true
+	return false
+
+
+func _has_prop(plan: SMMapPlan, model: String) -> bool:
+	for row: Dictionary in plan.props:
+		if str(row["id"]) == model:
+			return true
+	return false
+
+
+func test_env_map_swap_in() -> void:
+	var env: Dictionary = {}
+	for file: String in DirAccess.get_files_at("res://game/models/env"):
+		if file.get_extension() == "glb":
+			env[file.get_basename()] = true
+	var used: Dictionary = {}
+	for plan: SMMapPlan in _all_layouts():
+		_stamp_env(plan, used)
+	var missing: PackedStringArray = PackedStringArray()
+	for id: Variant in env:
+		if not used.has(str(id)):
+			missing.append(str(id))
+	missing.sort()
+	check(env.size() == 106 and missing.is_empty(), "every env mesh is stamped on a campaign or skirmish map%s" % ("" if missing.is_empty() else " (unused: %s)" % ",".join(missing)))
+	check(_has_lot(SMMapPlan.dressing("tonle_sap"), "tonle_floating_house"), "Tonle Sap lots include the floating house")
+	check(str(SMMapPlan.dressing("phillips_channel").landmark.get("id", "")) == "lm_marina_bay", "Phillips Channel landmarks Marina Bay, not Intramuros")
+	check(_has_lot(SMMapPlan.dressing("archipelago_rising"), "lm_intramuros"), "Archipelago Rising seats Intramuros in Manila")
+	var pakbeng: SMMapPlan = SMMapPlan.dressing("fog_over_pakbeng")
+	check(_has_prop(pakbeng, "karst_tower") and _has_prop(pakbeng, "jungle_waterfall") and _has_prop(pakbeng, "bamboo_footbridge"), "Pakbeng dresses karst, waterfall and a bamboo footbridge")
+	check(_has_prop(SMMapPlan.dressing("andaman"), "jetty") and _has_prop(SMMapPlan.dressing("andaman"), "longtail_boat"), "Andaman dresses a jetty and longtail")
+	check(_has_prop(SMMapPlan.of("mekong_delta"), "concrete_bridge") and _has_lot(SMMapPlan.of("mekong_delta"), "drone_hub"), "Mekong keeps its decks and adds a concrete span plus a drone hub")
+
 
 func test_street_towns() -> void:
 	var layouts: Array[SMMapPlan] = _all_layouts()

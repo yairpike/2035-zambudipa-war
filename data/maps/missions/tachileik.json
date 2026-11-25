@@ -46,6 +46,34 @@
       1
      ],
      "id": "wet_market"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "checkpoint"
+    },
+    {
+     "block": [
+      6,
+      0
+     ],
+     "id": "lanna_wat"
+    },
+    {
+     "block": [
+      7,
+      0
+     ],
+     "id": "casino_tower"
+    },
+    {
+     "block": [
+      5,
+      1
+     ],
+     "id": "longtail_dock"
     }
    ]
   }
@@ -56,5 +84,15 @@
   "wave_every": 70,
   "wave_size": 2,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "cell_tower",
+   "cell": [
+    42,
+    2
+   ],
+   "yaw": 0
+  }
+ ]
 }

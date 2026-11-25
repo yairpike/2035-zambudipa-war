@@ -46,6 +46,13 @@
       1
      ],
      "id": "teak_kyaung"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "checkpoint"
     }
    ]
   }
@@ -114,5 +121,31 @@
   "wave_every": 65,
   "wave_size": 2,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "cell_tower",
+   "cell": [
+    46,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pylon",
+   "cell": [
+    44,
+    30
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "watchtower",
+   "cell": [
+    2,
+    30
+   ],
+   "yaw": 0
+  }
+ ]
 }

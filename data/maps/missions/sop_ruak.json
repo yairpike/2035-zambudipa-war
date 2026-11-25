@@ -53,6 +53,20 @@
 						1
 					],
 					"id": "casino_tower"
+				},
+				{
+					"block": [
+						3,
+						0
+					],
+					"id": "server_compound"
+				},
+				{
+					"block": [
+						3,
+						1
+					],
+					"id": "checkpoint"
 				}
 			]
 		},
@@ -118,6 +132,13 @@
 						5
 					],
 					"id": "border_casino"
+				},
+				{
+					"block": [
+						0,
+						5
+					],
+					"id": "longtail_dock"
 				}
 			]
 		}
@@ -291,5 +312,15 @@
 		"wave_every": 90,
 		"wave_size": 2,
 		"wave_cap": 6
-	}
+	},
+	"props": [
+		{
+			"id": "truss_bridge",
+			"cell": [
+				16,
+				24
+			],
+			"yaw": 0
+		}
+	]
 }

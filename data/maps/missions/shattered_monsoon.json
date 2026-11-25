@@ -52,6 +52,20 @@
       2
      ],
      "id": "city_hdb"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "casino_tower"
+    },
+    {
+     "block": [
+      6,
+      0
+     ],
+     "id": "server_compound"
     }
    ]
   }
@@ -62,5 +76,47 @@
   "wave_every": 50,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "cell_tower",
+   "cell": [
+    62,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "solar_farm",
+   "cell": [
+    60,
+    42
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "charging_kiosk",
+   "cell": [
+    58,
+    40
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "battery_swap",
+   "cell": [
+    2,
+    42
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "e_scooter",
+   "cell": [
+    56,
+    2
+   ],
+   "yaw": 25
+  }
+ ]
 }

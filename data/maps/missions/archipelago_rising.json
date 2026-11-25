@@ -32,7 +32,8 @@
    ],
    "homes": [
     "peranakan_shophouse",
-    "malay_kampung_house"
+    "malay_kampung_house",
+    "kampong_ayer_house"
    ],
    "shops": "peranakan_shophouse",
    "high": [
@@ -46,6 +47,27 @@
       1
      ],
      "id": "city_colonial"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "lm_intramuros"
+    },
+    {
+     "block": [
+      6,
+      0
+     ],
+     "id": "maranao_torogan"
+    },
+    {
+     "block": [
+      7,
+      0
+     ],
+     "id": "lm_baroque_church"
     }
    ]
   }
@@ -56,5 +78,47 @@
   "wave_every": 60,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "jetty",
+   "cell": [
+    2,
+    36
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "mangrove",
+   "cell": [
+    4,
+    38
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "karst_sea_stack",
+   "cell": [
+    54,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "longtail_boat",
+   "cell": [
+    52,
+    38
+   ],
+   "yaw": 40
+  },
+  {
+   "id": "city_jeepney",
+   "cell": [
+    54,
+    20
+   ],
+   "yaw": 0
+  }
+ ]
 }

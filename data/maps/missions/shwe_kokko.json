@@ -53,6 +53,20 @@
       3
      ],
      "id": "border_casino"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "highland_longhouse"
+    },
+    {
+     "block": [
+      6,
+      0
+     ],
+     "id": "checkpoint"
     }
    ]
   }
@@ -63,5 +77,23 @@
   "wave_every": 65,
   "wave_size": 2,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "cctv_pole",
+   "cell": [
+    46,
+    2
+   ],
+   "yaw": 20
+  },
+  {
+   "id": "holo_screen",
+   "cell": [
+    44,
+    30
+   ],
+   "yaw": 0
+  }
+ ]
 }

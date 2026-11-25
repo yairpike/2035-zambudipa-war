@@ -32,7 +32,8 @@
    ],
    "homes": [
     "khmer_stilt_house",
-    "neon_shophouse"
+    "neon_shophouse",
+    "tonle_floating_house"
    ],
    "shops": "peranakan_shophouse",
    "high": [
@@ -46,6 +47,41 @@
       1
      ],
      "id": "wet_market"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "floating_market"
+    },
+    {
+     "block": [
+      6,
+      0
+     ],
+     "id": "prasat_ruin"
+    },
+    {
+     "block": [
+      7,
+      0
+     ],
+     "id": "lm_angkor"
+    },
+    {
+     "block": [
+      8,
+      0
+     ],
+     "id": "lm_pp_independence"
+    },
+    {
+     "block": [
+      9,
+      0
+     ],
+     "id": "lm_pp_market"
     }
    ]
   }

@@ -225,6 +225,22 @@
     10
    ],
    "yaw": 0
+  },
+  {
+   "id": "concrete_bridge",
+   "cell": [
+    14,
+    6
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "lm_long_bien",
+   "cell": [
+    18,
+    32
+   ],
+   "yaw": 90
   }
  ],
  "towns": [
@@ -249,6 +265,15 @@
    "homes": [
     "vn_tube_house",
     "mekong_stilt_house"
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      0
+     ],
+     "id": "lm_ben_thanh"
+    }
    ]
   },
   {
@@ -276,6 +301,13 @@
       1
      ],
      "id": "floating_market"
+    },
+    {
+     "block": [
+      0,
+      0
+     ],
+     "id": "lm_hanoi_opera"
     }
    ]
   },
@@ -324,6 +356,15 @@
    "homes": [
     "khmer_stilt_house",
     "mekong_stilt_house"
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      0
+     ],
+     "id": "drone_hub"
+    }
    ]
   }
  ],
