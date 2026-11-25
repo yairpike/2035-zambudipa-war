@@ -5075,7 +5075,7 @@ func test_sm_guide() -> void:
 	var raid_map: SMMinimap = raid.find_child("Minimap", true, false) as SMMinimap
 	check(raid_map != null and raid_map.backdrop != null and not _flat_olive(raid_map.backdrop), "the kokang minimap is not a flat olive square")
 	var worker: String = FileAccess.get_file_as_string("res://web/sw.js")
-	check(worker.contains("shattered-monsoon-v6") and worker.contains("cache.put") and worker.contains("/models/") and worker.contains("/audio/") and worker.contains("index.wasm") and worker.contains("index.pck"), "the service worker precaches the shell and stores models and audio")
+	check(worker.contains("shattered-monsoon-v7") and worker.contains("cache.put") and worker.contains("/models/") and worker.contains("/audio/") and worker.contains("index.wasm") and worker.contains("index.pck"), "the service worker precaches the shell and stores models and audio")
 	check(raid_boot != null and not raid_boot.visible and raid_boot.text == "Boot menu", "kokang keeps the front-end Boot Menu off the match")
 	raid.free()
 	await process_frame
@@ -8485,5 +8485,35 @@ func test_unit_actions() -> void:
 			if placed != null and str(placed.name).begins_with("Cell_"):
 				right = maxf(right, placed.position.x + placed.size.x)
 	check(body != null and body.get_node_or_null("Model") != null and str(body.get_meta("model", "")) != "" and port != null and port.size.x >= 120 and port.size.y >= 80 and port.scaling_3d_scale >= 0.99 and idle_player != null and idle_player.is_playing() and idle_player.speed_scale < 0.8 and move_player != null and move_player.is_playing() and move_player.speed_scale > 0.5 and die_unit != null and str(die_unit.get_meta("preview_pose", "")) == "die" and die_player != null and die_player.is_playing() and scroll != null and scroll.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED and scroll.size.x > 0.0 and row_w <= scroll.size.x + 1.0 and right > row_w * 0.75 and cam != null and cam.position.z < 0.0 and absf(yaw_after - yaw_before) > 0.2, "the cell fills the page, faces the camera, orbits, and loops each clip")
+	var panel: Control = boot.find_child("SettingsPanel", true, false) as Control
+	var blurb: Control = boot.find_child("SettingsBlurb", true, false) as Control
+	var grid_ctrl: Control = grid as Control
+	check(blurb != null and not blurb.visible and grid_ctrl != null and panel != null and grid_ctrl.size.y >= panel.size.y - grid_ctrl.position.y - 80.0, "the Units page drops the help footer so the grid can fill that height")
+	var sampan_body: MeshInstance3D = Forms.dress_unit("sampan", "boat", "naval", Color.GRAY)
+	var sampan_src: String = ModelBook.source_of("sampan")
+	check(sampan_body.get_node_or_null("Model") != null and sampan_src.contains("tripo") and not sampan_src.ends_with("models/sampan.glb"), "Malacca Pocket-Sub mounts the Tripo hull, not the Kenney stand-in")
+	var packer_probe: MeshInstance3D = Forms.dress_unit("packer", "core", "ground", Color.GRAY)
+	var packer_player: AnimationPlayer = Motion.player_of(packer_probe)
+	check(bool(packer_probe.get_meta("model_rigged", false)) and packer_player != null and Motion.has_clip(packer_player, "idle"), "Garuda mounts the rigged packer with its idle clip")
+	var nmrf_btn: Button = boot.find_child("Faction_nmrf", true, false) as Button
+	if nmrf_btn != null:
+		nmrf_btn.pressed.emit()
+	await process_frame
+	await process_frame
+	var packer_row: Node = boot.find_child("UnitRow_packer", true, false)
+	if packer_row != null and grid != null:
+		grid.call("_fill_row", packer_row)
+	await process_frame
+	var packer_idle: Node = packer_row.find_child("Cell_idle", true, false) if packer_row != null else null
+	var packer_unit: RTSUnit = packer_idle.find_child("PreviewUnit", true, false) as RTSUnit if packer_idle != null else null
+	var packer_mesh: MeshInstance3D = packer_unit.get_node_or_null("Body") as MeshInstance3D if packer_unit != null else null
+	check(packer_mesh != null and bool(packer_mesh.get_meta("model_rigged", false)) and str(packer_unit.get_meta("preview_pose", "")) == "idle", "the Units sheet poses Garuda's idle clip on the rigged mecha")
+	var video_tab: Button = boot.find_child("SettingsTabVideo", true, false) as Button
+	if video_tab != null:
+		video_tab.pressed.emit()
+	await process_frame
+	check(blurb != null and blurb.visible, "Video settings still show the help footer")
+	sampan_body.free()
+	packer_probe.free()
 	boot.free()
 	await process_frame

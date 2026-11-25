@@ -38,6 +38,7 @@ static func _mount_unit(body: MeshInstance3D, id: String, primary: Color, accent
 	_mount(body, scene, footprint, false, id, _yaw_of(RIGGED + id if rigged else id), Scale.unit_target(id))
 	body.set_meta("model_rigged", rigged)
 	_paint(body, primary, accent, id)
+	_notify_model(body)
 	return true
 
 ## A rigged copy that arrives after the static model swaps in place.
@@ -56,6 +57,7 @@ static func _swap_rigged(body: MeshInstance3D, id: String, primary: Color, accen
 	_mount(body, scene, footprint, false, id, _yaw_of(RIGGED + id), Scale.unit_target(id))
 	body.set_meta("model_rigged", true)
 	_paint(body, primary, accent, id)
+	_notify_model(body)
 	return true
 
 static func _mount_structure(host: MeshInstance3D, id: String, primary: Color, accent: Color) -> bool:
@@ -321,9 +323,14 @@ static func _path(key: String) -> String:
 		packed_try.append("res://game/models/tripo/%s.glb" % id)
 		packed_try.append("res://game/models/tripo/%s.gltf" % id)
 		packed_try.append(_cache_file(id))
-	packed_try.append("res://game/models/%s.glb" % id)
-	packed_try.append("res://game/models/%s.gltf" % id)
-	if not _tripo_id(id):
+		# Web serves the Tripo overlay at models/<id>.glb. The Kenney file of the
+		# same name is a last-resort desktop fallback, never a web mount.
+		if not OS.has_feature("web"):
+			packed_try.append("res://game/models/%s.glb" % id)
+			packed_try.append("res://game/models/%s.gltf" % id)
+	else:
+		packed_try.append("res://game/models/%s.glb" % id)
+		packed_try.append("res://game/models/%s.gltf" % id)
 		packed_try.append("user://models/%s.glb" % id)
 		packed_try.append("user://models/%s.gltf" % id)
 	for packed: String in packed_try:
@@ -333,10 +340,13 @@ static func _path(key: String) -> String:
 	var roots: PackedStringArray = PackedStringArray()
 	if _tripo_id(id):
 		roots.append(ProjectSettings.globalize_path("res://").path_join("game/models/tripo"))
-	roots.append(ProjectSettings.globalize_path("res://").path_join("game/models"))
+	if not OS.has_feature("web") or not _tripo_id(id):
+		roots.append(ProjectSettings.globalize_path("res://").path_join("game/models"))
 	roots.append(ProjectSettings.globalize_path("res://").path_join("build/web/models"))
 	roots.append(base.path_join("models"))
 	roots.append(base.get_base_dir().path_join("Resources/models"))
+	if _tripo_id(id):
+		roots.append(AssetPack.root().path_join("models/tripo"))
 	roots.append(AssetPack.root().path_join("models"))
 	for root: String in roots:
 		var found: String = root.path_join("%s.glb" % id)
@@ -387,10 +397,25 @@ static func _queue(body: MeshInstance3D, id: String, primary: Color, accent: Col
 			_release_standin(body)
 	if not _waiting.has(body):
 		_waiting.append(body)
-	if not body.is_inside_tree() or not _index_read or not _index.has(key):
+	if not body.is_inside_tree():
+		_when_in_tree(body, _resume_queue.bind(body, key))
+		return
+	if not _index_read or not _index.has(key):
 		return
 	var host: Node = _request_owner(body)
 	_fetch(host, key)
+
+## dress_unit runs before the body is parented. Fetch as soon as it enters the tree.
+static func _resume_queue(body: MeshInstance3D, key: String) -> void:
+	if not is_instance_valid(body) or not body.is_inside_tree():
+		return
+	var mounted: bool = str(body.get_meta("model", "")) != ""
+	var want_rigged: bool = key.begins_with(RIGGED) and bool(body.get_meta("model_rigged_wait", false))
+	if mounted and not want_rigged:
+		return
+	if not _index_read or not _index.has(key):
+		return
+	_fetch(_request_owner(body), key)
 
 ## The procedural mesh stays hidden while a GLB for this id is still on the way.
 static func _hold_standin(body: MeshInstance3D) -> void:
@@ -741,6 +766,13 @@ static func _mount(body: MeshInstance3D, scene: Node3D, footprint: AABB, fill: b
 	var keep_hidden: bool = str(body.name) == "HubShell" and not bool(body.get_meta("hub_placed", false)) and body.is_inside_tree()
 	body.visible = not keep_hidden
 	body.set_meta("standin_held", false)
+
+static func _notify_model(body: MeshInstance3D) -> void:
+	if body == null or not body.has_meta("on_model"):
+		return
+	var hook: Variant = body.get_meta("on_model")
+	if hook is Callable and (hook as Callable).is_valid():
+		(hook as Callable).call(body)
 
 static func _hoist(body: MeshInstance3D, scene: Node3D, node_name: String) -> void:
 	var found: Node3D = scene.find_child(node_name, true, false) as Node3D

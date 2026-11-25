@@ -26,6 +26,7 @@ func _on_visibility() -> void:
 func _ensure() -> void:
 	if not visible:
 		return
+	Models.warm(self)
 	if get_node_or_null("FactionRow") == null:
 		_chrome()
 	if _faction == "":
@@ -117,6 +118,9 @@ func _clips(id: String) -> PackedStringArray:
 				if key != "" and not names.has(key):
 					names.append(key)
 		scene.free()
+	# An empty list on web just means the GLB is still downloading. Do not lock that in.
+	if names.is_empty() and str(Models.source_of(Models.RIGGED + id)) == "" and str(Models.source_of(id)) == "":
+		return names
 	_clip_cache[id] = names
 	return names
 
@@ -369,15 +373,32 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	unit.attack_damage = float(item.get("weapon_damage", 8.0))
 	unit.set_meta("preview_action", action)
 	unit.set_meta("preview_row", item)
+	unit.set_meta("preview_cam", cam)
+	unit.set_meta("preview_cell", cell)
 	pivot.add_child(unit)
 	var ink: PackedColorArray = _colors(faction)
 	var body: MeshInstance3D = Forms.dress_unit(str(item.get("id", "")), str(item.get("role", "")), str(item.get("locomotion", "ground")), ink[1], ink[0], ink[1], faction)
+	body.set_meta("on_model", Callable(self, "_refresh_preview"))
 	unit.add_child(body)
 	_strip_standin(body)
 	Motion.attach(unit, body)
 	SMArms.arm(unit, item)
-	unit.set_meta("preview_cell", cell)
 	_frame(cam, body)
+	if str(body.get_meta("model", "")) != "":
+		_pose(unit)
+
+## A web GLB can land after the cell is built. Strip the box stand-in, reframe, and pose clips.
+func _refresh_preview(body: MeshInstance3D) -> void:
+	if body == null or not is_instance_valid(body):
+		return
+	var unit: RTSUnit = body.get_parent() as RTSUnit
+	if unit == null:
+		return
+	var cam: Camera3D = unit.get_meta("preview_cam") as Camera3D if unit.has_meta("preview_cam") else null
+	_strip_standin(body)
+	unit.set_meta("preview_set", false)
+	if cam != null and is_instance_valid(cam):
+		_frame(cam, body)
 	_pose(unit)
 
 func _on_cell_input(event: InputEvent, cell: Panel) -> void:
