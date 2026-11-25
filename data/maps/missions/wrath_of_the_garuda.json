@@ -46,6 +46,34 @@
       1
      ],
      "id": "city_colonial"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "uma_lulik"
+    },
+    {
+     "block": [
+      6,
+      0
+     ],
+     "id": "lm_monas"
+    },
+    {
+     "block": [
+      7,
+      0
+     ],
+     "id": "lm_borobudur"
+    },
+    {
+     "block": [
+      8,
+      0
+     ],
+     "id": "lm_bali_gate"
     }
    ]
   }
@@ -56,5 +84,31 @@
   "wave_every": 55,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "jetty",
+   "cell": [
+    2,
+    36
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "karst_sea_stack",
+   "cell": [
+    54,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "mangrove",
+   "cell": [
+    4,
+    38
+   ],
+   "yaw": 0
+  }
+ ]
 }

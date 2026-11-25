@@ -69,6 +69,20 @@
       0
      ],
      "id": "city_highrise"
+    },
+    {
+     "block": [
+      7,
+      1
+     ],
+     "id": "city_colonial"
+    },
+    {
+     "block": [
+      4,
+      3
+     ],
+     "id": "city_food_stalls"
     }
    ]
   },
@@ -112,6 +126,22 @@
    29
   ]
  },
+ "orchards": [
+  {
+   "id": "dipterocarp_rows",
+   "tree": "dipterocarp",
+   "rect": [
+    60,
+    34,
+    6,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  }
+ ],
  "landmark": {
   "id": "lm_shwedagon",
   "rect": [

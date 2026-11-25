@@ -367,6 +367,14 @@
     2
    ],
    "yaw": 40
+  },
+  {
+   "id": "cell_tower",
+   "cell": [
+    22,
+    53
+   ],
+   "yaw": 0
   }
  ],
  "towns": [
@@ -400,6 +408,13 @@
       0
      ],
      "id": "lanna_wat"
+    },
+    {
+     "block": [
+      0,
+      1
+     ],
+     "id": "lm_tha_phae"
     }
    ]
   },
@@ -420,6 +435,15 @@
    "homes": [
     "shan_stilt_house",
     "border_guesthouse"
+   ],
+   "civic": [
+    {
+     "block": [
+      1,
+      0
+     ],
+     "id": "casino_tower"
+    }
    ]
   }
  ],

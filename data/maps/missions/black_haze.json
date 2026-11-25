@@ -32,7 +32,8 @@
    ],
    "homes": [
     "neon_shophouse",
-    "border_guesthouse"
+    "border_guesthouse",
+    "malay_kampung_house"
    ],
    "shops": "peranakan_shophouse",
    "high": [
@@ -46,6 +47,34 @@
       1
      ],
      "id": "wet_market"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "palm_oil_mill"
+    },
+    {
+     "block": [
+      6,
+      0
+     ],
+     "id": "lm_wat_arun"
+    },
+    {
+     "block": [
+      7,
+      0
+     ],
+     "id": "lm_grand_palace"
+    },
+    {
+     "block": [
+      8,
+      0
+     ],
+     "id": "lm_lotus_tower"
     }
    ]
   }
@@ -56,5 +85,39 @@
   "wave_every": 60,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "jetty",
+   "cell": [
+    2,
+    36
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "city_tuktuk",
+   "cell": [
+    54,
+    38
+   ],
+   "yaw": 15
+  }
+ ],
+ "orchards": [
+  {
+   "id": "oil_palm_rows",
+   "tree": "oil_palm",
+   "rect": [
+    50,
+    2,
+    4,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  }
+ ]
 }

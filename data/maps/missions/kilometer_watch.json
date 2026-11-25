@@ -32,7 +32,8 @@
    ],
    "homes": [
     "border_guesthouse",
-    "neon_shophouse"
+    "neon_shophouse",
+    "malay_kampung_house"
    ],
    "shops": "neon_shophouse",
    "high": [
@@ -46,6 +47,13 @@
       1
      ],
      "id": "teak_kyaung"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "lm_mandalay_moat"
     }
    ]
   }
@@ -56,5 +64,39 @@
   "wave_every": 60,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "cell_tower",
+   "cell": [
+    50,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "watchtower",
+   "cell": [
+    48,
+    34
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pylon",
+   "cell": [
+    2,
+    34
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "lm_u_bein",
+   "cell": [
+    50,
+    20
+   ],
+   "yaw": 90
+  }
+ ]
 }

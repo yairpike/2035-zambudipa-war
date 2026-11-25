@@ -28,7 +28,9 @@
 			],
 			"homes": [
 				"neon_shophouse",
-				"border_guesthouse"
+				"border_guesthouse",
+				"shan_stilt_house",
+				"server_compound"
 			],
 			"shops": "neon_shophouse",
 			"high": [],
@@ -57,5 +59,31 @@
 		"wave_every": 70,
 		"wave_size": 2,
 		"wave_cap": 6
-	}
+	},
+	"props": [
+		{
+			"id": "cell_tower",
+			"cell": [
+				26,
+				2
+			],
+			"yaw": 0
+		},
+		{
+			"id": "cctv_pole",
+			"cell": [
+				25,
+				16
+			],
+			"yaw": 15
+		},
+		{
+			"id": "starlink_terminal",
+			"cell": [
+				24,
+				2
+			],
+			"yaw": 0
+		}
+	]
 }

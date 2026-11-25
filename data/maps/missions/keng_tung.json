@@ -46,6 +46,13 @@
       1
      ],
      "id": "lanna_wat"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "burmese_pagoda"
     }
    ]
   }
@@ -99,6 +106,20 @@
    "rect": [
     1,
     17,
+    4,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "pine_rows",
+   "tree": "khasi_pine",
+   "rect": [
+    50,
+    32,
     4,
     4
    ],

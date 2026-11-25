@@ -49,6 +49,27 @@
       1
      ],
      "id": "wet_market"
+    },
+    {
+     "block": [
+      3,
+      3
+     ],
+     "id": "lm_supertrees"
+    },
+    {
+     "block": [
+      1,
+      5
+     ],
+     "id": "lm_durian_domes"
+    },
+    {
+     "block": [
+      2,
+      5
+     ],
+     "id": "lm_twin_towers"
     }
    ]
   },
@@ -68,17 +89,35 @@
    ],
    "homes": [
     "malay_kampung_house",
-    "neon_shophouse"
+    "neon_shophouse",
+    "kampong_ayer_house",
+    "city_hdb"
    ],
    "shops": "neon_shophouse",
    "high": [
     1,
     4
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      1
+     ],
+     "id": "city_hdb"
+    },
+    {
+     "block": [
+      0,
+      5
+     ],
+     "id": "longtail_dock"
+    }
    ]
   }
  ],
  "landmark": {
-  "id": "lm_intramuros",
+  "id": "lm_marina_bay",
   "rect": [
    48,
    26,
@@ -194,5 +233,87 @@
   "wave_every": 90,
   "wave_size": 2,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "jetty",
+   "cell": [
+    26,
+    16
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "city_tuktuk",
+   "cell": [
+    40,
+    8
+   ],
+   "yaw": 10
+  },
+  {
+   "id": "city_jeepney",
+   "cell": [
+    42,
+    10
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "city_skytrain",
+   "cell": [
+    36,
+    2
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "city_flyover",
+   "cell": [
+    38,
+    4
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "charging_kiosk",
+   "cell": [
+    35,
+    30
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "battery_swap",
+   "cell": [
+    37,
+    28
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "e_scooter",
+   "cell": [
+    34,
+    12
+   ],
+   "yaw": 20
+  },
+  {
+   "id": "holo_screen",
+   "cell": [
+    50,
+    8
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "city_trishaw",
+   "cell": [
+    10,
+    8
+   ],
+   "yaw": 15
+  }
+ ]
 }

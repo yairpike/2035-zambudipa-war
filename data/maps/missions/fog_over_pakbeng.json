@@ -45,6 +45,20 @@
       1
      ],
      "id": "lao_sim"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "lao_that"
+    },
+    {
+     "block": [
+      6,
+      0
+     ],
+     "id": "lm_patuxai"
     }
    ]
   }
@@ -113,5 +127,55 @@
   "wave_every": 55,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "karst_tower",
+   "cell": [
+    2,
+    36
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "jungle_waterfall",
+   "cell": [
+    4,
+    38
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "bamboo_footbridge",
+   "cell": [
+    50,
+    20
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "cave_mouth",
+   "cell": [
+    48,
+    36
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "cascade",
+   "cell": [
+    3,
+    34
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "micro_hydro",
+   "cell": [
+    52,
+    8
+   ],
+   "yaw": 0
+  }
+ ]
 }
