@@ -5126,7 +5126,7 @@ func test_sm_guide() -> void:
 	var raid_map: SMMinimap = raid.find_child("Minimap", true, false) as SMMinimap
 	check(raid_map != null and raid_map.backdrop != null and not _flat_olive(raid_map.backdrop), "the kokang minimap is not a flat olive square")
 	var worker: String = FileAccess.get_file_as_string("res://web/sw.js")
-	check(worker.contains("shattered-monsoon-v7") and worker.contains("cache.put") and worker.contains("/models/") and worker.contains("/audio/") and worker.contains("index.wasm") and worker.contains("index.pck"), "the service worker precaches the shell and stores models and audio")
+	check(worker.contains("shattered-monsoon-v8") and worker.contains("cache.put") and worker.contains("/models/") and worker.contains("/audio/") and worker.contains("index.wasm") and worker.contains("index.pck"), "the service worker precaches the shell and stores models and audio")
 	check(raid_boot != null and not raid_boot.visible and raid_boot.text == "Boot menu", "kokang keeps the front-end Boot Menu off the match")
 	raid.free()
 	await process_frame
