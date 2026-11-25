@@ -115,6 +115,7 @@ func _run() -> void:
 	await H.section("test_map_symmetry", test_map_symmetry)
 	await H.section("test_model_scale", test_model_scale)
 	await H.section("test_street_towns", test_street_towns)
+	await H.section("test_env_seating", test_env_seating)
 	await H.section("test_iso_layout", test_iso_layout)
 	await H.section("test_game_language", test_game_language)
 	await H.section("test_render_budget", test_render_budget)
@@ -600,6 +601,64 @@ func _lots_twinned(plan: SMMapPlan) -> bool:
 		if not seen.has(key) or int(seen[key]) == int(lot["side"]):
 			return false
 	return true
+
+func test_env_seating() -> void:
+	var env_ids: PackedStringArray = PackedStringArray()
+	var dir := DirAccess.open("res://game/models/env")
+	if dir != null:
+		for file: String in dir.get_files():
+			if file.ends_with(".glb"):
+				env_ids.append(file.get_basename())
+	var stamped: Dictionary = {}
+	for plan: SMMapPlan in _all_layouts():
+		for row: Dictionary in plan.lots + plan.props + plan.groves:
+			stamped[str(row["id"])] = true
+	var missing: Array[String] = []
+	for id: String in env_ids:
+		if not stamped.has(id):
+			missing.append(id)
+	check(env_ids.size() == 106 and missing.is_empty(), "every env GLB is seated on a campaign or skirmish map %s" % [missing.slice(0, 8)])
+	var phillips: SMMapPlan = SMMapPlan.dressing("phillips_channel")
+	var phillips_mark: String = ""
+	for lot: Dictionary in phillips.lots:
+		if str(lot["kind"]) == "landmark":
+			phillips_mark = str(lot["id"])
+	check(phillips_mark == "lm_marina_bay", "Phillips Channel landmarks Marina Bay, not Intramuros")
+	var tonle: SMMapPlan = SMMapPlan.dressing("tonle_sap")
+	var floating: int = 0
+	for lot: Dictionary in tonle.lots:
+		if str(lot["id"]) == "tonle_floating_house":
+			floating += 1
+	check(floating > 0, "Tonle Sap seats tonle_floating_house on town lots (%d)" % floating)
+	var mekong: SMMapPlan = SMMapPlan.of("mekong_delta")
+	var deck: bool = false
+	for row: Dictionary in mekong.props:
+		deck = deck or str(row["id"]) == "concrete_bridge"
+	check(deck, "Mekong Delta stamps concrete_bridge on the canal road")
+	var pakbeng: SMMapPlan = SMMapPlan.dressing("fog_over_pakbeng")
+	var karst: bool = false
+	var fall: bool = false
+	var bamboo: bool = false
+	for row: Dictionary in pakbeng.props:
+		karst = karst or str(row["id"]) == "karst_tower"
+		fall = fall or str(row["id"]) == "jungle_waterfall"
+		bamboo = bamboo or str(row["id"]) == "bamboo_footbridge"
+	check(karst and fall and bamboo, "Pakbeng seats karst, waterfall and a bamboo footbridge")
+	var andaman: SMMapPlan = SMMapPlan.dressing("andaman")
+	var jetty: bool = false
+	var boat: bool = false
+	var stack: bool = false
+	for row: Dictionary in andaman.props:
+		jetty = jetty or str(row["id"]) == "jetty"
+		boat = boat or str(row["id"]) == "longtail_boat"
+		stack = stack or str(row["id"]) == "karst_sea_stack"
+	check(jetty and boat and stack, "Andaman seats a jetty, longtail and sea stack")
+	var manila: SMMapPlan = SMMapPlan.dressing("archipelago_rising")
+	var fort: String = ""
+	for lot: Dictionary in manila.lots:
+		if str(lot["kind"]) == "landmark":
+			fort = str(lot["id"])
+	check(fort == "lm_intramuros", "Archipelago Rising keeps Intramuros on the Manila map")
 
 func test_iso_layout() -> void:
 	var Fit: GDScript = load("res://game/camera_fit.gd") as GDScript

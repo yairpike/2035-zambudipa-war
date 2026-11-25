@@ -1,6 +1,6 @@
 {
  "place": "singapore_tanjong_pagar",
- "note": "Tanjong Pagar on the far shore: shophouse rows, a hawker centre block. Batam's Nagoya grid is the player's bank. Both banks are street grids round the two bases.",
+ "note": "Tanjong Pagar on the far shore: shophouse rows, HDB, Marina Bay and the Supertrees. Batam's Nagoya grid is the player's bank.",
  "layout": "phillips",
  "open": [
   [
@@ -49,6 +49,27 @@
       1
      ],
      "id": "wet_market"
+    },
+    {
+     "block": [
+      3,
+      3
+     ],
+     "id": "city_hdb"
+    },
+    {
+     "block": [
+      3,
+      4
+     ],
+     "id": "lm_supertrees"
+    },
+    {
+     "block": [
+      2,
+      5
+     ],
+     "id": "lm_durian_domes"
     }
    ]
   },
@@ -68,17 +89,27 @@
    ],
    "homes": [
     "malay_kampung_house",
-    "neon_shophouse"
+    "neon_shophouse",
+    "kampong_ayer_house"
    ],
    "shops": "neon_shophouse",
    "high": [
     1,
     4
+   ],
+   "civic": [
+    {
+     "block": [
+      3,
+      5
+     ],
+     "id": "lm_omar_ali"
+    }
    ]
   }
  ],
  "landmark": {
-  "id": "lm_intramuros",
+  "id": "lm_marina_bay",
   "rect": [
    48,
    26,
@@ -194,5 +225,55 @@
   "wave_every": 90,
   "wave_size": 2,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "jetty",
+   "cell": [
+    25,
+    5
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "jetty",
+   "cell": [
+    14,
+    18
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "city_skytrain",
+   "cell": [
+    50,
+    2
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "city_flyover",
+   "cell": [
+    40,
+    1
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "e_scooter",
+   "cell": [
+    49,
+    10
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "city_tuktuk",
+   "cell": [
+    35,
+    2
+   ],
+   "yaw": 0
+  }
+ ]
 }

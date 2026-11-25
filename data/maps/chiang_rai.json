@@ -367,6 +367,22 @@
     2
    ],
    "yaw": 40
+  },
+  {
+   "id": "cell_tower",
+   "cell": [
+    2,
+    28
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "city_tuktuk",
+   "cell": [
+    8,
+    18
+   ],
+   "yaw": 0
   }
  ],
  "towns": [
@@ -400,6 +416,20 @@
       0
      ],
      "id": "lanna_wat"
+    },
+    {
+     "block": [
+      2,
+      1
+     ],
+     "id": "casino_tower"
+    },
+    {
+     "block": [
+      1,
+      2
+     ],
+     "id": "lm_tha_phae"
     }
    ]
   },

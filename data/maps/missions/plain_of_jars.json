@@ -46,6 +46,27 @@
       1
      ],
      "id": "lao_sim"
+    },
+    {
+     "block": [
+      9,
+      5
+     ],
+     "id": "lao_that"
+    },
+    {
+     "block": [
+      10,
+      4
+     ],
+     "id": "prasat_ruin"
+    },
+    {
+     "block": [
+      9,
+      2
+     ],
+     "id": "lm_patuxai"
     }
    ]
   }
@@ -56,5 +77,33 @@
   "wave_every": 55,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "landmark": {
+  "id": "lm_that_luang",
+  "rect": [
+   52,
+   32,
+   4,
+   4
+  ],
+  "face": "n"
+ },
+ "props": [
+  {
+   "id": "rock_set",
+   "cell": [
+    2,
+    40
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "rock_set",
+   "cell": [
+    58,
+    2
+   ],
+   "yaw": 40
+  }
+ ]
 }

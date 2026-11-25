@@ -4,6 +4,7 @@ const Power = preload("res://addons/rts_advanced/sm_power.gd")
 const Fx = preload("res://game/fx_view.gd")
 const Ground = preload("res://game/ground_view.gd")
 const Fit = preload("res://game/camera_fit.gd")
+const World = preload("res://game/world_view.gd")
 ## Shared GTFC skirmish. The map id picks the terrain. Controls match Sop Ruak.
 
 @export var map_id: String = "burma_road"
@@ -212,7 +213,8 @@ func _mekong_world() -> void:
 
 func _deck(node_name: String, span: Rect2i) -> void:
 	var size: Vector3 = Vector3(float(span.size.x) * grid.cell_size + 2.0, 0.28, float(span.size.y) * grid.cell_size)
-	_slab(node_name, plan.rect_center(span) + Vector3(0.0, 0.15, 0.0), size, Color(0.45, 0.4, 0.3))
+	var deck: MeshInstance3D = _slab(node_name, plan.rect_center(span) + Vector3(0.0, 0.15, 0.0), size, Color(0.45, 0.4, 0.3))
+	World.dress_bridge_deck(deck)
 
 func _chiang_world() -> void:
 	Ground.dress(self, grid, "chiang", plan)

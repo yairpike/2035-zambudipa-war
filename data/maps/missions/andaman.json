@@ -1,6 +1,6 @@
 {
  "place": "kawthaung",
- "note": "Kawthaung waterfront: shophouse row on the jetty road, kampung houses up the slope, rubber behind.",
+ "note": "Kawthaung waterfront: shophouse row on the jetty road, kampung houses up the slope, rubber behind, longtails and a sea stack on the channel.",
  "open": [
   [
    5,
@@ -49,6 +49,15 @@
    "high": [
     1,
     2
+   ],
+   "civic": [
+    {
+     "block": [
+      7,
+      4
+     ],
+     "id": "longtail_dock"
+    }
    ]
   }
  ],
@@ -116,5 +125,47 @@
   "wave_every": 65,
   "wave_size": 2,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "jetty",
+   "cell": [
+    17,
+    26
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "longtail_boat",
+   "cell": [
+    17,
+    10
+   ],
+   "yaw": 30
+  },
+  {
+   "id": "karst_sea_stack",
+   "cell": [
+    19,
+    1
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "mangrove",
+   "cell": [
+    16,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "starlink_terminal",
+   "cell": [
+    46,
+    30
+   ],
+   "yaw": 0
+  }
+ ]
 }

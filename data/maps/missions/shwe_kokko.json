@@ -32,7 +32,8 @@
    ],
    "homes": [
     "border_guesthouse",
-    "neon_shophouse"
+    "neon_shophouse",
+    "highland_longhouse"
    ],
    "shops": "neon_shophouse",
    "high": [
@@ -53,6 +54,20 @@
       3
      ],
      "id": "border_casino"
+    },
+    {
+     "block": [
+      5,
+      4
+     ],
+     "id": "highland_longhouse"
+    },
+    {
+     "block": [
+      7,
+      4
+     ],
+     "id": "checkpoint"
     }
    ]
   }
@@ -63,5 +78,31 @@
   "wave_every": 65,
   "wave_size": 2,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "cctv_pole",
+   "cell": [
+    46,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "battery_swap",
+   "cell": [
+    45,
+    30
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "holo_screen",
+   "cell": [
+    46,
+    30
+   ],
+   "yaw": 0
+  }
+ ]
 }

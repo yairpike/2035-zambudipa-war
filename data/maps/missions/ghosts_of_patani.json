@@ -46,6 +46,34 @@
       1
      ],
      "id": "kampung_surau"
+    },
+    {
+     "block": [
+      7,
+      4
+     ],
+     "id": "wet_market"
+    },
+    {
+     "block": [
+      8,
+      4
+     ],
+     "id": "palm_oil_mill"
+    },
+    {
+     "block": [
+      8,
+      2
+     ],
+     "id": "lm_kl_clocktower"
+    },
+    {
+     "block": [
+      7,
+      5
+     ],
+     "id": "lm_twin_towers"
     }
    ]
   }
@@ -106,6 +134,20 @@
     1,
     2
    ]
+  },
+  {
+   "id": "oil_palm_rows",
+   "tree": "oil_palm",
+   "rect": [
+    1,
+    22,
+    4,
+    4
+   ],
+   "pitch": [
+    1,
+    2
+   ]
   }
  ],
  "pressure": {
@@ -114,5 +156,33 @@
   "wave_every": 60,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "landmark": {
+  "id": "lm_kek_lok_si",
+  "rect": [
+   42,
+   27,
+   4,
+   4
+  ],
+  "face": "n"
+ },
+ "props": [
+  {
+   "id": "solar_farm",
+   "cell": [
+    50,
+    34
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "e_scooter",
+   "cell": [
+    48,
+    2
+   ],
+   "yaw": 0
+  }
+ ]
 }

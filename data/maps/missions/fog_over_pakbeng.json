@@ -1,6 +1,6 @@
 {
  "place": "pak_beng",
- "note": "Pak Beng: one street of stilt houses stepping along the Mekong bank, a sim at the top.",
+ "note": "Pak Beng: stilt houses along the Mekong bank, a sim at the top, karst, a waterfall and a bamboo footbridge.",
  "open": [
   [
    5,
@@ -45,6 +45,13 @@
       1
      ],
      "id": "lao_sim"
+    },
+    {
+     "block": [
+      8,
+      5
+     ],
+     "id": "lao_that"
     }
    ]
   }
@@ -113,5 +120,63 @@
   "wave_every": 55,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "karst_tower",
+   "cell": [
+    2,
+    36
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "jungle_waterfall",
+   "cell": [
+    54,
+    36
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "bamboo_footbridge",
+   "cell": [
+    3,
+    38
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "cave_mouth",
+   "cell": [
+    1,
+    35
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "cascade",
+   "cell": [
+    53,
+    38
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "micro_hydro",
+   "cell": [
+    50,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "starlink_terminal",
+   "cell": [
+    52,
+    2
+   ],
+   "yaw": 0
+  }
+ ]
 }

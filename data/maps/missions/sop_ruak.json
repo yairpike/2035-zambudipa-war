@@ -53,6 +53,20 @@
 						1
 					],
 					"id": "casino_tower"
+				},
+				{
+					"block": [
+						3,
+						1
+					],
+					"id": "server_compound"
+				},
+				{
+					"block": [
+						0,
+						1
+					],
+					"id": "checkpoint"
 				}
 			]
 		},
@@ -85,6 +99,13 @@
 						5
 					],
 					"id": "lanna_wat"
+				},
+				{
+					"block": [
+						3,
+						3
+					],
+					"id": "longtail_dock"
 				}
 			]
 		},
@@ -291,5 +312,31 @@
 		"wave_every": 90,
 		"wave_size": 2,
 		"wave_cap": 6
-	}
+	},
+	"props": [
+		{
+			"id": "truss_bridge",
+			"cell": [
+				17,
+				25
+			],
+			"yaw": 90
+		},
+		{
+			"id": "longtail_boat",
+			"cell": [
+				18,
+				30
+			],
+			"yaw": 20
+		},
+		{
+			"id": "cell_tower",
+			"cell": [
+				2,
+				48
+			],
+			"yaw": 0
+		}
+	]
 }

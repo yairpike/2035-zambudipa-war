@@ -46,6 +46,34 @@
       1
      ],
      "id": "wet_market"
+    },
+    {
+     "block": [
+      5,
+      4
+     ],
+     "id": "checkpoint"
+    },
+    {
+     "block": [
+      7,
+      2
+     ],
+     "id": "lanna_wat"
+    },
+    {
+     "block": [
+      7,
+      4
+     ],
+     "id": "casino_tower"
+    },
+    {
+     "block": [
+      6,
+      4
+     ],
+     "id": "longtail_dock"
     }
    ]
   }
@@ -56,5 +84,23 @@
   "wave_every": 70,
   "wave_size": 2,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "cell_tower",
+   "cell": [
+    42,
+    28
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "charging_kiosk",
+   "cell": [
+    40,
+    2
+   ],
+   "yaw": 0
+  }
+ ]
 }

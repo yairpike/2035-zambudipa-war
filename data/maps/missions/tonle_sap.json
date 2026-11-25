@@ -1,6 +1,6 @@
 {
  "place": "phnom_penh_riverside",
- "note": "Phnom Penh riverside: French-era shophouse rows on Sisowath Quay, Psar Chas market, sugar palms.",
+ "note": "Phnom Penh riverside and the Tonle flood: floating houses on the lots, Psar Chas, Independence Monument, laterite prasat.",
  "open": [
   [
    5,
@@ -32,7 +32,8 @@
    ],
    "homes": [
     "khmer_stilt_house",
-    "neon_shophouse"
+    "neon_shophouse",
+    "tonle_floating_house"
    ],
    "shops": "peranakan_shophouse",
    "high": [
@@ -46,6 +47,34 @@
       1
      ],
      "id": "wet_market"
+    },
+    {
+     "block": [
+      9,
+      5
+     ],
+     "id": "floating_market"
+    },
+    {
+     "block": [
+      10,
+      4
+     ],
+     "id": "prasat_ruin"
+    },
+    {
+     "block": [
+      9,
+      2
+     ],
+     "id": "lm_pp_market"
+    },
+    {
+     "block": [
+      10,
+      2
+     ],
+     "id": "lm_angkor"
     }
    ]
   }
@@ -114,5 +143,33 @@
   "wave_every": 55,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "landmark": {
+  "id": "lm_pp_independence",
+  "rect": [
+   52,
+   32,
+   4,
+   4
+  ],
+  "face": "n"
+ },
+ "props": [
+  {
+   "id": "longtail_boat",
+   "cell": [
+    2,
+    40
+   ],
+   "yaw": 20
+  },
+  {
+   "id": "jetty",
+   "cell": [
+    1,
+    38
+   ],
+   "yaw": 90
+  }
+ ]
 }

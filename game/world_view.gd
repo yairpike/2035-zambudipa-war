@@ -5,6 +5,8 @@ const Forms = preload("res://game/unit_meshes.gd")
 const Ground = preload("res://game/ground_view.gd")
 const Settings = preload("res://game/match_settings.gd")
 const BuildingFx = preload("res://game/building_fx.gd")
+const Env = preload("res://game/env_dress.gd")
+const Models = preload("res://game/model_registry.gd")
 
 static func sync(host: Node3D, sight: SMSight, cam: RTSCamera) -> void:
 	paint_fog(sight, host)
@@ -180,6 +182,7 @@ static func fit_deck(host: Node3D, deck_name: String, north_up: bool, south_up: 
 	if deck == null:
 		return
 	var box: BoxMesh = deck.mesh as BoxMesh
+	var span: Node3D = deck.get_node_or_null("Concrete") as Node3D
 	if not north_up and not south_up:
 		deck.visible = false
 		return
@@ -190,12 +193,42 @@ static func fit_deck(host: Node3D, deck_name: String, north_up: bool, south_up: 
 	if north_up and south_up:
 		deck.position = Vector3(x, 0.15, 0.0)
 		box.size = Vector3(14.0, 0.28, 16.0)
+		_deck_box(deck, false)
+		if span != null:
+			span.visible = true
 	elif north_up:
 		deck.position = Vector3(x, 0.15, -4.0)
 		box.size = Vector3(14.0, 0.28, 8.0)
+		_deck_box(deck, true)
+		if span != null:
+			span.visible = false
 	else:
 		deck.position = Vector3(x, 0.15, 4.0)
 		box.size = Vector3(14.0, 0.28, 8.0)
+		_deck_box(deck, true)
+		if span != null:
+			span.visible = false
+
+## Hide the authored slab while both spans stand so the concrete_bridge GLB reads as the deck.
+static func _deck_box(deck: MeshInstance3D, show_slab: bool) -> void:
+	var mat: StandardMaterial3D = deck.material_override as StandardMaterial3D
+	if mat == null:
+		return
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA if not show_slab else BaseMaterial3D.TRANSPARENCY_DISABLED
+	mat.albedo_color.a = 1.0 if show_slab else 0.0
+
+## Swap the Mekong box-slab for the concrete_bridge mesh. The BoxMesh stays so collapse can still crop a half-span.
+static func dress_bridge_deck(deck: MeshInstance3D) -> void:
+	if deck == null or deck.get_node_or_null("Concrete") != null:
+		return
+	var root: Node3D = Env._load("concrete_bridge")
+	if root == null:
+		return
+	root.name = "Concrete"
+	var authored: AABB = Models._merged_aabb(root)
+	root.scale = Vector3.ONE * Env.fit_of("concrete_bridge", authored)
+	deck.add_child(root)
+	_deck_box(deck, false)
 
 static func slab(host: Node3D, node_name: String, pos: Vector3, size: Vector3, color: Color) -> MeshInstance3D:
 	var mi: MeshInstance3D = MeshInstance3D.new()
