@@ -8535,11 +8535,35 @@ func test_unit_actions() -> void:
 	var name_ctrl: Control = name_label as Control
 	var idle_ctrl: Control = idle_cell as Control
 	var side_by_side: bool = name_ctrl != null and idle_ctrl != null and name_ctrl.global_position.x + name_ctrl.size.x <= idle_ctrl.global_position.x + 2.0
-	var tall_cell: bool = idle_ctrl != null and scroll != null and idle_ctrl.size.y >= scroll.size.y * 0.7
-	check(body != null and body.get_node_or_null("Model") != null and str(body.get_meta("model", "")) != "" and port != null and port.size.x >= 200 and port.size.y >= 160 and port.scaling_3d_scale >= 0.99 and idle_player != null and idle_player.is_playing() and idle_player.speed_scale < 0.8 and move_player != null and move_player.is_playing() and move_player.speed_scale > 0.5 and die_unit != null and str(die_unit.get_meta("preview_pose", "")) == "die" and die_player != null and die_player.is_playing() and scroll != null and list_scroll != null and side_by_side and tall_cell and cam != null and cam.position.z < 0.0 and absf(yaw_after - yaw_before) > 0.2, "the list sits beside large action cells that face the camera, orbit, and loop each clip")
+	var cell_band: bool = idle_ctrl != null and scroll != null and idle_ctrl.size.y >= scroll.size.y * 0.48 and idle_ctrl.size.y <= scroll.size.y * 0.82
+	var mesh_scaled: bool = pivot != null and absf(pivot.scale.y - 0.75) < 0.02
+	check(body != null and body.get_node_or_null("Model") != null and str(body.get_meta("model", "")) != "" and port != null and port.size.x >= 150 and port.size.y >= 110 and port.scaling_3d_scale >= 0.99 and idle_player != null and idle_player.is_playing() and idle_player.speed_scale < 0.8 and move_player != null and move_player.is_playing() and move_player.speed_scale > 0.5 and die_unit != null and str(die_unit.get_meta("preview_pose", "")) == "die" and die_player != null and die_player.is_playing() and scroll != null and list_scroll != null and side_by_side and cell_band and mesh_scaled and cam != null and cam.position.z < 0.0 and absf(yaw_after - yaw_before) > 0.2, "the list sits beside 25-percent-smaller action cells that face the camera, orbit, and loop each clip")
+	var dist_before: float = cam.global_position.distance_to(pivot.global_position) if cam != null and pivot != null else 0.0
+	if grid != null and idle_cell != null:
+		grid.call("_zoom", idle_cell, 1.2)
+	var dist_after: float = cam.global_position.distance_to(pivot.global_position) if cam != null and pivot != null else 0.0
+	var zoomed_out: bool = dist_after > dist_before * 1.08
+	if grid != null and idle_cell != null:
+		grid.call("_zoom", idle_cell, 0.9)
+	var dist_in: float = cam.global_position.distance_to(pivot.global_position) if cam != null and pivot != null else 0.0
+	var zoomed_in: bool = dist_in < dist_after * 0.97
+	check(zoomed_out and zoomed_in, "wheel zoom dollies the preview camera out and back in")
 	var panel: Control = boot.find_child("SettingsPanel", true, false) as Control
 	var blurb: Control = boot.find_child("SettingsBlurb", true, false) as Control
 	var grid_ctrl: Control = grid as Control
+	var faction_row: Control = boot.find_child("FactionRow", true, false) as Control
+	var restore_btn: Control = boot.find_child("SettingsRestore", true, false) as Control
+	var back_btn: Control = boot.find_child("SettingsClose", true, false) as Control
+	var caption: Control = idle_cell.find_child("ActionLabel", true, false) as Control if idle_cell != null else null
+	var view_box: Control = idle_cell.find_child("ActionView", true, false) as Control if idle_cell != null else null
+	var pose_note: Control = secondary_cell.find_child("PoseNote", true, false) as Control if secondary_cell != null else null
+	var secondary_caption: Control = secondary_cell.find_child("ActionLabel", true, false) as Control if secondary_cell != null else null
+	var faction_clear: bool = faction_row != null and scroll != null and faction_row.global_position.x + faction_row.size.x <= scroll.global_position.x + 2.0
+	var restore_clear: bool = restore_btn != null and grid_ctrl != null and restore_btn.global_position.x + restore_btn.size.x <= grid_ctrl.global_position.x + 2.0
+	var back_clear: bool = back_btn != null and grid_ctrl != null and back_btn.global_position.x + back_btn.size.x <= grid_ctrl.global_position.x + 2.0
+	var caption_clear: bool = caption != null and view_box != null and caption.position.y >= view_box.position.y + view_box.size.y - 2.0
+	var note_clear: bool = pose_note == null or not pose_note.visible or secondary_caption == null or pose_note.position.y + pose_note.size.y <= secondary_caption.position.y - 2.0
+	check(faction_clear and restore_clear and back_clear and caption_clear and note_clear and name_label.clip_text, "faction tabs, restore, back, and captions stay off the previews")
 	check(blurb != null and not blurb.visible and grid_ctrl != null and panel != null and grid_ctrl.size.y >= panel.size.y - grid_ctrl.position.y - 80.0, "the Units page drops the help footer so the grid can fill that height")
 	var sampan_body: MeshInstance3D = Forms.dress_unit("sampan", "boat", "naval", Color.GRAY)
 	var sampan_src: String = ModelBook.source_of("sampan")

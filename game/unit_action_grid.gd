@@ -12,6 +12,14 @@ const COLUMN_ORDER: PackedStringArray = ["idle", "move", "attack", "ability", "d
 const SKIP_CLIPS: PackedStringArray = ["crawl", "hide"]
 const LIST_MIN_W: float = 176.0
 const LIST_MAX_W: float = 248.0
+## 25% smaller cells, a camera pulled back 25%, and a 25% mesh so the preview is not a close-up.
+const CELL_SCALE: float = 0.75
+const MESH_SCALE: float = 0.75
+const FRAME_PULL: float = 1.25
+const ZOOM_MIN: float = 0.55
+const ZOOM_MAX: float = 2.4
+const FACTION_H: float = 68.0
+const SCROLL_BAR_H: float = 16.0
 
 var _faction: String = ""
 var _selected_id: String = ""
@@ -39,18 +47,20 @@ func _ensure() -> void:
 		_fill_visible()
 
 func _chrome() -> void:
-	var row := HBoxContainer.new()
+	var row := Control.new()
 	row.name = "FactionRow"
-	row.add_theme_constant_override("separation", 6)
 	row.position = Vector2(0, 0)
-	row.size = Vector2(640, 32)
+	row.size = Vector2(LIST_MIN_W, FACTION_H)
+	row.clip_contents = true
+	row.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(row)
 	for id: String in FACTIONS:
 		var button := Button.new()
 		button.name = "Faction_%s" % id
-		button.text = id.to_upper()
+		button.text = _faction_caption(id)
 		button.focus_mode = Control.FOCUS_NONE
-		button.custom_minimum_size = Vector2(72, 28)
+		button.clip_text = true
+		button.add_theme_font_size_override("font_size", 13)
 		button.pressed.connect(_show_faction.bind(id))
 		row.add_child(button)
 	var list_scroll := ScrollContainer.new()
@@ -170,14 +180,16 @@ func _row(faction: String, item: Dictionary) -> Button:
 	var name_label := Label.new()
 	name_label.name = "UnitName"
 	name_label.text = str(item.get("display_name", id))
-	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	name_label.autowrap_mode = TextServer.AUTOWRAP_OFF
+	name_label.clip_text = true
 	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	name_label.add_theme_font_size_override("font_size", 15)
+	name_label.add_theme_font_size_override("font_size", 14)
 	name_label.add_theme_color_override("font_color", Color(1, 1, 1))
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	name_label.set_anchors_preset(Control.PRESET_FULL_RECT)
 	name_label.offset_left = 8
-	name_label.offset_right = -6
+	name_label.offset_right = -8
+	line.clip_contents = true
 	line.add_child(name_label)
 	return line
 
@@ -235,8 +247,9 @@ func _rebuild_preview(item: Dictionary) -> void:
 		var caption := Label.new()
 		caption.name = "ActionLabel"
 		caption.text = action
+		caption.clip_text = true
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		caption.add_theme_font_size_override("font_size", 14)
+		caption.add_theme_font_size_override("font_size", 13)
 		caption.add_theme_color_override("font_color", Color(0.95, 0.92, 0.8))
 		caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cell.add_child(caption)
@@ -293,23 +306,44 @@ func _mine(item: Dictionary) -> PackedStringArray:
 			mine.append(clip)
 	return mine
 
+func _faction_caption(id: String) -> String:
+	if id == "black_market":
+		return "MARKET"
+	return id.to_upper()
+
 func _layout_chrome() -> void:
+	var list_w: float = clampf(size.x * 0.26, LIST_MIN_W, LIST_MAX_W)
+	var gap: float = 10.0
 	var row: Control = get_node_or_null("FactionRow") as Control
 	if row != null:
 		row.position = Vector2(0, 0)
-		row.size = Vector2(maxf(320.0, size.x), 32)
-	var list_w: float = clampf(size.x * 0.26, LIST_MIN_W, LIST_MAX_W)
-	var gap: float = 10.0
-	var top: float = 40.0
-	var body_h: float = maxf(120.0, size.y - top)
+		row.size = Vector2(list_w, FACTION_H)
+		row.custom_minimum_size = Vector2(list_w, FACTION_H)
+		var gap_x: float = 4.0
+		var gap_y: float = 4.0
+		var btn_w: float = maxf(48.0, (list_w - gap_x) * 0.5)
+		var btn_h: float = maxf(24.0, (FACTION_H - gap_y) * 0.5)
+		var placed: int = 0
+		for child: Node in row.get_children():
+			var button: Control = child as Control
+			if button == null:
+				continue
+			var col: int = placed % 2
+			var r: int = placed / 2
+			button.position = Vector2(float(col) * (btn_w + gap_x), float(r) * (btn_h + gap_y))
+			button.size = Vector2(btn_w, btn_h)
+			button.custom_minimum_size = Vector2(48.0, 24.0)
+			placed += 1
+	var top: float = FACTION_H + 8.0
+	var body_h: float = maxf(80.0, size.y - top)
 	var list_scroll: Control = get_node_or_null("UnitListScroll") as Control
 	if list_scroll != null:
 		list_scroll.position = Vector2(0, top)
 		list_scroll.size = Vector2(list_w, body_h)
 	var scroll: Control = get_node_or_null("UnitScroll") as Control
 	if scroll != null:
-		scroll.position = Vector2(list_w + gap, top)
-		scroll.size = Vector2(maxf(80.0, size.x - list_w - gap), body_h)
+		scroll.position = Vector2(list_w + gap, 0.0)
+		scroll.size = Vector2(maxf(80.0, size.x - list_w - gap), size.y)
 
 func _layout_rows() -> void:
 	_layout_chrome()
@@ -339,30 +373,32 @@ func _place_cells() -> void:
 		board.size = Vector2(pane_w, pane_h)
 		return
 	var gap: float = 8.0
-	var cell_h: float = maxf(160.0, pane_h - 8.0)
-	var cell_w: float = maxf(280.0, minf(cell_h * 0.92, pane_w * 0.52))
+	var cap_h: float = 20.0
+	var cell_h: float = maxf(120.0, (pane_h - 8.0 - SCROLL_BAR_H) * CELL_SCALE)
+	var cell_w: float = maxf(160.0, minf(cell_h * 0.92, pane_w * 0.39))
 	if cell_w > pane_w - 8.0:
-		cell_w = maxf(160.0, pane_w - 8.0)
+		cell_w = maxf(120.0, pane_w - 8.0)
+	var y_off: float = maxf(4.0, (pane_h - SCROLL_BAR_H - cell_h) * 0.5)
 	var board_w: float = cell_w * float(cells.size()) + gap * float(cells.size() - 1) + 8.0
 	board.custom_minimum_size = Vector2(maxf(board_w, pane_w), pane_h)
 	board.size = Vector2(maxf(board_w, pane_w), pane_h)
 	for i: int in cells.size():
 		var cell: Control = cells[i]
-		cell.position = Vector2(4.0 + float(i) * (cell_w + gap), 4.0)
+		cell.position = Vector2(4.0 + float(i) * (cell_w + gap), y_off)
 		cell.size = Vector2(cell_w, cell_h)
 		cell.custom_minimum_size = Vector2(cell_w, cell_h)
 		var caption: Label = cell.get_node_or_null("ActionLabel") as Label
 		if caption != null:
-			caption.position = Vector2(4, cell_h - 22.0)
-			caption.size = Vector2(maxf(8.0, cell_w - 8.0), 18)
+			caption.position = Vector2(4, cell_h - cap_h - 2.0)
+			caption.size = Vector2(maxf(8.0, cell_w - 8.0), cap_h)
 		var box: Control = cell.get_node_or_null("ActionView") as Control
 		if box != null:
 			box.position = Vector2(2, 2)
-			box.size = Vector2(maxf(8.0, cell_w - 4.0), maxf(8.0, cell_h - 26.0))
+			box.size = Vector2(maxf(8.0, cell_w - 4.0), maxf(8.0, cell_h - cap_h - 8.0))
 		var note: Label = cell.get_node_or_null("PoseNote") as Label
 		if note != null:
-			note.position = Vector2(8, maxf(8.0, cell_h * 0.5 - 24.0))
-			note.size = Vector2(maxf(8.0, cell_w - 16.0), 48)
+			note.position = Vector2(8, maxf(8.0, cell_h - cap_h - 52.0))
+			note.size = Vector2(maxf(8.0, cell_w - 16.0), 40)
 
 func _fill_visible() -> void:
 	_layout_rows()
@@ -387,7 +423,7 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	var box := SubViewportContainer.new()
 	box.name = "ActionView"
 	box.position = Vector2(2, 2)
-	box.size = Vector2(maxf(8.0, cell.size.x - 4.0), maxf(8.0, cell.size.y - 26.0))
+	box.size = Vector2(maxf(8.0, cell.size.x - 4.0), maxf(8.0, cell.size.y - 28.0))
 	box.stretch = true
 	box.stretch_shrink = 1
 	box.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -448,6 +484,7 @@ func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String)
 	Motion.attach(unit, body)
 	SMArms.arm(unit, item)
 	_frame(cam, body)
+	pivot.scale = Vector3.ONE * MESH_SCALE
 	if str(body.get_meta("model", "")) != "":
 		_pose(unit)
 
@@ -463,18 +500,38 @@ func _refresh_preview(body: MeshInstance3D) -> void:
 	unit.set_meta("preview_set", false)
 	if cam != null and is_instance_valid(cam):
 		_frame(cam, body)
+	var pivot: Node3D = unit.get_parent() as Node3D
+	if pivot != null and str(pivot.name) == "OrbitPivot":
+		pivot.scale = Vector3.ONE * MESH_SCALE
 	_pose(unit)
 
 func _on_cell_input(event: InputEvent, cell: Panel) -> void:
 	var button: InputEventMouseButton = event as InputEventMouseButton
-	if button != null and button.button_index == MOUSE_BUTTON_LEFT:
-		cell.set_meta("orbit_drag", button.pressed)
-		cell.get_viewport().set_input_as_handled()
-		return
+	if button != null:
+		if button.button_index == MOUSE_BUTTON_WHEEL_UP or button.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			if button.pressed:
+				_zoom(cell, 0.9 if button.button_index == MOUSE_BUTTON_WHEEL_UP else 1.1)
+			cell.get_viewport().set_input_as_handled()
+			return
+		if button.button_index == MOUSE_BUTTON_LEFT:
+			cell.set_meta("orbit_drag", button.pressed)
+			cell.get_viewport().set_input_as_handled()
+			return
 	var motion: InputEventMouseMotion = event as InputEventMouseMotion
 	if motion != null and bool(cell.get_meta("orbit_drag", false)):
 		_orbit(cell, motion.relative)
 		cell.get_viewport().set_input_as_handled()
+
+## Wheel up dollies in. Wheel down dollies out. The mesh scale stays put so zoom is not a fake crop.
+func _zoom(cell: Control, factor: float) -> void:
+	var cam: Camera3D = cell.find_child("PreviewCamera", true, false) as Camera3D
+	var body: MeshInstance3D = cell.find_child("Body", true, false) as MeshInstance3D
+	if cam == null:
+		return
+	var k: float = clampf(float(cam.get_meta("preview_zoom", 1.0)) * factor, ZOOM_MIN, ZOOM_MAX)
+	cam.set_meta("preview_zoom", k)
+	if body != null:
+		_frame(cam, body)
 
 ## Drag delta in pixels. Yaw and pitch stay on this cell's pivot, and the clip keeps looping.
 func _orbit(cell: Control, delta: Vector2) -> void:
@@ -589,10 +646,14 @@ func _note(unit: RTSUnit, missing: String) -> void:
 		note.add_theme_color_override("font_color", Color(1.0, 0.82, 0.35))
 		note.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cell.add_child(note)
-	note.position = Vector2(6, maxf(4.0, cell.size.y - 64.0))
-	note.size = Vector2(maxf(8.0, cell.size.x - 12.0), 36)
+	note.position = Vector2(8, maxf(8.0, cell.size.y - 72.0))
+	note.size = Vector2(maxf(8.0, cell.size.x - 16.0), 40)
 	note.text = missing
 	note.visible = true
+	var caption: Label = cell.get_node_or_null("ActionLabel") as Label
+	if caption != null:
+		note.position.y = minf(note.position.y, caption.position.y - note.size.y - 4.0)
+		note.position.y = maxf(8.0, note.position.y)
 
 func _cell_of(unit: RTSUnit) -> Control:
 	var kept: Variant = unit.get_meta("preview_cell") if unit.has_meta("preview_cell") else null
@@ -610,7 +671,8 @@ func _frame(cam: Camera3D, body: MeshInstance3D) -> void:
 		unit.position = -center
 		center = pivot.position
 	var span: float = maxf(box.size.length(), 1.2)
-	var eye: Vector3 = center + Vector3(span * 0.14, span * 0.22, -span * 1.05)
+	var zoom_k: float = clampf(float(cam.get_meta("preview_zoom", 1.0)), ZOOM_MIN, ZOOM_MAX)
+	var eye: Vector3 = center + Vector3(span * 0.14, span * 0.22, -span * 1.05) * FRAME_PULL * zoom_k
 	cam.name = "PreviewCamera"
 	cam.fov = 48.0
 	cam.look_at_from_position(eye, center)

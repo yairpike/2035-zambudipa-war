@@ -290,7 +290,7 @@ func _layout(view: Vector2) -> void:
 	var rail_w: float = view.x if narrow or embedded else view.x * 0.4
 	if _page == "units":
 		rail_w = view.x
-		narrow = view.x < 720.0
+		narrow = false
 	var rail: Control = get_node_or_null("SettingsRail") as Control
 	if rail != null:
 		rail.position = Vector2.ZERO
@@ -373,14 +373,35 @@ func _layout(view: Vector2) -> void:
 	var back: Control = get_node_or_null("SettingsClose")
 	var restore: Control = get_node_or_null("SettingsRestore")
 	var foot: float = view.y - 52.0
-	if back != null:
-		back.position = Vector2(left, foot)
-		back.size = Vector2(88, 40)
-		back.custom_minimum_size = Vector2(88, 40)
-	if restore != null:
-		restore.position = Vector2(left if embedded else left + 100.0, foot)
-		restore.size = Vector2(minf(200.0, rail_w - 140.0), 40)
-		restore.custom_minimum_size = Vector2(restore.size.x, 40)
+	if _page == "units":
+		var nav_bottom: float = tab_y + float(tabs.size()) * 44.0 + 12.0
+		if title != null:
+			title.size = Vector2(nav_w, 42.0)
+		if back != null:
+			back.custom_minimum_size = Vector2(0, 0)
+			back.position = Vector2(left, nav_bottom)
+			back.size = Vector2(nav_w, 36)
+			back.custom_minimum_size = Vector2(nav_w, 36)
+		if restore != null:
+			var restore_btn: Button = restore as Button
+			if restore_btn != null:
+				restore_btn.clip_text = true
+				restore_btn.clip_contents = true
+				restore_btn.add_theme_font_size_override("font_size", 13)
+				restore_btn.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+			restore.custom_minimum_size = Vector2(0, 0)
+			restore.position = Vector2(left, nav_bottom + 40.0)
+			restore.size = Vector2(nav_w, 36)
+			restore.custom_minimum_size = Vector2(nav_w, 36)
+	else:
+		if back != null:
+			back.position = Vector2(left, foot)
+			back.size = Vector2(88, 40)
+			back.custom_minimum_size = Vector2(88, 40)
+		if restore != null:
+			restore.position = Vector2(left if embedded else left + 100.0, foot)
+			restore.size = Vector2(minf(200.0, rail_w - 140.0), 40)
+			restore.custom_minimum_size = Vector2(restore.size.x, 40)
 	if blurb != null:
 		blurb.visible = _page != "units"
 		if blurb.visible:
@@ -392,9 +413,8 @@ func _layout(view: Vector2) -> void:
 		card.visible = false
 	var grid: Control = get_node_or_null("UnitActionGrid") as Control
 	if grid != null and grid.visible:
-		var foot_room: float = 56.0 if _page == "units" else 12.0
 		grid.position = Vector2(content_x, content_top)
-		grid.size = Vector2(content_w, maxf(160.0, view.y - content_top - foot_room))
+		grid.size = Vector2(content_w, maxf(160.0, view.y - content_top - 8.0))
 
 func _place_slider(label: Control, slider: Control, value: Control, x: float, y: float, label_w: float, slider_x: float, slider_w: float, value_x: float) -> float:
 	if label != null and not label.visible:
