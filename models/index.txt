@@ -77,6 +77,7 @@ rigged/olive_ranger.glb
 rigged/olive_sapper.glb
 rigged/packer_escort.glb
 rigged/packer.glb
+rigged/printsmith.glb
 rigged/relay_van.glb
 rigged/river_rifle.glb
 rigged/ruby_lancer.glb

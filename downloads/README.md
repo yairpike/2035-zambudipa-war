@@ -1,5 +1,7 @@
 # 2035 - Zambudipa War downloads
 
+HTML listing (GitHub Pages): [https://yairpike.github.io/2035-zambudipa-war/downloads/](https://yairpike.github.io/2035-zambudipa-war/downloads/)
+
 ## Direct Download Links
 
 - **macOS (Apple Silicon and Intel):** [ASEAN-2031-macOS.dmg (84.7 MiB)](https://yairpike.github.io/2035-zambudipa-war/downloads/ASEAN-2031-macOS.dmg)
