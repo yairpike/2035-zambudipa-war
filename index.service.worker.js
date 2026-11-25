@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1795565009|5225547';
+const CACHE_VERSION = '1795568503|4843463';
 /** @type {string} */
 const CACHE_PREFIX = '2035 - Zambudipa-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
