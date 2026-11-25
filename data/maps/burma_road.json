@@ -260,6 +260,14 @@
     4
    ],
    "yaw": 0
+  },
+  {
+   "id": "lm_u_bein",
+   "cell": [
+    2,
+    20
+   ],
+   "yaw": 90
   }
  ],
  "towns": [
@@ -304,6 +312,15 @@
     "shan_stilt_house",
     "shan_stilt_house",
     "khmer_stilt_house"
+   ],
+   "civic": [
+    {
+     "block": [
+      2,
+      0
+     ],
+     "id": "lm_shwedagon"
+    }
    ]
   }
  ],

@@ -1,6 +1,6 @@
 {
 	"place": "laukkai",
-	"note": "Laukkai: casino blocks and shophouse streets east of the yard. Mogok ruby pits sit by the yard.",
+	"note": "Laukkai: casino blocks and shophouse streets east of the yard, a server compound and checkpoint on the SEZ strip.",
 	"cols": 28,
 	"rows": 18,
 	"open": [
@@ -28,7 +28,8 @@
 			],
 			"homes": [
 				"neon_shophouse",
-				"border_guesthouse"
+				"border_guesthouse",
+				"shan_stilt_house"
 			],
 			"shops": "neon_shophouse",
 			"high": [],
@@ -39,6 +40,20 @@
 						1
 					],
 					"id": "border_casino"
+				},
+				{
+					"block": [
+						4,
+						0
+					],
+					"id": "server_compound"
+				},
+				{
+					"block": [
+						4,
+						2
+					],
+					"id": "checkpoint"
 				}
 			]
 		}
@@ -57,5 +72,31 @@
 		"wave_every": 70,
 		"wave_size": 2,
 		"wave_cap": 6
-	}
+	},
+	"props": [
+		{
+			"id": "cell_tower",
+			"cell": [
+				26,
+				16
+			],
+			"yaw": 0
+		},
+		{
+			"id": "battery_swap",
+			"cell": [
+				25,
+				0
+			],
+			"yaw": 0
+		},
+		{
+			"id": "cctv_pole",
+			"cell": [
+				27,
+				17
+			],
+			"yaw": 0
+		}
+	]
 }

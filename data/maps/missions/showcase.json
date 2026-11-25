@@ -69,6 +69,20 @@
       0
      ],
      "id": "city_highrise"
+    },
+    {
+     "block": [
+      7,
+      3
+     ],
+     "id": "city_colonial"
+    },
+    {
+     "block": [
+      4,
+      3
+     ],
+     "id": "city_food_stalls"
     }
    ]
   },
@@ -269,6 +283,46 @@
    "cell": [
     30,
     40
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "dipterocarp",
+   "cell": [
+    28,
+    46
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "city_trishaw",
+   "cell": [
+    2,
+    20
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "city_tuktuk",
+   "cell": [
+    40,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "e_scooter",
+   "cell": [
+    30,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "charging_kiosk",
+   "cell": [
+    44,
+    18
    ],
    "yaw": 0
   }

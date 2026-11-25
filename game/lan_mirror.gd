@@ -177,6 +177,7 @@ func _deck(node_name: String, span: Rect2i) -> void:
 	mat.albedo_color = Color(0.45, 0.4, 0.3)
 	mi.material_override = mat
 	add_child(mi)
+	World.dress_bridge_deck(mi)
 
 func _ui() -> void:
 	ui_layer = CanvasLayer.new()

@@ -52,6 +52,27 @@
       2
      ],
      "id": "city_hdb"
+    },
+    {
+     "block": [
+      5,
+      0
+     ],
+     "id": "casino_tower"
+    },
+    {
+     "block": [
+      6,
+      2
+     ],
+     "id": "server_compound"
+    },
+    {
+     "block": [
+      7,
+      4
+     ],
+     "id": "city_colonial"
     }
    ]
   }
@@ -62,5 +83,31 @@
   "wave_every": 50,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "props": [
+  {
+   "id": "cell_tower",
+   "cell": [
+    62,
+    42
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pylon",
+   "cell": [
+    62,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "holo_screen",
+   "cell": [
+    60,
+    2
+   ],
+   "yaw": 0
+  }
+ ]
 }

@@ -32,7 +32,8 @@
    ],
    "homes": [
     "neon_shophouse",
-    "border_guesthouse"
+    "border_guesthouse",
+    "city_food_stalls"
    ],
    "shops": "peranakan_shophouse",
    "high": [
@@ -46,6 +47,20 @@
       1
      ],
      "id": "wet_market"
+    },
+    {
+     "block": [
+      8,
+      5
+     ],
+     "id": "lm_grand_palace"
+    },
+    {
+     "block": [
+      9,
+      2
+     ],
+     "id": "city_food_stalls"
     }
    ]
   }
@@ -56,5 +71,73 @@
   "wave_every": 60,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "landmark": {
+  "id": "lm_wat_arun",
+  "rect": [
+   47,
+   32,
+   4,
+   4
+  ],
+  "face": "n"
+ },
+ "props": [
+  {
+   "id": "city_tuktuk",
+   "cell": [
+    52,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "city_skytrain",
+   "cell": [
+    50,
+    8
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "city_flyover",
+   "cell": [
+    48,
+    2
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "holo_screen",
+   "cell": [
+    54,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "charging_kiosk",
+   "cell": [
+    53,
+    38
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "e_scooter",
+   "cell": [
+    52,
+    38
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "jetty",
+   "cell": [
+    2,
+    38
+   ],
+   "yaw": 90
+  }
+ ]
 }

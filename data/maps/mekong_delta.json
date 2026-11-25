@@ -225,6 +225,30 @@
     10
    ],
    "yaw": 0
+  },
+  {
+   "id": "concrete_bridge",
+   "cell": [
+    16,
+    23
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "lm_long_bien",
+   "cell": [
+    20,
+    6
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "city_skytrain",
+   "cell": [
+    24,
+    4
+   ],
+   "yaw": 90
   }
  ],
  "towns": [
@@ -249,6 +273,15 @@
    "homes": [
     "vn_tube_house",
     "mekong_stilt_house"
+   ],
+   "civic": [
+    {
+     "block": [
+      0,
+      0
+     ],
+     "id": "drone_hub"
+    }
    ]
   },
   {
@@ -276,6 +309,13 @@
       1
      ],
      "id": "floating_market"
+    },
+    {
+     "block": [
+      0,
+      0
+     ],
+     "id": "lm_ben_thanh"
     }
    ]
   },
@@ -341,6 +381,28 @@
     1,
     2
    ]
+  }
+ ],
+ "buildings": [
+  {
+   "id": "lm_hanoi_opera",
+   "rect": [
+    13,
+    8,
+    2,
+    2
+   ],
+   "face": "e"
+  },
+  {
+   "id": "lm_lotus_tower",
+   "rect": [
+    13,
+    44,
+    2,
+    2
+   ],
+   "face": "e"
   }
  ],
  "bot": {

@@ -32,7 +32,8 @@
    ],
    "homes": [
     "border_guesthouse",
-    "neon_shophouse"
+    "neon_shophouse",
+    "shan_stilt_house"
    ],
    "shops": "neon_shophouse",
    "high": [
@@ -46,6 +47,13 @@
       1
      ],
      "id": "teak_kyaung"
+    },
+    {
+     "block": [
+      7,
+      4
+     ],
+     "id": "burmese_pagoda"
     }
    ]
   }
@@ -56,5 +64,57 @@
   "wave_every": 60,
   "wave_size": 3,
   "wave_cap": 6
- }
+ },
+ "landmark": {
+  "id": "lm_mandalay_moat",
+  "rect": [
+   42,
+   27,
+   4,
+   4
+  ],
+  "face": "n"
+ },
+ "props": [
+  {
+   "id": "lm_u_bein",
+   "cell": [
+    50,
+    20
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "city_trishaw",
+   "cell": [
+    48,
+    2
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "cell_tower",
+   "cell": [
+    50,
+    34
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pylon",
+   "cell": [
+    2,
+    34
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "watchtower",
+   "cell": [
+    2,
+    2
+   ],
+   "yaw": 0
+  }
+ ]
 }
