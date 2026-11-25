@@ -8492,19 +8492,23 @@ func test_unit_actions() -> void:
 	tab.pressed.emit()
 	await process_frame
 	await process_frame
+	var grid: Node = boot.find_child("UnitActionGrid", true, false)
 	var rows: Array[Node] = boot.find_children("UnitRow_*", "Control", true, false)
 	var militia_row: Node = boot.find_child("UnitRow_militia", true, false)
+	if militia_row != null and grid != null:
+		grid.call("_fill_row", militia_row)
+	await process_frame
 	var name_label: Label = militia_row.find_child("UnitName", true, false) as Label if militia_row != null else null
-	var idle_cell: Node = militia_row.find_child("Cell_idle", true, false) if militia_row != null else null
+	var idle_cell: Node = boot.find_child("Cell_idle", true, false)
 	var preview: Node = idle_cell.find_child("PreviewUnit", true, false) if idle_cell != null else null
 	check(tab != null and rows.size() == 20 and militia_row != null and name_label != null and name_label.text != "" and idle_cell != null and idle_cell.find_child("ActionLabel", true, false) != null and preview != null, "settings shows one labeled row per unit and plays that unit's idle")
-	var attack_cell: Node = militia_row.find_child("Cell_attack", true, false) if militia_row != null else null
+	var attack_cell: Node = boot.find_child("Cell_attack", true, false)
 	var attack_label: Label = attack_cell.find_child("ActionLabel", true, false) as Label if attack_cell != null else null
-	var secondary_cell: Node = militia_row.find_child("Cell_secondary", true, false) if militia_row != null else null
-	check(attack_label != null and attack_label.text == "attack" and secondary_cell != null and militia_row.find_child("Cell_crawl", true, false) == null and militia_row.find_child("Cell_hide", true, false) == null, "each column is a real action, labeled on the cell")
-	var move_unit: RTSUnit = militia_row.find_child("Cell_move", true, false).find_child("PreviewUnit", true, false) as RTSUnit if militia_row.find_child("Cell_move", true, false) != null else null
+	var secondary_cell: Node = boot.find_child("Cell_secondary", true, false)
+	check(attack_label != null and attack_label.text == "attack" and secondary_cell != null and boot.find_child("Cell_crawl", true, false) == null and boot.find_child("Cell_hide", true, false) == null, "each column is a real action, labeled on the cell")
+	var move_unit: RTSUnit = boot.find_child("Cell_move", true, false).find_child("PreviewUnit", true, false) as RTSUnit if boot.find_child("Cell_move", true, false) != null else null
 	var attack_unit: RTSUnit = attack_cell.find_child("PreviewUnit", true, false) as RTSUnit if attack_cell != null else null
-	var ability_unit: RTSUnit = militia_row.find_child("Cell_ability", true, false).find_child("PreviewUnit", true, false) as RTSUnit if militia_row.find_child("Cell_ability", true, false) != null else null
+	var ability_unit: RTSUnit = boot.find_child("Cell_ability", true, false).find_child("PreviewUnit", true, false) as RTSUnit if boot.find_child("Cell_ability", true, false) != null else null
 	var secondary_note: Label = secondary_cell.find_child("PoseNote", true, false) as Label if secondary_cell != null else null
 	var secondary_unit: RTSUnit = secondary_cell.find_child("PreviewUnit", true, false) as RTSUnit if secondary_cell != null else null
 	var move_pose: String = str(move_unit.get_meta("preview_pose", "")) if move_unit != null else ""
@@ -8517,25 +8521,22 @@ func test_unit_actions() -> void:
 	var port: SubViewport = idle_cell.find_child("ActionViewport", true, false) as SubViewport if idle_cell != null else null
 	var idle_player: AnimationPlayer = body.find_child("AnimationPlayer", true, false) as AnimationPlayer if body != null else null
 	var move_player: AnimationPlayer = move_unit.find_child("Body", true, false).find_child("AnimationPlayer", true, false) as AnimationPlayer if move_unit != null and move_unit.find_child("Body", true, false) != null else null
-	var die_cell: Node = militia_row.find_child("Cell_die", true, false) if militia_row != null else null
+	var die_cell: Node = boot.find_child("Cell_die", true, false)
 	var die_unit: RTSUnit = die_cell.find_child("PreviewUnit", true, false) as RTSUnit if die_cell != null else null
 	var die_player: AnimationPlayer = die_unit.find_child("AnimationPlayer", true, false) as AnimationPlayer if die_unit != null else null
+	var list_scroll: ScrollContainer = boot.find_child("UnitListScroll", true, false) as ScrollContainer
 	var scroll: ScrollContainer = boot.find_child("UnitScroll", true, false) as ScrollContainer
 	var cam: Camera3D = idle_cell.find_child("PreviewCamera", true, false) as Camera3D if idle_cell != null else null
 	var pivot: Node3D = idle_cell.find_child("OrbitPivot", true, false) as Node3D if idle_cell != null else null
-	var grid: Node = boot.find_child("UnitActionGrid", true, false)
 	var yaw_before: float = pivot.rotation.y if pivot != null else 0.0
 	if grid != null and idle_cell != null:
 		grid.call("_orbit", idle_cell, Vector2(80, 0))
 	var yaw_after: float = pivot.rotation.y if pivot != null else 0.0
-	var row_w: float = (militia_row as Control).size.x if militia_row is Control else 0.0
-	var right: float = 0.0
-	if militia_row != null:
-		for cell_node: Node in militia_row.get_children():
-			var placed: Control = cell_node as Control
-			if placed != null and str(placed.name).begins_with("Cell_"):
-				right = maxf(right, placed.position.x + placed.size.x)
-	check(body != null and body.get_node_or_null("Model") != null and str(body.get_meta("model", "")) != "" and port != null and port.size.x >= 120 and port.size.y >= 80 and port.scaling_3d_scale >= 0.99 and idle_player != null and idle_player.is_playing() and idle_player.speed_scale < 0.8 and move_player != null and move_player.is_playing() and move_player.speed_scale > 0.5 and die_unit != null and str(die_unit.get_meta("preview_pose", "")) == "die" and die_player != null and die_player.is_playing() and scroll != null and scroll.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED and scroll.size.x > 0.0 and row_w <= scroll.size.x + 1.0 and right > row_w * 0.75 and cam != null and cam.position.z < 0.0 and absf(yaw_after - yaw_before) > 0.2, "the cell fills the page, faces the camera, orbits, and loops each clip")
+	var name_ctrl: Control = name_label as Control
+	var idle_ctrl: Control = idle_cell as Control
+	var side_by_side: bool = name_ctrl != null and idle_ctrl != null and name_ctrl.global_position.x + name_ctrl.size.x <= idle_ctrl.global_position.x + 2.0
+	var tall_cell: bool = idle_ctrl != null and scroll != null and idle_ctrl.size.y >= scroll.size.y * 0.7
+	check(body != null and body.get_node_or_null("Model") != null and str(body.get_meta("model", "")) != "" and port != null and port.size.x >= 200 and port.size.y >= 160 and port.scaling_3d_scale >= 0.99 and idle_player != null and idle_player.is_playing() and idle_player.speed_scale < 0.8 and move_player != null and move_player.is_playing() and move_player.speed_scale > 0.5 and die_unit != null and str(die_unit.get_meta("preview_pose", "")) == "die" and die_player != null and die_player.is_playing() and scroll != null and list_scroll != null and side_by_side and tall_cell and cam != null and cam.position.z < 0.0 and absf(yaw_after - yaw_before) > 0.2, "the list sits beside large action cells that face the camera, orbit, and loop each clip")
 	var panel: Control = boot.find_child("SettingsPanel", true, false) as Control
 	var blurb: Control = boot.find_child("SettingsBlurb", true, false) as Control
 	var grid_ctrl: Control = grid as Control
@@ -8555,7 +8556,7 @@ func test_unit_actions() -> void:
 	if packer_row != null and grid != null:
 		grid.call("_fill_row", packer_row)
 	await process_frame
-	var packer_idle: Node = packer_row.find_child("Cell_idle", true, false) if packer_row != null else null
+	var packer_idle: Node = boot.find_child("Cell_idle", true, false)
 	var packer_unit: RTSUnit = packer_idle.find_child("PreviewUnit", true, false) as RTSUnit if packer_idle != null else null
 	var packer_mesh: MeshInstance3D = packer_unit.get_node_or_null("Body") as MeshInstance3D if packer_unit != null else null
 	check(packer_mesh != null and bool(packer_mesh.get_meta("model_rigged", false)) and str(packer_unit.get_meta("preview_pose", "")) == "idle", "the Units sheet poses Garuda's idle clip on the rigged mecha")

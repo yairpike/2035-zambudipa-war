@@ -1,6 +1,6 @@
 extends Control
-## Settings page: one unit fills the scroll view. Its actions wrap across that width.
-## Each filled cell loops the real clip. Drag a cell to orbit the model.
+## Settings page: faction tabs and a unit list on the left, action previews on the right.
+## The selected unit's cells fill that remaining pane. Each cell loops the real clip. Drag to orbit.
 
 const Actions = preload("res://game/unit_actions.gd")
 const Forms = preload("res://game/unit_meshes.gd")
@@ -10,8 +10,11 @@ const Motion = preload("res://game/unit_motion.gd")
 const FACTIONS: PackedStringArray = ["gtfc", "nmrf", "mvd", "black_market"]
 const COLUMN_ORDER: PackedStringArray = ["idle", "move", "attack", "ability", "deploy", "die", "flinch", "secondary"]
 const SKIP_CLIPS: PackedStringArray = ["crawl", "hide"]
+const LIST_MIN_W: float = 176.0
+const LIST_MAX_W: float = 248.0
 
 var _faction: String = ""
+var _selected_id: String = ""
 var _rows_built: bool = false
 var _clip_cache: Dictionary = {}
 
@@ -50,28 +53,34 @@ func _chrome() -> void:
 		button.custom_minimum_size = Vector2(72, 28)
 		button.pressed.connect(_show_faction.bind(id))
 		row.add_child(button)
+	var list_scroll := ScrollContainer.new()
+	list_scroll.name = "UnitListScroll"
+	list_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	list_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	list_scroll.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(list_scroll)
+	var list := VBoxContainer.new()
+	list.name = "UnitRows"
+	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	list.add_theme_constant_override("separation", 2)
+	list_scroll.add_child(list)
 	var scroll := ScrollContainer.new()
 	scroll.name = "UnitScroll"
-	scroll.position = Vector2(0, 40)
-	scroll.size = Vector2(size.x, maxf(120.0, size.y - 40.0))
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(scroll)
 	scroll.gui_input.connect(_on_scroll_input)
 	var board := Control.new()
-	board.name = "UnitBoard"
+	board.name = "PreviewBoard"
+	board.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	scroll.add_child(board)
-	var list := Control.new()
-	list.name = "UnitRows"
-	board.add_child(list)
+	_layout_chrome()
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_RESIZED:
-		var scroll: Control = get_node_or_null("UnitScroll") as Control
-		if scroll != null:
-			scroll.size = Vector2(size.x, maxf(120.0, size.y - 40.0))
-			_layout_rows()
+		_layout_chrome()
+		_layout_rows()
 
 func _on_scroll_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -85,7 +94,8 @@ func _show_faction(id: String) -> void:
 		return
 	_faction = id
 	_rows_built = true
-	var list: Node = get_node("UnitScroll/UnitBoard/UnitRows")
+	_selected_id = ""
+	var list: Node = get_node("UnitListScroll/UnitRows")
 	var stale: Array[Node] = []
 	for child: Node in list.get_children():
 		stale.append(child)
@@ -93,10 +103,17 @@ func _show_faction(id: String) -> void:
 		list.remove_child(child)
 		child.free()
 	var data: Dictionary = SMCatalog.faction(id)
+	var first: String = ""
 	for item: Dictionary in SMCatalog.units_of(data):
 		list.add_child(_row(id, item))
-	_layout_rows()
-	call_deferred("_fill_visible")
+		if first == "":
+			first = str(item.get("id", ""))
+	_paint_factions()
+	if first != "":
+		_show_unit(first)
+	else:
+		_clear_preview()
+		_layout_rows()
 
 func _ensure_chrome() -> void:
 	if get_node_or_null("FactionRow") == null:
@@ -135,28 +152,80 @@ func _column_for(clip: String) -> String:
 		return clip
 	return ""
 
-func _row(faction: String, item: Dictionary) -> Panel:
+func _row(faction: String, item: Dictionary) -> Button:
 	var id: String = str(item.get("id", ""))
-	var line := Panel.new()
+	var line := Button.new()
 	line.name = "UnitRow_%s" % id
 	line.set_meta("unit_id", id)
 	line.set_meta("faction", faction)
 	line.set_meta("unit_row", item)
-	line.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
-	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	line.focus_mode = Control.FOCUS_NONE
+	line.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	line.custom_minimum_size = Vector2(LIST_MIN_W, 36)
+	line.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	line.pressed.connect(_show_unit.bind(id))
+	var empty := StyleBoxEmpty.new()
+	for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
+		line.add_theme_stylebox_override(state, empty)
 	var name_label := Label.new()
 	name_label.name = "UnitName"
 	name_label.text = str(item.get("display_name", id))
 	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	name_label.add_theme_font_size_override("font_size", 16)
+	name_label.add_theme_font_size_override("font_size", 15)
 	name_label.add_theme_color_override("font_color", Color(1, 1, 1))
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	name_label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	name_label.offset_left = 8
+	name_label.offset_right = -6
 	line.add_child(name_label)
+	return line
+
+func _show_unit(id: String) -> void:
+	_ensure_chrome()
+	if id == "":
+		return
+	if id == _selected_id and get_node_or_null("UnitScroll/PreviewBoard/Cell_idle") != null:
+		_paint_list()
+		_layout_rows()
+		_fill_visible()
+		return
+	_selected_id = id
+	var row: Control = get_node_or_null("UnitListScroll/UnitRows/UnitRow_%s" % id) as Control
+	var item: Dictionary = {}
+	if row != null:
+		item = row.get_meta("unit_row", {}) as Dictionary
+	if item.is_empty():
+		return
+	_rebuild_preview(item)
+	_paint_list()
+	_layout_rows()
+	_fill_visible()
+
+func _clear_preview() -> void:
+	var board: Node = get_node_or_null("UnitScroll/PreviewBoard")
+	if board == null:
+		return
+	board.set_meta("filled", false)
+	var stale: Array[Node] = []
+	for child: Node in board.get_children():
+		stale.append(child)
+	for child: Node in stale:
+		board.remove_child(child)
+		child.free()
+
+func _rebuild_preview(item: Dictionary) -> void:
+	_clear_preview()
+	var board: Node = get_node_or_null("UnitScroll/PreviewBoard")
+	if board == null:
+		return
 	for action: String in _ordered(item):
 		var cell := Panel.new()
 		cell.name = "Cell_%s" % action
 		cell.set_meta("action", action)
+		cell.set_meta("unit_id", str(item.get("id", "")))
+		cell.set_meta("faction", _faction)
+		cell.set_meta("unit_row", item)
 		cell.mouse_filter = Control.MOUSE_FILTER_STOP
 		var plate := StyleBoxFlat.new()
 		plate.bg_color = Color(0.08, 0.09, 0.11, 1)
@@ -167,13 +236,37 @@ func _row(faction: String, item: Dictionary) -> Panel:
 		caption.name = "ActionLabel"
 		caption.text = action
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		caption.add_theme_font_size_override("font_size", 12)
+		caption.add_theme_font_size_override("font_size", 14)
 		caption.add_theme_color_override("font_color", Color(0.95, 0.92, 0.8))
 		caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cell.add_child(caption)
 		cell.gui_input.connect(_on_cell_input.bind(cell))
-		line.add_child(cell)
-	return line
+		board.add_child(cell)
+
+func _paint_factions() -> void:
+	var row: Node = get_node_or_null("FactionRow")
+	if row == null:
+		return
+	for child: Node in row.get_children():
+		var button: CanvasItem = child as CanvasItem
+		if button == null:
+			continue
+		button.modulate = Color(1, 1, 1, 1.0 if str(child.name) == "Faction_%s" % _faction else 0.55)
+
+func _paint_list() -> void:
+	var list: Node = get_node_or_null("UnitListScroll/UnitRows")
+	if list == null:
+		return
+	for child: Node in list.get_children():
+		var row: Control = child as Control
+		if row == null:
+			continue
+		var on: bool = str(row.get_meta("unit_id", "")) == _selected_id
+		row.modulate = Color(1, 1, 1, 1.0 if on else 0.55)
+		var plate := StyleBoxFlat.new()
+		plate.bg_color = Color(1, 1, 1, 0.16 if on else 0.04)
+		for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
+			row.add_theme_stylebox_override(state, plate)
 
 func _ordered(item: Dictionary) -> PackedStringArray:
 	var mine: PackedStringArray = _mine(item)
@@ -200,130 +293,101 @@ func _mine(item: Dictionary) -> PackedStringArray:
 			mine.append(clip)
 	return mine
 
+func _layout_chrome() -> void:
+	var row: Control = get_node_or_null("FactionRow") as Control
+	if row != null:
+		row.position = Vector2(0, 0)
+		row.size = Vector2(maxf(320.0, size.x), 32)
+	var list_w: float = clampf(size.x * 0.26, LIST_MIN_W, LIST_MAX_W)
+	var gap: float = 10.0
+	var top: float = 40.0
+	var body_h: float = maxf(120.0, size.y - top)
+	var list_scroll: Control = get_node_or_null("UnitListScroll") as Control
+	if list_scroll != null:
+		list_scroll.position = Vector2(0, top)
+		list_scroll.size = Vector2(list_w, body_h)
+	var scroll: Control = get_node_or_null("UnitScroll") as Control
+	if scroll != null:
+		scroll.position = Vector2(list_w + gap, top)
+		scroll.size = Vector2(maxf(80.0, size.x - list_w - gap), body_h)
+
 func _layout_rows() -> void:
+	_layout_chrome()
+	var list: Control = get_node_or_null("UnitListScroll/UnitRows") as Control
+	var list_scroll: Control = get_node_or_null("UnitListScroll") as Control
+	if list != null and list_scroll != null:
+		list.custom_minimum_size = Vector2(maxf(80.0, list_scroll.size.x - 8.0), 0.0)
+	_place_cells()
+
+func _place_cells() -> void:
 	var scroll: ScrollContainer = get_node_or_null("UnitScroll") as ScrollContainer
-	var board: Control = get_node_or_null("UnitScroll/UnitBoard") as Control
-	var list: Control = get_node_or_null("UnitScroll/UnitBoard/UnitRows") as Control
-	if scroll == null or board == null or list == null:
+	var board: Control = get_node_or_null("UnitScroll/PreviewBoard") as Control
+	if scroll == null or board == null:
 		return
 	if scroll.size.x < 40.0 or scroll.size.y < 40.0:
 		return
-	var gutter: float = 14.0
-	var bar: VScrollBar = scroll.get_v_scroll_bar()
-	if bar != null and bar.get_minimum_size().x > 1.0:
-		gutter = bar.get_minimum_size().x
-	var inner: float = maxf(80.0, scroll.size.x - gutter)
-	var page_h: float = scroll.size.y
-	var rows: Array[Control] = []
-	for child: Node in list.get_children():
-		var row: Control = child as Control
-		if row != null and str(row.name).begins_with("UnitRow_"):
-			rows.append(row)
-	if rows.is_empty():
-		return
-	var content_h: float = page_h * float(rows.size())
-	board.custom_minimum_size = Vector2(inner, content_h)
-	board.size = Vector2(inner, content_h)
-	list.position = Vector2.ZERO
-	list.custom_minimum_size = Vector2(inner, content_h)
-	list.size = Vector2(inner, content_h)
-	for i: int in rows.size():
-		var row: Control = rows[i]
-		row.position = Vector2(0, page_h * float(i))
-		row.size = Vector2(inner, page_h)
-		row.custom_minimum_size = Vector2(inner, page_h)
-		_place_cells(row, inner, page_h)
-
-func _place_cells(row: Control, width: float, height: float) -> void:
-	var name_label: Label = row.get_node_or_null("UnitName") as Label
-	if name_label != null:
-		name_label.position = Vector2(8, 2)
-		name_label.size = Vector2(maxf(40.0, width - 16.0), 24)
 	var cells: Array[Control] = []
-	for child: Node in row.get_children():
+	for child: Node in board.get_children():
 		if str(child.name).begins_with("Cell_"):
 			var cell: Control = child as Control
 			if cell != null:
 				cells.append(cell)
+	var pane_w: float = maxf(80.0, scroll.size.x)
+	var pane_h: float = maxf(80.0, scroll.size.y)
 	if cells.is_empty():
+		board.custom_minimum_size = Vector2(pane_w, pane_h)
+		board.size = Vector2(pane_w, pane_h)
 		return
-	var top: float = 28.0
-	var gap: float = 4.0
-	var area_w: float = maxf(40.0, width - 8.0)
-	var area_h: float = maxf(40.0, height - top - 4.0)
-	var cols: int = _best_cols(cells.size(), area_w, area_h)
-	var lines: int = int(ceili(float(cells.size()) / float(cols)))
-	var cw: float = (area_w - gap * float(cols - 1)) / float(cols)
-	var ch: float = (area_h - gap * float(lines - 1)) / float(lines)
+	var gap: float = 8.0
+	var cell_h: float = maxf(160.0, pane_h - 8.0)
+	var cell_w: float = maxf(280.0, minf(cell_h * 0.92, pane_w * 0.52))
+	if cell_w > pane_w - 8.0:
+		cell_w = maxf(160.0, pane_w - 8.0)
+	var board_w: float = cell_w * float(cells.size()) + gap * float(cells.size() - 1) + 8.0
+	board.custom_minimum_size = Vector2(maxf(board_w, pane_w), pane_h)
+	board.size = Vector2(maxf(board_w, pane_w), pane_h)
 	for i: int in cells.size():
 		var cell: Control = cells[i]
-		var col: int = i % cols
-		var line_i: int = int(float(i) / float(cols))
-		cell.position = Vector2(4.0 + float(col) * (cw + gap), top + float(line_i) * (ch + gap))
-		cell.size = Vector2(cw, ch)
-		cell.custom_minimum_size = Vector2(cw, ch)
+		cell.position = Vector2(4.0 + float(i) * (cell_w + gap), 4.0)
+		cell.size = Vector2(cell_w, cell_h)
+		cell.custom_minimum_size = Vector2(cell_w, cell_h)
 		var caption: Label = cell.get_node_or_null("ActionLabel") as Label
 		if caption != null:
-			caption.position = Vector2(4, ch - 20.0)
-			caption.size = Vector2(maxf(8.0, cw - 8.0), 16)
+			caption.position = Vector2(4, cell_h - 22.0)
+			caption.size = Vector2(maxf(8.0, cell_w - 8.0), 18)
 		var box: Control = cell.get_node_or_null("ActionView") as Control
 		if box != null:
 			box.position = Vector2(2, 2)
-			box.size = Vector2(maxf(8.0, cw - 4.0), maxf(8.0, ch - 24.0))
+			box.size = Vector2(maxf(8.0, cell_w - 4.0), maxf(8.0, cell_h - 26.0))
 		var note: Label = cell.get_node_or_null("PoseNote") as Label
 		if note != null:
-			note.position = Vector2(6, maxf(4.0, ch - 64.0))
-			note.size = Vector2(maxf(8.0, cw - 12.0), 36)
-
-func _best_cols(count: int, width: float, height: float) -> int:
-	var best: int = 1
-	var best_min: float = -1.0
-	var gap: float = 4.0
-	for cols: int in range(1, count + 1):
-		var lines: int = int(ceili(float(count) / float(cols)))
-		var cw: float = (width - gap * float(cols - 1)) / float(cols)
-		var ch: float = (height - gap * float(lines - 1)) / float(lines)
-		var score: float = minf(cw, ch)
-		if score > best_min:
-			best_min = score
-			best = cols
-	return best
+			note.position = Vector2(8, maxf(8.0, cell_h * 0.5 - 24.0))
+			note.size = Vector2(maxf(8.0, cell_w - 16.0), 48)
 
 func _fill_visible() -> void:
 	_layout_rows()
-	var list: Node = get_node_or_null("UnitScroll/UnitBoard/UnitRows")
-	var scroll: Control = get_node_or_null("UnitScroll") as Control
-	if list == null or scroll == null:
+	var board: Node = get_node_or_null("UnitScroll/PreviewBoard")
+	if board == null:
 		return
-	var view := Rect2(scroll.global_position, scroll.size).grow(4.0)
-	var index: int = 0
-	for child: Node in list.get_children():
-		var row: Control = child as Control
-		if row == null:
-			continue
-		var rect: Rect2 = row.get_global_rect()
-		var on_screen: bool = index == 0 or (rect.size.y > 8.0 and view.intersects(rect))
-		if on_screen:
-			_fill_row(row)
-		index += 1
-
-func _fill_row(row: Control) -> void:
-	if bool(row.get_meta("filled", false)):
+	if bool(board.get_meta("filled", false)):
 		return
-	row.set_meta("filled", true)
-	var faction: String = str(row.get_meta("faction", ""))
-	var item: Dictionary = row.get_meta("unit_row", {}) as Dictionary
-	for child: Node in row.get_children():
+	board.set_meta("filled", true)
+	for child: Node in board.get_children():
 		var cell: Panel = child as Panel
 		if cell == null or not str(cell.name).begins_with("Cell_"):
 			continue
-		_mount_cell(cell, faction, item, str(cell.get_meta("action", "")))
+		_mount_cell(cell, str(cell.get_meta("faction", _faction)), cell.get_meta("unit_row", {}) as Dictionary, str(cell.get_meta("action", "")))
+
+func _fill_row(row: Control) -> void:
+	if row == null:
+		return
+	_show_unit(str(row.get_meta("unit_id", "")))
 
 func _mount_cell(cell: Panel, faction: String, item: Dictionary, action: String) -> void:
 	var box := SubViewportContainer.new()
 	box.name = "ActionView"
 	box.position = Vector2(2, 2)
-	box.size = Vector2(maxf(8.0, cell.size.x - 4.0), maxf(8.0, cell.size.y - 24.0))
+	box.size = Vector2(maxf(8.0, cell.size.x - 4.0), maxf(8.0, cell.size.y - 26.0))
 	box.stretch = true
 	box.stretch_shrink = 1
 	box.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
